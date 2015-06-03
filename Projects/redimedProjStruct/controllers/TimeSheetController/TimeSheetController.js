@@ -16,1021 +16,6 @@ var Q = require("q");
 //END LIBRARY
 
 module.exports = {
-    //MODULE TREE
-    LoadTreeTimeSheet: function(req, res) {
-        var searchObj = req.body.searchObj;
-        var searchParam = [];
-        var strQuery = '';
-        strQuery += "GROUP_TYPE='" + searchObj.GROUP_TYPE + "' and ";
-        for (var key in searchObj.data) {
-            if (searchObj.data[key]) {
-                strQuery += key + " like '%" + searchObj.data[key] + "%' and ";
-            }
-        }
-        strQuery = strQuery.substring(0, strQuery.length - 5);
-        searchParam.unshift(strQuery);
-        var query = "SELECT sys_hierarchy_group.GROUP_ID, sys_hierarchy_group.GROUP_NAME, sys_hierarchy_group.DECRIPTION, sys_hierarchy_group.CREATION_DATE, sys_hierarchy_group.COMPANY_ID, companies.Company_name FROM sys_hierarchy_group INNER JOIN companies ON sys_hierarchy_group.COMPANY_ID=companies.id" + " where " + searchParam + " ORDER BY CREATION_DATE " + searchObj.order + " limit " + searchObj.limit + " offset " + searchObj.offset;
-        db.sequelize.query(query)
-            .success(function(data) {
-                if (data === undefined || data === null || data.length === 0) {
-                    res.json({
-                        status: "fail",
-                        result: searchObj.data.GROUP_NAME === "" ? null : [],
-                        count: 0
-                    });
-                    return;
-                } else {
-                    sys_hierarchy_group.count({
-                            where: {
-                                GROUP_TYPE: searchObj.GROUP_TYPE
-                            }
-                        })
-                        .success(function(count) {
-                            res.json({
-                                count: count,
-                                result: data
-                            });
-                            return;
-                        })
-                        .error(function(err) {
-                            console.log("*****ERROR:" + err + "*****");
-                            res.json({
-                                status: "fail",
-                                result: null,
-                                count: 0
-                            });
-                            return;
-                        });
-                }
-            })
-            .error(function(err) {
-                console.log("*****ERROR:" + err + "*****");
-                res.json({
-                    status: "fail",
-                    result: null,
-                    count: 0
-                });
-                return;
-            });
-    },
-    LoadNodeTimeSheet: function(req, res) {
-        var searchObj = req.body.searchObj;
-        var searchParam = [];
-        var strQuery = "";
-        var order = "";
-        strQuery += "GROUP_ID = " + searchObj.GROUP_ID + " and ";
-        //search
-        for (var key in searchObj.data) {
-            if (searchObj.data[key] !== null && searchObj.data[key] !== undefined) {
-                strQuery += key + " like '%" + searchObj.data[key] + "%' and ";
-                searchParam.push("%" + searchObj.data[key] + "%");
-            }
-        }
-        strQuery = strQuery.substring(0, strQuery.length - 5);
-        // end search
-
-        // order by 
-        for (var keyorder in searchObj.order) {
-            if (searchObj.order[keyorder] !== null && searchObj.order[keyorder] !== undefined) {
-                order += keyorder + " " + searchObj.order[keyorder];
-            }
-        }
-        // end order by
-
-        searchParam.unshift(strQuery);
-
-        sys_hierarchy_nodes.findAndCountAll({
-                order: order,
-                offset: searchObj.offset,
-                limit: searchObj.limit,
-                where: searchParam
-            })
-            .success(function(data) {
-                if (data.count === 0) {
-                    res.json({
-                        status: "findNull",
-                        result: [],
-                        count: 0
-                    });
-                    return;
-                } else {
-                    res.json({
-                        status: "success",
-                        result: data.rows,
-                        count: data.count
-                    });
-                    return;
-                }
-            })
-            .error(function(err) {
-                console.log("*****ERROR: " + err + "*****");
-                res.json({
-                    status: "error",
-                    result: [],
-                    count: 0
-                });
-                return;
-            });
-    },
-
-    LoadUserTimeSheet: function(req, res) {
-        var searchObj = req.body.searchObj;
-        var strQuery = "";
-        var searchParam = [];
-        var order = " ORDER BY ";
-        var whereSelect = "";
-        strQuery += searchObj.NODE_ID + " and ";
-
-        //search
-        for (var key in searchObj.data) {
-            if (searchObj.data[key] !== undefined && searchObj.data[key] !== null && searchObj.data[key] !== "") {
-                strQuery += key + " like '%" + searchObj.data[key] + "%' and ";
-                searchParam.push("%" + searchObj.data[key] + "%");
-            }
-        }
-        //end search
-
-        //order
-        for (var keyorder in searchObj.order) {
-            if (searchObj.order[keyorder] !== undefined && searchObj.order[keyorder] !== null && searchObj.order[key] !== "") {
-                order += keyorder + " " + searchObj.order[keyorder];
-            }
-        }
-        //end order
-        //check not order
-        if (order.length === 10) {
-            order = "";
-        }
-        //end check order
-
-        //select
-        for (var keyselect in searchObj.select) {
-            if (searchObj.select[keyselect] !== undefined && searchObj.select[keyselect] !== null && searchObj.select[keyselect] !== "") {
-                whereSelect += keyselect + " = " + searchObj.select[keyselect] + " and ";
-            }
-        }
-        //end select
-        strQuery += whereSelect;
-        strQuery = strQuery.substring(0, strQuery.length - 5);
-        searchParam.unshift(strQuery);
-        var querySelectDel = "SELECT users.user_name, users.id,sys_hierarchies_users.NODE_ID,sys_hierarchies_users.DEPARTMENT_CODE_ID, users.Creation_date, " +
-            "time_location.name, departments.departmentName FROM sys_hierarchies_users " +
-            "INNER JOIN users ON sys_hierarchies_users.USER_ID = users.id " +
-            "INNER JOIN departments ON departments.departmentid = sys_hierarchies_users.DEPARTMENT_CODE_ID " +
-            "INNER JOIN time_location ON time_location.location_id = departments.locationID " +
-            "WHERE sys_hierarchies_users.NODE_ID = " + strQuery + order;
-        db.sequelize.query(querySelectDel)
-            .success(function(resultSelect) {
-                var querySelect = "SELECT users.user_name, users.id,sys_hierarchies_users.NODE_ID,sys_hierarchies_users.DEPARTMENT_CODE_ID, users.Creation_date, " +
-                    "time_location.name, departments.departmentName FROM sys_hierarchies_users " +
-                    "INNER JOIN users ON sys_hierarchies_users.USER_ID = users.id " +
-                    "INNER JOIN departments ON departments.departmentid = sys_hierarchies_users.DEPARTMENT_CODE_ID " +
-                    "INNER JOIN time_location ON time_location.location_id = departments.locationID " +
-                    "WHERE sys_hierarchies_users.NODE_ID = " + strQuery + order + " " + " limit " +
-                    searchObj.limit + " offset " + searchObj.offset;
-                db.sequelize.query(querySelect)
-                    .success(function(result) {
-                        var queryCount = "SELECT count(users.user_name) as count FROM sys_hierarchies_users " +
-                            "INNER JOIN users ON sys_hierarchies_users.USER_ID = users.id " +
-                            "INNER JOIN departments ON departments.departmentid = sys_hierarchies_users.DEPARTMENT_CODE_ID " +
-                            "INNER JOIN time_location ON time_location.location_id = departments.locationID " +
-                            "WHERE sys_hierarchies_users.NODE_ID = " + strQuery;
-                        db.sequelize.query(queryCount)
-                            .success(function(count) {
-                                if (result.length === 0) {
-                                    res.json({
-                                        status: "success",
-                                        result: (whereSelect.length !== 0 || searchObj.data['user_name'].length !== 0) ? result : null,
-                                        count: count[0].count,
-                                        resultSelect: resultSelect
-                                    });
-                                } else {
-                                    res.json({
-                                        status: "success",
-                                        result: result,
-                                        count: count[0].count,
-                                        resultSelect: resultSelect
-                                    });
-                                    return;
-                                }
-                            })
-                            .error(function(err) {
-                                console.log("*****ERRROR:" + err + "*****");
-                                res.json({
-                                    status: "error",
-                                    result: null,
-                                    count: 0,
-                                    resultSelect: []
-                                });
-                                return;
-                            });
-                    })
-                    .error(function(err) {
-                        console.log("*****ERROR:" + err + "*****");
-                        res.json({
-                            status: "error",
-                            result: null,
-                            count: 0,
-                            resultSelect: []
-                        });
-                        return;
-                    });
-            })
-            .error(function(err) {
-                console.log("*****ERROR:" + err + "*****");
-                res.json({
-                    status: "error",
-                    result: [],
-                    count: 0,
-                    resultSelect: []
-                });
-            });
-
-    },
-
-    LoadSelectUser: function(req, res) {
-        UserType.findAll({}, {
-                raw: true
-            })
-            .success(function(userType) {
-                Company.findAll({}, {
-                        raw: true
-                    })
-                    .success(function(company) {
-                        res.json({
-                            status: "success",
-                            userType: userType,
-                            company: company
-                        });
-                        return;
-                    })
-                    .error(function(err) {
-                        console.log("*****ERROR:" + err + "*****");
-                        res.json({
-                            status: "error",
-                            userType: [],
-                            company: []
-                        });
-                        return;
-                    });
-            })
-            .error(function(err) {
-                console.log("*****ERROR:" + err + "*****");
-                res.json({
-                    status: "error",
-                    userType: [],
-                    company: []
-                });
-                return;
-            });
-    },
-
-    DeleteUser: function(req, res) {
-        var userPost = req.body.userPost;
-        var query = "DELETE FROM sys_hierarchies_users WHERE (NODE_ID, USER_ID, DEPARTMENT_CODE_ID) IN (" + userPost + ")";
-        db.sequelize.query(query)
-            .success(function(resultDel) {
-                res.json({
-                    status: "success"
-                });
-            })
-            .error(function(err) {
-                console.log("*****ERROR:" + err + "*****");
-                res.json({
-                    status: "error"
-                });
-                return;
-            });
-    },
-    LoadDepartMent: function(req, res) {
-        Departments.findAll({
-                where: {
-                    departmentType: "Time Sheet"
-                }
-            }, {
-                raw: true
-            })
-            .success(function(result) {
-                res.json({
-                    status: "success",
-                    result: result
-                });
-                return;
-            })
-            .error(function(err) {
-                console.log("*****ERROR:" + err + "*****");
-                res.json({
-                    status: "error",
-                    result: []
-                });
-                return;
-            });
-    },
-    LoadNodeSelect: function(req, res) {
-        var GROUP_ID = req.body.info;
-        sys_hierarchy_nodes.findAll({
-                where: {
-                    GROUP_ID: GROUP_ID
-                }
-            }, {
-                raw: true
-            })
-            .success(function(result) {
-                res.json({
-                    status: "success",
-                    result: result
-                });
-            })
-            .error(function(err) {
-                console.log("*****ERROR:" + err + "*****");
-                res.json({
-                    status: "error",
-                    ressult: []
-                });
-                return;
-            });
-    },
-    LoadUser: function(req, res) {
-        var searchObj = req.body.searchObj;
-        var strQuery = "";
-        var order = " ORDER BY ";
-        var queryNOTIN = "SELECT USER_ID FROM sys_hierarchies_users WHERE NODE_ID = " + searchObj.NODE_ID + " AND DEPARTMENT_CODE_ID = " + searchObj.departmentid;
-        db.sequelize.query(queryNOTIN)
-            .success(function(NOTIN) {
-                for (var keyNotIn in NOTIN) {
-                    strQuery += NOTIN[keyNotIn].USER_ID + ",";
-                }
-                if (NOTIN.length !== 0) {
-                    strQuery = " users.id NOT IN (" + strQuery.substring(0, strQuery.length - 1) + ") and ";
-                }
-                //get filter
-                for (var keyFilter in searchObj.select) {
-                    if (searchObj.select[keyFilter] !== undefined && searchObj.select[keyFilter] !== null && searchObj.select[keyFilter] !== "") {
-                        strQuery += keyFilter + " = " + searchObj.select[keyFilter] + " and ";
-                    }
-                }
-                //end get filter
-
-                //get search
-                for (var key in searchObj.data) {
-                    if (searchObj.data[key] !== undefined && searchObj.data[key] !== null && searchObj.data[keyFilter] !== "") {
-                        strQuery += key + " like '%" + searchObj.data[key] + "%' and ";
-                    }
-                }
-                //end get search
-
-                //get order
-                for (var keyOrder in searchObj.order) {
-                    if (searchObj.order[keyOrder] !== undefined && searchObj.order[keyOrder] !== null && searchObj.order[keyOrder] !== "") {
-                        order += key + " " + searchObj.order[keyOrder] + ", ";
-                    }
-                }
-                if (order.length === 10) {
-                    order = "";
-                } else {
-                    order = order.substring(0, order.length - 2);
-                }
-                //end get order
-                strQuery = strQuery.substring(0, strQuery.length - 5);
-                var querySelectAll = "SELECT users.user_name, users.id, users.Creation_date, companies.Company_name, user_type.user_type " +
-                    "FROM users LEFT JOIN user_type ON users.user_type = user_type.ID " +
-                    "LEFT JOIN companies ON users.company_id = companies.id " +
-                    "WHERE " + strQuery + order;
-                var querySelectSome = "SELECT users.user_name, users.id, users.Creation_date, companies.Company_name, user_type.user_type " +
-                    "FROM users LEFT JOIN user_type ON users.user_type = user_type.ID " +
-                    "LEFT JOIN companies ON users.company_id = companies.id " +
-                    "WHERE " + strQuery + order + " LIMIT " + searchObj.limit + " OFFSET " + searchObj.offset;
-                var queryCountSome = "SELECT count(users.user_name) as count " +
-                    "FROM users LEFT JOIN user_type ON users.user_type = user_type.ID " +
-                    "LEFT JOIN companies ON users.company_id = companies.id " +
-                    "WHERE " + strQuery + order;
-                db.sequelize.query(querySelectAll)
-                    .success(function(resultAll) {
-                        db.sequelize.query(querySelectSome)
-                            .success(function(resultSome) {
-                                db.sequelize.query(queryCountSome)
-                                    .success(function(count) {
-                                        res.json({
-                                            status: "success",
-                                            resultAll: resultAll,
-                                            result: resultSome,
-                                            count: count[0].count
-                                        });
-                                        return;
-                                    })
-                                    .error(function(err) {
-                                        console.log("*****ERROR:" + err + "*****");
-                                        res.json({
-                                            status: "error",
-                                            resultAll: [],
-                                            result: [],
-                                            count: 0
-                                        });
-                                        return;
-                                    });
-                            })
-                            .error(function(err) {
-                                console.log("*****ERROR:" + err + "*****");
-                                res.json({
-                                    status: "error",
-                                    resultAll: [],
-                                    result: [],
-                                    count: 0
-                                });
-                                return;
-                            });
-                    })
-                    .error(function(err) {
-                        console.log("*****ERROR:" + err + "*****");
-                        res.json({
-                            status: "error",
-                            resultAll: [],
-                            result: [],
-                            count: 0
-                        });
-                        return;
-                    });
-            })
-            .error(function(err) {
-                console.log("*****ERROR:" + err + "*****");
-                res.json({
-                    status: "error",
-                    resultAll: [],
-                    result: [],
-                    count: 0
-                });
-                return;
-            });
-    },
-
-    AddUser: function(req, res) {
-        var info = req.body.info;
-        var arrayUser = "";
-        for (var key in info.userList) {
-            if (info.userList[key] !== undefined && info.userList[key] !== null) {
-                arrayUser += "(" + info.NODE_ID + "," + info.departmentid + "," + info.userList[key] + "," + 1 + "," + info.user_id + "," + null + "," + null + "," + null + "), ";
-            }
-        }
-        arrayUser = arrayUser.substring(0, arrayUser.length - 2);
-        var queryAddUser = "INSERT INTO sys_hierarchies_users VALUE " + arrayUser;
-        db.sequelize.query(queryAddUser)
-            .success(function(result) {
-                sys_hierarchies_users.findAll({
-                        where: {
-                            NODE_ID: info.NODE_ID,
-                            DEPARTMENT_CODE_ID: info.departmentid
-                        }
-                    }, {
-                        raw: true
-                    })
-                    .success(function(result) {
-                        res.json({
-                            status: "success",
-                            result: result
-                        });
-
-                    })
-                    .error(function(err) {
-                        console.log("*****ERROR:" + err + "*****");
-                        res.json({
-                            status: "error",
-                            result: []
-                        });
-                    });
-            })
-            .error(function(err) {
-                console.log("*****ERROR:" + err + "*****");
-                res.json({
-                    status: "error",
-                    result: []
-                });
-            });
-    },
-
-    LoadOneUser: function(req, res) {
-        var info = req.body.info;
-        var NODE_ID = info.NODE_ID;
-        var USER_ID = info.USER_ID;
-        var DEPARTMENT_ID = info.DEPARTMENT_ID;
-        var query = "SELECT users.user_name, users.Contact_email, user_type.user_type, companies.Company_name " +
-            "FROM users LEFT JOIN user_type ON users.user_type = user_type.ID " +
-            "LEFT JOIN companies ON users.company_id = companies.id " +
-            "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " +
-            "WHERE sys_hierarchies_users.NODE_ID = " + NODE_ID + " AND sys_hierarchies_users.USER_ID = " +
-            USER_ID + " AND sys_hierarchies_users.DEPARTMENT_CODE_ID = " + DEPARTMENT_ID;
-        db.sequelize.query(query)
-            .success(function(result) {
-                res.json({
-                    status: "success",
-                    result: result
-                });
-                return;
-            })
-            .error(function(err) {
-                console.log("*****ERROR:" + err + "*****");
-                res.json({
-                    status: "error",
-                    result: []
-                });
-                return;
-            });
-    },
-
-    UpdateUser: function(req, res) {
-        var info = req.body.info;
-        var NODE_ID = info.NODE_ID;
-        var USER_ID = info.USER_ID;
-        var DEPARTMENT_CODE_ID = info.departmentid;
-        sys_hierarchies_users.update({
-                NODE_ID: NODE_ID,
-                DEPARTMENT_CODE_ID: DEPARTMENT_CODE_ID,
-            }, {
-                NODE_ID: info.oldNodeId,
-                USER_ID: USER_ID,
-                DEPARTMENT_CODE_ID: info.oldDeptId
-            })
-            .success(function(ressult) {
-                res.json({
-                    status: "success"
-                });
-                return;
-            })
-            .error(function(err) {
-                console.log("*****ERROR:" + err + "*****");
-                res.json({
-                    status: "error"
-                });
-                return;
-            });
-    },
-
-    LoadRoleWhere: function(req, res) {
-        var info = req.body.info;
-        var queryNotIn = "SELECT NODE_ID FROM sys_hierarchies_users WHERE USER_ID = " + info.USER_ID + " AND DEPARTMENT_CODE_ID = " + info.DEPARTMENT_ID;
-        db.sequelize.query(queryNotIn)
-            .success(function(result) {
-                var strRole = "";
-                for (var key in result) {
-                    strRole += result[key].NODE_ID + ",";
-                }
-                strRole = strRole.substring(0, strRole.length - 1);
-                var queryRole = "SELECT sys_hierarchy_nodes.NODE_ID, sys_hierarchy_nodes.NODE_CODE " +
-                    "FROM sys_hierarchy_nodes " +
-                    "WHERE sys_hierarchy_nodes.GROUP_ID = " + info.GROUP_ID;
-                if (strRole !== "" && strRole.length !== 0) {
-                    queryRole += " AND sys_hierarchy_nodes.NODE_ID NOT IN (" + strRole + ")";
-                }
-                db.sequelize.query(queryRole)
-                    .success(function(result2) {
-                        res.json({
-                            status: "success",
-                            result: result2
-                        });
-                        return;
-                    })
-                    .error(function(err) {
-                        console.log("*****ERROR:" + err + "*****");
-                        res.json({
-                            status: "error",
-                            result: []
-                        });
-                    });
-            })
-            .error(function(err) {
-                console.log("*****ERROR:" + err + "*****");
-                res.json({
-                    status: "error",
-                    result: []
-                });
-            });
-    },
-
-    LoadDeptWhere: function(req, res) {
-        var info = req.body.info;
-        var queryNotIn = "SELECT DEPARTMENT_CODE_ID FROM sys_hierarchies_users WHERE USER_ID = " + info.USER_ID + " AND NODE_ID = " + info.NODE_ID;
-        db.sequelize.query(queryNotIn)
-            .success(function(result) {
-                var strDept = "";
-                for (var key in result) {
-                    strDept += result[key].DEPARTMENT_CODE_ID + ",";
-                }
-                strDept = strDept.substring(0, strDept.length - 1);
-                var queryDept = "SELECT departments.departmentid, departments.departmentName " +
-                    "FROM departments ";
-                if (strDept !== "" && strDept.length !== 0) {
-                    queryDept += " WHERE departments.departmentid NOT IN (" + strDept + ")";
-                }
-                db.sequelize.query(queryDept)
-                    .success(function(result2) {
-                        res.json({
-                            status: "success",
-                            result: result2
-                        });
-                        return;
-                    })
-                    .error(function(err) {
-                        console.log("*****ERROR:" + err + "*****");
-                        res.json({
-                            status: "error",
-                            result: []
-                        });
-                    });
-            })
-            .error(function(err) {
-                console.log("*****ERROR:" + err + "*****");
-                res.json({
-                    status: "error",
-                    result: []
-                });
-            });
-    },
-
-    //DEPT
-    LoadDept: function(req, res) {
-        var searchObj = req.body.searchObj;
-        var strOrder = "ORDER BY ";
-        var strSearch = " AND ";
-        var strQuery = " AND ";
-
-        //ORDER
-        for (var key in searchObj.order) {
-            if (searchObj.order[key] !== undefined && searchObj.order[key] !== null && searchObj.order[key] !== "") {
-                strOrder += key + " " + searchObj.order[key];
-            }
-        }
-        if (strOrder.length === 9) {
-            strOrder = "";
-        }
-        //END ORDER
-
-        //get filter
-        for (var keyFilter in searchObj.select) {
-            if (searchObj.select[keyFilter] !== undefined && searchObj.select[keyFilter] !== null && searchObj.select[keyFilter] !== "") {
-                strQuery += keyFilter + " = " + searchObj.select[keyFilter] + " and ";
-            }
-        }
-        //end get filter
-
-        //SEARCH
-        for (var keySearch in searchObj.data) {
-            if (searchObj.data[keySearch] !== undefined && searchObj.data[keySearch] !== null && searchObj.data[keySearch]) {
-                strSearch += key + " like '%" + searchObj.data[keySearch] + "%' and ";
-            }
-        }
-
-        if (strSearch.length === 5) {
-            strSearch = "";
-        } else {
-            strSearch = strSearch.substring(0, strSearch.length - 5);
-        }
-
-        if (strQuery.length === 5) {
-            strQuery = "";
-        } else {
-            strQuery = strQuery.substring(0, strQuery.length - 5);
-        }
-        //END SEARCH
-
-        var querySearch = "SELECT departments.departmentid, departments.departmentName, time_location.name, users.user_name " +
-            "FROM departments LEFT JOIN users ON departments.managerId = users.id " +
-            "LEFT JOIN time_location ON time_location.location_id = departments.locationID " +
-            "WHERE departments.departmentType = 'Time Sheet' " +
-            strSearch + strQuery + " " + strOrder + " LIMIT " + searchObj.limit + " OFFSET " + searchObj.offset;
-        var queryCount = "SELECT COUNT(departments.departmentid) AS count " +
-            "FROM departments LEFT JOIN users ON departments.managerId = users.id " +
-            "LEFT JOIN time_location ON time_location.location_id = departments.locationID " +
-            "WHERE departments.departmentType = 'Time Sheet' " +
-            strSearch + strQuery;
-        db.sequelize.query(querySearch)
-            .success(function(result) {
-                db.sequelize.query(queryCount)
-                    .success(function(count) {
-                        res.json({
-                            status: "success",
-                            result: result,
-                            count: count[0].count
-                        });
-                        return;
-                    })
-                    .error(function(err) {
-                        console.log("*****ERROR:" + err + "*****");
-                        res.json({
-                            status: "error",
-                            result: [],
-                            count: 0
-                        });
-                        return;
-                    });
-            }).error(function(err) {
-                console.log("*****ERROR:" + err + "*****");
-                res.json({
-                    status: "error",
-                    result: [],
-                    count: 0
-                });
-                return;
-            });
-    },
-    //END DEPT
-
-    DeleteDept: function(req, res) {
-        var idDept = req.body.idDept;
-        var query = "DELETE FROM departments WHERE departmentid = " + idDept;
-        db.sequelize.query(query)
-            .success(function(result) {
-                res.json({
-                    status: "success"
-                });
-                return;
-            })
-            .error(function(err) {
-                console.log("*****ERROR:" + err + "*****");
-                res.json({
-                    status: "error"
-                });
-            });
-    },
-
-    LoadLocation: function(req, res) {
-        Location.findAll({}, {
-                raw: true
-            })
-            .success(function(result) {
-                res.json({
-                    status: "success",
-                    result: result
-                });
-                return;
-            })
-            .error(function(err) {
-                console.log("*****ERROR:" + err + "*****");
-                res.json({
-                    status: "error"
-                });
-                return;
-            });
-    },
-
-    LoadOneDept: function(req, res) {
-        var idDept = req.body.idDept;
-        Departments.find({
-                where: {
-                    departmentid: idDept
-                }
-            }, {
-                raw: true
-            })
-            .success(function(result) {
-                res.json({
-                    status: "success",
-                    result: result
-                });
-                return;
-            })
-            .error(function(err) {
-                console.log("*****ERROR:" + err + "*****");
-                res.json({
-                    status: "error"
-                });
-                return;
-            });
-    },
-
-    InsertDept: function(req, res) {
-        var info = req.body.info;
-        Departments.max("departmentid")
-            .success(function(maxDept) {
-                var id = maxDept + 1;
-                Departments.create({
-                        departmentid: id,
-                        departmentName: info.departmentName,
-                        locationID: info.locationID,
-                        departmentType: "Time Sheet"
-                    })
-                    .success(function(result) {
-                        res.json({
-                            status: "success"
-                        });
-                    })
-                    .error(function(err) {
-                        console.log("*****ERROR:" + err + "*****");
-                        res.json({
-                            status: "error"
-                        });
-                        return;
-                    });
-            }).error(function(err) {
-                console.log("*****ERROR:" + err + "*****");
-                res.json({
-                    status: "error"
-                });
-                return;
-            });
-    },
-
-    UpdateDept: function(req, res) {
-        var info = req.body.info;
-        Departments.update({
-                departmentName: info.departmentName,
-                locationID: info.locationID
-            }, {
-                departmentid: info.departmentid
-            })
-            .success(function(result) {
-                res.json({
-                    status: "success"
-                });
-                return;
-            })
-            .error(function(err) {
-                console.log("*****ERROR:" + err + "*****");
-                res.json({
-                    status: "error"
-                });
-                return;
-            });
-    },
-
-    ViewApproved: function(req, res) {
-        //DECLARATION
-        var idTaskWeek = req.body.info;
-        // END DECLARATION
-        // QUERY 
-        var strQuery = "SELECT SUM(time_tasks.time_charge) AS sumDATE, time_tasks.date, time_tasks.tasks_id, " +
-            "time_tasks.activity_id, time_tasks_week.start_date, time_tasks_week.end_date, time_tasks_week.user_id, " +
-            "time_tasks_week.task_week_id, time_tasks_week.time_in_lieu, time_tasks.time_charge, time_tasks_week.over_time, " +
-            "time_task_status.name AS status, time_task_status.task_status_id, time_tasks_week.time_charge as chargeWeek, hr_employee.FirstName, hr_employee.LastName " +
-            "FROM time_tasks INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = time_tasks.tasks_week_id " +
-            "INNER JOIN time_task_status ON time_task_status.task_status_id = time_tasks_week.task_status_id " +
-            "INNER JOIN users ON time_tasks_week.user_id = users.id " +
-            "LEFT JOIN time_activity ON time_activity.activity_id = time_tasks.activity_id " +
-            "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " +
-            "WHERE time_tasks.tasks_week_id = " + idTaskWeek + " GROUP BY time_tasks.date ORDER BY time_tasks.date";
-        var strActivity = "SELECT SUM(time_tasks.time_charge) AS sumAC, time_tasks.date, " +
-            "time_tasks.activity_id, time_tasks_week.start_date, time_tasks_week.end_date,  " +
-            "time_tasks_week.task_week_id, time_tasks_week.time_in_lieu, time_tasks.time_charge, time_tasks_week.over_time, " +
-            "time_task_status.name AS status, time_task_status.task_status_id, time_tasks_week.time_charge as chargeWeek, hr_employee.FirstName, hr_employee.LastName " +
-            "FROM time_tasks INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = time_tasks.tasks_week_id " +
-            "INNER JOIN time_task_status ON time_task_status.task_status_id = time_tasks_week.task_status_id " +
-            "INNER JOIN users ON time_tasks_week.user_id = users.id " +
-            "LEFT JOIN time_activity ON time_activity.activity_id = time_tasks.activity_id " +
-            "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " +
-            "WHERE time_tasks.tasks_week_id = " + idTaskWeek + " GROUP BY time_tasks.date, time_activity.activity_id ORDER BY time_tasks.date";
-        // END QUERY
-        db.sequelize.query(strQuery)
-            .success(function(result) {
-                //CHECK LEAVE
-                var queryGetLeaveApprove = "SELECT hr_leave.start_date, hr_leave.finish_date " +
-                    "FROM hr_leave " +
-                    "WHERE hr_leave.user_id = :userId AND hr_leave.status_id = 3";
-                db.sequelize.query(queryGetLeaveApprove, null, {
-                        raw: true
-                    }, {
-                        userId: result[0].user_id
-                    })
-                    .success(function(resultLeaveApprove) {
-                        var forPermission = true;
-                        if (resultLeaveApprove !== undefined &&
-                            resultLeaveApprove !== null &&
-                            resultLeaveApprove.length !== 0) {
-                            //CHECK EXIST LEAVE
-                            for (var keyTimeSheet in result) {
-                                var checkExistLeave = false;
-                                var date = moment(moment(result[keyTimeSheet].date).format("YYYY-MM-DD")).format("X");
-                                for (var keyLeave in resultLeaveApprove) {
-                                    var startDate = moment(moment(resultLeaveApprove[keyLeave].start_date).format("YYYY-MM-DD")).format("X");
-                                    var finishDate = moment(moment(resultLeaveApprove[keyLeave].finish_date).format("YYYY-MM-DD")).format("X");
-                                    if ((result[keyTimeSheet].activity_id === 15 ||
-                                            result[keyTimeSheet].activity_id === 16 ||
-                                            result[keyTimeSheet].activity_id === 17 ||
-                                            result[keyTimeSheet].activity_id === 19 ||
-                                            result[keyTimeSheet].activity_id === 25) &&
-                                        date >= startDate &&
-                                        date <= finishDate) {
-                                        checkExistLeave = true;
-                                    }
-                                }
-                                if (checkExistLeave === false) {
-                                    forPermission = false;
-                                }
-                            }
-                            //END CHECK EXIST LEAVE
-                        } else {
-                            forPermission = false;
-                        }
-                        //GET TIME SHEET
-                        if (result === undefined || result === null || result.length === 0) {
-                            res.json({
-                                status: "success",
-                                result: [],
-                                resultActivity: [],
-                                forPermission: forPermission
-                            });
-                            return;
-                        } else {
-                            db.sequelize.query(strActivity)
-                                .success(function(resultActivity) {
-                                    res.json({
-                                        status: "success",
-                                        result: result,
-                                        resultActivity: resultActivity,
-                                        forPermission: forPermission
-                                    });
-                                    return;
-                                }).error(function(err) {
-                                    console.log("*****ERROR:" + err + "*****");
-                                    res.json({
-                                        status: "error",
-                                        result: [],
-                                        resultActivity: [],
-                                        forPermission: forPermission
-                                    });
-                                    return;
-                                });
-
-                        }
-                        //END GET TIME SHEET
-                    })
-                    .error(function(err) {
-                        console.log("*****ERROR:" + err + "*****");
-                        res.json({
-                            status: "error"
-                        });
-                        return;
-                    });
-                //END CHECK LEAVE
-            })
-            .error(function(err) {
-                console.log("*****ERROR:" + err + "*****");
-                res.json({
-                    status: "error",
-                    result: [],
-                    resultActivity: []
-                });
-                return;
-            });
-    },
-
-    ViewOnDate: function(req, res) {
-        var info = req.body.info;
-        var strQuery = "SELECT DISTINCT time_tasks.date,time_tasks.tasks_id, time_tasks.task,time_item_task.units,time_item_code.ITEM_NAME,time_item_task.ITEM_ID, " +
-            "time_item_code.IS_BILLABLE, time_item_task.ratio, time_activity.NAME, time_location.NAME AS LOCATION, departments.departmentName, " +
-            "time_tasks.time_charge, time_item_task.item_id, time_item_task.deleted, time_item_task.time_charge as chargeItem, time_item_task.comment, " +
-            "hr_employee.FirstName, hr_employee.LastName, time_tasks_week.start_date, time_tasks_week.end_date, " +
-            "time_tasks_week.time_charge as chargeWeek, time_task_status.name AS status FROM time_tasks " +
-            "INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = time_tasks.tasks_week_id " +
-            "INNER JOIN users ON users.id=time_tasks_week.user_id " +
-            "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " +
-            "INNER JOIN time_task_status ON time_task_status.task_status_id = time_tasks_week.task_status_id " +
-            "LEFT JOIN time_activity ON time_activity.activity_id = time_tasks.activity_id " +
-            "LEFT JOIN time_location ON time_location.location_id = time_tasks.location_id " +
-            "LEFT JOIN departments ON departments.departmentid = time_tasks.department_code_id " +
-            "LEFT OUTER JOIN time_item_task ON time_tasks.tasks_id = time_item_task.task_id AND time_item_task.deleted = 0 " +
-            "LEFT JOIN time_item_code ON time_item_code.ITEM_ID = time_item_task.item_id " +
-            "WHERE time_tasks.date = '" + info.DATE + "' AND time_tasks.tasks_week_id = " + info.ID +
-            " AND time_tasks.deleted = 0" +
-            " ORDER BY time_tasks.order ASC";
-        db.sequelize.query(strQuery)
-            .success(function(result) {
-                db.sequelize.query("SELECT DISTINCT t.`tasks_id`, c.`item_id` as ITEM_ID, " +
-                        "time_task_file.path_file, time_task_file.file_id, time_task_file.file_name, time_task_file.file_size " +
-                        "FROM `time_tasks` t INNER JOIN `time_item_task` i ON i.`task_id` = t.`tasks_id` " +
-                        "INNER JOIN `time_item_code` c ON c.`ITEM_ID` = i.`item_id`" +
-                        "INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = t.tasks_week_id " +
-                        "INNER JOIN time_item_file ON time_item_file.task_id = i.task_id AND time_item_file.item_id = i.item_id " +
-                        "INNER JOIN time_task_file ON time_task_file.file_id = time_item_file.file_id " +
-                        " WHERE " +
-                        "t.`tasks_week_id` = ?", null, {
-                            raw: true
-                        }, [info.ID])
-                    .success(function(file) {
-                        res.json({
-                            status: "success",
-                            result: result,
-                            file: file
-                        });
-                        return;
-                    })
-                    .error(function(err) {
-                        console.log("*****ERROR:" + err + "*****");
-                        res.json({
-                            status: "error",
-                            result: []
-                        });
-                        return;
-                    });
-
-            })
-            .error(function(err) {
-                console.log("*****ERROR:" + err + "*****");
-                res.json({
-                    status: "error",
-                    result: []
-                });
-                return;
-            });
-    },
-
     LoadItemCode: function(req, res) {
         var searchObj = req.body.searchObj;
         var strSearch = " WHERE 1 = 1 AND ";
@@ -1114,902 +99,366 @@ module.exports = {
             });
     },
 
-    //approve
-    LoadTimeSheetApprove: function(req, res) {
-        var searchObj = req.body.searchObj;
-        var strSearch = " AND ";
-        var orderBY = " ORDER BY ";
-        var strSearchEmployee = "";
-        if (searchObj.name['nameEmployee'] !== undefined && searchObj.name['nameEmployee'] !== null && searchObj.name['nameEmployee'] !== "") {
-            strSearchEmployee = " AND (hr_employee.FirstName like '%" + searchObj.name['nameEmployee'] + "%' OR " +
-                "hr_employee.LastName like '%" + searchObj.name['nameEmployee'] + "%')";
-        }
+    // LoadDeptReport: function(req, res) {
+    //     var USER_ID = req.body.USER_ID;
+    //     var query = "SELECT hr_employee.TITLE FROM hr_employee " +
+    //         "INNER JOIN users ON users.employee_id  = hr_employee.Employee_ID " +
+    //         "WHERE users.id = " + USER_ID;
+    //     db.sequelize.query(query)
+    //         .success(function(result) {
+    //             if (result !== undefined && result !== null && result.length !== 0) {
+    //                 var TITLE = result[0].TITLE;
+    //                 var queryDept = "";
+    //                 if (TITLE === "Director") {
+    //                     //ALL DEPT
+    //                     queryDept = "SELECT DISTINCT departments.departmentid as id, departments.departmentName as label FROM departments " +
+    //                         "WHERE departments.departmentType = 'Time Sheet'";
+    //                 } else {
+    //                     //ONE DEPT
+    //                     queryDept = "SELECT DISTINCT departments.departmentid as id, departments.departmentName as label FROM departments " +
+    //                         "INNER JOIN hr_employee ON hr_employee.Dept_ID = departments.departmentid " +
+    //                         "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
+    //                         "WHERE departments.departmentType = 'Time Sheet' AND users.id = " + USER_ID;
+    //                 }
+    //                 db.sequelize.query(queryDept)
+    //                     .success(function(resultDept) {
+    //                         res.json({
+    //                             status: "success",
+    //                             result: resultDept,
+    //                             isStaff: (TITLE === "Head of Dept." || TITLE === "Director") ? false : true
+    //                         });
+    //                         return;
+    //                     })
+    //                     .error(function(err) {
+    //                         console.log("*****ERROR:" + err + "*****");
+    //                         res.json({
+    //                             status: "error",
+    //                             result: []
+    //                         });
+    //                         return;
+    //                     });
+    //             }
+    //         })
+    //         .error(function(err) {
+    //             console.log("*****ERROR:" + err + "*****");
+    //             res.json({
+    //                 status: "error",
+    //                 result: []
+    //             });
+    //             return;
+    //         });
+    // },
 
-        //search
-        for (var keySearch in searchObj.data) {
-            if (searchObj.data[keySearch] !== undefined &&
-                searchObj.data[keySearch] !== null &&
-                searchObj.data[keySearch] !== "") {
-                strSearch += keySearch + " like '%" + searchObj.data[keySearch] + "%' AND ";
-            }
-        }
-        //end search
+    // LoadEmpReport: function(req, res) {
+    //     var listDept = req.body.listDept;
+    //     var strListDept = "";
+    //     for (var i = 0; i < listDept.length; i++) {
+    //         strListDept += listDept[i].id + ", ";
+    //     }
+    //     if (strListDept !== undefined && strListDept !== null && strListDept !== "" && strListDept.length !== 0) {
+    //         strListDept = strListDept.substring(0, strListDept.length - 2);
+    //     } else {
+    //         strListDept = null;
+    //     }
+    //     var queryStaff = "";
+    //     if (req.body.listDept[0].USER_ID !== undefined &&
+    //         req.body.listDept[0].isStaff === true) {
+    //         queryStaff = "AND users.id = " + req.body.listDept[0].USER_ID;
+    //     }
+    //     var query = "SELECT DISTINCT hr_employee.FirstName, hr_employee.LastName, hr_employee.Employee_ID FROM hr_employee " +
+    //         "INNER JOIN departments ON departments.departmentid = hr_employee.Dept_ID " +
+    //         "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
+    //         "WHERE departments.departmentid IN (" + strListDept + ") " + queryStaff;
+    //     db.sequelize.query(query)
+    //         .success(function(result) {
+    //             res.json({
+    //                 status: "success",
+    //                 result: result
+    //             });
+    //             return;
+    //         })
+    //         .error(function(err) {
+    //             console.log("*****ERROR:" + err + "*****");
+    //             res.json({
+    //                 status: "error",
+    //                 result: []
+    //             });
+    //             return;
+    //         });
+    // },
 
-        //select
-        for (var keySelect in searchObj.select) {
-            if (searchObj.select[keySelect] !== undefined &&
-                searchObj.select[keySelect] !== null &&
-                searchObj.select[keySelect] !== "") {
-                strSearch += keySelect + " = " + searchObj.select[keySelect] + " AND ";
-            }
-        }
-        //end select
+    // LoadReports1: function(req, res) {
+    //     var info = req.body.info;
+    //     var weekNoFrom = info.weekNoFrom;
+    //     var weekNoTo = info.weekNoTo;
+    //     var listEMP = info.listEMP;
+    //     var USER_ID = info.USER_ID;
+    //     var listDept = info.listDept;
+    //     var weekFrom = moment(info.weekFrom).format("YYYY-MM-DD");
+    //     var weekTo = moment(info.weekTo).format("YYYY-MM-DD");
+    //     //STR EMP
+    //     var strListEmp = "";
+    //     for (var i = 0; i < listEMP.length; i++) {
+    //         strListEmp += listEMP[i].id + ", ";
+    //     }
+    //     if (strListEmp !== undefined && strListEmp !== null && strListEmp !== "" && strListEmp.length !== 0) {
+    //         strListEmp = strListEmp.substring(0, strListEmp.length - 2);
+    //     } else {
+    //         strListEmp = null;
+    //     }
+    //     //END
+    //     var strListDept = "";
+    //     var strListDeptID = "";
+    //     for (var d = 0; d < listDept.length; d++) {
+    //         strListDeptID += listDept[d].id + ", ";
+    //     }
+    //     if (strListDeptID !== "") {
+    //         strListDeptID = strListDeptID.substring(0, strListDeptID.length - 2);
+    //     } else strListDeptID = -1;
 
-        if (strSearch.length === 5) {
-            strSearch = "";
-        } else {
-            strSearch = strSearch.substring(0, strSearch.length - 5);
-        }
+    //     // SELECT DEPT
+    //     var queryDept = "SELECT DISTINCT COUNT(hr_employee.Employee_ID) AS CountEmp, departments.departmentName, departments.departmentid FROM departments " +
+    //         "INNER JOIN hr_employee ON hr_employee.Dept_ID = departments.departmentid " +
+    //         "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
+    //         "INNER JOIN time_tasks_week ON time_tasks_week.user_id  = users.id " +
+    //         "WHERE users.employee_id IN (" + strListEmp + ") AND time_tasks_week.task_status_id = 3 AND " +
+    //         "time_tasks_week.week_no BETWEEN " + weekNoFrom + " AND " + weekNoTo + " GROUP BY departments.departmentName ORDER BY departments.departmentName ASC";
+    //     // END DEPT
 
-        for (var keyOrder in searchObj.order) {
-            if (searchObj.order[keyOrder] !== undefined &&
-                searchObj.order[keyOrder] !== null &&
-                searchObj.order[keyOrder] !== "") {
-                orderBY += keyOrder + " " + searchObj.order[keyOrder];
-            }
-        }
-        if (orderBY.length === 10) {
-            orderBY = "";
-        }
-        var isDirector = false;
-        //get NODE_ID Head of Dept. on TIMESHEET
-        var strQueryGetNodeDept = "SELECT sys_hierarchy_nodes.NODE_ID, sys_hierarchy_nodes.NODE_CODE FROM sys_hierarchy_nodes INNER JOIN sys_hierarchy_group ON " +
-            "sys_hierarchy_nodes.GROUP_ID = sys_hierarchy_group.GROUP_ID INNER JOIN sys_hierarchies_types ON " +
-            " sys_hierarchies_types.TYPE_NAME = sys_hierarchy_group.GROUP_TYPE INNER JOIN sys_hierarchies_users ON " +
-            "sys_hierarchies_users.NODE_ID = sys_hierarchy_nodes.NODE_ID WHERE sys_hierarchies_users.USER_ID = " + searchObj.USER_ID +
-            " AND sys_hierarchies_types.TYPE_NAME='Time Sheet'";
-        db.sequelize.query(strQueryGetNodeDept)
-            .success(function(result) {
-                if (result === undefined || result === null || result.length === 0) {
-                    res.json({
-                        status: "success",
-                        count: 0,
-                        result: null
-                    });
-                    return;
-                } else {
-                    var NodeDeptId = "";
-                    for (var deptId in result) {
-                        if (result[deptId] !== undefined &&
-                            result[deptId] !== null &&
-                            result[deptId] !== "") {
-                            if (result[deptId].NODE_CODE === "Director") {
-                                isDirector = true;
-                            }
-                            NodeDeptId += result[deptId].NODE_ID + ",";
-                        }
-                    }
-                    if (NodeDeptId !== "") {
-                        NodeDeptId = "(" + NodeDeptId.substring(0, NodeDeptId.length - 1) + ")";
-                    }
-                    //get list Dept's manager
-                    var strQueryDeptList = "SELECT sys_hierarchies_users.DEPARTMENT_CODE_ID FROM sys_hierarchies_users WHERE NODE_ID IN " +
-                        NodeDeptId + " AND sys_hierarchies_users.USER_ID = " +
-                        searchObj.USER_ID;
-                    db.sequelize.query(strQueryDeptList)
-                        .success(function(resultDept) {
-                            var Depts = "";
-                            if (resultDept === undefined || resultDept === null || resultDept.length === 0) {
-                                res.json({
-                                    status: "success",
-                                    count: 0,
-                                    result: []
-                                });
-                                return;
-                            } else {
-                                for (var keyDept in resultDept) {
-                                    if (resultDept[keyDept] !== undefined &&
-                                        resultDept[keyDept] !== null &&
-                                        resultDept[keyDept] !== "") {
-                                        Depts += resultDept[keyDept].DEPARTMENT_CODE_ID + ",";
-                                    }
-                                }
-                                if (Depts !== "") {
-                                    Depts = "(" + Depts.substring(0, Depts.length - 1) + ")";
-                                }
-                                //get node staff
-                                var queryNodeStaff = "SELECT NODE_ID FROM sys_hierarchy_nodes WHERE TO_NODE_ID IN " + NodeDeptId;
-                                db.sequelize.query(queryNodeStaff)
-                                    .success(function(staffNode) {
-                                        if (staffNode === undefined || staffNode === null || staffNode.length === 0) {
-                                            res.json({
-                                                status: "success",
-                                                count: 0,
-                                                result: []
-                                            });
-                                            return;
-                                        } else {
-                                            var NodeList = "";
-                                            for (var keyNode in staffNode) {
-                                                if (staffNode[keyNode] !== undefined &&
-                                                    staffNode[keyNode] !== null &&
-                                                    staffNode[keyNode].length !== 0) {
-                                                    NodeList += staffNode[keyNode].NODE_ID + ",";
-                                                }
-                                            }
-                                            if (NodeList !== "") {
-                                                NodeList = "(" + NodeList.substring(0, NodeList.length - 1) + ")";
-                                            }
-                                            //get list user staff
-                                            var strUserStaff = "";
-                                            if (isDirector === true) {
-                                                strUserStaff = "SELECT USER_ID FROM sys_hierarchies_users WHERE NODE_ID IN" +
-                                                    NodeList;
-                                            } else if (isDirector === false) {
-                                                strUserStaff = "SELECT USER_ID FROM sys_hierarchies_users WHERE NODE_ID IN" +
-                                                    NodeList + " AND DEPARTMENT_CODE_ID IN " + Depts;
-                                            }
-                                            db.sequelize.query(strUserStaff)
-                                                .success(function(resultListUser) {
-                                                    if (resultListUser === undefined || resultListUser === null || resultListUser.length === 0) {
-                                                        res.json({
-                                                            status: "success",
-                                                            count: 0,
-                                                            result: []
-                                                        });
-                                                        return;
-                                                    } else {
-                                                        var listUser = "";
-                                                        for (var keyUser in resultListUser) {
-                                                            if (resultListUser[keyUser] !== undefined &&
-                                                                resultListUser[keyUser] !== null &&
-                                                                resultListUser[keyUser] !== "") {
-                                                                listUser += resultListUser[keyUser].USER_ID + ",";
-                                                            }
-                                                        }
-                                                        if (listUser !== "") {
-                                                            listUser = "(" + listUser.substring(0, listUser.length - 1) + ")";
-                                                        }
-                                                        //get list approved
-                                                        var queryApprovedTimeSheet = "SELECT DISTINCT time_tasks_week.task_week_id, time_tasks_week.time_charge, time_tasks_week.start_date, time_tasks_week.end_date, " +
-                                                            "time_tasks_week.over_time, time_tasks_week.date_submited, time_tasks_week.comments, " +
-                                                            "hr_employee.Employee_Code, hr_employee.FirstName, hr_employee.LastName, hr_employee.TypeOfContruct, time_task_status.name " +
-                                                            "FROM time_tasks_week INNER JOIN time_tasks ON time_tasks.tasks_week_id = time_tasks_week.task_week_id " +
-                                                            "INNER JOIN users ON time_tasks_week.user_id = users.id INNER JOIN time_task_status ON " +
-                                                            "time_tasks_week.task_status_id = time_task_status.task_status_id INNER JOIN hr_employee ON " +
-                                                            "hr_employee.Employee_ID = users.employee_id WHERE time_task_status.task_status_id NOT IN(1) " +
-                                                            " AND users.id IN " + listUser + strSearch + strSearchEmployee + orderBY + " LIMIT " + searchObj.limit +
-                                                            " OFFSET " + searchObj.offset;
-                                                        var queryCountApprovedTimeSheet = "SELECT COUNT(DISTINCT time_tasks_week.task_week_id) AS COUNT " +
-                                                            "FROM time_tasks_week INNER JOIN time_tasks ON time_tasks.tasks_week_id = time_tasks_week.task_week_id " +
-                                                            "INNER JOIN users ON time_tasks_week.user_id = users.id INNER JOIN time_task_status ON " +
-                                                            "time_tasks_week.task_status_id = time_task_status.task_status_id INNER JOIN hr_employee ON " +
-                                                            "hr_employee.Employee_ID = users.employee_id WHERE time_task_status.task_status_id NOT IN(1) " +
-                                                            " AND users.id IN " + listUser + strSearch + strSearchEmployee;
-                                                        db.sequelize.query(queryApprovedTimeSheet)
-                                                            .success(function(listApproved) {
-                                                                db.sequelize.query(queryCountApprovedTimeSheet)
-                                                                    .success(function(count) {
-                                                                        //get list employee
-                                                                        var queryEmployee = "SELECT hr_employee.Employee_ID, hr_employee.Employee_Code FROM hr_employee INNER JOIN users ON " +
-                                                                            " users.employee_id = hr_employee.Employee_ID WHERE users.id IN " + listUser;
-                                                                        db.sequelize.query(queryEmployee)
-                                                                            .success(function(listEmployee) {
-                                                                                if ((listApproved === null || listApproved.length === 0) && strSearch === "" && strSearchEmployee === "") {
-                                                                                    res.json({
-                                                                                        status: "success",
-                                                                                        count: 0,
-                                                                                        result: null,
-                                                                                        listEmployee: listEmployee
-                                                                                    });
-                                                                                    return;
-                                                                                } else {
-                                                                                    res.json({
-                                                                                        status: "success",
-                                                                                        count: count[0].COUNT,
-                                                                                        result: listApproved,
-                                                                                        listEmployee: listEmployee
-                                                                                    });
-                                                                                    return;
+    //     // SELECT TIMECHARGE ACTIVITY
+    //     var queryActivity = "SELECT sum(time_tasks.time_charge) as SUM_CHARGE_ACTIVITY, time_tasks.activity_id, hr_employee.Employee_ID, " +
+    //         "hr_employee.FirstName, hr_employee.LastName, departments.departmentName " +
+    //         "FROM time_tasks_week " +
+    //         "INNER JOIN time_tasks ON time_tasks.tasks_week_id = time_tasks_week.task_week_id " +
+    //         "INNER JOIN users ON users.id = time_tasks_week.user_id " +
+    //         "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " +
+    //         "INNER JOIN departments ON hr_employee.Dept_ID = departments.departmentid " +
+    //         "WHERE users.employee_id IN (" + strListEmp + ") AND time_tasks_week.task_status_id = 3 AND " +
+    //         "time_tasks_week.week_no BETWEEN " + weekNoFrom + " AND " + weekNoTo +
+    //         " GROUP BY hr_employee.Employee_ID, time_tasks.activity_id ORDER BY departments.departmentid";
+    //     // END ACTIVITY
 
-                                                                                }
-                                                                                //end get list employee
-                                                                            })
-                                                                            .error(function(err) {
-                                                                                console.log("*****ERROR:" + err + "*****");
-                                                                                res.json({
-                                                                                    status: "error",
-                                                                                    count: 0,
-                                                                                    result: [],
-                                                                                    listEmployee: []
-                                                                                });
-                                                                                return;
-                                                                            });
-                                                                    })
-                                                                    .error(function(err) {
-                                                                        console.log("*****ERROR:" + err + "*****");
-                                                                        res.json({
-                                                                            status: "error",
-                                                                            count: 0,
-                                                                            result: [],
-                                                                            listEmployee: []
-                                                                        });
-                                                                        return;
-                                                                    });
-                                                            })
-                                                            .error(function(err) {
-                                                                console.log("*****ERROR:" + err + "*****");
-                                                                res.json({
-                                                                    status: "error",
-                                                                    count: 0,
-                                                                    result: [],
-                                                                    listEmployee: []
-                                                                });
-                                                                return;
-                                                            });
-                                                    }
-                                                })
-                                                .error(function(err) {
-                                                    console.log("*****ERROR:" + err + "*****");
-                                                    res.json({
-                                                        status: "error",
-                                                        count: 0,
-                                                        result: [],
-                                                        listEmployee: []
-                                                    });
-                                                    return;
-                                                });
-                                        }
-                                    })
-                                    .error(function(err) {
-                                        console.log("*****ERROR:" + err + "*****");
-                                        res.json({
-                                            status: "error",
-                                            count: 0,
-                                            result: [],
-                                            listEmployee: []
-                                        });
-                                    });
-                            }
-                        })
-                        .error(function(err) {
-                            console.log("*****ERROR:" + err + "*****");
-                            res.json({
-                                status: "error",
-                                count: 0,
-                                result: [],
-                                listEmployee: []
-                            });
-                            return;
-                        });
-                }
-            })
-            .error(function(err) {
-                console.log("*****ERROR:" + err + "*****");
-                res.json({
-                    status: "error",
-                    count: 0,
-                    result: [],
-                    listEmployee: []
-                });
-                return;
-            });
-    },
+    //     // SELECT TIMECHARGE ALL
+    //     var querySumTimeCharge = "SELECT DISTINCT SUM(C.time_charge) as SUM_CHARGE, SUM(c.time_in_lieu) AS SUM_IN_LIEU, SUM(C.over_time) AS SUM_OVER_TIME, " +
+    //         "C.Employee_ID, C.FirstName, C.LastName, C.departmentName , C.departmentid " +
+    //         " FROM (SELECT DISTINCT time_tasks_week.time_charge , " +
+    //         "hr_employee.Employee_ID, time_tasks_week.over_time , time_tasks_week.time_in_lieu, time_tasks_week.week_no, " +
+    //         "hr_employee.FirstName, hr_employee.LastName, departments.departmentName, departments.departmentid " +
+    //         "FROM time_tasks_week " +
+    //         "INNER JOIN time_tasks ON time_tasks.tasks_week_id = time_tasks_week.task_week_id " +
+    //         "INNER JOIN users ON users.id = time_tasks_week.user_id " +
+    //         "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " +
+    //         "INNER JOIN departments ON hr_employee.Dept_ID = departments.departmentid " +
+    //         "WHERE users.employee_id IN (" + strListEmp + ") AND time_tasks_week.task_status_id = 3 AND " +
+    //         "time_tasks_week.week_no BETWEEN " + weekNoFrom + " AND " + weekNoTo + ") C GROUP BY C.Employee_ID";
+    //     // END ALL
+    //     db.sequelize.query(queryDept)
+    //         .success(function(resultDept) {
+    //             db.sequelize.query(querySumTimeCharge)
+    //                 .success(function(resultTimeCharge) {
+    //                     db.sequelize.query(queryActivity)
+    //                         .success(function(resultActivity) {
+    //                             for (var i = 0; i < resultDept.length; i++) {
+    //                                 resultDept[i].listEmployee = [];
+    //                                 for (var j = 0; j < resultTimeCharge.length; j++) {
+    //                                     if (resultDept[i].departmentid === resultTimeCharge[j].departmentid) {
+    //                                         //PUSH DATA
+    //                                         resultDept[i].listEmployee.push({
+    //                                             employee_id: resultTimeCharge[j].Employee_ID,
+    //                                             name: resultTimeCharge[j].FirstName + " " + resultTimeCharge[j].LastName,
+    //                                             time_charge: resultTimeCharge[j].SUM_CHARGE,
+    //                                             time_in_lieu: resultTimeCharge[j].SUM_IN_LIEU,
+    //                                             over_time: resultTimeCharge[j].SUM_OVER_TIME,
+    //                                             SUM_CHARGE_ACTIVITY: [],
+    //                                             activity_id: resultTimeCharge[j].activity_id
+    //                                         });
+    //                                         //END
+    //                                         for (var k = 0; k < resultActivity.length; k++) {
+    //                                             if (resultActivity[k].Employee_ID === resultDept[i].listEmployee[resultDept[i].listEmployee.length - 1].employee_id) {
+    //                                                 resultDept[i].listEmployee[resultDept[i].listEmployee.length - 1].SUM_CHARGE_ACTIVITY[resultActivity[k].activity_id] = resultActivity[k].SUM_CHARGE_ACTIVITY;
+    //                                             }
+    //                                         }
+    //                                     }
+    //                                 }
+    //                             }
+    //                             //INSERT TEMP TABLE REPORTS1
 
-    RejectTaskWeek: function(req, res) {
-        var info = req.body.info;
-        info.date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
-        info.status = 4;
-        var query = "UPDATE time_tasks_week SET task_status_id = 4, after_status_id = 4, approved_date ='" + info.date + "', comments ='" +
-            info.comments + "' WHERE task_week_id = " + info.idTaskWeek;
-        db.sequelize.query(query)
-            .success(function(result) {
-                //TRACKER
-                var tracKer = {
-                    statusID: 4,
-                    USER_ID: info.USER_ID,
-                    idTaskWeek: info.idTaskWeek,
-                    date: info.date
-                };
-                //CALL FUNCTION TRACKER
-                TracKerTimeSheet(tracKer);
-                //END
-                // SEND MAIL
-                SendMailTimeSheet(req, res, info);
-                // END MAIL
+    //                             //SUM TIME ON DEPT
+    //                             for (var deptIndex = 0; deptIndex < resultDept.length; deptIndex++) {
+    //                                 resultDept[deptIndex].sum_ac1_dept = 0;
+    //                                 resultDept[deptIndex].sum_ac2_dept = 0;
+    //                                 resultDept[deptIndex].sum_ac3_dept = 0;
+    //                                 resultDept[deptIndex].sum_ac4_dept = 0;
+    //                                 resultDept[deptIndex].sum_ac5_dept = 0;
+    //                                 resultDept[deptIndex].time_in_lieu_dept = 0;
+    //                                 resultDept[deptIndex].overtime_dept = 0;
+    //                                 for (var empIndex = 0; empIndex < resultDept[deptIndex].listEmployee.length; empIndex++) {
+    //                                     resultDept[deptIndex].sum_ac1_dept += ((resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[1] === undefined || resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[1] === null) ? 0 : resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[1]);
+    //                                     resultDept[deptIndex].sum_ac2_dept += ((resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[2] === undefined || resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[2] === null) ? 0 : resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[2]);
+    //                                     resultDept[deptIndex].sum_ac3_dept += ((resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[3] === undefined || resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[3] === null) ? 0 : resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[3]);
+    //                                     resultDept[deptIndex].sum_ac4_dept += ((resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[4] === undefined || resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[4] === null) ? 0 : resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[4]);
+    //                                     resultDept[deptIndex].sum_ac5_dept += ((resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[5] === undefined || resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[5] === null) ? 0 : resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[5]);
+    //                                     resultDept[deptIndex].time_in_lieu_dept += ((resultDept[deptIndex].listEmployee[empIndex].time_in_lieu === undefined || resultDept[deptIndex].listEmployee[empIndex].time_in_lieu === null) ? 0 : resultDept[deptIndex].listEmployee[empIndex].time_in_lieu);
+    //                                     resultDept[deptIndex].overtime_dept += ((resultDept[deptIndex].listEmployee[empIndex].over_time === undefined || resultDept[deptIndex].listEmployee[empIndex].over_time === null) ? 0 : resultDept[deptIndex].listEmployee[empIndex].over_time);
+    //                                 }
+    //                             }
+    //                             //END
 
-                //END TRACKER
-                res.json({
-                    status: "success"
-                });
-                return;
-            })
-            .error(function(err) {
-                console.log("*****ERROR:" + err + "*****");
-                res.json({
-                    status: "error"
-                });
-                return;
-            });
-    },
-    ApproveTaskWeek: function(req, res) {
-        var info = req.body.info;
-        var idTaskWeek = info.idTaskWeek;
-        var queryGetTimeInLieu = "SELECT time_in_lieuChoose FROM  time_tasks_week WHERE task_week_id = " + idTaskWeek;
-        db.sequelize.query(queryGetTimeInLieu)
-            .success(function(result) {
-                if (result[0] !== undefined && result[0] !== null && result[0].time_in_lieuChoose > 0) {
-                    //processing time in lieu
-                    var time_in_lieuChoose = result[0].time_in_lieuChoose;
-                    //GET USER ID OF EMPLOYEE
-                    var queryGetUserID = "SELECT user_id FROM time_tasks_week WHERE task_week_id = " + idTaskWeek;
-                    db.sequelize.query(queryGetUserID)
-                        .success(function(users) {
-                            if (users[0] !== undefined && users[0] !== null) {
-                                var USER_ID = users[0].user_id;
-                                var weekNo = getWeekNo();
-                                var weekStart = weekNo - 4;
-                                //GET TIME IN LIEU 4 WEEK
-                                var queryGet4Week = "SELECT task_week_id, time_in_lieu FROM time_tasks_week WHERE user_id = " + USER_ID +
-                                    " AND week_no  BETWEEN " + weekStart + " AND " + weekNo + " AND task_status_id = 3 ";
-                                db.sequelize.query(queryGet4Week)
-                                    .success(function(listWeek) {
-                                        if (listWeek === undefined || listWeek === null || listWeek.length === 0) {
-                                            console.log("*****ERROR: User has not time in lieu *****");
-                                            res.json({
-                                                status: "error"
-                                            });
+    //                             // SUM ALL
+    //                             var sum_all = 0;
+    //                             var sum_ac1_all = 0,
+    //                                 sum_ac2_all = 0,
+    //                                 sum_ac3_all = 0,
+    //                                 sum_ac4_all = 0,
+    //                                 sum_ac5_all = 0,
+    //                                 time_in_lieu_all = 0,
+    //                                 overtime_all = 0;
+    //                             for (var deptIndexAll = 0; deptIndexAll < resultDept.length; deptIndexAll++) {
+    //                                 sum_ac1_all += resultDept[deptIndexAll].sum_ac1_dept;
+    //                                 sum_ac2_all += resultDept[deptIndexAll].sum_ac2_dept;
+    //                                 sum_ac3_all += resultDept[deptIndexAll].sum_ac3_dept;
+    //                                 sum_ac4_all += resultDept[deptIndexAll].sum_ac4_dept;
+    //                                 sum_ac5_all += resultDept[deptIndexAll].sum_ac5_dept;
+    //                                 time_in_lieu_all += resultDept[deptIndexAll].time_in_lieu_dept;
+    //                                 overtime_all += resultDept[deptIndexAll].overtime_dept;
+    //                                 sum_all +=
+    //                                     sum_ac1_all +
+    //                                     sum_ac2_all +
+    //                                     sum_ac3_all +
+    //                                     sum_ac4_all +
+    //                                     sum_ac5_all;
+    //                             }
 
-                                        } else {
-                                            var Weeks = listWeek;
-                                            //CHECK NULL OR 0 DELETE
-                                            for (var i = 0; i < Weeks.length; i++) {
-                                                if (Weeks[i].time_in_lieu === undefined ||
-                                                    Weeks[i].time_in_lieu === null ||
-                                                    Weeks[i].time_in_lieu === 0) {
-                                                    Weeks.splice(i, 1);
-                                                } else {
-                                                    //MINUS TIME IN LIEU REST
-                                                    if (time_in_lieuChoose <= Weeks[i].time_in_lieu) {
-                                                        Weeks[i].time_in_lieu = Weeks[i].time_in_lieu - time_in_lieuChoose;
-                                                        time_in_lieuChoose = 0;
-                                                        break;
-                                                    } else {
-                                                        time_in_lieuChoose = time_in_lieuChoose - Weeks[i].time_in_lieu;
-                                                        Weeks[i].time_in_lieu = 0;
-                                                    }
-                                                }
-                                            }
-                                            //END CHECK
+    //                             //END
+    //                             var listEmployeeInsert = "";
+    //                             var listTimeInsert = "";
+    //                             for (var i = 0; i < resultDept.length; i++) {
+    //                                 for (var j = 0; j < resultDept[i].listEmployee.length; j++) {
 
-                                            //UPDATE TIME IN LIEU FOR WEEK BEFORE
-                                            for (var j = 0; j < Weeks.length; j++) {
-                                                var queryUpdateTimeInLieu = "UPDATE time_tasks_week SET time_in_lieu = " + Weeks[j].time_in_lieu + " WHERE task_week_id = " + Weeks[j].task_week_id;
-                                                db.sequelize.query(queryUpdateTimeInLieu)
-                                                    .success(function(success) {
-                                                        res.json({
-                                                            status: "success"
-                                                        });
-                                                    })
-                                                    .error(function(err) {
-                                                        console.log("*****ERROR:" + err + "*****");
-                                                        res.json({
-                                                            status: "error"
-                                                        });
-                                                        return;
-                                                    });
-                                            }
-                                        }
-                                    })
-                                    .error(function(err) {
-                                        console.log("*****ERROR:" + err + "*****");
-                                        res.json({
-                                            status: "error"
-                                        });
-                                        return;
-                                    });
-                            }
-                        })
-                        .error(function(err) {
-                            console.log("*****ERROR:" + err + "*****");
-                            res.json({
-                                status: "error"
-                            });
-                            return;
-                        });
-                    //END
-                } else {
-                    console.log("*****Not found time in lieu choose of this week *****");
-                }
-                //SET APPROVE
-                info.date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
-                info.status = 3;
-                var timeType = "";
-                if (info.time_rest !== 0 && info.time_rest !== null && info.time_rest !== undefined) {
-                    if (info.time_in_lieuFull !== undefined && info.time_in_lieuFull !== null) {
-                        timeType += ", time_in_lieu = " + info.time_in_lieuFull;
-                    }
-                    if (info.over_timeFull !== undefined && info.over_timeFull !== null) {
-                        timeType += ", over_time = " + info.over_timeFull;
-                    }
-                }
-                var query = "UPDATE time_tasks_week SET task_status_id = 3, approved_date = '" + info.date + "'" + timeType + " WHERE task_week_id = " + idTaskWeek;
-                db.sequelize.query(query)
-                    .success(function(result) {
-                        //TRACKER
-                        var tracKer = {
-                            statusID: 3,
-                            USER_ID: info.USER_ID,
-                            idTaskWeek: info.idTaskWeek,
-                            date: info.date
-                        };
+    //                                     // VALUE EMP
+    //                                     listEmployeeInsert += "(" + USER_ID + "," + resultDept[i].departmentid + "," + resultDept[i].listEmployee[j].employee_id + ",'" +
+    //                                         resultDept[i].listEmployee[j].name + "','" + weekFrom + "','" + weekTo + "'," + resultDept[i].sum_ac1_dept +
+    //                                         "," + resultDept[i].sum_ac2_dept + "," +
+    //                                         resultDept[i].sum_ac3_dept + "," + resultDept[i].sum_ac4_dept + "," +
+    //                                         resultDept[i].sum_ac5_dept + "," + (resultDept[i].sum_ac1_dept + resultDept[i].sum_ac2_dept +
+    //                                             resultDept[i].sum_ac3_dept + resultDept[i].sum_ac4_dept + resultDept[i].sum_ac5_dept) + "," +
+    //                                         resultDept[i].time_in_lieu_dept + "," + resultDept[i].overtime_dept + ", " + sum_ac1_all +
+    //                                         ", " + sum_ac2_all + ", " + sum_ac3_all + ", " + sum_ac4_all + ", " +
+    //                                         sum_ac5_all + ", " + sum_all + ", " + time_in_lieu_all + ", " + overtime_all +
+    //                                         "), ";
+    //                                     //EMP
+    //                                     // VALUE TIME CHARGE
+    //                                     listTimeInsert += "(" + USER_ID + "," +
+    //                                         resultDept[i].listEmployee[j].employee_id + "," +
+    //                                         (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[1] === undefined ? 0 : resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[1]) + "," +
+    //                                         (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[2] === undefined ? 0 : resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[2]) + "," +
+    //                                         (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[3] === undefined ? 0 : resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[3]) + "," +
+    //                                         (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[4] === undefined ? 0 : resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[4]) + "," +
+    //                                         (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[5] === undefined ? 0 : resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[5]) + "," +
+    //                                         (resultDept[i].listEmployee[j].time_charge === undefined ? 0 : resultDept[i].listEmployee[j].time_charge) + "," + resultDept[i].listEmployee[j].time_in_lieu + ", " + resultDept[i].listEmployee[j].over_time + "), ";
+    //                                     //TIME 3
+    //                                 }
+    //                             }
+    //                             if (listEmployeeInsert !== "") {
+    //                                 listEmployeeInsert = listEmployeeInsert.substring(0, listEmployeeInsert.length - 2);
+    //                             }
+    //                             if (listTimeInsert !== "") {
+    //                                 listTimeInsert = listTimeInsert.substring(0, listTimeInsert.length - 2);
+    //                             }
+    //                             var queryInsertEmployee = "INSERT INTO time_employee_reports1 (user_id, departmentid, employee_id, employee, from_date, to_date, " +
+    //                                 "time_ac1_dept, time_ac2_dept, time_ac3_dept,time_ac4_dept, time_ac5_dept, total_dept, time_in_lieu_dept, overtime_dept, time_ac1_all, time_ac2_all, time_ac3_all, time_ac4_all, time_ac5_all, total_all, time_in_lieu_all, overtime_all)" +
+    //                                 " VALUES " + listEmployeeInsert;
+    //                             var queryInsertTimeInSert = "INSERT INTO time_time_charge_reports1 (user_id, employee_id, time_ac1, time_ac2, time_ac3, time_ac4, time_ac5, time_charge_sum, time_in_lieu, time_over) VALUES " + listTimeInsert;
+    //                             var queryDelEmployee = "DELETE FROM time_employee_reports1 WHERE user_id = " + USER_ID;
+    //                             var queryDelTime = "DELETE FROM time_time_charge_reports1 WHERE user_id = " + USER_ID;
+    //                             db.sequelize.query(queryDelEmployee)
+    //                                 .success(function(delSuccessEmp) {
+    //                                     db.sequelize.query(queryDelTime)
+    //                                         .success(function(delSuccessTime) {
+    //                                             //INSERT EMP
+    //                                             if (listEmployeeInsert !== "") {
+    //                                                 db.sequelize.query(queryInsertEmployee)
+    //                                                     .success(function(insertSuccessEmp) {
+    //                                                         // INSERT TIME
+    //                                                         if (queryInsertTimeInSert !== "") {
+    //                                                             db.sequelize.query(queryInsertTimeInSert)
+    //                                                                 .success(function(insertSuccessTime) {
 
-                        //CALL FUNCTION TRACKER
-                        TracKerTimeSheet(tracKer);
-                        //END
+    //                                                                     //RES.JSON
+    //                                                                     res.json({
+    //                                                                         status: "success",
+    //                                                                         result: resultDept
+    //                                                                     });
+    //                                                                     return;
+    //                                                                     //END
+    //                                                                 })
+    //                                                                 .error(function(err) {
+    //                                                                     console.log("*****ERROR:" + err + "*****");
+    //                                                                     res.json({
+    //                                                                         status: "error",
+    //                                                                         result: []
+    //                                                                     });
+    //                                                                     return;
+    //                                                                 });
+    //                                                         }
+    //                                                     })
+    //                                                     .error(function(err) {
+    //                                                         console.log("*****ERROR:" + err + "*****");
+    //                                                         res.json({
+    //                                                             status: "error",
+    //                                                             result: []
+    //                                                         });
+    //                                                         return;
+    //                                                     });
+    //                                             }
+    //                                         })
+    //                                         .error(function(err) {
+    //                                             console.log("*****ERROR:" + err + "*****");
+    //                                             res.json({
+    //                                                 status: "error",
+    //                                                 result: []
+    //                                             });
+    //                                             return;
+    //                                         });
+    //                                 })
+    //                                 .error(function(err) {
+    //                                     console.log("*****ERROR:" + err + "*****");
+    //                                     res.json({
+    //                                         status: "error",
+    //                                         result: []
+    //                                     });
+    //                                     return;
+    //                                 });
+    //                             //END INSERT
+    //                         })
+    //                         .error(function(err) {
+    //                             console.log("*****ERROR:" + err + "*****");
+    //                             res.json({
+    //                                 status: "error",
+    //                                 result: []
+    //                             });
+    //                             return;
+    //                         });
+    //                 })
+    //                 .error(function(err) {
+    //                     console.log("*****ERROR:" + err + "*****");
+    //                     res.json({
+    //                         status: "error",
+    //                         result: []
+    //                     });
+    //                     return;
+    //                 });
 
-                        // SEND MAIL
-                        SendMailTimeSheet(req, res, info);
-                        // ENE MAIL
-
-                        //END TRACKER
-                        res.json({
-                            status: "success"
-                        });
-                        return;
-                    })
-                    .error(function(err) {
-                        console.log("*****ERROR:" + err + "*****");
-                        res.json({
-                            status: "error"
-                        });
-                        return;
-                    });
-
-                //END
-            })
-            .error(function(err) {
-                console.log("*****ERROR:" + err + "*****");
-                res.json({
-                    status: "error"
-                });
-                return;
-            });
-
-    },
-    //ROLE
-    LoadRole: function(req, res) {
-        var USER_ID = req.body.USER_ID;
-        var query = "SELECT hr_employee.TITLE FROM sys_hierarchy_nodes INNER JOIN sys_hierarchy_group ON " +
-            "sys_hierarchy_nodes.GROUP_ID = sys_hierarchy_group.GROUP_ID INNER JOIN sys_hierarchies_types ON " +
-            " sys_hierarchies_types.TYPE_NAME = sys_hierarchy_group.GROUP_TYPE INNER JOIN sys_hierarchies_users ON " +
-            "sys_hierarchies_users.NODE_ID = sys_hierarchy_nodes.NODE_ID " +
-            "INNER JOIN users ON users.id = sys_hierarchies_users.USER_ID " +
-            "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " +
-            "WHERE sys_hierarchies_users.USER_ID = " + USER_ID +
-            " AND sys_hierarchies_types.TYPE_NAME='Time Sheet'";
-        db.sequelize.query(query)
-            .success(function(result) {
-                if (result === undefined || result === null || result.length === 0) {
-                    res.json({
-                        status: "success",
-                        position: [{
-                            TITLE: "NOTROLE"
-                        }]
-                    });
-                    return;
-                } else {
-                    res.json({
-                        status: "success",
-                        position: result
-                    });
-                    return;
-                }
-            })
-            .error(function(err) {
-                console.log("*****ERROR:" + err + "*****");
-                res.json({
-                    status: "error",
-                    position: [],
-                });
-                return;
-            });
-    },
-    StepEmployee: function(req, res) {
-        var info = req.body.info;
-        var listUserID = "";
-        for (var i = 0; i < info.length; i++) {
-            listUserID += info[i] + ",";
-        }
-        listUserID = listUserID.substring(0, listUserID.length - 1);
-        listUserID = "(" + listUserID + ")";
-        var queryEmp = "SELECT users.id, users.user_name, users.employee_id, hr_employee.Employee_Code, " +
-            "hr_employee.FirstName, hr_employee.LastName, hr_employee.TypeOfContruct FROM users " +
-            "LEFT JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id WHERE users.id IN " + listUserID;
-        db.sequelize.query(queryEmp)
-            .success(function(result) {
-                if (result === undefined || result === null || result.length === 0) {
-                    console.log("NOT FOUND USER IN LIST");
-                    res.json({
-                        status: "error"
-                    });
-                    return;
-                } else {
-                    res.json({
-                        status: "success",
-                        result: result
-                    });
-                    return;
-                }
-            })
-            .error(function(err) {
-                console.log("*****ERROR:" + err + "*****");
-                res.json({
-                    status: "error"
-                });
-                return;
-            });
-        //END ROLE
-    },
-
-    LoadDeptReport: function(req, res) {
-        var USER_ID = req.body.USER_ID;
-        var query = "SELECT hr_employee.TITLE FROM hr_employee " +
-            "INNER JOIN users ON users.employee_id  = hr_employee.Employee_ID " +
-            "WHERE users.id = " + USER_ID;
-        db.sequelize.query(query)
-            .success(function(result) {
-                if (result !== undefined && result !== null && result.length !== 0) {
-                    var TITLE = result[0].TITLE;
-                    var queryDept = "";
-                    if (TITLE === "Director") {
-                        //ALL DEPT
-                        queryDept = "SELECT DISTINCT departments.departmentid as id, departments.departmentName as label FROM departments " +
-                            "WHERE departments.departmentType = 'Time Sheet'";
-                    } else {
-                        //ONE DEPT
-                        queryDept = "SELECT DISTINCT departments.departmentid as id, departments.departmentName as label FROM departments " +
-                            "INNER JOIN hr_employee ON hr_employee.Dept_ID = departments.departmentid " +
-                            "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
-                            "WHERE departments.departmentType = 'Time Sheet' AND users.id = " + USER_ID;
-                    }
-                    db.sequelize.query(queryDept)
-                        .success(function(resultDept) {
-                            res.json({
-                                status: "success",
-                                result: resultDept,
-                                isStaff: (TITLE === "Head of Dept." || TITLE === "Director") ? false : true
-                            });
-                            return;
-                        })
-                        .error(function(err) {
-                            console.log("*****ERROR:" + err + "*****");
-                            res.json({
-                                status: "error",
-                                result: []
-                            });
-                            return;
-                        });
-                }
-            })
-            .error(function(err) {
-                console.log("*****ERROR:" + err + "*****");
-                res.json({
-                    status: "error",
-                    result: []
-                });
-                return;
-            });
-    },
-    LoadEmpReport: function(req, res) {
-        var listDept = req.body.listDept;
-        var strListDept = "";
-        for (var i = 0; i < listDept.length; i++) {
-            strListDept += listDept[i].id + ", ";
-        }
-        if (strListDept !== undefined && strListDept !== null && strListDept !== "" && strListDept.length !== 0) {
-            strListDept = strListDept.substring(0, strListDept.length - 2);
-        } else {
-            strListDept = null;
-        }
-        var queryStaff = "";
-        if (req.body.listDept[0].USER_ID !== undefined &&
-            req.body.listDept[0].isStaff === true) {
-            queryStaff = "AND users.id = " + req.body.listDept[0].USER_ID;
-        }
-        var query = "SELECT DISTINCT hr_employee.FirstName, hr_employee.LastName, hr_employee.Employee_ID FROM hr_employee " +
-            "INNER JOIN departments ON departments.departmentid = hr_employee.Dept_ID " +
-            "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
-            "WHERE departments.departmentid IN (" + strListDept + ") " + queryStaff;
-        db.sequelize.query(query)
-            .success(function(result) {
-                res.json({
-                    status: "success",
-                    result: result
-                });
-                return;
-            })
-            .error(function(err) {
-                console.log("*****ERROR:" + err + "*****");
-                res.json({
-                    status: "error",
-                    result: []
-                });
-                return;
-            });
-    },
-    LoadReports1: function(req, res) {
-        var info = req.body.info;
-        var weekNoFrom = info.weekNoFrom;
-        var weekNoTo = info.weekNoTo;
-        var listEMP = info.listEMP;
-        var USER_ID = info.USER_ID;
-        var listDept = info.listDept;
-        var weekFrom = moment(info.weekFrom).format("YYYY-MM-DD");
-        var weekTo = moment(info.weekTo).format("YYYY-MM-DD");
-        //STR EMP
-        var strListEmp = "";
-        for (var i = 0; i < listEMP.length; i++) {
-            strListEmp += listEMP[i].id + ", ";
-        }
-        if (strListEmp !== undefined && strListEmp !== null && strListEmp !== "" && strListEmp.length !== 0) {
-            strListEmp = strListEmp.substring(0, strListEmp.length - 2);
-        } else {
-            strListEmp = null;
-        }
-        //END
-        var strListDept = "";
-        var strListDeptID = "";
-        for (var d = 0; d < listDept.length; d++) {
-            strListDeptID += listDept[d].id + ", ";
-        }
-        if (strListDeptID !== "") {
-            strListDeptID = strListDeptID.substring(0, strListDeptID.length - 2);
-        } else strListDeptID = -1;
-
-        // SELECT DEPT
-        var queryDept = "SELECT DISTINCT COUNT(hr_employee.Employee_ID) AS CountEmp, departments.departmentName, departments.departmentid FROM departments " +
-            "INNER JOIN hr_employee ON hr_employee.Dept_ID = departments.departmentid " +
-            "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
-            "INNER JOIN time_tasks_week ON time_tasks_week.user_id  = users.id " +
-            "WHERE users.employee_id IN (" + strListEmp + ") AND time_tasks_week.task_status_id = 3 AND " +
-            "time_tasks_week.week_no BETWEEN " + weekNoFrom + " AND " + weekNoTo + " GROUP BY departments.departmentName ORDER BY departments.departmentName ASC";
-        // END DEPT
-
-        // SELECT TIMECHARGE ACTIVITY
-        var queryActivity = "SELECT sum(time_tasks.time_charge) as SUM_CHARGE_ACTIVITY, time_tasks.activity_id, hr_employee.Employee_ID, " +
-            "hr_employee.FirstName, hr_employee.LastName, departments.departmentName " +
-            "FROM time_tasks_week " +
-            "INNER JOIN time_tasks ON time_tasks.tasks_week_id = time_tasks_week.task_week_id " +
-            "INNER JOIN users ON users.id = time_tasks_week.user_id " +
-            "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " +
-            "INNER JOIN departments ON hr_employee.Dept_ID = departments.departmentid " +
-            "WHERE users.employee_id IN (" + strListEmp + ") AND time_tasks_week.task_status_id = 3 AND " +
-            "time_tasks_week.week_no BETWEEN " + weekNoFrom + " AND " + weekNoTo +
-            " GROUP BY hr_employee.Employee_ID, time_tasks.activity_id ORDER BY departments.departmentid";
-        // END ACTIVITY
-
-        // SELECT TIMECHARGE ALL
-        var querySumTimeCharge = "SELECT DISTINCT SUM(C.time_charge) as SUM_CHARGE, SUM(c.time_in_lieu) AS SUM_IN_LIEU, SUM(C.over_time) AS SUM_OVER_TIME, " +
-            "C.Employee_ID, C.FirstName, C.LastName, C.departmentName , C.departmentid " +
-            " FROM (SELECT DISTINCT time_tasks_week.time_charge , " +
-            "hr_employee.Employee_ID, time_tasks_week.over_time , time_tasks_week.time_in_lieu, time_tasks_week.week_no, " +
-            "hr_employee.FirstName, hr_employee.LastName, departments.departmentName, departments.departmentid " +
-            "FROM time_tasks_week " +
-            "INNER JOIN time_tasks ON time_tasks.tasks_week_id = time_tasks_week.task_week_id " +
-            "INNER JOIN users ON users.id = time_tasks_week.user_id " +
-            "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " +
-            "INNER JOIN departments ON hr_employee.Dept_ID = departments.departmentid " +
-            "WHERE users.employee_id IN (" + strListEmp + ") AND time_tasks_week.task_status_id = 3 AND " +
-            "time_tasks_week.week_no BETWEEN " + weekNoFrom + " AND " + weekNoTo + ") C GROUP BY C.Employee_ID";
-        // END ALL
-        db.sequelize.query(queryDept)
-            .success(function(resultDept) {
-                db.sequelize.query(querySumTimeCharge)
-                    .success(function(resultTimeCharge) {
-                        db.sequelize.query(queryActivity)
-                            .success(function(resultActivity) {
-                                for (var i = 0; i < resultDept.length; i++) {
-                                    resultDept[i].listEmployee = [];
-                                    for (var j = 0; j < resultTimeCharge.length; j++) {
-                                        if (resultDept[i].departmentid === resultTimeCharge[j].departmentid) {
-                                            //PUSH DATA
-                                            resultDept[i].listEmployee.push({
-                                                employee_id: resultTimeCharge[j].Employee_ID,
-                                                name: resultTimeCharge[j].FirstName + " " + resultTimeCharge[j].LastName,
-                                                time_charge: resultTimeCharge[j].SUM_CHARGE,
-                                                time_in_lieu: resultTimeCharge[j].SUM_IN_LIEU,
-                                                over_time: resultTimeCharge[j].SUM_OVER_TIME,
-                                                SUM_CHARGE_ACTIVITY: [],
-                                                activity_id: resultTimeCharge[j].activity_id
-                                            });
-                                            //END
-                                            for (var k = 0; k < resultActivity.length; k++) {
-                                                if (resultActivity[k].Employee_ID === resultDept[i].listEmployee[resultDept[i].listEmployee.length - 1].employee_id) {
-                                                    resultDept[i].listEmployee[resultDept[i].listEmployee.length - 1].SUM_CHARGE_ACTIVITY[resultActivity[k].activity_id] = resultActivity[k].SUM_CHARGE_ACTIVITY;
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                                //INSERT TEMP TABLE REPORTS1
-
-                                //SUM TIME ON DEPT
-                                for (var deptIndex = 0; deptIndex < resultDept.length; deptIndex++) {
-                                    resultDept[deptIndex].sum_ac1_dept = 0;
-                                    resultDept[deptIndex].sum_ac2_dept = 0;
-                                    resultDept[deptIndex].sum_ac3_dept = 0;
-                                    resultDept[deptIndex].sum_ac4_dept = 0;
-                                    resultDept[deptIndex].sum_ac5_dept = 0;
-                                    resultDept[deptIndex].time_in_lieu_dept = 0;
-                                    resultDept[deptIndex].overtime_dept = 0;
-                                    for (var empIndex = 0; empIndex < resultDept[deptIndex].listEmployee.length; empIndex++) {
-                                        resultDept[deptIndex].sum_ac1_dept += ((resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[1] === undefined || resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[1] === null) ? 0 : resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[1]);
-                                        resultDept[deptIndex].sum_ac2_dept += ((resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[2] === undefined || resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[2] === null) ? 0 : resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[2]);
-                                        resultDept[deptIndex].sum_ac3_dept += ((resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[3] === undefined || resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[3] === null) ? 0 : resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[3]);
-                                        resultDept[deptIndex].sum_ac4_dept += ((resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[4] === undefined || resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[4] === null) ? 0 : resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[4]);
-                                        resultDept[deptIndex].sum_ac5_dept += ((resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[5] === undefined || resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[5] === null) ? 0 : resultDept[deptIndex].listEmployee[empIndex].SUM_CHARGE_ACTIVITY[5]);
-                                        resultDept[deptIndex].time_in_lieu_dept += ((resultDept[deptIndex].listEmployee[empIndex].time_in_lieu === undefined || resultDept[deptIndex].listEmployee[empIndex].time_in_lieu === null) ? 0 : resultDept[deptIndex].listEmployee[empIndex].time_in_lieu);
-                                        resultDept[deptIndex].overtime_dept += ((resultDept[deptIndex].listEmployee[empIndex].over_time === undefined || resultDept[deptIndex].listEmployee[empIndex].over_time === null) ? 0 : resultDept[deptIndex].listEmployee[empIndex].over_time);
-                                    }
-                                }
-                                //END
-
-                                // SUM ALL
-                                var sum_all = 0;
-                                var sum_ac1_all = 0,
-                                    sum_ac2_all = 0,
-                                    sum_ac3_all = 0,
-                                    sum_ac4_all = 0,
-                                    sum_ac5_all = 0,
-                                    time_in_lieu_all = 0,
-                                    overtime_all = 0;
-                                for (var deptIndexAll = 0; deptIndexAll < resultDept.length; deptIndexAll++) {
-                                    sum_ac1_all += resultDept[deptIndexAll].sum_ac1_dept;
-                                    sum_ac2_all += resultDept[deptIndexAll].sum_ac2_dept;
-                                    sum_ac3_all += resultDept[deptIndexAll].sum_ac3_dept;
-                                    sum_ac4_all += resultDept[deptIndexAll].sum_ac4_dept;
-                                    sum_ac5_all += resultDept[deptIndexAll].sum_ac5_dept;
-                                    time_in_lieu_all += resultDept[deptIndexAll].time_in_lieu_dept;
-                                    overtime_all += resultDept[deptIndexAll].overtime_dept;
-                                    sum_all +=
-                                        sum_ac1_all +
-                                        sum_ac2_all +
-                                        sum_ac3_all +
-                                        sum_ac4_all +
-                                        sum_ac5_all;
-                                }
-
-                                //END
-                                var listEmployeeInsert = "";
-                                var listTimeInsert = "";
-                                for (var i = 0; i < resultDept.length; i++) {
-                                    for (var j = 0; j < resultDept[i].listEmployee.length; j++) {
-
-                                        // VALUE EMP
-                                        listEmployeeInsert += "(" + USER_ID + "," + resultDept[i].departmentid + "," + resultDept[i].listEmployee[j].employee_id + ",'" +
-                                            resultDept[i].listEmployee[j].name + "','" + weekFrom + "','" + weekTo + "'," + resultDept[i].sum_ac1_dept +
-                                            "," + resultDept[i].sum_ac2_dept + "," +
-                                            resultDept[i].sum_ac3_dept + "," + resultDept[i].sum_ac4_dept + "," +
-                                            resultDept[i].sum_ac5_dept + "," + (resultDept[i].sum_ac1_dept + resultDept[i].sum_ac2_dept +
-                                                resultDept[i].sum_ac3_dept + resultDept[i].sum_ac4_dept + resultDept[i].sum_ac5_dept) + "," +
-                                            resultDept[i].time_in_lieu_dept + "," + resultDept[i].overtime_dept + ", " + sum_ac1_all +
-                                            ", " + sum_ac2_all + ", " + sum_ac3_all + ", " + sum_ac4_all + ", " +
-                                            sum_ac5_all + ", " + sum_all + ", " + time_in_lieu_all + ", " + overtime_all +
-                                            "), ";
-                                        //EMP
-                                        // VALUE TIME CHARGE
-                                        listTimeInsert += "(" + USER_ID + "," +
-                                            resultDept[i].listEmployee[j].employee_id + "," +
-                                            (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[1] === undefined ? 0 : resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[1]) + "," +
-                                            (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[2] === undefined ? 0 : resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[2]) + "," +
-                                            (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[3] === undefined ? 0 : resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[3]) + "," +
-                                            (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[4] === undefined ? 0 : resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[4]) + "," +
-                                            (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[5] === undefined ? 0 : resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[5]) + "," +
-                                            (resultDept[i].listEmployee[j].time_charge === undefined ? 0 : resultDept[i].listEmployee[j].time_charge) + "," + resultDept[i].listEmployee[j].time_in_lieu + ", " + resultDept[i].listEmployee[j].over_time + "), ";
-                                        //TIME 3
-                                    }
-                                }
-                                if (listEmployeeInsert !== "") {
-                                    listEmployeeInsert = listEmployeeInsert.substring(0, listEmployeeInsert.length - 2);
-                                }
-                                if (listTimeInsert !== "") {
-                                    listTimeInsert = listTimeInsert.substring(0, listTimeInsert.length - 2);
-                                }
-                                var queryInsertEmployee = "INSERT INTO time_employee_reports1 (user_id, departmentid, employee_id, employee, from_date, to_date, " +
-                                    "time_ac1_dept, time_ac2_dept, time_ac3_dept,time_ac4_dept, time_ac5_dept, total_dept, time_in_lieu_dept, overtime_dept, time_ac1_all, time_ac2_all, time_ac3_all, time_ac4_all, time_ac5_all, total_all, time_in_lieu_all, overtime_all)" +
-                                    " VALUES " + listEmployeeInsert;
-                                var queryInsertTimeInSert = "INSERT INTO time_time_charge_reports1 (user_id, employee_id, time_ac1, time_ac2, time_ac3, time_ac4, time_ac5, time_charge_sum, time_in_lieu, time_over) VALUES " + listTimeInsert;
-                                var queryDelEmployee = "DELETE FROM time_employee_reports1 WHERE user_id = " + USER_ID;
-                                var queryDelTime = "DELETE FROM time_time_charge_reports1 WHERE user_id = " + USER_ID;
-                                db.sequelize.query(queryDelEmployee)
-                                    .success(function(delSuccessEmp) {
-                                        db.sequelize.query(queryDelTime)
-                                            .success(function(delSuccessTime) {
-                                                //INSERT EMP
-                                                if (listEmployeeInsert !== "") {
-                                                    db.sequelize.query(queryInsertEmployee)
-                                                        .success(function(insertSuccessEmp) {
-                                                            // INSERT TIME
-                                                            if (queryInsertTimeInSert !== "") {
-                                                                db.sequelize.query(queryInsertTimeInSert)
-                                                                    .success(function(insertSuccessTime) {
-
-                                                                        //RES.JSON
-                                                                        res.json({
-                                                                            status: "success",
-                                                                            result: resultDept
-                                                                        });
-                                                                        return;
-                                                                        //END
-                                                                    })
-                                                                    .error(function(err) {
-                                                                        console.log("*****ERROR:" + err + "*****");
-                                                                        res.json({
-                                                                            status: "error",
-                                                                            result: []
-                                                                        });
-                                                                        return;
-                                                                    });
-                                                            }
-                                                        })
-                                                        .error(function(err) {
-                                                            console.log("*****ERROR:" + err + "*****");
-                                                            res.json({
-                                                                status: "error",
-                                                                result: []
-                                                            });
-                                                            return;
-                                                        });
-                                                }
-                                            })
-                                            .error(function(err) {
-                                                console.log("*****ERROR:" + err + "*****");
-                                                res.json({
-                                                    status: "error",
-                                                    result: []
-                                                });
-                                                return;
-                                            });
-                                    })
-                                    .error(function(err) {
-                                        console.log("*****ERROR:" + err + "*****");
-                                        res.json({
-                                            status: "error",
-                                            result: []
-                                        });
-                                        return;
-                                    });
-                                //END INSERT
-                            })
-                            .error(function(err) {
-                                console.log("*****ERROR:" + err + "*****");
-                                res.json({
-                                    status: "error",
-                                    result: []
-                                });
-                                return;
-                            });
-                    })
-                    .error(function(err) {
-                        console.log("*****ERROR:" + err + "*****");
-                        res.json({
-                            status: "error",
-                            result: []
-                        });
-                        return;
-                    });
-
-            })
-            .error(function(err) {
-                console.log("*****ERROR:" + err + "*****");
-                res.json({
-                    status: "error",
-                    result: []
-                });
-                return;
-            });
-    },
+    //         })
+    //         .error(function(err) {
+    //             console.log("*****ERROR:" + err + "*****");
+    //             res.json({
+    //                 status: "error",
+    //                 result: []
+    //             });
+    //             return;
+    //         });
+    // },
 
     SendMailNotification: function(req, res) {
         //SEND MAIL
@@ -3538,1139 +1987,1139 @@ module.exports = {
     // END CHECK LEAVE
 
     // REPORT OWE LEAVE
-    LoadReportOweLeave: function(req, res) {
-        var info = req.body.info;
-        //console.log(info);
-        var stringEMP = "";
-        var stringDept = "";
-        var stringID = "";
-        var start_date;
-        var finish_date;
-        var date;
-        var flag1 = 0;
-        var flag2 = 0;
-        var flag3 = 0;
-        var flag4 = 0;
-        var listleave = [];
-        for (var i = 0; i < info.listEMP.length; i++) {
-            stringEMP += info.listEMP[i].id + ", ";
-        }
-        stringEMP += 0;
-        for (var j = 0; j < info.listDept.length; j++) {
-            stringDept += info.listDept[j].id + ", ";
-        }
-        stringDept += 0;
+    // LoadReportOweLeave: function(req, res) {
+    //     var info = req.body.info;
+    //     //console.log(info);
+    //     var stringEMP = "";
+    //     var stringDept = "";
+    //     var stringID = "";
+    //     var start_date;
+    //     var finish_date;
+    //     var date;
+    //     var flag1 = 0;
+    //     var flag2 = 0;
+    //     var flag3 = 0;
+    //     var flag4 = 0;
+    //     var listleave = [];
+    //     for (var i = 0; i < info.listEMP.length; i++) {
+    //         stringEMP += info.listEMP[i].id + ", ";
+    //     }
+    //     stringEMP += 0;
+    //     for (var j = 0; j < info.listDept.length; j++) {
+    //         stringDept += info.listDept[j].id + ", ";
+    //     }
+    //     stringDept += 0;
 
-        var sql_get_total_all = "SELECT COUNT(*) AS 'total_all' FROM hr_leave_owe WHERE create_id = " + info.USER_ID;
-        var sql_get_total_Dept = "SELECT COUNT(department) AS 'total_Dept',department FROM hr_leave_owe WHERE create_id = " + info.USER_ID + " GROUP BY department ";
-        var sql_get_data_hr_leave_owe_table = "SELECT users.id,hr_employee.FirstName, hr_employee.LastName, hr_employee.Employee_ID , departments.departmentid, departments.departmentName,time_tasks_week.time_charge,time_tasks_week.time_in_lieu, time_tasks_week.week_no,time_tasks_week.creation_date,time_tasks_week.last_update_date,time_tasks_week.task_week_id " + "FROM hr_employee " + "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + "INNER JOIN departments ON hr_employee.Dept_ID = departments.departmentid " + "INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id " + "WHERE time_tasks_week.task_status_id = 3 AND departments.departmentid IN ( " + stringDept + " ) AND (time_tasks_week.week_no BETWEEN " + info.weekNoFrom + " AND " + info.weekNoTo + " ) AND hr_employee.Employee_ID IN ( " + stringEMP + " )";
+    //     var sql_get_total_all = "SELECT COUNT(*) AS 'total_all' FROM hr_leave_owe WHERE create_id = " + info.USER_ID;
+    //     var sql_get_total_Dept = "SELECT COUNT(department) AS 'total_Dept',department FROM hr_leave_owe WHERE create_id = " + info.USER_ID + " GROUP BY department ";
+    //     var sql_get_data_hr_leave_owe_table = "SELECT users.id,hr_employee.FirstName, hr_employee.LastName, hr_employee.Employee_ID , departments.departmentid, departments.departmentName,time_tasks_week.time_charge,time_tasks_week.time_in_lieu, time_tasks_week.week_no,time_tasks_week.creation_date,time_tasks_week.last_update_date,time_tasks_week.task_week_id " + "FROM hr_employee " + "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + "INNER JOIN departments ON hr_employee.Dept_ID = departments.departmentid " + "INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id " + "WHERE time_tasks_week.task_status_id = 3 AND departments.departmentid IN ( " + stringDept + " ) AND (time_tasks_week.week_no BETWEEN " + info.weekNoFrom + " AND " + info.weekNoTo + " ) AND hr_employee.Employee_ID IN ( " + stringEMP + " )";
 
-        var delete_hr_leave_owe = "DELETE FROM hr_leave_owe WHERE create_id =" + info.USER_ID + " ";
+    //     var delete_hr_leave_owe = "DELETE FROM hr_leave_owe WHERE create_id =" + info.USER_ID + " ";
 
-        var delete_hr_leave_owe_table = "DELETE FROM hr_leave_owe_table WHERE create_id =" + info.USER_ID + " ";
-        db.sequelize.query(delete_hr_leave_owe)
-            .success(function(delete1) {
-                db.sequelize.query(delete_hr_leave_owe_table)
-                    .success(function(delete2) {
+    //     var delete_hr_leave_owe_table = "DELETE FROM hr_leave_owe_table WHERE create_id =" + info.USER_ID + " ";
+    //     db.sequelize.query(delete_hr_leave_owe)
+    //         .success(function(delete1) {
+    //             db.sequelize.query(delete_hr_leave_owe_table)
+    //                 .success(function(delete2) {
 
-                        db.sequelize.query(sql_get_data_hr_leave_owe_table)
-                            .success(function(data_hr_leave_owe_table) {
-                                //console.log(data_hr_leave_owe_table)
-                                for (var i = 0; i < data_hr_leave_owe_table.length; i++) {
-                                    db.hr_leave_owe_table.create({
-                                            create_id: info.USER_ID,
-                                            user_id: data_hr_leave_owe_table[i].id,
-                                            task_week_id: data_hr_leave_owe_table[i].task_week_id,
-                                            Employee_id: data_hr_leave_owe_table[i].Employee_ID,
-                                            Department_id: data_hr_leave_owe_table[i].departmentid,
-                                            FirstName: data_hr_leave_owe_table[i].FirstName,
-                                            LastName: data_hr_leave_owe_table[i].LastName,
-                                            Department_name: data_hr_leave_owe_table[i].departmentName,
-                                            weekno: data_hr_leave_owe_table[i].week_no,
-                                            from_date: info.weekFrom,
-                                            to_date: info.weekTo
-                                        })
-                                        .success(function(data_insert1) {
-                                            flag1++;
-                                            if (flag1 == data_hr_leave_owe_table.length) {
-                                                //console.log("NEXXT")
-                                                var sql_get_data_1 = "SELECT " + "hr_leave_owe_table.create_id, " + "hr_leave_owe_table.user_id, " + "hr_leave_owe_table.task_week_id, " + "hr_leave_owe_table.Employee_id, " + "hr_leave_owe_table.Department_id, " + "hr_leave_owe_table.from_date, " + "hr_leave_owe_table.to_date, " + "time_tasks.tasks_id, " + "time_tasks.date, " + "time_item_task.item_id " + "FROM hr_leave_owe_table " + "INNER JOIN time_tasks     ON time_tasks.tasks_week_id = hr_leave_owe_table.task_week_id " + "INNER JOIN time_item_task ON time_item_task.task_id  = time_tasks.tasks_id " + "WHERE time_item_task.item_id IN (15,16,17,19,24,25) AND hr_leave_owe_table.create_id=" + info.USER_ID + " ORDER BY hr_leave_owe_table.user_id ";
-                                                db.sequelize.query(sql_get_data_1)
-                                                    .success(function(data_1) {
-                                                        //console.log(data_1)
+    //                     db.sequelize.query(sql_get_data_hr_leave_owe_table)
+    //                         .success(function(data_hr_leave_owe_table) {
+    //                             //console.log(data_hr_leave_owe_table)
+    //                             for (var i = 0; i < data_hr_leave_owe_table.length; i++) {
+    //                                 db.hr_leave_owe_table.create({
+    //                                         create_id: info.USER_ID,
+    //                                         user_id: data_hr_leave_owe_table[i].id,
+    //                                         task_week_id: data_hr_leave_owe_table[i].task_week_id,
+    //                                         Employee_id: data_hr_leave_owe_table[i].Employee_ID,
+    //                                         Department_id: data_hr_leave_owe_table[i].departmentid,
+    //                                         FirstName: data_hr_leave_owe_table[i].FirstName,
+    //                                         LastName: data_hr_leave_owe_table[i].LastName,
+    //                                         Department_name: data_hr_leave_owe_table[i].departmentName,
+    //                                         weekno: data_hr_leave_owe_table[i].week_no,
+    //                                         from_date: info.weekFrom,
+    //                                         to_date: info.weekTo
+    //                                     })
+    //                                     .success(function(data_insert1) {
+    //                                         flag1++;
+    //                                         if (flag1 == data_hr_leave_owe_table.length) {
+    //                                             //console.log("NEXXT")
+    //                                             var sql_get_data_1 = "SELECT " + "hr_leave_owe_table.create_id, " + "hr_leave_owe_table.user_id, " + "hr_leave_owe_table.task_week_id, " + "hr_leave_owe_table.Employee_id, " + "hr_leave_owe_table.Department_id, " + "hr_leave_owe_table.from_date, " + "hr_leave_owe_table.to_date, " + "time_tasks.tasks_id, " + "time_tasks.date, " + "time_item_task.item_id " + "FROM hr_leave_owe_table " + "INNER JOIN time_tasks     ON time_tasks.tasks_week_id = hr_leave_owe_table.task_week_id " + "INNER JOIN time_item_task ON time_item_task.task_id  = time_tasks.tasks_id " + "WHERE time_item_task.item_id IN (15,16,17,19,24,25) AND hr_leave_owe_table.create_id=" + info.USER_ID + " ORDER BY hr_leave_owe_table.user_id ";
+    //                                             db.sequelize.query(sql_get_data_1)
+    //                                                 .success(function(data_1) {
+    //                                                     //console.log(data_1)
 
-                                                        for (var j = 0; j < data_1.length; j++) {
-                                                            stringID += data_1[j].user_id + ", ";
-                                                        }
-                                                        stringID += 0;
-                                                        //console.log(stringID)
-                                                        var sql_get_data_2 = "SELECT leave_id,start_date,finish_date,status_id,user_id " + "FROM hr_leave " + "WHERE user_id IN (" + stringID + ") AND status_id=3 ORDER BY user_id ";
-                                                        db.sequelize.query(sql_get_data_2)
-                                                            .success(function(data_2) {
-                                                                for (var x = 0; x < data_2.length; x++) {
-                                                                    start_date = moment(moment(data_2[x].start_date).format("YYYY-MM-DD")).format("X");
-                                                                    finish_date = moment(moment(data_2[x].finish_date).format("YYYY-MM-DD")).format("X");
-                                                                    for (var y = 0; y < data_1.length; y++) {
-                                                                        date = moment(moment(data_1[y].date).format("YYYY-MM-DD")).format("X");
-                                                                        if (data_1[y].user_id == data_2[x].user_id) {
-                                                                            if (date < start_date || date > finish_date) {
+    //                                                     for (var j = 0; j < data_1.length; j++) {
+    //                                                         stringID += data_1[j].user_id + ", ";
+    //                                                     }
+    //                                                     stringID += 0;
+    //                                                     //console.log(stringID)
+    //                                                     var sql_get_data_2 = "SELECT leave_id,start_date,finish_date,status_id,user_id " + "FROM hr_leave " + "WHERE user_id IN (" + stringID + ") AND status_id=3 ORDER BY user_id ";
+    //                                                     db.sequelize.query(sql_get_data_2)
+    //                                                         .success(function(data_2) {
+    //                                                             for (var x = 0; x < data_2.length; x++) {
+    //                                                                 start_date = moment(moment(data_2[x].start_date).format("YYYY-MM-DD")).format("X");
+    //                                                                 finish_date = moment(moment(data_2[x].finish_date).format("YYYY-MM-DD")).format("X");
+    //                                                                 for (var y = 0; y < data_1.length; y++) {
+    //                                                                     date = moment(moment(data_1[y].date).format("YYYY-MM-DD")).format("X");
+    //                                                                     if (data_1[y].user_id == data_2[x].user_id) {
+    //                                                                         if (date < start_date || date > finish_date) {
 
-                                                                                listleave.push(data_1[y]);
-                                                                            }
-                                                                        }
-                                                                    }
+    //                                                                             listleave.push(data_1[y]);
+    //                                                                         }
+    //                                                                     }
+    //                                                                 }
 
-                                                                }
-                                                                for (var q = 0; q < listleave.length; q++) {
-                                                                    db.hr_leave_owe.create({
-                                                                            create_id: listleave[q].create_id,
-                                                                            user_id: listleave[q].user_id,
-                                                                            department: listleave[q].Department_id,
-                                                                            date_leave: listleave[q].date,
-                                                                            employee: listleave[q].Employee_id,
-                                                                            from_date: listleave[q].from_date,
-                                                                            to_date: listleave[q].to_date,
-                                                                            created_by: info.USER_ID
-                                                                        })
-                                                                        .success(function(data_insert2) {
-                                                                            flag2++;
-                                                                            if (flag2 == listleave.length)
+    //                                                             }
+    //                                                             for (var q = 0; q < listleave.length; q++) {
+    //                                                                 db.hr_leave_owe.create({
+    //                                                                         create_id: listleave[q].create_id,
+    //                                                                         user_id: listleave[q].user_id,
+    //                                                                         department: listleave[q].Department_id,
+    //                                                                         date_leave: listleave[q].date,
+    //                                                                         employee: listleave[q].Employee_id,
+    //                                                                         from_date: listleave[q].from_date,
+    //                                                                         to_date: listleave[q].to_date,
+    //                                                                         created_by: info.USER_ID
+    //                                                                     })
+    //                                                                     .success(function(data_insert2) {
+    //                                                                         flag2++;
+    //                                                                         if (flag2 == listleave.length)
 
-                                                                                db.sequelize.query(sql_get_total_all)
-                                                                                .success(function(data_total_all) {
-                                                                                    db.sequelize.query(sql_get_total_Dept)
-                                                                                        .success(function(data_total_Dept) {
+    //                                                                             db.sequelize.query(sql_get_total_all)
+    //                                                                             .success(function(data_total_all) {
+    //                                                                                 db.sequelize.query(sql_get_total_Dept)
+    //                                                                                     .success(function(data_total_Dept) {
 
-                                                                                            for (var u = 0; u < data_total_Dept.length; u++) {
-                                                                                                for (var t = 0; t < listleave.length; t++) {
-                                                                                                    db.hr_leave_owe.update({
-                                                                                                            total_all: data_total_all[0].total_all,
-                                                                                                            total_Dept: data_total_Dept[u].total_Dept
-                                                                                                        }, {
-                                                                                                            department: data_total_Dept[u].department
-                                                                                                        })
-                                                                                                        .success(function(success) {
-                                                                                                            flag4++;
-                                                                                                            if (flag3 == data_total_Dept.length && flag4 == listleave.length) {
-                                                                                                                res.json({
-                                                                                                                    status: "success"
-                                                                                                                });
-                                                                                                                return;
-                                                                                                            }
-                                                                                                        })
-                                                                                                        .error(function(err) {
-                                                                                                            console.log("*****ERROR: " + err + " *****");
-                                                                                                            res.json({
-                                                                                                                status: "error"
-                                                                                                            });
-                                                                                                            return;
-                                                                                                        })
-                                                                                                }
-                                                                                                flag3++;
-                                                                                            }
-                                                                                        })
-                                                                                        .error(function(err) {
-                                                                                            console.log("*****ERROR: " + err + " *****");
-                                                                                            res.json({
-                                                                                                status: "error"
-                                                                                            });
-                                                                                            return;
-                                                                                        })
-                                                                                })
-                                                                                .error(function(err) {
-                                                                                    console.log("*****ERROR: " + err + " *****");
-                                                                                    res.json({
-                                                                                        status: "error"
-                                                                                    });
-                                                                                    return;
-                                                                                })
+    //                                                                                         for (var u = 0; u < data_total_Dept.length; u++) {
+    //                                                                                             for (var t = 0; t < listleave.length; t++) {
+    //                                                                                                 db.hr_leave_owe.update({
+    //                                                                                                         total_all: data_total_all[0].total_all,
+    //                                                                                                         total_Dept: data_total_Dept[u].total_Dept
+    //                                                                                                     }, {
+    //                                                                                                         department: data_total_Dept[u].department
+    //                                                                                                     })
+    //                                                                                                     .success(function(success) {
+    //                                                                                                         flag4++;
+    //                                                                                                         if (flag3 == data_total_Dept.length && flag4 == listleave.length) {
+    //                                                                                                             res.json({
+    //                                                                                                                 status: "success"
+    //                                                                                                             });
+    //                                                                                                             return;
+    //                                                                                                         }
+    //                                                                                                     })
+    //                                                                                                     .error(function(err) {
+    //                                                                                                         console.log("*****ERROR: " + err + " *****");
+    //                                                                                                         res.json({
+    //                                                                                                             status: "error"
+    //                                                                                                         });
+    //                                                                                                         return;
+    //                                                                                                     })
+    //                                                                                             }
+    //                                                                                             flag3++;
+    //                                                                                         }
+    //                                                                                     })
+    //                                                                                     .error(function(err) {
+    //                                                                                         console.log("*****ERROR: " + err + " *****");
+    //                                                                                         res.json({
+    //                                                                                             status: "error"
+    //                                                                                         });
+    //                                                                                         return;
+    //                                                                                     })
+    //                                                                             })
+    //                                                                             .error(function(err) {
+    //                                                                                 console.log("*****ERROR: " + err + " *****");
+    //                                                                                 res.json({
+    //                                                                                     status: "error"
+    //                                                                                 });
+    //                                                                                 return;
+    //                                                                             })
 
-                                                                        })
-                                                                        .error(function(err) {
-                                                                            console.log("*****ERROR: " + err + " *****");
-                                                                            res.json({
-                                                                                status: "error"
-                                                                            });
-                                                                            return;
-                                                                        })
-                                                                }
-                                                                //console.log(listleave)
+    //                                                                     })
+    //                                                                     .error(function(err) {
+    //                                                                         console.log("*****ERROR: " + err + " *****");
+    //                                                                         res.json({
+    //                                                                             status: "error"
+    //                                                                         });
+    //                                                                         return;
+    //                                                                     })
+    //                                                             }
+    //                                                             //console.log(listleave)
 
 
-                                                            })
-                                                            .error(function(err) {
-                                                                console.log("*****ERROR: " + err + " *****");
-                                                                res.json({
-                                                                    status: "error"
-                                                                });
-                                                                return;
-                                                            })
-                                                    })
-                                                    .error(function(err) {
-                                                        console.log("*****ERROR: " + err + " *****");
-                                                        res.json({
-                                                            status: "error"
-                                                        });
-                                                        return;
-                                                    })
-                                            }
-                                        })
-                                        .error(function(err) {
-                                            console.log("*****ERROR: " + err + " *****");
-                                            res.json({
-                                                status: "error"
-                                            });
-                                            return;
-                                        })
-                                }
-                            })
-                            .error(function(err) {
-                                console.log("*****ERROR: " + err + " *****");
-                                res.json({
-                                    status: "error"
-                                });
-                                return;
-                            })
+    //                                                         })
+    //                                                         .error(function(err) {
+    //                                                             console.log("*****ERROR: " + err + " *****");
+    //                                                             res.json({
+    //                                                                 status: "error"
+    //                                                             });
+    //                                                             return;
+    //                                                         })
+    //                                                 })
+    //                                                 .error(function(err) {
+    //                                                     console.log("*****ERROR: " + err + " *****");
+    //                                                     res.json({
+    //                                                         status: "error"
+    //                                                     });
+    //                                                     return;
+    //                                                 })
+    //                                         }
+    //                                     })
+    //                                     .error(function(err) {
+    //                                         console.log("*****ERROR: " + err + " *****");
+    //                                         res.json({
+    //                                             status: "error"
+    //                                         });
+    //                                         return;
+    //                                     })
+    //                             }
+    //                         })
+    //                         .error(function(err) {
+    //                             console.log("*****ERROR: " + err + " *****");
+    //                             res.json({
+    //                                 status: "error"
+    //                             });
+    //                             return;
+    //                         })
 
-                    })
+    //                 })
 
-            })
-            .error(function(err) {
-                console.log("*****ERROR: " + err + " *****");
-                res.json({
-                    status: "error"
-                });
-                return;
-            })
+    //         })
+    //         .error(function(err) {
+    //             console.log("*****ERROR: " + err + " *****");
+    //             res.json({
+    //                 status: "error"
+    //             });
+    //             return;
+    //         })
 
-        .error(function(err) {
-            console.log("*****ERROR: " + err + " *****");
-            res.json({
-                status: "error"
-            });
-            return;
-        })
-    },
+    //     .error(function(err) {
+    //         console.log("*****ERROR: " + err + " *****");
+    //         res.json({
+    //             status: "error"
+    //         });
+    //         return;
+    //     })
+    // },
     //END REPORT OWE LEAVE
 
     //REPORT TIME IN LIEU
-    LoadReportTimeInLieu: function(req, res) {
-        var info = req.body.info;
-        var listEMP = info.listEMP;
-        var USER_ID = info.USER_ID;
-        var weekNo = getWeekNo(new Date());
-        if (listEMP !== undefined &&
-            listEMP !== null &&
-            listEMP.length !== 0) {
-            //GET LIST EMPLOYEE ID
-            var strListEmp = "";
-            listEMP.forEach(function(value, index) {
-                if (value !== undefined &&
-                    value !== null &&
-                    !isNaN(value.id)) {
-                    strListEmp += value.id + ",";
-                }
-            });
-            if (strListEmp !== "") {
-                strListEmp = "(" + strListEmp.substring(0, strListEmp.length - 1) + ")";
-            }
-            //END GET LIST EMPLOYEE ID
+    // LoadReportTimeInLieu: function(req, res) {
+    //     var info = req.body.info;
+    //     var listEMP = info.listEMP;
+    //     var USER_ID = info.USER_ID;
+    //     var weekNo = getWeekNo(new Date());
+    //     if (listEMP !== undefined &&
+    //         listEMP !== null &&
+    //         listEMP.length !== 0) {
+    //         //GET LIST EMPLOYEE ID
+    //         var strListEmp = "";
+    //         listEMP.forEach(function(value, index) {
+    //             if (value !== undefined &&
+    //                 value !== null &&
+    //                 !isNaN(value.id)) {
+    //                 strListEmp += value.id + ",";
+    //             }
+    //         });
+    //         if (strListEmp !== "") {
+    //             strListEmp = "(" + strListEmp.substring(0, strListEmp.length - 1) + ")";
+    //         }
+    //         //END GET LIST EMPLOYEE ID
 
-            //GET TIME IN LIEU
-            var queryGetTimeInLieu =
-                "SELECT DISTINCT hr_employee.FirstName, hr_employee.LastName, hr_employee.Employee_ID, hr_employee.Dept_ID, " +
-                "time_item_task.item_id, time_item_task.time_charge, time_tasks_week.time_in_lieu, " +
-                "hr_employee.Dept_ID, time_tasks_week.week_no, YEAR(time_tasks_week.start_date) as YEAR " +
-                "FROM hr_employee " +
-                "INNER JOIN Departments ON departments.departmentid = hr_employee.Dept_ID " +
-                "INNER JOIN users ON hr_employee.Employee_ID = users.employee_id " +
-                "INNER JOIN time_tasks_week ON time_tasks_week.user_id = users.id " +
-                "INNER JOIN time_tasks ON time_tasks.tasks_week_id = time_tasks_week.task_week_id " +
-                "INNER JOIN time_item_task ON time_item_task.task_id = time_tasks.tasks_id " +
-                "WHERE time_tasks_week.task_status_id = 3 AND hr_employee.Employee_ID IN " + strListEmp;
-            db.sequelize.query(queryGetTimeInLieu)
-                .success(function(resultTimeInLieu) {
-                    if (resultTimeInLieu !== undefined &&
-                        resultTimeInLieu !== null &&
-                        resultTimeInLieu.length !== 0) {
-                        var arrayDept = [];
-                        var arrayEmployee = [];
-                        resultTimeInLieu.forEach(function(valueResult, indexResult) {
-                            //PUSH DEPT
-                            var isFoundDept = false;
-                            arrayDept.forEach(function(valueDept, indexDept) {
-                                if (valueResult.Dept_ID === valueDept.Dept_ID) {
-                                    isFoundDept = true;
-                                }
-                            });
-                            if (isFoundDept === false) {
-                                arrayDept.push({
-                                    Dept_ID: valueResult.Dept_ID
-                                });
-                            }
-                            //END PUSH DEPT
+    //         //GET TIME IN LIEU
+    //         var queryGetTimeInLieu =
+    //             "SELECT DISTINCT hr_employee.FirstName, hr_employee.LastName, hr_employee.Employee_ID, hr_employee.Dept_ID, " +
+    //             "time_item_task.item_id, time_item_task.time_charge, time_tasks_week.time_in_lieu, " +
+    //             "hr_employee.Dept_ID, time_tasks_week.week_no, YEAR(time_tasks_week.start_date) as YEAR " +
+    //             "FROM hr_employee " +
+    //             "INNER JOIN Departments ON departments.departmentid = hr_employee.Dept_ID " +
+    //             "INNER JOIN users ON hr_employee.Employee_ID = users.employee_id " +
+    //             "INNER JOIN time_tasks_week ON time_tasks_week.user_id = users.id " +
+    //             "INNER JOIN time_tasks ON time_tasks.tasks_week_id = time_tasks_week.task_week_id " +
+    //             "INNER JOIN time_item_task ON time_item_task.task_id = time_tasks.tasks_id " +
+    //             "WHERE time_tasks_week.task_status_id = 3 AND hr_employee.Employee_ID IN " + strListEmp;
+    //         db.sequelize.query(queryGetTimeInLieu)
+    //             .success(function(resultTimeInLieu) {
+    //                 if (resultTimeInLieu !== undefined &&
+    //                     resultTimeInLieu !== null &&
+    //                     resultTimeInLieu.length !== 0) {
+    //                     var arrayDept = [];
+    //                     var arrayEmployee = [];
+    //                     resultTimeInLieu.forEach(function(valueResult, indexResult) {
+    //                         //PUSH DEPT
+    //                         var isFoundDept = false;
+    //                         arrayDept.forEach(function(valueDept, indexDept) {
+    //                             if (valueResult.Dept_ID === valueDept.Dept_ID) {
+    //                                 isFoundDept = true;
+    //                             }
+    //                         });
+    //                         if (isFoundDept === false) {
+    //                             arrayDept.push({
+    //                                 Dept_ID: valueResult.Dept_ID
+    //                             });
+    //                         }
+    //                         //END PUSH DEPT
 
-                            //PUSH EMPLOYEE
-                            var isFoundEmployee = false;
-                            arrayEmployee.forEach(function(valueEmployee, indexEmployee) {
-                                if (valueEmployee.Employee_ID === valueResult.Employee_ID) {
-                                    isFoundEmployee = true;
-                                }
-                            });
-                            if (isFoundEmployee === false) {
-                                arrayEmployee.push({
-                                    Employee_ID: valueResult.Employee_ID,
-                                    Dept_ID: valueResult.Dept_ID
-                                });
-                            }
-                            //END PUSH EMPLOYEE
-                        });
-                        //PUSH TIME IN LIEU REST FOR EMPLOYEE
-                        arrayEmployee.forEach(function(valueEmployee, indexEmployee) {
-                            var timeInLieuHasTemp = 0;
-                            var timeInLieuUseTemp = 0;
-                            var timeInLieuNow = 0;
-                            var arrayWeekNo = [];
-                            resultTimeInLieu.forEach(function(valueTimeInLieu, indexTimeInLieu) {
-                                //FOR REST
-                                if (valueTimeInLieu.Employee_ID === valueEmployee.Employee_ID &&
-                                    !isNaN(valueTimeInLieu.time_in_lieu)) {
-                                    var isFoundWeekNo = false;
-                                    arrayWeekNo.forEach(function(valueWeekNo, indexWeekNo) {
-                                        if (valueWeekNo.week_no === valueTimeInLieu.week_no) {
-                                            isFoundWeekNo = true;
-                                        }
-                                    });
-                                    if (isFoundWeekNo === false) {
-                                        //FOR HAS
-                                        timeInLieuHasTemp += valueTimeInLieu.time_in_lieu;
-                                        arrayWeekNo.push({
-                                            week_no: valueTimeInLieu.week_no
-                                        });
-                                        //END FOR HAS
+    //                         //PUSH EMPLOYEE
+    //                         var isFoundEmployee = false;
+    //                         arrayEmployee.forEach(function(valueEmployee, indexEmployee) {
+    //                             if (valueEmployee.Employee_ID === valueResult.Employee_ID) {
+    //                                 isFoundEmployee = true;
+    //                             }
+    //                         });
+    //                         if (isFoundEmployee === false) {
+    //                             arrayEmployee.push({
+    //                                 Employee_ID: valueResult.Employee_ID,
+    //                                 Dept_ID: valueResult.Dept_ID
+    //                             });
+    //                         }
+    //                         //END PUSH EMPLOYEE
+    //                     });
+    //                     //PUSH TIME IN LIEU REST FOR EMPLOYEE
+    //                     arrayEmployee.forEach(function(valueEmployee, indexEmployee) {
+    //                         var timeInLieuHasTemp = 0;
+    //                         var timeInLieuUseTemp = 0;
+    //                         var timeInLieuNow = 0;
+    //                         var arrayWeekNo = [];
+    //                         resultTimeInLieu.forEach(function(valueTimeInLieu, indexTimeInLieu) {
+    //                             //FOR REST
+    //                             if (valueTimeInLieu.Employee_ID === valueEmployee.Employee_ID &&
+    //                                 !isNaN(valueTimeInLieu.time_in_lieu)) {
+    //                                 var isFoundWeekNo = false;
+    //                                 arrayWeekNo.forEach(function(valueWeekNo, indexWeekNo) {
+    //                                     if (valueWeekNo.week_no === valueTimeInLieu.week_no) {
+    //                                         isFoundWeekNo = true;
+    //                                     }
+    //                                 });
+    //                                 if (isFoundWeekNo === false) {
+    //                                     //FOR HAS
+    //                                     timeInLieuHasTemp += valueTimeInLieu.time_in_lieu;
+    //                                     arrayWeekNo.push({
+    //                                         week_no: valueTimeInLieu.week_no
+    //                                     });
+    //                                     //END FOR HAS
 
-                                        //FOR NOW
-                                        if ((valueTimeInLieu.week_no >= weekNo - 2 && valueTimeInLieu.week_no <= weekNo) &&
-                                            valueTimeInLieu.YEAR == moment().format("YYYY")) {
-                                            timeInLieuNow += valueTimeInLieu.time_in_lieu;
-                                        }
-                                        //END FOR NOW
-                                    }
-                                }
-                                //END FOR REST
+    //                                     //FOR NOW
+    //                                     if ((valueTimeInLieu.week_no >= weekNo - 2 && valueTimeInLieu.week_no <= weekNo) &&
+    //                                         valueTimeInLieu.YEAR == moment().format("YYYY")) {
+    //                                         timeInLieuNow += valueTimeInLieu.time_in_lieu;
+    //                                     }
+    //                                     //END FOR NOW
+    //                                 }
+    //                             }
+    //                             //END FOR REST
 
-                                //FOR USE
-                                if (valueTimeInLieu.Employee_ID === valueEmployee.Employee_ID &&
-                                    !isNaN(valueTimeInLieu.time_charge) &&
-                                    valueTimeInLieu.item_id == 22) {
-                                    timeInLieuUseTemp += valueTimeInLieu.time_charge;
-                                }
-                                //END FOR USE
-                            });
-                            arrayEmployee[indexEmployee].time_in_lieu_has = timeInLieuHasTemp;
-                            arrayEmployee[indexEmployee].time_in_lieu_use = timeInLieuUseTemp;
-                            arrayEmployee[indexEmployee].time_in_lieu_now = timeInLieuNow;
-                            arrayEmployee[indexEmployee].time_in_lieu_deduction = timeInLieuHasTemp - timeInLieuUseTemp - timeInLieuNow;
-                        });
-                        //END PUSH TIME IN LIEU REST FOR EMPLOYEE
+    //                             //FOR USE
+    //                             if (valueTimeInLieu.Employee_ID === valueEmployee.Employee_ID &&
+    //                                 !isNaN(valueTimeInLieu.time_charge) &&
+    //                                 valueTimeInLieu.item_id == 22) {
+    //                                 timeInLieuUseTemp += valueTimeInLieu.time_charge;
+    //                             }
+    //                             //END FOR USE
+    //                         });
+    //                         arrayEmployee[indexEmployee].time_in_lieu_has = timeInLieuHasTemp;
+    //                         arrayEmployee[indexEmployee].time_in_lieu_use = timeInLieuUseTemp;
+    //                         arrayEmployee[indexEmployee].time_in_lieu_now = timeInLieuNow;
+    //                         arrayEmployee[indexEmployee].time_in_lieu_deduction = timeInLieuHasTemp - timeInLieuUseTemp - timeInLieuNow;
+    //                     });
+    //                     //END PUSH TIME IN LIEU REST FOR EMPLOYEE
 
-                        //TIME IN LIEU FOR DEPT
-                        var timeInLieuHasAllTemp = 0;
-                        var timeInLieuUseAllTemp = 0;
-                        var timeInLieuNowAllTemp = 0;
-                        var timeInLieuDeductionAllTemp = 0;
-                        arrayEmployee.forEach(function(valueEmployee, indexEmployee) {
-                            var timeInLieuHasDeptTemp = 0;
-                            var timeInLieuUseDeptTemp = 0;
-                            var timeInLieuNowDeptTemp = 0;
-                            var timeInLieuDeductionDeptTemp = 0;
-                            arrayDept.forEach(function(valueDept, indexDept) {
-                                if (valueEmployee.Dept_ID === valueDept.Dept_ID) {
-                                    timeInLieuHasDeptTemp += valueEmployee.time_in_lieu_has;
-                                    timeInLieuUseDeptTemp += valueEmployee.time_in_lieu_use;
-                                    timeInLieuNowDeptTemp += valueEmployee.time_in_lieu_now;
-                                    timeInLieuDeductionDeptTemp += valueEmployee.time_in_lieu_deduction;
-                                }
-                                //PUSH FOR DEPT
-                                arrayDept[indexDept].time_in_lieu_has_dept = timeInLieuHasDeptTemp;
-                                arrayDept[indexDept].time_in_lieu_use_dept = timeInLieuUseDeptTemp;
-                                arrayDept[indexDept].time_in_lieu_now_dept = timeInLieuNowDeptTemp;
-                                arrayDept[indexDept].time_in_lieu_deduction_dept = timeInLieuDeductionDeptTemp;
-                                //END PUSH FOR DEPT
-                                timeInLieuHasAllTemp += valueEmployee.time_in_lieu_has;
-                                timeInLieuUseAllTemp += valueEmployee.time_in_lieu_use;
-                                timeInLieuNowAllTemp += valueEmployee.time_in_lieu_now;
-                                timeInLieuDeductionAllTemp += valueEmployee.time_in_lieu_deduction;
-                            });
-                        });
-                        //END TIME IN LIEU FOR DEPT
+    //                     //TIME IN LIEU FOR DEPT
+    //                     var timeInLieuHasAllTemp = 0;
+    //                     var timeInLieuUseAllTemp = 0;
+    //                     var timeInLieuNowAllTemp = 0;
+    //                     var timeInLieuDeductionAllTemp = 0;
+    //                     arrayEmployee.forEach(function(valueEmployee, indexEmployee) {
+    //                         var timeInLieuHasDeptTemp = 0;
+    //                         var timeInLieuUseDeptTemp = 0;
+    //                         var timeInLieuNowDeptTemp = 0;
+    //                         var timeInLieuDeductionDeptTemp = 0;
+    //                         arrayDept.forEach(function(valueDept, indexDept) {
+    //                             if (valueEmployee.Dept_ID === valueDept.Dept_ID) {
+    //                                 timeInLieuHasDeptTemp += valueEmployee.time_in_lieu_has;
+    //                                 timeInLieuUseDeptTemp += valueEmployee.time_in_lieu_use;
+    //                                 timeInLieuNowDeptTemp += valueEmployee.time_in_lieu_now;
+    //                                 timeInLieuDeductionDeptTemp += valueEmployee.time_in_lieu_deduction;
+    //                             }
+    //                             //PUSH FOR DEPT
+    //                             arrayDept[indexDept].time_in_lieu_has_dept = timeInLieuHasDeptTemp;
+    //                             arrayDept[indexDept].time_in_lieu_use_dept = timeInLieuUseDeptTemp;
+    //                             arrayDept[indexDept].time_in_lieu_now_dept = timeInLieuNowDeptTemp;
+    //                             arrayDept[indexDept].time_in_lieu_deduction_dept = timeInLieuDeductionDeptTemp;
+    //                             //END PUSH FOR DEPT
+    //                             timeInLieuHasAllTemp += valueEmployee.time_in_lieu_has;
+    //                             timeInLieuUseAllTemp += valueEmployee.time_in_lieu_use;
+    //                             timeInLieuNowAllTemp += valueEmployee.time_in_lieu_now;
+    //                             timeInLieuDeductionAllTemp += valueEmployee.time_in_lieu_deduction;
+    //                         });
+    //                     });
+    //                     //END TIME IN LIEU FOR DEPT
 
-                        //PUSH FROM DEPT TO EMPLOYEE
-                        arrayDept.forEach(function(valueDept, indexDept) {
-                            arrayEmployee.forEach(function(valueEmployee, indexEmployee) {
-                                if (valueDept.Dept_ID === valueEmployee.Dept_ID) {
-                                    arrayEmployee[indexEmployee].time_in_lieu_has_dept = valueDept.time_in_lieu_has_dept;
-                                    arrayEmployee[indexEmployee].time_in_lieu_use_dept = valueDept.time_in_lieu_use_dept;
-                                    arrayEmployee[indexEmployee].time_in_lieu_now_dept = valueDept.time_in_lieu_now_dept;
-                                    arrayEmployee[indexEmployee].time_in_lieu_deduction_dept = valueDept.time_in_lieu_deduction_dept;
-                                    arrayEmployee[indexEmployee].time_in_lieu_has_all = timeInLieuHasAllTemp;
-                                    arrayEmployee[indexEmployee].time_in_lieu_use_all = timeInLieuUseAllTemp;
-                                    arrayEmployee[indexEmployee].time_in_lieu_now_all = timeInLieuNowAllTemp;
-                                    arrayEmployee[indexEmployee].time_in_lieu_deduction_all = timeInLieuDeductionAllTemp;
-                                }
-                            });
-                        });
-                        //END PUSH
-                        //INSERT REPORT
-                        var listReport = "";
-                        arrayEmployee.forEach(function(value, index) {
-                            if (value !== undefined &&
-                                value !== null) {
-                                listReport += "(" + USER_ID + "," + value.Dept_ID + "," + value.Employee_ID + "," +
-                                    value.time_in_lieu_has + "," + value.time_in_lieu_use + "," + value.time_in_lieu_now + "," + value.time_in_lieu_deduction + "," +
-                                    value.time_in_lieu_has_dept + "," + value.time_in_lieu_use_dept + "," + value.time_in_lieu_now_dept + "," + value.time_in_lieu_deduction_dept + "," +
-                                    value.time_in_lieu_has_all + "," + value.time_in_lieu_use_all + "," + value.time_in_lieu_now_all + "," + value.time_in_lieu_deduction_all + ",'" +
-                                    moment().format("YYYY-MM-DD HH:mm:ss") + "'," + USER_ID + "),";
-                            }
-                        });
-                        if (listReport !== "") {
-                            listReport = listReport.substring(0, listReport.length - 1);
-                        }
-                        //END INSERT
+    //                     //PUSH FROM DEPT TO EMPLOYEE
+    //                     arrayDept.forEach(function(valueDept, indexDept) {
+    //                         arrayEmployee.forEach(function(valueEmployee, indexEmployee) {
+    //                             if (valueDept.Dept_ID === valueEmployee.Dept_ID) {
+    //                                 arrayEmployee[indexEmployee].time_in_lieu_has_dept = valueDept.time_in_lieu_has_dept;
+    //                                 arrayEmployee[indexEmployee].time_in_lieu_use_dept = valueDept.time_in_lieu_use_dept;
+    //                                 arrayEmployee[indexEmployee].time_in_lieu_now_dept = valueDept.time_in_lieu_now_dept;
+    //                                 arrayEmployee[indexEmployee].time_in_lieu_deduction_dept = valueDept.time_in_lieu_deduction_dept;
+    //                                 arrayEmployee[indexEmployee].time_in_lieu_has_all = timeInLieuHasAllTemp;
+    //                                 arrayEmployee[indexEmployee].time_in_lieu_use_all = timeInLieuUseAllTemp;
+    //                                 arrayEmployee[indexEmployee].time_in_lieu_now_all = timeInLieuNowAllTemp;
+    //                                 arrayEmployee[indexEmployee].time_in_lieu_deduction_all = timeInLieuDeductionAllTemp;
+    //                             }
+    //                         });
+    //                     });
+    //                     //END PUSH
+    //                     //INSERT REPORT
+    //                     var listReport = "";
+    //                     arrayEmployee.forEach(function(value, index) {
+    //                         if (value !== undefined &&
+    //                             value !== null) {
+    //                             listReport += "(" + USER_ID + "," + value.Dept_ID + "," + value.Employee_ID + "," +
+    //                                 value.time_in_lieu_has + "," + value.time_in_lieu_use + "," + value.time_in_lieu_now + "," + value.time_in_lieu_deduction + "," +
+    //                                 value.time_in_lieu_has_dept + "," + value.time_in_lieu_use_dept + "," + value.time_in_lieu_now_dept + "," + value.time_in_lieu_deduction_dept + "," +
+    //                                 value.time_in_lieu_has_all + "," + value.time_in_lieu_use_all + "," + value.time_in_lieu_now_all + "," + value.time_in_lieu_deduction_all + ",'" +
+    //                                 moment().format("YYYY-MM-DD HH:mm:ss") + "'," + USER_ID + "),";
+    //                         }
+    //                     });
+    //                     if (listReport !== "") {
+    //                         listReport = listReport.substring(0, listReport.length - 1);
+    //                     }
+    //                     //END INSERT
 
-                        //DELETE ALL REPORT FOR USER ID
-                        var queryDelReport = "DELETE FROM report_time_in_lieu WHERE user_id = :userId";
-                        db.sequelize.query(queryDelReport, null, {
-                                raw: true
-                            }, {
-                                userId: USER_ID
-                            })
-                            .success(function(resultDel) {
-                                var queryInsertReport = "INSERT INTO report_time_in_lieu " +
-                                    "(user_id, dept_id, employee_id, " +
-                                    "time_in_lieu_has_employee, time_in_lieu_use_employee, time_in_lieu_now_employee, time_in_lieu_deduction_employee," +
-                                    "time_in_lieu_has_dept, time_in_lieu_use_dept, time_in_lieu_now_dept, time_in_lieu_deduction_dept," +
-                                    "time_in_lieu_has_all, time_in_lieu_use_all, time_in_lieu_now_all, time_in_lieu_deduction_all, creation_date, created_by" +
-                                    ")" +
-                                    "VALUES" + listReport;
-                                db.sequelize.query(queryInsertReport)
-                                    .success(function(resultLast) {
-                                        res.json({
-                                            status: "success"
-                                        });
-                                    })
-                                    .error(function(err) {
-                                        console.log("*****ERROR:" + err + "*****");
-                                        res.json({
-                                            status: "error"
-                                        });
-                                    });
-                            })
-                            .error(function(err) {
-                                console.log("*****ERROR:" + err + "*****");
-                                res.json({
-                                    status: "error"
-                                });
-                            });
-                        //END DELETE
-                    }
-                })
-                .error(function(err) {
-                    console.log("*****ERROR:" + err + "*****");
-                    res.json({
-                        status: "error"
-                    });
-                    return;
-                });
-            // END GET TIME IN LIEU
-        }
-    },
+    //                     //DELETE ALL REPORT FOR USER ID
+    //                     var queryDelReport = "DELETE FROM report_time_in_lieu WHERE user_id = :userId";
+    //                     db.sequelize.query(queryDelReport, null, {
+    //                             raw: true
+    //                         }, {
+    //                             userId: USER_ID
+    //                         })
+    //                         .success(function(resultDel) {
+    //                             var queryInsertReport = "INSERT INTO report_time_in_lieu " +
+    //                                 "(user_id, dept_id, employee_id, " +
+    //                                 "time_in_lieu_has_employee, time_in_lieu_use_employee, time_in_lieu_now_employee, time_in_lieu_deduction_employee," +
+    //                                 "time_in_lieu_has_dept, time_in_lieu_use_dept, time_in_lieu_now_dept, time_in_lieu_deduction_dept," +
+    //                                 "time_in_lieu_has_all, time_in_lieu_use_all, time_in_lieu_now_all, time_in_lieu_deduction_all, creation_date, created_by" +
+    //                                 ")" +
+    //                                 "VALUES" + listReport;
+    //                             db.sequelize.query(queryInsertReport)
+    //                                 .success(function(resultLast) {
+    //                                     res.json({
+    //                                         status: "success"
+    //                                     });
+    //                                 })
+    //                                 .error(function(err) {
+    //                                     console.log("*****ERROR:" + err + "*****");
+    //                                     res.json({
+    //                                         status: "error"
+    //                                     });
+    //                                 });
+    //                         })
+    //                         .error(function(err) {
+    //                             console.log("*****ERROR:" + err + "*****");
+    //                             res.json({
+    //                                 status: "error"
+    //                             });
+    //                         });
+    //                     //END DELETE
+    //                 }
+    //             })
+    //             .error(function(err) {
+    //                 console.log("*****ERROR:" + err + "*****");
+    //                 res.json({
+    //                     status: "error"
+    //                 });
+    //                 return;
+    //             });
+    //         // END GET TIME IN LIEU
+    //     }
+    // },
     //END TIME IN LIEU
 
     //REPORT UTILIZATION RATIO DETAIL
-    LoadReportUtilizationRatioDetail: function(req, res) {
-        var info = req.body.info;
-        var stringEMP = "";
-        var stringDept = "";
-        var stringWeek = "";
-        var stringItem = "";
-        var stringline1 = "";
-        var flag1 = 0;
-        var flag2 = 0;
-        var flag3 = 0;
-        var flag4 = 0;
-        var flag5 = 0;
-        var flag6 = 0;
-        var co1 = 0;
-        var co2 = 0;
-        var time_charge_1_all = 0;
-        var time_charge_2_all = 0;
-        var time_charge_3_all = 0;
-        var time_charge_4_all = 0;
-        var time_charge_5_all = 0;
-        var time_charge_all = 0;
-        for (var i = 0; i < info.listEMP.length; i++) {
-            stringEMP += info.listEMP[i].id + ", ";
-        }
-        stringEMP += 0;
-        for (var j = 0; j < info.listDept.length; j++) {
-            stringDept += info.listDept[j].id + ", ";
-        }
-        stringDept += 0;
-        var sql_get_data_time_activity_report = "SELECT user_id,task_week_id,Employee_id,Department_id,activity_id,SUM(time_charge) AS 'time_charge_by_activity_id',time_charge_week,weekno,from_date,to_date " +
-            "FROM time_activity_detail_table " +
-            "WHERE Employee_id IN(" + stringEMP + ") AND Department_id in (" + stringDept + ") AND user_id=" + info.USER_ID + " " +
-            "GROUP BY Department_id,activity_id,Employee_id ";
+    // LoadReportUtilizationRatioDetail: function(req, res) {
+    //     var info = req.body.info;
+    //     var stringEMP = "";
+    //     var stringDept = "";
+    //     var stringWeek = "";
+    //     var stringItem = "";
+    //     var stringline1 = "";
+    //     var flag1 = 0;
+    //     var flag2 = 0;
+    //     var flag3 = 0;
+    //     var flag4 = 0;
+    //     var flag5 = 0;
+    //     var flag6 = 0;
+    //     var co1 = 0;
+    //     var co2 = 0;
+    //     var time_charge_1_all = 0;
+    //     var time_charge_2_all = 0;
+    //     var time_charge_3_all = 0;
+    //     var time_charge_4_all = 0;
+    //     var time_charge_5_all = 0;
+    //     var time_charge_all = 0;
+    //     for (var i = 0; i < info.listEMP.length; i++) {
+    //         stringEMP += info.listEMP[i].id + ", ";
+    //     }
+    //     stringEMP += 0;
+    //     for (var j = 0; j < info.listDept.length; j++) {
+    //         stringDept += info.listDept[j].id + ", ";
+    //     }
+    //     stringDept += 0;
+    //     var sql_get_data_time_activity_report = "SELECT user_id,task_week_id,Employee_id,Department_id,activity_id,SUM(time_charge) AS 'time_charge_by_activity_id',time_charge_week,weekno,from_date,to_date " +
+    //         "FROM time_activity_detail_table " +
+    //         "WHERE Employee_id IN(" + stringEMP + ") AND Department_id in (" + stringDept + ") AND user_id=" + info.USER_ID + " " +
+    //         "GROUP BY Department_id,activity_id,Employee_id ";
 
-        var sql_get_data_total = "SELECT Department_id,SUM(time_charge_1) AS 'time_charge_1_Dept', " +
-            "SUM(time_charge_2) AS 'time_charge_2_Dept',SUM(time_charge_3) AS 'time_charge_3_Dept', " +
-            "SUM(time_charge_4) AS 'time_charge_4_Dept',SUM(time_charge_5) AS 'time_charge_5_Dept', " +
-            "SUM(time_charge_week) AS 'time_charge_week_Dept' " + "from time_activity_report " +
-            "WHERE Department_id in (" + stringDept + ") AND Employee_id IN(" + stringEMP + ") AND user_id=" + info.USER_ID + " " +
-            "GROUP BY Department_id";
+    //     var sql_get_data_total = "SELECT Department_id,SUM(time_charge_1) AS 'time_charge_1_Dept', " +
+    //         "SUM(time_charge_2) AS 'time_charge_2_Dept',SUM(time_charge_3) AS 'time_charge_3_Dept', " +
+    //         "SUM(time_charge_4) AS 'time_charge_4_Dept',SUM(time_charge_5) AS 'time_charge_5_Dept', " +
+    //         "SUM(time_charge_week) AS 'time_charge_week_Dept' " + "from time_activity_report " +
+    //         "WHERE Department_id in (" + stringDept + ") AND Employee_id IN(" + stringEMP + ") AND user_id=" + info.USER_ID + " " +
+    //         "GROUP BY Department_id";
 
-        var sql_get_total = "SELECT * FROM time_activity_report ";
+    //     var sql_get_total = "SELECT * FROM time_activity_report ";
 
-        var sql_get_line_count = "SELECT COUNT(DISTINCT FirstName),Department_id,Employee_id,time_charge_week FROM time_activity_table GROUP BY FirstName ";
+    //     var sql_get_line_count = "SELECT COUNT(DISTINCT FirstName),Department_id,Employee_id,time_charge_week FROM time_activity_table GROUP BY FirstName ";
 
-        //DELETE DATA IN TABLE
-        var sql_delete_time_activity_table = "DELETE from time_activity_table WHERE user_id=" + info.USER_ID + " ";
-        var sql_delete_time_activity_detail_table = "DELETE from time_activity_detail_table WHERE user_id=" + info.USER_ID + " ";
-        var sql_delete_time_activity_report = "DELETE from time_activity_report WHERE user_id=" + info.USER_ID + " ";
-        db.sequelize.query(sql_delete_time_activity_report)
-            .success(function(data_delete3) {
+    //     //DELETE DATA IN TABLE
+    //     var sql_delete_time_activity_table = "DELETE from time_activity_table WHERE user_id=" + info.USER_ID + " ";
+    //     var sql_delete_time_activity_detail_table = "DELETE from time_activity_detail_table WHERE user_id=" + info.USER_ID + " ";
+    //     var sql_delete_time_activity_report = "DELETE from time_activity_report WHERE user_id=" + info.USER_ID + " ";
+    //     db.sequelize.query(sql_delete_time_activity_report)
+    //         .success(function(data_delete3) {
 
-                db.sequelize.query(sql_delete_time_activity_detail_table)
-                    .success(function(data_delete1) {
-                        db.sequelize.query(sql_delete_time_activity_table)
-                            .success(function(data_delete2) {
-                                //END DELETE
-                                var sql_get_data_time_activity_table = "SELECT users.id,hr_employee.FirstName, hr_employee.LastName, hr_employee.Employee_ID , departments.departmentid, departments.departmentName,time_tasks_week.time_charge, time_tasks_week.week_no,time_tasks_week.creation_date,time_tasks_week.last_update_date,time_tasks_week.task_week_id " + "FROM hr_employee " + "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + "INNER JOIN departments ON hr_employee.Dept_ID = departments.departmentid " + "INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id " + "WHERE time_tasks_week.task_status_id = 3 AND departments.departmentid IN ( " + stringDept + " ) AND (time_tasks_week.week_no BETWEEN " + info.weekNoFrom + " AND " + info.weekNoTo + " ) AND hr_employee.Employee_ID IN ( " + stringEMP + " )";
-                                db.sequelize.query(sql_get_data_time_activity_table)
-                                    .success(function(data_time_activity_table) {
-                                        //console.log(data_time_activity_table)
-                                        //INSERT time_activity_table
-                                        for (var i = 0; i < data_time_activity_table.length; i++) {
-                                            db.time_activity_table.create({
-                                                    user_id: info.USER_ID,
-                                                    task_week_id: data_time_activity_table[i].task_week_id,
-                                                    Employee_id: data_time_activity_table[i].Employee_ID,
-                                                    Department_id: data_time_activity_table[i].departmentid,
-                                                    FirstName: data_time_activity_table[i].FirstName,
-                                                    LastName: data_time_activity_table[i].LastName,
-                                                    Department_name: data_time_activity_table[i].departmentName,
-                                                    weekno: data_time_activity_table[i].week_no,
-                                                    time_charge_week: data_time_activity_table[i].time_charge,
-                                                    from_date: info.weekFrom,
-                                                    to_date: info.weekTo,
-                                                    Creation_by: info.USER_ID
-                                                })
-                                                .success(function(data_insert1) {
-                                                    flag1++;
-                                                    if (flag1 == data_time_activity_table.length) {
-                                                        //GET DETAIL DATA
-                                                        var sql_get_data_time_activity_detail_table = "SELECT time_activity_table.task_week_id,time_tasks.tasks_id," + "time_activity_table.user_id,time_activity_table.Employee_id," + "time_activity_table.Department_id,time_tasks.activity_id," + "time_tasks.time_charge,time_activity_table.time_charge_week," + "time_activity_table.weekno,time_activity_table.from_date,time_activity_table.to_date " + "FROM time_tasks " + "INNER JOIN time_activity_table ON time_activity_table.task_week_id = time_tasks.tasks_week_id " + "WHERE time_activity_table.user_id=" + info.USER_ID + " " + "ORDER BY time_activity_table.Department_id,time_activity_table.Employee_id,time_tasks.activity_id,time_activity_table.weekno";
+    //             db.sequelize.query(sql_delete_time_activity_detail_table)
+    //                 .success(function(data_delete1) {
+    //                     db.sequelize.query(sql_delete_time_activity_table)
+    //                         .success(function(data_delete2) {
+    //                             //END DELETE
+    //                             var sql_get_data_time_activity_table = "SELECT users.id,hr_employee.FirstName, hr_employee.LastName, hr_employee.Employee_ID , departments.departmentid, departments.departmentName,time_tasks_week.time_charge, time_tasks_week.week_no,time_tasks_week.creation_date,time_tasks_week.last_update_date,time_tasks_week.task_week_id " + "FROM hr_employee " + "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + "INNER JOIN departments ON hr_employee.Dept_ID = departments.departmentid " + "INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id " + "WHERE time_tasks_week.task_status_id = 3 AND departments.departmentid IN ( " + stringDept + " ) AND (time_tasks_week.week_no BETWEEN " + info.weekNoFrom + " AND " + info.weekNoTo + " ) AND hr_employee.Employee_ID IN ( " + stringEMP + " )";
+    //                             db.sequelize.query(sql_get_data_time_activity_table)
+    //                                 .success(function(data_time_activity_table) {
+    //                                     //console.log(data_time_activity_table)
+    //                                     //INSERT time_activity_table
+    //                                     for (var i = 0; i < data_time_activity_table.length; i++) {
+    //                                         db.time_activity_table.create({
+    //                                                 user_id: info.USER_ID,
+    //                                                 task_week_id: data_time_activity_table[i].task_week_id,
+    //                                                 Employee_id: data_time_activity_table[i].Employee_ID,
+    //                                                 Department_id: data_time_activity_table[i].departmentid,
+    //                                                 FirstName: data_time_activity_table[i].FirstName,
+    //                                                 LastName: data_time_activity_table[i].LastName,
+    //                                                 Department_name: data_time_activity_table[i].departmentName,
+    //                                                 weekno: data_time_activity_table[i].week_no,
+    //                                                 time_charge_week: data_time_activity_table[i].time_charge,
+    //                                                 from_date: info.weekFrom,
+    //                                                 to_date: info.weekTo,
+    //                                                 Creation_by: info.USER_ID
+    //                                             })
+    //                                             .success(function(data_insert1) {
+    //                                                 flag1++;
+    //                                                 if (flag1 == data_time_activity_table.length) {
+    //                                                     //GET DETAIL DATA
+    //                                                     var sql_get_data_time_activity_detail_table = "SELECT time_activity_table.task_week_id,time_tasks.tasks_id," + "time_activity_table.user_id,time_activity_table.Employee_id," + "time_activity_table.Department_id,time_tasks.activity_id," + "time_tasks.time_charge,time_activity_table.time_charge_week," + "time_activity_table.weekno,time_activity_table.from_date,time_activity_table.to_date " + "FROM time_tasks " + "INNER JOIN time_activity_table ON time_activity_table.task_week_id = time_tasks.tasks_week_id " + "WHERE time_activity_table.user_id=" + info.USER_ID + " " + "ORDER BY time_activity_table.Department_id,time_activity_table.Employee_id,time_tasks.activity_id,time_activity_table.weekno";
 
-                                                        var sql_get_time_charge_week = "SELECT SUM(time_charge) AS 'time_charge_week',Department_id,Employee_id " + " FROM time_activity_detail_table " + " WHERE user_id=268 AND Employee_id IN (" + stringEMP + ") " + " GROUP BY Department_id,Employee_id";
-                                                        db.sequelize.query(sql_get_data_time_activity_detail_table)
-                                                            .success(function(data_time_activity_detail_table) {
-                                                                db.sequelize.query(sql_get_time_charge_week)
-                                                                    .success(function(data_get_time_charge_week) {
-
-
-                                                                        for (var j = 0; j < data_time_activity_detail_table.length; j++) {
-                                                                            //INSERT time_activity_detail_table
-                                                                            db.time_activity_detail_table.create({
-                                                                                    task_week_id: data_time_activity_detail_table[j].task_week_id,
-                                                                                    tasks_id: data_time_activity_detail_table[j].tasks_id,
-                                                                                    user_id: data_time_activity_detail_table[j].user_id,
-                                                                                    Employee_id: data_time_activity_detail_table[j].Employee_id,
-                                                                                    Department_id: data_time_activity_detail_table[j].Department_id,
-                                                                                    activity_id: data_time_activity_detail_table[j].activity_id,
-                                                                                    time_charge: data_time_activity_detail_table[j].time_charge,
-                                                                                    //time_charge_week: data_time_activity_detail_table[j].time_charge_week,
-                                                                                    weekno: data_time_activity_detail_table[j].weekno,
-                                                                                    from_date: data_time_activity_detail_table[j].from_date,
-                                                                                    to_date: data_time_activity_detail_table[j].to_date,
-                                                                                    Creation_by: info.USER_ID
-                                                                                })
-                                                                                .success(function(data_insert2) {
-                                                                                    flag2++;
-                                                                                    if (flag2 == data_time_activity_detail_table.length) {
+    //                                                     var sql_get_time_charge_week = "SELECT SUM(time_charge) AS 'time_charge_week',Department_id,Employee_id " + " FROM time_activity_detail_table " + " WHERE user_id=268 AND Employee_id IN (" + stringEMP + ") " + " GROUP BY Department_id,Employee_id";
+    //                                                     db.sequelize.query(sql_get_data_time_activity_detail_table)
+    //                                                         .success(function(data_time_activity_detail_table) {
+    //                                                             db.sequelize.query(sql_get_time_charge_week)
+    //                                                                 .success(function(data_get_time_charge_week) {
 
 
+    //                                                                     for (var j = 0; j < data_time_activity_detail_table.length; j++) {
+    //                                                                         //INSERT time_activity_detail_table
+    //                                                                         db.time_activity_detail_table.create({
+    //                                                                                 task_week_id: data_time_activity_detail_table[j].task_week_id,
+    //                                                                                 tasks_id: data_time_activity_detail_table[j].tasks_id,
+    //                                                                                 user_id: data_time_activity_detail_table[j].user_id,
+    //                                                                                 Employee_id: data_time_activity_detail_table[j].Employee_id,
+    //                                                                                 Department_id: data_time_activity_detail_table[j].Department_id,
+    //                                                                                 activity_id: data_time_activity_detail_table[j].activity_id,
+    //                                                                                 time_charge: data_time_activity_detail_table[j].time_charge,
+    //                                                                                 //time_charge_week: data_time_activity_detail_table[j].time_charge_week,
+    //                                                                                 weekno: data_time_activity_detail_table[j].weekno,
+    //                                                                                 from_date: data_time_activity_detail_table[j].from_date,
+    //                                                                                 to_date: data_time_activity_detail_table[j].to_date,
+    //                                                                                 Creation_by: info.USER_ID
+    //                                                                             })
+    //                                                                             .success(function(data_insert2) {
+    //                                                                                 flag2++;
+    //                                                                                 if (flag2 == data_time_activity_detail_table.length) {
 
-                                                                                        var sql_get_time_charge_new = "SELECT user_id,SUM(time_charge) AS 'time_charge',Department_id,Employee_id,activity_id " + " FROM time_activity_detail_table " + " WHERE Department_id IN(" + stringDept + ") AND Employee_id IN(" + stringEMP + ") AND activity_id IN (1,2,3,4,5) " + " AND user_id=" + info.USER_ID + " " + " GROUP BY Department_id,Employee_id,activity_id " + " ORDER BY Department_id,Employee_id,activity_id ";
-                                                                                        db.sequelize.query(sql_get_time_charge_new)
-                                                                                            .success(function(data_time_charge_new) {
-                                                                                                var sql_get_length_line = "SELECT Department_id,Employee_id,user_id,SUM(time_charge) AS 'time_charge_week',from_date,to_date " + "FROM time_activity_detail_table " + "WHERE user_id =" + info.USER_ID + " " + "GROUP BY Employee_id " + "ORDER BY Department_id,Employee_id";
-                                                                                                db.sequelize.query(sql_get_length_line)
-                                                                                                    .success(function(data_length_line) {
 
-                                                                                                        for (var x = 0; x < data_length_line.length; x++) {
-                                                                                                            stringline1 += "(";
-                                                                                                            for (var y = 0; y < data_time_charge_new.length; y++) {
 
-                                                                                                                if (data_length_line[x].Department_id == data_time_charge_new[y].Department_id && data_length_line[x].Employee_id == data_time_charge_new[y].Employee_id) {
-                                                                                                                    stringline1 += data_time_charge_new[y].time_charge + "," + ((data_time_charge_new[y].time_charge / data_length_line[x].time_charge_week) * 100).toFixed(2) + ",";
-                                                                                                                }
-                                                                                                            }
-                                                                                                            if (stringline1 !== "(") {
-                                                                                                                stringline1 += data_length_line[x].Department_id + "," +
-                                                                                                                    data_length_line[x].Employee_id + "," +
-                                                                                                                    data_length_line[x].user_id + "," +
-                                                                                                                    data_length_line[x].time_charge_week + ",'" +
-                                                                                                                    moment(data_length_line[x].from_date).format("YYYY-MM-DD") + "','" +
-                                                                                                                    moment(data_length_line[x].to_date).format("YYYY-MM-DD") + "'),";
+    //                                                                                     var sql_get_time_charge_new = "SELECT user_id,SUM(time_charge) AS 'time_charge',Department_id,Employee_id,activity_id " + " FROM time_activity_detail_table " + " WHERE Department_id IN(" + stringDept + ") AND Employee_id IN(" + stringEMP + ") AND activity_id IN (1,2,3,4,5) " + " AND user_id=" + info.USER_ID + " " + " GROUP BY Department_id,Employee_id,activity_id " + " ORDER BY Department_id,Employee_id,activity_id ";
+    //                                                                                     db.sequelize.query(sql_get_time_charge_new)
+    //                                                                                         .success(function(data_time_charge_new) {
+    //                                                                                             var sql_get_length_line = "SELECT Department_id,Employee_id,user_id,SUM(time_charge) AS 'time_charge_week',from_date,to_date " + "FROM time_activity_detail_table " + "WHERE user_id =" + info.USER_ID + " " + "GROUP BY Employee_id " + "ORDER BY Department_id,Employee_id";
+    //                                                                                             db.sequelize.query(sql_get_length_line)
+    //                                                                                                 .success(function(data_length_line) {
 
-                                                                                                            }
+    //                                                                                                     for (var x = 0; x < data_length_line.length; x++) {
+    //                                                                                                         stringline1 += "(";
+    //                                                                                                         for (var y = 0; y < data_time_charge_new.length; y++) {
 
-                                                                                                        }
-                                                                                                        stringline1 = stringline1.substring(0, stringline1.length - 1);
-                                                                                                        console.log(stringline1);
-                                                                                                        var sql_insert_time_activity_report = "INSERT INTO time_activity_report (time_charge_1,per_1,time_charge_2,per_2,time_charge_3,per_3,time_charge_4,per_4,time_charge_5,per_5,Department_id,Employee_id,user_id,time_charge_week,from_date,to_date) VALUE " + stringline1;
-                                                                                                        db.sequelize.query(sql_insert_time_activity_report)
-                                                                                                            .success(function(data_insert_success) {
-                                                                                                                var sql_get_time_charge_Dept_all = "SELECT SUM(time_charge_1) AS'time_charge_1_Dept',SUM(time_charge_2) AS'time_charge_2_Dept',SUM(time_charge_3) AS'time_charge_3_Dept'," +
-                                                                                                                    "SUM(time_charge_4) AS'time_charge_4_Dept',SUM(time_charge_5) AS'time_charge_5_Dept'," +
-                                                                                                                    "SUM(time_charge_week) AS'time_charge_week_Dept',Department_id " +
-                                                                                                                    "FROM time_activity_report " +
-                                                                                                                    "WHERE Department_id IN(" + stringDept + ") AND user_id=" + info.USER_ID + " " +
-                                                                                                                    "GROUP BY Department_id";
-                                                                                                                var sql_get_time_charge_all = "SELECT user_id,SUM(time_charge_1_Dept) AS'time_charge_1_all',SUM(time_charge_2_Dept) AS'time_charge_2_all',SUM(time_charge_3_Dept) AS'time_charge_3_all', " +
-                                                                                                                    "SUM(time_charge_4_Dept) AS'time_charge_4_all',SUM(time_charge_5_Dept) AS'time_charge_5_all', " +
-                                                                                                                    "SUM(time_charge_week_Dept) AS'time_charge_all' " +
-                                                                                                                    "FROM time_activity_report " +
-                                                                                                                    "WHERE user_id=" + info.USER_ID;
-                                                                                                                db.sequelize.query(sql_get_time_charge_Dept_all)
-                                                                                                                    .success(function(data_time_charge_Dept_all) {
+    //                                                                                                             if (data_length_line[x].Department_id == data_time_charge_new[y].Department_id && data_length_line[x].Employee_id == data_time_charge_new[y].Employee_id) {
+    //                                                                                                                 stringline1 += data_time_charge_new[y].time_charge + "," + ((data_time_charge_new[y].time_charge / data_length_line[x].time_charge_week) * 100).toFixed(2) + ",";
+    //                                                                                                             }
+    //                                                                                                         }
+    //                                                                                                         if (stringline1 !== "(") {
+    //                                                                                                             stringline1 += data_length_line[x].Department_id + "," +
+    //                                                                                                                 data_length_line[x].Employee_id + "," +
+    //                                                                                                                 data_length_line[x].user_id + "," +
+    //                                                                                                                 data_length_line[x].time_charge_week + ",'" +
+    //                                                                                                                 moment(data_length_line[x].from_date).format("YYYY-MM-DD") + "','" +
+    //                                                                                                                 moment(data_length_line[x].to_date).format("YYYY-MM-DD") + "'),";
 
-                                                                                                                        var sql_count_line = "SELECT COUNT(*) AS count FROM time_activity_report WHERE user_id=" + info.USER_ID;
-                                                                                                                        db.sequelize.query(sql_count_line)
-                                                                                                                            .success(function(data_count) {
+    //                                                                                                         }
 
-                                                                                                                                for (var m = 0; m < data_count[0].count; m++) {
-                                                                                                                                    for (var v = 0; v < data_time_charge_Dept_all.length; v++) {
-                                                                                                                                        chainer.add(db.time_activity_report.update({
-                                                                                                                                            time_charge_1_Dept: data_time_charge_Dept_all[v].time_charge_1_Dept,
-                                                                                                                                            per_1_Dept: ((data_time_charge_Dept_all[v].time_charge_1_Dept / data_time_charge_Dept_all[v].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                            time_charge_2_Dept: data_time_charge_Dept_all[v].time_charge_2_Dept,
-                                                                                                                                            per_2_Dept: ((data_time_charge_Dept_all[v].time_charge_2_Dept / data_time_charge_Dept_all[v].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                            time_charge_3_Dept: data_time_charge_Dept_all[v].time_charge_3_Dept,
-                                                                                                                                            per_3_Dept: ((data_time_charge_Dept_all[v].time_charge_3_Dept / data_time_charge_Dept_all[v].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                            time_charge_4_Dept: data_time_charge_Dept_all[v].time_charge_4_Dept,
-                                                                                                                                            per_4_Dept: ((data_time_charge_Dept_all[v].time_charge_4_Dept / data_time_charge_Dept_all[v].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                            time_charge_5_Dept: data_time_charge_Dept_all[v].time_charge_5_Dept,
-                                                                                                                                            per_5_Dept: ((data_time_charge_Dept_all[v].time_charge_5_Dept / data_time_charge_Dept_all[v].time_charge_week_Dept) * 100).toFixed(2),
-                                                                                                                                            time_charge_week_Dept: data_time_charge_Dept_all[v].time_charge_week_Dept
-                                                                                                                                        }, {
-                                                                                                                                            Department_id: data_time_charge_Dept_all[v].Department_id
-                                                                                                                                        }));
-                                                                                                                                    }
+    //                                                                                                     }
+    //                                                                                                     stringline1 = stringline1.substring(0, stringline1.length - 1);
+    //                                                                                                     console.log(stringline1);
+    //                                                                                                     var sql_insert_time_activity_report = "INSERT INTO time_activity_report (time_charge_1,per_1,time_charge_2,per_2,time_charge_3,per_3,time_charge_4,per_4,time_charge_5,per_5,Department_id,Employee_id,user_id,time_charge_week,from_date,to_date) VALUE " + stringline1;
+    //                                                                                                     db.sequelize.query(sql_insert_time_activity_report)
+    //                                                                                                         .success(function(data_insert_success) {
+    //                                                                                                             var sql_get_time_charge_Dept_all = "SELECT SUM(time_charge_1) AS'time_charge_1_Dept',SUM(time_charge_2) AS'time_charge_2_Dept',SUM(time_charge_3) AS'time_charge_3_Dept'," +
+    //                                                                                                                 "SUM(time_charge_4) AS'time_charge_4_Dept',SUM(time_charge_5) AS'time_charge_5_Dept'," +
+    //                                                                                                                 "SUM(time_charge_week) AS'time_charge_week_Dept',Department_id " +
+    //                                                                                                                 "FROM time_activity_report " +
+    //                                                                                                                 "WHERE Department_id IN(" + stringDept + ") AND user_id=" + info.USER_ID + " " +
+    //                                                                                                                 "GROUP BY Department_id";
+    //                                                                                                             var sql_get_time_charge_all = "SELECT user_id,SUM(time_charge_1_Dept) AS'time_charge_1_all',SUM(time_charge_2_Dept) AS'time_charge_2_all',SUM(time_charge_3_Dept) AS'time_charge_3_all', " +
+    //                                                                                                                 "SUM(time_charge_4_Dept) AS'time_charge_4_all',SUM(time_charge_5_Dept) AS'time_charge_5_all', " +
+    //                                                                                                                 "SUM(time_charge_week_Dept) AS'time_charge_all' " +
+    //                                                                                                                 "FROM time_activity_report " +
+    //                                                                                                                 "WHERE user_id=" + info.USER_ID;
+    //                                                                                                             db.sequelize.query(sql_get_time_charge_Dept_all)
+    //                                                                                                                 .success(function(data_time_charge_Dept_all) {
 
-                                                                                                                                }
-                                                                                                                                chainer.runSerially()
-                                                                                                                                    .success(function(update_success1) {
+    //                                                                                                                     var sql_count_line = "SELECT COUNT(*) AS count FROM time_activity_report WHERE user_id=" + info.USER_ID;
+    //                                                                                                                     db.sequelize.query(sql_count_line)
+    //                                                                                                                         .success(function(data_count) {
 
-                                                                                                                                        db.sequelize.query(sql_get_time_charge_all)
-                                                                                                                                            .success(function(data_time_charge_all) {
-                                                                                                                                                for (var f = 0; f < data_count[0].count; f++) {
-                                                                                                                                                    chainer.add(db.time_activity_report.update({
-                                                                                                                                                        time_charge_1_all: data_time_charge_all[0].time_charge_1_all,
-                                                                                                                                                        per_1_all: ((data_time_charge_all[0].time_charge_1_all / data_time_charge_all[0].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                        time_charge_2_all: data_time_charge_all[0].time_charge_2_all,
-                                                                                                                                                        per_2_all: ((data_time_charge_all[0].time_charge_2_all / data_time_charge_all[0].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                        time_charge_3_all: data_time_charge_all[0].time_charge_3_all,
-                                                                                                                                                        per_3_all: ((data_time_charge_all[0].time_charge_3_all / data_time_charge_all[0].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                        time_charge_4_all: data_time_charge_all[0].time_charge_4_all,
-                                                                                                                                                        per_4_all: ((data_time_charge_all[0].time_charge_4_all / data_time_charge_all[0].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                        time_charge_5_all: data_time_charge_all[0].time_charge_5_all,
-                                                                                                                                                        per_5_all: ((data_time_charge_all[0].time_charge_5_all / data_time_charge_all[0].time_charge_all) * 100).toFixed(2),
-                                                                                                                                                        time_charge_all: data_time_charge_all[0].time_charge_all
-                                                                                                                                                    }, {
-                                                                                                                                                        user_id: data_time_charge_all[0].user_id
-                                                                                                                                                    }))
-                                                                                                                                                }
-                                                                                                                                                chainer.runSerially()
-                                                                                                                                                    .success(function(update_success2) {
-                                                                                                                                                        res.json({
-                                                                                                                                                            status: "success"
-                                                                                                                                                        });
-                                                                                                                                                        return;
-                                                                                                                                                    })
-                                                                                                                                                    .error(function(err) {
-                                                                                                                                                        console.log("*****ERROR: " + err + " *****");
-                                                                                                                                                        res.json({
-                                                                                                                                                            status: "error"
-                                                                                                                                                        });
-                                                                                                                                                        return;
-                                                                                                                                                    });
-                                                                                                                                            })
-                                                                                                                                            .error(function(err) {
-                                                                                                                                                console.log("*****ERROR: " + err + " *****");
-                                                                                                                                                res.json({
-                                                                                                                                                    status: "error"
-                                                                                                                                                });
-                                                                                                                                                return;
-                                                                                                                                            });
-                                                                                                                                    })
-                                                                                                                                    .error(function(err) {
-                                                                                                                                        console.log("*****ERROR: " + err + " *****");
-                                                                                                                                        res.json({
-                                                                                                                                            status: "error"
-                                                                                                                                        });
-                                                                                                                                        return;
-                                                                                                                                    });
-                                                                                                                            })
-                                                                                                                            .error(function(err) {
-                                                                                                                                console.log("*****ERROR: " + err + " *****");
-                                                                                                                                res.json({
-                                                                                                                                    status: "error"
-                                                                                                                                });
-                                                                                                                                return;
-                                                                                                                            });
+    //                                                                                                                             for (var m = 0; m < data_count[0].count; m++) {
+    //                                                                                                                                 for (var v = 0; v < data_time_charge_Dept_all.length; v++) {
+    //                                                                                                                                     chainer.add(db.time_activity_report.update({
+    //                                                                                                                                         time_charge_1_Dept: data_time_charge_Dept_all[v].time_charge_1_Dept,
+    //                                                                                                                                         per_1_Dept: ((data_time_charge_Dept_all[v].time_charge_1_Dept / data_time_charge_Dept_all[v].time_charge_week_Dept) * 100).toFixed(2),
+    //                                                                                                                                         time_charge_2_Dept: data_time_charge_Dept_all[v].time_charge_2_Dept,
+    //                                                                                                                                         per_2_Dept: ((data_time_charge_Dept_all[v].time_charge_2_Dept / data_time_charge_Dept_all[v].time_charge_week_Dept) * 100).toFixed(2),
+    //                                                                                                                                         time_charge_3_Dept: data_time_charge_Dept_all[v].time_charge_3_Dept,
+    //                                                                                                                                         per_3_Dept: ((data_time_charge_Dept_all[v].time_charge_3_Dept / data_time_charge_Dept_all[v].time_charge_week_Dept) * 100).toFixed(2),
+    //                                                                                                                                         time_charge_4_Dept: data_time_charge_Dept_all[v].time_charge_4_Dept,
+    //                                                                                                                                         per_4_Dept: ((data_time_charge_Dept_all[v].time_charge_4_Dept / data_time_charge_Dept_all[v].time_charge_week_Dept) * 100).toFixed(2),
+    //                                                                                                                                         time_charge_5_Dept: data_time_charge_Dept_all[v].time_charge_5_Dept,
+    //                                                                                                                                         per_5_Dept: ((data_time_charge_Dept_all[v].time_charge_5_Dept / data_time_charge_Dept_all[v].time_charge_week_Dept) * 100).toFixed(2),
+    //                                                                                                                                         time_charge_week_Dept: data_time_charge_Dept_all[v].time_charge_week_Dept
+    //                                                                                                                                     }, {
+    //                                                                                                                                         Department_id: data_time_charge_Dept_all[v].Department_id
+    //                                                                                                                                     }));
+    //                                                                                                                                 }
 
-                                                                                                                    })
-                                                                                                                    .error(function(err) {
-                                                                                                                        console.log("*****ERROR: " + err + " *****");
-                                                                                                                        res.json({
-                                                                                                                            status: "error"
-                                                                                                                        });
-                                                                                                                        return;
-                                                                                                                    });
-                                                                                                            })
-                                                                                                            .error(function(err) {
-                                                                                                                console.log("*****ERROR: " + err + " *****");
-                                                                                                                res.json({
-                                                                                                                    status: "error"
-                                                                                                                });
-                                                                                                                return;
-                                                                                                            });
+    //                                                                                                                             }
+    //                                                                                                                             chainer.runSerially()
+    //                                                                                                                                 .success(function(update_success1) {
 
-                                                                                                    })
-                                                                                                    .error(function(err) {
-                                                                                                        console.log("*****ERROR: " + err + " *****");
-                                                                                                        res.json({
-                                                                                                            status: "error"
-                                                                                                        });
-                                                                                                        return;
-                                                                                                    });
-                                                                                            })
-                                                                                            .error(function(err) {
-                                                                                                console.log("*****ERROR: " + err + " *****");
-                                                                                                res.json({
-                                                                                                    status: "error"
-                                                                                                });
-                                                                                                return;
-                                                                                            });
-                                                                                    }
-                                                                                })
+    //                                                                                                                                     db.sequelize.query(sql_get_time_charge_all)
+    //                                                                                                                                         .success(function(data_time_charge_all) {
+    //                                                                                                                                             for (var f = 0; f < data_count[0].count; f++) {
+    //                                                                                                                                                 chainer.add(db.time_activity_report.update({
+    //                                                                                                                                                     time_charge_1_all: data_time_charge_all[0].time_charge_1_all,
+    //                                                                                                                                                     per_1_all: ((data_time_charge_all[0].time_charge_1_all / data_time_charge_all[0].time_charge_all) * 100).toFixed(2),
+    //                                                                                                                                                     time_charge_2_all: data_time_charge_all[0].time_charge_2_all,
+    //                                                                                                                                                     per_2_all: ((data_time_charge_all[0].time_charge_2_all / data_time_charge_all[0].time_charge_all) * 100).toFixed(2),
+    //                                                                                                                                                     time_charge_3_all: data_time_charge_all[0].time_charge_3_all,
+    //                                                                                                                                                     per_3_all: ((data_time_charge_all[0].time_charge_3_all / data_time_charge_all[0].time_charge_all) * 100).toFixed(2),
+    //                                                                                                                                                     time_charge_4_all: data_time_charge_all[0].time_charge_4_all,
+    //                                                                                                                                                     per_4_all: ((data_time_charge_all[0].time_charge_4_all / data_time_charge_all[0].time_charge_all) * 100).toFixed(2),
+    //                                                                                                                                                     time_charge_5_all: data_time_charge_all[0].time_charge_5_all,
+    //                                                                                                                                                     per_5_all: ((data_time_charge_all[0].time_charge_5_all / data_time_charge_all[0].time_charge_all) * 100).toFixed(2),
+    //                                                                                                                                                     time_charge_all: data_time_charge_all[0].time_charge_all
+    //                                                                                                                                                 }, {
+    //                                                                                                                                                     user_id: data_time_charge_all[0].user_id
+    //                                                                                                                                                 }))
+    //                                                                                                                                             }
+    //                                                                                                                                             chainer.runSerially()
+    //                                                                                                                                                 .success(function(update_success2) {
+    //                                                                                                                                                     res.json({
+    //                                                                                                                                                         status: "success"
+    //                                                                                                                                                     });
+    //                                                                                                                                                     return;
+    //                                                                                                                                                 })
+    //                                                                                                                                                 .error(function(err) {
+    //                                                                                                                                                     console.log("*****ERROR: " + err + " *****");
+    //                                                                                                                                                     res.json({
+    //                                                                                                                                                         status: "error"
+    //                                                                                                                                                     });
+    //                                                                                                                                                     return;
+    //                                                                                                                                                 });
+    //                                                                                                                                         })
+    //                                                                                                                                         .error(function(err) {
+    //                                                                                                                                             console.log("*****ERROR: " + err + " *****");
+    //                                                                                                                                             res.json({
+    //                                                                                                                                                 status: "error"
+    //                                                                                                                                             });
+    //                                                                                                                                             return;
+    //                                                                                                                                         });
+    //                                                                                                                                 })
+    //                                                                                                                                 .error(function(err) {
+    //                                                                                                                                     console.log("*****ERROR: " + err + " *****");
+    //                                                                                                                                     res.json({
+    //                                                                                                                                         status: "error"
+    //                                                                                                                                     });
+    //                                                                                                                                     return;
+    //                                                                                                                                 });
+    //                                                                                                                         })
+    //                                                                                                                         .error(function(err) {
+    //                                                                                                                             console.log("*****ERROR: " + err + " *****");
+    //                                                                                                                             res.json({
+    //                                                                                                                                 status: "error"
+    //                                                                                                                             });
+    //                                                                                                                             return;
+    //                                                                                                                         });
 
-                                                                            .error(function(err) {
-                                                                                console.log("*****ERROR: " + err + " *****");
-                                                                                res.json({
-                                                                                    status: "error"
-                                                                                });
-                                                                                return;
-                                                                            });
-                                                                        }
-                                                                    })
-                                                                    .error(function(err) {
-                                                                        console.log("*****ERROR: " + err + " *****");
-                                                                        res.json({
-                                                                            status: "error"
-                                                                        });
-                                                                        return;
-                                                                    });
-                                                            })
-                                                            .error(function(err) {
-                                                                console.log("*****ERROR: " + err + " *****");
-                                                                res.json({
-                                                                    status: "error"
-                                                                });
-                                                                return;
-                                                            });
-                                                        //END GET
-                                                    }
-                                                })
-                                                .error(function(err) {
-                                                    console.log("*****ERROR: " + err + " *****");
-                                                    res.json({
-                                                        status: "error"
-                                                    });
-                                                    return;
-                                                });
-                                        }
-                                    })
-                                    .error(function(err) {
-                                        console.log("*****ERROR: " + err + " *****");
-                                        res.json({
-                                            status: "error"
-                                        });
-                                        return;
-                                    });
-                            })
-                            .error(function(err) {
-                                console.log("*****ERROR: " + err + " *****");
-                                res.json({
-                                    status: "error"
-                                });
-                                return;
-                            });
-                    })
-                    .error(function(err) {
-                        console.log("*****ERROR: " + err + " *****");
-                        res.json({
-                            status: "error"
-                        });
-                        return;
-                    });
+    //                                                                                                                 })
+    //                                                                                                                 .error(function(err) {
+    //                                                                                                                     console.log("*****ERROR: " + err + " *****");
+    //                                                                                                                     res.json({
+    //                                                                                                                         status: "error"
+    //                                                                                                                     });
+    //                                                                                                                     return;
+    //                                                                                                                 });
+    //                                                                                                         })
+    //                                                                                                         .error(function(err) {
+    //                                                                                                             console.log("*****ERROR: " + err + " *****");
+    //                                                                                                             res.json({
+    //                                                                                                                 status: "error"
+    //                                                                                                             });
+    //                                                                                                             return;
+    //                                                                                                         });
 
-            })
-            .error(function(err) {
-                console.log("*****ERROR: " + err + "*****");
-                res.json({
-                    status: "error"
-                });
-                return;
-            });
-        //
-    },
+    //                                                                                                 })
+    //                                                                                                 .error(function(err) {
+    //                                                                                                     console.log("*****ERROR: " + err + " *****");
+    //                                                                                                     res.json({
+    //                                                                                                         status: "error"
+    //                                                                                                     });
+    //                                                                                                     return;
+    //                                                                                                 });
+    //                                                                                         })
+    //                                                                                         .error(function(err) {
+    //                                                                                             console.log("*****ERROR: " + err + " *****");
+    //                                                                                             res.json({
+    //                                                                                                 status: "error"
+    //                                                                                             });
+    //                                                                                             return;
+    //                                                                                         });
+    //                                                                                 }
+    //                                                                             })
+
+    //                                                                         .error(function(err) {
+    //                                                                             console.log("*****ERROR: " + err + " *****");
+    //                                                                             res.json({
+    //                                                                                 status: "error"
+    //                                                                             });
+    //                                                                             return;
+    //                                                                         });
+    //                                                                     }
+    //                                                                 })
+    //                                                                 .error(function(err) {
+    //                                                                     console.log("*****ERROR: " + err + " *****");
+    //                                                                     res.json({
+    //                                                                         status: "error"
+    //                                                                     });
+    //                                                                     return;
+    //                                                                 });
+    //                                                         })
+    //                                                         .error(function(err) {
+    //                                                             console.log("*****ERROR: " + err + " *****");
+    //                                                             res.json({
+    //                                                                 status: "error"
+    //                                                             });
+    //                                                             return;
+    //                                                         });
+    //                                                     //END GET
+    //                                                 }
+    //                                             })
+    //                                             .error(function(err) {
+    //                                                 console.log("*****ERROR: " + err + " *****");
+    //                                                 res.json({
+    //                                                     status: "error"
+    //                                                 });
+    //                                                 return;
+    //                                             });
+    //                                     }
+    //                                 })
+    //                                 .error(function(err) {
+    //                                     console.log("*****ERROR: " + err + " *****");
+    //                                     res.json({
+    //                                         status: "error"
+    //                                     });
+    //                                     return;
+    //                                 });
+    //                         })
+    //                         .error(function(err) {
+    //                             console.log("*****ERROR: " + err + " *****");
+    //                             res.json({
+    //                                 status: "error"
+    //                             });
+    //                             return;
+    //                         });
+    //                 })
+    //                 .error(function(err) {
+    //                     console.log("*****ERROR: " + err + " *****");
+    //                     res.json({
+    //                         status: "error"
+    //                     });
+    //                     return;
+    //                 });
+
+    //         })
+    //         .error(function(err) {
+    //             console.log("*****ERROR: " + err + "*****");
+    //             res.json({
+    //                 status: "error"
+    //             });
+    //             return;
+    //         });
+    //     //
+    // },
     //END REPORT UTILIZITION RATIO DETAIL
 
     //REPORT UTILIZATION RATIO SUMARY
-    LoadReportUtilizationRatioSumary: function(req, res) {
-        var info = req.body.info;
-        var stringEMP = "";
-        var stringDept = "";
-        for (var i = 0; i < info.listEMP.length; i++) {
-            stringEMP += info.listEMP[i].id + ", ";
-        }
-        stringEMP += 0;
-        for (var j = 0; j < info.listDept.length; j++) {
-            stringDept += info.listDept[j].id + ", ";
-        }
-        stringDept += 0;
-        var time_charge_all = 0;
-        var flag1 = 0;
-        var flag2 = 0;
-        var flag3 = 0;
-        var flag4 = 0;
-        var flag5 = 0;
-        var flag6 = 0;
-        var flag7 = 0;
-        var flag8 = 0;
-        var flag9 = 0;
-        var sum = 0;
-        //DELETE ALL TABLE
-        var sql_delete_time_activity_summary_table = " DELETE FROM time_activity_summary_table WHERE user_id=" + info.USER_ID + " ";
-        var sql_delete_time_activity_summary_detail_table = " DELETE FROM time_activity_summary_detail_table WHERE user_id=" + info.USER_ID + " ";
-        var sql_delete_time_activity_summary_report = " DELETE FROM time_activity_summary_report WHERE user_id=" + info.USER_ID + " ";
-        //DELETE TABLE time_activity_summary_table
-        db.sequelize.query(sql_delete_time_activity_summary_table)
-            .success(function(data_delete1) {
-                //DELETE TABLE time_activity_summary_detail_table
-                db.sequelize.query(sql_delete_time_activity_summary_detail_table)
-                    .success(function(data_delete2) {
-                        //DELETE TABLE time_activity_summary_report
-                        db.sequelize.query(sql_delete_time_activity_summary_report)
-                            .success(function(data_delete3) {
-                                var sql_get_data_time_activity_summary_table = "SELECT users.id,hr_employee.FirstName, hr_employee.LastName, hr_employee.Employee_ID , departments.departmentid, departments.departmentName,time_tasks_week.time_charge, time_tasks_week.week_no,time_tasks_week.creation_date,time_tasks_week.last_update_date,time_tasks_week.task_week_id " + "FROM hr_employee " + "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + "INNER JOIN departments ON hr_employee.Dept_ID = departments.departmentid " + "INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id " + "WHERE time_tasks_week.task_status_id = 3 AND departments.departmentid IN ( " + stringDept + " ) AND (time_tasks_week.week_no BETWEEN " + info.weekNoFrom + " AND " + info.weekNoTo + " ) AND hr_employee.Employee_ID IN ( " + stringEMP + " ) ";
-                                //GET DATA TABLE time_activity_summary_table
-                                db.sequelize.query(sql_get_data_time_activity_summary_table)
-                                    .success(function(data_time_activity_summary_table) {
-                                        //console.log(data_time_activity_summary_table)
-                                        //INSERT DATA INTO time_activity_summary_table
-                                        for (var i = 0; i < data_time_activity_summary_table.length; i++) {
-                                            db.time_activity_summary_table.create({
-                                                    user_id: info.USER_ID,
-                                                    task_week_id: data_time_activity_summary_table[i].task_week_id,
-                                                    Employee_id: data_time_activity_summary_table[i].Employee_ID,
-                                                    Department_id: data_time_activity_summary_table[i].departmentid,
-                                                    FirstName: data_time_activity_summary_table[i].FirstName,
-                                                    LastName: data_time_activity_summary_table[i].LastName,
-                                                    Department_name: data_time_activity_summary_table[i].departmentName,
-                                                    weekno: data_time_activity_summary_table[i].week_no,
-                                                    time_charge_week: data_time_activity_summary_table[i].time_charge,
-                                                    from_date: info.weekFrom,
-                                                    to_date: info.weekTo,
-                                                    Creation_by: info.USER_ID
-                                                })
-                                                .success(function(data_insert1) {
-                                                    flag1++;
-                                                    if (flag1 == data_time_activity_summary_table.length) {
-                                                        //console.log("NEXT")
-                                                        //GET DATA TABLE time_activity_summary_detail_table
-                                                        var sql_get_data_time_activity_summary_detail_table = "SELECT " +
-                                                            "time_activity_summary_table.from_date, " +
-                                                            "time_activity_summary_table.to_date, " +
-                                                            "time_activity_summary_table.weekno, " +
-                                                            "time_tasks.tasks_id, " + "time_activity_summary_table.task_week_id, " +
-                                                            "time_activity_summary_table.user_id, " +
-                                                            "time_tasks.activity_id, " +
-                                                            "time_activity_summary_table.Department_id, " +
-                                                            "time_activity_summary_table.Employee_id, " +
-                                                            "time_tasks.time_charge, " +
-                                                            "time_activity_summary_table.time_charge_week " +
-                                                            "FROM time_tasks " +
-                                                            "INNER JOIN time_activity_summary_table ON time_tasks.tasks_week_id = time_activity_summary_table.task_week_id " +
-                                                            "WHERE time_activity_summary_table.Employee_id IN (" + stringEMP + ") AND time_activity_summary_table.Department_id IN (" + stringDept + ") AND time_activity_summary_table.user_id=" + info.USER_ID + " ";
-                                                        db.sequelize.query(sql_get_data_time_activity_summary_detail_table)
-                                                            .success(function(data_time_activity_summary_detail_table) {
-                                                                // console.log(data_time_activity_summary_detail_table)
-                                                                // console.log("NEXT")
-                                                                //INSERT DATA INTO time_activity_summary_detail_table
-                                                                for (var j = 0; j < data_time_activity_summary_detail_table.length; j++) {
-                                                                    chainer.add(db.time_activity_summary_detail_table.create({
-                                                                        task_week_id: data_time_activity_summary_detail_table[j].task_week_id,
-                                                                        tasks_id: data_time_activity_summary_detail_table[j].tasks_id,
-                                                                        user_id: data_time_activity_summary_detail_table[j].user_id,
-                                                                        Employee_id: data_time_activity_summary_detail_table[j].Employee_id,
-                                                                        Department_id: data_time_activity_summary_detail_table[j].Department_id,
-                                                                        activity_id: data_time_activity_summary_detail_table[j].activity_id,
-                                                                        time_charge: data_time_activity_summary_detail_table[j].time_charge,
-                                                                        time_charge_week: data_time_activity_summary_detail_table[j].time_charge_week,
-                                                                        weekno: data_time_activity_summary_detail_table[j].weekno,
-                                                                        from_date: data_time_activity_summary_detail_table[j].from_date,
-                                                                        to_date: data_time_activity_summary_detail_table[j].to_date,
-                                                                        Creation_by: info.USER_ID
-                                                                    }))
+    // LoadReportUtilizationRatioSumary: function(req, res) {
+    //     var info = req.body.info;
+    //     var stringEMP = "";
+    //     var stringDept = "";
+    //     for (var i = 0; i < info.listEMP.length; i++) {
+    //         stringEMP += info.listEMP[i].id + ", ";
+    //     }
+    //     stringEMP += 0;
+    //     for (var j = 0; j < info.listDept.length; j++) {
+    //         stringDept += info.listDept[j].id + ", ";
+    //     }
+    //     stringDept += 0;
+    //     var time_charge_all = 0;
+    //     var flag1 = 0;
+    //     var flag2 = 0;
+    //     var flag3 = 0;
+    //     var flag4 = 0;
+    //     var flag5 = 0;
+    //     var flag6 = 0;
+    //     var flag7 = 0;
+    //     var flag8 = 0;
+    //     var flag9 = 0;
+    //     var sum = 0;
+    //     //DELETE ALL TABLE
+    //     var sql_delete_time_activity_summary_table = " DELETE FROM time_activity_summary_table WHERE user_id=" + info.USER_ID + " ";
+    //     var sql_delete_time_activity_summary_detail_table = " DELETE FROM time_activity_summary_detail_table WHERE user_id=" + info.USER_ID + " ";
+    //     var sql_delete_time_activity_summary_report = " DELETE FROM time_activity_summary_report WHERE user_id=" + info.USER_ID + " ";
+    //     //DELETE TABLE time_activity_summary_table
+    //     db.sequelize.query(sql_delete_time_activity_summary_table)
+    //         .success(function(data_delete1) {
+    //             //DELETE TABLE time_activity_summary_detail_table
+    //             db.sequelize.query(sql_delete_time_activity_summary_detail_table)
+    //                 .success(function(data_delete2) {
+    //                     //DELETE TABLE time_activity_summary_report
+    //                     db.sequelize.query(sql_delete_time_activity_summary_report)
+    //                         .success(function(data_delete3) {
+    //                             var sql_get_data_time_activity_summary_table = "SELECT users.id,hr_employee.FirstName, hr_employee.LastName, hr_employee.Employee_ID , departments.departmentid, departments.departmentName,time_tasks_week.time_charge, time_tasks_week.week_no,time_tasks_week.creation_date,time_tasks_week.last_update_date,time_tasks_week.task_week_id " + "FROM hr_employee " + "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + "INNER JOIN departments ON hr_employee.Dept_ID = departments.departmentid " + "INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id " + "WHERE time_tasks_week.task_status_id = 3 AND departments.departmentid IN ( " + stringDept + " ) AND (time_tasks_week.week_no BETWEEN " + info.weekNoFrom + " AND " + info.weekNoTo + " ) AND hr_employee.Employee_ID IN ( " + stringEMP + " ) ";
+    //                             //GET DATA TABLE time_activity_summary_table
+    //                             db.sequelize.query(sql_get_data_time_activity_summary_table)
+    //                                 .success(function(data_time_activity_summary_table) {
+    //                                     //console.log(data_time_activity_summary_table)
+    //                                     //INSERT DATA INTO time_activity_summary_table
+    //                                     for (var i = 0; i < data_time_activity_summary_table.length; i++) {
+    //                                         db.time_activity_summary_table.create({
+    //                                                 user_id: info.USER_ID,
+    //                                                 task_week_id: data_time_activity_summary_table[i].task_week_id,
+    //                                                 Employee_id: data_time_activity_summary_table[i].Employee_ID,
+    //                                                 Department_id: data_time_activity_summary_table[i].departmentid,
+    //                                                 FirstName: data_time_activity_summary_table[i].FirstName,
+    //                                                 LastName: data_time_activity_summary_table[i].LastName,
+    //                                                 Department_name: data_time_activity_summary_table[i].departmentName,
+    //                                                 weekno: data_time_activity_summary_table[i].week_no,
+    //                                                 time_charge_week: data_time_activity_summary_table[i].time_charge,
+    //                                                 from_date: info.weekFrom,
+    //                                                 to_date: info.weekTo,
+    //                                                 Creation_by: info.USER_ID
+    //                                             })
+    //                                             .success(function(data_insert1) {
+    //                                                 flag1++;
+    //                                                 if (flag1 == data_time_activity_summary_table.length) {
+    //                                                     //console.log("NEXT")
+    //                                                     //GET DATA TABLE time_activity_summary_detail_table
+    //                                                     var sql_get_data_time_activity_summary_detail_table = "SELECT " +
+    //                                                         "time_activity_summary_table.from_date, " +
+    //                                                         "time_activity_summary_table.to_date, " +
+    //                                                         "time_activity_summary_table.weekno, " +
+    //                                                         "time_tasks.tasks_id, " + "time_activity_summary_table.task_week_id, " +
+    //                                                         "time_activity_summary_table.user_id, " +
+    //                                                         "time_tasks.activity_id, " +
+    //                                                         "time_activity_summary_table.Department_id, " +
+    //                                                         "time_activity_summary_table.Employee_id, " +
+    //                                                         "time_tasks.time_charge, " +
+    //                                                         "time_activity_summary_table.time_charge_week " +
+    //                                                         "FROM time_tasks " +
+    //                                                         "INNER JOIN time_activity_summary_table ON time_tasks.tasks_week_id = time_activity_summary_table.task_week_id " +
+    //                                                         "WHERE time_activity_summary_table.Employee_id IN (" + stringEMP + ") AND time_activity_summary_table.Department_id IN (" + stringDept + ") AND time_activity_summary_table.user_id=" + info.USER_ID + " ";
+    //                                                     db.sequelize.query(sql_get_data_time_activity_summary_detail_table)
+    //                                                         .success(function(data_time_activity_summary_detail_table) {
+    //                                                             // console.log(data_time_activity_summary_detail_table)
+    //                                                             // console.log("NEXT")
+    //                                                             //INSERT DATA INTO time_activity_summary_detail_table
+    //                                                             for (var j = 0; j < data_time_activity_summary_detail_table.length; j++) {
+    //                                                                 chainer.add(db.time_activity_summary_detail_table.create({
+    //                                                                     task_week_id: data_time_activity_summary_detail_table[j].task_week_id,
+    //                                                                     tasks_id: data_time_activity_summary_detail_table[j].tasks_id,
+    //                                                                     user_id: data_time_activity_summary_detail_table[j].user_id,
+    //                                                                     Employee_id: data_time_activity_summary_detail_table[j].Employee_id,
+    //                                                                     Department_id: data_time_activity_summary_detail_table[j].Department_id,
+    //                                                                     activity_id: data_time_activity_summary_detail_table[j].activity_id,
+    //                                                                     time_charge: data_time_activity_summary_detail_table[j].time_charge,
+    //                                                                     time_charge_week: data_time_activity_summary_detail_table[j].time_charge_week,
+    //                                                                     weekno: data_time_activity_summary_detail_table[j].weekno,
+    //                                                                     from_date: data_time_activity_summary_detail_table[j].from_date,
+    //                                                                     to_date: data_time_activity_summary_detail_table[j].to_date,
+    //                                                                     Creation_by: info.USER_ID
+    //                                                                 }))
 
-                                                                }
-                                                                chainer.runSerially()
-                                                                    .success(function(data_insert1) {
-                                                                        var sql_line = "SELECT DISTINCT Department_id,from_date,to_date  " +
-                                                                            "FROM time_activity_summary_detail_table " +
-                                                                            "WHERE user_id=" + info.USER_ID;
-                                                                        db.sequelize.query(sql_line)
-                                                                            .success(function(data_insert1) {
-                                                                                for (var t = 0; t < data_insert1.length; t++) {
-                                                                                    for (var u = 0; u < 5; u++) {
-                                                                                        chainer.add(db.time_activity_summary_report.create({
-                                                                                            user_id: info.USER_ID,
-                                                                                            Department_id: data_insert1[t].Department_id,
-                                                                                            activity_id: u + 1,
-                                                                                            from_date: data_insert1[t].from_date,
-                                                                                            to_date: data_insert1[t].to_date
-                                                                                        }));
-                                                                                    }
-                                                                                }
-                                                                                chainer.runSerially()
-                                                                                    .success(function(data_insert2) {
-                                                                                        var sql_update1 = "SELECT user_id,Employee_id,Department_id,activity_id,SUM(time_charge) AS'time_charge_Dept' " +
-                                                                                            "FROM time_activity_summary_detail_table " +
-                                                                                            "WHERE user_id=" + info.USER_ID + " AND Department_id IN (" + stringDept + ") AND Employee_id IN(" + stringEMP + ") " +
-                                                                                            "GROUP BY Employee_id,Department_id,activity_id";
-                                                                                        db.sequelize.query(sql_update1)
-                                                                                            .success(function(data_update1) {
-                                                                                                for (var y = 0; y < 5 * data_insert1.length; y++) {
-                                                                                                    for (var x = 0; x < data_update1.length; x++) {
-                                                                                                        chainer.add(db.time_activity_summary_report.update({
-                                                                                                            time_charge_Dept: data_update1[x].time_charge_Dept,
+    //                                                             }
+    //                                                             chainer.runSerially()
+    //                                                                 .success(function(data_insert1) {
+    //                                                                     var sql_line = "SELECT DISTINCT Department_id,from_date,to_date  " +
+    //                                                                         "FROM time_activity_summary_detail_table " +
+    //                                                                         "WHERE user_id=" + info.USER_ID;
+    //                                                                     db.sequelize.query(sql_line)
+    //                                                                         .success(function(data_insert1) {
+    //                                                                             for (var t = 0; t < data_insert1.length; t++) {
+    //                                                                                 for (var u = 0; u < 5; u++) {
+    //                                                                                     chainer.add(db.time_activity_summary_report.create({
+    //                                                                                         user_id: info.USER_ID,
+    //                                                                                         Department_id: data_insert1[t].Department_id,
+    //                                                                                         activity_id: u + 1,
+    //                                                                                         from_date: data_insert1[t].from_date,
+    //                                                                                         to_date: data_insert1[t].to_date
+    //                                                                                     }));
+    //                                                                                 }
+    //                                                                             }
+    //                                                                             chainer.runSerially()
+    //                                                                                 .success(function(data_insert2) {
+    //                                                                                     var sql_update1 = "SELECT user_id,Employee_id,Department_id,activity_id,SUM(time_charge) AS'time_charge_Dept' " +
+    //                                                                                         "FROM time_activity_summary_detail_table " +
+    //                                                                                         "WHERE user_id=" + info.USER_ID + " AND Department_id IN (" + stringDept + ") AND Employee_id IN(" + stringEMP + ") " +
+    //                                                                                         "GROUP BY Employee_id,Department_id,activity_id";
+    //                                                                                     db.sequelize.query(sql_update1)
+    //                                                                                         .success(function(data_update1) {
+    //                                                                                             for (var y = 0; y < 5 * data_insert1.length; y++) {
+    //                                                                                                 for (var x = 0; x < data_update1.length; x++) {
+    //                                                                                                     chainer.add(db.time_activity_summary_report.update({
+    //                                                                                                         time_charge_Dept: data_update1[x].time_charge_Dept,
 
-                                                                                                        }, {
-                                                                                                            user_id: data_update1[x].user_id,
+    //                                                                                                     }, {
+    //                                                                                                         user_id: data_update1[x].user_id,
 
-                                                                                                            Department_id: data_update1[x].Department_id,
-                                                                                                            activity_id: data_update1[x].activity_id
-                                                                                                        }));
-                                                                                                    }
-                                                                                                }
-                                                                                                chainer.runSerially()
-                                                                                                    .success(function(data_insert3) {
-                                                                                                        var sql_update2 = "SELECT SUM(time_charge_Dept) AS 'time_charge_Dept_all',Department_id,user_id " +
-                                                                                                            "FROM time_activity_summary_report " +
-                                                                                                            "WHERE Department_id IN(" + stringDept + ") AND user_id=" + info.USER_ID + " " +
-                                                                                                            "GROUP BY Department_id";
-                                                                                                        db.sequelize.query(sql_update2)
-                                                                                                            .success(function(data_update2) {
-                                                                                                                for (var m = 0; m < 5 * data_insert1.length; m++) {
-                                                                                                                    for (var n = 0; n < data_update2.length; n++) {
-                                                                                                                        chainer.add(db.time_activity_summary_report.update({
-                                                                                                                            time_charge_Dept_all: data_update2[n].time_charge_Dept_all
-                                                                                                                        }, {
-                                                                                                                            Department_id: data_update2[n].Department_id,
-                                                                                                                            user_id: data_update2[n].user_id
-                                                                                                                        }))
-                                                                                                                    }
-                                                                                                                }
-                                                                                                                chainer.runSerially()
-                                                                                                                    .success(function(data_insert4) {
-                                                                                                                        var sql_update3 = "SELECT SUM(t.time_charge_Dept_all) AS 'time_charge_all',t.user_id " +
-                                                                                                                            "FROM " +
-                                                                                                                            "(SELECT * " +
-                                                                                                                            "FROM time_activity_summary_report " +
-                                                                                                                            "WHERE user_id=268 " +
-                                                                                                                            "GROUP BY Department_id " +
-                                                                                                                            ") t";
-                                                                                                                        db.sequelize.query(sql_update3)
-                                                                                                                            .success(function(data_update4) {
-                                                                                                                                for (var h = 0; h < 5 * data_insert1.length; h++) {
-                                                                                                                                    chainer.add(db.time_activity_summary_report.update({
-                                                                                                                                        time_charge_all: data_update4[0].time_charge_all
-                                                                                                                                    }, {
-                                                                                                                                        user_id: data_update4[0].user_id
-                                                                                                                                    }))
-                                                                                                                                }
-                                                                                                                                chainer.runSerially()
-                                                                                                                                    .success(function(data_success) {
-                                                                                                                                        var sql_get_data = "SELECT * " +
-                                                                                                                                            "FROM time_activity_summary_report " +
-                                                                                                                                            "WHERE user_id=" + info.USER_ID + " " +
-                                                                                                                                            "GROUP BY Department_id,activity_id";
-                                                                                                                                        db.sequelize.query(sql_get_data)
-                                                                                                                                            .success(function(data) {
-                                                                                                                                                for (var k = 0; k < data.length; k++) {
-                                                                                                                                                    chainer.add(db.time_activity_summary_report.update({
-                                                                                                                                                        time_charge_Dept_per: ((data[k].time_charge_Dept / data[k].time_charge_Dept_all) * 100).toFixed(2)
-                                                                                                                                                    }, {
-                                                                                                                                                        user_id: data[k].user_id,
-                                                                                                                                                        Department_id: data[k].Department_id,
-                                                                                                                                                        activity_id: data[k].activity_id
-                                                                                                                                                    }))
-                                                                                                                                                }
-                                                                                                                                                chainer.runSerially()
-                                                                                                                                                    .success(function(data_success_final) {
-                                                                                                                                                        res.json({
-                                                                                                                                                            status: "success"
-                                                                                                                                                        });
-                                                                                                                                                    })
-                                                                                                                                                    .error(function(err) {
-                                                                                                                                                        console.log("*****ERROR: " + err + " *****");
-                                                                                                                                                    });
-                                                                                                                                                return;
-                                                                                                                                            })
-                                                                                                                                            .error(function(err) {
-                                                                                                                                                console.log("*****ERROR: " + err + " *****");
-                                                                                                                                                res.json({
-                                                                                                                                                    status: "error"
-                                                                                                                                                });
-                                                                                                                                                return;
-                                                                                                                                            })
-                                                                                                                                    })
-                                                                                                                                    .error(function(err) {
-                                                                                                                                        console.log("*****ERROR: " + err + " *****");
-                                                                                                                                        res.json({
-                                                                                                                                            status: "error"
-                                                                                                                                        });
-                                                                                                                                        return;
-                                                                                                                                    })
-                                                                                                                            })
-                                                                                                                            .error(function(err) {
-                                                                                                                                console.log("*****ERROR: " + err + " *****");
-                                                                                                                                res.json({
-                                                                                                                                    status: "error"
-                                                                                                                                });
-                                                                                                                                return;
-                                                                                                                            })
-                                                                                                                    })
-                                                                                                                    .error(function(err) {
-                                                                                                                        console.log("*****ERROR: " + err + " *****");
-                                                                                                                        res.json({
-                                                                                                                            status: "error"
-                                                                                                                        });
-                                                                                                                        return;
-                                                                                                                    })
+    //                                                                                                         Department_id: data_update1[x].Department_id,
+    //                                                                                                         activity_id: data_update1[x].activity_id
+    //                                                                                                     }));
+    //                                                                                                 }
+    //                                                                                             }
+    //                                                                                             chainer.runSerially()
+    //                                                                                                 .success(function(data_insert3) {
+    //                                                                                                     var sql_update2 = "SELECT SUM(time_charge_Dept) AS 'time_charge_Dept_all',Department_id,user_id " +
+    //                                                                                                         "FROM time_activity_summary_report " +
+    //                                                                                                         "WHERE Department_id IN(" + stringDept + ") AND user_id=" + info.USER_ID + " " +
+    //                                                                                                         "GROUP BY Department_id";
+    //                                                                                                     db.sequelize.query(sql_update2)
+    //                                                                                                         .success(function(data_update2) {
+    //                                                                                                             for (var m = 0; m < 5 * data_insert1.length; m++) {
+    //                                                                                                                 for (var n = 0; n < data_update2.length; n++) {
+    //                                                                                                                     chainer.add(db.time_activity_summary_report.update({
+    //                                                                                                                         time_charge_Dept_all: data_update2[n].time_charge_Dept_all
+    //                                                                                                                     }, {
+    //                                                                                                                         Department_id: data_update2[n].Department_id,
+    //                                                                                                                         user_id: data_update2[n].user_id
+    //                                                                                                                     }))
+    //                                                                                                                 }
+    //                                                                                                             }
+    //                                                                                                             chainer.runSerially()
+    //                                                                                                                 .success(function(data_insert4) {
+    //                                                                                                                     var sql_update3 = "SELECT SUM(t.time_charge_Dept_all) AS 'time_charge_all',t.user_id " +
+    //                                                                                                                         "FROM " +
+    //                                                                                                                         "(SELECT * " +
+    //                                                                                                                         "FROM time_activity_summary_report " +
+    //                                                                                                                         "WHERE user_id=268 " +
+    //                                                                                                                         "GROUP BY Department_id " +
+    //                                                                                                                         ") t";
+    //                                                                                                                     db.sequelize.query(sql_update3)
+    //                                                                                                                         .success(function(data_update4) {
+    //                                                                                                                             for (var h = 0; h < 5 * data_insert1.length; h++) {
+    //                                                                                                                                 chainer.add(db.time_activity_summary_report.update({
+    //                                                                                                                                     time_charge_all: data_update4[0].time_charge_all
+    //                                                                                                                                 }, {
+    //                                                                                                                                     user_id: data_update4[0].user_id
+    //                                                                                                                                 }))
+    //                                                                                                                             }
+    //                                                                                                                             chainer.runSerially()
+    //                                                                                                                                 .success(function(data_success) {
+    //                                                                                                                                     var sql_get_data = "SELECT * " +
+    //                                                                                                                                         "FROM time_activity_summary_report " +
+    //                                                                                                                                         "WHERE user_id=" + info.USER_ID + " " +
+    //                                                                                                                                         "GROUP BY Department_id,activity_id";
+    //                                                                                                                                     db.sequelize.query(sql_get_data)
+    //                                                                                                                                         .success(function(data) {
+    //                                                                                                                                             for (var k = 0; k < data.length; k++) {
+    //                                                                                                                                                 chainer.add(db.time_activity_summary_report.update({
+    //                                                                                                                                                     time_charge_Dept_per: ((data[k].time_charge_Dept / data[k].time_charge_Dept_all) * 100).toFixed(2)
+    //                                                                                                                                                 }, {
+    //                                                                                                                                                     user_id: data[k].user_id,
+    //                                                                                                                                                     Department_id: data[k].Department_id,
+    //                                                                                                                                                     activity_id: data[k].activity_id
+    //                                                                                                                                                 }))
+    //                                                                                                                                             }
+    //                                                                                                                                             chainer.runSerially()
+    //                                                                                                                                                 .success(function(data_success_final) {
+    //                                                                                                                                                     res.json({
+    //                                                                                                                                                         status: "success"
+    //                                                                                                                                                     });
+    //                                                                                                                                                 })
+    //                                                                                                                                                 .error(function(err) {
+    //                                                                                                                                                     console.log("*****ERROR: " + err + " *****");
+    //                                                                                                                                                 });
+    //                                                                                                                                             return;
+    //                                                                                                                                         })
+    //                                                                                                                                         .error(function(err) {
+    //                                                                                                                                             console.log("*****ERROR: " + err + " *****");
+    //                                                                                                                                             res.json({
+    //                                                                                                                                                 status: "error"
+    //                                                                                                                                             });
+    //                                                                                                                                             return;
+    //                                                                                                                                         })
+    //                                                                                                                                 })
+    //                                                                                                                                 .error(function(err) {
+    //                                                                                                                                     console.log("*****ERROR: " + err + " *****");
+    //                                                                                                                                     res.json({
+    //                                                                                                                                         status: "error"
+    //                                                                                                                                     });
+    //                                                                                                                                     return;
+    //                                                                                                                                 })
+    //                                                                                                                         })
+    //                                                                                                                         .error(function(err) {
+    //                                                                                                                             console.log("*****ERROR: " + err + " *****");
+    //                                                                                                                             res.json({
+    //                                                                                                                                 status: "error"
+    //                                                                                                                             });
+    //                                                                                                                             return;
+    //                                                                                                                         })
+    //                                                                                                                 })
+    //                                                                                                                 .error(function(err) {
+    //                                                                                                                     console.log("*****ERROR: " + err + " *****");
+    //                                                                                                                     res.json({
+    //                                                                                                                         status: "error"
+    //                                                                                                                     });
+    //                                                                                                                     return;
+    //                                                                                                                 })
 
-                                                                                                            })
-                                                                                                            .error(function(err) {
-                                                                                                                console.log("*****ERROR: " + err + " *****");
-                                                                                                                res.json({
-                                                                                                                    status: "error"
-                                                                                                                });
-                                                                                                                return;
-                                                                                                            })
-                                                                                                    })
-                                                                                                    .error(function(err) {
-                                                                                                        console.log("*****ERROR: " + err + " *****");
-                                                                                                        res.json({
-                                                                                                            status: "error"
-                                                                                                        });
-                                                                                                        return;
-                                                                                                    })
-                                                                                            })
-                                                                                            .error(function(err) {
-                                                                                                console.log("*****ERROR: " + err + "*****");
-                                                                                                res.json({
-                                                                                                    status: "error"
-                                                                                                });
-                                                                                                return;
-                                                                                            })
-                                                                                    })
-                                                                                    .error(function(err) {
-                                                                                        console.log("*****ERROR: " + err + " *****");
-                                                                                        res.json({
-                                                                                            status: "error"
-                                                                                        });
-                                                                                        return;
-                                                                                    })
-                                                                            })
-                                                                            .error(function(err) {
-                                                                                console.log("*****ERROR: " + err + " *****");
-                                                                                res.json({
-                                                                                    status: "error"
-                                                                                });
-                                                                                return;
-                                                                            })
-                                                                    })
-                                                                    .error(function(err) {
-                                                                        console.log("*****ERROR: " + err + " *****");
-                                                                        res.json({
-                                                                            status: "error"
-                                                                        });
-                                                                        return;
-                                                                    })
-                                                            })
-                                                            .error(function(err) {
-                                                                console.log("*****ERROR: " + err + " *****");
-                                                                res.json({
-                                                                    status: "error"
-                                                                });
-                                                                return;
-                                                            })
-                                                    }
-                                                })
-                                                .error(function(err) {
-                                                    console.log("*****ERROR: " + err + " *****");
-                                                    res.json({
-                                                        status: "error"
-                                                    });
-                                                    return;
-                                                })
-                                        }
-                                    })
-                                    .error(function(err) {
-                                        console.log("*****ERROR: " + err + " *****");
-                                        res.json({
-                                            status: "error"
-                                        });
-                                        return;
-                                    })
-                            })
-                            .error(function(err) {
-                                console.log("*****ERROR: " + err + " *****");
-                                res.json({
-                                    status: "error"
-                                });
-                                return;
-                            })
-                    })
-                    .error(function(err) {
-                        console.log("*****ERROR: " + err + " *****");
-                        res.json({
-                            status: "error"
-                        });
-                        return;
-                    })
-            })
-            .error(function(err) {
-                console.log("*****ERROR: " + err + "*****");
-                res.json({
-                    status: "error"
-                });
-                return;
-            })
-    },
+    //                                                                                                         })
+    //                                                                                                         .error(function(err) {
+    //                                                                                                             console.log("*****ERROR: " + err + " *****");
+    //                                                                                                             res.json({
+    //                                                                                                                 status: "error"
+    //                                                                                                             });
+    //                                                                                                             return;
+    //                                                                                                         })
+    //                                                                                                 })
+    //                                                                                                 .error(function(err) {
+    //                                                                                                     console.log("*****ERROR: " + err + " *****");
+    //                                                                                                     res.json({
+    //                                                                                                         status: "error"
+    //                                                                                                     });
+    //                                                                                                     return;
+    //                                                                                                 })
+    //                                                                                         })
+    //                                                                                         .error(function(err) {
+    //                                                                                             console.log("*****ERROR: " + err + "*****");
+    //                                                                                             res.json({
+    //                                                                                                 status: "error"
+    //                                                                                             });
+    //                                                                                             return;
+    //                                                                                         })
+    //                                                                                 })
+    //                                                                                 .error(function(err) {
+    //                                                                                     console.log("*****ERROR: " + err + " *****");
+    //                                                                                     res.json({
+    //                                                                                         status: "error"
+    //                                                                                     });
+    //                                                                                     return;
+    //                                                                                 })
+    //                                                                         })
+    //                                                                         .error(function(err) {
+    //                                                                             console.log("*****ERROR: " + err + " *****");
+    //                                                                             res.json({
+    //                                                                                 status: "error"
+    //                                                                             });
+    //                                                                             return;
+    //                                                                         })
+    //                                                                 })
+    //                                                                 .error(function(err) {
+    //                                                                     console.log("*****ERROR: " + err + " *****");
+    //                                                                     res.json({
+    //                                                                         status: "error"
+    //                                                                     });
+    //                                                                     return;
+    //                                                                 })
+    //                                                         })
+    //                                                         .error(function(err) {
+    //                                                             console.log("*****ERROR: " + err + " *****");
+    //                                                             res.json({
+    //                                                                 status: "error"
+    //                                                             });
+    //                                                             return;
+    //                                                         })
+    //                                                 }
+    //                                             })
+    //                                             .error(function(err) {
+    //                                                 console.log("*****ERROR: " + err + " *****");
+    //                                                 res.json({
+    //                                                     status: "error"
+    //                                                 });
+    //                                                 return;
+    //                                             })
+    //                                     }
+    //                                 })
+    //                                 .error(function(err) {
+    //                                     console.log("*****ERROR: " + err + " *****");
+    //                                     res.json({
+    //                                         status: "error"
+    //                                     });
+    //                                     return;
+    //                                 })
+    //                         })
+    //                         .error(function(err) {
+    //                             console.log("*****ERROR: " + err + " *****");
+    //                             res.json({
+    //                                 status: "error"
+    //                             });
+    //                             return;
+    //                         })
+    //                 })
+    //                 .error(function(err) {
+    //                     console.log("*****ERROR: " + err + " *****");
+    //                     res.json({
+    //                         status: "error"
+    //                     });
+    //                     return;
+    //                 })
+    //         })
+    //         .error(function(err) {
+    //             console.log("*****ERROR: " + err + "*****");
+    //             res.json({
+    //                 status: "error"
+    //             });
+    //             return;
+    //         })
+    // },
     //END REPORT UTILIZITION RATIO SUMARY
 
     //REPORT ITEM NUMBER
