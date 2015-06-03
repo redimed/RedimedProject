@@ -56,13 +56,13 @@ angular.module("app.loggedIn.TimeSheet.UpUser.Directive", [])
                         if (response.status === "success") {
                             scope.infoShow = response.result[0];
                         } else if (response.status === "error") {
-                            $state.go("loggedIn.TimeSheetListNode", null, {
+                            $state.go("loggedIn.TimeSheetHome.TimeSheetListNode", null, {
                                 "reload": true
                             });
                             toastr.error("Server response error!", "Error");
                         } else {
                             //catch exception
-                            $state.go("loggedIn.TimeSheetListNode", null, {
+                            $state.go("loggedIn.TimeSheetHome.TimeSheetListNode", null, {
                                 "reload": true
                             });
                             toastr.error("Server not response!", "Error");
@@ -77,7 +77,7 @@ angular.module("app.loggedIn.TimeSheet.UpUser.Directive", [])
                         infoDept.GROUP_ID = localStorageService.get("idTreeTimeSheet");
                         TimeSheetService.LoadRoleWhere(infoDept).then(function(response) {
                             if (response.status === "error") {
-                                $state.go("loggedIn.TimeSheetListNode", null, {
+                                $state.go("loggedIn.TimeSheetHome.TimeSheetListNode", null, {
                                     "reload": true
                                 });
                                 toastr.error("Server response error!", "Error");
@@ -85,7 +85,7 @@ angular.module("app.loggedIn.TimeSheet.UpUser.Directive", [])
                                 scope.node = response.result;
                             } else {
                                 //catch exceptio
-                                $state.go("loggedIn.TimeSheetListNode", null, {
+                                $state.go("loggedIn.TimeSheetHome.TimeSheetListNode", null, {
                                     "reload": true
                                 });
                                 toastr.error("Server not response!", "Error");
@@ -102,7 +102,7 @@ angular.module("app.loggedIn.TimeSheet.UpUser.Directive", [])
                         infoRole.NODE_ID = scope.info.NODE_ID;
                         TimeSheetService.LoadDeptWhere(infoRole).then(function(response) {
                             if (response.status === "error") {
-                                $state.go("loggedIn.TimeSheetListNode", null, {
+                                $state.go("loggedIn.TimeSheetHome.TimeSheetListNode", null, {
                                     "reload": true
                                 });
                                 toastr.error("Server response error!", "Error");
@@ -110,7 +110,7 @@ angular.module("app.loggedIn.TimeSheet.UpUser.Directive", [])
                                 scope.department = response.result;
                             } else {
                                 //catch exceptio
-                                $state.go("loggedIn.TimeSheetListNode", null, {
+                                $state.go("loggedIn.TimeSheetHome.TimeSheetListNode", null, {
                                     "reload": true
                                 });
                                 toastr.error("Server not response!", "Error");

@@ -116,14 +116,14 @@ angular.module("app.loggedIn.TimeSheet.Dept.Controller", [])
                     if (response.status === "error") {
                         toastr.error("Server response error!", "Error");
                     } else if (response.status === "success") {
-                        $state.go("loggedIn.TimeSheetDept", null, {
+                        $state.go("loggedIn.TimeSheetHome.TimeSheetDept", null, {
                             "reload": true
                         });
                         toastr.success("Delete success!", "Success");
 
                     } else {
                         toastr.error("Server not response!", "Error");
-                        $state.go("loggedIn.TimeSheetDept", null, {
+                        $state.go("loggedIn.TimeSheetHome.TimeSheetDept", null, {
                             "reload": true
                         });
                     }
@@ -155,17 +155,17 @@ angular.module("app.loggedIn.TimeSheet.Dept.Controller", [])
                                     modalInstance.close({
                                         status: "success"
                                     });
-                                    $state.go("loggedIn.TimeSheetDept", null, {
+                                    $state.go("loggedIn.TimeSheetHome.TimeSheetDept", null, {
                                         "reload": true
                                     });
                                     toastr.success("Add dept success!", "Success");
                                 } else if (response.status === "error") {
-                                    $state.go("loggedIn.TimeSheetDept", null, {
+                                    $state.go("loggedIn.TimeSheetHome.TimeSheetDept", null, {
                                         "reload": true
                                     });
                                     toastr.error("Add dept fail!", "error");
                                 } else {
-                                    $state.go("loggedIn.TimeSheetDept", null, {
+                                    $state.go("loggedIn.TimeSheetHome.TimeSheetDept", null, {
                                         "reload": true
                                     });
                                     toastr.error("Server not response!", "error");
@@ -177,17 +177,17 @@ angular.module("app.loggedIn.TimeSheet.Dept.Controller", [])
                                     modalInstance.close({
                                         status: "success"
                                     });
-                                    $state.go("loggedIn.TimeSheetDept", null, {
+                                    $state.go("loggedIn.TimeSheetHome.TimeSheetDept", null, {
                                         "reload": true
                                     });
                                     toastr.success("Update dept success!", "Success");
                                 } else if (response.status === "error") {
-                                    $state.go("loggedIn.TimeSheetDept", null, {
+                                    $state.go("loggedIn.TimeSheetHome.TimeSheetDept", null, {
                                         "reload": true
                                     });
                                     toastr.error("Update fail!", "Error");
                                 } else {
-                                    $state.go("loggedIn.TimeSheetDept", null, {
+                                    $state.go("loggedIn.TimeSheetHome.TimeSheetDept", null, {
                                         "reload": true
                                     });
                                     toastr.error("Server not response!", "error");

@@ -19,7 +19,7 @@ angular.module("app.loggedIn.TimeSheet.StepEmployee.Directive", [])
                                 console.log(response.result);
                             } else {
                                 //catch exception
-                                $state.go("loggedIn.AdminTimeSheet", null, {
+                                $state.go("loggedIn.home", null, {
                                     "reload": true
                                 });
                                 toastr.error("Server not response!", "Error");

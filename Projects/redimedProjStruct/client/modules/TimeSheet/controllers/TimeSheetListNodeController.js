@@ -32,7 +32,7 @@ angular.module("app.loggedIn.TimeSheet.ListNode", [])
                     $scope.listNode = response;
                 } else {
                     //catch exception
-                    $state.go("loggedIn.TimeSheetTree", null, {
+                    $state.go("loggedIn.TimeSheetHome.TimeSheetTree", null, {
                         "reload": true
                     });
                     toastr.error("Server reponse error!", "Error");
@@ -174,7 +174,7 @@ angular.module("app.loggedIn.TimeSheet.ListNode", [])
                     $scope.listUser = response;
                 } else {
                     // catch exception
-                    $state.go("loggedIn.TimeSheetTree", null, {
+                    $state.go("loggedIn.TimeSheetHome.TimeSheetTree", null, {
                         "reload": true
                     });
                     toastr.error("Server response error!", "Error");
@@ -265,7 +265,7 @@ angular.module("app.loggedIn.TimeSheet.ListNode", [])
         //LOAD LOCATION
         TimeSheetService.LoadLocation().then(function(response) {
             if (response.status === "error") {
-                $state.go("loggedIn.TimeSheetDept", null, {
+                $state.go("loggedIn.TimeSheetHome.TimeSheetDept", null, {
                     "reload": true
                 });
                 toastr.error("Server response error!", "Error");
@@ -273,7 +273,7 @@ angular.module("app.loggedIn.TimeSheet.ListNode", [])
                 $scope.local = response.result;
             } else {
                 //catch exception
-                $state.go("loggedIn.TimeSheetDept", null, {
+                $state.go("loggedIn.TimeSheetHome.TimeSheetDept", null, {
                     "reload": true
                 });
                 toastr.error("Server not response!", "Error");
@@ -442,7 +442,7 @@ angular.module("app.loggedIn.TimeSheet.ListNode", [])
                                 modalInstance.close({
                                     status: "error"
                                 });
-                                $state.go("loggedIn.TimeSheetListNode", null, {
+                                $state.go("loggedIn.TimeSheetHome.TimeSheetListNode", null, {
                                     "reload": true
                                 });
                                 toastr.error("Add user fail!", "Error");
@@ -451,7 +451,7 @@ angular.module("app.loggedIn.TimeSheet.ListNode", [])
                                 modalInstance.close({
                                     status: "error"
                                 });
-                                $state.go("loggedIn.TimeSheetListNode", null, {
+                                $state.go("loggedIn.TimeSheetHome.TimeSheetListNode", null, {
                                     "reload": true
                                 });
                                 toastr.error("Add user fail!", "Error");

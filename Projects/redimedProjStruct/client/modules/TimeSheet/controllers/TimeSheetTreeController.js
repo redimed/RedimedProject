@@ -84,6 +84,6 @@ angular.module("app.loggedIn.TimeSheet.Tree.Controller", [])
 
         $scope.goToListNode = function(idTreeTimeSheet) {
             localStorageService.set("idTreeTimeSheet", idTreeTimeSheet);
-            $state.go("loggedIn.TimeSheetListNode");
+            $state.go("loggedIn.TimeSheetHome.TimeSheetListNode");
         };
     });

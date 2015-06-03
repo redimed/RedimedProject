@@ -13,7 +13,7 @@ angular.module("app.loggedIn.TimeSheet.AddDept.Directive", [])
                     //load location
                     TimeSheetService.LoadLocation().then(function(response) {
                         if (response.status === "error") {
-                            $state.go("loggedIn.TimeSheetDept", null, {
+                            $state.go("loggedIn.TimeSheetHome.TimeSheetDept", null, {
                                 "reload": true
                             });
                             toastr.error("Server response error!", "Error");
@@ -21,7 +21,7 @@ angular.module("app.loggedIn.TimeSheet.AddDept.Directive", [])
                             scope.location = response.result;
                         } else {
                             //catch exception
-                            $state.go("loggedIn.TimeSheetDept", null, {
+                            $state.go("loggedIn.TimeSheetHome.TimeSheetDept", null, {
                                 "reload": true
                             });
                             toastr.error("Server not response!", "Error");
@@ -33,7 +33,7 @@ angular.module("app.loggedIn.TimeSheet.AddDept.Directive", [])
                         scope.addOrUpdateButton = "Update";
                         TimeSheetService.LoadOneDept(newModel).then(function(response) {
                             if (response.status === "error") {
-                                $state.go("loggedIn.TimeSheetDept", null, {
+                                $state.go("loggedIn.TimeSheetHome.TimeSheetDept", null, {
                                     "reload": true
                                 });
                                 toastr.error("Server response error!", "Error");
@@ -44,7 +44,7 @@ angular.module("app.loggedIn.TimeSheet.AddDept.Directive", [])
                                 scope.info.locationID = response.result.locationID;
                             } else {
                                 //catch exception
-                                $state.go("loggedIn.TimeSheetDept", null, {
+                                $state.go("loggedIn.TimeSheetHome.TimeSheetDept", null, {
                                     "reload": true
                                 });
                                 toastr.error("Server not response!", "Error");

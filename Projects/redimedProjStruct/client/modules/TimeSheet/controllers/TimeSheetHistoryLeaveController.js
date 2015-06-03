@@ -66,7 +66,7 @@ angular.module("app.loggedIn.TimeSheet.HistoryLeave.Controller", [])
                         TimeSheetService.SubmitOnViewLeave(info).then(function(response) {
                             if (response.status === "success") {
                                 modalInstance.close();
-                                $state.go("loggedIn.LeaveHistory",
+                                $state.go("loggedIn.TimeSheetHome.LeaveHistory",
                                     null, {
                                         "reload": true
                                     });
@@ -89,7 +89,7 @@ angular.module("app.loggedIn.TimeSheet.HistoryLeave.Controller", [])
 
                     $scope.clickEdit = function(leaveID) {
                         modalInstance.close();
-                        $state.go("loggedIn.CreateLeave", {
+                        $state.go("loggedIn.TimeSheetHome.CreateLeave", {
                             id: leaveID
                         }, {
                             "reload": true

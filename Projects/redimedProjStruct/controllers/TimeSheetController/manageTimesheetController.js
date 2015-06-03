@@ -1,5 +1,7 @@
 //EXPORTS MODEL
 var db = require("../../models");
+var moment = require('moment');
+var functionForTimesheet=require("./functionForTimesheet");
 //END
 module.exports = {
     ViewApproved: function(req, res) {
@@ -478,10 +480,10 @@ module.exports = {
                     date: info.date
                 };
                 //CALL FUNCTION TRACKER
-                TracKerTimeSheet(tracKer);
+                functionForTimesheet.TracKerTimeSheet(tracKer);
                 //END
                 // SEND MAIL
-                SendMailTimeSheet(req, res, info);
+                functionForTimesheet.SendMailTimeSheet(req, res, info);
                 // END MAIL
 
                 //END TRACKER
@@ -611,11 +613,11 @@ module.exports = {
                         };
 
                         //CALL FUNCTION TRACKER
-                        TracKerTimeSheet(tracKer);
+                        functionForTimesheet.TracKerTimeSheet(tracKer);
                         //END
 
                         // SEND MAIL
-                        SendMailTimeSheet(req, res, info);
+                        functionForTimesheet.SendMailTimeSheet(req, res, info);
                         // ENE MAIL
 
                         //END TRACKER

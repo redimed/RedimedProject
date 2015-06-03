@@ -27,7 +27,7 @@ angular.module("app.loggedIn.TimeSheet.ViewApproved.Controller", [])
                 } else if (response.status === "error") {
                     $scope.list = response;
                     toastr.error("Loading fail!", "Error");
-                    $state.go("loggedIn.ViewApprovedTimeSheet", null, {
+                    $state.go("loggedIn.TimeSheetHome.ViewApprovedTimeSheet", null, {
                         "reload": true
                     });
                 } else {

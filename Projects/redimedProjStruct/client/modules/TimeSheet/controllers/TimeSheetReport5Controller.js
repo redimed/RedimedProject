@@ -16,7 +16,7 @@ angular.module("app.loggedIn.TimeSheet.Report5.Controller", [])
         //SERVICE LOAD DEPT
 
         $scope.ListNew = function(listNew) {
-            if (listnew !== undefined &&
+            if (listNew !== undefined &&
                 listNew !== null &&
                 listNew.length !== 0) {
                 TimeSheetService.LoadEmpReport(listNew).then(function(response) {

@@ -1,5 +1,8 @@
 //EXPORTS MODEL
 var db = require("../../models");
+var chainer = new db.Sequelize.Utils.QueryChainer;
+var moment=require("moment");
+var functionForTimesheet=require('./functionForTimesheet');
 //END
 module.exports = {
     LoadDeptReport: function(req, res) {
@@ -581,7 +584,7 @@ module.exports = {
         var info = req.body.info;
         var listEMP = info.listEMP;
         var USER_ID = info.USER_ID;
-        var weekNo = getWeekNo(new Date());
+        var weekNo = functionForTimesheet.getWeekNo(new Date());
         if (listEMP !== undefined &&
             listEMP !== null &&
             listEMP.length !== 0) {

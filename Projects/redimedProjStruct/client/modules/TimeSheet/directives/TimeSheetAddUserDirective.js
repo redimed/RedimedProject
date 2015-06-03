@@ -46,7 +46,7 @@ angular.module("app.loggedIn.TimeSheet.AddUser.Directive", [])
                         scope.userType = response.userType;
                     } else {
                         //catch exception
-                        $state.go("loggedIn.TimeSheetTree", null, {
+                        $state.go("loggedIn.TimeSheetHome.TimeSheetTree", null, {
                             "reload": true
                         });
                         toastr.error("Loading fail!", "Error");
@@ -102,14 +102,14 @@ angular.module("app.loggedIn.TimeSheet.AddUser.Directive", [])
                         if (response.status === "error") {
                             scope.list = response.result;
                             toastr.error("Server response error!", "Error");
-                            $state.go("loggedIn.TimeSheetListNode", null, {
+                            $state.go("loggedIn.TimeSheetHome.TimeSheetListNode", null, {
                                 "reload": true
                             });
                         } else if (response.status === "success") {
                             scope.list = response;
                         } else {
                             //try cat exception
-                            $state.go("loggedIn.TimeSheetListNode", null, {
+                            $state.go("loggedIn.TimeSheetHome.TimeSheetListNode", null, {
                                 "reload": true
                             });
                             toastr.error("Server not response!", "Error");
