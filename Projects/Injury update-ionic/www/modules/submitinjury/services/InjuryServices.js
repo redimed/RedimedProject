@@ -14,10 +14,10 @@ angular.module('starter.injury.services',[])
             return detailWorker.post({id: id})
         }
 
-        injuryServices.uploadImg = function (id, part, description){
-            var detailApi = injuryApi.all("im/upload");
-            return detailApi.post({injury_id: id,injury_part: part,description: description});
-        }
+        // injuryServices.uploadImg = function (id, part, description){
+        //     var detailApi = injuryApi.all("im/upload");
+        //     return detailApi.post({injury_id: id,injury_part: part,description: description});
+        // }
 
         injuryServices.checkMobile = function (data) {
             var detailApi = injuryApi.all("im/patients/checkMobile")
@@ -61,7 +61,7 @@ angular.module('starter.injury.services',[])
             return detailApi.post({injury_id:injury_id});
         }
         
-        injuryServices.getInjuryInfo = {};
+        // injuryServices.getInjuryInfo = {};
 
         return injuryServices;
 

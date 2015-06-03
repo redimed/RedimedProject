@@ -28,5 +28,43 @@ angular.module("app.loggedIn.patient.consult.services",[])
 			info = angular.copy(consultInfo);
 		}
 
+		/**
+		 * tannv.dts@gmail.com
+		 * chuyen Appt Patient Status thanh Work in progress
+		 */
+		services.startSession=function(data)
+		{
+			return api.all('consultation/startSession').post({data: data});
+		}
+
+		/**
+		 * tannv.dts@gmail.com
+		 * Lay danh sach cac item cua apptPatient
+		 */
+		services.beforeFinishSession=function(data)
+		{
+			return api.all('consultation/beforeFinishSession').post({data: data});
+		}
+
+		/**
+		 * tannv.dts@gmail.com
+		 * chuyen Appt Patient Status thanh Finished
+		 */
+		services.finishSession=function(data)
+		{
+			return api.all('consultation/finishSession').post({data: data});
+		}
+
+		/**
+		 * tannv.dts@gmail.com
+		 * lay thong tin appt patient
+		 */
+		services.getApptPatient=function(data)
+		{
+			return api.all('consultation/getApptPatient').post({data: data});
+		}
+
+
+		
 		return services;
 	})

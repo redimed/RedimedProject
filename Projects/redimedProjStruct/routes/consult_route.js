@@ -15,3 +15,10 @@ app.post('/api/consultation/patient/company',ConsultationController.getPatientCo
 
 app.post('/api/upload',multipartMiddleware,ConsultationController.uploadFile);
 app.get('/api/download/:id',ConsultationController.downloadFile);
+
+//tannv.dts@gmail.com
+//02-06-2015
+app.post('/api/consultation/startSession',ConsultationController.startSession);
+app.post('/api/consultation/beforeFinishSession',ConsultationController.beforeFinishSession);
+app.post('/api/consultation/finishSession',ConsultationController.finishSession);
+app.post('/api/consultation/getApptPatient',ConsultationController.getApptPatient);

@@ -3,46 +3,42 @@
 	    background: rgb(24, 22, 78);
 	}
 </style>
+<script type="text/javascript">
+	 $('.un_main_nav_bar').on("load resize",function(e){
+        var widthBar = $('.un_main_nav_bar').width() - ($('.un_main_nav_item_0').width() + 40);
+        $(".un-more-ul .un-more-li").remove();
+        $('.un_main_nav_item').each(function() {
+        	var widthItem = $(this).width() + 40;
+        	if (widthBar < widthItem) {
+        		widthBar = 0;
+    			$('.un_main_nav_item_0').css('display','block');
+                $(".un-more-ul").append('<li class="un-more-li">'+$(this).context.innerHTML+'</li>');
+        		$(this).css('display','none');
+        	}else{
+        		widthBar -= widthItem;
+        		$(this).css('display','block');
+        		$('.un_main_nav_item_0').css('display','none');
+        	};
+        });
+    });
+</script>
 <div class="row">
 	<div class="col-lg-12">
 		<div class="un_page_panel">
-	<!-- <div class="un_header_panel">
-		<div class="un_header_part_left">
-			<img src="../theme/un/un_redimed_logo.jpg" alt="Redimed Logo" width="268px" height="60px" />
-		</div>
-		<div class="un_header_part_right">
-			<div class="un_header_part_right_content">
-				Header panel
-			</div>
-			<div class="un_header_part_right_btn">
-				btn
-			</div>
-		</div>
-		<div>
-			<img src="../theme/un/un_header_panel.jpg"  alt="Redimed Logo"   height="99px"  width="100%" />
-		</div>
-	</div> -->
 	<div class="un_main_nav_panel">
 		<div class="un_main_nav_bar">
-			<div ng-if="module.wrap==0" class="un_main_nav_item" ng-repeat="module in patient_detail_modules">
+			<div class="un_main_nav_item" ng-repeat="module in patient_detail_modules">
 				<a ui-sref="{{module.state}}">{{module.name}}</a>
 			</div>
-			<div ng-if="module.wrap==0" class="un_main_nav_item" ng-repeat="module in patient_apt_modules">
+			<div class="un_main_nav_item" ng-repeat="module in patient_apt_modules">
 				<a ui-sref="{{module.state}}">{{module.name}}</a>
 			</div>
 
-			<div class="un_main_nav_item">
+			<div style="display:none" class="un_main_nav_item_0">
 				<ul class="un_main_nav_item_dropdown">
 				    <li>
 				        <a>More<i class="fa fa-chevron-down"></i></a>
-				        <ul style="list-style-type: none;">
-				            <li ng-if="module.wrap==1" ng-repeat="module in patient_detail_modules">
-				            	<a ui-sref="{{module.state}}">{{module.name}}</a>
-				            </li>
-
-				            <li ng-if="module.wrap==1" ng-repeat="module in patient_apt_modules">
-				            	<a ui-sref="{{module.state}}">{{module.name}}</a>
-				            </li>
+				        <ul style="list-style-type: none;" class="un-more-ul">
 
 				        </ul>
 				    </li>

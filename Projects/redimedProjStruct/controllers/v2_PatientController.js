@@ -4,6 +4,7 @@ var mdt_functions = require('../mdt-functions.js');
 var Medicare_Rest = require('../helper/Medicare_Rest');
 var fs = require('fs');
 var mkdirp = require('mkdirp');
+var kiss=require('./kissUtilsController');
 
 module.exports ={
 	postSearch: function(req,res){
@@ -35,7 +36,18 @@ module.exports ={
 		var limit = (req.body.limit) ? req.body.limit : 10;
         var offset = (req.body.offset) ? req.body.offset : 0;
 		var fields = req.body.fields;
-		var search_data = req.body.search;
+		var search_data = {};
+  		
+  		if(kiss.checkData(req.body.search.First_name))
+  			search_data.First_name={'like':kiss.concat('%',req.body.search.First_name,'%')};
+
+  		if(kiss.checkData(req.body.search.Sur_name))
+  			search_data.Sur_name={'like':kiss.concat('%',req.body.search.Sur_name,'%')};
+  		
+  		if(kiss.checkData(req.body.search.DOB))
+  			search_data.DOB=req.body.search.DOB;
+
+
 		db.Patient.findAndCountAll({
 			where: search_data,
 			offset: offset,

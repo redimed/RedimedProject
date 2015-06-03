@@ -442,6 +442,19 @@ module.exports =
         },function(err){
             functionError(err); 
         });
+    },
+
+    /**
+     * Ham noi chuoi
+     * tannv.dts@gmail.com
+     */
+    concat:function()
+    {
+        var str="";
+        for (var i = 0; i < arguments.length; i++) 
+        {
+            str=str+arguments[i];
+        }
+        return str;
     }
-    
 }

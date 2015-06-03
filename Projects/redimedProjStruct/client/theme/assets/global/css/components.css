@@ -3444,6 +3444,7 @@ Portlets
 .portlet.light {
   padding: 12px 20px 15px 20px;
   background-color: #fff;
+  margin-top: 25px;
 }
 .portlet.light.bordered {
   border: 1px solid #e1e1e1 !important;
