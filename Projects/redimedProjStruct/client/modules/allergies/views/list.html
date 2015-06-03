@@ -2,14 +2,18 @@
     <label class="un-label-header un-bgBlack un-label-header-padding">Allergy List</label>
     <div class="un-padding-top-bottom-10">
         <div class="un-div-content un-bgWhite-boxshadow-bottom un-padding-10">
-            <div class="pull-right navbar-right un-padding-bottom-5">
+            <div class="pull-right un-padding-bottom-5">
                 <!-- Single button -->
                   <button style="margin-right: 0;" type="button" class="un-button un-bgXam-colBlack" ng-click="allergyAddForm.open()">New allergy
                   </button>
                   <button style="margin-right: 0;" type="button" class="un-button un-bgBlack" ng-click="patientAllergyForm.open()" ng-show="showAddExisted === true">Add existed
                   </button>
             </div>
-            <my-data-table options="allergy.options" numrows="10"></my-data-table>
+            <div class="row">
+                <div class="col-lg-12">
+                    <my-data-table options="allergy.options" numrows="10"></my-data-table>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -42,11 +46,15 @@
 <!-- PATIENT ALLERGY SELECT FORM -->
 <div class="mdt-search un-popup-config" style="display: block;" ng-if="patientAllergyForm.is_show">
     <label class="un-label-popup-header un-bg-label-B41E46">Add Existed</label>
-    <div class="pull-right text-center ng-scope">
+    <div class="pull-right text-center un-padding-bottom-5 ng-scope">
         <button class="btn btn-sm btn-block red" ng-click="patientAllergyForm.close()">
             <i class="fa fa-times"></i>
         </button>
     </div>
-    <my-data-table options="allergySub.options" numrows="10" rowclick="allergySelected"></my-data-table>
+    <div class="row">
+        <div class="col-lg-12">
+            <my-data-table options="allergySub.options" numrows="10" rowclick="allergySelected"></my-data-table>
+        </div>
+    </div>
 </div>
 <!-- END PATIENT ALLERGY SELECT FROM -->

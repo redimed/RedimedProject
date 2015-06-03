@@ -1577,10 +1577,14 @@ table.timetable-table td:last-child {
 }
 .un-input-custom{
     height: 20px;
+    /*phan quoc chien edit firefox*/
+    padding: 0px 0px 0px 5px !important;
 }
 .un-input-custom-1{
     height: 20px;
     border: 2px solid rgb(196, 196, 196)!important;
+    /*phan quoc chien edit firefox*/
+    padding: 0px 0px 0px 5px !important;
 }
 .un-img-sex{
     width: 50px;
@@ -1737,6 +1741,7 @@ table.timetable-table td:last-child {
     border: 3px solid white;
     background: rgb(102, 102, 102);
     margin-bottom: 10px;
+    outline: none;
 }
 .un-submit:hover{
     color: white !important;
@@ -1809,9 +1814,25 @@ table.timetable-table td:last-child {
     color:white;
 }
 
+.un_main_nav_item:active{
+    background: -webkit-linear-gradient(#9F9F9F, #262626); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#9F9F9F, #262626); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#9F9F9F, #262626); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#9F9F9F, #262626); /* Standard syntax */
+    color:white;
+}
+
 .un_main_nav_item a{
     color: black;
     text-decoration: none;
+}
+
+.un_main_nav_item a::active un_main_nav_item{
+    background: -webkit-linear-gradient(#9F9F9F, #262626); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#9F9F9F, #262626); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#9F9F9F, #262626); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#9F9F9F, #262626); /* Standard syntax */
+    color:white;
 }
 .un_main_nav_item:hover a{
     color: white;
@@ -2015,6 +2036,12 @@ nav bar end*/
 }
 .un-padding-bottom-5{
     padding-bottom: 5px;
+}
+/*phan quoc chien add button*/
+.un-button-my-data-table{
+    position: absolute;
+    right: 0;
+    top: -40px;
 }
 .un-padding-top-20{
     padding-top: 20px;
@@ -2249,7 +2276,7 @@ label{
     width: 10%;
     float: left;
     border-left: 3px solid rgb(23, 20, 76);
-    height: 153px;
+    height: 151px;
     padding: 1px 1px 1px 2px;
 }
 .un-div-width-50{
