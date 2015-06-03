@@ -124,7 +124,13 @@ var exlog={
     },
     log:function(data)
     {
-        console.log(data);
+        console.log('%c'+JSON.stringify(data), 'background: #ABC7E9; color: #141B76');
+    },
+    logErr:function(data)
+    {
+        console.log("%c----------------------ERROR BEGIN LOG------------------------",'background: #D4B1B1; color: red');
+        console.log('%c'+JSON.stringify(data), 'background: #D4B1B1; color: red');
+        console.log("%c-----------------------ERROR END LOG-------------------------",'background: #D4B1B1; color: red');
     }
 }
 
