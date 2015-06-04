@@ -3,8 +3,7 @@ angular.module('starter.injury.controller', ['ngCordova'])
     .controller('InjuryController', function($scope, $state, $filter, $stateParams,
                                              InjuryServices, $cordovaCamera, $ionicPopup, localStorageService,
                                              $cordovaFile, $ionicModal, ConfigService, $ionicSlideBoxDelegate,
-                                             $ionicLoading, $compile, $timeout, $rootScope, HOST_CONFIG, $document, $ionicSideMenuDelegate,
-                                             $cordovaDialogs, $ionicPlatform, $cordovaFileTransfer){
+                                             $ionicLoading, $compile, $timeout, $rootScope, HOST_CONFIG){
 
         $scope.isSubmit = false;
         $scope.isShow = true;
@@ -59,7 +58,7 @@ angular.module('starter.injury.controller', ['ngCordova'])
                     $scope.worker.DOB = $filter('date')($scope.worker.DOB, 'yyyy-MM-dd');
                 });
             }
-        }
+        };
 
         //CONFIG MODAL TAKE PHOTO AND SELECT GALLERRY
         $ionicModal.fromTemplateUrl('modules/submitinjury/views/modal/imageDetail.html', function(modal) {
@@ -95,11 +94,11 @@ angular.module('starter.injury.controller', ['ngCordova'])
                 $scope.worker.injury_date = new Date();
                 $state.go('app.injury.desInjury');
             }
-        }
+        };
 
         var scopeReset = angular.copy($scope.worker);
 
-        //FUNCTION FOR BUTTON RESET LEFT-TOP
+        //BUTTON RESET ALL FIELD SUBMIT INJURY
         $scope.resetFormInjury = function() {
             $scope.popupMessage = { message: "You'll try again input all field!"};
             $ionicPopup.show({
@@ -134,7 +133,7 @@ angular.module('starter.injury.controller', ['ngCordova'])
             });
         }
 
-        //FUNCTION RESET FIELD FOR CALL.
+        //FUNCTION RESET FIELD.
         function resetField() {
             $scope.isSubmit = false;
             $scope.isFailMobile = false;
@@ -145,7 +144,7 @@ angular.module('starter.injury.controller', ['ngCordova'])
             //$scope.isShow = !$scope.isShow;
         }
 
-        //SELECT A ROW WORKER WHEN WRITE
+        //SELECT WORKER LIST
         $scope.selectWorker = function (id) {
             $scope.isShow = !$scope.isShow;
             $scope.isFailMobile = false;
@@ -182,9 +181,6 @@ angular.module('starter.injury.controller', ['ngCordova'])
                 localStorageService.remove("injuryInfo");
                 $scope.temp1 = angular.copy($scope.worker);
                 $scope.isShow = !$scope.isShow;
-            }
-            if(InjuryServices.getInjuryInfo.Worker){
-                $scope.worker = InjuryServices.getInjuryInfo.Worker;
             }
         };
 

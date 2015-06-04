@@ -1,7 +1,7 @@
 angular.module('starter.security.login.controller',[])
     .controller('securityLoginController',function($scope, $rootScope, $state, UserService, SecurityService,
                                                    localStorageService, $cordovaPush, $cordovaDialogs,
-                                                   $cordovaMedia, signaling, phoneCallService, $ionicPopup, $ionicLoading){
+                                                   $cordovaMedia, signaling, phoneCallService, $ionicPopup, $ionicLoading, $timeout){
         $scope.notifications = [];
 
         $rootScope.$on('$cordovaPush:notificationReceived', function (event, notification) {
@@ -149,50 +149,52 @@ angular.module('starter.security.login.controller',[])
                 signaling.emit('updateSocketLogin', response.userInfo.user_name);
                 signaling.on('login_success',function(){
                     UserService.detail().then(function(response) {
-
                         if(typeof response.userInfo !== 'undefined')
                             localStorageService.set("userInfo", response.userInfo);
 
                         if(typeof response.companyInfo !== 'undefined')
                             localStorageService.set("companyInfo", response.companyInfo);
 
-                        if(response.userInfo['function_mobile'] != null){
-                            UserService.getFunction(response.userInfo['function_mobile']).then(function(data) {
-                                var rs = data.definition.split('(');
-                                if(rs[0] != null)
-                                {
-                                    if(rs[1] != null)
-                                    {
-                                        var r = rs[1].split(')');
-                                        var params = eval("("+r[0]+")");
+                        //check function_mobile then go
 
-                                        $state.go(rs[0],params,{reload:true});
-                                    }
-                                    else
-                                    {
-                                        $state.go(rs[0],{reload:true});
-                                    }
-                                }
-                            })
+                        //if(response.userInfo['function_mobile'] != null){
+                        //    UserService.getFunction(response.userInfo['function_mobile']).then(function(data) {
+                        //        console.log(data);
+                        //        console.log(data.definition);
+                        //        var rs = data.definition.split('(');
+                        //        console.log(rs[0] + "------" +  rs[1]);
+                        //        if(rs[0] != null)
+                        //        {
+                        //            if(rs[1] != null)
+                        //            {
+                        //                var r = rs[1].split(')');
+                        //                var params = eval("("+r[0]+")");
+                        //                $state.go(rs[0],params,{reload:true});
+                        //                $ionicLoading.hide();
+                        //            }
+                        //            else
+                        //            {
+                        //                $state.go(rs[0],{reload:true});
+                        //                $ionicLoading.hide();
+                        //            }
+                        //        }
+                        //    })
+                        //}
+
+                        switch (response.userInfo.UserType.user_type) {
+                            case "Driver":
+                                $state.go('app.driver.list', null, {reload:true});
+                                break;
+                            case "Company":
+                                $state.go('app.injury.info', null, {reload:true});
+                                break;
+                            default :
+                                $state.go('app.injury.info', null, {reload:true});
+                                break;
                         }
-                        else
-                        {
-                            if(localStorageService.get("userInfo").UserType.user_type == "Driver")
-                            {
-                                $ionicLoading.hide();
-                                $state.go('app.driver.list');
-                            }
-                            else if(localStorageService.get("userInfo").UserType.user_type == "Company")
-                            {
-                                $ionicLoading.hide();
-                                $state.go('app.injury.info');
-                            }
-                            else {
-                                $ionicLoading.hide();
-                                $state.go('app.injury.info');
-                            }
-                        }
-                        $ionicLoading.hide();
+                        $timeout(function(){
+                            $ionicLoading.hide();
+                        }, 2.5 * 1000);
                     });
                 })
 
@@ -220,5 +222,4 @@ angular.module('starter.security.login.controller',[])
                 ]
             });
         }
-
     });

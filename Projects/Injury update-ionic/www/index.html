@@ -9,10 +9,6 @@
     <link rel="stylesheet" href="lib/ionic/css/ionic.min.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
     <link rel="stylesheet" href="css/main.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
     <link rel="stylesheet" href="lib/ion-google-place/ion-google-place.css" type="text/css" media="screen" title="no title" charset="utf-8" />
-    <!--<link rel="stylesheet" href="lib/font-awesome-4.3.0/css/font-awesome.min.css" type="text/css" media="screen" title="no title" charset="utf-8" />-->
-    <!--<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/themes/base/jquery-ui.css"-->
-          <!--text="text/css" media="screen" title="no title" charset="UTF-8" />-->
-    <script src="lib/jquery/jquery-2.1.1.min.js" type="text/javascript" charset="utf-8"></script>
 
     <!--SOCKET SCRIPT-->
     <script src="lib/socket.io.js"></script>
@@ -26,14 +22,14 @@
     <script src="opentok.js"></script>
 
     <!--ANGULAR, MAP, JQUERY SCRIPT-->
+    <script src="lib/jquery/jquery-2.1.1.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="lib/lodash/dist/lodash.compat.min.js"></script>
     <script src="lib/restangular/dist/restangular.min.js"></script>
     <script src="lib/angular-local-storage/dist/angular-local-storage.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
+    <script src="lib/maps.googleapis.com.js"></script>
     <script src="lib/hpneo-gmaps-f12b532/gmaps.js"></script>
     <script src="lib/ion-google-place/ion-google-place.js"></script>
     <script src="lib/ngAutocomplete.js"></script>
-    <!--<script src="lib/spritespin/spritespin.js"></script>-->
 
     <!-- APP, MODULES SCRIPT -->
     <script src="js/app.js"></script>
@@ -72,10 +68,10 @@
     <script src="modules/onlineBooking/controller/rlobChooseAppointmentCalendarController.js"></script>
     <script src="modules/onlineBooking/controller/rlobDetailBookingController.js"></script>
     <script src="modules/driver/controller/DriverController.js"></script>
+    <script src="modules/driver/controller/detailInjuryController.js"></script>
     <script src="modules/NFC/controller/readNFCController.js"></script>
     <script src="modules/phoneCall/controller/phoneCallController.js"></script>
     <script src="modules/bluetooth/controller/mainBlueController.js"></script>
-    <script src="modules/bluetooth/controller/detailDeviceBlueController.js"></script>
 </head>
 <body ng-app="starter">
 <ion-nav-view name="root" style="background-color: rgba(0, 0, 0, 0.3);">

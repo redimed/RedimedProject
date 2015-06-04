@@ -1,10 +1,17 @@
 .span-input-color{
-    color: rgba(149,165,166,1);
+    color: white;
     font-weight: 300;
     font-size: 17px;
+    padding-right: 10px;
+    width: 150px;
+    text-align: -webkit-auto;
 }
 .forget-password a {
-    text-decoration: blink;
+    text-decoration: none;
+}
+
+.forget-password {
+    color: #ffffff;
 }
 
 .fLeft {
@@ -615,14 +622,7 @@ form i.icon.error {
     text-align: center;
 }
 
-.login .content {
-    background-color: rgb(255, 255, 255);
-    margin: 0 auto;
-    margin-bottom: 0px;
-    padding: 30px;
-    padding-top: 20px;
-    padding-bottom: 15px;
-}
+
 
 .login .content h3 {
     color: #000;
@@ -894,11 +894,12 @@ form i.icon.error {
 }
 
 .btn-login-custom {
-    background-color: #38b789;
+    background-color: #fbca01;
     border: none;
-    border-radius: 20px;
+    border-radius: 2px;
     line-height: 0;
     min-height: 45px;
+    width: 98%;
 }
 
 .btn-login-custom * {
@@ -1238,9 +1239,7 @@ form i.icon.error {
     display: none;
 }
 
-.customrow {
-    background-color: white;
-}
+
 .infoDevice {
     padding-left: 20px;
 }
@@ -1327,7 +1326,7 @@ form i.icon.error {
     box-shadow: none;
 }
 
-input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, input[type=url]:focus, input[type=date]:focus, input[type=tel]:focus, input[type=number]:focus, input[type=search]:focus, textarea:focus.materialize-textarea {
+/*input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, input[type=url]:focus, input[type=date]:focus, input[type=tel]:focus, input[type=number]:focus, input[type=search]:focus, textarea:focus.materialize-textarea {
     border-bottom: 1px solid #26a69a;
     -webkit-box-shadow: 0 1px 0 0 #26a69a;
     -moz-box-shadow: 0 1px 0 0 #26a69a;
@@ -1355,7 +1354,7 @@ input[type=text], input[type=password], input[type=email], input[type=url], inpu
     -o-transition: 0.3s;
     -ms-transition: 0.3s;
     transition: 0.3s;
-}
+}*/
 
 
 
@@ -2094,7 +2093,7 @@ ion-scroll[direction=y] {
 }
 
 /*.wrap-mes-popup h2, span {*/
-    /*color: #ffffff;*/
+/*color: #ffffff;*/
 /*}*/
 
 .color-fff {
@@ -2112,5 +2111,161 @@ ion-scroll[direction=y] {
 .has-error-input-pass  {
     border-bottom: 2px solid #ee6e73 !important;
     box-shadow: none !important;
+}
+
+/*New Design*/
+.login .content {
+    background-color: #015190;
+    margin: 0 auto;
+    width: 100%;
+    position: absolute;
+    height: 100%;
+}
+.input-login{
+    width: 100%;
+    margin: 0 0 15px 0;
+    padding: 0;
+    box-shadow: none;
+    box-sizing: content-box;
+    transition: 0.3s;
+    text-align: center;
+    border-radius: 2px;
+}
+.header-logo{
+    background-image: url(../img/1_01.png);
+    width: 168px;
+    height: 50px;
+    float: left;
+    margin-left: -1px;
+}
+
+.background-header-logo-child{
+    width: 100%;
+    height: 26px;
+    background-color: #ffffff;
+    float: right;
+    position: absolute;
+}
+.img-header{
+    padding-top: 13px;
+    width: 120px;
+    position: absolute;
+    z-index: 100;
+    margin-left: -75px;
+}
+.span-header{
+    float: right;
+    padding-right: 10%;
+    padding-top: 2px;
+    font-weight: 600;
+}
+.bd-bottom{
+    background: url(../img/manhinh.png);
+    width: 95%;
+    height: 3px;
+    margin:0 auto;
+    background-position-y: -41px;
+
+}
+.select-custom{
+    border: none;
+    background-color: #015190;
+    color: white;
+
+}
+.pl{
+    color: white
+}
+.pl::-webkit-input-placeholder {
+    color: white;
+
+}
+.pl::-moz-placeholder {
+    color: white;
+
+}
+.pl:-moz-placeholder {   /* Older versions of Firefox */
+    color:white;
+
+}
+.pl:-ms-input-placeholder {
+    color: white;
+
+}
+input[disabled], input[readonly]:not(.cloned-text-input), select[disabled], select[readonly], textarea[disabled], textarea[readonly]:not(.cloned-text-input){
+    background-color:#015190;
+}
+.actionBar{
+    float: left;width: 100%;height: 40px;
+}
+.customrow {
+    color: white;
+    padding: 15px;
+}
+.modal-forgotpass {
+    width: 90%;
+    height: 45%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    background-color: #fbca01;
+    border-radius: 10px;
+}
+.child-modalforgot {
+    position: absolute;
+    top: 70px;
+    bottom: 70px;
+    left: 0;
+    right: 0;
+}
+.input-mail-forgot {
+    width: 100%;
+}
+.btn-bgImage {
+    background: url("../img/1c_07.png") no-repeat center transparent;
+    border: none;
+    background-size: 310px 65px;
+    width: 100%;
+}
+.btn-bgImage:focus {
+    background-color: inherit;
+}
+.btn-close-bgImage {
+    position: absolute;
+    right: 0;
+    border-radius: 50%;
+    background-color: #c8a100;
+    color: #ffffff;
+    border: 1px solid #191400;
+    font-weight: bolder;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+.btn-close-bgImage:hover, .btn-close-bgImage:focus {
+    color: #ffffff;
+    background-color: #c8a100;
+    border: 1px solid #191400;
+}
+.btn-bgImage-popUp {
+    background: url("../img/1c_07.png") no-repeat center transparent;
+    border: none;
+    background-size: 137px 48px;
+    width: 100%;
+}
+.btn-bgImage-popUp:focus {
+    background-color: transparent;
+}
+.btn-cancel-popUp {
+    background: url("../img/4_05.png") no-repeat center transparent;
+    border: none;
+    background-size: 112px 40px;
+    width: 100%;
+    padding-bottom: 5px;
+}
+.btn-cancel-popUp:focus {
+    background-color: inherit;
 }
 
