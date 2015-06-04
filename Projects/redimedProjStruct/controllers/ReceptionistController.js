@@ -84,5 +84,27 @@ module.exports = {
 				res.json({status:'error'});
 				console.log(err);
 			})
+	},
+
+	updateAppointment: function(req,res){
+		var fromAppt = req.body.fromAppt;
+		var toAppt = req.body.toAppt;
+		var state = req.body.state;
+
+		if(state.toLowerCase() == 'progress')
+		{
+			db.sequelize.query("UPDATE cln_appt_patients SET CAL_ID = ?, appt_status = 'Work In Progress' WHERE id = ?",
+								null,{raw:true},[toAppt.CAL_ID, fromAppt.appt_id])
+				.success(function(){
+					res.json({status:'success'});
+				})
+				.error(function(err){
+					res.json({status:'error'});
+					console.log(err);
+				})
+		}
+
+		
+
 	}
 }

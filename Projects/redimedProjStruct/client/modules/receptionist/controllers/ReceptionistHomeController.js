@@ -7,6 +7,8 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 	$scope.progressAppt = [];
 	$scope.completeAppt = [];
 
+	$scope.fromAppt = {};
+
 	ReceptionistService.getSite().then(function(rs){
 		if(rs.status == 'success')
 			$scope.siteList = rs.data;
@@ -43,14 +45,37 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 		})
 	}
 
-	$scope.dragAppt = function(e,u,t){
-		console.log("====Drag====: ",t);
-		
+	$scope.dragAppt = function(event,ui,data){
+		$scope.fromAppt = angular.copy(data);
 	}
 
-	$scope.dropAppt = function(){
-		console.log("=====Drop====: ");
-	}
+	$scope.dropAppt = function(event,ui,toAppt){
+		if($scope.fromAppt)
+		{
+			swal({
+	            title: "Are You Sure To Set This Appointment?",
+	            type: "warning",
+	            showCancelButton: true,
+	            confirmButtonColor: "#DD6B55",
+	            confirmButtonText: "Yes",
+	            closeOnConfirm: true,
+	            closeOnCancel: true
+	        }, function(isConfirm) {
+	        	if(isConfirm)
+	        	{
+	        		ReceptionistService.updateAppointment($scope.fromAppt, toAppt, 'progress').then(function(rs){
+			        	if(rs.status == 'success')
+			        		toastr.success("Update Appointment Success!");
+			        })
+			        getAppt($scope.apptDate,$scope.apptSite);
+	        	}
+	        	else
+	        	{
+	        		getAppt($scope.apptDate,$scope.apptSite);
+	        	}
+	        });
 
+		}
+	};
 
 })
