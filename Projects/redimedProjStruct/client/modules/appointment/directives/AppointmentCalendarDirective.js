@@ -8,11 +8,6 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 			options: '='
 		},
 		link: function(scope, elem, attrs){
-			scope.onPatientRightClick = function($event, patient, col){
-				$event.preventDefault();
-				console.log(patient);
-			}
-
 			scope.goToCalendarDetail = function(doctor){
 				$cookieStore.put('appointment', scope.appointment.search);
 
@@ -737,6 +732,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 
 			if($cookieStore.get('appointment')){
 				scope.appointment.search = $cookieStore.get('appointment');
+				$cookieStore.remove('appointment');
 			}
 
 			scope.site = {
