@@ -2568,10 +2568,12 @@ label{
     top: 0px;
 }
 .un-header-logo-img{
-    height: 35px;
+    height: 40px;
     position: absolute;
-    top: 9;
-    width: 11%;
+    top: 8;
+    width: 200px;
+    vertical-align: middle;
+    text-align: center;
 }
 .un-mdt-button{
     margin-right: 0; 
@@ -3064,13 +3066,13 @@ label{
     width: 100%;   
 }
 .un-button-giang {
-  margin-right: 0;
-  border-radius: 20px !important;
-  border: 3px solid white;
-  padding: 5px 10px 5px 10px;
-box-shadow: 0px 3px 5px rgba(50, 50, 50, 0.75); 
-float:right;
-  outline: none;
+    margin-right: 0;
+    border-radius: 20px !important;
+    border: 3px solid white;
+    padding: 5px 10px 5px 10px;
+    box-shadow: 0px 3px 5px rgba(50, 50, 50, 0.75); 
+    float:right;
+    outline: none;
 }
 
 /*giang css end*/
