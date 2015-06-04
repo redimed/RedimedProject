@@ -1315,13 +1315,13 @@ table.timetable-table td:last-child {
 }
 
 .table-dynamic .table-bordered tbody tr .glyphicon-chevron-up {
-    top: -3px;
-    right: -14px;
+    top: -2px;
+    right: -40px;
 }
 
 .table-dynamic .table-bordered tbody tr .glyphicon-chevron-down {
-    top: 7px;
-    right: 1px;
+    top: 10px;
+    right: -22px;
 }
 
 .table-dynamic .table-bordered tbody tr .glyphicon-chevron-up:hover,

@@ -64,9 +64,6 @@ angular.module("app.loggedIn", [
     'app.loggedIn.sysservices',
     /*END AUTO CREATE*/
     'app.loggedIn.timetable',
-
-    "app.loggedIn.staff",
-
     // MODULE TREEAPPROVE
     'app.loggedIn.treeApprove',
     // END MODULE TREE APPROVE

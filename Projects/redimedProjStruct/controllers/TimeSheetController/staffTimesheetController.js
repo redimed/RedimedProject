@@ -1,10 +1,9 @@
-/**
- * Created by meditech on 19/09/2014.
- */
-var db = require('../models');
+//EXPORTS MODEL
+var db = require('../../models');
 var moment = require('moment');
 var chainer = new db.Sequelize.Utils.QueryChainer;
-var FunctionSendMail = require("../controllers/TimeSheetController/timeSheetEmailController.js");
+var FunctionSendMail = require("./sendMailSystemController");
+//END EXPORTS
 module.exports = {
     addAllTask: function(req, res) {
         var allTask = req.body.allTask;
@@ -420,8 +419,6 @@ module.exports = {
             });
     },
 
-
-
     getDepartmentLocation: function(req, res) {
         db.timeLocation.findAll({
                 raw: true
@@ -700,7 +697,6 @@ module.exports = {
                 console.log(err);
             });
 
-
     },
 
     getTask: function(req, res) {
@@ -760,7 +756,6 @@ module.exports = {
                 });
                 console.log(err);
             });
-
 
     },
 
@@ -932,6 +927,7 @@ module.exports = {
                 return;
             });
     },
+
     SubmitOnView: function(req, res) {
         var info = req.body.info;
         var query = "UPDATE time_tasks_week SET time_tasks_week.task_status_id = " + info.status + " WHERE time_tasks_week.task_week_id = " + info.ID_WEEK;
@@ -966,6 +962,7 @@ module.exports = {
                 return;
             });
     },
+
     CheckTimeInLieu: function(req, res) {
         var weekNo = req.body.weekNo;
         var USER_ID = req.body.USER_ID;
@@ -988,7 +985,91 @@ module.exports = {
                 });
                 return;
             });
-    }
+    },
+
+    LoadItemCode: function(req, res) {
+        var searchObj = req.body.searchObj;
+        var strSearch = " WHERE 1 = 1 AND ";
+        var strOrder = " ORDER BY ";
+        var activity = "";
+        // CHECK ISBILLABLE OR NOT
+        if (searchObj.isBillable === false) {
+            activity = " AND time_item_code.ACTIVITY_ID = " + searchObj.activity_id + " ";
+        } else {
+            activity = " AND time_item_code.IS_BILLABLE = 1 ";
+        }
+        //END
+        //get search
+        for (var keySearch in searchObj.data) {
+            if (searchObj.data[keySearch] !== undefined &&
+                searchObj.data[keySearch] !== null &&
+                searchObj.data[keySearch] !== "") {
+                strSearch += keySearch + " like '%" + searchObj.data[keySearch] +
+                    "%' AND ";
+            }
+        }
+
+        strSearch = strSearch.substring(0, strSearch.length - 5);
+        //end get search
+
+        //get ORDER
+        for (var keyOrder in searchObj.order) {
+            if (searchObj.order[keyOrder] !== undefined &&
+                searchObj.order[keyOrder] !== null &&
+                searchObj.order[keyOrder] !== "") {
+                strOrder += keyOrder + " " + searchObj.order[keyOrder] + ", ";
+            }
+        }
+        if (strOrder.length === 10) {
+            strOrder = "";
+        } else {
+            strOrder = strOrder.substring(0, strOrder.length - 2);
+        }
+        //end get ORDER
+        var query = "SELECT time_item_code.ITEM_ID, time_item_code.ITEM_NAME, time_item_code.ITEM_UNITS FROM time_item_code " + strSearch + activity + strOrder + " LIMIT " + searchObj.limit + " OFFSET " + searchObj.offset;
+        var queryCount = "SELECT COUNT(time_item_code.ITEM_ID) AS COUNTITEM FROM time_item_code " + strSearch + activity + strOrder;
+        db.sequelize.query(query)
+            .success(function(result) {
+                if ((result === undefined || result === null || result.length === 0) && strSearch === "") {
+                    res.json({
+                        status: "success",
+                        result: null,
+                        count: 0
+                    });
+                    return;
+                } else {
+
+                    db.sequelize.query(queryCount)
+                        .success(function(count) {
+                            res.json({
+                                status: "success",
+                                result: result,
+                                count: count[0].COUNTITEM
+                            });
+                            return;
+                        })
+                        .error(function(err) {
+                            console.log("*****ERROR:" + err + "*****");
+                            res.json({
+                                status: "error",
+                                result: null,
+                                count: 0
+                            });
+                            return;
+                        });
+                }
+            })
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error",
+                    result: null,
+                    count: 0
+                });
+                return;
+            });
+    },
+
 };
 
 // FUNCTION TRACKER

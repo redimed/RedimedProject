@@ -12,7 +12,7 @@ angular.module("app.loggedIn.staff.week.controller", [])
         StaffService.getDepartmentLocation().then(function(response){
             if(response['status'] == 'fail' || response['status'] == 'error'){
                 toastr.error("Error", "Error");
-                $state.go('loggedIn.staff.list', null, {'reload': true});
+                $state.go('loggedIn.TimeSheetHome.list', null, {'reload': true});
             }else
             {
                 departmentList = response['department'];
@@ -122,7 +122,7 @@ angular.module("app.loggedIn.staff.week.controller", [])
                 StaffService.addAllTask($scope.tasks,startWeek, endWeek).then(function(response){
                     if(response['status'] == 'success'){
                         toastr.success("success","Success");
-                        $state.go('loggedIn.staff.list', null, {'reload': true});
+                        $state.go('loggedIn.TimeSheetHome.list', null, {'reload': true});
                     }else
                     {
                         toastr.error("Error", "Error");

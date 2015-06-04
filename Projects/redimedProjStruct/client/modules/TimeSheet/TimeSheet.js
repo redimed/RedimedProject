@@ -1,106 +1,195 @@
 angular.module("app.loggedIn.TimeSheet", [
-        "app.loggedIn.TimeSheet.Controllers",
+        "app.loggedIn.TimeSheet.Home.Controller",
         "app.loggedIn.TimeSheet.Directives",
-        "app.loggedIn.TimeSheet.Service"
+        "app.loggedIn.TimeSheet.Service",
+        "app.loggedIn.staff.service"
     ])
     .config(function($stateProvider) {
+
         $stateProvider
+        //HOME
             .state("loggedIn.TimeSheetHome", {
-                position: ["Admin", "Staff", "Head of Dept.", "Director"],
-                url: "/TimeSheetHome",
-                templateUrl: "modules/TimeSheet/views/Home.html",
+                abstract: true,
+                url: "/timesheet",
+                templateUrl: "modules/TimeSheet/views/structure.html",
                 controller: "TimeSheetHomeController"
             })
-            .state("loggedIn.TimeSheetTree", {
-                position: ["Admin"],
-                url: "/TimeSheetTree",
-                templateUrl: "modules/TimeSheet/views/ListTree.html",
-                controller: "TimeSheetTree"
-            })
-            .state("loggedIn.TimeSheetListNode", {
-                position: ["Admin"],
-                url: "/TimeSheetListNode",
-                templateUrl: "modules/TimeSheet/views/ListNode.html",
-                controller: "TimeSheetListNodeController"
-            })
-            .state("loggedIn.TimeSheetDept", {
-                position: ["Admin"],
-                url: "/TimeSheetDept",
-                templateUrl: "modules/TimeSheet/views/dept.html",
-                controller: "TimeSheetDeptController"
-            })
-            .state("loggedIn.ApproveTask", {
+            //END HOME
+
+        // APPROVE TASK
+        .state("loggedIn.TimeSheetHome.ApproveTask", {
                 position: ["Head of Dept.", "Director"],
-                url: "/ApproveTask",
-                templateUrl: "modules/TimeSheet/views/ApproveTask.html",
-                controller: "ApproveTask"
+                url: "/approve-task",
+                views: {
+                    "main-content": {
+                        templateUrl: "modules/TimeSheet/views/ApproveTask.html",
+                        controller: "ApproveTask"
+                    }
+                }
             })
-            .state("loggedIn.ViewAppovedTimeSheet", {
+            //END APPROVE TASK
+
+        //VIEW APPROVED 
+        .state("loggedIn.TimeSheetHome.ViewAppovedTimeSheet", {
                 position: ["Head of Dept.", "Director"],
-                url: "/ViewApprovedTimeSheet",
-                templateUrl: "modules/TimeSheet/views/ViewApproved.html",
-                controller: "ViewApprovedTimeSheet"
+                url: "/view-approved-task",
+                views: {
+                    "main-content": {
+                        templateUrl: "modules/TimeSheet/views/ViewApproved.html",
+                        controller: "ViewApprovedTimeSheet"
+                    }
+                }
             })
-            .state("loggedIn.AdminTimeSheet", {
-                position: ['Admin'],
-                url: "/AdminTimeSheet",
-                templateUrl: "modules/TimeSheet/views/Admin.html",
-                controller: "AdminController"
+            //END VIEW APPROVED
+
+        // REPORT TIME IN LIEU
+        .state("loggedIn.TimeSheetHome.Report1TimeSheet", {
+                url: "/report-time-in-lieu",
+                views: {
+                    "main-content": {
+                        templateUrl: "modules/TimeSheet/views/Report1.html",
+                        controller: "Report1Controller"
+                    }
+                }
+
             })
-            .state("loggedIn.Report1TimeSheet", {
-                url: "/Report1TimeSheet",
-                templateUrl: "modules/TimeSheet/views/Report1.html",
-                controller: "Report1Controller"
+            //END REPORT TIME IN LIEU
+
+        // REPORT ON UTILIZATION RATIO DETAIL
+        .state("loggedIn.TimeSheetHome.Report2TimeSheet", {
+                url: "/report-on-utilization-ratio-detail",
+                views: {
+                    "main-content": {
+                        templateUrl: "modules/TimeSheet/views/Report2.html",
+                        controller: "Report2Controller"
+                    }
+                }
             })
-            .state("loggedIn.Report2TimeSheet", {
-                url: "/Report2TimeSheet",
-                templateUrl: "modules/TimeSheet/views/Report2.html",
-                controller: "Report2Controller"
+            //END REPORT
+
+        // REPORT UTILIZATION SUMMARY
+        .state("loggedIn.TimeSheetHome.Report3TimeSheet", {
+                url: "/report-on-utilization-ratio-summary",
+                views: {
+                    "main-content": {
+                        templateUrl: "modules/TimeSheet/views/Report3.html",
+                        controller: "Report3Controller"
+                    }
+                }
             })
-            .state("loggedIn.Report3TimeSheet", {
-                url: "/Report3TimeSheet",
-                templateUrl: "modules/TimeSheet/views/Report3.html",
-                controller: "Report3Controller"
+            //END REPORT
+
+        // REPORT WORKING HOURS
+        .state("loggedIn.TimeSheetHome.Report4TimeSheet", {
+                url: "/report-on-actual-working-hours",
+                views: {
+                    "main-content": {
+                        templateUrl: "modules/TimeSheet/views/Report4.html",
+                        controller: "Report4Controller"
+                    }
+                }
             })
-            .state("loggedIn.Report4TimeSheet", {
-                url: "/Report4TimeSheet",
-                templateUrl: "modules/TimeSheet/views/Report4.html",
-                controller: "Report4Controller"
+            //END REPORT 
+
+        // REPORT WORKING RATIO
+        .state("loggedIn.TimeSheetHome.Report5TimeSheet", {
+                url: "/report-on-actual-working-ratio",
+                views: {
+                    "main-content": {
+                        templateUrl: "modules/TimeSheet/views/Report5.html",
+                        controller: "Report5Controller"
+                    }
+                }
             })
-            .state("loggedIn.Report5TimeSheet", {
-                url: "/Report5TimeSheet",
-                templateUrl: "modules/TimeSheet/views/Report5.html",
-                controller: "Report5Controller"
+            //END REPORT
+
+        // REPORT ITEM NUMBER
+        .state("loggedIn.TimeSheetHome.Report6TimeSheet", {
+                url: "/report-on-item-number",
+                views: {
+                    "main-content": {
+                        templateUrl: "modules/TimeSheet/views/Report6.html",
+                        controller: "Report6Controller"
+                    }
+                }
             })
-            .state("loggedIn.Report6TimeSheet", {
-                url: "/Report6TimeSheet",
-                templateUrl: "modules/TimeSheet/views/Report6.html",
-                controller: "Report6Controller"
-            })
-            //MODULE LEAVE FORM
-            .state("loggedIn.CreateLeave", {
+            //END REPORT
+
+        // CREATE LEAVE
+        .state("loggedIn.TimeSheetHome.CreateLeave", {
                 position: ["Staff", "Head of Dept."],
-                url: "/CreateLeave/:id",
-                templateUrl: "modules/TimeSheet/views/CreateLeave.html",
-                controller: "CreateLeaveController"
+                url: "/create-leave/:id",
+                views: {
+                    "main-content": {
+                        templateUrl: "modules/TimeSheet/views/CreateLeave.html",
+                        controller: "CreateLeaveController"
+                    }
+                }
             })
-            .state("loggedIn.LeaveHistory", {
+            //END CREATE LEAVE
+
+        // LEAVE HISTORY
+        .state("loggedIn.TimeSheetHome.LeaveHistory", {
                 position: ["Staff", "Head of Dept."],
-                url: "/LeaveHistory",
-                templateUrl: "modules/TimeSheet/views/HistoryLeave.html",
-                controller: "HistoryLeaveController"
+                url: "/leave-history",
+                views: {
+                    "main-content": {
+                        templateUrl: "modules/TimeSheet/views/HistoryLeave.html",
+                        controller: "HistoryLeaveController"
+                    }
+                }
             })
-            .state("loggedIn.ApproveLeave", {
+            //END LEAVE HISTORY
+
+        // APPROVE LEAVE
+        .state("loggedIn.TimeSheetHome.ApproveLeave", {
                 position: ["Head of Dept.", "Director"],
-                url: "/ApproveLeave",
-                templateUrl: "modules/TimeSheet/views/ApproveLeave.html",
-                controller: "ApproveLeaveController"
+                url: "/approve-leave",
+                views: {
+                    "main-content": {
+                        templateUrl: "modules/TimeSheet/views/ApproveLeave.html",
+                        controller: "ApproveLeaveController"
+                    }
+                }
             })
-            .state("loggedIn.ReportOweLeave", {
+            //END APPROVE LEAVE
+
+        //REPORT SUBMMITED LEAVE FORM
+        .state("loggedIn.TimeSheetHome.ReportOweLeave", {
                 position: ["Head of Dept.", "Director"],
-                url: "/ReportOweLeave",
-                templateUrl: "modules/TimeSheet/views/ReportOweLeave.html",
-                controller: "ReportOweLeave"
-            });
-        //END LEAVE
+                url: "/report-unsubmitted-leave-form",
+                views: {
+                    "main-content": {
+                        templateUrl: "modules/TimeSheet/views/ReportOweLeave.html",
+                        controller: "ReportOweLeave"
+                    }
+                }
+            })
+            //END REPORT
+
+        //VIEW TIME-SHEET
+        .state("loggedIn.TimeSheetHome.view", {
+                position: ["Staff", "Head of Dept."],
+                url: "/view-timesheet",
+                views: {
+                    "main-content": {
+                        templateUrl: "modules/TimeSheet/views/viewTimesheet.html",
+                        controller: "TimesheetViewController"
+                    }
+                }
+            })
+            //END VIEW TIME-SHEET
+
+        //CREATE TIME-SHEET
+        .state("loggedIn.TimeSheetHome.create", {
+            position: ["Staff", "Head of Dept."],
+            url: "/create/:id",
+            views: {
+                "main-content": {
+                    templateUrl: "modules/TimeSheet/views/createTimesheet.html",
+                    controller: "TimesheetCreateController"
+                }
+            }
+        });
+        //END CREATE TIME-SHEET
     });

@@ -36,9 +36,7 @@ eval(fs.readFileSync('./routes/medical_device_route.js')+'');
 eval(fs.readFileSync('./routes/mdt_route.js')+'');
 
 //tannv.dts@gmail.com
-eval(fs.readFileSync('./routes/iso_route.js')+'');
-
-eval(fs.readFileSync('./routes/timeSheet_route.js')+'');
+eval(fs.readFileSync('./routes/iso_route.js') + '');
 //treeApprove
 eval(fs.readFileSync('./routes/Tree_Route.js') + '');
 
