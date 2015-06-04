@@ -35,6 +35,7 @@ angular.module("app.loggedIn.patient.controller", [
             $scope.patientBarVer.version='full';
         }
     })
+   
     $scope.patient_detail_modules = [
         {wrap:0,'name': 'Patient', 'color': 'blue-soft', 'desc': 'Info', 'icon': 'fa fa-user',
             'state': 'loggedIn.patient.detail'},
@@ -79,6 +80,7 @@ angular.module("app.loggedIn.patient.controller", [
         {wrap:1,'name': 'Recall', 'color': 'blue-soft', 'desc': 'Recall', 'icon': 'fa fa-repeat',
             'state': 'loggedIn.patient.recall'},
     ];
+    
     //get patient info
     $scope.current_patient = {};
     $scope.getPatientInfo = function(){
@@ -104,7 +106,6 @@ angular.module("app.loggedIn.patient.controller", [
                     $scope.current_patient.FROM_TIME=response.data.FROM_TIME;
                 }
             })
-            console.log($scope.current_patient);
         });
     }
     $scope.getPatientInfo();

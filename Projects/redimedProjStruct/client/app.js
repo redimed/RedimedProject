@@ -35,6 +35,7 @@ angular.module("app", [
         'ngSanitize',
         'ngMap',
         'ng-mfb',
+        'ngDragDrop',
         'btford.socket-io',
         'btford.modal',
         'dateRangePicker',

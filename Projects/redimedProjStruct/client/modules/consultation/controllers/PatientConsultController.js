@@ -76,11 +76,21 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			return false;
 		}
 
+		/**
+		 * create by: unknown
+		 * modify by tannv.dts@gmail.com
+		 */
 		function refresh(patientId){
-	    	ConsultationService.getPatientCompany(patientId).then(function(rs){
+	    	ConsultationService.getPatientCompany(patientId)
+	    	.then(function(rs){
+	    		exlog.log(rs);
 				if(rs.status.toLowerCase() == 'success' && rs.info)
+				{
 					$scope.companyInfo = rs.info;
-			})
+				}
+			},function(err){
+				exlog.logErr(err);
+			});
 	    }
 
 	    refresh($scope.patient_id);
@@ -106,6 +116,9 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			}
 		})
 
+		
+
+		
 		ConsultationService.getPatientProblem($scope.patient_id).then(function(rs){
 			if(rs.status.toLowerCase() == 'success' && rs.data)
 				$scope.problemList = rs.data;
@@ -594,6 +607,133 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 					toastr.success("Submit Consultation Failed!");
 			})
 
+        }
+
+        /**
+         * tannv.dts@gmail.com
+         * -----------------------------------------------------------
+         * -----------------------------------------------------------
+         * -----------------------------------------------------------
+         * -----------------------------------------------------------
+         * -----------------------------------------------------------
+         */
+        
+        /**
+		 * tannv.dts@gmail.com
+		 * Lay thong tin appt patient
+		 */
+		$scope.apptPatient={};
+		$scope.apptStatus=ptnConst.apptStatus;
+		$scope.getApptPatient=function()
+		{
+			var postData={
+        		patientId:$scope.patient_id,
+        		calId:$scope.cal_id
+        	}
+			ConsultationService.getApptPatient(postData)
+			.then(function(data){
+				if(data.status=='success')
+				{
+					$scope.apptPatient=data.data;
+				}
+				else
+				{
+					exlog.log(data);
+				}
+			},function(err){
+				exlog.logErr(err);
+			});
+		}
+		$scope.getApptPatient();
+
+		/**
+		 * tannv.dts@gmail.com
+		 * chuyen appt patient status thanh Work In Progress
+		 */
+		$scope.startSession=function()
+        {
+        	var postData={
+        		patientId:$scope.patient_id,
+        		calId:$scope.cal_id
+        	}
+        	ConsultationService.startSession(postData)
+        	.then(function(data){
+        		if(data.status=='success')
+        		{
+        			$scope.apptPatient.appt_status=ptnConst.apptStatus.workInProgress.value;
+        			toastr.success("Start progress success.");
+        		}
+        		else
+        		{
+        			exlog.logErr(data);
+        			toastr.error("Start progress error.");
+        		}
+        	},function(err){
+        		exlog.logErr(err);
+        		toastr.error("Start progress error.");
+        	});
+        }
+
+        $scope.beforeFinishSession=function()
+        {
+        	var postData={
+        		patientId:$scope.patient_id,
+        		calId:$scope.cal_id
+        	}
+        	ConsultationService.beforeFinishSession(postData)
+        	.then(function(data){
+        		if(data.status=='success')
+        		{
+        			if(data.data.length>0)
+        			{
+        				$scope.finishSession();
+        			}
+        			else
+        			{
+        				var modalInstance = $modal.open({
+							templateUrl: 'notifyChooseItem',
+							controller: function($scope, $modalInstance){
+								$scope.ok = function(){
+									$modalInstance.dismiss('cancel');
+								}
+							},
+							size: 'sm'
+						});
+        			}
+        		}
+        		else
+        		{
+        			exlog.logErr(data);
+        			toastr.error("Complete progress fail.");
+        		}
+        	},function(err){
+        		exlog.logErr(err);
+        		toastr.error("Complete progress fail.");
+        	});
+        }
+
+        $scope.finishSession=function()
+        {
+        	var postData={
+        		patientId:$scope.patient_id,
+        		calId:$scope.cal_id
+        	}
+        	ConsultationService.finishSession(postData)
+        	.then(function(data){
+        		if(data.status=='success')
+        		{
+        			$scope.apptPatient.appt_status=ptnConst.apptStatus.completed.value;
+        			toastr.success("Complete progress success.");
+        		}
+        		else
+        		{
+        			exlog.logErr(data);
+        			toastr.error("Complete progress fail.");
+        		}
+        	},function(err){
+        		exlog.logErr(err);
+        		toastr.error("Complete progress fail.");
+        	});
         }
 	})
 

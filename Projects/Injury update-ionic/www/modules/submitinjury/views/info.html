@@ -173,7 +173,8 @@
                     </label>
                     <label class="item item-input label-custom-field" >
                         <span class="input-label span-input-color">Birthday</span>
-                        <input ng-required="true" type="date" ng-model="worker.DOB" name="DOB" ng-disabled="worker.Patient_id != -1 && temp1.DOB" ng-click="clickDate()" min="1865-01-01" max="1995-01-01" ng-class="{'has-error':isSubmit && info.DOB.$invalid}" />
+                        <input ng-required="true" type="date" ng-model="worker.DOB"
+                               name="DOB" ng-disabled="worker.Patient_id != -1 && temp1.DOB" ng-click="clickDate()" min="1865-01-01" max="1995-01-01" ng-class="{'has-error':isSubmit && info.DOB.$invalid}" />
                     </label>
                     <label class="item item-input label-custom-field"  style="border-bottom-color:white">
                         <span class="input-label span-input-color">Address</span>

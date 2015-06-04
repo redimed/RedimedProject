@@ -27,7 +27,6 @@ angular.module('starter.injury.controller', ['ngCordova'])
         var checkNonemerg = localStorageService.get("checkNonemer");
         var userInfoLS = localStorageService.get("userInfo");
 
-
         //INIT OBJECT WORKER FOR FORM
         $scope.worker = {
             Patient_id: -1,
@@ -47,6 +46,7 @@ angular.module('starter.injury.controller', ['ngCordova'])
             infoMaps:{}
         };
 
+
         //INPUT DATE ANDROID VER == 4.3
         $scope.clickDate = function() {
             var options = {
@@ -56,7 +56,7 @@ angular.module('starter.injury.controller', ['ngCordova'])
             if(ionic.Platform.isAndroid() && ionic.Platform.version() == '4.3') {
                 datePicker.show(options, function(date){
                     $scope.worker.DOB = date;
-                    $scope.worker.DOB = $filter('date')(new Date($scope.worker.DOB),'yyyy-MM-dd');
+                    $scope.worker.DOB = $filter('date')($scope.worker.DOB, 'yyyy-MM-dd');
                 });
             }
         }
@@ -92,9 +92,8 @@ angular.module('starter.injury.controller', ['ngCordova'])
                 });
             }
             else {
-                $state.go('app.injury.desInjury');
-                //$scope.worker.injury_date = $filter('date')(new Date(), "yyyy-MM-dd");
                 $scope.worker.injury_date = new Date();
+                $state.go('app.injury.desInjury');
             }
         }
 
@@ -125,6 +124,8 @@ angular.module('starter.injury.controller', ['ngCordova'])
 
                             $scope.iconSuccessMail = false;
                             $scope.iconErrorMail = false;
+                            localStorageService.remove('patientID_select');
+                            localStorageService.remove('mode');
                             //$scope.isShow = !$scope.isShow;
                         }
                     },
@@ -174,18 +175,17 @@ angular.module('starter.injury.controller', ['ngCordova'])
             {
                 var injuryinfoLS = localStorageService.get("injuryInfo");
                 $scope.worker = injuryinfoLS.info;
+                $scope.worker.DOB = new Date(injuryinfoLS.info.DOB);
+                $scope.worker.injury_date = new Date();
                 $scope.imgURI = injuryinfoLS.dataImage;
                 localStorageService.remove("checkNonemer");
                 localStorageService.remove("injuryInfo");
                 $scope.temp1 = angular.copy($scope.worker);
                 $scope.isShow = !$scope.isShow;
             }
-            else{
-                //alert('checkNonemerg equal false');
+            if(InjuryServices.getInjuryInfo.Worker){
+                $scope.worker = InjuryServices.getInjuryInfo.Worker;
             }
-            // if(InjuryServices.getInjuryInfo.Worker){
-            //     $scope.worker = InjuryServices.getInjuryInfo.Worker;
-            // }
         };
 
         //SHOW MODAL IMAGE DETAIL
@@ -465,14 +465,12 @@ angular.module('starter.injury.controller', ['ngCordova'])
 
         //SUBMIT END INSERT INJURY LAST
         $scope.submitInjuryAll = function () {
-
+            $scope.messageLoading = {message: "Waiting..."};
             $ionicLoading.show({
-                template: "<div class='icon ion-ios7-reloading'></div>"+
-                "<br />"+
-                "<span>Waiting...</span>",
+                templateUrl: "modules/loadingTemplate.html",
                 animation: 'fade-in',
-                showBackdrop: true,
-                maxWidth: 200,
+                scope: $scope,
+                maxWidth: 500,
                 showDelay: 0
             });
             InjuryServices.insertInjury($scope.worker, localStorageService.get('userInfo').id).then(function(data) {
@@ -570,7 +568,7 @@ angular.module('starter.injury.controller', ['ngCordova'])
         }
 
 
-//get all injury by company view history 
+        //get all injury by company view history
         $scope.getInjuryByCompany = function(){
             InjuryServices.getInjuryByCompany(userInfoLS.company_id).then(function (result){
                 if(result.status == "success")
@@ -600,10 +598,11 @@ angular.module('starter.injury.controller', ['ngCordova'])
             $scope.historyDetail = [];
             $state.go('app.injury.historyInjury');
         }
+
         $scope.getInjuryByCompany();
     })
 
-    .directive("mdtMap", function($http,$ionicLoading,$timeout){
+    .directive("mdtMap", function($http, $ionicLoading, $timeout){
         return {
             restrict: "A",
             replace: "true",
@@ -616,13 +615,12 @@ angular.module('starter.injury.controller', ['ngCordova'])
             link: function(scope, element, attrs){
                 var id = "#"+attrs.id;
                 var geo ;
+                scope.messageLoading = {message: "Acquiring the current location..."};
                 $ionicLoading.show({
-                    template: "<div class='icon ion-ios7-reloading'></div>"+
-                    "<br />"+
-                    "<span>Acquiring the current location...</span>",
+                    templateUrl: "modules/loadingTemplate.html",
                     animation: 'fade-in',
-                    showBackdrop: true,
-                    maxWidth: 200,
+                    scope: scope,
+                    maxWidth: 500,
                     showDelay: 0
                 });
                 var map = new GMaps({
@@ -641,13 +639,12 @@ angular.module('starter.injury.controller', ['ngCordova'])
                 });
                 //get location
                 var location =  function(){
+                    scope.messageLoading = {message: "Acquiring the current location..."};
                     $ionicLoading.show({
-                        template: "<div class='icon ion-ios7-reloading'></div>"+
-                        "<br />"+
-                        "<span>Acquiring the current location...</span>",
+                        templateUrl: "modules/loadingTemplate.html",
                         animation: 'fade-in',
-                        showBackdrop: true,
-                        maxWidth: 200,
+                        scope: scope,
+                        maxWidth: 500,
                         showDelay: 0
                     });
                     $timeout(function(){
@@ -701,13 +698,13 @@ angular.module('starter.injury.controller', ['ngCordova'])
                     }
                 });
                 var ad= function(){
+                    scope.messageLoading = {message: "Waiting..."};
                     $ionicLoading.show({
-                        template: "<div class='icon ion-ios7-reloading'></div>"+
-                        "<br />"+
-                        "<span>waiting...</span>",
+                        templateUrl: "modules/loadingTemplate.html",
                         animation: 'fade-in',
-                        showBackdrop: true,
-                        maxWidth: 500
+                        scope: scope,
+                        maxWidth: 500,
+                        showDelay: 0
                     });
 
                     GMaps.geocode({
@@ -736,7 +733,7 @@ angular.module('starter.injury.controller', ['ngCordova'])
                         }
                     });
                 };
-                scope.$watch('lo',function(newval,oldval){
+                scope.$watch('lo',function(newval, oldval){
                     if(newval==true){
                         scope.lo = false;
                         ad();
@@ -746,7 +743,7 @@ angular.module('starter.injury.controller', ['ngCordova'])
         }
     })
 
-    .directive("companyMap", function( $state,InjuryServices,localStorageService,$ionicLoading,$timeout){
+    .directive("companyMap", function($state, InjuryServices, localStorageService, $ionicLoading){
         return {
             restrict: "A",
             replace: "true",
@@ -788,13 +785,12 @@ angular.module('starter.injury.controller', ['ngCordova'])
 
                 var location =  function(){
                     map.removeMarkers();
+                    scope.messageLoading = {message: "Waiting..."};
                     $ionicLoading.show({
-                        template: "<div class='icon ion-ios7-reloading'></div>"+
-                        "<br />"+
-                        "<span>Waiting...</span>",
+                        templateUrl: "modules/loadingTemplate.html",
                         animation: 'fade-in',
-                        showBackdrop: true,
-                        maxWidth: 200,
+                        scope: scope,
+                        maxWidth: 500,
                         showDelay: 0
                     });
                     GMaps.geolocate({
@@ -877,3 +873,4 @@ angular.module('starter.injury.controller', ['ngCordova'])
             }
         }
     })
+

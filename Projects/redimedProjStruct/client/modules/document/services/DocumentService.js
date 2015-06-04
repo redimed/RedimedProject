@@ -368,6 +368,30 @@ angular.module('app.loggedIn.document.services', [])
                 rating_id: ratingData.rating_id
             });
          }
+         documentService.checkExistFA = function(fa_id, patient_id, cal_id){
+            var info = api.all("document/checkExistFA");
+            return info.post({fa_id: fa_id, patient_id:patient_id, cal_id:cal_id});
+         }
+         documentService.loadExistHeaderSections = function(fa_id, patient_id, cal_id){
+            var info = api.all("document/existHeaderSections");
+            return info.post({fa_id: fa_id, patient_id:patient_id, cal_id:cal_id});
+         }
+         documentService.loadExistLines = function(section_id, fa_id, patient_id, cal_id){
+            var info = api.all("document/existLines");
+            return info.post({section_id: section_id, fa_id:fa_id, patient_id:patient_id, cal_id:cal_id});
+         }
+         documentService.loadExistCommentsAndDetails = function(line_id, patient_id, cal_id){
+            var info = api.all("document/existDetailsComments");
+            return info.post({line_id: line_id, patient_id:patient_id, cal_id:cal_id});
+         }
+         documentService.insertNewFA = function(insertData){
+            var insertNewFA = api.all("document/insertNewFA");
+            return insertNewFA.post({insertData: insertData});
+         }
+         documentService.updateNewFA = function(updateData, patient_id, cal_id){
+            var updateNewFA = api.all("document/updateNewFA");
+            return updateNewFA.post({updateData: updateData, patient_id: patient_id, cal_id:cal_id});
+         }
 
          
          // end new Functional Assessment

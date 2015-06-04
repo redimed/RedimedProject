@@ -1,23 +1,18 @@
 <ion-view title="Add Worker">
     <ion-nav-buttons>
      
-         <button class="button button-icon icon ion-ios7-arrow-back  "   style="color:#fff" ng-click="backdescInjury()">
+         <button class="button button-icon icon ion-ios7-arrow-back"
+                 style="color:#fff" ng-click="backdescInjury()">
             Back
         </button>
     </ion-nav-buttons>
-  <!--   <div class="bar bar-subheader">
-       
-        <h1 class="title">Booking</h1>
-    </div> -->
     <ion-content class="padding has-header has-subheader">
         <ion-list>
 
             <label class="item item-input label-custom-field" >
                 <span class="input-label span-input-color">Day</span>
                 <input ng-required="true" type="date"
-
                        ng-model="selectedFilter.date" name="Date"  />
-
             </label>
             <label  class="item item-input item-select label-custom-field" ng-class="{'has-error':isSubmit && infor.Title.$invalid}">
                 <span class="input-label span-input-color">Location</span>

@@ -13,9 +13,9 @@
                 <div style="z-index: 1; position:relative; width: 100%; top: 20px;">
                     <label class="item item-input label-custom-field" >
                         <span class="input-label span-input-color">Injury Date</span>
-                        <input ng-required="true" type="date" ng-model="worker.injury_date" name="injury_date" ng-class="{'has-error':isSubmitdesc && descinjury.injury_date.$invalid}" />
+                        <input ng-required="true" type="date"
+                               ng-model="worker.injury_date" ng-class="{'has-error':isSubmitdesc && descinjury.injury_date.$invalid}" />
                     </label>
-
 
                     <label class="item item-input item-stacked-label label-custom-field">
                         <span class="input-label span-input-color">Injury Description</span>

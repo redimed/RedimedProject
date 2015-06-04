@@ -1,9 +1,28 @@
 angular.module('app.loggedIn.appointment.controllers.doctor', [])
 
-.controller('AppointmentDoctorController', function($scope, $state, $timeout, $stateParams, $modal, toastr, $cookieStore, OutreferralModel, AppointmentModel, ConfigService){
+.controller('AppointmentDoctorController', function($scope, $state, $timeout, $stateParams, $modal, toastr, $cookieStore, OutreferralModel, AppointmentModel, mdtRedimedsitesService, mdtDeptService, ConfigService){
+	var loadSite = function(){
+		mdtRedimedsitesService.list()
+		.then(function(response){
+			$scope.site.list = response.data;
+		}, function(error){})
+	}
+
+	var loadClinical = function(){
+		mdtDeptService.listAll()
+		.then(function(response){
+			$scope.clinicalDept.list = response.data;
+		}, function(error){})
+	}
+
 	$scope.goToOtherDoctor = function(doctor){
-		$scope.appointment.load({site_id: data.site_id, datepicker: data.datepicker, doctor_id: doctor.DOCTOR_ID});
+		$cookieStore.put('appointment', $scope.appointment.pre);
+		$scope.appointment.load({site_id: data.site_id, datepicker: $scope.appointment.pre.datepicker, doctor_id: doctor.DOCTOR_ID, clinical_dept_id: $scope.appointment.pre.clinical_dept_id});
 		$scope.appointment.pre.doctor_id = doctor.DOCTOR_ID;
+	}
+
+	$scope.loadAppointment = function(){
+		$scope.appointment.load({site_id: data.site_id, datepicker: $scope.appointment.pre.datepicker, doctor_id: $scope.appointment.pre.doctor_id, clinical_dept_id: $scope.appointment.pre.clinical_dept_id});
 	}
 
 	$scope.dialogWaitingListAdd = function(col){
@@ -391,7 +410,7 @@ angular.module('app.loggedIn.appointment.controllers.doctor', [])
 
 						if(!flagIndex){
 							var doctor = {SERVICE_ID: data.SERVICE_ID, CAL_ID: data.CAL_ID, IS_REFERRAL: data.IS_REFERRAL, SERVICE_COLOR: data.SERVICE_COLOR, PATIENTS: 'MESS_SYS_010', patients: [], CLINICAL_DEPT_ID: data.CLINICAL_DEPT_ID };
-							doctor.patients.push({Patient_id: data.Patient_id, First_name: data.First_name, Sur_name: data.Sur_name, Outreferral: data.outreferral, CAL_ID: data.CAL_ID});
+							doctor.patients.push({DOCTOR_ID: $stateParams.doctorId, Patient_id: data.Patient_id, First_name: data.First_name, Sur_name: data.Sur_name, Outreferral: data.outreferral, CAL_ID: data.CAL_ID});
 							doctor.PATIENTS = 'ok';
 
 							doctor.cal = data.CAL_ID;
@@ -421,7 +440,7 @@ angular.module('app.loggedIn.appointment.controllers.doctor', [])
 					}
 				}else{
 					var doctor = {SERVICE_ID: data.SERVICE_ID, CAL_ID: data.CAL_ID, IS_REFERRAL: data.IS_REFERRAL, SERVICE_COLOR: data.SERVICE_COLOR, PATIENTS: 'MESS_SYS_010', patients: [], CLINICAL_DEPT_ID: data.CLINICAL_DEPT_ID };
-					doctor.patients.push({Patient_id: data.Patient_id, First_name: data.First_name, Sur_name: data.Sur_name, Outreferral: data.outreferral, CAL_ID: data.CAL_ID});
+					doctor.patients.push({DOCTOR_ID: $stateParams.doctorId, Patient_id: data.Patient_id, First_name: data.First_name, Sur_name: data.Sur_name, Outreferral: data.outreferral, CAL_ID: data.CAL_ID});
 
 					doctor.cal = data.CAL_ID;
 					doctor.FROM_TIME = data.FROM_TIME;
@@ -433,12 +452,16 @@ angular.module('app.loggedIn.appointment.controllers.doctor', [])
 		})
 	}
 
+	$scope.site = {list: []};
+	$scope.clinicalDept = {list: []};
 
 	$scope.appointment = {
 		pre: {
 			doctor_id: null,
 			name: null,
-			datepicker: null
+			datepicker: null,
+			site_id: null,
+			clinical_dept_id: null
 		},
 		list: [],
 		doctors: [],
@@ -452,13 +475,17 @@ angular.module('app.loggedIn.appointment.controllers.doctor', [])
 
 		$scope.appointment.pre.datepicker = data.datepicker;
 		$scope.appointment.pre.doctor_id = $stateParams.doctorId;
+		$scope.appointment.pre.clinical_dept_id = data.clinical_dept_id;
+		$scope.appointment.pre.site_id = data.site_id;
 
 		OutreferralModel.DotorFromUserId($stateParams.doctorId)
 		.then(function(response){
 			$scope.appointment.pre.name = response.data[0].NAME;
 		}, function(error){})
 
-		$scope.appointment.load({site_id: data.site_id, datepicker: data.datepicker, doctor_id: $stateParams.doctorId});
+		$scope.appointment.load({site_id: data.site_id, datepicker: data.datepicker, doctor_id: $stateParams.doctorId, clinical_dept_id: data.clinical_dept_id});
+		loadSite();
+		loadClinical();
 	}
 
 })

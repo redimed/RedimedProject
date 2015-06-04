@@ -1,3 +1,49 @@
+<div class="row" style="margin-bottom: 10px;">
+	<!-- DATEPICKER -->
+	<div class="col-md-4">
+		<div class="form-group">
+			<label class="un-label-header un-bgWhite">Datepicker</label>
+			<div class="un-div-content un-bgWhite-boxshadow-bottom">
+				<input custom-date ng-model="appointment.pre.datepicker" ng-change="loadAppointment()" style="width: 100%; border: 0;" class="form-control un-padding-right-top-bottom-10-left-15">
+			</div>
+		</div>
+	</div>
+	<style type="text/css">
+		.un_group_black_header{
+			z-index: 0;
+		}
+	</style>
+	<!-- END DATEPICKER -->
+
+	<!-- REDIMEDSITE -->
+	<div class="col-md-4">
+		<div class="form-group">
+			<label class="un-label-header un-bgWhite">Redimed Site</label>
+			<div class="un-div-content un-bgWhite-boxshadow-bottom">
+	        	<select ng-options="s.id as s.Site_name for s in site.list" ng-model="appointment.pre.site_id"
+				ng-change="loadAppointment()" style="width: 100%; border: 0;" class="form-control un-padding-right-top-bottom-10-left-15">
+				</select>	
+	        </div>
+		</div>
+	</div>
+	<!-- END REDIMEDSITE -->
+
+	<!-- CLINICAL DEPT -->
+	<div class="col-md-4">
+		<div class="form-group">
+			<label class="un-label-header un-bgWhite">Clinical Dept</label>
+			<div class="un-div-content un-bgWhite-boxshadow-bottom">
+				<select ng-options="c.CLINICAL_DEPT_ID as c.CLINICAL_DEPT_NAME for c in clinicalDept.list" 
+				ng-model="appointment.pre.clinical_dept_id"
+				class="form-control"
+				ng-change="loadAppointment()" style="width: 100%; border: 0;" class="form-control un-padding-right-top-bottom-10-left-15">
+					<option value="">All</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	<!-- END CLINICAL DEPT -->
+</div>
 <div class="col-md-12">
 	<ul class="un-tabs">
 		<li ng-repeat="doctor in appointment.doctors" 
@@ -9,13 +55,6 @@
 	<div class="un-tabs-content">
 		<div class="un-tab-content active">
 			<div id="appointment">
-				<div class="row" style="margin-bottom: 20px;">
-					<div class="col-md-12">
-						<b>Doctor Name: </b>{{appointment.pre.name}}
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<b>Appointment Date: </b>{{appointment.pre.datepicker}}
-					</div>
-				</div>
 				<div class="row">
 					<div class="col-md-12">
 						<table class="table">
@@ -26,7 +65,7 @@
 								<th>Status</th>
 								<th>Service</th>
 							</tr>
-							<tr ng-repeat="l in appointment.list">
+							<tr ng-repeat="l in appointment.list" ng-style="{'background-color': l.SERVICE_COLOR, color: 'white'}">
 								<td>{{l.FROM_TIME}}</td>
 								<td>{{l.TO_TIME}}</td>
 								<td>
