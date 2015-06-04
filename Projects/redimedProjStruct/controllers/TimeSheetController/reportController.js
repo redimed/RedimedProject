@@ -1451,7 +1451,7 @@ module.exports = {
                                                                                                                             "FROM " +
                                                                                                                             "(SELECT * " +
                                                                                                                             "FROM time_activity_summary_report " +
-                                                                                                                            "WHERE user_id=268 " +
+                                                                                                                            "WHERE user_id="+info.USER_ID+" " +
                                                                                                                             "GROUP BY Department_id " +
                                                                                                                             ") t";
                                                                                                                         db.sequelize.query(sql_update3)
