@@ -967,16 +967,56 @@ module.exports = {
     CheckTimeInLieu: function(req, res) {
         var weekNo = req.body.weekNo;
         var USER_ID = req.body.USER_ID;
-        var weekStart = weekNo - 4;
-        var query = "SELECT time_tasks_week.time_in_lieu FROM time_tasks_week WHERE user_id = " +
-            USER_ID + " AND time_tasks_week.task_status_id = 3 AND time_tasks_week.week_no BETWEEN " + weekStart + " AND " + weekNo;
-        db.sequelize.query(query)
+        var weekStart = weekNo - 2;
+        var queryGetTimInLieuHas = "SELECT time_tasks_week.time_in_lieu FROM time_tasks_week WHERE user_id = :userId " +
+            "AND time_tasks_week.task_status_id = 3 AND time_tasks_week.week_no BETWEEN :weekStart AND :weekNo";
+        db.sequelize.query(queryGetTimInLieuHas, null, {
+                raw: true
+            }, {
+                userId: USER_ID,
+                weekStart: weekStart,
+                weekNo: weekNo
+            })
             .success(function(result) {
-                res.json({
-                    status: "success",
-                    result: result
-                });
-                return;
+                var queryGetTimInLieuChoose = "SELECT time_tasks_week.time_in_lieuChoose FROM time_tasks_week WHERE user_id = :userId " +
+                    "AND time_tasks_week.task_status_id = 2";
+                db.sequelize.query(queryGetTimInLieuChoose, null, {
+                        raw: true
+                    }, {
+                        userId: USER_ID
+                    })
+                    .success(function(result2) {
+                        var totalTimeInieuHas = 0;
+                        var totalTimeInLieuChoose = 0;
+                        result.forEach(function(valueHas, indexHas) {
+                            if (valueHas !== undefined &&
+                                valueHas !== null &&
+                                !isNaN(valueHas.time_in_lieu)) {
+                                totalTimeInieuHas += valueHas.time_in_lieu;
+                            }
+                        });
+                        result2.forEach(function(valueChoose, indexChoose) {
+                            if (valueChoose !== undefined &&
+                                valueChoose !== null &&
+                                !isNaN(valueChoose.time_in_lieuChoose)) {
+                                totalTimeInLieuChoose += valueChoose.time_in_lieuChoose;
+                            }
+                        });
+                        totalTimeInieuHas -= totalTimeInLieuChoose;
+                        res.json({
+                            status: "success",
+                            time_in_lieu: totalTimeInieuHas
+                        });
+                        return;
+                    })
+                    .error(function(err) {
+                        console.log("*****ERROR:" + err + "*****");
+                        res.json({
+                            status: "success",
+                            result: []
+                        });
+                        return;
+                    });
             })
             .error(function(err) {
                 console.log("*****ERROR:" + err + "*****");
