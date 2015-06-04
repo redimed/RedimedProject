@@ -89,7 +89,7 @@ angular.module('app.loggedIn.patient.checkin.controller',[])
                                 });
                             },
                             disfn: function(item){
-                                if(item.appt_status===ptnConst.apptStatus.checkedIn.value){
+                                if(item.appt_status!=ptnConst.apptStatus.booking.value){
                                     return true;
                                 }
                                 return false;

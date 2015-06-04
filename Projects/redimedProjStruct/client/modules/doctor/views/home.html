@@ -86,8 +86,32 @@
                     </div>
                 </div>
                 <br/>
+                <div>
+                    <div class="un_tn_legend_inline_panel">
+                        <div class="un_tn_legend_inline_header">
+                            Appointment Status Color:
+                        </div>
+                        <div class="un_tn_legend_inline_item">
+                            <div class="un_tn_legend_node un_tn_legend_node_red"></div>
+                            {{apptStatus.checkedIn.value}}
+                        </div>
+                        <div class="un_tn_legend_inline_item">
+                            <div class="un_tn_legend_node un_tn_legend_node_yellow"></div>
+                            {{apptStatus.workInProgress.value}}
+                        </div>
+                        <div class="un_tn_legend_inline_item">
+                            <div class="un_tn_legend_node un_tn_legend_node_green"></div>
+                            {{apptStatus.booking.value}}
+                        </div>
+                        <div class="un_tn_legend_inline_item">
+                            <div class="un_tn_legend_node un_tn_legend_node_blank"></div>
+                            Other
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="table-dynamic">
-                    <table class="table table-responsive table-bordered table-hover">
+                    <table class="table table-responsive table-bordered">
                         <thead>
                             <tr>
                                 <th>
@@ -110,6 +134,11 @@
                                         <span style="color: white;">To Time</span>
                                     </div>
                                 </th>
+                                <th>
+                                    <div class="th">
+                                        <span style="color: white;">Appointment Status</span>
+                                    </div>
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -122,7 +151,9 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr ng-repeat="item in list_appts" ng-click="goToApptDetail(item)" ng-class="setClassAppt(item.APP_TYPE)" style="cursor: pointer;">
+                            <!-- tan frame -->
+                            <!-- <tr ng-repeat="item in list_appts" ng-click="goToApptDetail(item)" ng-class="setClassAppt(item.APP_TYPE)" style="cursor: pointer;"> -->
+                            <tr ng-repeat="item in list_appts" ng-click="goToApptDetail(item)" style="cursor: pointer;" ng-class="setColorAppt(item.appt_status);">
                                 <td>{{$index+1}}</td>
                                 <td ng-click="goToApptDetail(item)">
                                    <!--  <div ng-repeat="PATIENT in item.PATIENTS">
@@ -130,8 +161,9 @@
                                     </div> -->
                                     {{item.PATIENT_NAME}}
                                 </td>
-                                <td>{{item.FROM_TIME}}</td>
-                                <td>{{item.TO_TIME}}</td>
+                                <td>{{item.FROM_TIME|date:'dd/MM/yyyy - HH:mm'}}</td>
+                                <td>{{item.TO_TIME|date:'dd/MM/yyyy - HH:mm'}}</td>
+                                <td>{{item.appt_status}}</td>
                             </tr>
                         </tbody>
                         <!-- <tfoot ng-show="list_appts.length == 0">
@@ -199,3 +231,12 @@
         </div>
     </div>
 </div>  
+
+<script type="text/ng-template" id="notifyCompleteSession">
+    <div class="modal-body">
+        <p>You have {{numberOfItems}} appointment{{numberOfItems>1?'s':''}} with status [Work In Progress]. Please complete it{{numberOfItems>1?'s':''}}</p>
+    </div>
+    <div class="modal-footer">
+        <button class="un_tn_btn un_tn_btn_gray un_tn_btn_sm" ng-click="ok()">Ok</button>
+    </div>
+</script>

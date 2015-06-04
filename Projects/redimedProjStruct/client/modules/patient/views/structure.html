@@ -170,7 +170,7 @@
 										<label type="text" class="form-control un-input-xam-fig">{{current_patient.First_name}}</label>
 									</div>
 								</div>
-								<div class="col-lg-3 un-padding-right-0">
+								<div class="col-lg-2 un-padding-left-10 un-padding-right-0">
 									<div class="input-group">
 										<span class="input-group-btn ">
 										<button class="btn un-btn-black-label" type="button">DOB</button>
@@ -178,7 +178,7 @@
 										<label type="text" class="form-control un-input-xam-fig">{{current_patient.DOB | date:'dd-MM-yyyy'}}</label>
 									</div>
 								</div>
-								<div class="col-lg-3 un-padding-left-10">
+								<div class="col-lg-2 un-padding-left-10 un-padding-right-0">
 									<div class="input-group">
 										<span class="input-group-btn ">
 										<button class="btn un-btn-black-label" type="button">Gender</button>
@@ -188,7 +188,7 @@
 										<label type="text" class="form-control un-input-xam-fig" ng-show="current_patient.Sex==null"></label>
 									</div>
 								</div>
-								<div class="col-lg-3 un-padding-left-10">
+								<div class="col-lg-2 un-padding-left-10 un-padding-right-0">
 									<div class="input-group">
 										<span class="input-group-btn ">
 										<button class="btn un-btn-black-label" type="button">Allergy</button>
@@ -199,6 +199,14 @@
 												<label ng-if="$last">{{item.allergy_name}}</label>
 											</label>
 										</label>
+									</div>
+								</div>
+								<div class="col-lg-3 un-padding-left-10">
+									<div class="input-group">
+										<span class="input-group-btn ">
+										<button class="btn un-btn-black-label" type="button">Time</button>
+										</span>
+										<label type="text" class="form-control un-input-xam-fig">{{current_patient.FROM_TIME|date:'dd/MM/yyyy - hh:mm'}}</label>
 									</div>
 								</div>
 							</div>

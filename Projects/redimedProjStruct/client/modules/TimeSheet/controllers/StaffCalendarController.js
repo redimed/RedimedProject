@@ -123,7 +123,7 @@ angular.module("app.loggedIn.staff.calendar.controller", [])
                 StaffService.addAllTask($scope.tasks,startWeek, endWeek).then(function(response){
                     if(response['status'] == 'success'){
                         toastr.success("success","Success");
-                        $state.go('loggedIn.staff.list', null, {'reload': true});
+                        $state.go('loggedIn.TimeSheetHome.list', null, {'reload': true});
                     }else
                     {
                         toastr.error("Error", "Error");
@@ -135,7 +135,7 @@ angular.module("app.loggedIn.staff.calendar.controller", [])
                 StaffService.editTask($scope.tasks).then(function(response){
                     if(response['status'] == 'success'){
                         toastr.success("Edit Success");
-                        $state.go('loggedIn.staff.list', null, {'reload': true});
+                        $state.go('loggedIn.TimeSheetHome.list', null, {'reload': true});
                     }else
                     {
                         toastr.error("Error", "Error");

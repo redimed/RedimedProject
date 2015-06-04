@@ -1,11 +1,18 @@
 angular.module("app.loggedIn.document.newFA.controllers",[])
-.controller('newFAController', function($scope, DocumentService, PatientService, toastr){
+.controller('newFAController', function($scope, $stateParams, DocumentService, PatientService, toastr, moment){
 	//Init params
-	var fa_id=11;
-	var patient_id= 677;
+	$scope.editMode = null;
+	// var fa_id=11;
+	var fa_id = $stateParams.fa_id*1;
+	// var patient_id= 677;
+	var patient_id = $stateParams.patient_id*1;
+	var cal_id = $stateParams.cal_id*1;
 	$scope.patient_age = null;
 	$scope.header = {};
 	$scope.patient_info = {};
+	$scope.isSignatureShow = false;
+
+	
 	//End Init params
 
 	//Functions for Init
@@ -15,8 +22,12 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 			if(headerAndSectionRes.status === 'error') toastr.error('Unexpected error', 'Error!');
 			else{
 				$scope.header = headerAndSectionRes.data;
+				$scope.header.PATIENT_ID = patient_id;
+				$scope.header.CAL_ID = cal_id;
 				//get lines of section
 				$scope.header.sections.forEach(function(section){
+					section.PATIENT_ID = patient_id;
+					section.CAL_ID = cal_id;
 					DocumentService.loadNewLines(section.SECTION_ID, getHeaderId).then(function(lineRes){
 						if(lineRes.status==='error') {
 							$scope.header={};
@@ -26,6 +37,8 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 							section.lines=lineRes.data;
 							//get details and comment of lines
 							section.lines.forEach(function(line){
+								line.PATIENT_ID = patient_id;
+								line.CAL_ID = cal_id;
 								if(line.PICTURE!==null){
 									var strarr = line.PICTURE.split("\\");
 									var fileName = strarr[strarr.length-1];
@@ -40,12 +53,64 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 										line.details = detailAndCommentRes.data.details;
 										line.comments = detailAndCommentRes.data.comments;
 										line.details.forEach(function(detail){
+											detail.PATIENT_ID = patient_id;
+											detail.CAL_ID = cal_id;
 											if(detail.PICTURE!==null){
 												var strarr = detail.PICTURE.split("\\");
 												var fileName = strarr[strarr.length-1];
 												detail.previewPath = "https://"+location.host+"/document/fa/images/"+fileName;
 											}
-											console.log('this is data',$scope.header);
+										})
+										line.comments.forEach(function(comment){
+											comment.PATIENT_ID = patient_id;
+											comment.CAL_ID = cal_id;
+										})
+									}
+								})
+							})
+						}
+					})
+				})
+			}
+		})
+	}
+
+	var getExistFA = function(fa_id, patient_id, cal_id){
+		var getHeaderId = fa_id;
+		DocumentService.loadExistHeaderSections(getHeaderId, patient_id, cal_id).then(function(headerAndSectionRes){
+			if(headerAndSectionRes.status === 'error') toastr.error('Unexpected error', 'Error!');
+			else{
+				$scope.header = headerAndSectionRes.data;
+				//get lines of section
+				$scope.header.sections.forEach(function(section){
+					DocumentService.loadExistLines(section.SECTION_ID, getHeaderId, patient_id, cal_id).then(function(lineRes){
+						if(lineRes.status==='error') {
+							$scope.header={};
+							toastr.error('Unexpected error', 'Error!');
+						}
+						else{
+							section.lines=lineRes.data;
+							//get details and comment of lines
+							section.lines.forEach(function(line){
+								if(line.PICTURE!==null){
+									var strarr = line.PICTURE.split("\\");
+									var fileName = strarr[strarr.length-1];
+									line.previewPath = "https://"+location.host+"/document/fa/images/"+fileName;
+								} 
+								DocumentService.loadExistCommentsAndDetails(line.LINE_ID, patient_id, cal_id).then(function(detailAndCommentRes){
+									if(detailAndCommentRes.status === 'error'){
+										$scope.header={};
+										toastr.error('Unexpected error', 'Error!');
+									}
+									else{
+										line.details = detailAndCommentRes.data.details;
+										line.comments = detailAndCommentRes.data.comments;
+										line.details.forEach(function(detail){
+											if(detail.PICTURE!==null){
+												var strarr = detail.PICTURE.split("\\");
+												var fileName = strarr[strarr.length-1];
+												detail.previewPath = "https://"+location.host+"/document/fa/images/"+fileName;
+											}
 										})
 									}
 								})
@@ -79,11 +144,25 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
         }
         $scope.patient_age = age;
 	}
+
+	var checkExistFA = function(fa_id, patient_id, cal_id){
+		DocumentService.checkExistFA(fa_id, patient_id, cal_id).then(function(result){
+			if(result.status==='error') toastr.error('Unexpected error!','Error!');
+			else if(result.status==='not existed') {
+				getNewFA(fa_id);
+				$scope.editMode=false;
+			}
+			else {
+				getExistFA(fa_id, patient_id, cal_id);
+				$scope.editMode=true;
+			}
+		})
+	}
 	//End Functions for Init
 
 	// Init function
 	var init = function(){
-		getNewFA(fa_id);
+		checkExistFA(fa_id, patient_id,cal_id);
 		getPatientInfo(patient_id);
 	}
 
@@ -347,6 +426,120 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 	//End Validation functions
 
 	//Process functions
+	$scope.showSignature = function(){
+		$scope.isSignatureShow = true;
+	}
+	$scope.okClick = function () {
+        $scope.isSignatureShow = false;
+    }
+    $scope.cancelClick = function () {
+        $scope.isSignatureShow = false;
+    }
+    $scope.clearClick = function () {
+        $scope.header.ASSESSED_SIGN = '';
+    }
+    $scope.newFASubmit = function(){
+    	var insertInfo = getInsertInformation($scope.header);
+    	DocumentService.insertNewFA(insertInfo).then(function(result){
+    		if(result.status==='success') {
+    			$scope.editMode=true;
+    			toastr.success('Functional Assessment Submitted!','Success!');
+    		}
+    		else toastr.error('Failed to submit functional assessment!','Error!');
+    	})
+    }
+    $scope.faUpdate = function(){
+    	var updateInfo = getInsertInformation($scope.header);
+    	DocumentService.updateNewFA(updateInfo, patient_id, cal_id).then(function(result){
+    		if(result.status==='success') {
+    			toastr.success('Functional assessment updated!','Success!');
+    		}
+    		else toastr.error('Failed to update functional assessment!','Error!');
+    	})
+    }
+
+    var getInsertInformation = function(header){
+    	var insertHeader = {};
+		var insertSections = [];
+		var insertLines = [];
+		var insertDetails = [];
+		var insertComments = [];
+		var dateFormatString = "YYYY-MM-DD hh:mm:ss";
+    	//get submit header
+    	var tmpHeader = angular.copy(header);
+    	delete tmpHeader.sections;
+    	if($scope.editMode===false){
+    		tmpHeader.Creation_date = moment().format(dateFormatString);
+    	}
+    	else{
+    		tmpHeader.Creation_date = moment(tmpHeader.Creation_date).format(dateFormatString);
+    	}
+    	tmpHeader.Last_update_date = moment().format(dateFormatString);
+    	insertHeader = tmpHeader;
+    	//get submit sections
+    	for(var i=0; i<header.sections.length; i++){
+    		var tmpSection = angular.copy(header.sections[i]);
+    		delete tmpSection.lines;
+    		if($scope.editMode===false){
+	    		tmpSection.Creation_date = moment().format(dateFormatString);
+	    	}
+	    	else{
+	    		tmpSection.Creation_date = moment(tmpSection.Creation_date).format(dateFormatString);
+	    	}
+			tmpSection.Last_update_date = moment().format(dateFormatString);
+
+    		insertSections.push(tmpSection);
+    		//get submit lines
+    		for(var j=0; j<header.sections[i].lines.length; j++){
+    			var tmpLine = angular.copy(header.sections[i].lines[j]);
+    			delete tmpLine.details;
+    			delete tmpLine.comments;
+    			delete tmpLine.previewPath;
+    			if($scope.editMode===false){
+		    		tmpLine.Creation_date = moment().format(dateFormatString);
+		    	}
+		    	else{
+		    		tmpLine.Creation_date = moment(tmpLine.Creation_date).format(dateFormatString);
+		    	}
+		    	tmpLine.Last_update_date = moment().format(dateFormatString);
+		    	insertLines.push(tmpLine);
+		    	//get submit details
+		    	for(var k=0; k<header.sections[i].lines[j].details.length; k++){
+		    		var tmpDetail = angular.copy(header.sections[i].lines[j].details[k]);
+		    		delete tmpDetail.previewPath;
+		    		if($scope.editMode===false){
+			    		tmpDetail.Creation_date = moment().format(dateFormatString);			    	}
+			    	else{
+			    		tmpDetail.Creation_date = moment(tmpDetail.Creation_date).format(dateFormatString);
+			    	}
+			    	tmpDetail.Last_update_date = moment().format(dateFormatString);
+			    	insertDetails.push(tmpDetail);
+		    	}
+		    	//get submit comments
+		    	for(var m=0; m<header.sections[i].lines[j].comments.length; m++){
+		    		var tmpComment= angular.copy(header.sections[i].lines[j].comments[m]);
+		    		if($scope.editMode===false){
+			    		tmpComment.Creation_date = moment().format(dateFormatString);
+			    	}
+			    	else{
+			    		tmpComment.Creation_date = moment(tmpComment.Creation_date).format(dateFormatString);
+			    	}
+			    	tmpComment.Last_update_date = moment().format(dateFormatString);
+			    	insertComments.push(tmpComment);
+		    	}
+    		}
+
+    	}
+    	var submitInformations = {
+			insertHeader: insertHeader,
+			insertSections: insertSections,
+			insertLines: insertLines,
+			insertDetails: insertDetails,
+			insertComments: insertComments,
+		}
+
+		return submitInformations;
+    }
 	//End Process functions
 
 });

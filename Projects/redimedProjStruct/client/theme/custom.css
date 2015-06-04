@@ -1315,13 +1315,13 @@ table.timetable-table td:last-child {
 }
 
 .table-dynamic .table-bordered tbody tr .glyphicon-chevron-up {
-    top: -3px;
-    right: -14px;
+    top: -2px;
+    right: -40px;
 }
 
 .table-dynamic .table-bordered tbody tr .glyphicon-chevron-down {
-    top: 7px;
-    right: 1px;
+    top: 10px;
+    right: -22px;
 }
 
 .table-dynamic .table-bordered tbody tr .glyphicon-chevron-up:hover,
@@ -1441,27 +1441,33 @@ table.timetable-table td:last-child {
 
 .bv-right-list{
     position: absolute;
-    padding: 10px;
+    /*padding: 10px;*/
     right: 0;
-    top: 0;
-    min-height: 100%;
-    width: 250px;
+    top: 102px;
+    min-height: 92%;
+    width: 225px;
     color: #000000;
     /*background-color: #3D4A53;*/
-    background-color: #ffffff;
-    border: 1px solid rgb(173, 188, 86);
+    background-color: rgb(205, 204, 203);
+    /*border: 1px solid rgb(173, 188, 86);*/
     z-index: 888;
+}.m-background{
+    line-height:45px; 
+    text-align:center;"
+    width: 100%;
+    height: 45px;
+    background-color: #ffffff;
 }
 .bv-arrow {
     width: 0; 
     height: 0; 
-    border-top: 30px solid transparent;
-    border-bottom: 30px solid transparent; 
+    border-top: 14px solid transparent;
+    border-bottom: 14px solid transparent; 
     z-index: 888;
-    border-right:30px solid rgb(188, 186, 186);
+    border-right:17px solid #333332;
     position: absolute;
-    top: 5%;
-    right: 250px;
+    top: 102px;
+    right: 225px;
 }
 
 /*Minh Hikari custom css. DO NOT DELETE. Especially CHIEN :v*/
@@ -1577,10 +1583,14 @@ table.timetable-table td:last-child {
 }
 .un-input-custom{
     height: 20px;
+    /*phan quoc chien edit firefox*/
+    padding: 0px 0px 0px 5px !important;
 }
 .un-input-custom-1{
     height: 20px;
     border: 2px solid rgb(196, 196, 196)!important;
+    /*phan quoc chien edit firefox*/
+    padding: 0px 0px 0px 5px !important;
 }
 .un-img-sex{
     width: 50px;
@@ -1737,6 +1747,7 @@ table.timetable-table td:last-child {
     border: 3px solid white;
     background: rgb(102, 102, 102);
     margin-bottom: 10px;
+    outline: none;
 }
 .un-submit:hover{
     color: white !important;
@@ -1809,9 +1820,25 @@ table.timetable-table td:last-child {
     color:white;
 }
 
+.un_main_nav_item:active{
+    background: -webkit-linear-gradient(#9F9F9F, #262626); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#9F9F9F, #262626); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#9F9F9F, #262626); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#9F9F9F, #262626); /* Standard syntax */
+    color:white;
+}
+
 .un_main_nav_item a{
     color: black;
     text-decoration: none;
+}
+
+.un_main_nav_item a::active un_main_nav_item{
+    background: -webkit-linear-gradient(#9F9F9F, #262626); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#9F9F9F, #262626); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#9F9F9F, #262626); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#9F9F9F, #262626); /* Standard syntax */
+    color:white;
 }
 .un_main_nav_item:hover a{
     color: white;
@@ -2015,6 +2042,12 @@ nav bar end*/
 }
 .un-padding-bottom-5{
     padding-bottom: 5px;
+}
+/*phan quoc chien add button*/
+.un-button-my-data-table{
+    position: absolute;
+    right: 0;
+    top: -40px;
 }
 .un-padding-top-20{
     padding-top: 20px;
@@ -2249,7 +2282,7 @@ label{
     width: 10%;
     float: left;
     border-left: 3px solid rgb(23, 20, 76);
-    height: 153px;
+    height: 151px;
     padding: 1px 1px 1px 2px;
 }
 .un-div-width-50{
@@ -2535,10 +2568,12 @@ label{
     top: 0px;
 }
 .un-header-logo-img{
-    height: 35px;
+    height: 40px;
     position: absolute;
-    top: 9;
-    width: 11%;
+    top: 8;
+    width: 200px;
+    vertical-align: middle;
+    text-align: center;
 }
 .un-mdt-button{
     margin-right: 0; 
@@ -2864,8 +2899,8 @@ label{
     width: 100%;
     height: 100%;
     background-image: url(un/icon3_03size022.png);
-    background-position: 150;
     background-repeat: no-repeat;
+    background-position: center; 
 }
 /* end */
 
@@ -3031,13 +3066,13 @@ label{
     width: 100%;   
 }
 .un-button-giang {
-  margin-right: 0;
-  border-radius: 20px !important;
-  border: 3px solid white;
-  padding: 5px 10px 5px 10px;
-box-shadow: 0px 3px 5px rgba(50, 50, 50, 0.75); 
-float:right;
-  outline: none;
+    margin-right: 0;
+    border-radius: 20px !important;
+    border: 3px solid white;
+    padding: 5px 10px 5px 10px;
+    box-shadow: 0px 3px 5px rgba(50, 50, 50, 0.75); 
+    float:right;
+    outline: none;
 }
 
 /*giang css end*/
@@ -3339,6 +3374,63 @@ float:right;
     position: absolute;
     top: 25;
     left: 0;
+}
+
+.un_tn_row_red{
+    background-color: rgb(255, 169, 169);
+}
+.un_tn_row_yellow{
+    background-color: rgb(215, 215, 123);
+}
+.un_tn_row_green{
+    background-color: rgb(144, 218, 144);
+}
+.un_tn_row_blank{
+    
+}
+.un_tn_row_hover_red:hover{
+    background-color: rgb(253, 208, 208);
+}
+.un_tn_row_hover_yellow:hover{
+    background-color:rgba(215, 215, 123, 0.77);
+}
+.un_tn_row_hover_green:hover{
+    background-color:rgba(144, 218, 144, 0.57);
+}
+.un_tn_row_hover_blank:hover{
+    background-color:rgb(213, 213, 213);
+}
+.un_tn_legend_inline_panel{
+    font-style: italic;
+    margin-top:10px;
+    margin-bottom: 10px;
+    float:left;
+}
+.un_tn_legend_inline_header{
+    float:left;
+}
+.un_tn_legend_inline_item{
+    float:left;
+    margin-left:5px;
+    margin-right: 10px;
+}
+.un_tn_legend_node{
+    width:20px;
+    height:20px;
+    float:left;
+}
+
+.un_tn_legend_node_red{
+    background-color: rgb(255, 169, 169);
+}
+.un_tn_legend_node_yellow{
+    background-color: rgb(215, 215, 123);
+}
+.un_tn_legend_node_green{
+    background-color: rgb(144, 218, 144);
+}
+.un_tn_legend_node_blank{
+    border:1px solid #333333;
 }
 /*---------------------------------------------*/
 /*---------------------------------------------*/

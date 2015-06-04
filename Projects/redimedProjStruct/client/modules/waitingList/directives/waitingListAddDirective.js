@@ -1,11 +1,12 @@
 angular.module('app.loggedIn.waitingList.directives.add', [])
 
-.directive('waitingListAdd', function($modal, WaitingListModel, ConfigService, $cookieStore, OutreferralModel){
+.directive('waitingListAdd', function($modal, WaitingListModel, ConfigService, $cookieStore, OutreferralModel, PatientService){
 	return {
 		restrict: 'EA',
 		scope: {
 			success: '=',
-			doctorId: '='
+			doctorId: '=',
+			patientId: '='
 		},
 		templateUrl: 'modules/waitingList/directives/templates/add.html',
 		link: function(scope, elem, attrs){
@@ -33,6 +34,16 @@ angular.module('app.loggedIn.waitingList.directives.add', [])
 					.then(function(response){
 						scope.waitingList.model.doctor_id = response.data[0].doctor_id;
 						scope.doctor.name = response.data[0].NAME;
+					}, function(error){})
+				}
+			})
+
+			scope.$watch('patientId', function(patientId){
+				if(typeof patientId !== 'undefined'){
+					PatientService.get(patientId)
+					.then(function(response){
+						scope.waitingList.model.Patient_id = response.data.Patient_id;
+						scope.patient.name = response.data.First_name+" "+response.data.Sur_name;
 					}, function(error){})
 				}
 			})

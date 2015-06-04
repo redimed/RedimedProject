@@ -1,36 +1,55 @@
 var db = require('../models');
 var mdt_functions = require('../mdt-functions.js');
+var kiss=require('./kissUtilsController');//tan add
+var errorCode=require('./errorCode');//tan add
+var invoiceUtil=require('./invoiceUtilController');//tan add
 
+//tannv.dts@gmail.com
+var controllerCode="RED_DOCTOR_V2";
 module.exports = {
+
+	/**
+	 * created by: unknown
+	 * modify: tannv.dts
+	 * cap nhat truy van lay cac thong tin lien quan appPatient
+	 */
 	postCalendarByDate: function(req, res) {
+		var fHeader="v2_DoctorController->postCalendarByDate";
+		var functionCode="FN001";
+		var fromDate = kiss.checkData(req.body.fromDate)?req.body.fromDate:null;
+		var toDate = kiss.checkData(req.body.toDate)?req.body.toDate:null;
+		var doctor_id = kiss.checkData(req.body.doctor_id)?req.body.doctor_id:''; 
+		if(!kiss.checkListData(fromDate,toDate,doctor_id))
+		{
+			kiss.exlog(fHeader,"Loi data truyen den");
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
+			return;
+		}
 
+		var sql=
+			" SELECT patient.*,`apptPatient`.`appt_status`, calendar.`FROM_TIME`,calendar.`TO_TIME`,               "+
+			" calendar.`SERVICE_ID`,calendar.CAL_ID,calendar.DOCTOR_ID                                             "+
+			" FROM `cln_patients` patient                                                                          "+
+			" INNER JOIN `cln_appt_patients` apptPatient ON patient.`Patient_id`=apptPatient.`Patient_id`          "+
+			" INNER JOIN `cln_appointment_calendar` calendar ON apptPatient.`CAL_ID`=calendar.`CAL_ID`             "+
+			" WHERE calendar.`DOCTOR_ID`=? AND DATE(calendar.`FROM_TIME`)>=? AND DATE(calendar.`FROM_TIME`)<=?     "+
+			" ORDER BY calendar.`FROM_TIME` ASC                                                                    ";
+		
+		kiss.executeQuery(req,sql,[doctor_id,fromDate,toDate],function(rows){
+			res.json({status:'success',data:rows});
+		},function(err){
+			kiss.exlog(fHeader,"Loi truy van lay data",err);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN002')});
+		},true)
 
-		// var date = req.body.date;
-		var fromDate = req.body.fromDate;
-		var toDate = req.body.toDate;
-		var doctor_id = req.body.doctor_id; 
-
-		// if(!date) {
-		// 	// current date;
-		// 	date = mdt_functions.nowDateDatabase();
-		// }
-
-		db.sequelize.query("SELECT c.*, p.* "+
+		//tannv.dts@gmail.com frame
+		/*db.sequelize.query("SELECT c.*, p.* "+
 							"FROM cln_appointment_calendar c "+
 							"INNER JOIN cln_patients p "+
 							"ON c.`Patient_id` = p.Patient_id "+
 							"WHERE DOCTOR_ID = ? "+
 							"AND FROM_TIME >= ? AND TO_TIME <= ? ORDER BY FROM_TIME"
 			,null,{raw:true},[doctor_id,fromDate,toDate])
-		
-		// db.Appointment.findAll({
-		// 	where: {
-		// 		DOCTOR_ID: doctor_id,
-		// 		Patient_id: {ne: null},
-		// 		FROM_TIME: { rlike: date },
-
-		// 	}
-		// })
 
 		.success(function(data){
 			res.json({list: data, status: 'success'})
@@ -38,7 +57,40 @@ module.exports = {
 		.error(function(err) {
 			console.log(err);
 			res.json(500, {"status": "error", "error": err});
-		})
+		})*/
+
+	},
+
+	/**
+	 * Kiem tra doctor co bao nhieu appointment la workInProgress
+	 * tannv.dts@gmail.com
+	 */
+	postApptWorkInProgress:function(req,res)
+	{
+		var fHeader="v2_DoctorController->getApptWorkInProgress";
+		var functionCode="FN002";
+		var fromDate = kiss.checkData(req.body.fromDate)?req.body.fromDate:null;
+		var toDate = kiss.checkData(req.body.toDate)?req.body.toDate:null;
+		var doctor_id = kiss.checkData(req.body.doctor_id)?req.body.doctor_id:''; 
+		if(!kiss.checkListData(fromDate,toDate,doctor_id))
+		{
+			kiss.exlog(fHeader,"Loi data truyen den");
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
+			return;
+		}
+		var sql=
+			" SELECT `apptPatient`.*                                                                              "+
+			" FROM `cln_appt_patients` apptPatient                                                                "+
+			" INNER JOIN `cln_appointment_calendar` calendar ON apptPatient.`CAL_ID`=calendar.`CAL_ID`            "+
+			" WHERE calendar.`DOCTOR_ID`=? AND DATE(calendar.`FROM_TIME`)>=? AND DATE(calendar.`FROM_TIME`)<=?    "+
+			" AND `apptPatient`.`appt_status`=?                                                                   ";
+
+		kiss.executeQuery(req,sql,[doctor_id,fromDate,toDate,invoiceUtil.apptStatus.workInProgress.value],function(rows){
+			res.json({status:'success',data:rows});
+		},function(err){
+			kiss.exlog(fHeader,"Loi truy van lay data",err);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN002')});
+		});
 
 	},
 

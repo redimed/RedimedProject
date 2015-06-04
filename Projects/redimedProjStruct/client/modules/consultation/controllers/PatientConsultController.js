@@ -589,7 +589,6 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		                    toastr.error('Save Item Failed!');
 		                }
 		            });
-		            
 				}
 				else
 					toastr.success("Submit Consultation Failed!");

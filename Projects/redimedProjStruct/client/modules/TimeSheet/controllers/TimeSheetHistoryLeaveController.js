@@ -66,19 +66,19 @@ angular.module("app.loggedIn.TimeSheet.HistoryLeave.Controller", [])
                         TimeSheetService.SubmitOnViewLeave(info).then(function(response) {
                             if (response.status === "success") {
                                 modalInstance.close();
-                                $state.go("loggedIn.LeaveHistory",
+                                $state.go("loggedIn.TimeSheetHome.LeaveHistory",
                                     null, {
                                         "reload": true
                                     });
                                 toastr.success("Submit success!", "Success");
                             } else if (response.status === "error") {
-                                $state.go("loggedIn.TimeSheetHome", null, {
+                                $state.go("loggedIn.home", null, {
                                     "reload": true
                                 });
                                 toastr.error("Submit fail!", "Error");
                             } else {
                                 //catch exception
-                                $state.go("loggedIn.TimeSheetHome", null, {
+                                $state.go("loggedIn.home", null, {
                                     "reload": true
                                 });
                                 toastr.error("Server not response!", "Error");
@@ -89,7 +89,7 @@ angular.module("app.loggedIn.TimeSheet.HistoryLeave.Controller", [])
 
                     $scope.clickEdit = function(leaveID) {
                         modalInstance.close();
-                        $state.go("loggedIn.CreateLeave", {
+                        $state.go("loggedIn.TimeSheetHome.CreateLeave", {
                             id: leaveID
                         }, {
                             "reload": true

@@ -39,7 +39,7 @@ angular.module("app.loggedIn.TimeSheet.Detail.Directive", [])
                                     toastr.error("Loadding fail!", "Error");
                                     //close modalInstance
                                 } else {
-                                    $state("loggedIn.ApproveTask", null, {
+                                    $state("loggedIn.TimeSheetHome.ApproveTask", null, {
                                         "reload": true
                                     });
                                     toastr.error("Server not response!", "Error");
