@@ -315,6 +315,7 @@ module.exports = {
                 return;
             });
     },
+
     LoadNodeSelect: function(req, res) {
         var GROUP_ID = req.body.info;
         db.sys_hierarchy_nodes.findAll({
@@ -339,6 +340,7 @@ module.exports = {
                 return;
             });
     },
+
     LoadUser: function(req, res) {
         var searchObj = req.body.searchObj;
         var strQuery = "";
@@ -451,6 +453,7 @@ module.exports = {
                 return;
             });
     },
+
     AddUser: function(req, res) {
         var info = req.body.info;
         var arrayUser = "";
@@ -494,6 +497,7 @@ module.exports = {
                 });
             });
     },
+    
     LoadOneUser: function(req, res) {
         var info = req.body.info;
         var NODE_ID = info.NODE_ID;
@@ -835,7 +839,7 @@ module.exports = {
                 return;
             });
     },
-    
+
     StepEmployee: function(req, res) {
         var info = req.body.info;
         var listUserID = "";
