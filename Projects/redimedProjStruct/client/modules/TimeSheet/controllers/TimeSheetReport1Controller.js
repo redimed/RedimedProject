@@ -64,6 +64,7 @@ angular.module("app.loggedIn.TimeSheet.Report1.Controller", [])
                 var info = {};
                 info.listEMP = angular.copy($scope.listEmployeeChoose);
                 info.USER_ID = $cookieStore.get('userInfo').id;
+                info.listDept = angular.copy($scope.listDepartmentChoose);
                 TimeSheetService.LoadReportTimeInLieu(info).then(function(response) {
                     if (response.status === "success") {
                         // PROCESSING PDF
