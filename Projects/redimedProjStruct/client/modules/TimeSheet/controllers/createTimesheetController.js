@@ -59,10 +59,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             if (response.status === "error") {
                 toastr.error("Check Time in Lieu fail!", "Fail");
             } else if (response.status === "success") {
-                var timeInLieu = 0;
-                angular.forEach(response.result, function(data, index) {
-                    timeInLieu += data.time_in_lieu;
-                });
+                var timeInLieu = response.time_in_lieu;
                 //conver to hours-minute
                 var hours = parseInt(timeInLieu / 60);
                 var minutes = timeInLieu % 60;
@@ -111,6 +108,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                     if (value !== undefined &&
                         value !== null &&
                         value.ITEM_ID == 22 &&
+                        value.isAction !== "delete" &&
                         value.time_charge !== "" &&
                         value.time_charge.length !== 0) {
                         sumInLieu += StaffService.convertShowToFull(value.time_charge);
@@ -190,11 +188,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
         if (response.status === "error") {
             toastr.error("Check Time in Lieu fail!", "Fail");
         } else if (response.status === "success") {
-            var timeInLieu = 0;
-            angular.forEach(response.result, function(data, index) {
-                timeInLieu += data.time_in_lieu;
-            });
-            $scope.info.time_in_lieuHas = timeInLieu;
+            $scope.info.time_in_lieuHas = response.time_in_lieu;
 
         } else {
             $state.go("loggedIn.home", null, {
