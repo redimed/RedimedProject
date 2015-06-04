@@ -43,9 +43,9 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 		})
 	}
 
-	$scope.dragAppt = function(e,u){
-		console.log("====Drag====: ",e);
-		console.log("====Drag U====: ",u);
+	$scope.dragAppt = function(e,u,t){
+		console.log("====Drag====: ",t);
+		
 	}
 
 	$scope.dropAppt = function(){

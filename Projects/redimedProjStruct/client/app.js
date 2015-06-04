@@ -225,28 +225,6 @@ angular.module("app", [
         socket.removeAllListeners();
     })
 
-    // var checkInterval;
-
-    // checkInterval = $interval(function() {
-    //     if ($cookieStore.get("userInfo") != null || typeof $cookieStore.get("userInfo") !== 'undefined') {
-    //         socket.emit("checkApp", $cookieStore.get("userInfo").id)
-    //     }
-    // }, 5 * 1000);
-
-
-    // socket.on("isLoggedIn",function(){
-    //     toastr.error("Your Account Is Already Logged In!");
-
-    //     $cookieStore.remove("userInfo");
-    //     $cookieStore.remove("companyInfo");
-    //     $cookieStore.remove("doctorInfo");
-    //     $cookieStore.remove("fromState");
-    //     $state.go("security.login",null,{location: "replace", reload: true});
-
-    //     socket.removeAllListeners();
-    // })
-
-
     $idle.watch();
 
     $rootScope.jsErrors = [];
