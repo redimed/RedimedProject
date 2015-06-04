@@ -582,7 +582,6 @@ module.exports = {
 
     LoadReportTimeInLieu: function(req, res) {
         var info = req.body.info;
-        //console.log(info);
         //CHUYEN LIST EMPL VA LIST DEPT THANH CHUOI STRING
         var stringEMP = "";
         var stringDept = "";
