@@ -334,6 +334,7 @@ module.exports = {
 	insertNewPost:function(req,res){
 		var data = req.body.post;
 		var shopId = req.body.shop;
+		console.log(data);
 		var sqlInsertPost = 
 			"INSERT INTO ph_posts (company_id,required_date,time_od_shift,local_weekday_rate,nonelocal_weekday_rate,sat_rate,sun_rate,ph_rate,isTravel,isAccommodation,post_type,job_title,job_description,Start_date,Duration,job_type,Qualification,experiences_require,hours_per_week,days_per_week,isweekend_shift,CREATION_DATE) "+
 			"VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";

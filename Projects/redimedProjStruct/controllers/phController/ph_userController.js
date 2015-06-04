@@ -12,11 +12,14 @@ var db = require("../../models");
 module.exports = {
 	//signup user 
 	signup : function(req,res){
+		var userID = {};
 		var data = req.body;
 		var password=bcrypt.hashSync(data.password);
 		console.log(data)
 		var DOB = moment(data.DOB_pharmacist).format("YYYY-MM-DD")
 		console.log(DOB);
+		console.log("------------", data.user_img);
+		
 		// console.log(password);
 		// insert data table ph_user
 		var sqlInsertUser = 
@@ -40,7 +43,7 @@ module.exports = {
 			"VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		var sqlSelectCompanyName = "SELECT company_name FROM ph_companies WHERE company_name =  ? ";
 		req.getConnection(function(err,connection){
-            var query = connection.query(sqlInsertUser,[data.username,password,data.user_type,data.firstname,data.surname,data.mobile,data.email],function(err,rows){
+            var query = connection.query(sqlInsertUser,[data.username,password,data.user_type,data.firstname,data.surname,data.mobile, data.email],function(err,rows){
                 if(err){
                     console.log(err);
                     res.json({status:'fail'});
@@ -55,9 +58,22 @@ module.exports = {
                     			res.json({status:'fail'});
 							}else{
 								//select user id 
-								var userID = user_id[0].user_id
+								userID = user_id[0].user_id
 								console.log(userID);
-
+								if (data.user_img == '' || data.user_img == null) {
+									console.log(data.user_img);
+								}else{
+									data.user_img = '.\\uploadFile\\'+'Pharmacist\\'+'userID_'+ userID + '\\' + "image.jpg";
+								}
+								var updateImg = "UPDATE `ph_users` u SET u.`user_img` = ? WHERE u.`user_id` = ?"
+								db.sequelize.query(updateImg, null, {raw:true}, [data.user_img, userID])
+									.success(function(rows){
+										console.log("---------------Upload");
+										// res.json({status:'success', address:rows[0]});
+									})
+									.error(function(err){
+										console.log("errorUpload", err);
+									})
 								//check user type if user_type = company call query insert company
 				                if(data.user_type=="Company"){
 
@@ -96,7 +112,7 @@ module.exports = {
 											                    						res.json({status:'fail'});
 											                     					}else{
 											                     						console.log("Success company user")
-											                     						res.json({status:'Success'});
+											                     						res.json({status:'Success', data:userID});
 											                     					}
 											                     				})
 											                     			})
@@ -124,7 +140,7 @@ module.exports = {
 							                    res.json({status:'fail'});
 							                }else{
 							                    console.log("Success Pharmarcis user")
-							                    res.json({status:'Success'});
+							                    res.json({status:'Success', data:userID});
 							                }
 							            })
 							        })
@@ -306,6 +322,7 @@ module.exports = {
 
 	uploadAvatarPic: function(req,res){
         var data = req.body;
+        console.log("--------------upload", data);
         if(data.user_id !== 'undefined'){
 	        var prefix = __dirname.substring(0,__dirname.indexOf('controllers'));
 	        var targetFolder = prefix+'uploadFile\\'+'Pharmacist\\'+'userID_'+ data.user_id;
@@ -469,5 +486,61 @@ module.exports = {
 			.error(function(err){
 				console.log("errorDistance", err);
 			})
-	}
+	},
+
+	getJobTitle: function(req, res){
+		var title = req.body.title;
+
+		var sql = 	"SELECT * FROM `ph_shops_post` sp " +
+					"INNER JOIN `ph_posts` po ON sp.`post_id` = po.`post_id` " +
+					"INNER JOIN `ph_company_shops` cs ON sp.`shop_id` = cs.`shop_id` " +
+					"WHERE po.`job_title` LIKE ? ";
+
+		db.sequelize.query(sql, null, {raw:true}, ["%" + title + "%"])
+			.success(function(rows){
+				console.log("---------------title", rows);
+				res.json({status:'success', title:rows});
+			})
+			.error(function(err){
+				console.log("errorDistance", err);
+			})
+	},
+
+	getJobDescription: function(req, res){
+		var description = req.body.description;
+		console.log(description)
+		var sql = 	"SELECT * FROM `ph_shops_post` sp " +
+					"INNER JOIN `ph_posts` po ON sp.`post_id` = po.`post_id` " +
+					"INNER JOIN `ph_company_shops` cs ON sp.`shop_id` = cs.`shop_id` " +
+					"WHERE po.`job_description` LIKE ? ";
+
+		db.sequelize.query(sql, null, {raw:true}, ["%" + description + "%"])
+			.success(function(rows){
+				console.log("---------------description", rows);
+				res.json({status:'success', description:rows});
+			})
+			.error(function(err){
+				console.log("errorDistance", err);
+			})
+	},
+
+	getSearch: function(req, res){
+		var description = req.body.description;
+		var title = req.body.title;
+
+		console.log(description)
+		var sql = 	"SELECT * FROM `ph_shops_post` sp " +
+					"INNER JOIN `ph_posts` po ON sp.`post_id` = po.`post_id` " +
+					"INNER JOIN `ph_company_shops` cs ON sp.`shop_id` = cs.`shop_id` " +
+					"WHERE po.`job_description` LIKE ?  AND  po.`job_title` LIKE ?";
+
+		db.sequelize.query(sql, null, {raw:true}, ["%" + description + "%", "%" + title + "%"])
+			.success(function(rows){
+				console.log("---------------search", rows);
+				res.json({status:'success', data:rows});
+			})
+			.error(function(err){
+				console.log("errorDistance", err);
+			})
+	},
 }
