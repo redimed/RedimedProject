@@ -49,10 +49,10 @@ module.exports = {
                             //CHECK EXIST LEAVE
                             for (var keyTimeSheet in result) {
                                 var checkExistLeave = false;
-                                var date = moment(moment(result[keyTimeSheet].date).format("YYYY-MM-DD")).format("X");
+                                var date = moment(result[keyTimeSheet].date).startOf('day').format("X");
                                 for (var keyLeave in resultLeaveApprove) {
-                                    var startDate = moment(moment(resultLeaveApprove[keyLeave].start_date).format("YYYY-MM-DD")).format("X");
-                                    var finishDate = moment(moment(resultLeaveApprove[keyLeave].finish_date).format("YYYY-MM-DD")).format("X");
+                                    var startDate = moment(resultLeaveApprove[keyLeave].start_date).startOf('day').format("X");
+                                    var finishDate = moment(resultLeaveApprove[keyLeave].finish_date).startOf('day').format("X");
                                     if ((result[keyTimeSheet].activity_id === 15 ||
                                             result[keyTimeSheet].activity_id === 16 ||
                                             result[keyTimeSheet].activity_id === 17 ||
