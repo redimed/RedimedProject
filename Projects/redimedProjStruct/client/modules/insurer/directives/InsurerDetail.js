@@ -5,7 +5,9 @@ angular.module("app.loggedIn.insurer.detail.directive", [])
         scope: {
             data: "@",
             options: "=",
-            on_success: '=onsuccess'
+            on_success: '=onsuccess',
+            success:'=',
+            responsedata:'='
         },
         templateUrl: "modules/insurer/directives/templates/detail.html",
         link: function (scope, element, attrs) {
@@ -38,6 +40,8 @@ angular.module("app.loggedIn.insurer.detail.directive", [])
                                 toastr.success("Added a new Insurer", "Success");
                                 scope.modelObjectMap = angular.copy(InsurerModel);
                                 scope.isSubmit = false;
+                                scope.success = true;
+                                scope.responsedata = response;
                                 if (scope.on_success) {
                                     scope.on_success(response);
                                 }

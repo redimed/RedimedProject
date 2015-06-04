@@ -1,6 +1,6 @@
 angular.module('app.loggedIn.company.directives.listInsurer', [])
 
-.directive('listInsurer', function(CompanyModel, $filter,$state){
+.directive('listInsurer', function(CompanyModel, $filter,$state, $modal,toastr){
 	return {
 		restrict: 'EA',
 		templateUrl: 'modules/company/directives/templates/listInsurer.html',
@@ -8,7 +8,8 @@ angular.module('app.loggedIn.company.directives.listInsurer', [])
 			options: '=',
 			limit: '@',
 			onRowClick: '&',
-			insurerArray:'='
+			insurerArray:'=',
+			responsedata:'='
 		},
 	    link: function(scope, elem, attrs){
 			var setPage = function(page){
@@ -48,6 +49,21 @@ angular.module('app.loggedIn.company.directives.listInsurer', [])
 				}//end switch
 				scope.company.load();
 				setPage(1);
+			}
+			scope.addNewInsurer = function(){
+				var modalInstance = $modal.open({
+			      templateUrl: 'modules/company/dialogs/templates/addNewInsurer.html',
+			      controller: 'CompanyAddNewInsurerDialgosController',
+			      size :''
+			    })
+			    .result.then(function(response){
+			    	 if(response.status === 'success'){
+						CompanyModel.selectInsurer(response.data.insertId)
+					    	.then(function(response){
+					    		scope.responsedata = response.data[0];
+					    	})
+					} 	
+			    })
 			}
 			scope.company = {
 				search: search,

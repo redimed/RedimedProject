@@ -1,6 +1,6 @@
 angular.module('app.loggedIn.company.directives.addCompanyNotFollow', [])
 
-.directive('addCompanyNotFollow', function(CompanyModel, $filter,$state,$modal,$stateParams,toastr,$cookieStore,ConfigService){
+.directive('addCompanyNotFollow', function(CompanyModel, $filter,$state,$modal,$stateParams,toastr,$cookieStore,ConfigService,$q){
 	return {
 		restrict: 'EA',
 		templateUrl: 'modules/company/directives/templates/add.html',
@@ -128,6 +128,14 @@ angular.module('app.loggedIn.company.directives.addCompanyNotFollow', [])
 						scope.company.listTemp.push(row.id);
 						scope.company.listInsurer.push(row);
 					};
+					var postData = { 
+						Insurer:row.id,
+						id:$stateParams.companyId
+					}
+					scope.company.InsurerTemp = row.id;
+					scope.company.checkColor = row.id;
+					CompanyModel.updateInsurer(postData)
+					.then(function(response){}, function(error){})
 					
 				})
 			}
