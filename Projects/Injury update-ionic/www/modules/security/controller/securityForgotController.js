@@ -36,10 +36,13 @@ angular.module('starter.security.forgot.controller',[])
                         $scope.popupMessage = { message: "That e-mail address doesn't have an associated " +
                         "user account. Are you sure you've registered?"}
                         $ionicPopup.show({
-                            templateUrl: "modules/popup/PopUpError.html",
+                            templateUrl: "modules/popup/PopUpConfirm.html",
                             scope: $scope,
                             buttons: [
-                                { text: "Ok" }
+                                { text: "Ok" },
+                                {   text: "Cancel",
+                                    type: 'btn-cancel-popUp'
+                                },
                             ]
                         });
                     }

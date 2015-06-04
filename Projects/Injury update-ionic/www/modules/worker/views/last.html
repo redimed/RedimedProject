@@ -1,12 +1,27 @@
 <ion-view title="Add Worker">
-    <ion-nav-buttons side="left">
+    <!-- <ion-nav-buttons side="left">
         <a class="button button-icon icon ion-ios7-arrow-back color-fff" ui-sref="app.worker.main">&nbsp;Back</a>
-    </ion-nav-buttons>
+    </ion-nav-buttons> -->
+<ion-content class="content-scroll" style="background:#015190">
+        <div class="transparent-modal-phone" style="width: 100%; height: 100%">
+            <div >
+                <div class="header-logo">
+                    <img src="img/main_logo.png" class="img-header">
+                </div>
+                <div class="background-header-logo-child">
+                    <span class="span-header">Injury Management</span>
 
-    <form name="last" novalidate>
-        <ion-content class="padding has-header">
+                </div>
+                <div style="width: 100%;height: 49px;float: left;position: absolute;">
+                    <span style="float: right;padding-right: 2%;padding-top: 30px;font-weight: 600;color: white;">Last Infomation</span>
+                </div>
+            </div>
+     <form name="last" novalidate style="margin-top:50px">
             <ion-list>
-                <!--<label class="row item item-input border-none">-->
+            <div class="actionBar">
+                    <a class="button button-icon icon ion-ios7-arrow-back color-fff" ui-sref="app.worker.main" style="float:left">&nbsp;Back</a>
+            </div>
+                <!--<label class="row item-input border-none">-->
                 <!--<span class="input-label span-input-color">Indigenous Status</span>-->
                 <!--<div class="col-md-5">-->
                 <!--<ion-checkbox class="border-none" ng-model="isAboriginal">Aboriginal origin</ion-checkbox>-->
@@ -18,75 +33,75 @@
                 <!--</div>-->
                 <!--</label>-->
 
-                <!--<label class="item item-input">-->
+                <!--<label class="item-input">-->
                 <!--<span class="input-label span-input-color">Country of Birth</span>-->
                 <!--<input type="text" ng-model="worker.countryOfbirth" name="worker.countryOfbirth" />-->
                 <!--</label>-->
 
-                <!--<label class="item item-input">-->
+                <!--<label class="item-input">-->
                 <!--<span class="input-label span-input-color">Primary Language</span>-->
                 <!--<input type="text" ng-model="worker.Pr_lang" name="Pr_lang">-->
                 <!--</label>-->
 
-                <label class="item item-input label-custom-field">
+                <label class="item-input label-custom-field">
                     <span class="input-label span-input-color">Occupation</span>
-                    <input type="text" ng-model="worker.Occupation" name="Occupation">
+                    <input type="text" ng-model="worker.Occupation" name="Occupation" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
                 </label>
 
+<div class="bd-bottom"></div>
 
-
-                <label class="item item-input label-custom-field">
+                <label class="item-input label-custom-field">
                     <span class="input-label span-input-color">Partner's Name</span>
-                    <input type="text" ng-model="worker.Partner_name" name="Partner_name">
+                    <input type="text" ng-model="worker.Partner_name" name="Partner_name" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
                 </label>
 
+<div class="bd-bottom"></div>
 
-
-                <label class="item item-input label-custom-field">
+                <label class="item-input label-custom-field">
                     <span class="input-label span-input-color">Partner's DOB</span>
                     <input type="text" onfocus="this.type='date';
                     this.setAttribute('onfocus','');this.blur();
-                    this.focus();" ng-model="worker.Partner_DOB" name="Partner_DOB" />
+                    this.focus();" ng-model="worker.Partner_DOB" name="Partner_DOB" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
                 </label>
 
-
-                <label class="item item-input label-custom-field">
-                    <span class="input-label span-input-color">Partner's Occupation</span>
-                    <input type="text" ng-model="worker.Partner_Occupation" name="Partner_Occupation">
+<div class="bd-bottom"></div>
+                <label class="item-input label-custom-field">
+                    <span class="input-label span-input-color">Partner's Occupation</span> 
+                    <input type="text" ng-model="worker.Partner_Occupation" name="Partner_Occupation" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
                 </label>
-
-                <!--<label class="item item-input" ng-class="{'has-error':isSubmit3 && second.NOK_emerg_contact.$invalid}">-->
+<div class="bd-bottom"></div>
+                <!--<label class="item-input" ng-class="{'has-error':isSubmit3 && second.NOK_emerg_contact.$invalid}">-->
                 <!--<span class="input-label span-input-color">NOK/Emerg.Contact</span>-->
                 <!--<input type="text" ng-model="worker.NOK_emerg_contact" name="NOK_emerg_contact">-->
                 <!--<i ng-class="{'icon ion-alert-circled error':isSubmit3 && last.NOK_emerg_contact.$invalid}"></i>-->
                 <!--</label>-->
 
-                <!--<label class="item item-input" ng-class="{'has-error':isSubmit3 && last.NOK_Phone.$invalid}">-->
+                <!--<label class="item-input" ng-class="{'has-error':isSubmit3 && last.NOK_Phone.$invalid}">-->
                 <!--<span class="input-label span-input-color">NOK Phone</span>-->
                 <!--<input type="tel" ng-model="worker.NOK_Phone" name="NOK_Phone">-->
                 <!--<i ng-class="{'icon ion-alert-circled error':isSubmit3 && last.NOK_Phone.$invalid}"></i>-->
                 <!--</label>-->
 
-                <label class="item item-input label-custom-field">
+                <label class="item-input label-custom-field">
                     <span class="input-label span-input-color">Alias First Name</span>
-                    <input type="text" ng-model="worker.Alias_First_name" name="Alias_First_name">
+                    <input type="text" ng-model="worker.Alias_First_name" name="Alias_First_name" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
                 </label>
-
-                <label class="item item-input label-custom-field">
+<div class="bd-bottom"></div>
+                <label class="item-input label-custom-field">
                     <span class="input-label span-input-color">Alias Sur Name</span>
-                    <input type="text" ng-model="worker.Alias_Sur_name" name="Alias_Sur_name">
+                    <input type="text" ng-model="worker.Alias_Sur_name" name="Alias_Sur_name" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
                 </label>
-
-                <label class="item item-input label-custom-field">
+<div class="bd-bottom"></div>
+                <label class="item-input label-custom-field">
                     <span class="input-label span-input-color">UR No</span>
-                    <input type="tel" ng-model="worker.UR_no" name="UR_no">
+                    <input type="tel" ng-model="worker.UR_no" name="UR_no" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
                 </label>
-
-                <label class="item item-input label-custom-field">
+<div class="bd-bottom"></div>
+                <label class="item-input label-custom-field">
                     <span class="input-label span-input-color">Custom</span>
-                    <input type="text" ng-model="worker.Custom" name="Custom">
+                    <input type="text" ng-model="worker.Custom" name="Custom" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
                 </label>
-
+<div class="bd-bottom"></div>
                 <div class="row responsive-sm">
                     <div class="col col-80 col-offset-10">
                         <a class="button button-clear button-full" style="border: none; background-color: #1ABC9C;
@@ -97,7 +112,11 @@
                     </div>
                 </div>
             </ion-list>
-        </ion-content>
     </form>
+         
+        </div>
+
+    </ion-content>
+   
 </ion-view>
 

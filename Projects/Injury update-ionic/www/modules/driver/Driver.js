@@ -1,6 +1,7 @@
 angular.module('starter.driver',[
     'starter.driver.services',
-    'starter.driver.controller'
+    'starter.driver.controller',
+    'starter.driverdetail.controller'
 ])
     .config(function ($stateProvider){
         $stateProvider
@@ -15,8 +16,8 @@ angular.module('starter.driver',[
                 }
             })
             .state('app.driver.list',{
+                 cache: false,
                 url:"/list",
-                cache: false,
                 views: {
                     'structure' : {
                         templateUrl: "modules/driver/views/listInjury.html"
@@ -24,17 +25,18 @@ angular.module('starter.driver',[
                 }
             })
             .state('app.driver.detailInjury',{
+                  cache: false,
                 url:"/detail_injury/:injuryID",
-                cache: false,
                 views: {
                     'structure' : {
-                        templateUrl: "modules/driver/views/infoInjury.html"
+                        templateUrl: "modules/driver/views/infoInjury.html",
+                        controller:'detailInjuryController'
                     }
                 }
             })
             .state('app.driver.mapsPickup',{
+                 cache: false,
                 url:"/mapsPickup",
-                cache: false,
                 views:{
                     'structure':{
                         templateUrl:"modules/driver/views/mapsPickup.html"

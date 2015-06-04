@@ -1,84 +1,91 @@
 <ion-view>
-    <ion-content class="content-scroll">
+    <ion-content class="content-scroll" style="background:#015190">
         <div class="transparent-modal-phone" style="width: 100%; height: 100%">
             <div class="cus-content-modal-phone content">
-                <a ui-sref="login">
-                    <img src="img/main_logo.png">
-                </a>
+            <div >
+                <div class="header-logo">
+                    <img src="img/main_logo.png" class="img-header">
+                </div>
+                <div class="background-header-logo-child">
+                    <span class="span-header">Injury Management</span>
 
-                <h2>
-                    Sign Up
-                </h2>
+                </div>
+                <div style="width: 100%;height: 49px;float: left;position: absolute;">
+                    <span style="float: right;padding-right: 2%;padding-top: 30px;font-weight: 600;color: white;">SIGN UP</span>
+                     <button class="button button-clear button-positive ion-arrow-left-c" style="text-decoration: underline;color: white;letter-spacing: 0.15em;border: none;float: left;margin-left: 130px;margin-top: 15px;" ui-sref="security.login">
+                  
+                    </button>
+                </div>
+            </div>
+               
                 <form novalidate name="registerForm" style="margin-top: 50px">
-                    <label class="item item-input label-custom-field">
-                        <span class="input-label span-input-color">Username</span>
+                    <label class="item-input label-custom-field">
+                        <span class=" span-input-color">Username</span>
                         <input type="text" name="username"
                                ng-model="userInfo.user_name" required ng-pattern="/^[\w&.-]+$/"
-                               ng-class="{'has-error-input-pass': registerForm.username.$error.pattern}"/>
+                               ng-class="{'has-error-input-pass': registerForm.username.$error.pattern}"  class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white" />
                     </label>
-
-                    <label class="item item-input label-custom-field">
-                        <span class="input-label span-input-color">Password</span>
+                    <div class="bd-bottom"></div>
+                    <label class="item-input label-custom-field">
+                        <span class=" span-input-color">Password</span>
                         <input type="password" name="password"
-                               ng-model="userInfo.password" required />
+                               ng-model="userInfo.password" required  class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
                     </label>
-
-                    <label class="item item-input label-custom-field">
-                        <span class="input-label span-input-color">Re-Password</span>
+                         <div class="bd-bottom"></div>
+                    <label class="item-input label-custom-field">
+                        <span class=" span-input-color">Re-Password</span>
                         <input type="password" name="password" ng-model="userInfo.rePass"
                                required ng-match="userInfo.password" ng-keyup="current=true" ng-focus="current=false"
-                               ng-class="{'has-error-input-pass': userInfo.password !== userInfo.rePass && current}" />
+                               ng-class="{'has-error-input-pass': userInfo.password !== userInfo.rePass && current}"  class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
                     </label>
-
-                    <label class="item item-input item-select label-custom-field">
-                        <span class="input-label span-input-color">Title</span>
-                        <select ng-required="true" ng-model="userInfo.title" name="Title" class="browser-default"
+                    <div class="bd-bottom"></div>
+                    <label class="item-input ">
+                        <span class=" span-input-color">Title</span>
+                        <select ng-required="true" ng-model="userInfo.title" name="Title" class="select-custom" 
                                 ng-options="row.name as row.name for row in titleIndex">
                             <option value="">--Select Title--</option>
                         </select>
-                        <hr class="customHr">
                     </label>
-
-                    <label class="item item-input label-custom-field" >
-                        <span class="input-label span-input-color">First Name</span>
-                        <input ng-required="true" type="text" ng-model="userInfo.firstName" name="First_name" />
+                     <div class="bd-bottom"></div>
+                    <label class="item-input label-custom-field" >
+                        <span class=" span-input-color">First Name</span>
+                        <input ng-required="true" type="text" ng-model="userInfo.firstName" name="First_name"  class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
                     </label>
-
-                    <label class="item item-input label-custom-field" >
-                        <span class="input-label span-input-color">Sur Name</span>
-                        <input ng-required="true" type="text" ng-model="userInfo.surName" name="Sur_name" />
+                     <div class="bd-bottom"></div>
+                    <label class="item-input label-custom-field" >
+                        <span class=" span-input-color">Sur Name</span>
+                        <input ng-required="true" type="text" ng-model="userInfo.surName" name="Sur_name"  class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
                     </label>
-
-                    <label class="item item-input label-custom-field">
-                        <span class="input-label span-input-color">Middle Name</span>
-                        <input type="text" ng-model="userInfo.middleName" name="Middle_name" />
+                     <div class="bd-bottom"></div>
+                    <label class="item-input label-custom-field">
+                        <span class=" span-input-color">Middle Name</span>
+                        <input type="text" ng-model="userInfo.middleName" name="Middle_name"  class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
                     </label>
-
-                    <label class="item item-input label-custom-field">
-                        <span class="input-label span-input-color">Mobile Phone</span>
-                        <input type="tel" name="phone" ng-model="userInfo.phone" required maxlength="11" />
+                     <div class="bd-bottom"></div>
+                    <label class="item-input label-custom-field">
+                        <span class=" span-input-color">Mobile Phone</span>
+                        <input type="tel" name="phone" ng-model="userInfo.phone" required maxlength="11"  class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
                     </label>
-
-                    <label class="item item-input label-custom-field">
-                        <span class="input-label span-input-color">Email</span>
-                        <input type="email" name="email" ng-model="userInfo.email" required ng-keyup="validEmail()"/>
+                         <div class="bd-bottom"></div>
+                    <label class="item-input label-custom-field">
+                        <span class=" span-input-color">Email</span>
+                        <input type="email" name="email" ng-model="userInfo.email" required ng-keyup="validEmail()"  class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
                     </label>
-
-                    <label  class="item item-input item-select label-custom-field">
-                        <span class="input-label span-input-color">Gender</span>
-                        <select ng-required="true" ng-model="userInfo.sex" name="Sex" class="browser-default"
+                     <div class="bd-bottom"></div>
+                    <label  class="item-input ">
+                        <span class=" span-input-color">Gender</span>
+                        <select ng-required="true" ng-model="userInfo.sex" name="Sex" class="select-custom"
                                 ng-options="row.name as row.name for row in sexIndex">
                             <option value="">--Select Sex--</option>
                         </select>
-                        <hr class="customHr">
+                    </label>
+                     <div class="bd-bottom"></div>
+                    <label  class="item-input label-custom-field">
+                        <span class=" span-input-color">Birthday</span>
+                        <input type="date" name="birthday" ng-model="userInfo.dob" required  class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
                     </label>
 
-                    <label  class="item item-input label-custom-field">
-                        <span class="input-label span-input-color">Birthday</span>
-                        <input type="date" name="birthday" ng-model="userInfo.dob" required />
-                    </label>
-
-
+                     <div class="bd-bottom"></div>
                 </form>
 
                 <button class="button btn-login-custom button-full" style="margin-top: 50px;"
@@ -86,10 +93,7 @@
                         || !userInfo.surName || !userInfo.middleName || !userInfo.email || !userInfo.phone || !userInfo.dob || !userInfo.sex" ng-click="submitRegister()">
                     <h4>SIGN UP</h4>
                 </button>
-                <a class="button button-clear" style="text-decoration: underline;
-                    color: #EE6059; letter-spacing: 0.15em;" ui-sref="security.login">
-                    Cancel
-                </a>
+               
             </div>
         </div>
 

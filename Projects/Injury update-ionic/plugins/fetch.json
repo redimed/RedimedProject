@@ -143,5 +143,13 @@
         },
         "is_top_level": true,
         "variables": {}
+    },
+    "org.apache.cordova.geolocation": {
+        "source": {
+            "type": "local",
+            "path": "/Users/nguyenhuy/Desktop/coffee-pg-cc-master/plugins/org.apache.cordova.geolocation"
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }

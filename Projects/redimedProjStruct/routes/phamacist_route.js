@@ -40,6 +40,9 @@ app.post('/api/phPharmacist/updateQulification',ph_companyController.updateQulif
 app.post('/api/phPharmacist/getPostByUserId',ph_userController.getPostByUserId);
 app.post('/api/phPharmacist/searchPost',ph_userController.searchPost);
 app.post('/api/phPharmacist/getDistance',ph_userController.getDistance);
+app.post('/api/phPharmacist/getJobTitle',ph_userController.getJobTitle);
+app.post('/api/phPharmacist/getJobDescription',ph_userController.getJobDescription);
+app.post('/api/phPharmacist/getSearch',ph_userController.getSearch);
 
 app.post('/api/phPharmacist/addNewExp',ph_companyController.addNewExp);
 app.get('/api/phPharmacist/getExp',ph_companyController.getExp);

@@ -61,8 +61,5 @@ angular.module('starter.injury.services',[])
             return detailApi.post({injury_id:injury_id});
         }
         
-        // injuryServices.getInjuryInfo = {};
-
         return injuryServices;
-
     })

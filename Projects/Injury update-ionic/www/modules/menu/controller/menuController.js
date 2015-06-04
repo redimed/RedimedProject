@@ -21,10 +21,10 @@ angular.module("starter.menu.controller",[])
         var media = null;
         var loop = function (status) {
             if (status === Media.MEDIA_STOPPED) {
-                 media.play();
+                media.play();
             }
             else if (status === Media.MEDIA_PAUSED) {
-                 media.pause();
+                media.pause();
             }
         };
 
@@ -187,29 +187,25 @@ angular.module("starter.menu.controller",[])
         }
 
         function getLocation() {
-            if(localStorageService.get("userInfo")) {
-                if(localStorageService.get("userInfo").UserType.user_type == 'Driver') {
-                    var posOptions = {maximumAge: 0, timeout: 10000, enableHighAccuracy: true};
-                    $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
-                            var driverLocation = [];
-                            lat = position.coords.latitude
-                            long = position.coords.longitude
+            var posOptions = {maximumAge: 0, timeout: 10000, enableHighAccuracy: true};
+            $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
+                var driverLocation = [];
+                lat = position.coords.latitude
+                long = position.coords.longitude
 
-                            driverLocation.push({
-                                id: localStorageService.get("userInfo").id,
-                                latitude: lat,
-                                longitude: long,
-                                userName: localStorageService.get("userInfo").user_name,
-                                userType: localStorageService.get("userInfo").UserType.user_type
-                            });
-                            signaling.emit('location', driverLocation);
-                        }, function (err) {
-                            $interval.cancel(stopInterval);
-                            stopInterval = undefined;
-                            alert("Could not get the current position. Either GPS signals are weak or GPS has been switched off");
-                        });
-                }
-            }
+                driverLocation.push({
+                    id: localStorageService.get("userInfo").id,
+                    latitude: lat,
+                    longitude: long,
+                    userName: localStorageService.get("userInfo").user_name,
+                    userType: localStorageService.get("userInfo").UserType.user_type
+                });
+                signaling.emit('location', driverLocation);
+            }, function (err) {
+                $interval.cancel(stopInterval);
+                stopInterval = undefined;
+                alert("Could not get the current position. Either GPS signals are weak or GPS has been switched off");
+            });
         }
 
         $scope.doRefreshListUserOnline = function() {
@@ -310,14 +306,14 @@ angular.module("starter.menu.controller",[])
                     }
                 }
             });
-            if(localStorageService.get("userInfo").UserType.user_type == 'Driver')
-            {
-                getLocation();
-                if(stopInterval != undefined) {
-                    stopInterval = $interval(function () { getLocation()}, 10 * 1000);
+            if(localStorageService.get("userInfo") != null) {
+                if(localStorageService.get("userInfo").UserType.user_type == 'Driver')
+                {
+                    getLocation();
+                    if(stopInterval != undefined) {
+                        stopInterval = $interval(function () { getLocation()}, 10 * 1000);
+                    }
                 }
-            } else {
-                return;
             }
         });
     })
