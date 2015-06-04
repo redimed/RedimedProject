@@ -340,7 +340,8 @@ module.exports = {
                 chainer.add(
                     db.timeTaskWeek.update({
                         time_charge: info.time_temp,
-                        task_status_id: info.statusID
+                        task_status_id: info.statusID,
+                        time_in_lieuChoose: info.time_in_lieuFull
                     }, {
                         task_week_id: info.idWeek
                     })

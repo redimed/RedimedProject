@@ -111,6 +111,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                     if (value !== undefined &&
                         value !== null &&
                         value.ITEM_ID == 22 &&
+                        value.isAction !== "delete" &&
                         value.time_charge !== "" &&
                         value.time_charge.length !== 0) {
                         sumInLieu += StaffService.convertShowToFull(value.time_charge);
