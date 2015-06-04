@@ -30,16 +30,6 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 		ReceptionistService.getAppointmentByDate(d,site).then(function(rs){
 			if(rs.status.toLowerCase() == 'success')
 			{	
-				if(rs.upcoming.length > 0)
-				{
-					for(var i=0; i<rs.upcoming.length; i++)
-					{
-						var time = moment.utc(rs.upcoming[i].time).format('DD/MM/YYYY hh:mm:ss a');
-						var arrDate = time.split(' ');
-						rs.upcoming[i].time = arrDate[1]+' '+arrDate[2];
-					}
-				}
-				
 				$scope.upcomingAppt = rs.upcoming;
 				$scope.progressAppt = rs.progress;
 				$scope.completeAppt = rs.completed;
@@ -51,6 +41,15 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 				$scope.completeAppt = [];
 			}
 		})
+	}
+
+	$scope.dragAppt = function(e,u){
+		console.log("====Drag====: ",e);
+		console.log("====Drag U====: ",u);
+	}
+
+	$scope.dropAppt = function(){
+		console.log("=====Drop====: ");
 	}
 
 

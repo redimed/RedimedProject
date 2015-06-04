@@ -589,19 +589,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		                    toastr.error('Save Item Failed!');
 		                }
 		            });
-
-		            $scope.consultInfo = {
-						patient_id: $scope.patient_id,
-						cal_id: $scope.cal_id,
-						problem_id: null,
-						history: null,
-						examination: null,
-						treatment: null,
-						diagnosis: null,
-						measurements: [],
-						scripts: [],
-						images: []
-					}
+		            
 				}
 				else
 					toastr.success("Submit Consultation Failed!");
