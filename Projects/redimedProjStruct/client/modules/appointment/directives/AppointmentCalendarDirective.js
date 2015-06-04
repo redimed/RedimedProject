@@ -827,7 +827,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 					angular.element('.bv-arrow').css({right: 0});
 				}else{
 					angular.element('#alert-center').css({display: 'block'});
-					angular.element('.bv-arrow').css({right: '230px'});
+					angular.element('.bv-arrow').css({right: '225px'});
 				}
 			}
 

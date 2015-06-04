@@ -1,4 +1,24 @@
 <div id="alert-center" class="bv-right-list">
+    <div class="m-background">
+        <label style="font-weight: bold;font-size: 18px;">Notification List</label>
+    </div>
+        <div ng-repeat="list in alertCenter.list">
+        <label ng-if="list.alert.length > 0 || list.cal.length > 0" style="font-size: 15px;">
+            {{list.First_name}} {{list.Sur_name}}
+        </label>
+        <ul ng-repeat="alert in list.alert" ng-if="list.alert.length > 0">
+            <li>{{alert.name}}</li>
+        </ul>
+        <p ng-repeat="cal in list.cal" ng-if="list.cal.length > 0">
+            <span ng-if="cal.IS_REFERRAL && cal.OUTREFERRAL === 'no'">
+                {{cal.FROM_TIME}}-{{cal.TO_TIME}}:&nbsp
+                There is no referral
+            </span>
+        </p>
+        <hr style="border:1px solid white;" />
+        </div>
+</div>
+<!-- <div id="alert-center" class="bv-right-list">
 	<h3>Notification List</h3>
 	<hr>
 	<span ng-repeat="list in alertCenter.list">
@@ -16,7 +36,7 @@
 		</p>
 		
 	</span>
-</div>
+</div> -->
 <div class="bv-arrow" ng-click="clickArrow()"></div>
 
 <div id="appointment">
