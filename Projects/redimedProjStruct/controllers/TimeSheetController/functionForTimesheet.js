@@ -92,6 +92,7 @@
              });
          //END GET INFORMATION
      },
+
      sendMailSubmitLeaveAgain: function(req, res, info) {
          var arrayWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
          var DATE_OF_WEEK = arrayWeek[moment(info.dateSubmit).format('e') - 1];
@@ -471,7 +472,6 @@
                  return;
              });
          //END
-
      },
 
      getWeekNo: function() {
@@ -544,7 +544,6 @@
          } else {
              return "-";
          }
-
      },
 
      convertTime: function(time) {

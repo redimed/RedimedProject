@@ -444,27 +444,6 @@
                         <!-- END REPORT -->
                     </ul>
                     <!-- END FOR DIRECTOR -->
-                    <!-- FOR ADMIN -->
-                    <a href="javascript:;" ng-click="menuParentClick(menu.parent.definition)" ng-if="menu.parent.menu_id===147">
-                        <i>
-                            <img src="/img/TimeSheet/icon_03.PNG"/>
-                        </i>
-                        <span class="title" style="margin-top:-25px; margin-left:38px;">{{menu.parent.name}}</span>
-                    </a>
-                    <ul class="sub-menu" ng-if="menu.parent.menu_id===147">
-                        <li>
-                            <a ui-sref="loggedIn.TimeSheetHome.TimeSheetTree">
-                                <i class="fa fa-angle-right"></i>Manager Users
-                            </a>
-                        </li>
-                        <li>
-                            <a ui-sref="loggedIn.TimeSheetHome.TimeSheetDept">
-                                <i class="fa fa-angle-right"></i>Manage Departments
-                            </a>
-                        </li>
-                    </ul>
-                    <!-- END FOR DIRECTOR -->
-                    <!-- END FOR ADMIN -->
                     <!-- END IS TIMESHEET -->
                 </li>
                 <!-- END NOT TIMESHEET -->

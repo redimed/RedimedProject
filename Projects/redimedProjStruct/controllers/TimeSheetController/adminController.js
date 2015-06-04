@@ -61,6 +61,7 @@ module.exports = {
                 return;
             });
     },
+
     LoadNodeTimeSheet: function(req, res) {
         var searchObj = req.body.searchObj;
         var searchParam = [];
@@ -120,6 +121,7 @@ module.exports = {
                 return;
             });
     },
+
     LoadUserTimeSheet: function(req, res) {
         var searchObj = req.body.searchObj;
         var strQuery = "";
@@ -232,8 +234,8 @@ module.exports = {
                     resultSelect: []
                 });
             });
-
     },
+
     LoadSelectUser: function(req, res) {
         db.UserType.findAll({}, {
                 raw: true
@@ -288,6 +290,7 @@ module.exports = {
                 return;
             });
     },
+
     LoadDepartMent: function(req, res) {
         db.Departments.findAll({
                 where: {
@@ -312,6 +315,7 @@ module.exports = {
                 return;
             });
     },
+
     LoadNodeSelect: function(req, res) {
         var GROUP_ID = req.body.info;
         db.sys_hierarchy_nodes.findAll({
@@ -336,6 +340,7 @@ module.exports = {
                 return;
             });
     },
+
     LoadUser: function(req, res) {
         var searchObj = req.body.searchObj;
         var strQuery = "";
@@ -448,6 +453,7 @@ module.exports = {
                 return;
             });
     },
+
     AddUser: function(req, res) {
         var info = req.body.info;
         var arrayUser = "";
@@ -491,6 +497,7 @@ module.exports = {
                 });
             });
     },
+
     LoadOneUser: function(req, res) {
         var info = req.body.info;
         var NODE_ID = info.NODE_ID;
@@ -777,6 +784,7 @@ module.exports = {
                 return;
             });
     },
+
     InsertDept: function(req, res) {
         var info = req.body.info;
         db.Departments.max("departmentid")
@@ -831,6 +839,7 @@ module.exports = {
                 return;
             });
     },
+    
     StepEmployee: function(req, res) {
         var info = req.body.info;
         var listUserID = "";

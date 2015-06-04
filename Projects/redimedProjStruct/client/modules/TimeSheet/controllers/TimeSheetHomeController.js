@@ -1,8 +1,5 @@
 angular.module("app.loggedIn.TimeSheet.Home.Controller", [
         "app.loggedIn.TimeSheet.Home.Controller", //TIME SHEET HOME PAGE
-        "app.loggedIn.TimeSheet.Tree.Controller", //TREE APPROVE
-        "app.loggedIn.TimeSheet.ListNode", //NODE OF TREE APPROVE
-        "app.loggedIn.TimeSheet.Dept.Controller", //DEPARTMENT 
         "app.loggedIn.TimeSheet.ApproveTask.Controller", //APPROVE TIME SHEET
         "app.loggedIn.TimeSheet.Report1.Controller", //REPORT ON TIME IN LIEU
         "app.loggedIn.TimeSheet.Report2.Controller", //REPORT ON UTILIZATION RATIO - VIEW BY DETAIL ACTIVITIES

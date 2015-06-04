@@ -28,5 +28,5 @@ module.exports = {
                 return;
             });
         //END FIND FILE DOWNLOAD
-    }
+    },
 };

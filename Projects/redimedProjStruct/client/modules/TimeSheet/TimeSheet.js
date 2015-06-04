@@ -16,46 +16,6 @@ angular.module("app.loggedIn.TimeSheet", [
             })
             //END HOME
 
-        // TREE
-        .state("loggedIn.TimeSheetHome.TimeSheetTree", {
-                position: ["Admin"],
-                url: "/tree",
-                views: {
-                    "main-content": {
-                        templateUrl: "modules/TimeSheet/views/ListTree.html",
-                        controller: "TimeSheetTree"
-                    }
-                }
-            })
-            //END TREE
-
-        //LIST NODE
-        .state("loggedIn.TimeSheetHome.TimeSheetListNode", {
-                position: ["Admin"],
-                url: "/list-node",
-                views: {
-                    "main-content": {
-                        templateUrl: "modules/TimeSheet/views/ListNode.html",
-                        controller: "TimeSheetListNodeController"
-                    }
-                }
-
-            })
-            //END LIST NODE
-
-        // DEPARTMENT
-        .state("loggedIn.TimeSheetHome.TimeSheetDept", {
-                position: ["Admin"],
-                url: "/department",
-                views: {
-                    "main-content": {
-                        templateUrl: "modules/TimeSheet/views/dept.html",
-                        controller: "TimeSheetDeptController"
-                    }
-                }
-            })
-            //END DEPARTMENT
-
         // APPROVE TASK
         .state("loggedIn.TimeSheetHome.ApproveTask", {
                 position: ["Head of Dept.", "Director"],
@@ -193,7 +153,6 @@ angular.module("app.loggedIn.TimeSheet", [
                 }
             })
             //END APPROVE LEAVE
-
 
         //REPORT SUBMMITED LEAVE FORM
         .state("loggedIn.TimeSheetHome.ReportOweLeave", {

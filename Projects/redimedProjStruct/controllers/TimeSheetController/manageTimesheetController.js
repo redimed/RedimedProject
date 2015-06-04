@@ -464,6 +464,7 @@ module.exports = {
                 return;
             });
     },
+    
     RejectTaskWeek: function(req, res) {
         var info = req.body.info;
         info.date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
@@ -500,6 +501,7 @@ module.exports = {
                 return;
             });
     },
+
     ApproveTaskWeek: function(req, res) {
         var info = req.body.info;
         var idTaskWeek = info.idTaskWeek;
