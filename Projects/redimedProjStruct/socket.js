@@ -110,39 +110,6 @@ module.exports = function(io,cookie,cookieParser) {
                 })
         })
 
-        socket.on('checkApp',function(id){
-            if(id){
-                db.User.find({where:{id:id}},{raw:true})
-                    .success(function(user){
-                        if(user)
-                        {
-                            if(user.socket == null){
-                                db.User.update({
-                                    socket: socket.id
-                                },{id:id})
-                                    .success(function(){
-                                        getOnlineUser();
-                                    })
-                                    .error(function(err){
-                                        console.log(err);
-                                    })
-                            }
-                            // else
-                            // {
-                            //     if(user.socket != socket.id){
-                            //         io.to(socket.id).emit("isLoggedIn");
-                            //     }
-                            //     getOnlineUser();
-                            // }
-                        }
-
-                    })
-                    .error(function(err){
-                        console.log(err);
-                    })
-            }
-        })
-
         socket.on('forceLogin',function(username){
 
             db.User.find({where:{user_name: username}},{raw:true})
@@ -188,8 +155,6 @@ module.exports = function(io,cookie,cookieParser) {
                     console.log(err);
                 })
 
-
-            // socket.emit('isSuccess');
 
         });
 

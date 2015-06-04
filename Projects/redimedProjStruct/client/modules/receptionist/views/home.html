@@ -1,54 +1,233 @@
+<style>
+	.img-profile{
+	  position: relative;
+	  top: 50%;
+	    -webkit-transform: translateY(-50%);
+	    -ms-transform: translateY(-50%);
+	    transform: translateY(-50%);
+	}
+</style>
+<div class="row">
+	<div class="col-md-3 col-sm-3" >
+		<span class="pull-right bold" style="font-size: 20px">Appointment In:</span>
+	</div>
+	<div class="col-md-2 col-sm-2" >
+		<span class="pull-left">
+			<input ui-date="{dateFormat: 'dd/mm/yy', defaultDate: '01/01/1990', changeMonth: true, changeYear: true}" 
+			style="text-align: center;"
+            class="form-control" 
+            ng-change="getAppointment()"
+            ng-model="apptDate" >
+		</span>
+	</div>
+	<div class="col-md-1 col-sm-1">
+		<span class="bold" style="font-size: 20px">Site:</span>
+	</div>
+	<div class="col-md-3 col-sm-3">
+		<select ng-model="apptSite" class="form-control" 
+				ng-options="site.id as site.Site_name for site in siteList"
+				ng-change="getAppointment()">
+			<option value="">--Choose Site--</option>
+		</select>
+	</div>
+</div>
+<br/>
 <div class="row">
 	<div class="col-md-4 col-sm-4 col-lg-4">
-		<div class="portlet grey-cascade box">
-	        <div class="portlet-title">
+		<div class="portlet blue-hoki box">
+	        <div class="portlet-title" >
 	            <div class="caption ">
 	                <span class="caption-subject uppercase">Upcoming</span>
 	            </div>
 	        </div>
 	        <div class="portlet-body" >
-           		<div class="portlet-light">
-           			<div class="portlet-title">
+	        	<div ng-if="upcomingAppt.length == 0">
+	        		<div style="text-align: center;">
+                        <span style="font-size: 20px; font-style: italic; font-weight: bold;">      
+                            Empty Data
+                        </span>
+                    </div>
+	        	</div>
+           		<div ng-if="upcomingAppt.length > 0" style="margin-bottom: 0px !important; padding: 1px 15px 0px 10px !important; margin-top: 0px ! important;" class="portlet light" ng-repeat="appt in upcomingAppt">
+           			<div class="portlet-title" style="min-height: 0px !important;">
            				<div class="caption">
-           					<span class="caption-subject font-red-sunglo bold uppercase">7:00 AM</span>
+           					<span class="caption-subject bold uppercase">
+       							{{appt.time | moment: 'utc' | moment: 'format': 'hh:mm:ss A'}}
+   							</span>
            				</div>
            				<div class="tools">
            					<a href="javascript:;" class="collapse"></a>
            				</div>
            			</div>
            			<div class="portlet-body">
-           				<div class="row">
-           					<div class="col-md-12">
-           						BBBBBBBBBBBB
-           					</div>
-           				</div>
+       					<div style="color: black; border-color: #7FA8CB; cursor: pointer;" 
+       						class="well well-sm" 
+       						ng-repeat="a in appt.appointment"
+       						data-drag="true" 
+       						data-jqyoui-options="{revert: 'invalid'}" 
+       						jqyoui-draggable="{placeholder:true, animate:true, placeholder:true, onStart: 'dragAppt(hello)'}">
+       						<div class="media">
+       							<div style="width: 70px; height: 70px;" class="pull-left">
+   									<img width="100%" height="100%" class="img-circle" ng-src="{{(a.avatar == null || a.avatar == '') ? 'theme/assets/icon.png' : a.avatar}}">
+			                    </div>
+			                    <div class="media-body">
+			                    	<h4 style="font-size: 21px;" class="media-heading bold">{{a.patient_name}}</h4>
+			                    	<div class="row">
+			                    		<span class="col-md-4 col-sm-4">
+				                    		<i class="fa fa-calendar"></i>
+				                    		{{(a.DOB == null ? 'N/A' : a.DOB) | date:'dd/MM/yyyy'}}
+				                    	</span>
+				                    	<span class="col-md-8 col-sm-8">
+				                    		<i class="fa fa-building-o"></i>
+				                    		{{a.Company_name == null ? 'N/A' : a.Company_name}}
+				                    	</span>
+			                    	</div>
+			                    	<div class="row" style="margin-top: 10px;">
+			                    		<span class="col-md-4 col-sm-4">
+			                    			<i class="fa fa-user-md"></i>
+				                    		{{a.doctor_name == null ? 'N/A' : a.doctor_name}}
+			                    		</span>
+				                    	<span class="col-md-8 col-sm-8 ">
+				                    		<label ng-if="a.appt_status == 'Checked In'" class="label label-md label-success ">
+				                    			{{a.appt_status}}
+			                    			</label>
+			                    			<label ng-if="a.appt_status == 'Cancelled'" class="label label-md label-danger ">
+				                    			{{a.appt_status}}
+			                    			</label>
+			                    			<label ng-if="a.appt_status == 'Booking'" class="label label-md label-warning ">
+				                    			{{a.appt_status}}
+			                    			</label>
+				                    	</span>
+			                    	</div>
+			                    </div>
+       						</div>
+       					</div>
            			</div>
-           			
            		</div>
 	        </div>
         </div>
 	</div>
 	<div class="col-md-4 col-sm-4 col-lg-4">
-		<div class="portlet grey-cascade box">
+		<div class="portlet blue-hoki box">
 	        <div class="portlet-title">
 	            <div class="caption ">
 	                <span class="caption-subject uppercase">In Progress</span>
 	            </div>
 	        </div>
-	        <div class="portlet-body" >
-	           
+	        <div class="portlet-body">
+	        	<div ng-if="progressAppt.length == 0">
+	        		<div style="text-align: center;">
+                        <span style="font-size: 20px; font-style: italic; font-weight: bold;">      
+                            Empty Data
+                        </span>
+                    </div>
+	        	</div>
+           		<div ng-if="progressAppt.length > 0" style="margin-bottom: 0px !important; padding: 1px 15px 0px 10px !important;margin-top: 0px ! important;" class="portlet light" ng-repeat="appt in progressAppt">
+           			<div class="portlet-title" style="min-height: 0px !important;">
+           				<div class="caption">
+           					<span class="caption-subject bold uppercase">
+       							{{appt.doctor}}
+   							</span>
+           				</div>
+           				<div class="tools">
+           					<a href="javascript:;" class="collapse"></a>
+           				</div>
+           			</div>
+           			<div class="portlet-body">
+       					<div style=" color: black; border-color: #7FA8CB" 
+       						class="well well-sm" ng-repeat="a in appt.appointment">
+       						<div class="media" ng-if="a.appt_id != null">
+       							<div style="width: 70px; height: 70px;" class="pull-left">
+   									<img width="100%" height="100%" class="img-circle" ng-src="{{(a.avatar == null || a.avatar == '') ? 'theme/assets/icon.png' : a.avatar}}">
+			                    </div>
+			                    <div class="media-body">
+			                    	<h4 style="font-size: 21px;" class="media-heading bold">{{a.patient_name}}</h4>
+			                    	<div class="row">
+			                    		<span class="col-md-4 col-sm-4">
+				                    		<i class="fa fa-calendar"></i>
+				                    		{{(a.DOB == null ? 'N/A' : a.DOB) | date:'dd/MM/yyyy'}}
+				                    	</span>
+			                    		<span class="col-md-8 col-sm-8">
+				                    		<i class="fa fa-building-o"></i>
+				                    		{{a.Company_name == null ? 'N/A' : a.Company_name}}
+				                    	</span>
+			                    	</div>
+			                    	<div class="row" style="margin-top: 10px;">
+			                    		<span class="col-md-4 col-sm-4">
+			                    			<i class="fa fa-clock-o"></i>
+				                    		{{a.FROM_TIME | moment: 'utc' | moment: 'format': 'hh:mm:ss A'}}
+			                    		</span>
+			                    		<span class="col-md-8 col-sm-8 ">
+				                    		<label class="label label-md label-warning ">
+				                    			{{a.appt_status}}
+			                    			</label>
+				                    	</span>
+			                    	</div>
+			                    	
+			                    </div>
+       						</div>
+       						<div ng-if="a.appt_id == null" style="text-align: center;" 
+	       						data-drop="true" 
+				        		data-jqyoui-options 
+				        		jqyoui-droppable="{onDrop: 'dropAppt()'}">
+       							<span style="font-size: 20px; font-style: italic; font-weight: bold;">      
+		                            {{a.FROM_TIME | moment: 'utc' | moment: 'format': 'hh:mm:ss A'}}
+		                        </span>
+       						</div>
+       					</div>
+           			</div>
+           		</div>
 	        </div>
         </div>
 	</div>
 	<div class="col-md-4 col-sm-4 col-lg-4">
-		<div class="portlet grey-cascade box">
+		<div class="portlet blue-hoki box">
 	        <div class="portlet-title">
 	            <div class="caption ">
 	                <span class="caption-subject uppercase">Completed</span>
 	            </div>
 	        </div>
 	        <div class="portlet-body" >
-	           
+	        	<div ng-if="completeAppt.length == 0">
+	        		<div style="text-align: center;">
+                        <span style="font-size: 20px; font-style: italic; font-weight: bold;">      
+                            Empty Data
+                        </span>
+                    </div>
+	        	</div>
+           		<div ng-if="completeAppt.length > 0">
+   					<div style="color: black; border-color: #7FA8CB" 
+   						class="well well-sm" ng-repeat="a in completeAppt">
+   						<div class="media">
+   							<div style="width: 70px; height: 70px;" class="pull-left">
+								<img width="100%" height="100%" class="img-circle" ng-src="{{(a.avatar == null || a.avatar == '') ? 'theme/assets/icon.png' : a.avatar}}">
+		                    </div>
+		                    <div class="media-body">
+		                    	<h4 style="font-size: 21px;" class="media-heading bold">{{a.patient_name}}</h4>
+		                    	<div class="row">
+		                    		<span class="col-md-4 col-sm-4">
+			                    		<i class="fa fa-calendar"></i>
+			                    		{{(a.DOB == null ? 'N/A' : a.DOB) | date:'dd/MM/yyyy'}}
+			                    	</span>
+			                    	<span class="col-md-8 col-sm-8">
+			                    		<i class="fa fa-building-o"></i>
+			                    		{{a.Company_name == null ? 'N/A' : a.Company_name}}
+			                    	</span>
+		                    	</div>
+		                    	<div class="row" style="margin-top: 10px;">
+		                    		<span class="col-md-4 col-sm-4">
+		                    			<i class="fa fa-user-md"></i>
+			                    		{{a.doctor_name == null ? 'N/A' : a.doctor_name}}
+		                    		</span>
+			                    	<span class="col-md-8 col-sm-8">
+		                    			<i class="fa fa-clock-o"></i>
+			                    		{{a.FROM_TIME | moment: 'utc' | moment: 'format': 'hh:mm:ss A'}}
+		                    		</span>
+		                    	</div>
+		                    </div>
+   						</div>
+   					</div>
+           		</div>
 	        </div>
         </div>
 	</div>

@@ -150,7 +150,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
     $scope.chooseItem = function(task) {
         console.log(task);
         var modalInstance = $modal.open({
-            templateUrl: "modules/staff/views/itemModal.html",
+            templateUrl: "modules/TimeSheet/views/itemModal.html",
             controller: 'ItemController',
             size: 'md'
         });
@@ -158,7 +158,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
 
     $scope.view = function(item) {
         var modalInstance = $modal.open({
-            templateUrl: "modules/staff/views/viewTimesheetByHour.html",
+            templateUrl: "modules/TimeSheet/views/viewTimesheetByHour.html",
             controller: "ViewTimesheetByHourController",
             size: 'lg',
             resolve: {
@@ -204,7 +204,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
             $scope.time_in_lieuHas = timeInLieu;
 
         } else {
-            $state.go("loggedIn.TimeSheetHome", null, {
+            $state.go("loggedIn.home", null, {
                 "reload": true
             });
             toastr.error("Server not response!", "Error");
@@ -229,7 +229,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
 
     $scope.okClick = function() {
         $modalInstance.close();
-        $state.go('loggedIn.timesheet.create', {
+        $state.go('loggedIn.TimeSheetHome.create', {
             id: infoWeek.task_week_id
         });
     };
@@ -252,7 +252,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                     $modalInstance.close();
                 } else if (response.status === 'success') {
                     $modalInstance.close();
-                    $state.go("loggedIn.timesheet.view", null, {
+                    $state.go("loggedIn.TimeSheetHome.view", null, {
                         "reload": true
                     });
                     toastr.success("Submit success", "Success");
@@ -321,7 +321,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
 
     $scope.chooseItem = function(item) {
         var modalInstance = $modal.open({
-            templateUrl: "modules/staff/views/itemModal.html",
+            templateUrl: "modules/TimeSheet/views/itemModal.html",
             controller: 'ItemController',
             size: 'lg',
             resolve: {
@@ -370,7 +370,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
             $scope.time_in_lieuHas = timeInLieu;
 
         } else {
-            $state.go("loggedIn.TimeSheetHome", null, {
+            $state.go("loggedIn.home", null, {
                 "reload": true
             });
             toastr.error("Server not response!", "Error");
@@ -403,7 +403,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                     $modalInstance.close();
                 } else if (response.status === 'success') {
                     $modalInstance.close();
-                    $state.go("loggedIn.timesheet.view", null, {
+                    $state.go("loggedIn.TimeSheetHome.view", null, {
                         "reload": true
                     });
                     toastr.success("Submit success", "Success");
@@ -414,7 +414,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
     };
     $scope.okClick = function() {
         $modalInstance.close();
-        $state.go('loggedIn.timesheet.create', {
+        $state.go('loggedIn.TimeSheetHome.create', {
             id: infoWeek.task_week_id
         });
     };
@@ -482,7 +482,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
 
     $scope.viewDetailDate = function(infoWeek, date) {
         var modalInstance = $modal.open({
-            templateUrl: "modules/staff/views/viewDetail.html",
+            templateUrl: "modules/TimeSheet/views/viewDetail.html",
             controller: 'ViewDetailController',
             size: 'lg',
             resolve: {

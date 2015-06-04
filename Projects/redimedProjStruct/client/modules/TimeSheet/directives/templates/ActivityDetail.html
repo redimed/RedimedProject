@@ -84,7 +84,7 @@
                         </thead>
                         <tbody>
                             <tr ng-class-odd="'odd'" style="cursor: pointer; font-size:13px;" ng-repeat="(indexItem,item) in items">
-                                <td ng-show="item.show===true" class="btn btn-xs" style="width:100px;">{{($index>8)?$index+1:"0"+($index+1)}}</td>
+                                <td ng-show="item.show===true" style="width:100px; text-align:center;">{{($index>8)?$index+1:"0"+($index+1)}}</td>
                                 <!-- MORE -->
                                 <td ng-show="item.show===true" style="border:1px solid #ccc; text-align:left; width:300px;" ng-if="(item.ITEM_NAME | readMoreSelected).check===true">
                                     <div ng-show="item.show===true" ng-if="item.status===false">
@@ -178,15 +178,15 @@
                     <table class="responsive table table-bordered" ng-show="!list.loading">
                 <tbody>
                     <tr style="background-color:#67809f;height:32px;">
-                        <td class="btn btn-xs" style="text-align:left; width:80px;">
+                        <td style="text-align:left; width:80px;">
                     <input type="text" class="input-sm" ng-disabled="true" style="text-align:center; font-size:13px; font-weight:bold;width:80px;" value="Tasks / Items">
                     </td>
-                    <td class="btn btn-xs" style="text-align:left;">
+                    <td style="text-align:left;">
                         <input type="text" class="input-sm" style="border:1px solid #ccc; font-size:13px; height:20px;background-color:white;margin-top:3px;" placeholder="Description" ng-model="searchObjectMap.data['time_item_code.ITEM_NAME']" ng-change="loadList()" tabindex="2" id="itemNameID">
                     </td>
                     </tr>
                     <tr ng-repeat="l in list.result" ng-class-odd="'odd'" style="cursor: pointer; font-size:13px;" ng-dblclick="addItem(l.ITEM_ID, l.ITEM_NAME, l.ITEM_UNITS)">
-                        <td class="btn btn-xs" style="font-size:13px;width:80px;">{{($index>8)?$index+1:"0"+($index+1)}}</td>
+                        <td style="font-size:13px;width:80px; text-align:center;">{{($index>8)?$index+1:"0"+($index+1)}}</td>
                         <td style="border:1px solid #ccc; text-align:left;font-size:13px;" ng-if="(l.ITEM_NAME | readMore).check===true">
                             <div ng-if="l.status===false">
                                 {{(l.ITEM_NAME | readMore).value}}<a ng-click="clickShow($index)">&nbsp;&nbsp;More...</a>
@@ -195,7 +195,7 @@
                                 {{l.ITEM_NAME}}<a ng-click="clickShow($index)">&nbsp;Close</a>
                             </div>
                         </td>
-                        <td class="btn btn-xs" style="border:1px solid #ccc; text-align:left;font-size:13px;" ng-if="(l.ITEM_NAME | readMore).check===false">
+                        <td style="border:1px solid #ccc; text-align:left;font-size:13px;" ng-if="(l.ITEM_NAME | readMore).check===false">
                             {{(l.ITEM_NAME | readMore).value}}
                         </td>
                     </tr>

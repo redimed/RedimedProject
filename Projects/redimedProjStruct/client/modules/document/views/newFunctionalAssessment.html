@@ -484,13 +484,13 @@
 				</div>
 				<div class="col-md-10 col-sm-10 col-xs-10">
 					<label class="btn">
-						Low Risk <input type="radio">
+						Low Risk <input type="radio" ng-model="header.Risk" ng-value="0">
 					</label>
 					<label class="btn">
-						Medium Risk <input type="radio">
+						Medium Risk <input type="radio" ng-model="header.Risk" ng-value="1">
 					</label>
 					<label class="btn">
-						High Risk <input type="radio">
+						High Risk <input type="radio" ng-model="header.Risk" ng-value="2">
 					</label>
 				</div>
 			</div>
@@ -510,33 +510,33 @@
 				</div>
 				<div class="col-md-6 col-sm-6 col-xs-6">
 					<label class="btn">
-						Yes <input type="radio">
+						Yes <input type="radio" ng-model="header.Recommend" ng-value="1">
 					</label>
 					<label class="btn">
-						No <input type="radio">
+						No <input type="radio" ng-model="header.Recommend" ng-value="0">
 					</label>
 				</div>
 			</div>
 			
 			<label class="control-label text-info bold">Additional Tests Attached:</label>
 			<div class="row">
-				<div class="col-md-3 col-sm-3 col-xs-3">
+				<div class="col-md-3 col-sm-3 col-xs-3" >
 					<label class="control-label pull-right">Flexibility</label>
 				</div>
 				<div class="col-md-1 col-sm-1 col-xs-1">
-					<input type="checkbox" />
+					<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="header.Att_Flexibility===1 || header.Att_Flexibility==='1'" ng-model="header.Att_Flexibility"/>
 				</div>
 				<div class="col-md-3 col-sm-3 col-xs-3">
 					<label class="control-label pull-right">Score Stability</label>
 				</div>
 				<div class="col-md-1 col-sm-1 col-xs-1">
-					<input type="checkbox" />
+					<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="header.Att_Core_Stability===1 || header.Att_Core_Stability==='1'" ng-model="header.Att_Core_Stability"/>
 				</div>
 				<div class="col-md-3 col-sm-3 col-xs-3">
 					<label class="control-label pull-right">Wrist/elbow function</label>
 				</div>
 				<div class="col-md-1 col-sm-1 col-xs-1">
-					<input type="checkbox" />
+					<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="header.Att_Wirst_Elbow_func===1 || header.Att_Wirst_Elbow_func==='1'" ng-model="header.Att_Wirst_Elbow_func"/>
 				</div>
 			</div>
 			<div class="row">
@@ -544,24 +544,64 @@
 					<label class="control-label pull-right">Shoulder function</label>
 				</div>
 				<div class="col-md-1 col-sm-1 col-xs-1">
-					<input type="checkbox" />
+					<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="header.Att_Shoulder_func===1 || header.Att_Shoulder_func==='1'" ng-model="header.Att_Shoulder_func"/>
 				</div>
 				<div class="col-md-3 col-sm-3 col-xs-3">
 					<label class="control-label pull-right">Lower limb function</label>
 				</div>
 				<div class="col-md-1 col-sm-1 col-xs-1">
-					<input type="checkbox" />
+					<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="header.Att_Lower_Limb_func===1 || header.Att_Lower_Limb_func==='1'" ng-model="header.Att_Lower_Limb_func"/>
 				</div>
 				<div class="col-md-3 col-sm-3 col-xs-3">
 					<label class="control-label pull-right">Balance</label>
 				</div>
 				<div class="col-md-1 col-sm-1 col-xs-1">
-					<input type="checkbox" />
+					<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="header.Att_Balance===1 || header.Att_Balance==='1'" ng-model="header.Att_Balance"/>
 				</div>
 			</div>
+			<div class="row">
+				<div class="col-md-2 col-sm-2 col-xs-2">
+					<button class="btn btn-default green" ng-click="showSignature()">Signature</button>
+				</div>
+				<div class="col-md-10 col-sm-10"
+                     ng-show="header.ASSESSED_SIGN!==null && header.ASSESSED_SIGN!=='' && isSignatureShow===false">
+                    <img ng-src="{{header.ASSESSED_SIGN}}" alt=""
+                         style="width: 200px;height: 150px;"/>
+                </div>
+			</div>
+			<div class="row" style="text-align: center;" ng-show="isSignatureShow">
+	            <div class="col-md-12 col-sm-12">
+	                <canvas width="500" height="400" id="canvas"
+	                        signature ng-model="header.ASSESSED_SIGN" style="background-color: #8eece8">
+	                </canvas>
+	            </div>
+	            <div class="col-md-12 col-sm-12">
+	                <div class="break-row"></div>
+	                <div class="btn-group">
+	                    <button type="button" ng-click="cancelClick()" class="btn btn-danger btn-sm">
+	                        Cancel
+	                    </button>
+	                    <button type="button" ng-click="clearClick()" class="btn btn-warning btn-sm">Clear
+	                    </button>
+	                    <button type="button" ng-click="okClick()" class="btn green btn-sm">Ok</button>
+	                </div>
+	            </div>
+	        </div>
 
-			<button class="btn btn-default green">Signature</button>
 		</div>
 		
 	</div>
+
+	<div class="row">
+    <div class="col-md-12 ">
+        <button ng-click="newFASubmit()" class="btn green pull-right" ng-show="editMode===false"> Submit
+        </button>
+        <button ng-click="faUpdate()" class="btn green pull-right" ng-show="editMode===true"> Update
+        </button>
+        <!-- <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/FA/{{infoH.FA_ID}}/{{infoH.CAL_ID}}/{{infoH.PATIENT_ID}}"
+           ng-disabled="isNew " target="_blank"
+           class="btn btn-primary blue pull-right">Print PDF
+        </a> -->
+<!--         <a href="javascript:;" ng-disabled="!infoChanged()"  ng-click="resetForm()" class="btn btn-danger pull-right">Reset</a> -->
+    </div>
 </form>

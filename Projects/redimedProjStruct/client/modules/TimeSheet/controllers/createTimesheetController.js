@@ -79,7 +79,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 swal(notification);
                 //END NOTIFICATION
             } else {
-                $state.go("loggedIn.TimeSheetHome", null, {
+                $state.go("loggedIn.home", null, {
                     "reload": true
                 });
                 toastr.error("Server not response!", "Error");
@@ -103,11 +103,19 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 //SUM TIME CHARGE
                 sum = sum + parseInt(StaffService.convertShowToFull(data.time_charge));
                 //END
-                if (data.activity_id === 22) {
-                    //SUM IN LIEU
-                    sumInLieu = sumInLieu + parseInt(StaffService.convertShowToFull(data.time_charge));
-                    //END  
-                }
+            }
+            if (data.item !== undefined &&
+                data.item !== null &&
+                data.length !== 0) {
+                angular.forEach(data.item, function(value, index) {
+                    if (value !== undefined &&
+                        value !== null &&
+                        value.ITEM_ID == 22 &&
+                        value.time_charge !== "" &&
+                        value.time_charge.length !== 0) {
+                        sumInLieu += StaffService.convertShowToFull(value.time_charge);
+                    }
+                });
             }
         });
 
@@ -189,7 +197,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
             $scope.info.time_in_lieuHas = timeInLieu;
 
         } else {
-            $state.go("loggedIn.TimeSheetHome", null, {
+            $state.go("loggedIn.home", null, {
                 "reload": true
             });
             toastr.error("Server not response!", "Error");
@@ -539,7 +547,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 StaffService.addAllTask($scope.tasks, $scope.info).then(function(response) {
                     if (response['status'] == 'success') {
                         toastr.success("success", "Success");
-                        $state.go('loggedIn.timesheet.view', null, {
+                        $state.go('loggedIn.TimeSheetHome.view', null, {
                             'reload': true
                         });
                     } else {
@@ -553,7 +561,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 StaffService.editTask($scope.tasks, $scope.info).then(function(response) {
                     if (response['status'] == 'success') {
                         toastr.success("Edit Success");
-                        $state.go('loggedIn.timesheet.view', null, {
+                        $state.go('loggedIn.TimeSheetHome.view', null, {
                             'reload': true
                         });
                     } else {

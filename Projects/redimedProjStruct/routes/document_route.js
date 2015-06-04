@@ -37,6 +37,12 @@ app.post('/api/document/newHeaderSections', newFAController.newHeaderAndSections
 app.post('/api/document/newLines', newFAController.newLines);
 app.post('/api/document/newDetailsComments', newFAController.newDetailsAndComments);
 app.post('/api/document/autoRating', newFAController.autoRating)
+app.post('/api/document/checkExistFA', newFAController.checkExistFA);
+app.post('/api/document/existHeaderSections', newFAController.existHeaderAndSections);
+app.post('/api/document/existLines', newFAController.existLines);
+app.post('/api/document/existDetailsComments', newFAController.existDetailsAndComments);
+app.post('/api/document/insertNewFA', newFAController.insertNewFA);
+app.post('/api/document/updateNewFA', newFAController.updateNewFA);
 // end
 
 

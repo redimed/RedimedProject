@@ -334,6 +334,7 @@ module.exports = {
 	insertNewPost:function(req,res){
 		var data = req.body.post;
 		var shopId = req.body.shop;
+		console.log(data);
 		var sqlInsertPost = 
 			"INSERT INTO ph_posts (company_id,required_date,time_od_shift,local_weekday_rate,nonelocal_weekday_rate,sat_rate,sun_rate,ph_rate,isTravel,isAccommodation,post_type,job_title,job_description,Start_date,Duration,job_type,Qualification,experiences_require,hours_per_week,days_per_week,isweekend_shift,CREATION_DATE) "+
 			"VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ";
@@ -500,7 +501,7 @@ module.exports = {
 
 	getPostForShopId: function(req, res){
 		var shop_id = req.body.shop_id;
-		var sql = "SELECT p.`post_id`, p.`job_title`, p.`job_type`, p.`job_description` " +
+		var sql = "SELECT * " +
 				"FROM `ph_shops_post` sp " +
 				"INNER JOIN `ph_posts` p ON sp.`post_id` = p.`post_id` " +
 				"INNER JOIN `ph_company_shops` cs ON sp.`shop_id` = cs.`shop_id` " +

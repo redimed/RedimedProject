@@ -74,13 +74,13 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                         }
                         //employee
                     } else if (response.status === "error" || response.result.length === 0) {
-                        $state.go("loggedIn.TimeSheetHome", null, {
+                        $state.go("loggedIn.home", null, {
                             "reload": true
                         });
                         toastr("Load infomation employee fail!", "Error");
                     } else {
                         //catch exception
-                        $state.go("loggedIn.TimeSheetHome", null, {
+                        $state.go("loggedIn.home", null, {
                             "reload": true
                         });
                         toastr("Server not response!", "Error");
@@ -130,16 +130,16 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                     TimeSheetService.UpLeaveServer($scope.info).then(function(response) {
                         if (response.status === "success") {
                             toastr.success("Apply for leave success!", "Success");
-                            $state.go("loggedIn.LeaveHistory", null, {
+                            $state.go("loggedIn.TimeSheetHome.LeaveHistory", null, {
                                 "reload": true
                             });
                         } else if (response.status === "error") {
-                            $state.go("loggedIn.TimeSheetHome", null, {
+                            $state.go("loggedIn.home", null, {
                                 "reload": true
                             });
                             toastr.error("Apply for leave fail!", "Error");
                         } else {
-                            $state.go("loggedIn.TimeSheetHome", null, {
+                            $state.go("loggedIn.home", null, {
                                 "reload": true
                             });
                             toastr.error("Server not response!", "Error");
@@ -152,7 +152,7 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                     //UPDATE
                     TimeSheetService.UpdateLeave($scope.info).then(function(response) {
                         if (response.status === "success") {
-                            $state.go("loggedIn.LeaveHistory", null, {
+                            $state.go("loggedIn.TimeSheetHome.LeaveHistory", null, {
                                 "reload": true
                             });
                             toastr.success("Update leave success!", "Success");
@@ -161,7 +161,7 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                         } else {
 
                             //catch exception
-                            $state.go("loggedIn.TimeSheetHome", null, {
+                            $state.go("loggedIn.home", null, {
                                 "reload": true
                             });
                             toastr.error("Server not response!", "Error");
@@ -249,7 +249,7 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                                     closeOnConfirm: true
                                 }, function(isConfirm) {
                                     if (isConfirm) {
-                                        $state.go("loggedIn.LeaveHistory", null, {
+                                        $state.go("loggedIn.TimeSheetHome.LeaveHistory", null, {
                                             "reload": true
                                         });
                                     } else {

@@ -158,7 +158,7 @@ angular.module("app.loggedIn.document", [
             })
             .state("loggedIn.newFA",{
                 // url:"/newFA/:patient_id/:cal_id/:fa_id",
-                url:"/newFA",
+                url:"/newFA/:patient_id/:cal_id/:fa_id",
                 templateUrl: "modules/document/views/newFunctionalAssessment.html",
                 controller: "newFAController"
             })

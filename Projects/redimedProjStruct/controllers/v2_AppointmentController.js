@@ -87,11 +87,18 @@ module.exports = {
         })
 	},
 
+	/**
+	 * created by: unknown
+	 * modify: tannv.dts
+	 */
 	postApptById: function(req,res){
 		var limit = (req.body.limit) ? req.body.limit : 10;
         var offset = (req.body.offset) ? req.body.offset : 0;
 		var fields = req.body.fields;
 		var whereCon = req.body.search;
+		//tannv.dts add
+		//loc ra nhung appointment khong phai cancel
+		// whereCon.appt_status={'ne':'Cancelled'};
 
 		db.ApptPatient.findAndCountAll({
 			attributes: ['CAL_ID', 'Patient_id', 'appt_status'],

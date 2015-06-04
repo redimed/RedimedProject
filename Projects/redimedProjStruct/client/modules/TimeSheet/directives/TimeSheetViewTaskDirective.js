@@ -19,7 +19,7 @@ angular.module("app.loggedIn.TimeSheet.ViewTask.Directive", [])
                         //END
                         TimeSheetService.ViewApproved(newModel).then(function(response) {
                             if (response.status === "error") {
-                                $state.go("loggedIn.ApproveTask", null, {
+                                $state.go("loggedIn.TimeSheetHome.ApproveTask", null, {
                                     "reload": true
                                 });
                                 toastr.error("Loading fail!", "Error");
@@ -49,7 +49,7 @@ angular.module("app.loggedIn.TimeSheet.ViewTask.Directive", [])
                                 scope.info.TypeOfContruct = scope.list.result[0].TypeOfContruct;
                             } else {
                                 //catch exception
-                                $state.go("loggedIn.TimeSheetHome", null, {
+                                $state.go("loggedIn.home", null, {
                                     "reload": true
                                 });
                                 toastr.error('Server not response!', "Error");

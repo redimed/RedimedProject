@@ -384,8 +384,10 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 					_.forEach(scope.appointment.list, function(list){
 						var j = 0;
 						_.forEach(list.doctors, function(doctor){
-							if(scope.appointment.list[i].doctors[j].patients.length > 1 && scope.appointment.list[i].doctors[j].PATIENTS === 'ok'){
-								scope.appointment.list[i].doctors[j].height = "auto";
+							if(typeof scope.appointment.list[i].doctors[j].patients !== 'undefined'){
+								if(scope.appointment.list[i].doctors[j].patients.length > 1 && scope.appointment.list[i].doctors[j].PATIENTS === 'ok'){
+									scope.appointment.list[i].doctors[j].height = "auto";
+								}
 							}
 							j++;
 						})
@@ -400,11 +402,12 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 
 				var modalInstance = $modal.open({
 					templateUrl: 'waitingListAdd',
-					controller: function($scope, $modalInstance){
+					controller: function($scope, $modalInstance, patient){
 						$scope.success = false;
 
 						$timeout(function(){
 							$scope.doctor_id = col.DOCTOR_ID;
+							$scope.patient_id = patient.Patient_id;
 						}, 200)
 
 						$scope.$watch('success', function(success){
@@ -417,6 +420,9 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 					resolve: {
 						col: function(){
 							return col;
+						},
+						patient: function(){
+							return scope.appointment.selectedPatient;
 						}
 					}
 				});
@@ -693,7 +699,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 				})
 			}
 
-			var onRightClick = function($event, app, col){
+			var onRightClick = function($event, app, col, patient){
 				angular.element("#popupMenu").css({
 					'display': 'block',
 					'top': $event.pageY-68,
@@ -702,6 +708,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 
 				scope.appointment.selectedAppointment = angular.copy(app);
 				scope.appointment.selectedCol = angular.copy(col);
+				scope.appointment.selectedPatient = angular.copy(patient);
 			}
 
 			angular.element("#appointment").on("click", function(){
@@ -711,7 +718,8 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 			scope.appointment = {
 				selectedAppointment: {},
 				selectedCol: {},
-				onRightClick: function($event, app, col){ onRightClick($event, app, col) },
+				selectedPatient: {},
+				onRightClick: function($event, app, col, patient){ onRightClick($event, app, col, patient) },
 				dialog: {
 					rightAdd: function(app, col){ dialogRightAdd(app, col) },
 					add: function(app, col){ dialogAdd(app, col) },
@@ -724,6 +732,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 
 			if($cookieStore.get('appointment')){
 				scope.appointment.search = $cookieStore.get('appointment');
+				$cookieStore.remove('appointment');
 			}
 
 			scope.site = {
@@ -818,7 +827,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 					angular.element('.bv-arrow').css({right: 0});
 				}else{
 					angular.element('#alert-center').css({display: 'block'});
-					angular.element('.bv-arrow').css({right: '250px'});
+					angular.element('.bv-arrow').css({right: '225px'});
 				}
 			}
 

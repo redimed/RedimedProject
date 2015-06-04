@@ -23,6 +23,16 @@ angular.module("app.loggedIn.doctor.services", []).factory("DoctorService", func
 
         return instanceApi.post({'doctor_id' : doctor_id, fromDate: from, toDate: to})
     }
+    /**
+     * Lay cac appointment co status la Work In Progress
+     * tannv.dts@gmail.com
+     * 
+     */
+    doctorService.getApptWorkInProgress = function(doctor_id, from, to) {
+
+        var instanceApi = doctorApi.all("v2/doctor/appt_work_in_progress");
+        return instanceApi.post({'doctor_id' : doctor_id, fromDate: from, toDate: to})
+    }
 
      doctorService.catItemDept = function(items) {
 		// MUST ORDER BY 'ITEM DEPT' POPULAR_HEADER_ID

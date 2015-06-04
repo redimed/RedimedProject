@@ -33,13 +33,13 @@ angular.module("app.loggedIn.TimeSheet.Report1.Controller", [])
                         $scope.listEmp = angular.copy(arrayEmp);
                         //END
                     } else if (response.status === "error") {
-                        $state.go("loggedIn.TimeSheetHome", null, {
+                        $state.go("loggedIn.home", null, {
                             "reload": true
                         });
                         toastr.error("Loading employee fail!", "Error");
                     } else {
                         //catch exception
-                        $state.go("loggedIn.TimeSheetHome", null, {
+                        $state.go("loggedIn.home", null, {
                             "reload": true
                         });
                         toastr.error("Server not response!", "Error");
@@ -63,21 +63,21 @@ angular.module("app.loggedIn.TimeSheet.Report1.Controller", [])
             if ($scope.listEmployeeChoose.length !== 0) {
                 var info = {};
                 info.listEMP = angular.copy($scope.listEmployeeChoose);
-                info.listDept = angular.copy($scope.listDepartmentChoose);
                 info.USER_ID = $cookieStore.get('userInfo').id;
+                info.listDept = angular.copy($scope.listDepartmentChoose);
                 TimeSheetService.LoadReportTimeInLieu(info).then(function(response) {
                     if (response.status === "success") {
                         // PROCESSING PDF
                         $scope.USER_ID = $cookieStore.get('userInfo').id;
                         //END PDF
                     } else if (response.status === "error") {
-                        $state.go("loggedIn.TimeSheetHome", null, {
+                        $state.go("loggedIn.home", null, {
                             "reload": true
                         });
                         toastr.error("Loading reports fail!", 'Error');
                     } else {
                         //catch exception
-                        $state.go("loggedIn.TimeSheetHome", null, {
+                        $state.go("loggedIn.home", null, {
                             "reload": true
                         });
                         toastr.error("Server not response!", 'Error');
@@ -90,7 +90,7 @@ angular.module("app.loggedIn.TimeSheet.Report1.Controller", [])
         // END DEPT
         TimeSheetService.LoadDeptReport($cookieStore.get("userInfo").id).then(function(response) {
             if (response.status === "error") {
-                $state.go("loggedIn.TimeSheetHome", null, {
+                $state.go("loggedIn.home", null, {
                     "reload": true
                 });
                 toastr.error("Load Department fail!", "Error");
@@ -98,7 +98,7 @@ angular.module("app.loggedIn.TimeSheet.Report1.Controller", [])
                 $scope.listDept = response.result;
             } else {
                 //catch exception
-                $state.go("loggedIn.TimeSheetHome", null, {
+                $state.go("loggedIn.home", null, {
                     "reload": true
                 });
                 toastr.error("Server not response!", "Error");
@@ -111,7 +111,7 @@ angular.module("app.loggedIn.TimeSheet.Report1.Controller", [])
             uncheckAll: 'Uncheck All',
             selectionCount: 'Department Selected',
             selectionOf: '/',
-            nameAddon: "Department",
+            nameAddon: ($scope.position === 'Director') ? 'Departments' : 'Department',
             searchPlaceholder: 'Search...',
             buttonDefaultText: '--Choose Department--',
             dynamicButtonTextSuffix: 'Department Selected'
@@ -137,7 +137,7 @@ angular.module("app.loggedIn.TimeSheet.Report1.Controller", [])
             uncheckAll: 'Uncheck All',
             selectionCount: 'Employee Selected',
             selectionOf: '/',
-            nameAddon: "Employee",
+            nameAddon: ($scope.position === 'Director' || $scope.position === 'Head of Dept.') ? 'Employees' : 'Employee',
             searchPlaceholder: 'Search...',
             buttonDefaultText: '--Choose Employee--',
             dynamicButtonTextSuffix: 'Employee Selected'

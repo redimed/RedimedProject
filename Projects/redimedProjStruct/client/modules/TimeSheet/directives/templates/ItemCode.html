@@ -80,7 +80,7 @@
                         </thead>
                         <tbody>
                             <tr ng-class-odd="'odd'" style="cursor: pointer; " ng-repeat="item in items">
-                                <td ng-show="item.show===true" class="btn btn-xs" style="width:100px;">{{item.ITEM_ID}}</td>
+                                <td ng-show="item.show===true" style="width:100px; text-align:center;">{{item.ITEM_ID}}</td>
                                 <!-- MORE -->
                                 <td ng-show="item.show===true" style="border:1px solid #ccc; text-align:left; width:300px;" ng-if="(item.ITEM_NAME | readMoreSelected).check===true">
                                     <div ng-show="item.show===true" ng-if="item.status===false">
@@ -140,54 +140,58 @@
                     <table class="responsive table table-bordered" ng-show="!list.loading">
                 <tbody>
                     <tr style="background-color:#67809f;height:32px;">
-                        <td class="btn btn-xs" style="text-align:left; width:100px;">
-                    <input type="text" class="input-sm" ng-model="searchObjectMap.data['time_item_code.ITEM_ID']" ng-change="loadList()" style="border:1px solid #ccc; font-size:13px; width:100px;height:20px;background-color:white;margin-top:3px;" placeholder="Tasks / Items" tabindex="1" id="itemCodeID">
+                        <td style="text-align:left; width:100px;">
+                            <div class="col-md-6">
+                    <input type="text" class="input-sm" ng-model="searchObjectMap.data['time_item_code.ITEM_ID']" ng-change="loadList()" style="border:1px solid #ccc; font-size:13px; width:100px;height:20px;background-color:white;margin-top:3px;" placeholder="Tasks / Items" tabindex="1" id="itemCodeID"/>
+                </div>
+                <div class="col-md-6">
                     <span class="glyphicon glyphicon-chevron-up" ng-click="itemCodeASC()" ng-class="{'active': searchObjectMap.order['time_item_code.ITEM_ID']==='ASC'}">
                             </span>
                     <span class="glyphicon glyphicon-chevron-down" ng-click="itemCodeDESC()" ng-class="{ 'active': searchObjectMap.order['time_item_code.ITEM_ID']==='DESC' } ">
                             </span>
+                </div>
+                </td>
+                <td style="text-align:left;">
+                    <input type="text" class="input-sm" style="border:1px solid #ccc; font-size:13px; height:20px;background-color:white;margin-top:3px;" placeholder="Description" ng-model="searchObjectMap.data['time_item_code.ITEM_NAME']" ng-change="loadList()" tabindex="2" id="itemNameID">
+                </td>
+                </tr>
+                <tr ng-repeat="l in list.result" ng-class-odd="'odd'" style="cursor: pointer; " ng-dblclick="addItem(l.ITEM_ID, l.ITEM_NAME, l.ITEM_UNITS)">
+                    <td style="text-align:left;width:100px;font-size:13px;">{{l.ITEM_ID}}
                     </td>
-                    <td class="btn btn-xs" style="text-align:left;">
-                        <input type="text" class="input-sm" style="border:1px solid #ccc; font-size:13px; height:20px;background-color:white;margin-top:3px;" placeholder="Description" ng-model="searchObjectMap.data['time_item_code.ITEM_NAME']" ng-change="loadList()" tabindex="2" id="itemNameID">
+                    <td style="border:1px solid #ccc; text-align:left;font-size:13px;" ng-if="(l.ITEM_NAME | readMore).check===true">
+                        <div ng-if="l.status===false">
+                            {{(l.ITEM_NAME | readMore).value}}<a ng-click="clickShow($index)">&nbsp;&nbsp;More...</a>
+                        </div>
+                        <div ng-if="l.status===true">
+                            {{l.ITEM_NAME}}<a ng-click="clickShow($index)">&nbsp;Close</a>
+                        </div>
                     </td>
-                    </tr>
-                    <tr ng-repeat="l in list.result" ng-class-odd="'odd'" style="cursor: pointer; " ng-dblclick="addItem(l.ITEM_ID, l.ITEM_NAME, l.ITEM_UNITS)">
-                        <td class="btn btn-xs" style="text-align:left;width:100px;font-size:13px;">{{l.ITEM_ID}}
-                        </td>
-                        <td style="border:1px solid #ccc; text-align:left;font-size:13px;" ng-if="(l.ITEM_NAME | readMore).check===true">
-                            <div ng-if="l.status===false">
-                                {{(l.ITEM_NAME | readMore).value}}<a ng-click="clickShow($index)">&nbsp;&nbsp;More...</a>
+                    <td style="border:1px solid #ccc; text-align:left;font-size:13px;;" ng-if="(l.ITEM_NAME | readMore).check===false">
+                        {{(l.ITEM_NAME | readMore).value}}
+                    </td>
+                </tr>
+                </tbody>
+                </table>
+                <footer class="table-footer " ng-show="list.result!==null || (list.result.length!==0 && list.result!==null)">
+                    <div class="row ">
+                        <div class="col-ms-6 page-num-info ">
+                            <div class="col-md-4 col-sm-5 ">
+                                <span class="bold custom-timesheet">Total: {{list.count}}</span>
+                                <span class="custom-timesheet">Show</span>
+                                <select class="custom-timesheet" ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows " style="font-size:13px; width:48px;height:18px;">
+                                </select>
+                                <span class="custom-timesheet">entries per page</span>
                             </div>
-                            <div ng-if="l.status===true">
-                                {{l.ITEM_NAME}}<a ng-click="clickShow($index)">&nbsp;Close</a>
-                            </div>
-                        </td>
-                        <td class="btn btn-xs" style="border:1px solid #ccc; text-align:left;font-size:13px;;" ng-if="(l.ITEM_NAME | readMore).check===false">
-                            {{(l.ITEM_NAME | readMore).value}}
-                        </td>
-                    </tr>
-                    </tbody>
-                    </table>
-                    <footer class="table-footer " ng-show="list.result!==null || (list.result.length!==0 && list.result!==null)">
-                        <div class="row ">
-                            <div class="col-ms-6 page-num-info ">
-                                <div class="col-md-4 col-sm-5 ">
-                                    <span class="bold custom-timesheet">Total: {{list.count}}</span>
-                                    <span class="custom-timesheet">Show</span>
-                                    <select class="custom-timesheet" ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows " style="font-size:13px; width:48px;height:18px;">
-                                    </select>
-                                    <span class="custom-timesheet">entries per page</span>
-                                </div>
-                                <div class="col-ms-6 text-right pagination-container ">
-                                    <span ng-show="count.loading "><i class="fa fa-spinner fa-spin fa-2x "></i></span>
-                                    <pagination boundary-links="true " total-items="list.count " ng-model="searchObjectMap.currentPage " class="pagination-sm " previous-text="&lsaquo; " next-text="&rsaquo; " first-text="&laquo; " last-text="&raquo; " items-per-page="searchObjectMap.limit " max-size="searchObjectMap.maxSize " ng-change="setPage() "></pagination>
-                                </div>
+                            <div class="col-ms-6 text-right pagination-container ">
+                                <span ng-show="count.loading "><i class="fa fa-spinner fa-spin fa-2x "></i></span>
+                                <pagination boundary-links="true " total-items="list.count " ng-model="searchObjectMap.currentPage " class="pagination-sm " previous-text="&lsaquo; " next-text="&rsaquo; " first-text="&laquo; " last-text="&raquo; " items-per-page="searchObjectMap.limit " max-size="searchObjectMap.maxSize " ng-change="setPage() "></pagination>
                             </div>
                         </div>
-                    </footer>
-                </div>
-                <!-- END TABLE ITEM -->
+                    </div>
+                </footer>
+            </div>
+            <!-- END TABLE ITEM -->
         </fieldset>
         <!-- END MAIN INFO -->
     </form>
-    </div>
+</div>
