@@ -26,10 +26,10 @@
 			<td>{{l.date_started | filterdate: 'DD/MM/YYYY'}}</td>
 			<td>{{l.expire_date | filterdate: 'DD/MM/YYYY'}}</td>
 			<td align="center">
-				<button ng-click="outreferral.dialog.edit(l)" ng-if="action.edit" class="un-button-submit-m ng-scope"><i class="fa fa-pencil-square-o"></i>
+				<button ng-click="outreferral.dialog.edit(l)" ng-if="action.edit" class="un-button-submit-m ng-scope">
 					Edit
 				</button>
-				<button ng-click="outreferral.dialog.show(l)" ng-if="action.show" class="un-button-submit-m ng-scope"><i  class="fa-check-square-o"></i>
+				<button ng-click="outreferral.dialog.show(l)" ng-if="action.show" class="un-submit un-bgBlack ng-scope">
 					Show
 				</button>
 				<!-- <button  ng-if="l.isEnable"  ng-click="outreferral.clickEnable(l)" class="un-button-submit-m ng-scope">Enable</button>

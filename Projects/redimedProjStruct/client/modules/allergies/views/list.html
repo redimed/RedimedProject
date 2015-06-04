@@ -1,60 +1,64 @@
-<div class="col-lg-12 un-bgXam-colBlack un-margin-top-30">
-    <label class="un-label-header un-bgBlack un-label-header-padding">Allergy List</label>
-    <div class="un-padding-top-bottom-10">
-        <div class="un-div-content un-bgWhite-boxshadow-bottom un-padding-10">
-            <div class="pull-right un-padding-bottom-5">
-                <!-- Single button -->
-                  <button style="margin-right: 0;" type="button" class="un-button un-bgXam-colBlack" ng-click="allergyAddForm.open()">New allergy
-                  </button>
-                  <button style="margin-right: 0;" type="button" class="un-button un-bgBlack" ng-click="patientAllergyForm.open()" ng-show="showAddExisted === true">Add existed
-                  </button>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <my-data-table options="allergy.options" numrows="10"></my-data-table>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="col-lg-12 un-bgXam-colBlack un-margin-top-30">
+            <label class="un-label-header un-bgBlack un-label-header-padding">Allergy List</label>
+            <div class="un-padding-top-bottom-10">
+                <div class="un-div-content un-bgWhite-boxshadow-bottom un-padding-10">
+                    <div class="pull-right un-padding-bottom-5">
+                        <!-- Single button -->
+                          <button style="margin-right: 0;" type="button" class="un-button un-bgXam-colBlack" ng-click="allergyAddForm.open()">New allergy
+                          </button>
+                          <button style="margin-right: 0;" type="button" class="un-button un-bgBlack" ng-click="patientAllergyForm.open()" ng-show="showAddExisted === true">Add existed
+                          </button>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <my-data-table options="allergy.options" numrows="10"></my-data-table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
-
-<!--ALLERGY ADD FORM-->
-<div class="mdt-search un-popup-config" style="display: block;" ng-if="allergyAddForm.is_show">
-    <label class="un-label-popup-header un-bg-label-B41E46">Add Allergy</label>
-    <div class="pull-right text-center ng-scope">
-        <button class="btn btn-sm btn-block red" ng-click="allergyAddForm.close()">
-            <i class="fa fa-times"></i>
-        </button>
-    </div>
-    <allergy-detail options="options" onsuccess="allergyAddForm.success" />
-</div>
-<!--END ALLERGY ADD FORM-->
-
-<!--ALLERGY EDIT FORM-->
-<div class="mdt-search un-popup-config" style="display: block;" ng-if="allergyEditForm.is_show">
-    <label class="un-label-popup-header un-bg-label-B41E46">Edit Allergy</label>
-    <div class="pull-right text-center ng-scope">
-        <button class="btn btn-sm btn-block red" ng-click="allergyEditForm.close()">
-            <i class="fa fa-times"></i>
-        </button>
-    </div>
-    <allergy-detail options="options" onsuccess="allergyEditForm.success" data="{id:'{{allergy.id}}'}"/>
-</div>
-<!--END ALLERGY EDIT FORM-->
-
-<!-- PATIENT ALLERGY SELECT FORM -->
-<div class="mdt-search un-popup-config" style="display: block;" ng-if="patientAllergyForm.is_show">
-    <label class="un-label-popup-header un-bg-label-B41E46">Add Existed</label>
-    <div class="pull-right text-center un-padding-bottom-5 ng-scope">
-        <button class="btn btn-sm btn-block red" ng-click="patientAllergyForm.close()">
-            <i class="fa fa-times"></i>
-        </button>
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <my-data-table options="allergySub.options" numrows="10" rowclick="allergySelected"></my-data-table>
+        <!--ALLERGY ADD FORM-->
+        <div class="mdt-search un-popup-config" style="display: block;" ng-if="allergyAddForm.is_show">
+            <label class="un-label-popup-header un-bg-label-B41E46">Add Allergy</label>
+            <div class="pull-right text-center ng-scope">
+                <button class="btn btn-sm btn-block red" ng-click="allergyAddForm.close()">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+            <allergy-detail options="options" onsuccess="allergyAddForm.success" />
         </div>
+        <!--END ALLERGY ADD FORM-->
+
+        <!--ALLERGY EDIT FORM-->
+        <div class="mdt-search un-popup-config" style="display: block;" ng-if="allergyEditForm.is_show">
+            <label class="un-label-popup-header un-bg-label-B41E46">Edit Allergy</label>
+            <div class="pull-right text-center ng-scope">
+                <button class="btn btn-sm btn-block red" ng-click="allergyEditForm.close()">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+            <allergy-detail options="options" onsuccess="allergyEditForm.success" data="{id:'{{allergy.id}}'}"/>
+        </div>
+        <!--END ALLERGY EDIT FORM-->
+
+        <!-- PATIENT ALLERGY SELECT FORM -->
+        <div class="mdt-search un-popup-config" style="display: block;" ng-if="patientAllergyForm.is_show">
+            <label class="un-label-popup-header un-bg-label-B41E46">Add Existed</label>
+            <div class="pull-right text-center un-padding-bottom-5 ng-scope">
+                <button class="btn btn-sm btn-block red" ng-click="patientAllergyForm.close()">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <my-data-table options="allergySub.options" numrows="10" rowclick="allergySelected"></my-data-table>
+                </div>
+            </div>
+        </div>
+        <!-- END PATIENT ALLERGY SELECT FROM -->
+        
     </div>
 </div>
-<!-- END PATIENT ALLERGY SELECT FROM -->

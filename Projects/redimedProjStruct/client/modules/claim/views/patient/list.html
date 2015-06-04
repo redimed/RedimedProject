@@ -2,7 +2,7 @@
 	<label class="un-label-header un-bgBlack un-label-header-padding">Claims</label>
 	<div class="un-padding-top-bottom-10 ">
 		<div class="un-div-content un-bgWhite-boxshadow-bottom un-padding-10">
-			<button class="btn un-btn-red un-btn-position" ng-click="claim.dialog.add()">Add Claim</button>
+			<button class="un-button un-bgBlack pull-right un-margin-bottom-6px" ng-click="claim.dialog.add()">Add Claim</button>
 			<claim-patient-list reload="claim.reload" limit="claim.limit" 
 				patient-id="claim.Patient_id" cal-id="claim.CAL_ID" permission="{add: false, edit: true, show: true}">
 			</claim-patient-list>

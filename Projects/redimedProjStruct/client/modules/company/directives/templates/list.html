@@ -9,16 +9,16 @@
  -->
 <div  class="col-lg-12 un-bgXam-colBlack un-margin-top-30">
 	<label class="un-label-popup-header un-bg-label-333333">Companies</label>
-	<div class="un_tn_panel_action">
-		<button style="margin-right: 0;" type="button" class="un_tn_btn un_tn_btn_pink" ng-click="Select()">
-	        Select
-	    </button>
-	 	<button style="margin-right: 0;" type="button" class="un_tn_btn un_tn_btn_pink" ng-click="addClick1()">
-	        Add
-	    </button>
-	</div>
 	<div class="un-padding-top-bottom-10 ">
-		 <div class="un-div-content un-bgWhite-boxshadow-bottom un-padding-10">
+		<div class="un-div-content un-bgWhite-boxshadow-bottom un-padding-10">
+			<div class="pull-right un-padding-bottom-5">
+				<button style="margin-right: 0;" type="button" class="un-button un-bgXam-colBlack" ng-click="Select()">
+			        Select Company
+			    </button>
+			 	<button style="margin-right: 0;" type="button" class="un-button un-bgBlack" ng-click="addClick1()">
+			        Add Company
+			    </button>
+			</div>
 			<div class="un_tn_panel_body">
 				<div class="row">
 			    	<div class="col-md-12">
@@ -40,13 +40,13 @@
 									<td>{{row.country}}</td>
 									<td align="center">
 										<a>
-										   	<button class="un_tn_btn un_tn_btn_pink"  ng-if="row.id === company.company_idActive"  ng-click="onRowClick(row)">Active</button>
+										   	<button class="un_tn_btn un-bgBlack"  ng-if="row.id === company.company_idActive"  ng-click="onRowClick(row)">Active</button>
 											<button  class="un_tn_btn un_tn_btn_gray" ng-if="row.id !== company.company_idActive"  ng-click="onRowClick(row)">Inactive</button>
 										</a>
-										<a><button class="un_tn_btn un_tn_btn_pink" ng-click="clickEdit(row)">Edit</button></a>
+										<a><button class="un_tn_btn un-bgBlack" ng-click="clickEdit(row)">Edit</button></a>
 										<a>
-										   	<button  class="un-submit un-bgXam-colBlack"  ng-if="row.checkisEnable"  ng-click="disableCompany(row)">Enable</button>
-											<button  class="un-submit un-bgBlack"  ng-if="!row.checkisEnable"  ng-click="disableCompany(row)">Disable</button>
+										   	<button  class="un_tn_btn un-bgXam-colBlack"  ng-if="row.checkisEnable"  ng-click="disableCompany(row)">Enable</button>
+											<button  class="un_tn_btn un-bgBlack"  ng-if="!row.checkisEnable"  ng-click="disableCompany(row)">Disable</button>
 										</a>
 									</td> 
 								</tr>
@@ -57,8 +57,6 @@
 			</div>
 		</div>
 	</div>
-    
-    
 </div>
 <!-- 
 <div>

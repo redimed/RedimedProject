@@ -1598,7 +1598,7 @@ table.timetable-table td:last-child {
     padding-top: 5px;
     position: relative;
     position: absolute;
-    bottom: -10px;
+    bottom: 8px;
 }
 .un-icon-down{
     position: relative;
@@ -1791,9 +1791,9 @@ table.timetable-table td:last-child {
     margin-top: -20px;
 }
 .un-select-sex{
-    width: 20px;
-    position: relative;
-    top: 18px;
+    width: 78%;
+    height: 20px;
+    padding: 0px !important;
     color: black;
 }
 .un_page_panel {
@@ -2577,7 +2577,7 @@ label{
 }
 .un-mdt-button{
     margin-right: 0; 
-    padding: 3px 10px 2px 10px;
+    padding: 2px 10px 0px 10px;
     margin-left: 10px !important;
     outline: none;
 }
@@ -3267,6 +3267,7 @@ label{
 /*style cho input form*/
 .un_tn_form_control{
     height: 20px;
+    padding: 0px 0px 0px 5px !important;
 }
 .un_tn_form_control_gray{
     color: black!important;
@@ -3435,4 +3436,20 @@ label{
 /*---------------------------------------------*/
 /*---------------------------------------------*/
 /*TAN PANEL DEFINITION END*/
-
+/*phanquocchien patient star*/
+.pt_member_logo{
+    width: 296px;
+    margin: auto;
+}
+.pt_margin_bottom_60{
+    margin-bottom: 60px;
+}
+.pt_margin_bottom_30{
+    margin-bottom: 30px;
+}
+.pt_container{
+    width: 100%;
+    min-height: 100%;
+    background-color:#ffffff;
+}
+/*phanquocchien patient end*/

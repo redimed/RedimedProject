@@ -171,7 +171,9 @@ angular.module("app.loggedIn.patient.detail.directive", [])
 				}
 				if (scope.params.permission.create === true) {
 					//phan quoc chien  set country and state form add new patient
+					
 					scope.modelObjectMap.Country = "Australia";
+					scope.modelObjectMap.Sex = 0;
 					scope.loadState();
 					scope.modelObjectMap.State = 20;
 				};

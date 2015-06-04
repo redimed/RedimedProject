@@ -1,74 +1,79 @@
 <label class="un-label-popup-header un-bg-label-333333">Add Claim</label>
-<button class="btn un-btn-red un-btn-position" ng-click="claim.dialog.add()" ng-if="action.add">Add Claim</button>
 <script type="text/ng-template" id="claimAdd">
 	<div class="modal-body">	
 		<claim-patient-add patient-id="claim.Patient_id" cal-id="claim.CAL_ID" success="claim.success"></claim-patient-add>
 	</div>
 </script>
 
-<table class="mdt-table">
-	<thead>
-		<tr>
-			<th>Claim No</th>
-			<th>
-				Claim Date&nbsp
-				<a ng-if="claim.search.Claim_date === 'asc'" ng-click="claim.onOrderBy({field: 'Claim_date', order: 'desc'})">
-					<i class="fa fa-caret-up"></i>
-				</a>
-				<a ng-if="claim.search.Claim_date === 'desc'" ng-click="claim.onOrderBy({field: 'Claim_date', order: 'asc'})">
-					<i class="fa fa-caret-down"></i>
-				</a>
-			</th>
-			<th>Injury Name</th>
-			<th>
-				Injury Date&nbsp
-				<a ng-if="claim.search.Injury_date === 'asc'" ng-click="claim.onOrderBy({field: 'Injury_date', order: 'desc'})">
-					<i class="fa fa-caret-up"></i>
-				</a>
-				<a ng-if="claim.search.Injury_date === 'desc'" ng-click="claim.onOrderBy({field: 'Injury_date', order: 'asc'})">
-					<i class="fa fa-caret-down"></i>
-				</a>
-			</th>
-			<th></th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td>
-				<input class="form-control input-sm" ng-model="claim.search.Claim_no" ng-enter="claim.onSearch()">
-			</td>
-			<td></td>
-			<td>
-				<input class="form-control input-sm" ng-model="claim.search.Injury_name" ng-enter="claim.onSearch()">
-			</td>
-			<td></td>
-			<td></td>
-		</tr>
-		<tr ng-repeat="l in claim.list" ng-click="onRowClick({row: l})" style="cursor: pointer;">
-			<td>{{l.Claim_no}}</td>
-			<td>{{l.Claim_date | filterdate:'DD/MM/YYYY'}}</td>
-			<td>{{l.Injury_name}}</td>
-			<td>{{l.Injury_date | filterdate: 'DD/MM/YYYY'}}</td>
-			<td>
-				<button class="un-button un-bgXam-colBlack" ng-click="claim.dialog.edit(l)" ng-if="action.edit">
-					Edit
-				</button>
-				<button class="un-button un-bgBlack" ng-click="claim.dialog.show(l)" ng-if="action.show">
-					Show
-				</button>
+<button class="un-button un-bgBlack pull-right un-margin-bottom-6px" ng-click="claim.dialog.add()" ng-if="action.add">Add Claim</button>
+<div class="row">
+	<div class="col-lg-12">
+		<table class="mdt-table">
+			<thead>
+				<tr>
+					<th>Claim No</th>
+					<th>
+						Claim Date&nbsp
+						<a ng-if="claim.search.Claim_date === 'asc'" ng-click="claim.onOrderBy({field: 'Claim_date', order: 'desc'})">
+							<i class="fa fa-caret-up"></i>
+						</a>
+						<a ng-if="claim.search.Claim_date === 'desc'" ng-click="claim.onOrderBy({field: 'Claim_date', order: 'asc'})">
+							<i class="fa fa-caret-down"></i>
+						</a>
+					</th>
+					<th>Injury Name</th>
+					<th>
+						Injury Date&nbsp
+						<a ng-if="claim.search.Injury_date === 'asc'" ng-click="claim.onOrderBy({field: 'Injury_date', order: 'desc'})">
+							<i class="fa fa-caret-up"></i>
+						</a>
+						<a ng-if="claim.search.Injury_date === 'desc'" ng-click="claim.onOrderBy({field: 'Injury_date', order: 'asc'})">
+							<i class="fa fa-caret-down"></i>
+						</a>
+					</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+						<input class="form-control input-sm" ng-model="claim.search.Claim_no" ng-enter="claim.onSearch()">
+					</td>
+					<td></td>
+					<td>
+						<input class="form-control input-sm" ng-model="claim.search.Injury_name" ng-enter="claim.onSearch()">
+					</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr ng-repeat="l in claim.list" ng-click="onRowClick({row: l})" style="cursor: pointer;">
+					<td>{{l.Claim_no}}</td>
+					<td>{{l.Claim_date | filterdate:'DD/MM/YYYY'}}</td>
+					<td>{{l.Injury_name}}</td>
+					<td>{{l.Injury_date | filterdate: 'DD/MM/YYYY'}}</td>
+					<td>
+						<button class="un-submit un-bgXam-colBlack" ng-click="claim.dialog.edit(l)" ng-if="action.edit">
+							Edit claim
+						</button>
+						<button class="un-submit un-bgBlack" ng-click="claim.dialog.show(l)" ng-if="action.show">
+							Show claim 
+						</button>
 
-				<!--<button class="btn btn-sm btn-primary" ng-click="claim.dialog.remove(l)" ng-if="action.remove">
-					Remove
-				</button>-->
-			</td>
-		</tr>
-	</tbody>
-</table>
-<div align="right">
-	<pagination boundary-links="true" total-items="claim.count" ng-model="claim.search.page" 
-    class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
-    items-per-page="claim.search.limit" max-size="claim.search.max_size" ng-change="claim.onPage(claim.search.page)">
-</pagination>
+						<!--<button class="btn btn-sm btn-primary" ng-click="claim.dialog.remove(l)" ng-if="action.remove">
+							Remove
+						</button>-->
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div align="right">
+			<pagination boundary-links="true" total-items="claim.count" ng-model="claim.search.page" 
+		    class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+		    items-per-page="claim.search.limit" max-size="claim.search.max_size" ng-change="claim.onPage(claim.search.page)">
+			</pagination>
+		</div>
+</div>
+
 </div>
 
 <script type="text/ng-template" id="dialogClaimRemove">
