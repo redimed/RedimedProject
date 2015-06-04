@@ -3375,6 +3375,63 @@ label{
     top: 25;
     left: 0;
 }
+
+.un_tn_row_red{
+    background-color: rgb(255, 169, 169);
+}
+.un_tn_row_yellow{
+    background-color: rgb(215, 215, 123);
+}
+.un_tn_row_green{
+    background-color: rgb(144, 218, 144);
+}
+.un_tn_row_blank{
+    
+}
+.un_tn_row_hover_red:hover{
+    background-color: rgb(253, 208, 208);
+}
+.un_tn_row_hover_yellow:hover{
+    background-color:rgba(215, 215, 123, 0.77);
+}
+.un_tn_row_hover_green:hover{
+    background-color:rgba(144, 218, 144, 0.57);
+}
+.un_tn_row_hover_blank:hover{
+    background-color:rgb(213, 213, 213);
+}
+.un_tn_legend_inline_panel{
+    font-style: italic;
+    margin-top:10px;
+    margin-bottom: 10px;
+    float:left;
+}
+.un_tn_legend_inline_header{
+    float:left;
+}
+.un_tn_legend_inline_item{
+    float:left;
+    margin-left:5px;
+    margin-right: 10px;
+}
+.un_tn_legend_node{
+    width:20px;
+    height:20px;
+    float:left;
+}
+
+.un_tn_legend_node_red{
+    background-color: rgb(255, 169, 169);
+}
+.un_tn_legend_node_yellow{
+    background-color: rgb(215, 215, 123);
+}
+.un_tn_legend_node_green{
+    background-color: rgb(144, 218, 144);
+}
+.un_tn_legend_node_blank{
+    border:1px solid #333333;
+}
 /*---------------------------------------------*/
 /*---------------------------------------------*/
 /*TAN PANEL DEFINITION END*/

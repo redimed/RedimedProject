@@ -82,6 +82,31 @@ angular.module("app.loggedIn.doctor.controller", [
         if (type === 'Billing')
             return 'info';
     }
+
+    /**
+     * tannv.dts@gmail.com
+     * gan m
+     */
+    $scope.apptStatus=ptnConst.apptStatus;
+    $scope.setColorAppt=function(status)
+    {
+        if(status==ptnConst.apptStatus.checkedIn.value)
+        {
+            return "un_tn_row_red un_tn_row_hover_red";
+        }
+        else if(status==ptnConst.apptStatus.workInProgress.value)
+        {
+            return "un_tn_row_yellow un_tn_row_hover_yellow";
+        }
+        else if(status==ptnConst.apptStatus.booking.value)
+        {
+            return "un_tn_row_green un_tn_row_hover_green";
+        }
+        else
+        {
+            return "un_tn_row_blank un_tn_row_hover_blank";
+        }
+    }
 	
 	$scope.views = {
 		patient_info: 'modules/doctor/views/patient-info.html',
