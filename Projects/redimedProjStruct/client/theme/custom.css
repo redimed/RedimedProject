@@ -3450,6 +3450,49 @@ label{
 .pt_container{
     width: 100%;
     min-height: 100%;
-    background-color:#ffffff;
+    background-color:#11B1CF;
+}
+.pt_button_right{
+     float: right;
+}
+.pt_button_left{
+    float: left;
+}
+.pt_page_content{
+    border: 3px solid #FFFFFF;
+    padding: 100px 50px; 
+    background: #1E3945;
+    border-radius: 25px !important;
+}
+.pt-button-search{
+     background: url('../theme/un/bonha_21.png') no-repeat;
+    width: 130px;
+    height: 50px;
+    float: left;
+}
+.pt-button-reset{
+     background: url('../theme/un/bonha_21.png') no-repeat;
+    width: 130px;
+    height: 50px;
+    float: left;
+}
+.pt-i-search{
+      margin-top: 12px;
+      margin-left: 20px;
+      font-size: 20px;
+}
+.pt-border-m{
+    border-radius: 5px !important;
+    border: 1px dotted rgb(253, 254, 255);
+}
+.pt-margin-top-m{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: -10px;
+    margin-right: -1px;
+}
+.pt-label-m{
+    width: 140px; 
+    color: white;
 }
 /*phanquocchien patient end*/

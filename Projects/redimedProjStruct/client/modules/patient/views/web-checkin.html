@@ -1,56 +1,69 @@
-<h1>Check In</h1>
-
-<div class="portlet box blue ng-scope">
-	<div class="portlet-title">
-        <div class="caption">
-            <i class="fa fa-search"></i> Search
-        </div>
-<!--         <div class="pull-right navbar-right">
-              <button style="margin-right: 0;" type="button" class="btn btn-default red" ng-click="patientAddForm.open()">
-                  <i class="fa fa-plus"></i>	Add patient
-              </button>
-        </div> -->
-    </div>
-
-    <div class="portlet-body">
-      <form name="sysservicesForm" class="form-horizontal" novalidate style="margin-bottom: 0">
-        <div class="form-body">
-          <div class="row">
-            <div class="col-md-4 col-sm-4">
-              <span class="field">
-                <label for="patient_FN">First name</label>
+<style type="text/css">
+  .mdt-table th {
+    background-image: linear-gradient(#F7F8F8, #B4B6B8);
+    color: #5A5B5A;
+    border: none !important;
+    height:45px !important;
+    font-size: 18px !important;
+    border: rgb(30, 57, 69) !important;
+  }
+  .table thead tr th {
+      font-size: 16px;
+      font-weight: 400;
+    }
+</style>
+<div>
+    <div class="pt_page_content">
+      <form name="sysservicesForm" novalidate>
+        <div>
+          <div class="row pt-border-m">
+          <div class="col-md-4 pt-margin-top-m">
+            <label class="pt-label-m" style="text-align:center;">First Name</label>
+            <input style="width: 390px;">
+          </div>
+           <div class="col-md-4 pt-margin-top-m">
+            <label class="pt-label-m" style="text-align:center;">Last Name</label>
+            <input style="width: 390px;">
+          </div>
+           <div class="col-md-4 pt-margin-top-m">
+             <label class="pt-label-m" style="text-align:center;">DOB</label>
+            <input style="width: 390px;">
+          </div>    
+          <!--<div class="col-md-4">
+              <div class="field pt-margin-top-m">
+                <label for="patient_FN">First name </label>
                 <input type="text" placeholder="First name" name="patient_FN" ng-model="patientSearch.First_name" class="form-control" id="patient_FN" float-label/>
-              </span>
+              </div>
             </div>
-            <div class="col-md-4 col-sm-4">
-              <span class="field">
+            <div class="col-md-4">
+              <span class="field pt-margin-top-m">
                 <label for="patient_LN">Last name</label>
                 <input type="text" placeholder="Last name" name="patient_LN" ng-model="patientSearch.Sur_name" class="form-control" id="patient_LN" float-label/>
               </span>
             </div>
-            <div class="col-md-4 col-sm-4">
-              <span class="field">
+            <div class="col-md-4">
+              <span class="field pt-margin-top-m">
                 <label for="patient_DOB">Date Of Birth</label>
                 <input placeholder="Date Of Birth" name="patient_DOB" ng-model="patientSearch.DOB" class="form-control" id="patient_DOB" float-label ui-date="{dateFormat: 'dd/mm/yy', changeYear: true,changeMonth: true,yearRange: '1900:-0'}" readonly="readonly"/>
               </span>
-            </div>
+            </div>-->
           </div>
         </div>
         <!-- ACTION -->
-        <div class="row" style="margin-bottom: 15px;">
-            <div class="col-md-8 col-sm-8 has-error">
-              <label class="control-label ">Please reset the form when you have completed your check-in.</label>
+        <div class="row" style="margin-top: 14px;">
+            <div class="col-md-6 col-sm-6 has-error">
             </div>
-            <div class="col-md-4 col-sm-4">
-              <div class="col-md-6 col-sm-6">
-                <button class="btn btn-block green" ng-click="searchClick()">
-                    <i class="fa fa-search"></i>  Search
-                </button>
+            <div class="col-md-3 col-sm-3">
+            </div>
+            <div class="col-md-3 col-sm-3">
+              <div class="pt-button-search">
+                <!-- <img ng-click="searchClick()" src="./theme/un/bonha_21.png"></img> -->
+                    <i class="fa fa-search pt-i-search" ng-click="searchClick()"> Search</i>
+               
               </div>
-              <div class="col-md-6 col-sm-6">
-                <button class="btn btn-block red" ng-click="resetClick()">
-                    <i class="fa fa-refresh"></i>  Reset
-                </button>
+              <div class="pt-button-reset">
+                <!-- <img src="./theme/un/bonha_21.png" ng-click="resetClick()"> -->
+                    <i class="fa fa-refresh pt-i-search" ng-click="resetClick()"> Reset</i>
               </div>
             </div>
         </div>
