@@ -403,7 +403,7 @@ module.exports = {
 			.success(function(data){
             if(data){
                 if(data[0].user_img == null){
-            		console.log("------avatar", data[0].user_img);
+            		console.log("------not data avatar");
                 }
                 else{
                     fs.exists(data[0].user_img,function(exists){
