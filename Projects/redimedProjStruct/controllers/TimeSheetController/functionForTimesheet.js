@@ -405,7 +405,7 @@
                  } else {
                      strNode = "(" + strNode.substring(0, strNode.length - 2) + ")";
                  }
-                 var queryHasTimeSheet = "SELECT time_tasks_week.user_id FROM time_tasks_week WHERE time_tasks_week.week_no = " + getWeekNo();
+                 var queryHasTimeSheet = "SELECT time_tasks_week.user_id FROM time_tasks_week WHERE time_tasks_week.week_no = " + module.exports.getWeekNo();
                  db.sequelize.query(queryHasTimeSheet)
                      .success(function(resultHasTimeSheet) {
                          var strHasTimeSheet = "";
@@ -436,7 +436,7 @@
                                      var mailOptions = {
                                          senders: 'TimeSheet',
                                          recipients: resultListEmp[lM].Email,
-                                         subject: '<span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Notification of Late Timesheet(s) Due</span>',
+                                         subject: 'Notification of Late Timesheet(s) Due',
                                          htmlBody: '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Dear <b>' + resultListEmp[lM].FirstName + ' ' + resultListEmp[lM].LastName + '</label></b>,<br/><br/><br/>' +
                                              '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This is a reminder that your timesheet was due</label><b> FRIDAY, ' + FRIDAY + ' - 12:00pm.&nbsp;</b><br/><br/><br/>' +
                                              '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Please log into the Timesheet System to complete and submit your timesheet. ' +

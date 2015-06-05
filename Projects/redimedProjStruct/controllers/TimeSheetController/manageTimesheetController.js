@@ -170,7 +170,7 @@ module.exports = {
             "LEFT JOIN departments ON departments.departmentid = time_tasks.department_code_id " + //JOIN
             "LEFT OUTER JOIN time_item_task ON time_tasks.tasks_id = time_item_task.task_id AND time_item_task.deleted = 0 " + //JOIN
             "LEFT JOIN time_item_code ON time_item_code.ITEM_ID = time_item_task.item_id " + //JOIN
-            "WHERE time_tasks.date = :dateTast AND time_tasks.tasks_week_id = id" + //WHERE
+            "WHERE time_tasks.date = :dateTast AND time_tasks.tasks_week_id = :id" + //WHERE
             " AND time_tasks.deleted = 0" + //WHERE
             " ORDER BY time_tasks.order ASC"; //ORDER
         db.sequelize.query(strQuery, null, {

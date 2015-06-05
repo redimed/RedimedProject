@@ -31,6 +31,7 @@ angular.module("app.loggedIn.TimeSheet.Report1.Controller", [])
                             });
                         });
                         $scope.listEmp = angular.copy(arrayEmp);
+                        $scope.listEmployeeChoose = [];
                         //END
                     } else if (response.status === "error") {
                         $state.go("loggedIn.home", null, {

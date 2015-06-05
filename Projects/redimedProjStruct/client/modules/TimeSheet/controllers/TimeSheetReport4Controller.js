@@ -31,6 +31,7 @@ angular.module("app.loggedIn.TimeSheet.Report4.Controller", [])
                             });
                         });
                         $scope.listEmp = angular.copy(arrayEmp);
+                        $scope.listEmployeeChoose = [];
                         //END
                     } else if (response.status === "error") {
                         $state.go("loggedIn.home", null, {
@@ -57,6 +58,12 @@ angular.module("app.loggedIn.TimeSheet.Report4.Controller", [])
             return weekNo;
         };
         //FUNCTION GET WEEK NUMBER
+
+        //FUNCTION CHANGE DATE
+        $scope.changeDate = function() {
+            $scope.changeEmp($scope.listEmployeeChoose);
+        };
+        //END
 
         $scope.changeEmp = function(list) {
             if ($scope.dateWeekFrom !== undefined && $scope.dateWeekFrom !== null && $scope.dateWeekFrom !== "" &&

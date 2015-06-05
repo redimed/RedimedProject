@@ -233,6 +233,52 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                         };
                         $scope.tasks.push($scope.task);
                     });
+                    //PUSH WEEKEND LEAVE
+                    //SET DEFAULT WEEKEND
+                    if ($scope.tasks !== undefined &&
+                        $scope.tasks !== null &&
+                        $scope.tasks.length !== 0 &&
+                        $scope.tasks[$scope.tasks.length - 1] !== undefined &&
+                        $scope.tasks[$scope.tasks.length - 2] !== undefined) {
+                        $scope.tasks[$scope.tasks.length - 1].activity_id = 5; //SET ATIVITY_ID DEFAULT FOR SUN
+                        $scope.tasks[$scope.tasks.length - 2].activity_id = 5; //SET ATIVITY_ID DEFAULT FOR SAT
+
+                        //SET DEFAULT ITEM FOR SUN
+                        if ($scope.tasks[$scope.tasks.length - 1].item !== undefined && $scope.tasks[$scope.tasks.length - 1].item !== null) {
+                            var item = {};
+                            item.isAction = 'insert';
+                            item.time_temp = 0;
+                            item.totalUnits = 0;
+                            item.ratio = 0;
+                            item.time_charge = '0000';
+                            item.ITEM_ID = 18;
+                            item.ITEM_NAME = "Weekend Leave";
+                            $scope.tasks[$scope.tasks.length - 1].item.push(item);
+                            $scope.tasks[$scope.tasks.length - 1].time_charge = '0000';
+                            $scope.tasks[$scope.tasks.length - 1].time_temp = 0;
+                            $scope.tasks[$scope.tasks.length - 1].notPopup = true;
+                        }
+                        //END SUN
+
+                        //SET DEFAULT ITEM FOR SAT
+                        if ($scope.tasks[$scope.tasks.length - 2].item !== undefined && $scope.tasks[$scope.tasks.length - 2].item !== null) {
+                            var item = {};
+                            item.isAction = 'insert';
+                            item.time_temp = 0;
+                            item.totalUnits = 0;
+                            item.ratio = 0;
+                            item.time_charge = '0000';
+                            item.ITEM_ID = 18;
+                            item.ITEM_NAME = "Weekend Leave";
+                            $scope.tasks[$scope.tasks.length - 2].item.push(item);
+                            $scope.tasks[$scope.tasks.length - 2].time_charge = '0000';
+                            $scope.tasks[$scope.tasks.length - 2].time_temp = 0;
+                            $scope.tasks[$scope.tasks.length - 2].notPopup = true;
+                        }
+                        //EN SAT
+                    }
+                    //END SET
+                    //END
                 }
             }
         });
