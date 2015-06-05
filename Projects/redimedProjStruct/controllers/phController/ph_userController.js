@@ -401,8 +401,7 @@ module.exports = {
 		var sql = "SELECT pu.`user_img` FROM `ph_users` pu WHERE pu.`user_id` = ? ";
 		db.sequelize.query(sql, null, {raw:true}, [patientId])
 			.success(function(data){
-            if(data){
-                if(data[0].user_img == null){
+                if(typeof data[0].user_img == 'undefined'){
             		console.log("------not data avatar");
                 }
                 else{
@@ -414,7 +413,6 @@ module.exports = {
                         res.sendfile("./uploadFile/Pharmacist/default-avatar.png");
                       }
                     })
-                }
             }})
             .error(function(err){
                 res.json({status:'error',error:err})
