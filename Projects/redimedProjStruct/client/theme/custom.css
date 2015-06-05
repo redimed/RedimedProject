@@ -3376,7 +3376,9 @@ label{
     top: 25;
     left: 0;
 }
-
+.un_tn_row_violet{
+    background-color: rgb(224, 154, 213);
+}
 .un_tn_row_red{
     background-color: rgb(255, 169, 169);
 }
@@ -3386,8 +3388,14 @@ label{
 .un_tn_row_green{
     background-color: rgb(144, 218, 144);
 }
+.un_tn_row_blue{
+    background-color: #d9edf7;
+}
 .un_tn_row_blank{
     
+}
+.un_tn_row_hover_violet{
+    background-color: rgba(224, 154, 213, 0.47);
 }
 .un_tn_row_hover_red:hover{
     background-color: rgb(253, 208, 208);
@@ -3397,6 +3405,9 @@ label{
 }
 .un_tn_row_hover_green:hover{
     background-color:rgba(144, 218, 144, 0.57);
+}
+.un_tn_row_hover_blue:hover{
+    background-color: rgba(217, 237, 247, 0.56);
 }
 .un_tn_row_hover_blank:hover{
     background-color:rgb(213, 213, 213);
@@ -3420,7 +3431,9 @@ label{
     height:20px;
     float:left;
 }
-
+.un_tn_legend_node_violet{
+    background-color: rgb(224, 154, 213);
+}
 .un_tn_legend_node_red{
     background-color: rgb(255, 169, 169);
 }
@@ -3429,6 +3442,9 @@ label{
 }
 .un_tn_legend_node_green{
     background-color: rgb(144, 218, 144);
+}
+.un_tn_legend_node_blue{
+    background-color: #d9edf7;
 }
 .un_tn_legend_node_blank{
     border:1px solid #333333;

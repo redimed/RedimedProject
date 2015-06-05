@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.patient.consult.controller",[])
-	.controller("PatientConsultController",function($filter,$rootScope,$interval,$window,$document,$cookieStore,$scope,$state,$modal,InsurerService,toastr,socket,OTSession,ReceptionistService,$stateParams,ConsultationService,PatientService,UserService){
+	.controller("PatientConsultController",function($filter,$rootScope,$interval,$window,$document,$cookieStore,$scope,$state,$modal,InsurerService,toastr,socket,OTSession,ReceptionistService,$stateParams,ConsultationService,PatientService,UserService,$interval){
 		$scope.patient_id = $stateParams.patient_id;
 		$scope.cal_id = $stateParams.cal_id;
 		$scope.userInfo = $cookieStore.get('userInfo');
@@ -25,7 +25,9 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			scripts: [],
 			images: []
 		}
-
+		//tannv.dts@gmail.com
+		$scope.timerDisplay=null;
+		//-------------------------------------------------
 		$scope.problemAddForm = {
 	        is_show: false,
 	        open: function () {
@@ -622,6 +624,19 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 				if(data.status=='success')
 				{
 					$scope.apptPatient=data.data;
+					if($scope.apptPatient.SESSION_START_TIME  && $scope.apptPatient.SESSION_END_TIME)
+					{
+						var tempStart=moment(new Date($scope.apptPatient.SESSION_START_TIME));
+						var tempEnd=moment(new Date($scope.apptPatient.SESSION_END_TIME));
+						var x=tempEnd.diff(tempStart,'seconds');
+						$scope.timerDisplay=kiss.msToTimer(x).display;
+					}
+
+					if($scope.apptPatient.appt_status==ptnConst.apptStatus.workInProgress.value)
+					{
+						$scope.startSessionTime=$scope.apptPatient.SESSION_START_TIME;
+					}
+
 				}
 				else
 				{
@@ -639,26 +654,72 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		 */
 		$scope.startSession=function()
         {
-        	var postData={
-        		patientId:$scope.patient_id,
-        		calId:$scope.cal_id
-        	}
-        	ConsultationService.startSession(postData)
+        	ConsultationService.beforeStartSession($scope.apptPatient.DOCTOR_ID)
         	.then(function(data){
         		if(data.status=='success')
         		{
-        			$scope.apptPatient.appt_status=ptnConst.apptStatus.workInProgress.value;
-        			toastr.success("Start progress success.");
+        			if(data.data.length>0)
+        			{
+        				var modalInstance = $modal.open({
+							templateUrl: 'notifyApptsWorkInProgress',
+							controller: function($scope, $modalInstance)
+							{
+								$scope.listData=data.data;
+								$scope.gotoAppointment=function(item){
+									if(!item.CAL_ID || !item.Patient_id) {
+										toastr.error('Cannot goto appointment.','Error!')
+										return;
+									}
+									$state.go("loggedIn.patient.appointment", {patient_id: item.Patient_id, cal_id: item.CAL_ID});
+								}
+								$scope.ok = function(){
+									$modalInstance.dismiss('cancel');
+								}
+							},
+							// size: 'sm'
+						});
+        			}
+        			else
+        			{
+        				executeStart();
+        			}
         		}
         		else
         		{
-        			exlog.logErr(data);
-        			toastr.error("Start progress error.");
+        			toastr.error("Error when check data.");
         		}
         	},function(err){
+        		toastr.error("Error when check data.");
         		exlog.logErr(err);
-        		toastr.error("Start progress error.");
         	});
+
+        	function executeStart()
+        	{
+        		var startSessionTime=new Date();
+        		var postData={
+	        		patientId:$scope.patient_id,
+	        		calId:$scope.cal_id,
+	        		startSessionTime:moment(startSessionTime).format('YYYY/MM/DD HH:mm:ss')
+	        	}
+	        	ConsultationService.startSession(postData)
+	        	.then(function(data){
+	        		if(data.status=='success')
+	        		{
+	        			$scope.apptPatient.appt_status=ptnConst.apptStatus.workInProgress.value;
+	        			toastr.success("Start progress success.");
+	        			$scope.startSessionTime=startSessionTime;
+	        			$scope.apptPatient.SESSION_START_TIME=startSessionTime;
+	        		}
+	        		else
+	        		{
+	        			exlog.logErr(data);
+	        			toastr.error("Start progress error.");
+	        		}
+	        	},function(err){
+	        		exlog.logErr(err);
+	        		toastr.error("Start progress error.");
+	        	});
+        	}
         }
 
         $scope.beforeFinishSession=function()
@@ -701,15 +762,19 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 
         $scope.finishSession=function()
         {
+        	var endSessionTime=new Date();
         	var postData={
         		patientId:$scope.patient_id,
-        		calId:$scope.cal_id
+        		calId:$scope.cal_id,
+        		endSessionTime:moment(endSessionTime).format("YYYY/MM/DD HH:mm:ss")
         	}
         	ConsultationService.finishSession(postData)
         	.then(function(data){
         		if(data.status=='success')
         		{
         			$scope.apptPatient.appt_status=ptnConst.apptStatus.completed.value;
+        			$scope.startSessionTime='close';
+        			$scope.apptPatient.SESSION_END_TIME=endSessionTime;
         			toastr.success("Complete progress success.");
         		}
         		else
@@ -722,6 +787,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
         		toastr.error("Complete progress fail.");
         	});
         }
+        
 	})
 
 	.directive('dropzone', function () {

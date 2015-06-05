@@ -91,18 +91,32 @@
                         <div class="un_tn_legend_inline_header">
                             Appointment Status Color:
                         </div>
+
+                         <div class="un_tn_legend_inline_item">
+                            <div class="un_tn_legend_node un_tn_legend_node_blue"></div>
+                            {{apptStatus.booking.value}}
+                        </div>
+
                         <div class="un_tn_legend_inline_item">
-                            <div class="un_tn_legend_node un_tn_legend_node_red"></div>
+                            <div class="un_tn_legend_node un_tn_legend_node_violet"></div>
                             {{apptStatus.checkedIn.value}}
                         </div>
+
+                        <div class="un_tn_legend_inline_item">
+                            <div class="un_tn_legend_node un_tn_legend_node_red"></div>
+                            {{apptStatus.preProgress.value}}
+                        </div>
+
                         <div class="un_tn_legend_inline_item">
                             <div class="un_tn_legend_node un_tn_legend_node_yellow"></div>
                             {{apptStatus.workInProgress.value}}
                         </div>
+
                         <div class="un_tn_legend_inline_item">
                             <div class="un_tn_legend_node un_tn_legend_node_green"></div>
-                            {{apptStatus.booking.value}}
+                            {{apptStatus.completed.value}}
                         </div>
+                       
                         <div class="un_tn_legend_inline_item">
                             <div class="un_tn_legend_node un_tn_legend_node_blank"></div>
                             Other

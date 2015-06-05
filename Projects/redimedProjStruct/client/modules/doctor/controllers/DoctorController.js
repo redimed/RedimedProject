@@ -90,20 +90,26 @@ angular.module("app.loggedIn.doctor.controller", [
     $scope.apptStatus=ptnConst.apptStatus;
     $scope.setColorAppt=function(status)
     {
-        if(status==ptnConst.apptStatus.checkedIn.value)
+        if(status==ptnConst.apptStatus.booking.value)
         {
+            return "un_tn_row_blue un_tn_row_hover_blue";
+        }
+        else if(status==ptnConst.apptStatus.checkedIn.value)
+        {
+            return "un_tn_row_violet un_tn_row_hover_violet";
+        }
+        else if(status==ptnConst.apptStatus.preProgress.value){
             return "un_tn_row_red un_tn_row_hover_red";
         }
         else if(status==ptnConst.apptStatus.workInProgress.value)
         {
             return "un_tn_row_yellow un_tn_row_hover_yellow";
         }
-        else if(status==ptnConst.apptStatus.booking.value)
+        else if(status==ptnConst.apptStatus.completed.value)
         {
             return "un_tn_row_green un_tn_row_hover_green";
         }
-        else
-        {
+        else{
             return "un_tn_row_blank un_tn_row_hover_blank";
         }
     }

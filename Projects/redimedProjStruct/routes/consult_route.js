@@ -18,6 +18,7 @@ app.get('/api/download/:id',ConsultationController.downloadFile);
 
 //tannv.dts@gmail.com
 //02-06-2015
+app.post('/api/consultation/beforeStartSession',ConsultationController.beforeStartSession);
 app.post('/api/consultation/startSession',ConsultationController.startSession);
 app.post('/api/consultation/beforeFinishSession',ConsultationController.beforeFinishSession);
 app.post('/api/consultation/finishSession',ConsultationController.finishSession);

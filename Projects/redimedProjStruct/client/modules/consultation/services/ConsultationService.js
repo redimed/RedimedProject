@@ -30,6 +30,15 @@ angular.module("app.loggedIn.patient.consult.services",[])
 
 		/**
 		 * tannv.dts@gmail.com
+		 * kiem tra xem doctor co cac appointment nao dang la work in progress hay khong
+		 */
+		services.beforeStartSession=function(doctorId)
+		{
+			return api.all('consultation/beforeStartSession').post({doctorId:doctorId});
+		}
+
+		/**
+		 * tannv.dts@gmail.com
 		 * chuyen Appt Patient Status thanh Work in progress
 		 */
 		services.startSession=function(data)

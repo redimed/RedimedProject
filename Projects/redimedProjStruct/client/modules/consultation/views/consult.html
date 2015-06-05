@@ -1075,13 +1075,20 @@
         BEGIN
          -->
         <div style="  text-align: center;margin-top:-20;margin-bottom:-1px;margin-left:auto;margin-right:auto;">
-            <button ng-show="apptPatient.appt_status==apptStatus.checkedIn.value" ng-click="startSession();" class="un_tn_btn un_tn_btn_pink un_tn_btn_lg">Start Progress</button>
+
+            <kiss-timer start-session-time="startSessionTime" return-value="timerDisplay"></kiss-timer>
+
+            <button ng-show="apptPatient.appt_status==apptStatus.preProgress.value" ng-click="startSession();" class="un_tn_btn un_tn_btn_pink un_tn_btn_lg">Start Progress</button>
          
-            <button ng-show="apptPatient.appt_status==apptStatus.workInProgress.value" ng-click="beforeFinishSession();" class="un_tn_btn un_tn_btn_pink un_tn_btn_lg">Complete</button>
+            <button ng-show="apptPatient.appt_status==apptStatus.workInProgress.value" ng-click="beforeFinishSession();" class="un_tn_btn un_tn_btn_pink un_tn_btn_lg">
+                Complete</br>
+                <span style="color:white;font-size:15px">{{timerDisplay}}</span>
+            </button>
 
             <div ng-show="apptPatient.appt_status==apptStatus.completed.value"
                 class="un_tn_txt_notify un_tn_txt_notify_gray">
-                Progress Finished.
+                Progress Finished. 
+                <span style="color:white;font-size:15px">{{timerDisplay}}</span>               
             </div>
         </div>
         <!-- 
@@ -1180,3 +1187,35 @@
         <button class="un_tn_btn un_tn_btn_gray un_tn_btn_sm" ng-click="ok()">Ok</button>
     </div>
 </script>
+
+
+
+<script type="text/ng-template" id="notifyApptsWorkInProgress">
+    <div class="modal-body">
+        Before start this appointment, please complete appointments below:
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Patient Name</th>
+                    <th>From Time</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in listData">
+                    <td>{{item.First_name}} {{item.Sur_name}}</td>
+                    <td>{{item.FROM_TIME|date:'HH:mm dd-MM-yyyy'}}</td>
+                    <td>{{item.appt_status}}</td>
+                    <td>
+                        <button class="un_tn_btn un_tn_btn_pink un_tn_btn_sm" ng-click="gotoAppointment(item)">go to</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button class="un_tn_btn un_tn_btn_gray un_tn_btn_sm" ng-click="ok()">Ok</button>
+    </div>
+</script>
+

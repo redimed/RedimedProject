@@ -15,6 +15,7 @@ var ptnConst={
 	apptStatus:{
 		booking:{value:'Booking',display:'Booking'},
 		checkedIn:{value:'Checked In',display:'Checked In'},
+		preProgress:{value:'Pre-progress',display:'Pre-progress'},
 		workInProgress:{value:'Work In Progress',display:'Work In Progress'},
 		completed:{value:'Completed',display:'Completed'},
 		billing:{value:'Billing',display:'Billing'},
