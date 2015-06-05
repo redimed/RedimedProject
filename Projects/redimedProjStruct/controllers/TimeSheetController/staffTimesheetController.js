@@ -92,7 +92,7 @@ module.exports = {
                             .success(function(result) {
                                 if (result[0] !== undefined && result[0].dataValues !== undefined && result[0].dataValues.tasks_week_id !== undefined) {
                                     //TRACKER
-                                    info.date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                                    info.date = moment().format("YYYY-MM-DD HH:mm:ss");
                                     var idTaskWeek = result[0].dataValues.tasks_week_id;
                                     var tracKer = {
                                         statusID: info.statusID,
@@ -356,7 +356,7 @@ module.exports = {
 
         chainer.runSerially().success(function(result) {
             //TRACKER
-            var date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+            var date = moment().format("YYYY-MM-DD HH:mm:ss");
             var idTaskWeek = info.idWeek;
             var tracKer = {
                 statusID: info.statusID,
@@ -577,7 +577,8 @@ module.exports = {
 
     showEdit: function(req, res) {
         var info = req.body.info;
-        var query = "SELECT * FROM time_tasks WHERE time_tasks.tasks_week_id = " + info + " AND time_tasks.deleted = 0 ORDER BY time_tasks.order ASC";
+        var query = "SELECT * FROM time_tasks WHERE time_tasks.tasks_week_id = " +
+            info + " AND time_tasks.deleted = 0 ORDER BY time_tasks.order ASC";
         db.sequelize.query(query)
             .success(function(tasks) {
                 if (tasks === null || tasks.length === 0) {
@@ -935,7 +936,7 @@ module.exports = {
         db.sequelize.query(query)
             .success(function(result) {
                 //TRACKER
-                var date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                var date = moment().format("YYYY-MM-DD HH:mm:ss");
                 var tracKer = {
                     statusID: info.status,
                     USER_ID: info.USER_ID,

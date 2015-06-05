@@ -1,7 +1,7 @@
 //EXPORTS MODEL
 var db = require('../../models');
 var moment = require('moment');
-var functionForTimesheet=require('./functionForTimesheet');
+var functionForTimesheet = require('./functionForTimesheet');
 //END EXPORTS
 module.exports = {
     // APPROVE LEAVE
@@ -14,10 +14,11 @@ module.exports = {
             userID: info.userID,
             creationDate: moment().format("YYYY-MM-DD h:mm:ss")
         };
-        var queryGetInfoLeave = "SELECT hr_leave.leave_id, hr_leave.standard, hr_leave.is_approve_first, " +
-            "hr_leave.is_approve_second, hr_leave.status_id_first, hr_leave.status_id_second " +
-            "FROM hr_leave " +
-            "WHERE hr_leave.leave_id = :leaveID";
+        var queryGetInfoLeave =
+            "SELECT hr_leave.leave_id, hr_leave.standard, hr_leave.is_approve_first, " + //SELECT
+            "hr_leave.is_approve_second, hr_leave.status_id_first, hr_leave.status_id_second " + //SELECT
+            "FROM hr_leave " + //FROM
+            "WHERE hr_leave.leave_id = :leaveID"; //WHERE
         db.sequelize.query(queryGetInfoLeave, null, {
                 raw: true
             }, {
@@ -71,10 +72,11 @@ module.exports = {
                             //END APPROVE
                         } else if (resultInfoLeave[0].is_approve_first === 1 &&
                             resultInfoLeave[0].is_approve_second === 0) {
-                            var queryCheckHeadOfDept = "SElECT sys_hierarchy_nodes.NODE_ID " +
-                                "FROM sys_hierarchy_nodes " +
-                                "INNER JOIN sys_hierarchies_users ON sys_hierarchy_nodes.TO_NODE_ID = sys_hierarchies_users.NODE_ID " +
-                                "WHERE sys_hierarchies_users.USER_ID = :userID";
+                            var queryCheckHeadOfDept =
+                                "SElECT sys_hierarchy_nodes.NODE_ID " + //SELECT
+                                "FROM sys_hierarchy_nodes " + //FROM
+                                "INNER JOIN sys_hierarchies_users ON sys_hierarchy_nodes.TO_NODE_ID = sys_hierarchies_users.NODE_ID " + //JOIN
+                                "WHERE sys_hierarchies_users.USER_ID = :userID"; //WHERE
                             db.sequelize.query(queryCheckHeadOfDept, null, {
                                     raw: true
                                 }, {
@@ -104,11 +106,12 @@ module.exports = {
                                                 //SEND MAIL
 
                                                 //GET NODE_ID DIRECTOR
-                                                var queryGetNodeID = "SELECT DISTINCT sys_hierarchy_nodes.NODE_ID " +
-                                                    "FROM sys_hierarchy_nodes " +
-                                                    "INNER JOIN sys_hierarchy_group ON sys_hierarchy_nodes.GROUP_ID = sys_hierarchy_group.GROUP_ID " +
-                                                    "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.NODE_ID = sys_hierarchy_nodes.NODE_ID " +
-                                                    "WHERE sys_hierarchies_users.USER_ID = :userID AND sys_hierarchy_group.GROUP_TYPE = 'Time Sheet'";
+                                                var queryGetNodeID =
+                                                    "SELECT DISTINCT sys_hierarchy_nodes.NODE_ID " + //SELECT
+                                                    "FROM sys_hierarchy_nodes " + //FROM
+                                                    "INNER JOIN sys_hierarchy_group ON sys_hierarchy_nodes.GROUP_ID = sys_hierarchy_group.GROUP_ID " + //JOIN
+                                                    "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.NODE_ID = sys_hierarchy_nodes.NODE_ID " + //JOIN
+                                                    "WHERE sys_hierarchies_users.USER_ID = :userID AND sys_hierarchy_group.GROUP_TYPE = 'Time Sheet'"; //WHERE
                                                 db.sequelize.query(queryGetNodeID, null, {
                                                         raw: true
                                                     }, {
@@ -122,10 +125,10 @@ module.exports = {
                                                             resultNodeId[0] !== null &&
                                                             !isNaN(resultNodeId[0].NODE_ID)) {
                                                             var queryGetNodeIdManage =
-                                                                "SELECT DISTINCT sys_hierarchy_nodes.NODE_ID " +
-                                                                "FROM sys_hierarchy_nodes " +
-                                                                "INNER JOIN sys_hierarchies_users ON sys_hierarchy_nodes.TO_NODE_ID = sys_hierarchies_users.NODE_ID " +
-                                                                "WHERE sys_hierarchy_nodes.NODE_ID = :nodeId";
+                                                                "SELECT DISTINCT sys_hierarchy_nodes.NODE_ID " +//SELECT
+                                                                "FROM sys_hierarchy_nodes " +//FROM
+                                                                "INNER JOIN sys_hierarchies_users ON sys_hierarchy_nodes.TO_NODE_ID = sys_hierarchies_users.NODE_ID " +//JOIN
+                                                                "WHERE sys_hierarchy_nodes.NODE_ID = :nodeId";//WHERE
                                                             db.sequelize.query(queryGetNodeIdManage, null, {
                                                                     raw: true
                                                                 }, {
@@ -140,11 +143,11 @@ module.exports = {
                                                                         !isNaN(resultNodeIdManage[0].NODE_ID)) {
                                                                         //GET INFOMATION MANAGE
                                                                         var queryGetInfoManage =
-                                                                            "SELECT sys_hierarchies_users.USER_ID " +
-                                                                            "FROM sys_hierarchies_users " +
-                                                                            "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " +
-                                                                            "INNER JOIN sys_hierarchy_group ON sys_hierarchy_nodes.GROUP_ID = sys_hierarchy_group.GROUP_ID " +
-                                                                            "WHERE sys_hierarchy_group.GROUP_TYPE = 'Time Sheet' AND sys_hierarchy_nodes.NODE_ID = :nodeId";
+                                                                            "SELECT sys_hierarchies_users.USER_ID " +//SELECT
+                                                                            "FROM sys_hierarchies_users " +//FROM
+                                                                            "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " +//JOIN
+                                                                            "INNER JOIN sys_hierarchy_group ON sys_hierarchy_nodes.GROUP_ID = sys_hierarchy_group.GROUP_ID " +//JOIN
+                                                                            "WHERE sys_hierarchy_group.GROUP_TYPE = 'Time Sheet' AND sys_hierarchy_nodes.NODE_ID = :nodeId";//WHERE
                                                                         db.sequelize.query(queryGetInfoManage, null, {
                                                                                 raw: true
                                                                             }, {
