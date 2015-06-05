@@ -1,7 +1,7 @@
 angular.module('starter.booking.rlobChooseAppointmentCalendar.controller',[
 
 ])
-.controller('rlobChooseAppointmentCalendarController',function($filter,$scope,$stateParams,localStorageService,OnlineBookingService,$state){
+.controller('rlobChooseAppointmentCalendarController',function($filter,$scope,$stateParams,localStorageService,OnlineBookingService,$state,$timeout,$ionicLoading){
 
         $scope.loginInfo = localStorageService.get('userInfo');
         $scope.patientID = $stateParams.Patient_id;
@@ -16,7 +16,7 @@ angular.module('starter.booking.rlobChooseAppointmentCalendar.controller',[
 
         $scope.backdescInjury = function() {
             localStorageService.set("checkNonemer", true);
-            $state.go('app.injury.desInjury', {reload: true});
+            $state.go('app.injury.desInjury');
         }
 
         $scope.selectedFilter.date = new Date();
@@ -59,10 +59,10 @@ angular.module('starter.booking.rlobChooseAppointmentCalendar.controller',[
         $scope.updateAppoinmentsList=function()
         {
             var specialityId=$scope.selectedFilter.clnSpecialitySelected && $scope.selectedFilter.clnSpecialitySelected.Specialties_id?$scope.selectedFilter.clnSpecialitySelected.Specialties_id:'%';
-            var doctorId=$scope.selectedFilter.doctorSelected  && $scope.selectedFilter.doctorSelected.doctor_id?$scope.selectedFilter.doctorSelected.doctor_id:'%';
-            var locationId=$scope.selectedFilter.locationSelected  && $scope.selectedFilter.locationSelected.id?$scope.selectedFilter.locationSelected.id:'%';
-            var fromTime=$scope.selectedFilter.date;
+            var doctorId=$scope.selectedFilter.doctorSelected  && $scope.selectedFilter.doctorSelected.DOCTOR_ID?$scope.selectedFilter.doctorSelected.DOCTOR_ID:'%';
 
+            var locationId=$scope.selectedFilter.locationSelected  && $scope.selectedFilter.locationSelected.id?$scope.selectedFilter.locationSelected.id:'%';
+            var fromTime=$filter('date')($scope.selectedFilter.date, "yyyy-MM-dd");
             OnlineBookingService.getApointmentCalendar(specialityId,doctorId,locationId,fromTime).then(function(data){
                 var temp={LOCATION_ITEMS:[]};
                 for(var i=0;i<data.length;i++)
@@ -76,7 +76,6 @@ angular.module('starter.booking.rlobChooseAppointmentCalendar.controller',[
                         });
 
                     }
-//
                     if(!temp[data[i].SITE_ID][data[i].DOCTOR_ID])
                     {
                         temp[data[i].SITE_ID][data[i].DOCTOR_ID]={APPOINTMENT_ITEMS:[]};
@@ -85,7 +84,6 @@ angular.module('starter.booking.rlobChooseAppointmentCalendar.controller',[
                             DOCTOR_NAME:data[i].NAME
                         });
                     }
-
                     if(!temp[data[i].SITE_ID][data[i].DOCTOR_ID][data[i].CAL_ID])
                     {
                         temp[data[i].SITE_ID][data[i].DOCTOR_ID][data[i].CAL_ID]={};
@@ -117,6 +115,7 @@ angular.module('starter.booking.rlobChooseAppointmentCalendar.controller',[
                     arr.push(location_item);
                 }
                 $scope.appointmentsFilter=arr;
+                // $scope.doctorsFilter = $scope.appointmentsFilter[0].DOCTOR_ITEMS;
 
             },function(data){
                 console.log("error");
@@ -124,8 +123,16 @@ angular.module('starter.booking.rlobChooseAppointmentCalendar.controller',[
         };
         $scope.selectAppointmentCalendar=function(appointmentCalendar,DID,LID)
         {
+              $ionicLoading.show({
+                template: "<div class='icon ion-ios7-reloading'></div>"+
+                "<br />"+
+                "<span>Waiting...</span>",
+                animation: 'fade-in',
+                showBackdrop: true,
+                maxWidth: 200,
+                showDelay: 0
+            });
 
-            console.log('aa---'+JSON.stringify(appointmentCalendar));
             var info = {
                 CAL_ID: appointmentCalendar.CAL_ID,
                 APPOINTMENT_TIME: appointmentCalendar.APPOINTMENT_TIME,
@@ -133,14 +140,20 @@ angular.module('starter.booking.rlobChooseAppointmentCalendar.controller',[
                 DOCTOR_ID: appointmentCalendar.DOCTOR_ID,
                 SITE_ID: appointmentCalendar.SITE_ID,
                 DOCTOR_NAME: DID,
-                LOCATION_NAME: LID
+                LOCATION_NAME: LID,
+                PatientID: $scope.patientID
             };
+
             OnlineBookingService.getInfoLocation(appointmentCalendar.SITE_ID).then(function(data){
                 info.Address = data.Site_addr;
-
+                // OnlineBookingService.infoBooking = info;
                 localStorageService.set("selectedBooking", info);
             });
-            $state.go('app.detailBooking',{PatientID: $scope.patientID});
+            $timeout(function(){
+                 $ionicLoading.hide();
+                  $state.go('app.detailBooking');
+            },500)
+          
         };
 
 })

@@ -39,8 +39,35 @@ angular.module('starter.security',[
                 cache: false,
                 views:{
                     'main-content':{
-                        templateUrl: 'modules/security/views/register.html',
+                        templateUrl: 'modules/security/views/structure_register.html',
                         controller: 'securityRegisterController'
+                    }
+                }
+            })
+            .state('security.register.info1',{
+                url:'/register_info1',
+                cache: false,
+                views:{
+                    'wrap_register':{
+                        templateUrl: 'modules/security/views/register_info1.html',
+                    }
+                }
+            })
+            .state('security.register.info2',{
+                url:'/register_info2',
+                cache: false,
+                views:{
+                    'wrap_register':{
+                        templateUrl: 'modules/security/views/register_info2.html',
+                    }
+                }
+            })
+            .state('security.register.info3',{
+                url:'/register_info3',
+                cache: false,
+                views:{
+                    'wrap_register':{
+                        templateUrl: 'modules/security/views/register_info3.html',
                     }
                 }
             })

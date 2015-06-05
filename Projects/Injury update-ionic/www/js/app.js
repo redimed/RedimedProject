@@ -85,11 +85,11 @@ angular.module('starter', ['ionic',
             }
         })
 
-        $interval(function() {
-            if (localStorageService.get("userInfo") != null) {
-                signaling.emit('checkApp', localStorageService.get("userInfo").id);
-            }
-        }, 3 * 1000);
+        //$interval(function() {
+        //    if (localStorageService.get("userInfo") != null) {
+        //        signaling.emit('checkApp', localStorageService.get("userInfo").id);
+        //    }
+        //}, 3 * 1000);
 
 
         signaling.on('reconnect_failed',function(){
@@ -103,7 +103,7 @@ angular.module('starter', ['ionic',
         $rootScope.$on("$stateChangeSuccess", function (e, toState,toParams, fromState, fromParams) {
             localStorageService.set("fromState",{fromState:fromState,fromParams:fromParams});
             if(!localStorageService.get("userInfo")){
-                if(toState.name !== "security.forgot" && toState.name !== "security.login" && toState.name !== "security.register") {
+                if(toState.name !== "security.forgot" && toState.name !== "security.login" && toState.name !== "security.register.info1"  && toState.name !== "security.register.info2"  && toState.name !== "security.register.info3") {
                     e.preventDefault();
                     $state.go("security.login");
                 }

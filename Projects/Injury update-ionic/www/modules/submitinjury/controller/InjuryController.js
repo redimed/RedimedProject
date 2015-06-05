@@ -11,6 +11,7 @@ angular.module('starter.injury.controller', ['ngCordova'])
         $scope.isSubmitdesc = false;
         $scope.isClick = null;
         $scope.list = [];
+        $scope.templist = [];
         $scope.isShowImg = true;
         $scope.isFailMobile = false;
         $scope.isFailEmail = false;
@@ -108,7 +109,6 @@ angular.module('starter.injury.controller', ['ngCordova'])
 
                     {
                         text: "Ok",
-                        type: 'button button-assertive',
                         onTap: function(e) {
                             $scope.isSubmit = false;
                             $scope.isFailMobile = false;
@@ -128,7 +128,10 @@ angular.module('starter.injury.controller', ['ngCordova'])
                             //$scope.isShow = !$scope.isShow;
                         }
                     },
-                    { text: "Cancel" }
+                    {
+                        text: "Cancel",
+                        type: 'btn-cancel-popUp'
+                    }
                 ]
             });
         }
@@ -367,7 +370,11 @@ angular.module('starter.injury.controller', ['ngCordova'])
                     $scope.popupMessage = { message:"Please Check Your Information!" };
                     $ionicPopup.show({
                         templateUrl: "modules/popup/PopUpError.html",
-                        scope: $scope
+                        scope: $scope,
+                        buttons:
+                            [
+                                {   text: "Ok"  }
+                            ]
                     })
                 }
                 else
@@ -389,7 +396,6 @@ angular.module('starter.injury.controller', ['ngCordova'])
                             buttons:
                                 [
                                     {   text: "Ok",
-                                        type: "button button-assertive",
                                         onTap: function(e) {
                                             $scope.takePicture();
                                             $scope.popUpemergency = false;
@@ -397,6 +403,7 @@ angular.module('starter.injury.controller', ['ngCordova'])
                                     },
                                     {
                                         text: "Cancel",
+                                        type: 'btn-cancel-popUp',
                                         onTap: function(e) {
                                             $scope.popUpemergency = false;
                                         }
@@ -411,9 +418,13 @@ angular.module('starter.injury.controller', ['ngCordova'])
                 $scope.isSubmitdesc = true;
                 if (desc.$invalid)
                 {
-                    $ionicPopup.alert({
-                        title: "Error",
-                        template: 'Please Check Your Information!'
+                    $scope.popupMessage = { message:"Please Check Your Information!" };
+                    $ionicPopup.show({
+                        templateUrl: "modules/popup/PopUpError.html",
+                        scope: $scope,
+                        buttons: [
+                            { text: "Ok" }
+                        ]
                     });
                 }
                 else{
@@ -429,13 +440,13 @@ angular.module('starter.injury.controller', ['ngCordova'])
                             buttons: [
                                 {
                                     text: "Yes, I do",
-                                    type: "button button-assertive",
                                     onTap: function(e) {
                                         $scope.takePicture();
                                     }
                                 },
                                 {
                                     text: "Cancel",
+                                    type: 'btn-cancel-popUp',
                                     onTap: function(e) {
                                         NonEmergency();
                                     }
@@ -473,7 +484,7 @@ angular.module('starter.injury.controller', ['ngCordova'])
                 $timeout(function () {
                     if(data.status == 'success')
                     {
-                        
+
                         $scope.popupMessage = { message: "Success insert injury!" };
                         $ionicPopup.show({
                             templateUrl: "modules/popup/PopUpSuccess.html",
@@ -501,8 +512,8 @@ angular.module('starter.injury.controller', ['ngCordova'])
                             ]
                         });
                         var alertPopup = $ionicPopup.alert({
-                           title: 'Insert Failed',
-                           template: 'Please check information!'
+                            title: 'Insert Failed',
+                            template: 'Please check information!'
                         });
                     }
                 }, 1000);
@@ -596,6 +607,18 @@ angular.module('starter.injury.controller', ['ngCordova'])
         }
 
         $scope.getInjuryByCompany();
+
+        $scope.searchPatient = function(type, input) {
+            switch (type) {
+                case 0:
+                    $scope.result_row_firstname = $filter('filter')($scope.list, {First_name: input });
+                    break;
+                case 1:
+                    $scope.result_row_surname = $filter('filter')($scope.list, {Sur_name: input });
+                    break;
+            }
+            console.log($scope.result_row);
+        }
     })
 
     .directive("mdtMap", function($http, $ionicLoading, $timeout){

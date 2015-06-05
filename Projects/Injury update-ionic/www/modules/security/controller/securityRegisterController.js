@@ -1,26 +1,26 @@
 angular.module('starter.security.register.controller',[])
 
-    .controller('securityRegisterController', function($scope, InjuryServices, SecurityService, ConfigService, $ionicPopup){
+    .controller('securityRegisterController', function($scope, $state, InjuryServices, SecurityService, ConfigService, $ionicPopup){
 
         $scope.titleIndex = ConfigService.title_option();
         $scope.sexIndex = ConfigService.sex_option();
         $scope.userInfo = {};
 
         $scope.submitRegister = function() {
+            console.log($scope.userInfo);
             $scope.userInfo.dob = new Date($scope.userInfo.dob);
-            console.log($scope.userInfo.dob);
-            console.log(JSON.stringify($scope.userInfo));
             SecurityService.signup($scope.userInfo).then(function (res){
-                console.log(res);
                 if(res.status.toLowerCase() == 'success') {
                     $scope.popupMessage = { message:"Register success!" };
                     $ionicPopup.show({
-                        templateUrl: "modules/popup/PopUpConfirm.html",
+                        templateUrl: "modules/popup/PopUpSuccess.html",
                         scope: $scope,
                         buttons: [
                             {
                                 text: "Ok",
-                                type: "button button-assertive"
+                                onTap: function() {
+                                    $state.go('security.login', null, {reload: true});
+                                }
                             }
                         ]
                     });

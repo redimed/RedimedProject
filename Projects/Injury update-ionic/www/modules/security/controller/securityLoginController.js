@@ -72,12 +72,14 @@ angular.module('starter.security.login.controller',[])
                 buttons: [
                     {
                         text: '<span>Yes, push out!</span>',
-                        type: 'button button-assertive',
                         onTap: function(e) {
                             signaling.emit('forceLogin', $scope.modelUser.username);
                         }
                     },
-                    { text: 'Cancel' }
+                    {
+                        text: 'Cancel',
+                        type: 'btn-cancel-popUp'
+                    }
 
                 ]
             })
