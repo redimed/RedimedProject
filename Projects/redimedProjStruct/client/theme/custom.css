@@ -3495,4 +3495,19 @@ label{
     width: 140px; 
     color: white;
 }
+pt_header_box_shadow{
+    -moz-box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
+    -webkit-box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
+    background-color: #ffffff;
+}
+.pt_header_img_logo{
+    float: left;
+    padding-left: 30px;
+    padding-top: 30px;
+}
+.pt_header_img{
+    float: right;
+    padding-top: 10px;
+}
 /*phanquocchien patient end*/
