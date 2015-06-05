@@ -397,28 +397,26 @@ module.exports = {
 	},
 
 	getAvatar: function(req, res){
-		var patientId = req.params.user_id;
-		var sql = "SELECT pu.`user_img` FROM `ph_users` pu WHERE pu.`user_id` = ? ";
-		db.sequelize.query(sql, null, {raw:true}, [patientId])
-			.success(function(data){
-            if(data){
-                if(data[0].user_img == null){
-            		console.log("------not data avatar");
-                }
-                else{
-                    fs.exists(data[0].user_img,function(exists){
-            		console.log("------avatar", exists);
-                      if (exists) {
-                        res.sendfile(data[0].user_img);
-                      } else {
-                        res.sendfile("./uploadFile/Pharmacist/default-avatar.png");
-                      }
-                    })
-                }
-            }})
-            .error(function(err){
-                res.json({status:'error',error:err})
-            })
+		// var patientId = req.params.user_id;
+		// var sql = "SELECT pu.`user_img` FROM `ph_users` pu WHERE pu.`user_id` = ? ";
+		// db.sequelize.query(sql, null, {raw:true}, [patientId])
+		// 	.success(function(data){
+  //               if(typeof data[0].user_img == 'undefined'){
+  //           		console.log("------not data avatar");
+  //               }
+  //               else{
+  //                   fs.exists(data[0].user_img,function(exists){
+  //           		console.log("------avatar", exists);
+  //                     if (exists) {
+  //                       res.sendfile(data[0].user_img);
+  //                     } else {
+  //                       res.sendfile("./uploadFile/Pharmacist/default-avatar.png");
+  //                     }
+  //                   })
+  //           }})
+  //           .error(function(err){
+  //               res.json({status:'error',error:err})
+  //           })
 	},
 
 	getPostByUserId: function(req, res){

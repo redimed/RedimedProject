@@ -1,6 +1,7 @@
 angular.module("app.security",[
     "app.security.controller",
-    "app.security.services"
+    "app.security.services",
+    "app.webpatient.controller"
 ])
 
 .config(function($stateProvider){
@@ -119,6 +120,7 @@ angular.module("app.security",[
         views: {
             "root": {
                 templateUrl: "modules/security/views/web-patient.html",
+                controller: "WebPatientController"
             }
         }
     })  
@@ -126,6 +128,11 @@ angular.module("app.security",[
         url: "/portal-patient/web-checkin",
         templateUrl: "/modules/patient/views/web-checkin.html",
         controller:'PatientCheckinController'
+    })
+    .state("webpatient.register", {
+        url: "/portal-patient/register",
+        templateUrl: "/modules/patient/views/patient-register.html",
+        controller:'WebPatientController'
     })
     //chien end
 })

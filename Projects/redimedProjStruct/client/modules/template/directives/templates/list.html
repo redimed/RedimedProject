@@ -1,0 +1,27 @@
+<div class="panel panel-default">
+	<div class="panel-body">
+		<form enctype="multipart/form-data">
+			<div class="form-group">
+				<label for="fileinput">Import File: </label>
+				<input type="file" file-model="template.inputfile"/>
+				{{template.inputfile}}
+			</div>
+		</form>
+	</div>
+</div>
+<table class="mdt-table">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Description</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="l in alert.list">
+			<td>{{l.name}}</td>
+			<td>{{l.description}}</td>
+			<td></td>
+		</tr>
+	</tbody>
+</table>
