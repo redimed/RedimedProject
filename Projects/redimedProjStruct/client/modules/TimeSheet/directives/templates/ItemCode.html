@@ -96,7 +96,13 @@
                                 <!-- END MORE -->
                                 <td ng-show="item.show===true" style="text-align:center;width:100px;">
                                     <div ng-class="{'error-input':items[$index].time_charge==='' || items[$index].time_charge ===null || items[$index].time_charge===undefined}">
-                                        <input type="text" tabindex="4" class="input-sm" ng-model="items[$index].time_charge" ui-mask="{{items[$index].time_charge>=10000?'999:99':'99:99'}}" name="time_charge" ng-required="item.show===true" style="font-size:13px;border:1px solid #ccc;height:25px; text-align:center;" id="time_chargeID" time-charge>
+                                        <!-- TIME CHARGE HIGH -->
+                                        <input type="text" tabindex="4" class="input-sm" ng-model="items[$index].time_charge" ui-mask="999:99" name="time_charge" ng-required="item.show===true" style="font-size:13px;border:1px solid #ccc;height:25px; text-align:center;" id="time_chargeID" time-charge ng-if="items[$index].time_charge>=10000">
+                                        <!-- END -->
+
+                                        <!-- TIME CHARGE NORMAL -->
+                                         <input type="text" tabindex="4" class="input-sm" ng-model="items[$index].time_charge" ui-mask="99:99" name="time_charge" ng-required="item.show===true" style="font-size:13px;border:1px solid #ccc;height:25px; text-align:center;" id="time_chargeID" time-charge ng-if="!(items[$index].time_charge>=10000)">
+                                        <!-- END -->
                                     </div>
                                 </td>
                                 <td ng-show="item.show===true" style="text-align:center;width:120px;">
