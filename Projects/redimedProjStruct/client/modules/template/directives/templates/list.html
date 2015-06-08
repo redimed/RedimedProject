@@ -1,27 +1,19 @@
-<div class="panel panel-default">
-	<div class="panel-body">
-		<form enctype="multipart/form-data">
-			<div class="form-group">
-				<label for="fileinput">Import File: </label>
-				<input type="file" file-model="template.inputfile"/>
-				{{template.inputfile}}
-			</div>
-		</form>
-	</div>
-</div>
+<button class="btn btn-success" ng-click="goToAdd()">Add Template</button>
 <table class="mdt-table">
 	<thead>
 		<tr>
 			<th>Name</th>
-			<th>Description</th>
 			<th>Action</th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="l in alert.list">
+		<tr ng-repeat="l in template.list">
 			<td>{{l.name}}</td>
-			<td>{{l.description}}</td>
-			<td></td>
+			<td>
+				<button class="btn btn-success btn-sm" ng-click="goToEdit(l)">Edit</button>
+				<button class="btn btn-success btn-sm" ng-click="goToWrite(l)">Write</button>
+				<button class="btn btn-success btn-sm" ng-click="removeList(l)">Delete</button>
+			</td>
 		</tr>
 	</tbody>
 </table>

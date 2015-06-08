@@ -3527,3 +3527,13 @@ label{
     padding-top: 10px;
 }
 /*phanquocchien patient end*/
+
+.ql-container{
+    background-color: white;
+}
+
+.custom-input-template{
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+}
