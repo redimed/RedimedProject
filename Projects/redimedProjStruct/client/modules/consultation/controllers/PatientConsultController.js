@@ -709,6 +709,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 	        			toastr.success("Start progress success.");
 	        			$scope.startSessionTime=startSessionTime;
 	        			$scope.apptPatient.SESSION_START_TIME=startSessionTime;
+	        			socket.emit("notifyReceptionist");
 	        		}
 	        		else
 	        		{
@@ -776,6 +777,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
         			$scope.startSessionTime='close';
         			$scope.apptPatient.SESSION_END_TIME=endSessionTime;
         			toastr.success("Complete progress success.");
+        			socket.emit("notifyReceptionist");
         		}
         		else
         		{
