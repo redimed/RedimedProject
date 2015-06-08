@@ -1,5 +1,5 @@
 angular.module("app.calendar.mobile.controller",[])
-.controller('rlobCalendarMobileMasterController',function($scope,toastr,$http,$stateParams,Mailto,$cookieStore,$window,rlobService,$timeout,ConfigService){
+.controller('rlobCalendarMobileMasterController',function($modal,$scope,toastr,$http,$stateParams,Mailto,$cookieStore,$window,rlobService,$timeout,ConfigService){
 	$scope.loginInfo = $cookieStore.get('userInfo');
 
     //-------------------------------------------------------------
@@ -173,8 +173,15 @@ angular.module("app.calendar.mobile.controller",[])
             if ($scope.selectedAppointmentCalendar) {
                 rlobService.addApptPatient($scope.patientInfoCalendar.Patient_id,$scope.selectedAppointmentCalendar.CAL_ID).then(function(data){
                     if (data.status == 'success') {
-                        $scope.checkSubmit = false;
-                        toastr.success('Booking Successfully !!!', "Success");
+                        //$scope.checkSubmit = false;
+                        //toastr.success('Booking Successfully !!!', "Success");
+                        var modalInstance = $modal.open({
+                                templateUrl: 'notifyid',
+                                controller: function($scope, $modalInstance){
+                                },
+                                size: 'sm',
+                                backdrop : 'static'
+                            });
                     }
                     else{
                         toastr.error("Booking fail!", "Error");
@@ -188,3 +195,5 @@ angular.module("app.calendar.mobile.controller",[])
         };
     }
 })
+
+
