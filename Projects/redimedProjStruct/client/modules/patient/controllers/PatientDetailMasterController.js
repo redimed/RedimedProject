@@ -272,7 +272,7 @@ angular.module("app.loggedIn.patient.detail.master.controller", [])
                         return;
                     }
                     toastr.success('Updated Patient Successfully !!!', "Success");
-                    //phanquocchien check submit success
+                    //phanquocchien check edit success
                     if($scope.actionCenter && $scope.actionCenter.runWhenFinish)
 					{
 						$scope.actionCenter.runWhenFinish();
@@ -299,6 +299,12 @@ angular.module("app.loggedIn.patient.detail.master.controller", [])
                         return;
                     }else{
                     	toastr.success('Insert Patient Successfully !!!', "Success");
+                    	//phanquocchien check add success
+	                    if($scope.actionCenter && $scope.actionCenter.runWhenFinish)
+						{
+							$scope.actionCenter.runWhenFinish(data.data);
+						}
+						//end
                         if(uploader.queue.length > 0){
                         	uploader.queue[0].formData[0] = {patient_id: data.data.Patient_id, file_name:upload_file_name, editMode:false};
 							uploader.uploadItem(uploader.queue[0]);

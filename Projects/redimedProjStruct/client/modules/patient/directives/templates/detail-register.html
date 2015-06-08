@@ -12,7 +12,6 @@
 
 
 
-
 <style type="text/css">
     .page-content-wrapper .page-content {
         min-height: 552px;
@@ -29,329 +28,401 @@
         border: 1px solid red;
     }
 </style>
-<div class="un-background">
+<div class="row pt_padding_30">
     <form name="patientForm" novalidate>
-    <!-- ACTION -->
-
-        <div class="row un-div-l-r-15">
-            <div class="col-lg-12 col-md-12 un-form">
-                <div class="row">
-                    <div class="col-lg-3 col-md-3 un-div-p-r-5">
-                        <div class="row">
-                            <div class="col-lg-12 col-md-12 un-height-img">
-                                <input id="patient_photo_upload" ng-hide="true" type="file" nv-file-select uploader="uploader" ng-if="!!uploader"/>
-                                <div ng-repeat="item in uploader.queue" ng-if="uploader.queue.length>0">
-                                    <div class="un-canvas" ng-thumb="{ file: item._file, height:257, width:257}">{{item._file.name}}</div>
-                                </div>
-                                <img class="un-img-avartar" src="{{avt_path}}" width="100%" height="100%" ng-show="!uploader || uploader.queue.length===0"/>
-                                
-                                <img class="un-chose-img" src="../theme/assets/icon-2_03.png" ng-click="openUploader()">
-                            </div>
-                        </div>
-                        <div class="row un-form-bg-xam">
-                            <div class="col-lg-12 col-md-12">
-                                <div class="row">
-                                    <div class="col-lg-12 col-md-12 un-div-p-r-0">
-                                        <div ng-class="{'has-error': patientForm.ref.$invalid && isSubmit}">
-                                            <label class="un-label-form-1 un-label-whidth-130">Ref No</label>
-                                            <input name="ref" ng-model="modelObjectMap.Ref" 
-                                            ng-readonly="isMedicare===true" class="form-control un-input-custom" id="ref" float-label>
-                                        </div> 
-                                        <div ng-class="{'has-error': patientForm.medicareno.$invalid && isSubmit}">
-                                            <!-- <label class="un-label-form-1">Medicare No {{isMedicare}}</label> -->
-                                            <label class="un-label-form-1 un-label-whidth-130">Medicare Number</label>
-                                            <input name="medicareno" maxlength="10" 
-                                                ng-model="modelObjectMap.Medicare_no" min="0"
-                                                class="form-control un-input-custom" id="medicareno" float-label ng-readonly="isMedicare===true">
-                                            <!-- ERROR -->
-                                            <!-- <span ng-show="patientForm.medicareno.$invalid && isSubmit">
-                                                <span class="mdt-popover above" ng-show="patientForm.medicareno.$error.number">
-                                                    Medicare No must be number
-                                                </span>
-                                                <span class="mdt-popover above" ng-show="patientForm.medicareno.$error.min">
-                                                    Medicare No must be large than zero
-                                                </span>
-                                            </span> -->
-                                            <!-- ERROR -->
-                                        </div> 
-                                        <div>
-                                            <label class="un-label-form-1 un-label-whidth-130">Medicare Expire</label>
-                                            <input class="form-control un-input-custom"
-                                            ui-date="{dateFormat: 'dd/mm/yy', defaultDate: '01/01/1990', changeMonth: true, changeYear: true}" id="mediexp" 
-                                            name="mediexp" ng-disabled="isMedicare===true"
-                                            ng-model="modelObjectMap.Exp_medicare" float-label>
-                                        </div>
-                                        <label class="un-label-c-white" ng-show="isMedicare===false">Medicare number is not verify</label>
-                                        <label class="un-label-c-white" ng-show="isMedicare===true">Medicare Number is verified</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+        <div class="col-lg-4 col-md-4 pt_div_left">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 un-height-img">
+                    <input id="patient_photo_upload" ng-hide="true" type="file" nv-file-select uploader="uploader" ng-if="!!uploader"/>
+                    <div ng-repeat="item in uploader.queue" ng-if="uploader.queue.length>0">
+                        <div class="un-canvas" ng-thumb="{ file: item._file, height:257, width:257}">{{item._file.name}}</div>
                     </div>
-                    <div class="col-lg-9 col-md-9 un-div-p-r-30">
-                        <div class="row un-bg-black">
-                            <div class="col-lg-8 col-md-8">
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-6 un-form-left">
-                                        <div ng-class="{'has-error': patientForm.title.$invalid && isSubmit}">
-                                            <label class="un-label-form un-label-whidth-85">Title</label>
-                                            <select class="form-control un-input-custom un-select-p" ng-options="title.id as title.name for title in options.titles" 
-                                                name="title" ng-model="modelObjectMap.Title" id="title" float-label>
-                                                <option value="" disabled selected>Title</option>
-                                            </select>
-                                        </div>
-                                        <div ng-class="{'has-error': patientForm.fname.$invalid && isSubmit}">
-                                            <label class="un-label-form un-label-whidth-85">First name *</label>
-                                            <input class="form-control un-input-custom" required type="text" id="fname" float-label name="fname" ng-model="modelObjectMap.First_name" />
-                                            <!-- ERROR -->
-                                            <!-- <span ng-show="patientForm.fname.$invalid && isSubmit">
-                                                <span class="mdt-popover above" ng-show="patientForm.fname.$error.required">
-                                                    First Name is required
-                                                </span>
-                                            </span> -->
-                                            <!-- ERROR -->
-                                        </span>
-                                        </div>                        
-                                        <div ng-class="{'has-error': patientForm.sname.$invalid && isSubmit}">
-                                            <label class="un-label-form un-label-whidth-85">Sur name *</label>
-                                            <input required type="text" id="sname" 
-                                                name="sname" ng-model="modelObjectMap.Sur_name" float-label class="form-control un-input-custom"/>
-                                            <!-- ERROR -->
-                                            <!-- <span ng-show="patientForm.sname.$invalid && isSubmit">
-                                                <span class="mdt-popover above" ng-show="patientForm.sname.$error.required">
-                                                    Sur Name is required
-                                                </span>
-                                            </span> -->
-                                            <!-- ERROR -->
-                                        </div>   
-                                        <div>
-                                            <label class="un-label-form un-label-whidth-85">Middle name</label>
-                                            <input type="text" id="mname" name="mname" ng-model="modelObjectMap.Middle_name" class="form-control un-input-custom" float-label />
-                                        </div>
-                                        <div>
-                                            <label class="un-label-form un-label-whidth-85">Known as</label>
-                                            <input type="text" id="knownas" 
-                                                name="knownas" ng-model="modelObjectMap.Known_as" class="form-control un-input-custom" float-label />
-                                        </div>  
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 un-form-right">
-                                        <div>
-                                            <label class="un-label-form un-label-whidth-97">Occupation</label>
-                                            <input type="text" name="occupation" ng-model="modelObjectMap.Occupation"
-                                                class="form-control un-input-custom" id="occupation" float-label>
-                                        </div>
-                                    </div>
-                                </div>
+                    <img class="un-img-avartar" src="{{avt_path}}" width="100%" height="100%" ng-show="!uploader || uploader.queue.length===0"/>
+                    
+                    <img class="un-chose-img" src="../theme/assets/icon-2_03.png" ng-click="openUploader()">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 pt_boder_bottom">
+                    <div ng-class="{'has-error': patientForm.title.$invalid && isSubmit}">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label pt_padding_left_0 pt_font_size_13">Title</label>
+                            <div class="col-md-8 pt_padding_right_0">
+                                <select class="form-control pt_width_100 pt_height_30" ng-options="title.id as title.name for title in options.titles" name="title" ng-model="modelObjectMap.Title" id="title" float-label>
+                                    <option value="" disabled selected>Title</option>
+                                </select>
                             </div>
-                            <div class="col-lg-4 col-md-4 un-form-add">
-                                <div class="col-lg-12 col-md-12 un-from-add-div">
-                                    <div ng-class="{'has-error': patientForm.address1.$invalid && isSubmit}">
-                                        <label class="un-label-form-2 un-label-whidth-85">Address 1 *</label>
-                                        <input type="text" name="address1" ng-model="modelObjectMap.Address1"
-                                            class="form-control un-input-custom" id="address1" required float-label>
-                                        <!-- ERROR -->
-                                        <!-- <span ng-show="patientForm.address1.$invalid && isSubmit">
-                                            <span style="left: -25px;" class="mdt-popover below" ng-show="patientForm.address1.$error.required">
-                                                Address 1 is required
-                                            </span>
-                                        </span> -->
-                                        <!-- ERROR -->
-                                    </div> 
-                                    <div ng-class="{'has-error': patientForm.address2.$invalid && isSubmit}">
-                                        <label class="un-label-form-2 un-label-whidth-85">Address 2 *</label>
-                                        <input type="text" name="address2" ng-model="modelObjectMap.Address2"
-                                            class="form-control un-input-custom" id="address2" required float-label>
-                                        <!-- ERROR -->
-                                        <!-- <span ng-show="patientForm.address2.$invalid && isSubmit">
-                                            <span style="left: -10px;" class="mdt-popover above" ng-show="patientForm.address2.$error.required">
-                                                Address 2 is required
-                                            </span>
-                                        </span> -->
-                                        <!-- ERROR -->
-                                    </div>
-                                    <div ng-class="{'has-error': patientForm.surburb.$invalid && isSubmit}">
-                                        <label class="un-label-form-2 un-label-whidth-85">Surburb *</label>
-                                        <input type="text" name="surburb" ng-model="modelObjectMap.Surburb"
-                                            class="form-control un-input-custom" id="surburb" required float-label>
-                                        <!-- ERROR -->
-                                        <!-- <span ng-show="patientForm.surburb.$invalid && isSubmit">
-                                            <span class="mdt-popover above" ng-show="patientForm.surburb.$error.required">
-                                                Surburb is required
-                                            </span>
-                                        </span> -->
-                                        <!-- ERROR -->
-                                    </div>
-                                    <div ng-class="{'has-error': patientForm.postcode.$invalid && isSubmit}">
-                                        <label class="un-label-form-2 un-label-whidth-85">Post Code *</label>
-                                        <input type="text" name="postcode" ng-model="modelObjectMap.Post_code"
-                                            class="form-control un-input-custom" id="postcode" required float-label>
-                                        <!-- ERROR -->
-                                        <!-- <span ng-show="patientForm.postcode.$invalid && isSubmit">
-                                            <span class="mdt-popover above" ng-show="patientForm.postcode.$error.required">
-                                                Post Code is required
-                                            </span>
-                                        </span> -->
-                                        <!-- ERROR -->
-                                    </div>
-                                    <div ng-class="{'has-error': patientForm.country.$invalid && isSubmit}">
-                                        <label class="un-label-form-2 un-label-whidth-85">Country *</label>
-                                        <select class="form-control un-input-custom un-select-p" ng-options="country.Country_name as country.Country_name for country in options.countries" 
-                                            name="country" ng-model="modelObjectMap.Country" id="country" float-label required ng-change="loadState()">
-                                            <option value="" disabled selected>Country</option>
-                                        </select>
-                                        <!-- ERROR -->
-                                       <!--  <span ng-show="patientForm.country.$invalid && isSubmit">
-                                            <span class="mdt-popover above" ng-show="patientForm.country.$error.required">
-                                                Country is required
-                                            </span>
-                                        </span> -->
-                                        <!-- ERROR -->
-                                    </div>
-                                    <div ng-class="{'has-error': patientForm.state.$invalid && isSubmit}">
-                                        <label class="un-label-form-2 un-label-whidth-85">State *</label>
-                                        <select class="form-control un-input-custom un-select-p" ng-options="state.id as state.State for state in options.states" 
-                                            name="state" ng-model="modelObjectMap.State" id="state" required float-label>
-                                            <option value="" disabled selected>State</option>
-                                        </select>
-                                        <!-- ERROR -->
-                                        <!-- <span ng-show="patientForm.state.$invalid && isSubmit">
-                                            <span style="bottom: 60px;" class="mdt-popover above" ng-show="patientForm.state.$error.required">
-                                                State is required
-                                            </span>
-                                        </span> -->
-                                        <!-- ERROR -->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row un-bg-xanh">
-                            <div class="col-lg-3 col-md-3">
-                                <span>
-                                    <select class="btn un-select" ng-options="type.Account_id as type.Account_name for type in options.account_types" 
-                                        name="acctype" ng-model="modelObjectMap.Account_type" id="acctype" float-label>
-                                        <option value="" disabled selected>Account Type</option>
-                                    </select>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="row un-bg-trang">
-                            <div class="col-lg-3 col-md-3 un-form-white-p2">
-                                <div>
-                                    <label class="un-label-form-3 un-label-whidth-97">Private Fund</label>
-                                    <select class="form-control un-input-custom-1 un-select-p" ng-options="type.PF_id as type.Fund_name for type in options.private_types" 
-                                        name="privatefund" ng-model="modelObjectMap.Private_fund_id" id="privatefund" float-label>
-                                        <option value="" disabled selected>Private Fund</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-3 un-form-white-p2">
-                                <div ng-class="{'has-error': patientForm.memberno.$invalid && isSubmit}">
-                                    <label class="un-label-form-3 un-label-whidth-130">Membership Number</label>
-                                    <input type="number" name="memberno" 
-                                        ng-model="modelObjectMap.MemberShip_no" min="0"
-                                        class="form-control un-input-custom-1  un-select-p-5" id="memberno" float-label>
-                                </div>
-                                <div ng-class="{'has-error': patientForm.dvano.$invalid && isSubmit}">
-                                    <label class="un-label-form-3 un-label-whidth-130">DVA Number</label>
-                                    <input type="number" name="dvano" 
-                                        ng-model="modelObjectMap.DVA_No" min="0"
-                                        class="form-control un-input-custom-1  un-select-p-5" id="dvano" float-label>
-                                    <!-- ERROR -->
-                                    <!-- <span ng-show="patientForm.dvano.$invalid && isSubmit">
-                                        <span class="mdt-popover above" ng-show="patientForm.dvano.$error.number">
-                                            DVA No must be number
-                                        </span>
-                                        <span class="mdt-popover above" ng-show="patientForm.dvano.$error.min">
-                                            DVA No must be large than zero
-                                        </span>
-                                    </span> -->
-                                    <!-- ERROR -->
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-3 un-form-white-p3">
-                                <div ng-class="{'has-error': patientForm.upi.$invalid && isSubmit}">
-                                    <label class="un-label-form-3 un-label-whidth-97">UPI</label>
-                                    <input type="number" name="upi" 
-                                        ng-model="modelObjectMap.UPI" min="0"
-                                        class="form-control un-input-custom-1  un-select-p-5" id="upi" float-label>
-                                </div>
-                               
-                            </div>
-                                
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-12 col-md-12">
-                    <div class="row un-bg-trang">
-                    <!-- <div class="row">
-                        <label class="un-label-white">More Sub Information</label>
-                    </div> -->
-
-                    <div class="col-lg-2 col-md-2 un-form-white-p">
-                        <div>
-                            <label class="un-label-form-3 un-label-whidth-130">Partner Name</label>
-                            <input type="text" name="partnername" ng-model="modelObjectMap.Partner_name"
-                                class="form-control un-input-custom-1" id="partnername" float-label>
-                        </div>
-                        <div>
-                            <label class="un-label-form-3 un-label-whidth-130">Alias First Name</label>
-                            <input type="text" name="aliasfname" 
-                            ng-model="modelObjectMap.Alias_First_name"
-                            class="form-control un-input-custom-1" id="aliasfname" float-label>
-                        </div>
-                        <div ng-class="{'has-error': patientForm.urno.$invalid && isSubmit}">
-                            <label class="un-label-form-3 un-label-whidth-130">UR No</label>
-                            <input type="number" name="urno" 
-                                ng-model="modelObjectMap.UR_no" min="0"
-                                class="form-control un-input-custom-1  un-select-p-5" id="urno" float-label>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-2 un-form-white-p2">
-                        <div>
-                            <label class="un-label-form-3 un-label-whidth-130">Partner's Date of Birth</label>
-                            <input type="birthday" class="form-control un-input-custom-1" ui-date="{dateFormat: 'dd/mm/yy'}" id="partnerdob" name="partnerdob"
-                            ng-model="modelObjectMap.Partner_DOB" float-label>
-                        </div>
-                        <div>
-                            <label class="un-label-form-3 un-label-whidth-130">Alias Sur Name</label>
-                            <input type="text" name="aliassname" ng-model="modelObjectMap.Alias_Sur_name"
-                                class="form-control un-input-custom-1" id="aliassname" float-label>
-                        </div>
-                        <div>
-                            <label class="un-label-form-3 un-label-whidth-130">Custom</label>
-                            <input type="text" name="custom" 
-                                ng-model="modelObjectMap.Custom"
-                                class="form-control un-input-custom-1" id="custom" float-label>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-2 un-form-white-p2">
-                        <div>
-                            <label class="un-label-form-3 un-label-whidth-130">Partner Occupation</label>
-                            <input type="text" name="partnerocc" 
-                                ng-model="modelObjectMap.Partner_Occupation"
-                                class="form-control un-input-custom-1" id="partnerocc" float-label>
-                        </div>
-                        <div ng-class="{'has-error': patientForm.hccno.$invalid && isSubmit}">
-                            <label class="un-label-form-3 un-label-whidth-130">HCC Pension Number</label>
-                            <input type="number" name="hccno" 
-                                ng-model="modelObjectMap.HCC_Pension_No" min="0"
-                                class="form-control un-input-custom-1  un-select-p-5" id="hccno" float-label>
-                        </div>
-                        <div>
-                            <label class="un-label-form-3 un-label-whidth-97">Pension Expire</label>
-                            <input class="form-control un-input-custom-1" ui-date="{dateFormat: 'dd/mm/yy'}" id="pensionexp" name="pensionexp" ng-model="modelObjectMap.Exp_pension" float-label>
-                        </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 pt_boder_bottom">
+                    <div ng-class="{'has-error': patientForm.fname.$invalid && isSubmit}">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label pt_padding_left_0 pt_font_size_13">First name *</label>
+                            <div class="col-md-8 pt_padding_right_0">
+                                <input class="form-control pt_width_100 pt_height_30" required type="text" id="fname" float-label name="fname" ng-model="modelObjectMap.First_name" />
+                            </div>
+                        </div>  
                     </div>
                 </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 pt_boder_bottom">
+                    <div ng-class="{'has-error': patientForm.sname.$invalid && isSubmit}">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label pt_padding_left_0 pt_font_size_13">Sur name *</label>
+                            <div class="col-md-8 pt_padding_right_0">
+                                <input required type="text" id="sname" name="sname" ng-model="modelObjectMap.Sur_name" float-label class="form-control pt_width_100 pt_height_30"/>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 pt_boder_bottom">
+                    <div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label pt_padding_left_0 pt_font_size_13">Middle name</label>
+                            <div class="col-md-8 pt_padding_right_0">
+                                <input type="text" id="mname" name="mname" ng-model="modelObjectMap.Middle_name" class="form-control pt_width_100 pt_height_30" float-label />
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 pt_boder_bottom">
+                    <div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label pt_padding_left_0 pt_font_size_13">Known as</label>
+                            <div class="col-md-8 pt_padding_right_0">
+                                <input type="text" id="knownas"name="knownas" ng-model="modelObjectMap.Known_as" class="form-control pt_width_100 pt_height_30" float-label />
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 pt_boder_bottom">
+                    <div ng-class="{'has-error': patientForm.address1.$invalid && isSubmit}">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label pt_padding_left_0 pt_font_size_13">Address 1 *</label>
+                            <div class="col-md-8 pt_padding_right_0">
+                                <input type="text" name="address1" ng-model="modelObjectMap.Address1" class="form-control pt_width_100 pt_height_30" id="address1" required float-label>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 pt_boder_bottom">
+                    <div ng-class="{'has-error': patientForm.address2.$invalid && isSubmit}">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label pt_padding_left_0 pt_font_size_13">Address 2 *</label>
+                            <div class="col-md-8 pt_padding_right_0">
+                                <input type="text" name="address2" ng-model="modelObjectMap.Address2" class="form-control pt_width_100 pt_height_30" id="address2" required float-label>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 pt_div_center">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 pt_boder_bottom">
+                    <div ng-class="{'has-error': patientForm.surburb.$invalid && isSubmit}">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label pt_padding_left_0 pt_font_size_13">Surburb *</label>
+                            <div class="col-md-8 pt_padding_right_0">
+                                <input type="text" name="surburb" ng-model="modelObjectMap.Surburb" class="form-control pt_width_100 pt_height_30" id="surburb" required float-label>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 pt_boder_bottom">
+                    <div ng-class="{'has-error': patientForm.state.$invalid && isSubmit}">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label pt_padding_left_0 pt_font_size_13">State *</label>
+                            <div class="col-md-8 pt_padding_right_0">
+                                <select class="form-control pt_width_100 pt_height_30" ng-options="state.id as state.State for state in options.states" name="state" ng-model="modelObjectMap.State" id="state" required float-label>
+                                    <option value="" disabled selected>State</option>
+                                </select>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 pt_boder_bottom">
+                    <div ng-class="{'has-error': patientForm.country.$invalid && isSubmit}">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label pt_padding_left_0 pt_font_size_13">Country *</label>
+                            <div class="col-md-8 pt_padding_right_0">
+                                <select class="form-control pt_width_100 pt_height_30" ng-options="country.Country_name as country.Country_name for country in options.countries" 
+                                    name="country" ng-model="modelObjectMap.Country" id="country" float-label required ng-change="loadState()">
+                                    <option value="" disabled selected>Country</option>
+                                </select>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 pt_boder_bottom">
+                    <div ng-class="{'has-error': patientForm.postcode.$invalid && isSubmit}">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label pt_padding_left_0 pt_font_size_13">Post Code *</label>
+                            <div class="col-md-8 pt_padding_right_0">
+                                <input type="text" name="postcode" ng-model="modelObjectMap.Post_code" class="form-control pt_width_100 pt_height_30" id="postcode" required float-label>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 pt_boder_bottom">
+                    <div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label pt_padding_left_0 pt_font_size_13">Account Type</label>
+                            <div class="col-md-8 pt_padding_right_0">
+                                <select class="form-control pt_width_100 pt_height_30" ng-options="type.Account_id as type.Account_name for type in options.account_types" 
+                                    name="acctype" ng-model="modelObjectMap.Account_type" id="acctype" float-label>
+                                    <option value="" disabled selected>Account Type</option>
+                                </select>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 pt_boder_bottom">
+                    <div ng-class="{'has-error': patientForm.accseft.$invalid && isSubmit}"> 
+                        <div class="form-group">
+                            <label class="col-md-4 control-label pt_padding_left_0 pt_font_size_13">Account Holder</label>
+                            <div class="col-md-8 pt_padding_right_0">
+                                <input type="number" name="accseft" ng-model="modelObjectMap.Account_Seft" min="0" class="form-control pt_width_100 pt_height_30" id="accseft" float-label>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 pt_boder_bottom">
+                    <div ng-class="{'has-error': patientForm.medicareno.$invalid && isSubmit}">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label pt_padding_left_0 pt_font_size_13">Medicare No</label>
+                            <div class="col-md-8 pt_padding_right_0">
+                                <input name="medicareno" maxlength="10" ng-model="modelObjectMap.Medicare_no" min="0"class="form-control pt_width_100 pt_height_30" id="medicareno" float-label ng-readonly="isMedicare===true">
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 pt_boder_bottom">
+                    <div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label pt_padding_left_0 pt_font_size_13">Expire Medicare</label>
+                            <div class="col-md-8 pt_padding_right_0">
+                                <input class="form-control pt_width_100 pt_height_30" ui-date="{dateFormat: 'dd/mm/yy', defaultDate: '01/01/1990', changeMonth: true, changeYear: true}" id="mediexp" name="mediexp" ng-disabled="isMedicare===true" ng-model="modelObjectMap.Exp_medicare" float-label>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 pt_boder_bottom">
+                    <div ng-class="{'has-error': patientForm.memberno.$invalid && isSubmit}">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label pt_padding_left_0 pt_font_size_13">Membership No</label>
+                            <div class="col-md-8 pt_padding_right_0">
+                                <input type="number" name="memberno" ng-model="modelObjectMap.MemberShip_no" min="0"class="form-control pt_width_100 pt_height_30" id="memberno" float-label>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 pt_boder_bottom">
+                    <div ng-class="{'has-error': patientForm.dvano.$invalid && isSubmit}">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label pt_padding_left_0 pt_font_size_13">DVA No</label>
+                            <div class="col-md-8 pt_padding_right_0">
+                                <input type="number" name="dvano" ng-model="modelObjectMap.DVA_No" min="0" class="form-control pt_width_100 pt_height_30" id="dvano" float-label>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 pt_boder_bottom">
+                    <div ng-class="{'has-error': patientForm.hccno.$invalid && isSubmit}">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label pt_padding_left_0 pt_font_size_13">HCC/Pension No</label>
+                            <div class="col-md-8 pt_padding_right_0">
+                                <input type="number" name="hccno" ng-model="modelObjectMap.HCC_Pension_No" min="0"
+                                class="form-control pt_width_100 pt_height_30" id="hccno" float-label>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 pt_boder_bottom">
+                    <div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label pt_padding_left_0 pt_font_size_13">Expire</label>
+                            <div class="col-md-8 pt_padding_right_0">
+                                <input class="form-control pt_width_100 pt_height_30" ui-date="{dateFormat: 'dd/mm/yy'}" id="pensionexp" name="pensionexp" ng-model="modelObjectMap.Exp_pension" float-label>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 pt_div_right">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 pt_boder_bottom">
+                    <div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label pt_padding_left_0 pt_font_size_13">Health Fund</label>
+                            <div class="col-md-8 pt_padding_right_0">
+                                <select class="form-control pt_width_100 pt_height_30" ng-options="type.PF_id as type.Fund_name for type in options.private_types" name="privatefund" ng-model="modelObjectMap.Private_fund_id" id="privatefund" float-label>
+                                    <option value="" disabled selected>Health Fund</option>
+                                </select>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 pt_boder_bottom">
+                    <div ng-class="{'has-error': patientForm.upi.$invalid && isSubmit}">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label pt_padding_left_0 pt_font_size_13">UPI</label>
+                            <div class="col-md-8 pt_padding_right_0">
+                                <input type="number" name="upi" ng-model="modelObjectMap.UPI" min="0" class="form-control pt_width_100 pt_height_30" id="upi" float-label>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 pt_boder_bottom">
+                    <div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label pt_padding_left_0 pt_font_size_13">Occupation</label>
+                            <div class="col-md-8 pt_padding_right_0">
+                                <input type="text" name="occupation" ng-model="modelObjectMap.Occupation" class="form-control pt_width_100 pt_height_30" id="occupation" float-label>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 pt_boder_bottom">
+                    <div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label pt_padding_left_0 pt_font_size_13">Partner's Name</label>
+                            <div class="col-md-8 pt_padding_right_0">
+                                <input type="text" name="partnername" ng-model="modelObjectMap.Partner_name"
+                                class="form-control pt_width_100 pt_height_30" id="partnername" float-label>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 pt_boder_bottom">
+                    <div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label pt_padding_left_0 pt_font_size_13">Partner's DOB</label>
+                            <div class="col-md-8 pt_padding_right_0">
+                                <input type="birthday" class="form-control pt_width_100 pt_height_30" ui-date="{dateFormat: 'dd/mm/yy'}" id="partnerdob" name="partnerdob" ng-model="modelObjectMap.Partner_DOB" float-label>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 pt_boder_bottom">
+                    <div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label pt_padding_left_0 pt_font_size_13">Partner Occupation</label>
+                            <div class="col-md-8 pt_padding_right_0">
+                                <input type="text" name="partnerocc" ng-model="modelObjectMap.Partner_Occupation"
+                                class="form-control pt_width_100 pt_height_30" id="partnerocc" float-label>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 pt_boder_bottom">
+                    <div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label pt_padding_left_0 pt_font_size_13">Alias First Name</label>
+                            <div class="col-md-8 pt_padding_right_0">
+                                <input type="text" name="aliasfname" ng-model="modelObjectMap.Alias_First_name"
+                                class="form-control pt_width_100 pt_height_30" id="aliasfname" float-label>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 pt_boder_bottom">
+                    <div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label pt_padding_left_0 pt_font_size_13">Alias Sur Name</label>
+                            <div class="col-md-8 pt_padding_right_0">
+                                <input type="text" name="aliassname" ng-model="modelObjectMap.Alias_Sur_name"
+                                class="form-control pt_width_100 pt_height_30" id="aliassname" float-label>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 pt_boder_bottom">
+                    <div ng-class="{'has-error': patientForm.urno.$invalid && isSubmit}">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label pt_padding_left_0 pt_font_size_13">UR No</label>
+                            <div class="col-md-8 pt_padding_right_0">
+                                <input type="number" name="urno" ng-model="modelObjectMap.UR_no" min="0"
+                                class="form-control pt_width_100 pt_height_30" id="urno" float-label>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 pt_boder_bottom">
+                    <div ng-class="{'has-error': patientForm.urno.$invalid && isSubmit}">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label pt_padding_left_0 pt_font_size_13">Custom</label>
+                            <div class="col-md-8 pt_padding_right_0">
+                                <input type="text" name="custom" ng-model="modelObjectMap.Custom"
+                                class="form-control pt_width_100 pt_height_30" id="custom" float-label>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-xs-12 pt_submit">
+                <div style="margin: auto;display: table;" ng-if="params.permission.create !== false" class="row">
+                    <img src="../theme/un/paient-dESIGN_07.png" ng-click="buttonclick()">
+                </div>
+                <button class="btn pull-right un-submit" ng-if="params.permission.edit !== false" ng-click="buttonclick()"></i>&nbsp EDIT</button>
+                <button class="btn pull-right un-submit" ng-if="isClose" ng-click="closePopup()">&nbsp CLOSE</button>
                 </div>
             </div>
         </div>
     </form>
 </div>
-<div class="row">
-    <div class="col-lg-12 col-md-12">
-    <button class="btn pull-right un-submit" ng-if="params.permission.create !== false" ng-click="buttonclick()">&nbsp SAVE</button>
-    <button class="btn pull-right un-submit" ng-if="params.permission.edit !== false" ng-click="buttonclick()"></i>&nbsp EDIT</button>
-    <button class="btn pull-right un-submit" ng-if="isClose" ng-click="closePopup()">&nbsp CLOSE</button>
-    </div>
-</div>
+

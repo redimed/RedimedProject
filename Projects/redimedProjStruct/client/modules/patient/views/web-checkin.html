@@ -1,82 +1,79 @@
 <style type="text/css">
-  .mdt-table th {
-    background-image: linear-gradient(#F7F8F8, #B4B6B8);
-    color: #5A5B5A;
-    border: none !important;
-    height:45px !important;
-    font-size: 18px !important;
-    border: rgb(30, 57, 69) !important;
+  .mdt-table th:first-child{
+    border-left: none;
+    box-shadow: none;
   }
-  .table thead tr th {
-      font-size: 16px;
-      font-weight: 400;
-    }
+  .mdt-table th{
+    background-color: #CDCFD1;
+    color: black;
+    text-shadow:none;
+    border: none !important;
+  }
+  .mdt-table th:last-child {
+   box-shadow: none; 
+  }
 </style>
-<div>
-    <div class="pt_page_content">
-      <form name="sysservicesForm" novalidate>
-        <div>
-          <div class="row pt-border-m">
-          <div class="col-md-4 pt-margin-top-m">
-            <label class="pt-label-m" style="text-align:center;">First Name</label>
-            <input style="width: 390px;">
-          </div>
-           <div class="col-md-4 pt-margin-top-m">
-            <label class="pt-label-m" style="text-align:center;">Last Name</label>
-            <input style="width: 390px;">
-          </div>
-           <div class="col-md-4 pt-margin-top-m">
-             <label class="pt-label-m" style="text-align:center;">DOB</label>
-            <input style="width: 390px;">
-          </div>    
-          <!--<div class="col-md-4">
-              <div class="field pt-margin-top-m">
-                <label for="patient_FN">First name </label>
-                <input type="text" placeholder="First name" name="patient_FN" ng-model="patientSearch.First_name" class="form-control" id="patient_FN" float-label/>
+<div class="row pt_header_box_shadow">
+    <img class="pt_header_img_logo" src="./theme/un/LOGO_30.png">
+    <img class="pt_header_img" src="./theme/un/2_17.png">
+</div>
+<div class="row">
+  <div class="col-lg-12 col-md-12 col-xs-12">
+    <div class="pt_contein">
+      <div class="portlet-body">
+        <form name="sysservicesForm" class="form-horizontal" novalidate style="margin-bottom: 0">
+          <div class="form-body pt_contein_input">
+            <div class="row">
+              <div class="col-md-4 col-sm-4">
+                <div class="form-group pt_margin_bottom_0">
+                  <label class="col-md-3 control-label">First name</label>
+                  <div class="col-md-9">
+                    <input type="text" name="patient_FN" ng-model="patientSearch.First_name" class="form-control" id="patient_FN" float-label/>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-4">
+                <div class="form-group pt_margin_bottom_0">
+                  <label class="col-md-3 control-label">Last name</label>
+                  <div class="col-md-9">
+                    <input type="text" name="patient_LN" ng-model="patientSearch.Sur_name" class="form-control" id="patient_LN" float-label/>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-4">
+                <div class="form-group pt_margin_bottom_0">
+                  <label class="col-md-4 control-label">Date Of Birth</label>
+                  <div class="col-md-8">
+                    <input name="patient_DOB" ng-model="patientSearch.DOB" class="form-control" id="patient_DOB" float-label ui-date="{dateFormat: 'dd/mm/yy', changeYear: true,changeMonth: true,yearRange: '1900:-0'}"/>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="col-md-4">
-              <span class="field pt-margin-top-m">
-                <label for="patient_LN">Last name</label>
-                <input type="text" placeholder="Last name" name="patient_LN" ng-model="patientSearch.Sur_name" class="form-control" id="patient_LN" float-label/>
-              </span>
-            </div>
-            <div class="col-md-4">
-              <span class="field pt-margin-top-m">
-                <label for="patient_DOB">Date Of Birth</label>
-                <input placeholder="Date Of Birth" name="patient_DOB" ng-model="patientSearch.DOB" class="form-control" id="patient_DOB" float-label ui-date="{dateFormat: 'dd/mm/yy', changeYear: true,changeMonth: true,yearRange: '1900:-0'}" readonly="readonly"/>
-              </span>
-            </div>-->
           </div>
-        </div>
-        <!-- ACTION -->
-        <div class="row" style="margin-top: 14px;">
-            <div class="col-md-6 col-sm-6 has-error">
-            </div>
-            <div class="col-md-3 col-sm-3">
-            </div>
-            <div class="col-md-3 col-sm-3">
-              <div class="pt-button-search">
-                <!-- <img ng-click="searchClick()" src="./theme/un/bonha_21.png"></img> -->
-                    <i class="fa fa-search pt-i-search" ng-click="searchClick()"> Search</i>
-               
+          <!-- ACTION -->
+          <button style="display:none" class="btn btn-block green" ng-click="searchClick()">
+                    <i class="fa fa-search"></i>  Search
+          </button>
+          <div class="row pt_contein_buttom">
+              <div class="row pt_padding_right_0">
+                <div class="col-lg-12 col-md-12 col-xs-12">
+                  <img class="pull-right" src="../theme/un/paient-dESIGN_03.png" ng-click="resetClick()">
+                  <img class="pull-right" src="../theme/un/paient-dESIGN_10.png" ng-click="searchClick()">
+                </div>
               </div>
-              <div class="pt-button-reset">
-                <!-- <img src="./theme/un/bonha_21.png" ng-click="resetClick()"> -->
-                    <i class="fa fa-refresh pt-i-search" ng-click="resetClick()"> Reset</i>
-              </div>
-            </div>
-        </div>
-        <!-- END ACTION -->
-      </form>
-    	
-      <div class="row">
-        <div class="col-md-6 col-sm-6">
-            <my-data-table options="patients.options" rowclass="patients.class" numrows="10" ></my-data-table>
-        </div>
-        <div class="col-md-6 col-sm-6">
-            <my-data-table options="appointments.options" rowclass="appointments.class" numrows="10" ></my-data-table>
+          </div>
+          <!-- END ACTION -->
+        </form>
+        
+        <div class="row">
+          <div class="col-md-6 col-sm-6">
+              <my-data-table options="patients.options" rowclass="patients.class" numrows="10" ></my-data-table>
+          </div>
+          <div class="col-md-6 col-sm-6">
+              <my-data-table options="appointments.options" rowclass="appointments.class" numrows="10" ></my-data-table>
+          </div>
         </div>
       </div>
     </div>
+  </div>
 </div>

@@ -1,5 +1,5 @@
 angular.module("app.webpatient.controller",[])
-.controller('WebPatientController',function($scope,ConfigService){
+.controller('WebPatientController',function($scope,ConfigService,$state){
      // USE FOR BOOKING
     $scope.modelObject = {
         Title: 'Mr',
@@ -38,6 +38,7 @@ angular.module("app.webpatient.controller",[])
         Phone_ext: null
     };
     $scope.options = {};
+
     var loadOptionsApi = function(){
         ConfigService.countries_option().then(function(response){
             if(response.status === 'success')
@@ -67,6 +68,16 @@ angular.module("app.webpatient.controller",[])
         permission: {
             create: true,
             edit: false
+        }
+    }
+    $scope.actionCenter={
+        runWhenFinish:function(patienInfo){
+            if (patienInfo) {
+                $scope.patientInfoCalendar = patienInfo;
+                console.log($scope.patientInfoCalendar);
+                $state.go('webpatient.booking');
+                console.log(patienInfo);
+            };
         }
     }
 })
