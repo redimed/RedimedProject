@@ -168,7 +168,7 @@ angular.module("app.calendar.mobile.controller",[])
     }   
 
     $scope.submitCalendar = function(){
-        if ($scope.patientInfoCalendar) {
+        if ($scope.patientInfoCalendar.Patient_id) {
             if ($scope.selectedAppointmentCalendar) {
                 rlobService.addApptPatient($scope.patientInfoCalendar.Patient_id,$scope.selectedAppointmentCalendar.CAL_ID).then(function(data){
                     if (data.status == 'success') {

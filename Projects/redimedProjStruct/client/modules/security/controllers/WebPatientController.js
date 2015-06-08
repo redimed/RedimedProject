@@ -70,6 +70,7 @@ angular.module("app.webpatient.controller",[])
             edit: false
         }
     }
+    $scope.patientInfoCalendar = {};
     $scope.actionCenter={
         runWhenFinish:function(patienInfo){
             if (patienInfo) {
