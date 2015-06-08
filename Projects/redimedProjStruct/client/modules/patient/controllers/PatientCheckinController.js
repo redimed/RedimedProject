@@ -39,6 +39,10 @@ angular.module('app.loggedIn.patient.checkin.controller',[])
                         {type:'button', btnlabel:'Appointment', 
                             btnfn:function(item){
                                 $scope.appointments.show(item.Patient_id);
+                                if ($scope.patientInfoCalendar) {
+                                    $scope.patientInfoCalendar = item;
+                                    $scope.bottomNewBooking = true;
+                                };
                             }
                         }
                     ],
