@@ -7,6 +7,22 @@ var kiss=require('./kissUtilsController');
 var moment=require('moment');
 
 module.exports = {
+    postselectInsurer:function(req,res){
+        var postData = req.body.data;
+        var sql = knex
+                .select('*')
+                .from('cln_insurers')
+                .where('cln_insurers.id', postData)
+                .toString();
+
+        db.sequelize.query(sql)
+        .success(function(data){
+            res.json({data: data});
+        })
+        .error(function(error){
+            res.json(500, {error: error,sql:sql});
+        })
+    },
     postDetail: function(req, res){
         var postData = req.body.data;
 

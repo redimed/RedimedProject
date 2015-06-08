@@ -45,7 +45,16 @@ angular.module("app.loggedIn.doctor.home.controller",[])
 	 * modify: tannv.dts@gmail.com
 	 */
 	$scope.goToApptDetail = function (item) {
-		var fromDate = moment(($scope.selectDate.start).format("YYYY-MM-DD"));
+		console.log('this is item',item);
+		if(!item.CAL_ID || !item.Patient_id) {
+			toastr.error('Unexpected error!','Error!')
+			return;
+		}
+  		// $state.go("loggedIn.patient.appointment", {patient_id: item.Patient_id, cal_id: item.CAL_ID});// tan frame
+  		$state.go("loggedIn.patient.consult", {patient_id: item.Patient_id, cal_id: item.CAL_ID});
+
+		// tannv.dts@gmail.com add and frame  		
+		/*var fromDate = moment(($scope.selectDate.start).format("YYYY-MM-DD"));
 		var toDate = moment(($scope.selectDate.end).format("YYYY-MM-DD"));
 		var doctor_id = $scope.doctorInfo.doctor_id;
 		DoctorService.getApptWorkInProgress(doctor_id, fromDate._i, toDate._i)
@@ -66,12 +75,7 @@ angular.module("app.loggedIn.doctor.home.controller",[])
 					});
 					return;
 				}
-				console.log('this is item',item);
-				if(!item.CAL_ID || !item.Patient_id) {
-					toastr.error('Unexpected error!','Error!')
-					return;
-				}
-		  		$state.go("loggedIn.patient.appointment", {patient_id: item.Patient_id, cal_id: item.CAL_ID});
+				
 			}
 			else
 			{
@@ -79,7 +83,7 @@ angular.module("app.loggedIn.doctor.home.controller",[])
 			}
 		},function(err){
 			toastr.error("Error when check info.","Error!");
-		})
+		})*/
     }
 
 

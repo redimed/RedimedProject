@@ -65,10 +65,31 @@ form i.icon.error {
 }
 .searchform{
     z-index: 9999;
-    position: absolute;
-    width: 100%;
+    width: 95%;
     height: auto;
     max-height: 300px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 10px auto;
+    background-color: #0169ff;
+    box-shadow: 2px 2px 11px -1px rgba(0,0,0,0.4) inset;
+    border: none;
+    padding: 0px;
+}
+.child-ion-scroll-searchform {
+    border-bottom: 2px solid rgba(0, 93, 200, .5);
+    padding: 10px 10px 0px 20px;
+    text-align: left;
+}
+.child-ion-scroll-searchform h2 {
+    color:#f3c90a;
+    font-weight: bold;
+    line-height: 20px;
+}
+.child-ion-scroll-searchform h4 {
+    color:white;
+    line-height: 20px;
 }
 .itemsearch{
     width: 100%;
@@ -203,86 +224,36 @@ form i.icon.error {
     margin-right: 100px;
     padding: 0 5px 0 5px;
 }
-/*btn emergency*/
+
 .btn-emer {
-    background-color: #FF5E3A !important;
-    width: 100%;
+    width: 40%;
+    color: #000000;
+    border-radius: 15px;
+    border: 2px solid #f5f5f5;
+    line-height: 30px;
+    min-height: 35px;
 }
-.btn-emer i {
-    color: #f5f5f5;
-    font-size: 17px !important;
-    position: absolute;
-    top: 5px;
-    left: 0;
-    right: 0;
-    margin: auto;
+.btn-emer:active, .btn-emer:focus, .btn-emer:hover  {
+    border: 2px solid #fff;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7) inset;
+    color: inherit;
 }
-.btn-emer span {
-    color: #f5f5f5;
-    font-size: 15px;
-    position: absolute;
-    top: 10px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-}
-/**/
 
-
-/*btn model*/
-.btn-model-body {
-    background-color: #444 !important;
-    width: 100%;
-}
-.btn-model-body i {
-    color: #f5f5f5;
-    font-size: 17px !important;
-    position: absolute;
-    top: 5px;
-    left: 0;
-    right: 0;
-    margin: auto;
-}
-.btn-model-body span {
-    color: #f5f5f5;
-    font-size: 15px;
-    position: absolute;
-    top: 12px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-    margin-top: 4px;
-}
-/**/
-
-
-/*btn non-emergency*/
 .btn-non-emer {
-    background-color: #34AADC !important;
-    width: 100%;
+    width: 40%;
+    color: #000000;
+    border-radius: 15px;
+    border: 2px solid #fbca01;
+    line-height: 30px;
+    min-height: 35px;
+    background-color: #fbca01;
 }
-.btn-non-emer i {
-    color: #f5f5f5;
-    font-size: 17px !important;
-    position: absolute;
-    top: 5px;
-    left: 0;
-    right: 0;
-    margin: auto;
+.btn-non-emer:active, .btn-non-emer:focus, .btn-non-emer:hover   {
+    border: 2px solid #fff;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7) inset;
+    background-color: #fbca01;
+    color: inherit;
 }
-.btn-non-emer span {
-    color: #f5f5f5;
-    font-size: 15px;
-    position: absolute;
-    top: 12px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-}
-/**/
 
 
 /*custom ion-scroll success injury*/
@@ -938,6 +909,7 @@ form i.icon.error {
 .label-custom-field {
     border: none;
     padding-bottom: 0;
+    color: white
 }
 .custom-hr {
     width: 100%;
@@ -1359,24 +1331,23 @@ input[type=text], input[type=password], input[type=email], input[type=url], inpu
 
 
 .tabs {
-    position: relative;
-    height: 48px;
-    background-color: #FFF;
-    margin: 0 auto;
-    width: 100%;
-    white-space: nowrap; }
+   position: relative;
+  height: 48px;
+  background-color: #015190;
+  margin: 0 auto;
+  width: 100%;
+  white-space: nowrap;
+  background-image: none;
+}
 .tabs li.tab {
     display: block;
-    float: left;
-    text-align: center;
-    background-color: #fff;
-    line-height: 48px;
-    height: 48px;
-    padding: 0 20px;
-    margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    width: 15%; }
+  float: left;
+  text-align: left;
+  line-height: 48px;
+  height: 48px;
+  margin: 0;
+  width: 15%;
+}
 .tabs li.tab a {
     color: #ee6e73;
     display: block;
@@ -1397,7 +1368,13 @@ input[type=text], input[type=password], input[type=email], input[type=url], inpu
     will-change: left, right; }
 
 ul.tabs li.tab {
-    padding: 0; }
+    padding: 0;
+    -webkit-box-shadow: 0px -4px 12px 0px rgba(54, 50, 50, 0.84);
+-moz-box-shadow:    0px -4px 12px 0px rgba(54, 50, 50, 0.84);
+box-shadow:         0px -4px 12px 0px rgba(54, 50, 50, 0.84); 
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+}
 
 .margin-bot0 {
     margin-bottom: 0 !important;
@@ -2101,7 +2078,7 @@ ion-scroll[direction=y] {
 }
 
 .active-li {
-    border-bottom: 1px solid #ee6e73;
+    background-color: #f3c90a;
     margin-right: 39px;
     width: 0px;
     -webkit-transition: 0.5s ease;
@@ -2196,7 +2173,9 @@ input[disabled], input[readonly]:not(.cloned-text-input), select[disabled], sele
     background-color:#015190;
 }
 .actionBar{
-    float: left;width: 100%;height: 40px;
+    float: left;
+    width: 100%;
+    padding: 0 10px 0 10px;
 }
 .customrow {
     color: white;
@@ -2232,6 +2211,7 @@ input[disabled], input[readonly]:not(.cloned-text-input), select[disabled], sele
 }
 .btn-bgImage:focus {
     background-color: inherit;
+    box-shadow: none !important;
 }
 .btn-close-bgImage {
     position: absolute;
@@ -2248,6 +2228,7 @@ input[disabled], input[readonly]:not(.cloned-text-input), select[disabled], sele
     color: #ffffff;
     background-color: #c8a100;
     border: 1px solid #191400;
+    box-shadow: none !important;
 }
 .btn-bgImage-popUp {
     background: url("../img/1c_07.png") no-repeat center transparent;
@@ -2257,6 +2238,7 @@ input[disabled], input[readonly]:not(.cloned-text-input), select[disabled], sele
 }
 .btn-bgImage-popUp:focus {
     background-color: transparent;
+    box-shadow: none !important;
 }
 .btn-cancel-popUp {
     background: url("../img/4_05.png") no-repeat center transparent;
@@ -2267,5 +2249,6 @@ input[disabled], input[readonly]:not(.cloned-text-input), select[disabled], sele
 }
 .btn-cancel-popUp:focus {
     background-color: inherit;
+    box-shadow: none !important;
 }
 

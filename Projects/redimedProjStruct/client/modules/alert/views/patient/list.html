@@ -2,10 +2,15 @@
  <label class="un-label-popup-header un-bg-label-333333">Alerts</label>
   <div class="un-padding-top-bottom-10 ">
     <div class="un-div-content un-bgWhite-boxshadow-bottom un-padding-10">
-      <button class="btn un-btn-red un-btn-position" ng-click="alert.dialog.select()">Select Alert</button>
-     <alert-patient-list patient-id="alert.Patient_id" limit="alert.limit" reload="alert.reload" 
-        permission="{edit: true, remove: true}" cal-id="alert.CAL_ID">
-    </alert-patient-list>
+      <button class="un-button un-bgBlack pull-right un-margin-bottom-6px" ng-click="alert.dialog.select()">Select Alert</button>
+      <div class="row">
+        <div class="col-lg-12">
+          <alert-patient-list patient-id="alert.Patient_id" limit="alert.limit" reload="alert.reload" 
+              permission="{edit: true, remove: true}" cal-id="alert.CAL_ID">
+          </alert-patient-list>
+        </div>
+      </div>
+     
     </div>
   </div>
 </div>

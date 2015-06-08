@@ -1598,7 +1598,7 @@ table.timetable-table td:last-child {
     padding-top: 5px;
     position: relative;
     position: absolute;
-    bottom: -10px;
+    bottom: 8px;
 }
 .un-icon-down{
     position: relative;
@@ -1791,9 +1791,9 @@ table.timetable-table td:last-child {
     margin-top: -20px;
 }
 .un-select-sex{
-    width: 20px;
-    position: relative;
-    top: 18px;
+    width: 78%;
+    height: 20px;
+    padding: 0px !important;
     color: black;
 }
 .un_page_panel {
@@ -2577,7 +2577,7 @@ label{
 }
 .un-mdt-button{
     margin-right: 0; 
-    padding: 3px 10px 2px 10px;
+    padding: 2px 10px 0px 10px;
     margin-left: 10px !important;
     outline: none;
 }
@@ -3267,6 +3267,7 @@ label{
 /*style cho input form*/
 .un_tn_form_control{
     height: 20px;
+    padding: 0px 0px 0px 5px !important;
 }
 .un_tn_form_control_gray{
     color: black!important;
@@ -3375,7 +3376,9 @@ label{
     top: 25;
     left: 0;
 }
-
+.un_tn_row_violet{
+    background-color: rgb(224, 154, 213);
+}
 .un_tn_row_red{
     background-color: rgb(255, 169, 169);
 }
@@ -3385,8 +3388,14 @@ label{
 .un_tn_row_green{
     background-color: rgb(144, 218, 144);
 }
+.un_tn_row_blue{
+    background-color: #d9edf7;
+}
 .un_tn_row_blank{
     
+}
+.un_tn_row_hover_violet{
+    background-color: rgba(224, 154, 213, 0.47);
 }
 .un_tn_row_hover_red:hover{
     background-color: rgb(253, 208, 208);
@@ -3396,6 +3405,9 @@ label{
 }
 .un_tn_row_hover_green:hover{
     background-color:rgba(144, 218, 144, 0.57);
+}
+.un_tn_row_hover_blue:hover{
+    background-color: rgba(217, 237, 247, 0.56);
 }
 .un_tn_row_hover_blank:hover{
     background-color:rgb(213, 213, 213);
@@ -3419,7 +3431,9 @@ label{
     height:20px;
     float:left;
 }
-
+.un_tn_legend_node_violet{
+    background-color: rgb(224, 154, 213);
+}
 .un_tn_legend_node_red{
     background-color: rgb(255, 169, 169);
 }
@@ -3429,10 +3443,97 @@ label{
 .un_tn_legend_node_green{
     background-color: rgb(144, 218, 144);
 }
+.un_tn_legend_node_blue{
+    background-color: #d9edf7;
+}
 .un_tn_legend_node_blank{
     border:1px solid #333333;
 }
 /*---------------------------------------------*/
 /*---------------------------------------------*/
 /*TAN PANEL DEFINITION END*/
+/*phanquocchien patient star*/
+.pt_member_logo{
+    width: 296px;
+    margin: auto;
+}
+.pt_margin_bottom_60{
+    margin-bottom: 60px;
+}
+.pt_margin_bottom_30{
+    margin-bottom: 30px;
+}
+.pt_container{
+    width: 100%;
+    min-height: 100%;
+    background-color:#11B1CF;
+}
+.pt_button_right{
+     float: right;
+}
+.pt_button_left{
+    float: left;
+}
+.pt_page_content{
+    border: 3px solid #FFFFFF;
+    padding: 100px 50px; 
+    background: #1E3945;
+    border-radius: 25px !important;
+}
+.pt-button-search{
+     background: url('../theme/un/bonha_21.png') no-repeat;
+    width: 130px;
+    height: 50px;
+    float: left;
+}
+.pt-button-reset{
+     background: url('../theme/un/bonha_21.png') no-repeat;
+    width: 130px;
+    height: 50px;
+    float: left;
+}
+.pt-i-search{
+      margin-top: 12px;
+      margin-left: 20px;
+      font-size: 20px;
+}
+.pt-border-m{
+    border-radius: 5px !important;
+    border: 1px dotted rgb(253, 254, 255);
+}
+.pt-margin-top-m{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: -10px;
+    margin-right: -1px;
+}
+.pt-label-m{
+    width: 140px; 
+    color: white;
+}
+.pt_header_box_shadow{
+    -moz-box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
+    -webkit-box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
+    background-color: #ffffff;
+}
+.pt_header_img_logo{
+    float: left;
+    padding-left: 30px;
+    padding-top: 30px;
+}
+.pt_header_img{
+    float: right;
+    padding-top: 10px;
+}
+/*phanquocchien patient end*/
 
+.ql-container{
+    background-color: white;
+}
+
+.custom-input-template{
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+}

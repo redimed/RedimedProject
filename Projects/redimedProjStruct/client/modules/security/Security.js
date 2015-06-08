@@ -1,6 +1,7 @@
 angular.module("app.security",[
     "app.security.controller",
-    "app.security.services"
+    "app.security.services",
+    "app.webpatient.controller"
 ])
 
 .config(function($stateProvider){
@@ -73,6 +74,7 @@ angular.module("app.security",[
          }
      }
     })
+
     .state("security.rlobSponsor", {
      url: "/rlob-sponsor",
      views: {
@@ -104,4 +106,33 @@ angular.module("app.security",[
         }
     })
     //END REDIRECT    
+    //phanquocchien.c1109g@gmail.com
+    .state("security.portalPatient", {
+        url: "/portal-patient",
+        views: {
+            "main-content": {
+                    templateUrl: "/modules/security/views/portal-patient.html"
+                }
+            }
+    }) 
+    .state("webpatient", {
+        abstract: false,
+        views: {
+            "root": {
+                templateUrl: "modules/security/views/web-patient.html",
+                controller: "WebPatientController"
+            }
+        }
+    })  
+    .state("webpatient.checkin", {
+        url: "/portal-patient/web-checkin",
+        templateUrl: "/modules/patient/views/web-checkin.html",
+        controller:'PatientCheckinController'
+    })
+    .state("webpatient.register", {
+        url: "/portal-patient/register",
+        templateUrl: "/modules/patient/views/patient-register.html",
+        controller:'WebPatientController'
+    })
+    //chien end
 })

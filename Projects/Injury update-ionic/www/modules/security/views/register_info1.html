@@ -12,9 +12,10 @@
                 </div>
                 <div style="width: 100%;height: 49px;float: left;position: absolute;">
                     <span style="float: right;padding-right: 2%;padding-top: 30px;font-weight: 600;color: white;">SIGN UP</span>
-                     <button class="button button-clear button-positive ion-arrow-left-c" style="text-decoration: underline;color: white;letter-spacing: 0.15em;border: none;float: left;margin-left: 130px;margin-top: 15px;" ui-sref="security.login">
-                  
-                    </button>
+                </div>
+                <div class="actionBar">
+                    <a class="button button-icon color-fff" ui-sref="security.register.info2" style="float:right"><i class="icon ion-arrow-right-c"></i></a>
+                    <a class="button button-icon color-fff" ui-sref="security.login" style="float:left"><i class="icon ion-arrow-left-c"></i></a>
                 </div>
             </div>
                
@@ -39,7 +40,7 @@
                                ng-class="{'has-error-input-pass': userInfo.password !== userInfo.rePass && current}"  class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
                     </label>
                     <div class="bd-bottom"></div>
-                    <label class="item-input ">
+                    <label class="item-input">
                         <span class=" span-input-color">Title</span>
                         <select ng-required="true" ng-model="userInfo.title" name="Title" class="select-custom" 
                                 ng-options="row.name as row.name for row in titleIndex">
@@ -66,12 +67,12 @@
                         <span class=" span-input-color">Mobile Phone</span>
                         <input type="tel" name="phone" ng-model="userInfo.phone" required maxlength="11"  class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
                     </label>
-                         <div class="bd-bottom"></div>
+                    <div class="bd-bottom"></div>
                     <label class="item-input label-custom-field">
                         <span class=" span-input-color">Email</span>
                         <input type="email" name="email" ng-model="userInfo.email" required ng-keyup="validEmail()"  class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
                     </label>
-                     <div class="bd-bottom"></div>
+                    <div class="bd-bottom"></div>
                     <label  class="item-input ">
                         <span class=" span-input-color">Gender</span>
                         <select ng-required="true" ng-model="userInfo.sex" name="Sex" class="select-custom"
@@ -79,21 +80,28 @@
                             <option value="">--Select Sex--</option>
                         </select>
                     </label>
-                     <div class="bd-bottom"></div>
+                    <div class="bd-bottom"></div>
                     <label  class="item-input label-custom-field">
                         <span class=" span-input-color">Birthday</span>
                         <input type="date" name="birthday" ng-model="userInfo.dob" required  class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
                     </label>
-
-                     <div class="bd-bottom"></div>
+                    <div class="bd-bottom"></div>
+                    <label class="item-input label-custom-field">
+                        <span class="input-label span-input-color">Know as</span>
+                        <input type="text" ng-model="userInfo.Known_as" name="Known_as" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white" />
+                    </label>
+                    <div class="bd-bottom"></div>
+                    <label class="item-input label-custom-field" >
+                        <span class="input-label span-input-color">Address</span>
+                        <input ng-required="true" type="text" ng-model="userInfo.Address1" name="Address1" ng-class="{'has-error':isSubmit && first.Address1.$invalid}" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
+                    </label>
+                    <div class="bd-bottom"></div>
+                    <label class="item-input label-custom-field">
+                        <span class="input-label span-input-color">Address 2</span>
+                        <input type="text" ng-model="userInfo.Address2" name="Address2" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
+                    </label>
+                    <div class="bd-bottom"></div>
                 </form>
-
-                <button class="button btn-login-custom button-full" style="margin-top: 50px;"
-                        ng-disabled="!userInfo.user_name || !userInfo.password || !userInfo.title || !userInfo.firstName
-                        || !userInfo.surName || !userInfo.middleName || !userInfo.email || !userInfo.phone || !userInfo.dob || !userInfo.sex" ng-click="submitRegister()">
-                    <h4>SIGN UP</h4>
-                </button>
-               
             </div>
         </div>
 

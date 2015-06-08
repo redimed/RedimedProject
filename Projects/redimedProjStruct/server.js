@@ -18,6 +18,7 @@ var useragent = require('express-useragent');
 var _ = require('lodash-node');
 var http = require('http');
 var https = require('https');
+var busboy = require('connect-busboy');
 
 
 
@@ -70,7 +71,7 @@ app.use(express.static(clientDir));
 app.get('/',function(req, res) {
     res.sendfile(path.join(clientDir, 'login.html'))
 });
-
+app.use(busboy());
 
 app.use('/img/patient/avt', express.static(uploadedFile));
 app.use('/document/fa/images', express.static(documentImage));

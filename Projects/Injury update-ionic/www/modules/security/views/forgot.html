@@ -10,24 +10,25 @@
             <div class="modal-forgotpass">
                 <a class="button btn-close-bgImage" ui-sref="security.login"
                    style="min-width: 35px; min-height: 35px; padding: 0px; line-height: 30px;">x</a>
-                <div class="child-modalforgot">
+                <div class="sweetAlert">
+                    <div class="iconPopup warning" style="border-color: dodgerblue; margin: 10px auto;">
+                        <span class="body" style="background-color: dodgerblue;"></span>
+                        <span class="dot" style="background-color: dodgerblue;"></span>
+                    </div>
+                </div>
                     <form novalidate name="formForgot">
-                        <div class="sweetAlert">
-                            <div class="iconPopup warning" style="border-color: dodgerblue; margin-top: -40px;">
-                                <span class="body" style="background-color: dodgerblue;"></span>
-                                <span class="dot" style="background-color: dodgerblue;"></span>
-                            </div>
-                        </div>
-                        <h1 style="color: #ffffff; margin: 25px 0 25px 0;">Problems signing in?</h1>
-                        <input ng-required="true" style="padding-left: 20px; height: 45px;" class="input-mail-forgot" type="email" ng-model="objForgotpass.email" name="input"
+                        <h1 style="color: #ffffff; margin: 15px 0 15px 0;">Problems signing in?</h1>
+                        <input ng-required="true" style="padding-left: 20px; height: 45px;" class="input-mail-forgot" type="email"
+                               ng-model="objForgotpass.email" name="input"
                                placeholder="Enter your email address!" />
                     </form>
-                    <div style="width: 100%; margin-top: 45px;">
-                        <button class="button btn-bgImage" ng-disabled="formForgot.input.$error.email || objForgotpass.email == null" ng-click="submitResetPassword()">
+                    <div style="width: 100%; margin: 1% auto;">
+                        <button class="button btn-bgImage"
+                                ng-disabled="formForgot.input.$error.email || objForgotpass.email == null"
+                                ng-click="submitResetPassword()">
                             <h4>Request Password Reset</h4>
                         </button>
                     </div>
-                </div>
             </div>
         </div>
     </div>

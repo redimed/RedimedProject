@@ -320,6 +320,32 @@ module.exports = {
      * ----------------------------------------------------------------------
      * ----------------------------------------------------------------------
      */
+    beforeStartSession:function(req,res)
+    {
+        var fHeader="ConsultationController->beforeStartSession";
+        var functionCode="FN006";
+        var doctorId=kiss.checkData(req.body.doctorId)?req.body.doctorId:'';
+        if(!kiss.checkListData(doctorId))
+        {
+            kiss.exlog(fHeader,"Loi data truyen den");
+            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,"TN001")});
+            return;
+        }
+        var sql=
+            " SELECT patient.*,calendar.`FROM_TIME`,apptPatient.appt_status,apptPatient.CAL_ID           "+
+            " FROM `cln_appt_patients` apptPatient                                                       "+
+            " INNER JOIN `cln_appointment_calendar` calendar ON apptPatient.`CAL_ID`=calendar.`CAL_ID`   "+
+            " INNER JOIN `cln_patients` patient ON `apptPatient`.`Patient_id`=patient.`Patient_id`       "+
+            " WHERE calendar.`DOCTOR_ID`=? AND `apptPatient`.`appt_status`=?                             ";
+
+        kiss.executeQuery(req,sql,[doctorId,invoiceUtil.apptStatus.workInProgress.value],function(rows){
+            res.json({status:'success',data:rows});
+        },function(err){
+            kiss.exlog(fHeader,"Loi truy van select du lieu",err);
+            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,"TN002")});
+        },true);
+    },
+
     startSession:function(req,res)
     {
         var fHeader="ConsultationController->startSession";
@@ -327,15 +353,16 @@ module.exports = {
         var postData=kiss.checkData(req.body.data)?req.body.data:{};
         var calId=kiss.checkData(postData.calId)?postData.calId:'';
         var patientId=kiss.checkData(postData.patientId)?postData.patientId:'';
-        if(!kiss.checkListData(calId,patientId))
+        var startSessionTime=kiss.checkData(postData.startSessionTime)?postData.startSessionTime:'';
+        if(!kiss.checkListData(calId,patientId,startSessionTime))
         {
             kiss.exlog(fHeader,"Loi data truyen den");
             res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
             return;
         }
 
-        var sql="UPDATE `cln_appt_patients` SET appt_status=? WHERE `Patient_id`=? AND `CAL_ID`=? AND appt_status<>?";
-        var params=[invoiceUtil.apptStatus.workInProgress.value,patientId,calId,invoiceUtil.apptStatus.cancelled.value];
+        var sql="UPDATE `cln_appt_patients` SET appt_status=?,SESSION_START_TIME=? WHERE `Patient_id`=? AND `CAL_ID`=? AND appt_status<>?";
+        var params=[invoiceUtil.apptStatus.workInProgress.value,startSessionTime,patientId,calId,invoiceUtil.apptStatus.cancelled.value];
         kiss.executeQuery(req,sql,params,function(result){
             if(result.affectedRows>0)
             {
@@ -391,15 +418,16 @@ module.exports = {
         var postData=kiss.checkData(req.body.data)?req.body.data:{};
         var calId=kiss.checkData(postData.calId)?postData.calId:'';
         var patientId=kiss.checkData(postData.patientId)?postData.patientId:'';
-        if(!kiss.checkListData(calId,patientId))
+        var endSessionTime=kiss.checkData(postData.endSessionTime)?postData.endSessionTime:'';
+        if(!kiss.checkListData(calId,patientId,endSessionTime))
         {
             kiss.exlog(fHeader,"Loi data truyen den");
             res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
             return;
         }
 
-        var sql="UPDATE `cln_appt_patients` SET appt_status=? WHERE `Patient_id`=? AND `CAL_ID`=? AND appt_status=?";
-        var params=[invoiceUtil.apptStatus.completed.value,patientId,calId,invoiceUtil.apptStatus.workInProgress.value];
+        var sql="UPDATE `cln_appt_patients` SET appt_status=?,SESSION_END_TIME=? WHERE `Patient_id`=? AND `CAL_ID`=? AND appt_status=?";
+        var params=[invoiceUtil.apptStatus.completed.value,endSessionTime,patientId,calId,invoiceUtil.apptStatus.workInProgress.value];
         kiss.executeQuery(req,sql,params,function(result){
             if(result.affectedRows>0)
             {
@@ -433,7 +461,11 @@ module.exports = {
             res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
             return;
         }
-        var sql="SELECT * FROM `cln_appt_patients` WHERE `Patient_id`=? AND `CAL_ID`=? AND `appt_status`<>?";
+        var sql=
+            " SELECT `apptPatient`.*,calendar.`DOCTOR_ID`                                               "+
+            " FROM `cln_appt_patients` apptPatient                                                      "+
+            " INNER JOIN `cln_appointment_calendar` calendar ON apptPatient.`CAL_ID`=calendar.`CAL_ID`  "+
+            " WHERE apptPatient.`Patient_id`=? AND apptPatient.`CAL_ID`=? AND apptPatient.`appt_status`<>?; ";
         var params=[patientId,calId,invoiceUtil.apptStatus.cancelled.value];
         kiss.executeQuery(req,sql,params,function(rows){
             if(rows.length>0)

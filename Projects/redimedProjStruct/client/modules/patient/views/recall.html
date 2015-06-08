@@ -3,11 +3,15 @@
     <div class="un-padding-top-bottom-10">
         <div class="un-div-content un-bgWhite-boxshadow-bottom un-padding-10">
             <div class="pull-right navbar-right">
-                <button  type="button" class="btn un-btn-red un-btn-position" ng-click="addForm.open()">
+                <button  type="button" class="un-button un-bgBlack pull-right un-margin-bottom-6px" ng-click="addForm.open()">
                     New Recall
                 </button>
             </div>
-            <my-data-table numrows="20" options="recall_opt" rowclick="rowClick"></my-data-table>
+            <div class="row">
+                <div class="col-lg-12">
+                    <my-data-table numrows="20" options="recall_opt" rowclick="rowClick"></my-data-table>
+                </div>
+            </div>
         </div>
     </div>
 </div>

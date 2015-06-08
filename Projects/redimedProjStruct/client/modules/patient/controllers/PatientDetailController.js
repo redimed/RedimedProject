@@ -4,7 +4,9 @@ angular.module("app.loggedIn.patient.detail.controller", [])
 	//init
 	$scope.current_patient = {};
 	//chien set bar null
-    $scope.patientBarVer.version='null';
+	if ($scope.patientBarVer) {
+    	$scope.patientBarVer.version='null';
+	};
 	
 	$scope.actionCenter={
 		runWhenFinish:function(){

@@ -14,8 +14,8 @@
 
                 </div>
                 <div style="width: 100%;height: 49px;float: left;position: absolute;">
-                    <span style="float: right;padding-right: 2%;padding-top: 30px;font-weight: 600;color: white;">Read NFC</span>
-                </div>a
+                    <span style="float: right;padding-right: 10%;padding-top: 30px;font-weight: 600;color: white;">Read NFC</span>
+                </div>
             </div>
                <div class="actionBar">
                     <button menu-toggle="left" class="button button-icon icon ion-navicon " style="color:#fff;float:left;"></button>
@@ -59,8 +59,8 @@
                 <div class="col">
                     <ul class="tabs" style="border-top: none; margin-top: -35px;">
                         <li class="tab col" ng-repeat="tab in tabs"
-                            ng-click="onClickTab(tab)">
-                            <a href style="text-decoration: none; width: 40%; margin: auto;" ng-class="{'active-li':isActiveTab(tab.url)}">
+                            ng-click="onClickTab(tab)" ng-class="{'active-li':isActiveTab(tab.url)}">
+                            <a href style="text-decoration: none; width: 40%; margin: auto;color:white" >
                                 {{tab.title}}
                             </a>
                         </li>
@@ -281,19 +281,19 @@
             <div class="row">
                 <div class="col" style="text-align: right">
                     <a class="button button-positive" ng-click="updateWorker(testData)">
-                        <i class="icon ion-ios7-refresh-empty"></i>
+                        <i class="icon ion-edit"></i>
                     </a>
                 </div>
 
                 <div  style="text-align: left">
                     <a class="button button-positive" ng-click="writeNewNFC(testData)">
-                        <i class="fa fa-tag"></i>
+                        <i class="icon ion-ios-pricetag-outline"></i>
                     </a>
                 </div>
 
                 <div class="col" style="text-align: left">
                     <a class="button button-positive" ng-click="Inapp(testData)">
-                        <i class="fa fa-share-square-o"></i>
+                        <i class="icon ion-link"></i>
                     </a>
                 </div>
             </div>

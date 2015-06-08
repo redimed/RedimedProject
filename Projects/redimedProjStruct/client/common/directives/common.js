@@ -44,7 +44,6 @@ angular.module("app.directive.common", [
   };
 })
 
-
 .directive('accessibleForm', function () {
     return {
         restrict: 'A',

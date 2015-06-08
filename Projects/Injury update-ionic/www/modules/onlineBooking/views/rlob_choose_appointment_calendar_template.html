@@ -52,21 +52,21 @@
                     <div ng-if="appointmentsFilter.length<=0" style="text-align: center">
                         <h4>No Results</h4>
                     </div>
-                    <div ng-repeat="location in appointmentsFilter">
-                            <div class="col-md-2" style="width: 800px">
-                                <i class="fa fa-map-marker fa-2x " style="color:#b71c1c"></i>
-                                <span class="text-primary" style="margin: 12px">{{location.SITE_NAME}}</span>
+                    <div ng-repeat="location in appointmentsFilter" style="text-align: left;color:white">
+                            <div class="col-md-2" >
+                                <i class="icon ion-android-pin " style="width: 800px;margin: 0px 0px 0px 10px;"></i>
+                                <span class="text-primary" style="margin-left: 8px;">{{location.SITE_NAME}}</span>
                             </div></br>
                             <div ng-repeat="doctor in location.DOCTOR_ITEMS">
                                         <div class="col-md-2" style="width: 1050px">
-                                            <i class="fa fa-user-md fa-2x " style="color:#b71c1c"></i>
-                                            <span class="text-primary" style="margin: 12px">{{doctor.DOCTOR_NAME}}</span>
+                                            <i class="icon ion-medkit" style="width: 800px;margin: 0px 0px 0px 10px;"></i>
+                                            <span class="text-primary" style="margin-left: 8px;">{{doctor.DOCTOR_NAME}}</span>
                                         </div>
                                         </br>
                                         <div class="col-md-2">
-                                            <i class="fa fa-calendar fa-2x " style="float: left; color:#b71c1c" ></i>
-                                                <div class="col s10" style="margin-left:16px">
-                                                        <div class="grid-example col s12 m6" style="border-bottom: 1px solid #dcdcdc;margin-bottom: 10px">
+                                            <i class="icon ion-android-time" style="float: left;margin-left: 10px;margin-top: 12px;" ></i>
+                                                <div class="col s10" style="">
+                                                        <div class="grid-example col s12 m6" style="margin-bottom: 10px">
                                                            <a ng-repeat="appointment in doctor.APPOINTMENT_ITEMS"
                                                                class="btn btn-sm blue filter-submit margin-bottom "
                                                                style="margin-left: 10px;margin-bottom: 10px;"

@@ -84,7 +84,9 @@ angular.module("app.loggedIn", [
     'app.loggedIn.alert',
     'app.loggedIn.outreferral',
     // 'app.loggedIn.problem',
-    'app.loggedIn.fadefine'
+    'app.loggedIn.fadefine',
+
+    'app.loggedIn.template'
 ])
 
 .config(function($stateProvider) {
