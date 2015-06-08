@@ -147,10 +147,16 @@ module.exports = {
 					console.log(err);
 				})
 		}
-		else if(state.toLowerCase() == 'cancel')
+		else 
 		{
+			var status = null;
+			if(state.toLowerCase() == 'cancel')
+				status = 'Cancelled';
+			if(state.toLowerCase() == 'undo')
+				status = toAppt.appt_status;
+
 			db.sequelize.query("UPDATE cln_appt_patients SET CAL_ID = ?, appt_status = ? WHERE id = ?",
-						null,{raw:true},[toAppt.CAL_ID, 'Cancelled', fromAppt.appt_id])
+						null,{raw:true},[toAppt.CAL_ID, status, fromAppt.appt_id])
 				.success(function(){
 					res.json({status:'success'});
 				})
@@ -159,5 +165,6 @@ module.exports = {
 					console.log(err);
 				})
 		}
+		
 	}
 }

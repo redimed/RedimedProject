@@ -140,6 +140,11 @@
 	            <div class="caption">
 	                <span class="caption-subject uppercase">In Progress</span>
 	            </div>
+	            <div class="actions">
+	            	<button class="btn btn-md grey" ng-click="undoAction()" ng-disabled="undoArr.length == 0">
+	            		<i class="fa fa-undo"></i> Undo
+	            	</button>
+	            </div>
 	        </div>
 	        <div class="portlet-body">
 	        	<div ng-if="progressAppt.length == 0 && currAppt.length == 0">

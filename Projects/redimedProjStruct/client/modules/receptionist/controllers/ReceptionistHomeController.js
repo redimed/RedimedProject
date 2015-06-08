@@ -8,6 +8,8 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 	$scope.completeAppt = [];
 	$scope.currAppt = [];
 
+	$scope.undoArr = [];
+
 	$scope.fromAppt = {};
 	$scope.startCheckedTime = null;
 
@@ -95,6 +97,8 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 			        	}
 			        })
 			        getAppt($scope.apptDate,$scope.apptSite);
+			        $scope.undoArr = [];
+			        $scope.undoArr.push({from: toAppt, to:$scope.fromAppt, status:'progress'});
 	        	}
 	        	else
 	        	{
@@ -103,6 +107,34 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 	        });
 
 		}
+	};
+
+	$scope.undoAction = function(){
+		if($scope.undoArr.length > 0)
+		{
+			swal({
+	            title: "Are You Sure To Undo Action?",
+	            type: "warning",
+	            showCancelButton: true,
+	            confirmButtonColor: "#DD6B55",
+	            confirmButtonText: "Yes",
+	            closeOnConfirm: true,
+	            closeOnCancel: true
+	        }, function() {
+	        	var item = $scope.undoArr[0];
+				ReceptionistService.updateAppointment(item.from, item.to, 'undo').then(function(rs){
+		        	if(rs.status == 'success')
+		        	{
+		        		toastr.success("Undo Action Success!");
+		        		$scope.undoArr = [];
+		        	}
+		        })
+		        getAppt($scope.apptDate,$scope.apptSite);
+
+	        });
+			
+		}
+		
 	};
 
 })
