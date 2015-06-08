@@ -6,6 +6,7 @@ module.exports = {
 	appointmentByDate: function(req,res){
 		var date = req.body.date;
 		var site = req.body.siteId;
+
 		db.sequelize.query("SELECT d.NAME AS doctor_name,a.id AS appt_id, a.`appt_status` ,c.`CAL_ID`, c.`DOCTOR_ID`,c.`SITE_ID`,p.`Patient_id`,c.`FROM_TIME`,c.`TO_TIME`, "+
 							"p.`Title`,p.`First_name`,p.`Sur_name`,p.`Middle_name`, p.`DOB`,co.`Company_name`,p.avatar "+
 							"FROM `cln_appointment_calendar` c "+
@@ -21,8 +22,14 @@ module.exports = {
 					var apptUpcoming = [];
 					var apptProgress = [];
 					var apptComplete = [];
+					var currTime = [];
 
-					for (var i = 0; i < data.length; i++) {
+					var resultUpcoming = [];
+					var resultProgress = [];
+					var resultCurr = [];
+
+					for (var i = 0; i < data.length; i++) 
+					{
 						var item = data[i];
 						var status;
 						var arrName = [];
@@ -36,23 +43,31 @@ module.exports = {
 						   && (status == 'checked in' || status == 'booking' || status == 'cancelled' || item.appt_status == null))
 							apptUpcoming.push(item);
 					
-						if(item.appt_id == null || (item.appt_id != null && status == 'work in progress'))
-							apptProgress.push(item);
-					
 						if(item.appt_id != null && status == 'completed')
 							apptComplete.push(item);
-						
-					};
-					
-					var resultUpcoming = _.chain(apptUpcoming)
-						.groupBy("FROM_TIME")
-						.pairs()
-						.map(function(currentItem){
-					        return _.object(_.zip(["time", "appointment"], currentItem));
-						})
-						.value();
 
-					var resultProgress = _.chain(apptProgress)
+						if(moment(moment().format('YYYY-MM-DD')).isSame(date))
+						{
+							var duration = moment.duration("01:00:00");
+							var fromTime = moment.utc(item.FROM_TIME).format('HH:mm:ss');
+							var time1 = moment().subtract(duration).format('HH:mm:ss');
+							var time2 = moment().format('HH:mm:ss');
+
+							if(fromTime >= time1 && fromTime <= time2)
+							{
+								if(item.appt_id != null && (status == 'work in progress' || status == 'pre-progress'))
+									apptProgress.push(item);
+								else
+								{
+									if(currTime.length <= 0)
+										currTime.push(item);
+								}
+							}
+						
+						}
+					};
+
+					resultCurr = _.chain(currTime)
 						.groupBy("doctor_name")
 						.pairs()
 						.map(function(currentItem){
@@ -60,11 +75,27 @@ module.exports = {
 						})
 						.value();
 
-					res.json({status:'success',
-							  upcoming:resultUpcoming,
-							  progress:resultProgress,
-							  completed:apptComplete})
+					resultProgress = _.chain(apptProgress)
+						.groupBy("doctor_name")
+						.pairs()
+						.map(function(currentItem){
+					        return _.object(_.zip(["doctor", "appointment"], currentItem));
+						})
+						.value();
 
+					resultUpcoming = _.chain(apptUpcoming)
+						.groupBy("FROM_TIME")
+						.pairs()
+						.map(function(currentItem){
+					        return _.object(_.zip(["time", "appointment"], currentItem));
+						})
+						.value();
+
+					res.json({status:'success',
+							  upcoming: resultUpcoming,
+							  progress: resultProgress,
+							  curr: resultCurr,
+							  completed: apptComplete});
 				}
 				else
 					res.json({status:'error'})
@@ -91,20 +122,23 @@ module.exports = {
 		var toAppt = req.body.toAppt;
 		var state = req.body.state;
 
+		var status = null;
+
 		if(state.toLowerCase() == 'progress')
-		{
-			db.sequelize.query("UPDATE cln_appt_patients SET CAL_ID = ?, appt_status = 'Work In Progress' WHERE id = ?",
-								null,{raw:true},[toAppt.CAL_ID, fromAppt.appt_id])
-				.success(function(){
-					res.json({status:'success'});
-				})
-				.error(function(err){
-					res.json({status:'error'});
-					console.log(err);
-				})
-		}
+			status = 'Pre-progress';
+		if(state.toLowerCase() == 'checked')
+			status = 'Checked In';
+		if(state.toLowerCase() == 'cancel')
+			status = 'Cancelled';
 
-		
-
+		db.sequelize.query("UPDATE cln_appt_patients SET CAL_ID = ?, appt_status = ? WHERE id = ?",
+						null,{raw:true},[toAppt.CAL_ID, status, fromAppt.appt_id])
+		.success(function(){
+			res.json({status:'success'});
+		})
+		.error(function(err){
+			res.json({status:'error'});
+			console.log(err);
+		})
 	}
 }

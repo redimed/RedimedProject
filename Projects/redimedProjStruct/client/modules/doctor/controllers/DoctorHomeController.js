@@ -112,7 +112,7 @@ angular.module("app.loggedIn.doctor.home.controller",[])
 		getDoctorInfo();
 	}
 	//tannv.dts@gmail.com
-	var getDoctorInfo=function()
+	function getDoctorInfo()
 	{
 		$scope.doctorInfo = $cookieStore.get('doctorInfo');
         console.log("Doctor Info: ",$scope.doctorInfo);
