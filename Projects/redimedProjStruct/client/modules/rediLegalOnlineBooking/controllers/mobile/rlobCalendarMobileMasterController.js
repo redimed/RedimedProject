@@ -159,6 +159,7 @@ angular.module("app.calendar.mobile.controller",[])
 
     $scope.updateAppoinmentsList();
     $scope.CAL_ID = null;
+    $scope.checkSubmit = true;
     $scope.selectAppointmentCalendar=function(appointmentCalendar)
     {
         $scope.selectedAppointmentCalendar=appointmentCalendar;
@@ -172,6 +173,7 @@ angular.module("app.calendar.mobile.controller",[])
             if ($scope.selectedAppointmentCalendar) {
                 rlobService.addApptPatient($scope.patientInfoCalendar.Patient_id,$scope.selectedAppointmentCalendar.CAL_ID).then(function(data){
                     if (data.status == 'success') {
+                        $scope.checkSubmit = false;
                         toastr.success('Booking Successfully !!!', "Success");
                     }
                     else{

@@ -1,7 +1,6 @@
 angular.module("app.loggedIn.doctor.home.controller",[])
 
-.controller("DoctorHomeController", function($scope, $state, $cookieStore, DoctorService, ConfigService, localStorageService, toastr, moment,$modal){
-
+.controller("DoctorHomeController", function($scope,socket, $state, $cookieStore, DoctorService, ConfigService, localStorageService, toastr, moment,$modal){
 	var nowtime = moment();
 
 	$scope.selectDate = moment().range(moment().subtract(1, 'days'), moment());
@@ -91,30 +90,6 @@ angular.module("app.loggedIn.doctor.home.controller",[])
 		$scope.loadCalendar();
 	}
 
-    /**
-	 * tannv.dts@gmail.com
-	 * Kiem tra doctor Info co ton tai chua
-	 */
-	$scope.userInfo=$cookieStore.get('userInfo');
-	if($cookieStore.get('doctorInfo') && $cookieStore.get('doctorInfo').doctor_id)
-	{
-		DoctorService.getByUserId($scope.userInfo.id).then(function (data) {
-	        if (data) 
-	        {
-	            $cookieStore.put('doctorInfo', {
-	                doctor_id: data.doctor_id,
-	                NAME: data.NAME,
-	                Provider_no: data.Provider_no,
-	                CLINICAL_DEPT_ID: data.CLINICAL_DEPT_ID
-	            });
-	            getDoctorInfo();
-	        }
-	    });
-	}
-	else
-	{
-		getDoctorInfo();
-	}
 	//tannv.dts@gmail.com
 	function getDoctorInfo()
 	{
@@ -125,4 +100,35 @@ angular.module("app.loggedIn.doctor.home.controller",[])
 		}
         init();
 	}
+
+    /**
+	 * tannv.dts@gmail.com
+	 * Kiem tra doctor Info co ton tai chua
+	 */
+	$scope.checkIsDoctor=function(){
+		$scope.userInfo=$cookieStore.get('userInfo');
+		if($cookieStore.get('doctorInfo') && $cookieStore.get('doctorInfo').doctor_id)
+		{
+			getDoctorInfo();
+		}
+		else
+		{
+			DoctorService.getByUserId($scope.userInfo.id).then(function (data) {
+		        if (data) 
+		        {
+		            $cookieStore.put('doctorInfo', {
+		                doctor_id: data.doctor_id,
+		                NAME: data.NAME,
+		                Provider_no: data.Provider_no,
+		                CLINICAL_DEPT_ID: data.CLINICAL_DEPT_ID
+		            });
+		            getDoctorInfo();
+		        }
+		    });
+		}
+	}
+	$scope.checkIsDoctor();
+	socket.on('receiveNotifyDoctor', function() {
+        $scope.checkIsDoctor();
+    })
 })
