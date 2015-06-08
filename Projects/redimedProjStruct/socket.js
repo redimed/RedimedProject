@@ -21,6 +21,26 @@ module.exports = function(io,cookie,cookieParser) {
         var source = header['user-agent'];
         ua = useragent.parse(source);
 
+        socket.on('notifyDoctor',function(doctorId){
+            db.Doctor.find({where:{doctor_id: doctorId}},{raw:true})
+                .success(function(doctor){
+                    if(doctor.User_id)
+                    {
+                        db.User.find({where:{id: doctor.User_id}},{raw:true})
+                            .success(function(user){
+                                if(user.socket)
+                                    io.to(user.socket).emit('receiveNotifyDoctor');
+                            })
+                            .error(function(err){
+                                console.log(err);
+                            })
+                    }
+                })
+                .error(function(err){
+                    console.log(err);
+                })
+        })
+
         socket.on("shareImage",function(id,callUser){
             db.User.find({where:{id: callUser}},{raw:true})
                 .success(function(user){

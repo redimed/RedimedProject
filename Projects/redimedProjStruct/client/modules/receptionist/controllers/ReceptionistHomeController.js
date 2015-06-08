@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.receptionist.home.controller", [])
 
-.controller("ReceptionistHomeController", function ($scope,$filter, $state, $timeout, $modal, $cookieStore, toastr, ConfigService, DoctorService, ReceptionistService, PatientService, localStorageService, sysServiceService) {
+.controller("ReceptionistHomeController", function ($scope,$filter, $state, $timeout, $modal,socket, $cookieStore, toastr, ConfigService, DoctorService, ReceptionistService, PatientService, localStorageService, sysServiceService) {
 	$scope.apptDate = new Date();
 	$scope.apptSite = null;
 	$scope.upcomingAppt = [];
@@ -9,6 +9,7 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 	$scope.currAppt = [];
 
 	$scope.fromAppt = {};
+	$scope.startCheckedTime = null;
 
 	ReceptionistService.getSite().then(function(rs){
 		if(rs.status == 'success')
@@ -63,6 +64,7 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 	        		toastr.success("Update Appointment Success!");
 	        })
 	        getAppt($scope.apptDate,$scope.apptSite);
+
         });
 	}
 
@@ -87,7 +89,10 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 	        	{
 	        		ReceptionistService.updateAppointment($scope.fromAppt, toAppt, 'progress').then(function(rs){
 			        	if(rs.status == 'success')
+			        	{
 			        		toastr.success("Update Appointment Success!");
+			        		socket.emit('notifyDoctor',toAppt.DOCTOR_ID);
+			        	}
 			        })
 			        getAppt($scope.apptDate,$scope.apptSite);
 	        	}

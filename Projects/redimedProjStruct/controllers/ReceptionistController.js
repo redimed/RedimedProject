@@ -7,7 +7,7 @@ module.exports = {
 		var date = req.body.date;
 		var site = req.body.siteId;
 
-		db.sequelize.query("SELECT d.NAME AS doctor_name,a.id AS appt_id, a.`appt_status` ,c.`CAL_ID`, c.`DOCTOR_ID`,c.`SITE_ID`,p.`Patient_id`,c.`FROM_TIME`,c.`TO_TIME`, "+
+		db.sequelize.query("SELECT d.NAME AS doctor_name,a.id AS appt_id, a.`appt_status` ,c.`CAL_ID`, c.`DOCTOR_ID`,c.`SITE_ID`,p.`Patient_id`,c.`FROM_TIME`,c.`TO_TIME`,a.checkedin_start_time, "+
 							"p.`Title`,p.`First_name`,p.`Sur_name`,p.`Middle_name`, p.`DOB`,co.`Company_name`,p.avatar "+
 							"FROM `cln_appointment_calendar` c "+
 							"INNER JOIN doctors d ON c.`DOCTOR_ID` = d.`doctor_id` "+
@@ -35,6 +35,7 @@ module.exports = {
 						var arrName = [];
 						arrName.push(item.Title,item.First_name,item.Sur_name,item.Middle_name);
 						item.patient_name = arrName.join(' ');
+						item.checkedin_start_time = moment.utc(item.checkedin_start_time).format('YYYY-MM-DD HH:mm:ss');
 
 						if(item.appt_status != null)
 							status = item.appt_status.toLowerCase();
@@ -122,23 +123,41 @@ module.exports = {
 		var toAppt = req.body.toAppt;
 		var state = req.body.state;
 
-		var status = null;
-
-		if(state.toLowerCase() == 'progress')
-			status = 'Pre-progress';
 		if(state.toLowerCase() == 'checked')
-			status = 'Checked In';
-		if(state.toLowerCase() == 'cancel')
-			status = 'Cancelled';
-
-		db.sequelize.query("UPDATE cln_appt_patients SET CAL_ID = ?, appt_status = ? WHERE id = ?",
-						null,{raw:true},[toAppt.CAL_ID, status, fromAppt.appt_id])
-		.success(function(){
-			res.json({status:'success'});
-		})
-		.error(function(err){
-			res.json({status:'error'});
-			console.log(err);
-		})
+		{
+			db.sequelize.query("UPDATE cln_appt_patients SET CAL_ID = ?, appt_status = ?, checkedin_start_time = ? WHERE id = ?",
+						null,{raw:true},[toAppt.CAL_ID, 'Checked In', moment().format('YYYY-MM-DD HH:mm:ss'), fromAppt.appt_id])
+				.success(function(){
+					res.json({status:'success'});
+				})
+				.error(function(err){
+					res.json({status:'error'});
+					console.log(err);
+				})
+		}
+		else if(state.toLowerCase() == 'progress')
+		{
+			db.sequelize.query("UPDATE cln_appt_patients SET CAL_ID = ?, appt_status = ?, checkedin_end_time = ? WHERE id = ?",
+						null,{raw:true},[toAppt.CAL_ID, 'Pre-progress', moment().format('YYYY-MM-DD HH:mm:ss'), fromAppt.appt_id])
+				.success(function(){
+					res.json({status:'success'});
+				})
+				.error(function(err){
+					res.json({status:'error'});
+					console.log(err);
+				})
+		}
+		else if(state.toLowerCase() == 'cancel')
+		{
+			db.sequelize.query("UPDATE cln_appt_patients SET CAL_ID = ?, appt_status = ? WHERE id = ?",
+						null,{raw:true},[toAppt.CAL_ID, 'Cancelled', fromAppt.appt_id])
+				.success(function(){
+					res.json({status:'success'});
+				})
+				.error(function(err){
+					res.json({status:'error'});
+					console.log(err);
+				})
+		}
 	}
 }
