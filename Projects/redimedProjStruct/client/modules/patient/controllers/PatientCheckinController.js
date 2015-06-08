@@ -1,5 +1,5 @@
 angular.module('app.loggedIn.patient.checkin.controller',[])
-	.controller('PatientCheckinController',function($scope, ConfigService, PatientService, toastr){
+	.controller('PatientCheckinController',function($scope, ConfigService, PatientService, toastr,$state){
         $scope.showPatientResult = false;
         $scope.showAppointmentOfId = null;
         $scope.patient_panel={};
@@ -40,7 +40,8 @@ angular.module('app.loggedIn.patient.checkin.controller',[])
                             btnfn:function(item){
                                 $scope.appointments.show(item.Patient_id);
                                 if ($scope.patientInfoCalendar) {
-                                    $scope.patientInfoCalendar = item;
+                                    $scope.patientInfoCalendar.Patient_id = item.Patient_id;
+                                    console.log($scope.patientInfoCalendar);
                                     $scope.bottomNewBooking = true;
                                 };
                             }
@@ -128,5 +129,13 @@ angular.module('app.loggedIn.patient.checkin.controller',[])
            $scope.appointments.reset();
            $scope.patients.reset();
            $scope.patientSearch={};
+        }
+        $scope.goToNewBooking = function(){
+            if ($scope.patientInfoCalendar) {
+                console.log($scope.patientInfoCalendar.Patient_id);
+                $state.go('webpatient.booking');
+            }else{
+                toastr.error("No information available on the patient", "Error");
+            };
         }
 	});
