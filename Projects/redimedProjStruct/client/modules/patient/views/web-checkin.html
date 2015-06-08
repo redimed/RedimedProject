@@ -37,7 +37,7 @@
               <div class="col-md-4 col-sm-4">
                 <div ng-class="{'has-error': sysservicesForm.patient_FN.$invalid && isSubmit}">
                     <div class="form-group pt_margin_bottom_0">
-                        <label class="col-md-3 control-label">First name</label>
+                        <label class="col-md-3 control-label">First name *</label>
                         <div class="col-md-9">
                           <input type="text" name="patient_FN" ng-model="patientSearch.First_name" class="form-control" id="patient_FN" required float-label/>
                         </div>
@@ -47,7 +47,7 @@
               <div class="col-md-4 col-sm-4">
                 <div ng-class="{'has-error': sysservicesForm.patient_LN.$invalid && isSubmit}">
                     <div class="form-group pt_margin_bottom_0">
-                      <label class="col-md-3 control-label">Last name</label>
+                      <label class="col-md-3 control-label">Last name *</label>
                       <div class="col-md-9">
                         <input type="text" name="patient_LN" ng-model="patientSearch.Sur_name" class="form-control" id="patient_LN" required float-label/>
                       </div>
@@ -58,7 +58,7 @@
               <div class="col-md-4 col-sm-4">
                 <div ng-class="{'has-error': sysservicesForm.patient_DOB.$invalid && isSubmit}">
                     <div class="form-group pt_margin_bottom_0">
-                      <label class="col-md-4 control-label">Date Of Birth</label>
+                      <label class="col-md-4 control-label">Date Of Birth *</label>
                       <div class="col-md-8">
                         <input name="patient_DOB" ng-model="patientSearch.DOB" class="form-control" id="patient_DOB" float-label ui-date="{dateFormat: 'dd/mm/yy', changeYear: true,changeMonth: true,yearRange: '1900:-0'}" required/>
                       </div>
