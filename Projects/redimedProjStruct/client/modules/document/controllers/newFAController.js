@@ -210,47 +210,50 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 	}
 
 	$scope.autoCalculationVal1 = function(line,detail){
-		if(detail.VAL1_ISCHECKBOX === 4 || detail.VAL1_ISCHECKBOX === 5){
-			line.RATING_VALUE1 = 0;
-			for(var i = 0; i<line.details.length; i++){
-				if(line.details[i].VAL1_ISCHECKBOX===4){
-					switch(line.details[i].VAL1_CHECKBOX){
-						default:
-						case '0':
-						case '1': line.RATING_VALUE1 += 0;
-									break;
-						case '2': line.RATING_VALUE1 += 1;
-									break;
+		console.log(detail);
+		if(detail!==undefined){
+			if(detail.VAL1_ISCHECKBOX === 4 || detail.VAL1_ISCHECKBOX === 5){
+				line.RATING_VALUE1 = 0;
+				for(var i = 0; i<line.details.length; i++){
+					if(line.details[i].VAL1_ISCHECKBOX===4){
+						switch(line.details[i].VAL1_CHECKBOX){
+							default:
+							case '0':
+							case '1': line.RATING_VALUE1 += 0;
+										break;
+							case '2': line.RATING_VALUE1 += 1;
+										break;
+						}
+					}
+					else if(line.details[i].VAL1_ISCHECKBOX === 5){
+						switch(line.details[i].VAL1_CHECKBOX){
+							default:
+							case '0': line.RATING_VALUE1 += 0;
+										break;
+							case '1': line.RATING_VALUE1 += 1;
+										break;
+							case '2': line.RATING_VALUE1 += 2;
+										break;
+						}
 					}
 				}
-				else if(line.details[i].VAL1_ISCHECKBOX === 5){
-					switch(line.details[i].VAL1_CHECKBOX){
-						default:
-						case '0': line.RATING_VALUE1 += 0;
-									break;
-						case '1': line.RATING_VALUE1 += 1;
-									break;
-						case '2': line.RATING_VALUE1 += 2;
-									break;
-					}
+				switch(line.RATING_VALUE1){
+					default:
+					case 0: line.RATE1 = "";
+							break;
+					case 1: line.RATE1 = "Poor";
+								break;
+					case 2: line.RATE1 = "Fair";
+								break;
+					case 3: line.RATE1 = "Good";
+								break;
+					case 4: line.RATE1 = "Excellent";
+								break;
 				}
+				autoSummary(line);
 			}
-			switch(line.RATING_VALUE1){
-				default:
-				case 0: line.RATE1 = "";
-						break;
-				case 1: line.RATE1 = "Poor";
-							break;
-				case 2: line.RATE1 = "Fair";
-							break;
-				case 3: line.RATE1 = "Good";
-							break;
-				case 4: line.RATE1 = "Excellent";
-							break;
-			}
-			autoSummary(line);
-		}
-		else if(line.SCORE_TYPE1 === 9 && detail.QUESTION.toLowerCase() === 'job demand (kgs)'){
+		}	
+		if(line.SCORE_TYPE1 === 9 && detail.QUESTION.toLowerCase() === 'job demand (kgs)'){
 			var default_details_value = line.details[0].VAL1_VALUE;
 			var start_value = 5;
 			if(line.details === 2){
@@ -287,13 +290,6 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 							break;
 			}
 		}
-		
-		// if(detail.VAL1_ISCHECKBOX === 4){
-		// 	line.RATING_VALUE1
-		// 	if(detail.VAL1_CHECKBOX === 1 || detail.VAL1_CHECKBOX === 0){
-		// 		line.RATING_VALUE1
-		// 	}
-		// }
 	}
 	//For VAL2
 	var calculateFunctionsVal2 = {
