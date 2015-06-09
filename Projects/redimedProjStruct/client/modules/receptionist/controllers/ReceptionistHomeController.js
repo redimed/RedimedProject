@@ -109,6 +109,16 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 		}
 	};
 
+    function cancelListenerHandler(){
+        console.log("Remove Success");
+    }
+
+    socket.removeListener('receiveNotifyReceptionist', cancelListenerHandler());
+
+	socket.on('receiveNotifyReceptionist',function(){
+		getAppt($scope.apptDate,$scope.apptSite);
+	})
+
 	$scope.undoAction = function(){
 		if($scope.undoArr.length > 0)
 		{

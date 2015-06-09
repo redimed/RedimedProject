@@ -41,6 +41,29 @@ module.exports = function(io,cookie,cookieParser) {
                 })
         })
 
+        socket.on('notifyReceptionist',function(){
+            db.UserType.find({where:{user_type: 'Receptionist'}},{raw:true})
+                .success(function(type){
+                    db.User.findAll({where:{user_type: type.ID}},{raw:true})
+                        .success(function(users){
+                            if(users.length > 0)
+                            {
+                                for(var i=0; i< users.length; i++)
+                                {
+                                    if(users[i].socket)
+                                        io.to(users[i].socket).emit('receiveNotifyReceptionist');
+                                }   
+                            }
+                        })
+                        .error(function(err){
+                            console.log(err);
+                        })
+                })
+                .error(function(err){
+                    console.log(err);
+                })
+        })
+
         socket.on("shareImage",function(id,callUser){
             db.User.find({where:{id: callUser}},{raw:true})
                 .success(function(user){
