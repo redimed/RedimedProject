@@ -25,7 +25,10 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 		if($scope.apptSite == null)
 		{
 			toastr.warning("Please Choose Site!");
-			return;
+			$scope.upcomingAppt = [];
+			$scope.progressAppt = [];
+			$scope.completeAppt = [];
+			$scope.doctors = [];
 		}
 		else
 			getAppt($scope.apptDate,$scope.apptSite);
@@ -44,7 +47,6 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 			{	
 				$scope.upcomingAppt = rs.upcoming;
 				$scope.completeAppt = rs.completed;
-
 				ReceptionistService.getProgressAppt(d,site).then(function(rs){
 					if(rs.status.toLowerCase() == 'success')
 					{

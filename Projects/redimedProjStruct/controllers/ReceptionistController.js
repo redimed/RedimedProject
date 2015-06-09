@@ -17,12 +17,12 @@ module.exports = {
 							"WHERE c.FROM_TIME BETWEEN ? AND DATE_ADD(?, INTERVAL 1 DAY) "+
 							"AND c.`SITE_ID` = ? ORDER BY c.`FROM_TIME`;", null, {raw:true}, [date,date,site])
 			.success(function(data){
+				var apptUpcoming = [];
+				var apptComplete = [];
+				var resultUpcoming = [];
+
 				if(data.length > 0)
 				{
-					var apptUpcoming = [];
-					var apptComplete = [];
-					var resultUpcoming = [];
-
 					for (var i = 0; i < data.length; i++) 
 					{
 						var item = data[i];
@@ -50,13 +50,11 @@ module.exports = {
 					        return _.object(_.zip(["time", "appointment"], currentItem));
 						})
 						.value();
-
-					res.json({status:'success',
-							  upcoming: resultUpcoming,
-							  completed: apptComplete});
 				}
-				else
-					res.json({status:'error'})
+
+				res.json({status:'success',
+						  upcoming: resultUpcoming,
+						  completed: apptComplete});
 			})
 			.error(function(err){
 				res.json({status:'error'});
@@ -117,7 +115,7 @@ module.exports = {
 							{
 								arr2.push(doctors[i].doctor_id);
 							}
-
+							
 							var diffArr = _.difference(arr2,arr1);
 							if(diffArr.length > 0)
 							{
@@ -127,7 +125,6 @@ module.exports = {
 									doctor.push(doctors[index]);
 								}
 							}
-							
 						}
 						res.json({status:'success',
 								  data: result,
