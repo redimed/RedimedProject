@@ -159,37 +159,30 @@ angular.module("app.calendar.mobile.controller",[])
 
     $scope.updateAppoinmentsList();
     $scope.CAL_ID = null;
-    $scope.checkSubmit = true;
+    var selectCalendar = null;
     $scope.selectAppointmentCalendar=function(appointmentCalendar)
     {
         $scope.selectedAppointmentCalendar=appointmentCalendar;
         $scope.CAL_ID = appointmentCalendar.CAL_ID;
         console.log($scope.selectedAppointmentCalendar);
         $scope.updateAppoinmentsList();
-    }   
-
+        selectCalendar = $scope.selectedAppointmentCalendar;
+        console.log('ne',selectCalendar);
+    } 
     $scope.submitCalendar = function(){
         if ($scope.patientInfoCalendar.Patient_id) {
             if ($scope.selectedAppointmentCalendar) {
+                console.log("hehe",selectCalendar);
                 rlobService.addApptPatient($scope.patientInfoCalendar.Patient_id,$scope.selectedAppointmentCalendar.CAL_ID).then(function(data){
                     if (data.status == 'success') {
-                        //$scope.checkSubmit = false;
-                        //toastr.success('Booking Successfully !!!', "Success");
                         var modalInstance = $modal.open({
-                                templateUrl: 'notifyid',
-                                controller: function($scope, $modalInstance,$state){
-                                    $scope.goTohome = function(){
-                                        $modalInstance.close();
-                                    }
-                                },
-                                size: 'sm',
-                                backdrop : 'static',
-                                windowClass: 'no-animation-modal'
-                            });
-
-
-                        modalInstance.result.then(function () {
-                            $state.go("security.portalPatient");
+                            templateUrl: 'notifyid',
+                            controller: function($scope, $modalInstance,$state){
+                                console.log("zooooooo",selectCalendar);
+                                $scope.selectCalendar = selectCalendar;
+                            },
+                            size: 'sm',
+                            backdrop : 'static'
                         });
                     }
                     else{

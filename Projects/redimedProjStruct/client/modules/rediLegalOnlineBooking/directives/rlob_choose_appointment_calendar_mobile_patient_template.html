@@ -64,7 +64,7 @@
     <div>
     <div style="margin-top: 40px;">
         <div class="row">
-          <img style="padding-bottom: 10px;padding-right: 10px;" class="pull-right" src="../theme/un/paient-dESIGN_07.png" ng-click="submitCalendar()" ng-show="checkSubmit === true">
+          <img style="padding-bottom: 10px;padding-right: 10px;" class="pull-right" src="../theme/un/paient-dESIGN_07.png" ng-click="submitCalendar()">
         </div>
         <div ng-if="appointmentsFilter.length<=0" style="text-align: center">
             <h4>No Results</h4>
@@ -99,11 +99,18 @@
 
 <script type="text/ng-template" id="notifyid">
     <div class="modal-body">
-        <div class="row" style="padding: 20px;text-align: center;">
-          <img style="padding-right: 15px;" src="../theme/un/Untitled-2_07.png"/>Booking Successfully !!!
+        <div class="row pt_padding_20_test_center">
+          <img class="pt_img_padding_left_15" src="../theme/un/Untitled-2_07.png"/>Booking Successfully !!!
+          <br/>
+          <br/>
+          <P class="pt_boder_dotted un-padding-10">
+            <label><i class="fa fa-user-md"></i></label>&nbsp{{selectCalendar.DOCTOR_NAME}}<br/>
+            <label><i class="fa fa-map-marker"></i></label>&nbsp{{selectCalendar.SITE_NAME}}<br/>
+            <label><i class="fa fa-calendar"></i></label>&nbsp{{selectCalendar.APPOINTMENT_TIME}}&nbsp-&nbsp{{selectCalendar.FROM_TIME | date:"MM/dd/yyyy"}}
+          </p>
         </div>
-        <div style="display: table;margin: auto;" class="row">
-          <img src="../theme/un/Untitled-2_21.png" ng-click="goTohome()"/>
+        <div class="row pt_display_table_margin_auto">
+          <img src="../theme/un/Untitled-2_21.png" ui-sref="security.portalPatient"/>
         </div>
     </div>
  </script>

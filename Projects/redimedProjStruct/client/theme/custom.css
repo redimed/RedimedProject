@@ -3615,8 +3615,7 @@ label{
 .pt_submit{
     margin: auto;
     float: none;
-    padding-top: 50px;
-    padding-bottom: 26px;
+    padding-top: 19px;
 }
 .pt_font_size_13{
     font-size: 13px;
@@ -3631,6 +3630,20 @@ label{
     margin-right: 0;
     padding: 20px;
     margin-bottom: 10px;
+}
+.pt_boder_dotted{
+    border: 1px dotted rgba(0, 0, 0, 0.5);
+}
+.pt_padding_20_test_center{
+    padding: 20px;
+    text-align: center;
+}
+.pt_display_table_margin_auto{
+    display: table;
+    margin: auto;
+}
+.pt_img_padding_left_15{
+    padding-right: 15px;
 }
 /*phanquocchien patient end*/
 
