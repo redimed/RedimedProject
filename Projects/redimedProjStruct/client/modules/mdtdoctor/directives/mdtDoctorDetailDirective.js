@@ -10,7 +10,7 @@ angular.module('app.loggedIn.mdtdoctor.detail.directive', [])
 	}
 })
 
-.directive('mdtdoctorDetail', function(mdtDoctorModel, ConfigService, mdtDoctorService, mdtSpecialtyService, UserService, toastr, $cookieStore, $modal, $stateParams){
+.directive('mdtdoctorDetail', function(mdtDoctorModel, ConfigService, mdtDoctorService, mdtSpecialtyService, UserService,ReceptionistService, toastr, $cookieStore, $modal, $stateParams){
 	return {
 		restrict: 'EA',
 		scope: {
@@ -26,8 +26,14 @@ angular.module('app.loggedIn.mdtdoctor.detail.directive', [])
 			}
 
 			scope.users = null;
+			scope.siteList = null;
 			UserService.all().then(function(response){
 				scope.users = response.data;
+			})
+
+			ReceptionistService.getSite().then(function(rs){
+				if(rs.status == 'success')
+					scope.siteList = rs.data;
 			})
 
 			var init = function(){

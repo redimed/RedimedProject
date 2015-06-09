@@ -56,6 +56,10 @@ angular.module("app.loggedIn.receptionist.services", [])
 		return receptionistApi.all('appointment/getByDate').post({date: date,siteId: site});
 	}
 
+	receptionistService.getProgressAppt = function(date,site){
+		return receptionistApi.all('appointment/progress').post({date: date,siteId: site});
+	}
+
 	receptionistService.updateAppointment = function(from,to,state){
 		return receptionistApi.all('appointment/update').post({fromAppt:from, toAppt:to, state: state});
 	}

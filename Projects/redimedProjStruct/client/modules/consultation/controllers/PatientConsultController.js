@@ -99,7 +99,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 
 		$interval(function(){
 			refresh($scope.patient_id);
-		},60 * 1000);
+		},40 * 1000);
 
 
 		PatientService.get($scope.patient_id).then(function(rs){

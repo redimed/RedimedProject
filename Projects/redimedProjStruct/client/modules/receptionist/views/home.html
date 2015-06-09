@@ -19,22 +19,10 @@
 
 </style>
 <div class="row">
-	<div class="col-md-3 col-sm-3" >
-		<span class="pull-right bold" style="font-size: 20px">Appointment In:</span>
+	<div class="col-md-4 col-sm-4">
+		<span class="bold pull-right" style="font-size: 20px">Site:</span>
 	</div>
-	<div class="col-md-2 col-sm-2" >
-		<span class="pull-left">
-			<input ui-date="{dateFormat: 'dd/mm/yy', defaultDate: '01/01/1990', changeMonth: true, changeYear: true}" 
-			style="text-align: center;"
-            class="form-control" 
-            ng-change="getAppointment()"
-            ng-model="apptDate" >
-		</span>
-	</div>
-	<div class="col-md-1 col-sm-1">
-		<span class="bold" style="font-size: 20px">Site:</span>
-	</div>
-	<div class="col-md-3 col-sm-3">
+	<div class="col-md-4 col-sm-4">
 		<select ng-model="apptSite" class="form-control" 
 				ng-options="site.id as site.Site_name for site in siteList"
 				ng-change="getAppointment()">
@@ -147,38 +135,12 @@
 	            </div>
 	        </div>
 	        <div class="portlet-body">
-	        	<div ng-if="progressAppt.length == 0 && currAppt.length == 0">
+	        	<div ng-if="progressAppt.length == 0 && doctors.length == 0">
 	        		<div style="text-align: center;">
                         <span style="font-size: 20px; font-style: italic; font-weight: bold;">      
                             Empty Data
                         </span>
                     </div>
-	        	</div>
-	        	<div ng-if="progressAppt.length == 0 && currAppt.length > 0" style="margin-bottom: 0px !important; padding: 1px 15px 0px 10px !important;margin-top: 0px ! important;" class="portlet light" ng-repeat="appt in currAppt">
-	        		<div class="portlet-title" style="min-height: 0px !important;">
-           				<div class="caption">
-           					<span class="caption-subject bold uppercase">
-       							{{appt.doctor}}
-   							</span>
-           				</div>
-           				<div class="tools">
-           					<a href="javascript:;" class="collapse"></a>
-           				</div>
-           			</div>
-           			<div class="portlet-body">
-       					<div style=" color: black; border-color: #7FA8CB" 
-       						class="well appt-profile" ng-repeat="a in appt.appointment">
-       						<div style="text-align: center;" 
-	       						data-drop="true" 
-				        		data-jqyoui-options 
-				        		jqyoui-droppable="{onDrop: 'dropAppt(a)'}">
-       							<span style="font-size: 20px; font-style: italic; font-weight: bold;">      
-		                            {{a.FROM_TIME | moment: 'utc' | moment: 'format': 'hh:mm:ss A'}}
-		                        </span>
-       						</div>
-       					</div>
-
-           			</div>
 	        	</div>
            		<div ng-if="progressAppt.length > 0" style="margin-bottom: 0px !important; padding: 1px 15px 0px 10px !important;margin-top: 0px ! important;" class="portlet light" ng-repeat="appt in progressAppt">
            			<div class="portlet-title" style="min-height: 0px !important;">
@@ -228,6 +190,32 @@
        						</div>
        					</div>
            			</div>
+           		</div>
+           		<div ng-if="doctors.length > 0" style="margin-bottom: 0px !important; padding: 1px 15px 0px 10px !important;margin-top: 0px ! important;" class="portlet light" ng-repeat="d in doctors">
+           			<div class="portlet-title" style="min-height: 0px !important;">
+           				<div class="caption">
+           					<span class="caption-subject bold uppercase">
+       							{{d.NAME}}
+   							</span>
+           				</div>
+           				<div class="tools">
+           					<a href="javascript:;" class="collapse"></a>
+           				</div>
+           			</div>
+           			<div class="portlet-body">
+       					<div style=" color: black; border-color: #7FA8CB" class="well appt-profile">
+       						<div style="text-align: center;"
+   							  	data-drop="true"
+						  		data-jqyoui-options
+   							  	jqyoui-droppable="{onDrop: 'dropAppt(d)'}">
+
+   							  	<span style="font-size: 20px; font-style: italic; font-weight: bold;">
+   							  		Drop Appointment Here!
+   							  	</span>
+       								
+       						</div>
+   						</div>
+					</div>	
            		</div>
 	        </div>
         </div>
