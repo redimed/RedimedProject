@@ -402,7 +402,7 @@ module.exports = {
 		db.sequelize.query(sql, null, {raw:true}, [patientId])
 			.success(function(data){
 				console.log("__________",data[0]);
-                if(typeof data[0] == 'undefined'){
+                if(typeof data[0] == 'undefined' || data[0].user_img == null){
             		console.log("------not data avatar");
                 }
                 else{

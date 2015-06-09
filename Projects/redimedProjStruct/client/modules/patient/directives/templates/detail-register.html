@@ -132,6 +132,18 @@
         <div class="col-lg-4 col-md-4 pt_div_center">
             <div class="row">
                 <div class="col-lg-12 col-md-12 pt_boder_bottom">
+                    <div ng-class="{'has-error': patientForm.dob.$invalid && isSubmit}">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label pt_padding_left_0 pt_font_size_13">Date of Birth *</label>
+                            <div class="col-md-8 pt_padding_right_0">
+                                <input ui-date="{dateFormat: 'dd/mm/yy', defaultDate: '01/01/1990', changeMonth: true, changeYear: true}" id="dob" class="form-control pt_width_100 pt_height_30" name="dob" required="" ng-model="modelObjectMap.DOB" float-label="">
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 pt_boder_bottom">
                     <div ng-class="{'has-error': patientForm.surburb.$invalid && isSubmit}">
                         <div class="form-group">
                             <label class="col-md-4 control-label pt_padding_left_0 pt_font_size_13">Surburb *</label>
@@ -271,6 +283,8 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="col-lg-4 col-md-4 pt_div_right">
             <div class="row">
                 <div class="col-lg-12 col-md-12 pt_boder_bottom">
                     <div>
@@ -283,8 +297,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-4 col-md-4 pt_div_right">
             <div class="row">
                 <div class="col-lg-12 col-md-12 pt_boder_bottom">
                     <div>
