@@ -65,7 +65,8 @@ angular.module("app.loggedIn.invoice.list.controller",[
             {
                 class: 'fa fa-money', title: 'Detail',
                 callback: function(item){
-               		$state.go('loggedIn.patient.invoice_detail', {header_id: item.header_id}); 
+                    exlog.log(item)
+               		$state.go('loggedIn.patient.invoice_detail', {header_id: item.header_id,patient_id:item.Patient_id,cal_id:item.cal_id}); 
                 }
             },
         ],
