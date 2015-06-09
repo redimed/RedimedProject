@@ -543,7 +543,7 @@ module.exports = {
 
 	getCompanyId: function(req, res){
 		var user_id = req.body.user_id;
-		console.log("---------------", user_id);
+		console.log("--------------", user_id);
 		var sql = 	"SELECT cu.`company_id` FROM `ph_company_users` cu " +
 					"INNER JOIN `ph_users` u ON cu.`user_id` = u.`user_id` " +
 					"WHERE u.`user_id` = ? ";
