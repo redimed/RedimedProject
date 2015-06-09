@@ -509,11 +509,12 @@ angular.module('app.config', [])
     .constant("SCORE_TYPE", [
             {id:3,label:'Auto Average score and Normal Range'},
             {id:10,label:'Auto Max score and Rating'},
+            {id:11, label:'Auto Min score and Rating'},
             {id:4,label:'Auto Recovery Heart Rate Rating'},
             {id:6,label:'Auto Simple Rating'},
             {id:8,label:'Manual Checkbox Rating (Excellent/Good/Fair/Poor)'},
             {id:7,label:'Manual Checkbox Rating (Able/Partial/Unable'},
-            {id:9,label:'Auto Max Weight Managed and Manual Checkbox Rating(Able/Partial/Unable)'},
+            {id:9,label:'Auto Weight Managed and Manual Checkbox Rating(Able/Partial/Unable)'},
             {id:5,label:'Summary Rating and Score'},
         ])
     .constant("COMMENT_TYPE", [
@@ -527,7 +528,9 @@ angular.module('app.config', [])
             {id:-1,label:'(no value)'},
             {id:0,label:'Textbox'},
             {id:1,label:'Simple checkbox'},
-            {id:2,label:'Unable/Partial/Able'},
+            {id:2,label:'Normal Unable/Partial/Able'},
+            {id:4,label:'Unable=Partial=0, Able=1'},
+            {id:5,label:'Unable=0, Partial=1, Able=2'},
             {id:3,label:'Yes/No'}
         ])
 .factory('ConfigService', function(VALUE_TYPE, SCORE_TYPE, COMMENT_TYPE, TIMETABLE_DAY_OF_WEEK, PRIORITY_OPTION, DAY_OF_WEEK, NUMBER_OF_WEEK, SEX_LIST, YES_NO_OPT, ACC_TYPE, APP_TYPE, APPT_STATUS, MONTH_IN_YEAR, INVOICE_STATUS, RECALL_PERIOD, RECALL_REMIND, MEDICINE_UNIT, Restangular) {

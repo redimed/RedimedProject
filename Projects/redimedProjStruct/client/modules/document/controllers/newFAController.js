@@ -64,6 +64,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 										line.comments.forEach(function(comment){
 											comment.PATIENT_ID = patient_id;
 											comment.CAL_ID = cal_id;
+											console.log($scope.header);
 										})
 									}
 								})
@@ -208,13 +209,73 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 		}
 	}
 
-	$scope.autoCalculationVal1 = function(line){
-		
+	$scope.autoCalculationVal1 = function(line,detail){
+		if(detail.VAL1_ISCHECKBOX === 4 || detail.VAL1_ISCHECKBOX === 5){
+			line.RATING_VALUE1 = 0;
+			for(var i = 0; i<line.details.length; i++){
+				if(line.details[i].VAL1_ISCHECKBOX===4){
+					switch(line.details[i].VAL1_CHECKBOX){
+						default:
+						case '0':
+						case '1': line.RATING_VALUE1 += 0;
+									break;
+						case '2': line.RATING_VALUE1 += 1;
+									break;
+					}
+				}
+				else if(line.details[i].VAL1_ISCHECKBOX === 5){
+					switch(line.details[i].VAL1_CHECKBOX){
+						default:
+						case '0': line.RATING_VALUE1 += 0;
+									break;
+						case '1': line.RATING_VALUE1 += 1;
+									break;
+						case '2': line.RATING_VALUE1 += 2;
+									break;
+					}
+				}
+			}
+			switch(line.RATING_VALUE1){
+				default:
+				case 0: line.RATE1 = "";
+						break;
+				case 1: line.RATE1 = "Poor";
+							break;
+				case 2: line.RATE1 = "Fair";
+							break;
+				case 3: line.RATE1 = "Good";
+							break;
+				case 4: line.RATE1 = "Excellent";
+							break;
+			}
+			autoSummary(line);
+		}
+		else if(line.SCORE_TYPE1 === 9 && detail.QUESTION.toLowerCase() === 'job demand (kgs)'){
+			var default_details_value = line.details[0].VAL1_VALUE;
+			var start_value = 5;
+			if(line.details === 2){
+				line.details[1].VAL1_VALUE = angular.copy(default_details_value);
+			}
+			else{
+				for(var i = 1; i<line.details.length; i++){
+					line.details[i].VAL1_VALUE = angular.copy(start_value);
+					if(start_value < default_details_value) start_value+=5;
+				}
+			}
+		}
+		else if(line.SCORE_TYPE1 === 7 && detail.QUESTION.toLowerCase() === 'job demand'){
+			var default_details_value = line.details[0].VAL1_VALUE;
+			var start_value = 5;
+			if(line.details[0].QUESTION.toLowerCase() === "job demand" && line.details.length === 2){
+				line.details[1].VAL1_VALUE = angular.copy(default_details_value);
+			}
+		}
 		if(line.ISSCORE1===1){
 			switch(line.SCORE_TYPE1){
 				case 3: calculateFunctionsVal1.calAvg(line);
 						break;
-				case 9:
+				case 9: line.SCORE1= line.details[line.details.length-1].VAL1_VALUE;
+						break;
 				case 10: calculateFunctionsVal1.calMax(line);
 							break;
 				case 11: calculateFunctionsVal1.calMin(line);
@@ -226,6 +287,13 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 							break;
 			}
 		}
+		
+		// if(detail.VAL1_ISCHECKBOX === 4){
+		// 	line.RATING_VALUE1
+		// 	if(detail.VAL1_CHECKBOX === 1 || detail.VAL1_CHECKBOX === 0){
+		// 		line.RATING_VALUE1
+		// 	}
+		// }
 	}
 	//For VAL2
 	var calculateFunctionsVal2 = {
@@ -270,7 +338,8 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 			switch(line.SCORE_TYPE1){
 				case 3: calculateFunctionsVal2.calAvg(line);
 						break;
-				case 9:
+				case 9: line.SCORE2= line.details[line.details.length-1].VAL2_VALUE;
+							break;
 				case 10: calculateFunctionsVal2.calMax(line);
 							break;
 				case 11: calculateFunctionsVal2.calMin(line);
@@ -444,6 +513,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
     		if(result.status==='success') {
     			$scope.editMode=true;
     			toastr.success('Functional Assessment Submitted!','Success!');
+    			init();
     		}
     		else toastr.error('Failed to submit functional assessment!','Error!');
     	})
@@ -453,6 +523,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
     	DocumentService.updateNewFA(updateInfo, patient_id, cal_id).then(function(result){
     		if(result.status==='success') {
     			toastr.success('Functional assessment updated!','Success!');
+
     		}
     		else toastr.error('Failed to update functional assessment!','Error!');
     	})
