@@ -1,18 +1,16 @@
 angular.module("app.loggedIn.patient.consult.scriptController",[])
 	.controller("ScriptController",function($scope,$filter,$state,$modal,toastr,$modalInstance,ConsultationService,$stateParams, script){
 		$scope.scriptInfo = {
-			medication: null,
-			strength: null,
-			form: null,
-			qty: 0,
-			code: null,
-			script: null,
-			dose: null,
-			frequency: null,
-			instructions: null,
-			repeat: null,
-			reason: null,
-			category: null
+			        medication_name:null,
+			        start_date:null,
+			        dose:null,
+			        end_date:null,
+			        unit:null,
+			        qty:null,
+			        route:null,
+			        doctor_id:null,
+			        frequency:null,
+			        condition_Indication:null
 		};
 
 		$scope.medications = [];

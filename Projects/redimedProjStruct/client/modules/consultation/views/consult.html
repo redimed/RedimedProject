@@ -258,22 +258,7 @@
                             <tr>
                                 <th>
                                     <div class="th">
-                                        <span style="color: white;">Medication</span>
-                                    </div>
-                                </th>
-                                <th>
-                                    <div class="th">
-                                        <span style="color: white;">Strength</span>
-                                    </div>
-                                </th>
-                                <th>
-                                    <div class="th">
-                                        <span style="color: white;">Form</span>
-                                    </div>
-                                </th>
-                                <th>
-                                    <div class="th">
-                                        <span style="color: white;">Qty</span>
+                                        <span style="color: white;">Name</span>
                                     </div>
                                 </th>
                                 <th>
@@ -283,10 +268,45 @@
                                 </th>
                                 <th>
                                     <div class="th">
+                                        <span style="color: white;">Unit</span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        <span style="color: white;">Route</span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
                                         <span style="color: white;">Frequency</span>
                                     </div>
                                 </th>
                                 <th>
+                                    <div class="th">
+                                        <span style="color: white;">Start Date</span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        <span style="color: white;">End Date</span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        <span style="color: white;">Quanlity</span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        <span style="color: white;">Doctor</span>
+                                    </div>
+                                </th>
+                                 <th>
+                                    <div class="th">
+                                        <span style="color: white;">Condition/Indication</span>
+                                    </div>
+                                </th>
+                                 <th>
                                     <div class="th">
                                         <span style="color: white;">Action</span>
                                     </div>
@@ -295,7 +315,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td colspan="8">
+                                <td colspan="11">
                                     <div style="text-align: center;">
                                         <span ng-if="consultInfo.scripts.length <= 0" style="font-size: 20px; font-style: italic; font-weight: bold;">      
                                             Empty Data
@@ -305,22 +325,34 @@
                             </tr>
                             <tr style="background-color: white;" class="bold" ng-if="consultInfo.scripts.length > 0" ng-repeat="m in consultInfo.scripts">
                                 <td style="vertical-align: middle">
-                                    {{m.medication}}
-                                </td>
-                                <td style="vertical-align: middle">
-                                    {{m.strength}}
-                                </td>
-                                <td style="vertical-align: middle">
-                                    {{m.form}}
-                                </td>
-                                <td style="vertical-align: middle">
-                                    {{m.qty}}
+                                    {{m.medication_name}}
                                 </td>
                                 <td style="vertical-align: middle">
                                     {{m.dose}}
                                 </td>
                                 <td style="vertical-align: middle">
+                                    {{m.unit}}
+                                </td>
+                                <td style="vertical-align: middle">
+                                    {{m.route}}
+                                </td>
+                                <td style="vertical-align: middle">
                                     {{m.frequency}}
+                                </td>
+                                <td style="vertical-align: middle">
+                                    {{m.start_date}}
+                                </td>
+                                 <td style="vertical-align: middle">
+                                    {{m.end_date}}
+                                </td>
+                                 <td style="vertical-align: middle">
+                                    {{m.qty}}
+                                </td>
+                                 <td style="vertical-align: middle">
+                                    {{m.doctor_id}}
+                                </td>
+                                <td style="vertical-align: middle">
+                                    {{m.condition_Indication}}
                                 </td>
                                 <td align="center">
                                     <a ng-click="scriptAction('edit',$index)" href="javascript:;" class="btn btn-icon-only btn-circle blue">
