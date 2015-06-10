@@ -11,7 +11,7 @@ var fs = require('fs');//Read js file for import into
 module.exports =
 {
     insertNonEmergency:function(req,res){
-        console.log(req.body.info);
+        // console.log('giapppppppppppppppppppppppp',req.body.info);
         // return
         var FIRSTNAME=kiss.checkData(req.body.info.FIRSTNAME)?req.body.info.FIRSTNAME:null;
         var LASTNAME=kiss.checkData(req.body.info.LASTNAME)?req.body.info.LASTNAME:null;
@@ -68,7 +68,7 @@ module.exports =
             });
         });
     },insertEmergency:function(req,res){
-        // console.log(req.body.info);
+        // console.log('giappppppppppppppp',req.body.info);
         // return
         // console.log()
         var FIRSTNAME=kiss.checkData(req.body.info.FIRSTNAME)?req.body.info.FIRSTNAME:null;
@@ -85,8 +85,8 @@ module.exports =
         var LATITUDE=kiss.checkData(req.body.info.LATITUDE)?req.body.info.LATITUDE:null;
         var currentDate=moment().format("YYYY/MM/DD HH:mm:ss");
         var EMAIL=kiss.checkData(req.body.info.EMAIL)?req.body.info.EMAIL:null;
-        var REMEMBER_PATIENTS=kiss.checkData(req.body.info.REMEMBER_PATIENTS)?req.body.info.REMEMBER_PATIENTS:null;
-        var RECEIVE_REDIMED=kiss.checkData(req.body.info.RECEIVE_REDIMED)?req.body.info.RECEIVE_REDIMED:null;
+        var REMEMBER_PATIENTS=kiss.checkData(req.body.info.REMEMBER_PATIENTS)?req.body.info.REMEMBER_PATIENTS:0;
+        var RECEIVE_REDIMED=kiss.checkData(req.body.info.RECEIVE_REDIMED)?req.body.info.RECEIVE_REDIMED:0;
 
         if(!kiss.checkListData(FIRSTNAME,LASTNAME,GENDER,DOB,CONTACT_NO,TYPE_NAME,INJURY,EMAIL))
         {
