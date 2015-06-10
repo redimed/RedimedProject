@@ -19,7 +19,7 @@
                 </div>
                 <div class="col-md-6 col-sm-6">
                     <label class="un-label-form-3 un-label-whidth-130">Start Date</label>
-                    <input ng-model="scriptInfo.start_date"  class="form-control input-sm select-outside" custom-date/>
+                    <input ng-model="scriptInfo.start_date"  class="form-control input-sm select-outside" custom-date />
                 </div>
             </div>
             <div class="row">
@@ -29,51 +29,41 @@
                 </div>
                 <div class="col-md-6 col-sm-6">
                     <label class="un-label-form-3 un-label-whidth-130">End Date</label>
-                     <input ng-model="scriptInfo.end_date" class="form-control input-sm select-outside" custom-date/>
+                     <input ng-model="scriptInfo.end_date" class="form-control input-sm select-outside" custom-date />
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 col-sm-6">
                     <label class="un-label-form-3 un-label-whidth-130">Unit</label>
-                    <select ng-model="scriptInfo.unit" class="form-control input-sm select-outside ng-pristine ng-valid">
-                        <option value="mg">Mg</option>
-                        <option value="g">G</option>
-                        <option value="ml" >Ml</option>
-                        <option value="litre">Litre</option>
-                        <option value="mg">Tablet</option>
-                        <option value="capsule">Capsule</option>
-                    </select>
+                    <select ng-model="scriptInfo.unit" class="form-control input-sm select-outside"
+                        ng-options="value.value as value.display for (key,value) in listUnit">
+                        <option value=""></option>
+                        </select>
                 </div>
                 <div class="col-md-6 col-sm-6">
                     <label class="un-label-form-3 un-label-whidth-130">Quanlity</label>
-                    <input ng-model="scriptInfo.qty"  class="form-control input-sm select-outside ng-pristine ng-valid" />
+                    <input ng-model="scriptInfo.qty"  class="form-control input-sm select-outside ng-pristine ng-valid"/>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 col-sm-6">
                     <label class="un-label-form-3 un-label-whidth-130">Route</label>
-                    <select ng-model="scriptInfo.route" class="form-control input-sm select-outside ng-pristine ng-valid">
-                        <option value="PO">PO</option>
-                        <option value="PR">PR</option>
-                        <option value="IV" >IV</option>
-                        <option value="IM">IM</option>
-                        <option value="S/C">S/C</option>
-                        <option value="Topical">Topical</option>
+                     <select ng-model="scriptInfo.route" class="form-control input-sm select-outside"
+                        ng-options="value.value as value.display for (key,value) in listRoute">
+                        <option value=""></option>
                     </select>
                 </div>
                 <div class="col-md-6 col-sm-6">
                     <label class="un-label-form-3 un-label-whidth-130">Doctor</label>
-                    <input ng-model="scriptInfo.doctor_id"  class="form-control input-sm select-outside ng-pristine ng-valid">
+                    <input ng-model="scriptInfo.doctor_id"  class="form-control input-sm select-outside ng-pristine ng-valid" disabled>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 col-sm-6">
                     <label class="un-label-form-3 un-label-whidth-130">Frequency</label>
-                    <select ng-model="scriptInfo.frequency" class="form-control input-sm select-outside ng-pristine ng-valid">
-                        <option value="OD">OD</option>
-                        <option value="BD">BD</option>
-                        <option value="TDS" >TDS</option>
-                        <option value="QID">QID</option>
+                    <select ng-model="scriptInfo.frequency" class="form-control input-sm select-outside ng-pristine ng-valid"
+                        ng-options="value.value as value.display for (key,value) in listFrequency">
+                        <option value=""></option>
                     </select>
                 </div>
                 <div class="col-md-6 col-sm-6">

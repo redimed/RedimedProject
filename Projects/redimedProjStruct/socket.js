@@ -21,6 +21,24 @@ module.exports = function(io,cookie,cookieParser) {
         var source = header['user-agent'];
         ua = useragent.parse(source);
 
+        socket.on('notifyPatient',function(apptId){
+            db.sequelize.query("SELECT p.Title,p.`First_name`,p.`Sur_name`,p.`Middle_name`, d.`NAME` as doctor_name "+
+                                "FROM cln_appt_patients a "+
+                                "INNER JOIN cln_patients p ON a.`Patient_id` = p.`Patient_id` "+
+                                "INNER JOIN doctors d ON a.`actual_doctor_id` = d.`doctor_id` "+
+                                "WHERE a.id = ?",null,{raw:true},[apptId])
+                .success(function(data){
+                    if(data.length > 0)
+                    {
+                        var item = data[0];
+                        var arrName = [];
+                        arrName.push(item.Title, item.First_name, item.Sur_name, item.Middle_name);
+
+                        io.sockets.emit('receiveNotifyPatient',arrName.join(' '), item.doctor_name);
+                    }
+                })
+        })
+
         socket.on('notifyDoctor',function(doctorId){
             db.Doctor.find({where:{doctor_id: doctorId}},{raw:true})
                 .success(function(doctor){

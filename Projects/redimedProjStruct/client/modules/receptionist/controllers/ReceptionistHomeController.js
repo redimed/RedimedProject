@@ -100,6 +100,7 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 			        	{
 			        		toastr.success("Update Appointment Success!");
 			        		socket.emit('notifyDoctor',doctor.doctor_id);
+			        		socket.emit('notifyPatient',$scope.fromAppt.appt_id);
 			        		$scope.undoArr = [];
 			        		$scope.undoArr.push($scope.fromAppt);
 			        	}

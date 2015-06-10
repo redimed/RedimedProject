@@ -1,0 +1,41 @@
+
+<style type="text/css">
+	.login .content {
+		width: 600px;
+		padding: 35px;
+	}
+</style>
+<span class="login">
+	<div class="logo">
+		<a ui-sref="login">
+			<img src="theme/assets/logo.png">
+		</a>
+	</div>
+	<div class="content" style="font-size: 14px !important;  font-family: calibri !important;">
+		<div style="text-align: center;">
+			<span style="font-size: 20px;">
+				Next Patient
+			</span>
+			<br/>
+			<span style="font-size: 35px; font-weight: bold;">
+				{{info.patientName != null ? info.patientName : 'Waiting...'}}
+			</span>
+			<br/>
+			<span style="font-size: 20px;">
+				Doctor
+			</span>
+			<br/>
+			<span style="font-size: 35px; font-weight: bold;">
+				{{info.doctorName != null ? info.doctorName : 'Waiting...'}}
+			</span>
+		</div>
+	</div>
+	<div class="copyright">
+	 	2014 &copy; REDIMED Dashboard
+	</div>
+</span>
+<script type="text/javascript">
+    document.body.className = "loginClass page-header-fixed page-container-bg-solid page-sidebar-closed-hide-logo page-header-fixed-mobile page-footer-fixed1";
+</script> 
+
+

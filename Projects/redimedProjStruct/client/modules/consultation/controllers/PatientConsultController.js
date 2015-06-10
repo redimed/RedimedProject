@@ -1,4 +1,5 @@
 angular.module("app.loggedIn.patient.consult.controller",[])
+
 	.controller("PatientConsultController",function($filter,$rootScope,$interval,$window,$document,$cookieStore,$scope,$state,$modal,InsurerService,toastr,socket,OTSession,ReceptionistService,$stateParams,ConsultationService,PatientService,UserService,$interval){
 
 		/* VUONG */
@@ -7,6 +8,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			$cookieStore.put('template_patient_id', $stateParams.patient_id);
 		}
 		/* END VUONG */
+
 
 		$scope.patient_id = $stateParams.patient_id;
 		$scope.cal_id = $stateParams.cal_id;
@@ -208,6 +210,9 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 					windowClass: "consult-modal-window",
 					controller:'ScriptController',
 					resolve: {
+						actual_doctor_id: function(){
+							return $scope.actual_doctor_id;
+						},
 						script: function(){
 							return null;
 						}
@@ -557,7 +562,8 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 				$scope.consultInfo.measurements[i].patient_id = $scope.patient_id;
 				$scope.consultInfo.measurements[i].cal_id = $scope.cal_id;
 			}
-
+			$scope.consultInfo.scripts.start_date = ConfigService.convertToDB($scope.consultInfo.scripts.start_date);
+			$scope.consultInfo.scripts.end_date = ConfigService.convertToDB($scope.consultInfo.scripts.end_date);
         	ConsultationService.submitConsult($scope.consultInfo).then(function(res){
 				if(res.status == 'success')
 				{
@@ -620,6 +626,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		 * Lay thong tin appt patient
 		 */
 		$scope.apptPatient={};
+		$scope.actual_doctor_id={}
 		$scope.apptStatus=ptnConst.apptStatus;
 		$scope.getApptPatient=function()
 		{
@@ -632,6 +639,12 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 				if(data.status=='success')
 				{
 					$scope.apptPatient=data.data;
+					DoctorService.getById($scope.apptPatient.actual_doctor_id)
+					.then(function(data){
+						$scope.actual_doctor_id = data;
+						console.log('-----------------',$scope.actual_doctor_id);
+					})
+
 					if($scope.apptPatient.SESSION_START_TIME  && $scope.apptPatient.SESSION_END_TIME)
 					{
 						var tempStart=moment(new Date($scope.apptPatient.SESSION_START_TIME));
@@ -655,7 +668,6 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			});
 		}
 		$scope.getApptPatient();
-
 		/**
 		 * tannv.dts@gmail.com
 		 * chuyen appt patient status thanh Work In Progress
