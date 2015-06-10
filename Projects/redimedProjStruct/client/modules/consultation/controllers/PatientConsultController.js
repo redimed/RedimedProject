@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.patient.consult.controller",[])
-	.controller("PatientConsultController",function($filter,$rootScope,$interval,$window,$document,$cookieStore,$scope,$state,$modal,InsurerService,toastr,socket,DoctorService,OTSession,ReceptionistService,$stateParams,ConsultationService,PatientService,UserService,$interval){
+	.controller("PatientConsultController",function($filter,$rootScope,$interval,$window,$document,$cookieStore,$scope,$state,$modal,InsurerService,toastr,socket,DoctorService,OTSession,ReceptionistService,$stateParams,ConsultationService,PatientService,UserService,$interval,ConfigService){
 		$scope.patient_id = $stateParams.patient_id;
 		$scope.cal_id = $stateParams.cal_id;
 		$scope.userInfo = $cookieStore.get('userInfo');
@@ -552,7 +552,8 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 				$scope.consultInfo.measurements[i].patient_id = $scope.patient_id;
 				$scope.consultInfo.measurements[i].cal_id = $scope.cal_id;
 			}
-
+			$scope.consultInfo.scripts.start_date = ConfigService.convertToDB($scope.consultInfo.scripts.start_date);
+			$scope.consultInfo.scripts.end_date = ConfigService.convertToDB($scope.consultInfo.scripts.end_date);
         	ConsultationService.submitConsult($scope.consultInfo).then(function(res){
 				if(res.status == 'success')
 				{

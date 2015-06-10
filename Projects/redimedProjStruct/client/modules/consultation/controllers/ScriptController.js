@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.patient.consult.scriptController",[])
-	.controller("ScriptController",function(ConfigService,$scope,$filter,$state,$modal,toastr,$modalInstance,ConsultationService,$stateParams, actual_doctor_id,script){
+	.controller("ScriptController",function($scope,$filter,$state,$modal,toastr,$modalInstance,ConsultationService,$stateParams, actual_doctor_id,script){
 		$scope.scriptInfo = {
 			        medication_name:null,
 			        start_date:null,
@@ -40,8 +40,6 @@ angular.module("app.loggedIn.patient.consult.scriptController",[])
 		}
 
 		$scope.okClick = function(){
-			$scope.scriptInfo.start_date = ConfigService.convertToDB($scope.scriptInfo.start_date);
-			$scope.scriptInfo.end_date = ConfigService.convertToDB($scope.scriptInfo.end_date);
 			$modalInstance.close({'type':'ok','value':$scope.scriptInfo});
 		}
 
