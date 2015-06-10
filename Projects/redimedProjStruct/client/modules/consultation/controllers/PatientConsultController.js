@@ -235,6 +235,9 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 					windowClass: "consult-modal-window",
 					controller:'ScriptController',
 					resolve: {
+						actual_doctor_id: function(){
+							return $scope.actual_doctor_id;
+						},
 						script: function(){
 							return $scope.consultInfo.scripts[index];
 						}
@@ -561,6 +564,10 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			{
 				$scope.consultInfo.measurements[i].patient_id = $scope.patient_id;
 				$scope.consultInfo.measurements[i].cal_id = $scope.cal_id;
+			}
+			for(var i= 0 ;i<$scope.consultInfo.scripts.length;i++){
+				$scope.consultInfo.scripts[i].start_date = ConfigService.convertToDB($scope.consultInfo.scripts[i].start_date);
+				$scope.consultInfo.scripts[i].end_date = ConfigService.convertToDB($scope.consultInfo.scripts[i].end_date);
 			}
         	ConsultationService.submitConsult($scope.consultInfo).then(function(res){
 				if(res.status == 'success')
