@@ -26,8 +26,9 @@ module.exports =
         var LATITUDE=kiss.checkData(req.body.info.LATITUDE)?req.body.info.LATITUDE:null;
         var CAL_ID=kiss.checkData(req.body.info.CAL_ID)?req.body.info.CAL_ID:null;
         var BookingType=kiss.checkData(req.body.info.BookingType)?req.body.info.BookingType:null;
+        var EMAIL=kiss.checkData(req.body.info.EMAIL)?req.body.info.EMAIL:null;
         var currentDate=moment().format("YYYY/MM/DD HH:mm:ss");
-        if(!kiss.checkListData(FIRSTNAME,LASTNAME,GENDER,DOB,CONTACT_NO,INJURY,TYPE_NAME,CAL_ID,BookingType))
+        if(!kiss.checkListData(FIRSTNAME,LASTNAME,GENDER,DOB,CONTACT_NO,INJURY,TYPE_NAME,CAL_ID,BookingType,EMAIL))
         {
             kiss.exlog('insertNonEmergency',"Loi data truyen den");
             res.json({status:'fail'});
@@ -44,6 +45,7 @@ module.exports =
             TYPE_NAME:TYPE_NAME,
             INJURY:INJURY,
             CAL_ID:CAL_ID,
+            email:EMAIL,
             BookingType:BookingType,
             CREATION_DATE:currentDate
         }
@@ -82,7 +84,11 @@ module.exports =
         var LONGITUDE=kiss.checkData(req.body.info.LONGITUDE)?req.body.info.LONGITUDE:null;
         var LATITUDE=kiss.checkData(req.body.info.LATITUDE)?req.body.info.LATITUDE:null;
         var currentDate=moment().format("YYYY/MM/DD HH:mm:ss");
-        if(!kiss.checkListData(FIRSTNAME,LASTNAME,GENDER,DOB,CONTACT_NO,TYPE_NAME,INJURY))
+        var EMAIL=kiss.checkData(req.body.info.EMAIL)?req.body.info.EMAIL:null;
+        var REMEMBER_PATIENTS=kiss.checkData(req.body.info.REMEMBER_PATIENTS)?req.body.info.REMEMBER_PATIENTS:null;
+        var RECEIVE_REDIMED=kiss.checkData(req.body.info.RECEIVE_REDIMED)?req.body.info.RECEIVE_REDIMED:null;
+
+        if(!kiss.checkListData(FIRSTNAME,LASTNAME,GENDER,DOB,CONTACT_NO,TYPE_NAME,INJURY,EMAIL))
         {
             kiss.exlog('insertEmergency',"Loi data truyen den");
             res.json({status:'fail'});
@@ -101,6 +107,9 @@ module.exports =
             INJURY:INJURY,
             LONGITUDE:LONGITUDE,
             LATITUDE:LATITUDE,
+            email:EMAIL,
+            remember_patients:REMEMBER_PATIENTS,
+            receive_redimed:RECEIVE_REDIMED,
             CREATION_DATE:currentDate
         }
         // console.log(insertRow);
