@@ -196,6 +196,31 @@ angular.module("app", [
             }
         })
 
+        .state('notifyScreen',{
+            url:'/notification',
+            views: {
+                "root": {
+                    templateUrl: "common/views/apptNotification.html",
+                    controller: function($scope,$state,socket){
+                        $scope.info = {
+                            patientName: null,
+                            doctorName: null
+                        };
+                        function cancelListenerHandler(){
+                            console.log("Remove Success");
+                        }
+                        socket.removeListener('receiveNotifyPatient', cancelListenerHandler());
+                        socket.on('receiveNotifyPatient',function(patient, doctor){
+                            if(patient)
+                                $scope.info.patientName = patient;
+                            if(doctor)
+                                $scope.info.doctorName = doctor;
+                        })
+                    }
+                }
+            }
+        })
+
 
         /* END */
     })
@@ -285,14 +310,17 @@ angular.module("app", [
         });
        
         if (!$cookieStore.get("userInfo")) {
-            socket.removeAllListeners();
-            socket.emit('lostCookie');
-            if (toState.name !== "security.forgot" && toState.name !== "security.login" && toState.name !== "security.term" && toState.name !== "security.redirect" && toState.name !=="security.rlobRegister" && toState.name!=='security.rlobSponsor' && toState.name!=='security.rlobSponsor.emergency' && toState.name!=='security.rlobSponsor.nonemergency' && toState.name!=='security.portalPatient' && toState.name.indexOf('webpatient') ) {
-                e.preventDefault();
-                $state.go("security.login", null, {
-                    location: "replace",
-                    reload: true
-                });
+            if(toState.name !== "notifyScreen")
+            {
+                socket.removeAllListeners();
+                socket.emit('lostCookie');
+                if (toState.name !== "security.forgot" && toState.name !== "security.login" && toState.name !== "security.term" && toState.name !== "security.redirect" && toState.name !=="security.rlobRegister" && toState.name!=='security.rlobSponsor' && toState.name!=='security.rlobSponsor.emergency' && toState.name!=='security.rlobSponsor.nonemergency' && toState.name!=='security.portalPatient' && toState.name.indexOf('webpatient') ) {
+                    e.preventDefault();
+                    $state.go("security.login", null, {
+                        location: "replace",
+                        reload: true
+                    });
+                }
             }
         }
 
