@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.patient.consult.scriptController",[])
-	.controller("ScriptController",function($scope,$filter,$state,$modal,toastr,$modalInstance,ConsultationService,$stateParams, script){
+	.controller("ScriptController",function($scope,$filter,$state,$modal,toastr,$modalInstance,ConsultationService,$stateParams, actual_doctor_id,script){
 		$scope.scriptInfo = {
 			        medication_name:null,
 			        start_date:null,
@@ -8,7 +8,7 @@ angular.module("app.loggedIn.patient.consult.scriptController",[])
 			        unit:null,
 			        qty:null,
 			        route:null,
-			        doctor_id:null,
+			        doctor_id:actual_doctor_id.NAME,
 			        frequency:null,
 			        condition_Indication:null
 		};
