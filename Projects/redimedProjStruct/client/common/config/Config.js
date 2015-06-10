@@ -507,14 +507,15 @@ angular.module('app.config', [])
             {code:"bottle", label:"bottle"}
         ])
     .constant("SCORE_TYPE", [
-            {id:3,label:'Auto Average score and Normal Range'},
+            {id:3,label:'Upper Limb Grip Strength'},
             {id:10,label:'Auto Max score and Rating'},
-            {id:11, label:'Auto Min score and Rating'},
-            {id:4,label:'Auto Recovery Heart Rate Rating'},
-            {id:6,label:'Auto Simple Rating'},
-            {id:8,label:'Manual Checkbox Rating (Excellent/Good/Fair/Poor)'},
-            {id:7,label:'Manual Checkbox Rating (Able/Partial/Unable'},
-            {id:9,label:'Auto Weight Managed and Manual Checkbox Rating(Able/Partial/Unable)'},
+            {id:11, label:'Hamstring Flexibility'},
+            {id:4,label:'Cardiovascular Fitness'},
+            {id:6,label:'Core Strength'},
+            {id:8,label:'Functional Task Rating'},
+            {id:7,label:'Weight Test Rating'},
+            {id:9,label:'Weight Test Rating (has managed weight info)'},
+            {id:12,label:'Lower Limb Function'},
             {id:5,label:'Summary Rating and Score'},
         ])
     .constant("COMMENT_TYPE", [
