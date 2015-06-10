@@ -86,10 +86,10 @@ module.exports = {
 		console.log(data);
 		var DOB =  moment(data.DOB).format("YYYY-MM-DD")
 		var sqlupdatePharmacist = 
-					"UPDATE ph_phamacists SET surname = ?,firstname = ?,DOB = ?,email= ?,phone= ?,mobile= ?,address= ?,surburb= ?,postcode= ?,state= ?,country = ?,gender= ?,preferred_name = ? ,APHRA = ?,Proficient = ? ,isHMR = ?,isCPOP = ?,isCompounding = ? "+
+					"UPDATE ph_phamacists SET surname = ?,firstname = ?,DOB = ?,email= ?,phone= ?,mobile= ?,address= ?,surburb= ?,postcode= ?,state= ?,country = ?,gender= ?,preferred_name = ? ,APHRA = ?,Proficient = ? ,isHMR = ?,isCPOP = ?,isCompounding = ?, lat = ?, lng = ? "+
 					"WHERE user_id = ? ";
 		req.getConnection(function(err,connection){
-			var query = connection.query(sqlupdatePharmacist,[data.surname,data.firstname,DOB,data.email,data.phone,data.mobile,data.address,data.surburb,data.postcode,data.state,data.country,data.gender,data.preferred_name,data.APHRA,data.Proficient,data.isHMR,data.isCPOP,data.isCompounding,data.user_id],function(err,rows){
+			var query = connection.query(sqlupdatePharmacist,[data.surname,data.firstname,DOB,data.email,data.phone,data.mobile,data.address,data.surburb,data.postcode,data.state,data.country,data.gender,data.preferred_name,data.APHRA,data.Proficient,data.isHMR,data.isCPOP,data.isCompounding, data.latitude, data.longitude ,data.user_id],function(err,rows){
 				if(err){
 					console.log(err);
 					res.json({status:'fail'});
@@ -268,7 +268,7 @@ module.exports = {
 	//get shop by company id
 	getCompanyShopById:function(req,res){
 		var company_id = req.query.company_id;
-		var sql = " SELECT * FROM ph_company_shops WHERE company_id = ? ";
+		var sql = "SELECT * FROM ph_company_shops cs WHERE cs.`company_id` = ? ORDER BY cs.`shop_id` DESC";
 		req.getConnection(function(err,connection){
 			var query = connection.query(sql,company_id,function(err,rows){
 				if(err){

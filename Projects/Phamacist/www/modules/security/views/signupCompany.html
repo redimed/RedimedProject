@@ -1,0 +1,188 @@
+ <ion-view>
+    <ion-content class="content-scroll">
+     <div  class="ic-tabs" style="width: 160px;">
+                <img src="img/Design-Appb_01.png" alt="" style="width: 129px;
+  margin-top: -2px;">
+            </div>
+         <div class="form-group" disable-tap>
+                
+                 <div style="width: 100%;background-color: #ef4e52;height: 49px;margin-left: 80px;"><h1 class="logo_login" style="width:225px">Company</h1></div>
+                <form name="CompanyForm" style="padding-top:10px">
+              
+                      <label class="item item-input input_us" >
+                        <span class="input-label span-input-color">Company Name</span>
+                        <input style="background:white;height: 36px;" ng-required="true" type="text" placeholder="Company Name" ng-model="signupData.name_company" name="CompanyName" 
+                        ng-class="{'error':iserr|| CompanyForm.CompanyName.$dirty && CompanyForm.CompanyName.$invalid}"  />
+                      </label>
+                     <div class="err" ng-messages="CompanyForm.CompanyName.$error" ng-show="iserr ||CompanyForm.CompanyName.$dirty && CompanyForm.CompanyName.$invalid">
+                            <small ng-message="required"
+                                ng-show="CompanyForm.CompanyName.$error.required">
+                                 Company name is required 
+                            </small>
+                    </div>
+                    <br>
+                     <label class="item item-input input_us" >
+                        <span class="input-label span-input-color">Address Company</span>
+                        <input style="background:white;height: 36px;"  ng-required="true" type="text" ng-model="signupData.address_company" name="address" placeholder="Address" gm-places-autocomplete 
+                        id="autocomplete" ng-focus="disableTap()"
+                        ng-class="{'error':iserr|| CompanyForm.address.$dirty && CompanyForm.address.$invalid}"/>
+                      </label>
+                       
+                     <div class="err" ng-messages="CompanyForm.address.$error" ng-show="iserr|| CompanyForm.address.$dirty && CompanyForm.address.$invalid">
+                            <small ng-message="required"
+                                ng-show="CompanyForm.address.$error.required">
+                                 Address is required 
+                            </small>
+                    </div>
+                    <br>
+                    <label class="item item-input input_us" >
+                        <span class="input-label span-input-color">Surburb</span>
+                        <input style="background:white;height: 36px;"  ng-required="true" type="text" placeholder="Surburb" ng-model="signupData.surburb_company" name="Surburb" 
+                        ng-class="{'error':iserr|| CompanyForm.Surburb.$dirty && CompanyForm.Surburb.$invalid}" />
+                    </label>
+                    <div class="err" ng-messages="CompanyForm.Surburb.$error" ng-show="iserr || CompanyForm.Surburb.$dirty && CompanyForm.Surburb.$invalid">
+                            <small ng-message="required"
+                                ng-show="CompanyForm.Surburb.$error.required">
+                                 Surburb is required 
+                            </small>
+                    </div>
+                    <br>
+                    <label class="item item-input input_us" >
+                        <span class="input-label span-input-color">Post Code</span>
+                        <input style="background:white;height: 36px;"  ng-required="true" type="number" placeholder="Post code" name="postcode" ng-model="signupData.postcode_company" type="number" 
+                        ng-class="{'error':iserr|| CompanyForm.postcode.$dirty && CompanyForm.postcode.$invalid}" />
+                    </label>
+                   <div class="err" ng-messages="CompanyForm.postcode.$error" ng-show="iserr|| CompanyForm.postcode.$dirty && CompanyForm.postcode.$invalid">
+                            <small ng-message="required"
+                                ng-show="CompanyForm.postcode.$error.required">
+                                 postcode is required 
+                            </small>
+                    </div>
+                    <br>
+                     <label class="item item-input input_us" >
+                        <span class="input-label span-input-color">State</span>
+                        <input style="background:white;height: 36px;"  ng-required="true" type="text" placeholder="State" name="state" ng-model="signupData.state_company"
+                        ng-class="{'error':iserr|| CompanyForm.state.$dirty && CompanyForm.state.$invalid}" />
+                    </label>
+                    <div class="err" ng-messages="CompanyForm.state.$error" ng-show="iserr || CompanyForm.state.$dirty && CompanyForm.state.$invalid">
+                            <small ng-message="required"
+                                ng-show="CompanyForm.state.$error.required">
+                                 State is required 
+                            </small>
+                    </div>
+                    <br>
+                     <label class="item item-input input_us" >
+                        <span class="input-label span-input-color">Country</span>
+                        <input style="background:white;height: 36px;"  ng-required="true" type="text"placeholder="Country" name="country" ng-model="signupData.country_company" 
+                        ng-class="{'error':iserr|| CompanyForm.country.$dirty && CompanyForm.country.$invalid}" />
+                    </label>
+                    <div class="err" ng-messages="CompanyForm.country.$error" ng-show="iserr||CompanyForm.country.$dirty && CompanyForm.country.$invalid">
+                            <small ng-message="required"
+                                ng-show="CompanyForm.country.$error.required">
+                                 Country is required 
+                            </small>
+                    </div>
+                    <br>
+                    <label class="item item-input input_us" >
+                        <span class="input-label span-input-color">Contact Name</span>
+                        <input style="background:white;height: 36px;"  ng-required="true" type="text" placeholder="Contact Name" name="Contactname" ng-model="signupData.contact_name_company"
+                        ng-class="{'error':iserr|| CompanyForm.Contactname.$dirty && CompanyForm.Contactname.$invalid}" />
+                    </label>
+                   <div class="err" ng-messages="CompanyForm.Contactname.$error" ng-show="iserr||CompanyForm.Contactname.$dirty && CompanyForm.Contactname.$invalid">
+                            <small ng-message="required"
+                                ng-show="CompanyForm.Contactname.$error.required">
+                                 Contactname is required 
+                            </small>
+                     </div>
+                     <br>
+                    <label class="item item-input input_us" >
+                        <span class="input-label span-input-color">Contact Number</span>
+                        <input style="background:white;height: 36px;"  ng-required="true" type="text" placeholder="Contact Number" name="contactNumber" ng-model="signupData.contact_number_company"
+                        ng-class="{'error':iserr|| CompanyForm.contactNumber.$dirty && CompanyForm.contactNumber.$invalid}" />
+                    </label>
+                     <div class="err" ng-messages="CompanyForm.contactNumber.$error" ng-show="iserr||CompanyForm.contactNumber.$dirty && CompanyForm.contactNumber.$invalid">
+                            <small ng-message="required"
+                                ng-show="CompanyForm.contactNumber.$error.required">
+                                 Contact Number is required 
+                            </small>
+                        </div>
+                        <br>
+                     <label class="item item-input input_us" >
+                        <span class="input-label span-input-color">Email Company</span>
+                        <input style="background:white;height: 36px;"  ng-required="true"  placeholder="Email" name="email" ng-model="signupData.email_company" type="email"
+                        ng-class="{'error':iserr|| CompanyForm.email.$dirty && CompanyForm.email.$invalid}" />
+                    </label>
+                    <div class="err" ng-messages="CompanyForm.email.$error" ng-show="iserr||CompanyForm.email.$dirty && CompanyForm.email.$invalid">
+                            <small ng-message="required"
+                                ng-show="CompanyForm.email.$error">
+                                 Email is required 
+                            </small>
+                     </div>
+                     <br>
+                    <label class="item item-input input_us" >
+                        <span class="input-label span-input-color">Phone Company</span>
+                        <input style="background:white;height: 36px;"  placeholder="Phone" ng-model="signupData.phone_company" type="number" name="phone"
+                        ng-class="{'error':iserr|| CompanyForm.phone.$dirty && CompanyForm.phone.$invalid}" />
+                    </label>
+                     <div class="err" ng-messages="CompanyForm.phone.$error" ng-show="iserr||CompanyForm.phone.$dirty && CompanyForm.phone.$invalid">
+                            <small ng-message="required"
+                                ng-show="CompanyForm.phone.$error">
+                                 Phone is required 
+                            </small>
+                     </div>
+                     <br>
+                    <label class="item item-input input_us" >
+                        <span class="input-label span-input-color">Mobile Company</span>
+                        <input style="background:white;height: 36px;"   placeholder="Mobile" name="mobile" ng-model="signupData.mobile_company" required type="number"
+                        ng-class="{'error':iserr|| CompanyForm.mobile.$dirty && CompanyForm.mobile.$invalid}" />
+                    </label>
+                    <div class="err" ng-messages="CompanyForm.mobile.$error" ng-show="iserr||CompanyForm.mobile.$dirty && CompanyForm.mobile.$invalid">
+                            <small ng-message="required"
+                                ng-show="CompanyForm.mobile.$error">
+                                 Mobile is required 
+                            </small>
+                    </div>
+                    <br>
+                    <li class="item item-checkbox " style="border:none" >
+                         <label class="checkbox ">
+                           <input type="checkbox" ng-model="signupData.compouding_company"  ng-true-value="1" ng-false-value="0">
+                         </label>
+                         Compouding
+                    </li>
+                     <li class="item item-checkbox " style="border:none" >
+                         <label class="checkbox ">
+                           <input type="checkbox" ng-model="signupData.CPOP_company"  ng-true-value="1" ng-false-value="0">
+                         </label>
+                         CPOP
+                    </li>
+                    <li class="item item-checkbox " style="border:none" >
+                         <label class="checkbox ">
+                           <input type="checkbox" ng-model="signupData.multishop_company"  ng-true-value="1" ng-false-value="0">
+                         </label>
+                         MultiShop
+                    </li>
+
+                     <label class="item item-input input_us" >
+                        <span class="input-label span-input-color">Dispending Software</span>
+                        <input placeholder="Dispending Software" name="Dispending" ng-model="signupData.dispendingsoftware_company"  type="text" required
+                        ng-class="{'error':iserr|| CompanyForm.Dispending.$dirty && CompanyForm.Dispending.$invalid}" />
+                    </label>
+                    <div class="err" ng-messages="CompanyForm.Dispending.$error" ng-show="iserr||CompanyForm.Dispending.$dirty && CompanyForm.Dispending.$invalid">
+                            <small ng-message="required"
+                                ng-show="CompanyForm.Dispending.$error.required">
+                                 Dispending is required 
+                            </small>
+                    </div>
+                   
+                   
+
+                    <br>
+                     <button class="btn" ng-click="signup(CompanyForm)" style="float:right" data-tap-disabled="true">Sign Up</button>
+                   
+                     
+                     <button class="btn" ui-sref="security.signup"  style="float:left" data-tap-disabled="true">Back </button>
+                </form>
+                   
+        </div>
+   </ion-content>
+</ion-view>

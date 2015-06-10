@@ -1,0 +1,31 @@
+<ion-view title="User In Company" >
+      <div class="bar bar-subheader customHeaderBar">
+        <button class="button button-icon icon fa fa-reply" style="color:#fff;padding-top: 12px;" ui-sref="app.main.company" ></button>
+        <h2 class="title customHeaderBar"  style=" margin-left: 14%;font-size: 20px;top: 11px;">User</h2>
+         <button class="button button-icon icon fa fa-plus " style="color:#fff" ng-click="openModalUserInCompany('Add New User','addNew')"></button>
+      </div>
+    
+    <ion-content style="background: #2bbbd6">
+        <div class="list card" ng-repeat="user in dataUserIncompany" ng-if="user.user_id !== userInfo.user_id">
+          <div class="item item-avatar" >
+            <img ng-src="img/app-icons/android/mipmap-hdpi/logo.png">
+            <h2>{{user.username}}</h2>
+            <p>Email: {{user.email}}</p>
+            <p>Phone: {{user.mobile}}</p>
+            <p> 
+              <i class="icon fa fa-trash-o fa-2x" ng-click="deleteUserInCompany(user.user_id)"></i>
+            </p>
+          </div>
+
+          <div class="item item-image">
+           
+          </div>
+
+          <a class="assertive">
+            
+          </a>
+
+       </div>
+      
+    </ion-content>
+</ion-view>
