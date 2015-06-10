@@ -12,7 +12,11 @@ angular.module("app.loggedIn.patient.consult.scriptController",[])
 			        frequency:null,
 			        condition_Indication:null
 		};
-
+		//phan quoc chien set list 
+		$scope.listUnit = ptnConst.unit;
+		$scope.listRoute = ptnConst.route;
+		$scope.listFrequency = ptnConst.frequency;
+		//chien end
 		$scope.medications = [];
 		$scope.selectedMedication = null;
 		$scope.checkMedication = true;
@@ -36,6 +40,7 @@ angular.module("app.loggedIn.patient.consult.scriptController",[])
 		}
 
 		$scope.okClick = function(){
+			
 			$modalInstance.close({'type':'ok','value':$scope.scriptInfo});
 		}
 
