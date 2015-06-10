@@ -393,9 +393,10 @@ module.exports = {
     LoadReportOweLeave: function(req, res) {
         var info = req.body.info;
         //console.log(info);
-        var stringEMP = "";
-        var stringDept = "";
-        var stringID = "";
+        var stringEMP   = "";
+        var stringDept  = "";
+        var stringID    = "";
+        var stringline1 = "";
         var start_date;
         var finish_date;
         var date;
@@ -412,6 +413,62 @@ module.exports = {
             stringDept += info.listDept[j].id + ", ";
         }
         stringDept += 0;
+        //get year from
+        info.weekFrom = new Date(info.weekFrom);
+        info.weekFrom.setHours(0, 0, 0);
+        var yearsFrom = info.weekFrom.getFullYear();
+        
+        //end get year from
+
+        //get year to
+        info.weekTo = new Date(info.weekTo);
+        info.weekTo.setHours(0, 0, 0);
+        var yearsTo = info.weekTo.getFullYear();
+        
+        //end get year to
+
+        //get string weekno+year
+            //if yearfrom = yearto
+        if(yearsFrom==yearsTo){
+            for(var a = info.weekNoFrom; a <= info.weekNoTo; a++){
+                stringline1+="("+a+","+yearsFrom+"),";
+            }
+            stringline1 = stringline1.substring(0, stringline1.length - 1);
+            // console.log(stringline1);
+        }//end if
+        //else
+        else{
+
+            if(info.weekFrom.getMonth()===11){  // if month=12 ->>> lay tuan 53 cua nam do vi neu k set truong hop nay khi tra ve weekno=1 
+                stringline1+="(53,"+yearsFrom+"),";
+            }
+            else{
+                for(var a = info.weekNoFrom; a < 54; a++){
+                    stringline1+="("+a+","+yearsFrom+"),";
+                }
+            }
+
+            if(info.weekTo.getMonth()===0){ // if month=1 ->> lay tuan dau tien cua nam do vi neu k set truong hop nay khi tra ve weekno=53
+                stringline1+="(1,"+yearsTo+"),";
+            }
+            else{
+                for(var b = info.weekNoTo+1; b > 0;b--){
+                    stringline1+="("+b+","+yearsTo+"),";
+                }
+            }
+            var hieu_cua_2_nam = yearsTo - yearsFrom;
+            for(var c = 0; c < hieu_cua_2_nam-1; c++){
+                var years = yearsFrom+1;
+                for(var d = 1;d <54; d++){
+                    stringline1+="("+d+","+years+"),";
+                }
+            }
+
+            stringline1 = stringline1.substring(0, stringline1.length - 1);
+            // console.log(stringline1);
+        }//end else
+        //end get string weekno+year
+        
 
         var sql_get_total_all = "SELECT COUNT(*) AS 'total_all' FROM hr_leave_owe WHERE create_id = :user_id ";
         var sql_get_total_Dept = "SELECT COUNT(department) AS 'total_Dept',department FROM hr_leave_owe WHERE create_id = :user_id GROUP BY department ";
@@ -433,8 +490,8 @@ module.exports = {
                                               "INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id " + //INNER JOIN
                                               "WHERE time_tasks_week.task_status_id = 3 "+ //WHERE
                                                 " AND departments.departmentid IN ( " + stringDept + " ) "+ //WHERE
-                                                " AND (time_tasks_week.week_no BETWEEN :weekNoFrom "+ //WHERE
-                                                " AND :weekNoTo ) AND hr_employee.Employee_ID IN ( " + stringEMP + " )"; //WHERE
+                                                " AND (time_tasks_week.week_no,YEAR(time_tasks_week.start_date))  IN ( " + stringline1 + " ) "+ //WHERE
+                                                " AND hr_employee.Employee_ID IN ( " + stringEMP + " )"; //WHERE
 
         var delete_hr_leave_owe = "DELETE FROM hr_leave_owe WHERE create_id = :user_id ";
 
@@ -452,13 +509,7 @@ module.exports = {
                 })
                     .success(function(delete2) {
 
-                        db.sequelize.query(sql_get_data_hr_leave_owe_table,null,{
-                            raw:true
-                        },{
-                            weekNoFrom   : info.weekNoFrom,
-                            weekNoTo     : info.weekNoTo
-                        })
-                        
+                        db.sequelize.query(sql_get_data_hr_leave_owe_table)
                             .success(function(data_hr_leave_owe_table) {
                                 if(data_hr_leave_owe_table!==undefined&&data_hr_leave_owe_table!==null&&data_hr_leave_owe_table!==""&&data_hr_leave_owe_table.length!==0){
 
@@ -733,6 +784,7 @@ module.exports = {
         var data_Dept = [];
         var d = new Date();
         d.setHours(0, 0, 0);
+        var years = d.getFullYear();
         d.setDate(d.getDate() + 4 - (d.getDay() || 7));
         var yearStart = new Date(d.getFullYear(), 0, 1);
         var weeks = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
@@ -755,10 +807,15 @@ module.exports = {
                                     "INNER JOIN departments ON hr_employee.Dept_ID = departments.departmentid  "+//INNER JOIN
                                     "INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id "+//INNER JOIN
                                     "WHERE time_tasks_week.task_status_id = 3 AND "+//WHERE
+                                    "YEAR(time_tasks_week.start_date)=:years AND "+
                                     "departments.departmentid IN ("+stringDept+") AND "+//WHERE
                                     // "time_tasks_week.week_no<"+info.weekNoFrom+" AND "+
                                     "hr_employee.Employee_ID IN ("+stringEMP+")";//WHERE
-                db.sequelize.query(sql_get_data1)
+                db.sequelize.query(sql_get_data1,null,{
+                    raw : true
+                },{
+                    years : years
+                })
                     .success(function(data1){
                         //get time in lieu*********************
                         if(data1!==null&&data1!==undefined&&data1!==""&&data1.length!==0){
@@ -815,11 +872,16 @@ module.exports = {
                                                 "INNER JOIN time_tasks ON time_tasks.tasks_week_id = time_tasks_week.task_week_id "+//INNER JOIN
                                                 "INNER JOIN time_item_task ON time_item_task.task_id = time_tasks.tasks_id "+//INNER JOIN
                                                 "WHERE time_tasks_week.task_status_id = 3 AND "+//WHERE
+                                                "YEAR(time_tasks_week.start_date)=:years AND "+
                                                 "departments.departmentid IN ("+stringDept+") AND "+//WHERE
                                                 // "(time_tasks_week.week_no <"+info.weekNoFrom+") AND "+
                                                 "hr_employee.Employee_ID IN ("+stringEMP+") AND "+//WHERE
                                                 "time_item_task.item_id=22";//WHERE
-                    db.sequelize.query(sql_get_data2)
+                    db.sequelize.query(sql_get_data2,null,{
+                        raw:true
+                    },{
+                        years: years
+                    })
                         .success(function(data2){
                             if(data2!==undefined&&data2!==null&&data2!==""&&data2.length!==0){
                             //get time in lieu used and time in lieu remain *******************
@@ -977,8 +1039,13 @@ module.exports = {
                                     "WHERE time_tasks_week.task_status_id = 3 AND "+//WHERE
                                     "departments.departmentid IN ("+stringDept+") AND "+//WHERE
                                     "(time_tasks_week.week_no BETWEEN "+week2+" AND "+weeks+" ) AND "+//WHERE
+                                    "YEAR(time_tasks_week.start_date)=:years AND "+
                                     "hr_employee.Employee_ID IN ("+stringEMP+")";//WHERE
-                            db.sequelize.query(sql_get_data3)
+                            db.sequelize.query(sql_get_data3,null,{
+                                raw:true
+                            },{
+                                years:years
+                            })
                                 .success(function(data3){
                                     
                                     if(data3!==undefined&&data3!==null&&data3!==""&&data3.length!==0){
@@ -1138,11 +1205,12 @@ module.exports = {
 
     LoadReportUtilizationRatioDetail: function(req, res) {
         var info = req.body.info;
-        var stringEMP = "";
-        var stringDept = "";
-        var stringWeek = "";
-        var stringItem = "";
+        var stringEMP   = "";
+        var stringDept  = "";
+        var stringWeek  = "";
+        var stringItem  = "";
         var stringline1 = "";
+        var stringline2 = "";
         var flag1 = 0;
         var flag2 = 0;
         var flag3 = 0;
@@ -1165,6 +1233,63 @@ module.exports = {
             stringDept += info.listDept[j].id + ", ";
         }
         stringDept += 0;
+
+        //get year from
+        info.weekFrom = new Date(info.weekFrom);
+        info.weekFrom.setHours(0, 0, 0);
+        var yearsFrom = info.weekFrom.getFullYear();
+        
+        //end get year from
+
+        //get year to
+        info.weekTo = new Date(info.weekTo);
+        info.weekTo.setHours(0, 0, 0);
+        var yearsTo = info.weekTo.getFullYear();
+        
+        //end get year to
+
+        //get string weekno+year
+            //if yearfrom = yearto
+        if(yearsFrom==yearsTo){
+            for(var a = info.weekNoFrom; a <= info.weekNoTo; a++){
+                stringline2+="("+a+","+yearsFrom+"),";
+            }
+            stringline2 = stringline2.substring(0, stringline2.length - 1);
+            //console.log(stringline1);
+        }//end if
+        //else
+        else{
+
+            if(info.weekFrom.getMonth()===11){  // if month=12 ->>> lay tuan 53 cua nam do vi neu k set truong hop nay khi tra ve weekno=1 
+                stringline2+="(53,"+yearsFrom+"),";
+            }
+            else{
+                for(var a = info.weekNoFrom; a < 54; a++){
+                    stringline2+="("+a+","+yearsFrom+"),";
+                }
+            }
+
+            if(info.weekTo.getMonth()===0){ // if month=1 ->> lay tuan dau tien cua nam do vi neu k set truong hop nay khi tra ve weekno=53
+                stringline2+="(1,"+yearsTo+"),";
+            }
+            else{
+                for(var b = info.weekNoTo+1; b > 0;b--){
+                    stringline2+="("+b+","+yearsTo+"),";
+                }
+            }
+            var hieu_cua_2_nam = yearsTo - yearsFrom;
+            for(var c = 0; c < hieu_cua_2_nam-1; c++){
+                var years = yearsFrom+1;
+                for(var d = 1;d <54; d++){
+                    stringline2+="("+d+","+years+"),";
+                }
+            }
+
+            stringline2 = stringline2.substring(0, stringline2.length - 1);
+            //console.log(stringline1);
+        }//end else
+        //end get string weekno+year
+
         var sql_get_data_time_activity_report = "SELECT user_id, "+//SELECT
         " task_week_id, "+//SELECT
         " Employee_id, "+//SELECT
@@ -1231,14 +1356,9 @@ module.exports = {
                                                                        " INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id " + //INNER JOIN
                                                                        " WHERE time_tasks_week.task_status_id = 3 "+//WHERE
                                                                             " AND departments.departmentid IN ( " + stringDept + " ) "+//WHERE
-                                                                            " AND (time_tasks_week.week_no BETWEEN :weekNoFrom AND :weekNoTo ) "+//WHERE
+                                                                            " AND (time_tasks_week.week_no,YEAR(time_tasks_week.start_date)) IN (" + stringline2 + ")  "+//WHERE
                                                                             " AND hr_employee.Employee_ID IN ( " + stringEMP + " )";//WHERE
-                                db.sequelize.query(sql_get_data_time_activity_table,null,{
-                                    raw : true
-                                },{
-                                    weekNoFrom : info.weekNoFrom,
-                                    weekNoTo   : info.weekNoTo
-                                })
+                                db.sequelize.query(sql_get_data_time_activity_table)
                                     .success(function(data_time_activity_table) {
                                         if(data_time_activity_table!==undefined&&data_time_activity_table!==null&&data_time_activity_table!==""&&data_time_activity_table.length!==0){
                                             for (var i = 0; i < data_time_activity_table.length; i++) {
@@ -1631,8 +1751,9 @@ module.exports = {
 
     LoadReportUtilizationRatioSumary: function(req, res) {
         var info = req.body.info;
-        var stringEMP = "";
-        var stringDept = "";
+        var stringEMP   = "";
+        var stringDept  = "";
+        var stringline2 = "";
         for (var i = 0; i < info.listEMP.length; i++) {
             stringEMP += info.listEMP[i].id + ", ";
         }
@@ -1651,7 +1772,64 @@ module.exports = {
         var flag7 = 0;
         var flag8 = 0;
         var flag9 = 0;
-        var sum = 0;
+        var sum   = 0;
+
+         //get year from
+        info.weekFrom = new Date(info.weekFrom);
+        info.weekFrom.setHours(0, 0, 0);
+        var yearsFrom = info.weekFrom.getFullYear();
+        
+        //end get year from
+
+        //get year to
+        info.weekTo = new Date(info.weekTo);
+        info.weekTo.setHours(0, 0, 0);
+        var yearsTo = info.weekTo.getFullYear();
+        
+        //end get year to
+
+        //get string weekno+year
+            //if yearfrom = yearto
+        if(yearsFrom==yearsTo){
+            for(var a = info.weekNoFrom; a <= info.weekNoTo; a++){
+                stringline2+="("+a+","+yearsFrom+"),";
+            }
+            stringline2 = stringline2.substring(0, stringline2.length - 1);
+            //console.log(stringline1);
+        }//end if
+        //else
+        else{
+
+            if(info.weekFrom.getMonth()===11){  // if month=12 ->>> lay tuan 53 cua nam do vi neu k set truong hop nay khi tra ve weekno=1 
+                stringline2+="(53,"+yearsFrom+"),";
+            }
+            else{
+                for(var a = info.weekNoFrom; a < 54; a++){
+                    stringline2+="("+a+","+yearsFrom+"),";
+                }
+            }
+
+            if(info.weekTo.getMonth()===0){ // if month=1 ->> lay tuan dau tien cua nam do vi neu k set truong hop nay khi tra ve weekno=53
+                stringline2+="(1,"+yearsTo+"),";
+            }
+            else{
+                for(var b = info.weekNoTo+1; b > 0;b--){
+                    stringline2+="("+b+","+yearsTo+"),";
+                }
+            }
+            var hieu_cua_2_nam = yearsTo - yearsFrom;
+            for(var c = 0; c < hieu_cua_2_nam-1; c++){
+                var years = yearsFrom+1;
+                for(var d = 1;d <54; d++){
+                    stringline2+="("+d+","+years+"),";
+                }
+            }
+
+            stringline2 = stringline2.substring(0, stringline2.length - 1);
+            //console.log(stringline1);
+        }//end else
+        //end get string weekno+year
+
         //DELETE ALL TABLE
         var sql_delete_time_activity_summary_table = " DELETE FROM time_activity_summary_table WHERE user_id= :user_id ";
         var sql_delete_time_activity_summary_detail_table = " DELETE FROM time_activity_summary_detail_table WHERE user_id= :user_id ";
@@ -1694,15 +1872,10 @@ module.exports = {
                                                                                " INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id " +//INNER JOIN 
                                                                                " WHERE time_tasks_week.task_status_id = 3 "+//WHERE
                                                                                " AND departments.departmentid IN ( " + stringDept + " ) "+//WHERE
-                                                                               " AND (time_tasks_week.week_no BETWEEN :weekNoFrom AND :weekNoTo ) "+//WHERE
+                                                                               " AND (time_tasks_week.week_no,YEAR(time_tasks_week.start_date)) IN ("+stringline2+") "+//WHERE
                                                                                " AND hr_employee.Employee_ID IN ( " + stringEMP + " ) ";//WHERE
                                 //GET DATA TABLE time_activity_summary_table
-                                db.sequelize.query(sql_get_data_time_activity_summary_table,null,{
-                                    raw : true
-                                },{
-                                    weekNoFrom : info.weekNoFrom,
-                                    weekNoTo   : info.weekNoTo
-                                })
+                                db.sequelize.query(sql_get_data_time_activity_summary_table)
                                     .success(function(data_time_activity_summary_table) {
                                         
                                         //INSERT DATA INTO time_activity_summary_table
@@ -1797,7 +1970,8 @@ module.exports = {
                                                                                                     var sql_update1 = "SELECT user_id,Department_id,activity_id,SUM(time_charge) AS'time_charge_Dept' "+ //SELECT
                                                                                                                         "FROM time_activity_summary_detail_table "+ //FROM
                                                                                                                         "WHERE user_id= :user_id "+ //WHERE
-                                                                                                                        "GROUP BY Department_id,activity_id"; //GROUP BY
+                                                                                                                        "GROUP BY Department_id,activity_id "+//GROUP BY
+                                                                                                                        "ORDER BY Department_id,activity_id"; 
                                                                                                     db.sequelize.query(sql_update1,null,{
                                                                                                         raw : true
                                                                                                     },{
@@ -1824,7 +1998,8 @@ module.exports = {
                                                                                                                             "FROM time_activity_summary_report " + //FROM
                                                                                                                             "WHERE Department_id IN(" + stringDept + ") "+ //WHERE
                                                                                                                             "AND user_id= :user_id " + //WHERE
-                                                                                                                            "GROUP BY Department_id"; //GROUP BY
+                                                                                                                            "GROUP BY Department_id "+//GROUP BY
+                                                                                                                            "ORDER BY Department_id,activity_id"; 
                                                                                                                         db.sequelize.query(sql_update2,null,{
                                                                                                                             raw : true
                                                                                                                         },{
@@ -1852,7 +2027,8 @@ module.exports = {
                                                                                                                                                 "FROM time_activity_summary_report " + //FROM
                                                                                                                                                 "WHERE user_id= :user_id " + //FROM
                                                                                                                                                 "GROUP BY Department_id " +//FROM
-                                                                                                                                                ") t"; //FROM
+                                                                                                                                                ") t "+
+                                                                                                                                                "ORDER BY Department_id,activity_id"; //FROM
                                                                                                                                             db.sequelize.query(sql_update3,null,{
                                                                                                                                                 raw : true
                                                                                                                                             },{
@@ -1872,7 +2048,8 @@ module.exports = {
                                                                                                                                                                 var sql_get_data = "SELECT * " + //SELECT
                                                                                                                                                                     "FROM time_activity_summary_report " + //FROM
                                                                                                                                                                     "WHERE user_id= :user_id " + //WHERE
-                                                                                                                                                                    "GROUP BY Department_id,activity_id"; //GROUP BY
+                                                                                                                                                                    "GROUP BY Department_id,activity_id "+
+                                                                                                                                                                    "ORDER BY Department_id,activity_id"; //GROUP BY
                                                                                                                                                                 db.sequelize.query(sql_get_data,null,{
                                                                                                                                                                     raw : true
                                                                                                                                                                 },{
