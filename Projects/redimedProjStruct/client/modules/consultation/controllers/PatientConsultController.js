@@ -1,5 +1,13 @@
 angular.module("app.loggedIn.patient.consult.controller",[])
 	.controller("PatientConsultController",function($filter,$rootScope,$interval,$window,$document,$cookieStore,$scope,$state,$modal,InsurerService,toastr,socket,OTSession,ReceptionistService,$stateParams,ConsultationService,PatientService,UserService,$interval){
+
+		/* VUONG */
+		$scope.addTemplate = function(){
+			$state.go('loggedIn.template');
+			$cookieStore.put('template_patient_id', $stateParams.patient_id);
+		}
+		/* END VUONG */
+
 		$scope.patient_id = $stateParams.patient_id;
 		$scope.cal_id = $stateParams.cal_id;
 		$scope.userInfo = $cookieStore.get('userInfo');

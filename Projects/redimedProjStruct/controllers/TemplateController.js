@@ -7,6 +7,22 @@ var fs = require('fs');
 var moment = require('moment');
 
 module.exports = {
+	postDelete: function(req, res){
+		var data = req.body.data;
+
+		var sql = knex('template')
+					.where({id: data.id})
+					.del().toString();
+
+		db.sequelize.query(sql)
+		.success(function(rows){
+			res.json({data: rows});
+		})
+		.error(function(error){
+			res.json(500, {error: error});
+		})
+	},
+
 	postOne: function(req, res){
 		var data = req.body.data;
 

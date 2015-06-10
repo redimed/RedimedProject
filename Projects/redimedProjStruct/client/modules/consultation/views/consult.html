@@ -159,6 +159,11 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <button class="btn btn-success" ng-click="addTemplate()">Add Template</button>
+                    </div>
+                </div>
             </div>
             <div class="un-tab-content" id="tab_1_2">
                 <div class="table-dynamic">
@@ -1248,6 +1253,12 @@
     </div>
     <div class="modal-footer">
         <button class="un_tn_btn un_tn_btn_gray un_tn_btn_sm" ng-click="ok()">Ok</button>
+    </div>
+</script>
+
+<script type="text/ng-template" id="listTemplateDialog">
+    <div class="modal-body">
+        <template-list></template-list>
     </div>
 </script>
 

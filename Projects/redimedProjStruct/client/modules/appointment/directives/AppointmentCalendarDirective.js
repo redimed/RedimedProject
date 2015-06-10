@@ -1,6 +1,6 @@
 angular.module('app.loggedIn.appointment.directives.calendar', [])
 
-.directive('appointmentCalendar', function($modal, $timeout, $state, $cookieStore, toastr, AppointmentModel, mdtRedimedsitesService, mdtDeptService, ConfigService){
+.directive('appointmentCalendar', function($modal, $timeout, $state, $cookieStore, $modal, toastr, AppointmentModel, mdtRedimedsitesService, mdtDeptService, ConfigService){
 	return {
 		restrict: 'EA',
 		templateUrl: 'modules/appointment/directives/templates/calendar.html',

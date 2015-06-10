@@ -10,3 +10,4 @@ app.post(url+'add', TemplateController.postAdd);
 app.post(url+'update', TemplateController.postEdit);
 app.post(url+'list', TemplateController.postList);
 app.post(url+'one', TemplateController.postOne);
+app.post(url+'delete', TemplateController.postDelete);

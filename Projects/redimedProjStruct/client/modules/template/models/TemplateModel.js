@@ -25,5 +25,10 @@ angular.module("app.loggedIn.template.model", [])
         return detailApi.post({data: data});
     }
 
+    instanceService.delete = function(data){
+        var detailApi = appApi.all("delete");
+        return detailApi.post({data: data});
+    }
+
     return instanceService;
 })
