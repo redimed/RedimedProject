@@ -216,19 +216,16 @@ module.exports = {
                             db.ClnPatientMedication.create({
                                 patient_id: info.patient_id,
                                 consult_id: consultId,
-                                medication_name: s.medication,
-                                strength: s.strength,
-                                form: s.form,
+                                medication_name: s.medication_name,
+                                unit: s.unit,
                                 qty: s.qty,
-                                code: s.code,
-                                script: s.script,
                                 dose: s.dose,
                                 frequency: s.frequency,
-                                instructions: s.instructions,
-                                repeat: s.repeat,
-                                reason: s.reason,
-                                category: s.category,
-                                price: s.price
+                                start_date : s.start_date,
+                                end_date : s.end_date,
+                                route : s.route,
+                                doctor_id : s.doctor_id,
+                                condition_Indication : s.condition_Indication
                             })
                         )
                     }
