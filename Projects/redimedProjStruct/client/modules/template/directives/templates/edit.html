@@ -125,3 +125,13 @@
 		<div id="editor"></div>
 	</div>
 </form>
+
+<script type="text/ng-template" id="textChangeDialog">
+	<div class="modal-body">	
+		<ul>
+			<li ng-repeat="field in field">
+				<a ng-click="selectField(field)">{{field.field}}</a>
+			</li>
+		</ul>
+	</div>
+</script>

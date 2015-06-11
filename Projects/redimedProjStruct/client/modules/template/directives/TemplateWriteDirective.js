@@ -1,17 +1,29 @@
 angular.module('app.loggedIn.template.directives.write', [])
 
-.directive('templateWrite', function($modal, $cookieStore, $state, $stateParams, TemplateModel, toastr, PatientService){
+.directive('templateWrite', function($modal, $cookieStore, $state, $stateParams, $timeout, TemplateModel, toastr, PatientService){
 	return {
 		restrict: 'EA',
 		scope: {
 		},
 		templateUrl: 'modules/template/directives/templates/write.html',
 		link: function(scope, elem, attrs){
+
+			scope.savePDF = function(){
+				
+			}
+
+			var finishDownload = function(){
+				window.clearInterval(fileDownloadCheckTimer);
+ 				$.removeCookie('fileDownloadToken'); //clears this cookie value
+ 				$.unblockUI();
+			}
+
 			/* PATIENT LOAD */
 			var patientLoad = function(patient_id){
 				PatientService.get(patient_id)
 				.then(function(response){
 					scope.patient.one = response.data;
+					loadTemplate();
 				}, function(error){})
 			}
 
@@ -82,8 +94,6 @@ angular.module('app.loggedIn.template.directives.write', [])
 			scope.template = {
 				one: null
 			}
-
-			loadTemplate();
 		}
 	}
 })
