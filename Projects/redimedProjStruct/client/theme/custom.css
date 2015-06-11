@@ -1277,6 +1277,7 @@ table.timetable-table td:last-child {
     border-right: 1.5px solid #ddd;
     -moz-user-select: none;
     -webkit-user-select: none;
+    width: 15;
 }
 
 .odd {

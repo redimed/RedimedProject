@@ -25,12 +25,19 @@ angular.module("app.loggedIn.patient.consult.controller",[])
             }
 		};
 		//get list consultation of patient
-		ConsultationService.getListConsultOfPatient($stateParams.patient_id).then(function(data){
-			if (data.status == 'success') {
-				$scope.listConsultOfPatient = data.data;
-				console.log($scope.listConsultOfPatient);
-			};
-		});
+		$scope.setListConsultationOfPatient = function(){
+			ConsultationService.getListConsultOfPatient($stateParams.patient_id).then(function(data){
+				if (data.status == 'success') {
+					$scope.listConsultOfPatient = data.data;
+					console.log(data.data);
+				};
+			});
+		}
+		$scope.setListConsultationOfPatient();
+		//
+		$scope.showPopupHistory = function(data){
+			console.log(data);
+		}
 		/*chien end*/
 		$scope.patient_id = $stateParams.patient_id;
 		$scope.cal_id = $stateParams.cal_id;
@@ -587,7 +594,6 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 				$scope.consultInfo.measurements[i].patient_id = $scope.patient_id;
 				$scope.consultInfo.measurements[i].cal_id = $scope.cal_id;
 			}
-
         	ConsultationService.submitConsult($scope.consultInfo).then(function(res){
 				if(res.status == 'success')
 				{
@@ -624,6 +630,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		                if(response.status === 'success'){
 		                   	toastr.success('Save Item Success!');
 		                    PatientService.endInvoice($scope.appointment.Patient_id, $scope.appointment.CAL_ID);
+		                    $scope.setListConsultationOfPatient();
 		                }
 		                else{
 		                    toastr.error('Save Item Failed!');
@@ -692,7 +699,6 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			});
 		}
 		$scope.getApptPatient();
-
 		/**
 		 * tannv.dts@gmail.com
 		 * chuyen appt patient status thanh Work In Progress

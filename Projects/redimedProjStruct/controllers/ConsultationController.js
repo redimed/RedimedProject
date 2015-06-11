@@ -496,11 +496,13 @@ module.exports = {
             return;
         }
         var sql=
-            " SELECT * FROM `cln_patient_consults` WHERE `patient_id` = ? ";
+            " SELECT consult.*,problem.`Notes` FROM `cln_patient_consults` consult               "+
+            " LEFT JOIN `cln_problems` problem ON consult.`problem_id` = problem.`Problem_id`    "+
+            " WHERE consult.`patient_id` = ?                                                     ";
         kiss.executeQuery(req,sql,patientId,function(rows){
             if(rows.length>0)
             {
-                res.json({status:'success',data:rows[0]});
+                res.json({status:'success',data:rows});
             }
             else
             {
