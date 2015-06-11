@@ -8,11 +8,39 @@ var chainer = new db.Sequelize.Utils.QueryChainer;
 var kiss=require('./kissUtilsController');
 var errorCode=require('./errorCode');
 var invoiceUtil=require('./invoiceUtilController');
+var knex = require('../knex-connect.js');
+var commonFunction =  require('../knex-function.js');
 
 //tannv.dts@gmail.com
 var controllerCode="RED_CONSULT";
 
 module.exports = {
+
+    getByIdProblem: function(req, res){
+
+        var postData = req.body.consult_id;
+
+        var sql = knex
+        .column('cln_patient_consults.history',
+        'cln_patient_consults.Creation_date',
+        'cln_patient_consults.examination',
+        'cln_patient_consults.treatment_plan',
+        'cln_patient_consults.diagnosis',
+        'cln_problems.Notes')
+        .from('cln_patient_consults')
+        .innerJoin('cln_problems', 'cln_patient_consults.problem_id', 'cln_problems.Problem_id')
+        .where({'consult_id': postData})
+        .toString();
+        db.sequelize.query(sql)
+        .success(function(data){
+            res.json({data: data[0]});
+        })
+        .error(function(error){
+            res.json({'status': 'error', 'message': error})
+        })
+
+    },
+
 	getPatientProblem: function(req,res){
 		var patientId = req.body.patient_id;
 

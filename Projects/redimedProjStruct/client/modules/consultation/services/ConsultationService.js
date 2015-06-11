@@ -78,7 +78,9 @@ angular.module("app.loggedIn.patient.consult.services",[])
 			return api.all('consultation/getApptPatient').post({data: data});
 		}
 
-
+		services.getByIdConsult = function(consult_id){
+			return api.all('consultation/byidConsult').post({consult_id:consult_id});
+		}
 		
 		return services;
 	})

@@ -36,7 +36,17 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		$scope.setListConsultationOfPatient();
 		//
 		$scope.showPopupHistory = function(data){
-			console.log(data);
+			//console.log('---------------', data);
+			var modalInstance = $modal.open({
+				templateUrl:'modules/consultation/dialogs/dialogs_consult_history.html',
+				controller: 'ConsultHistoryController',
+				resolve: {
+					consults:function(){
+						return data;
+					}
+				}
+			})
+			
 		}
 		/*chien end*/
 		$scope.patient_id = $stateParams.patient_id;

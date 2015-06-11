@@ -15,7 +15,7 @@ app.post('/api/consultation/patient/company',ConsultationController.getPatientCo
 
 app.post('/api/upload',multipartMiddleware,ConsultationController.uploadFile);
 app.get('/api/download/:id',ConsultationController.downloadFile);
-
+app.post('/api/consultation/byidConsult', ConsultationController.getByIdProblem);
 //tannv.dts@gmail.com
 //02-06-2015
 app.post('/api/consultation/beforeStartSession',ConsultationController.beforeStartSession);
