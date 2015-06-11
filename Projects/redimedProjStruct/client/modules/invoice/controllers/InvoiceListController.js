@@ -7,7 +7,7 @@ angular.module("app.loggedIn.invoice.list.controller",[
     *   SET UP TABLE - INVOICE 
     */
 	var invoice_status = [{label: '-- All --'}].concat($scope.options.invoice_status);
-
+    
 	$scope.invoiceClass = function(item) {
         return {
             warning: (item.STATUS == 'approach'),

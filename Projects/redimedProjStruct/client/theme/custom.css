@@ -3236,6 +3236,12 @@ label{
     font-size: 10px;
 }
 
+.un_tn_btn_zip{
+    padding-left:3px;
+    padding-right:3px;
+}
+
+
 .un_tn_txt_notify{
     /*border-radius: 20px !important;*/
     /*border: 3px solid white;*/

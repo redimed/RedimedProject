@@ -13,7 +13,15 @@ angular.module("app.loggedIn.claim.model", [])
         var detailApi = appApi.all("listNoFollowPatient");
         return detailApi.post({data: data});
     }
-  
+    
+    /**
+     * tannv.dts@gmail.com
+     * 
+     */
+    instanceService.getPatientInsurer = function(patientId){
+        var detailApi = appApi.one('getPatientInsurer');
+        return detailApi.get({patientId: patientId});
+    }
     instanceService.add = function(data){
     	var detailApi = appApi.all('add');
     	return detailApi.post({data: data});

@@ -36,20 +36,28 @@ module.exports = function(sequelize, DataTypes){
 		updatedAt: 'LAST_UPDATE_DATE',
 		hooks: {
 			beforeUpdate: function( header, fn ) {
+				console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.0")
+				console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.0")
+				console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.0")
+				console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.0")
+				console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.0")
 				if(header.claim_id) {
 					header.getClaim().success(function(claim){
 						if(!claim) {
+							console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.1")
 							fn();
 							return;
 						}
-
-						header.set('Insurer_id', claim.insurer_site);
+						console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.2")
+						header.set('Insurer_id', claim.insurer_id);
 						fn();
 					}).error(function(err){
+						console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.3")
 						console.log(err)
 						fn();
 					})
 				} else {
+					console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.4")
 					fn();
 				}
 			},

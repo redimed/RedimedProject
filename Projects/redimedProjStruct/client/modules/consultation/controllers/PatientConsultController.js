@@ -587,6 +587,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 				$scope.consultInfo.measurements[i].patient_id = $scope.patient_id;
 				$scope.consultInfo.measurements[i].cal_id = $scope.cal_id;
 			}
+
         	ConsultationService.submitConsult($scope.consultInfo).then(function(res){
 				if(res.status == 'success')
 				{
@@ -691,6 +692,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			});
 		}
 		$scope.getApptPatient();
+
 		/**
 		 * tannv.dts@gmail.com
 		 * chuyen appt patient status thanh Work In Progress

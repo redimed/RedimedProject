@@ -24,6 +24,16 @@ angular.module('app.loggedIn.invoice.services', [])
 		return funcApi.post({data: postData});
 	}
 
+	/**
+	 * tannv.dts@gmail.com
+	 * 
+	 */
+	mdtService.removeInvoiceLine = function(data){
+		var funcApi = mdtApi.all('invoice/remove_invoice_line');
+		return funcApi.post({data: data});
+	}
+
+
 
 
 	 // instanceService.invoiceDetail = function(header_id) {

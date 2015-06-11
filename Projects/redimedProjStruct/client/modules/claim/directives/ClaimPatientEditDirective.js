@@ -50,8 +50,8 @@ angular.module('app.loggedIn.claim.directives.patientEdit', [])
 			}
 
 			var loadInsurer = function(){
+				//tannv mark
 				var postData = {Patient_id: scope.patientId};
-
 				InsurerService.oneFollowPatient(postData).then(function(response){
 					if(typeof response.data !== 'undefined'){
 						scope.insurer.name = response.data.insurer_name;
