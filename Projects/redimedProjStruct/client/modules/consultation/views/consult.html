@@ -42,6 +42,9 @@
             <li>
                 <a href="index.html#tab_1_11" data-toggle="tab">Attach File</a>
             </li>
+            <li>
+                <a href="index.html#tab_1_12" data-toggle="tab">Consultation History</a>
+            </li>
         </ul>
         <div class="un-tabs-content"> 
             <div class="un-tab-content active" id="tab_1_1">
@@ -162,6 +165,7 @@
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
                         <button class="btn btn-success" ng-click="addTemplate()">Add Template</button>
+                        <button class="btn btn-success" ng-click="referralAddForm.open()">submit</button>
                     </div>
                 </div>
             </div>
@@ -1104,6 +1108,53 @@
                     <input id="appt_doc_upload" ng-hide="true" type="file" multiple nv-file-select uploader="uploader" />
                 </div>
             </div>
+            <div class="un-tab-content" id="tab_1_12">
+                <div class="table-dynamic">
+                    <table class="responsive table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div class="th">
+                                        <span style="color: white;">Date</span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        <span style="color: white;">Problem</span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        <span style="color: white;">Clinial Examination</span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        <span style="color: white;">Diagnosis</span>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="th">
+                                        <span style="color: white;">Treatment</span>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="7">
+                                    <div style="text-align: center;">
+                                        <!-- ngIf: listConsultOfPatient.length <= 0 --><span ng-if="listConsultOfPatient.length <= 0" style="font-size: 20px; font-style: italic; font-weight: bold;" class="ng-scope">      
+                                            Empty Data
+                                        </span><!-- end ngIf: listConsultOfPatient.length <= 0 -->
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- ngRepeat: m in listConsultOfPatient -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
     <div class="col-md-2 col-sm-2">
@@ -1214,7 +1265,16 @@
     </div>
     <problem-detail options="options" onsuccess="problemAddForm.success" />
 </div>
-
+<!--REFERRAL ADD FORM-->
+<div class="mdt-search" style="display: block;" ng-if="referralAddForm.is_show">
+    <div class="pull-right text-center ng-scope">
+        <button class="btn btn-sm btn-block red" ng-click="referralAddForm.close()">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <referral-detail options="options" onsuccess="referralAddForm.success" />
+</div>
+<!--END REFERRAL ADD FORM-->
 
 <script type="text/ng-template" id="notifyChooseItem">
     <div class="modal-body">

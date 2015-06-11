@@ -6,10 +6,32 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		$scope.addTemplate = function(){
 			$state.go('loggedIn.template');
 			$cookieStore.put('template_patient_id', $stateParams.patient_id);
-		}
+		}		
 		/* END VUONG */
-
-
+		/*chien star*/
+		//buttom add make referral
+		$scope.referralAddForm = {
+			is_show: false,
+            open: function () {
+                this.is_show = true;
+            },
+            close: function () {
+                this.is_show = false;
+            },
+            success: function (response) {
+                if (response.status == 'success')
+                    $scope.referral_panel.reload();
+                    $scope.referralAddForm.close();
+            }
+		};
+		//get list consultation of patient
+		ConsultationService.getListConsultOfPatient($stateParams.patient_id).then(function(data){
+			if (data.status == 'success') {
+				$scope.listConsultOfPatient = data.data;
+				console.log($scope.listConsultOfPatient);
+			};
+		});
+		/*chien end*/
 		$scope.patient_id = $stateParams.patient_id;
 		$scope.cal_id = $stateParams.cal_id;
 		$scope.userInfo = $cookieStore.get('userInfo');

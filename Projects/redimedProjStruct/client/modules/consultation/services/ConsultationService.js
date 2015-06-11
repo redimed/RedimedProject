@@ -27,7 +27,12 @@ angular.module("app.loggedIn.patient.consult.services",[])
 		services.setConsultInfo = function(consultInfo){
 			info = angular.copy(consultInfo);
 		}
-
+		/*phanquocchien.c1109g@gmail.com
+		*get list consultation of patient
+		*/
+		services.getListConsultOfPatient = function(patient_id){
+			return api.all('consultation/listconsultofpatient').post({patient_id:patient_id});
+		}
 		/**
 		 * tannv.dts@gmail.com
 		 * kiem tra xem doctor co cac appointment nao dang la work in progress hay khong

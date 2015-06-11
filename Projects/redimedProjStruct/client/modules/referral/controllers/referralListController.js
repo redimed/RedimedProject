@@ -4,7 +4,6 @@ angular.module('app.loggedIn.referral.list.controller',[
     .controller('ReferralListController',function($scope, $stateParams){
         $scope.referral_panel = {};
         $scope.referral = {};
-    
         $scope.referrals = {
             select:0,
             class:function(referral){
@@ -47,6 +46,7 @@ angular.module('app.loggedIn.referral.list.controller',[
                         class: 'fa fa-print', title: 'Print',
                         callback: function(item){
                             console.log('this is selected item',item)
+                            alert(item);
 //                                $scope.script.id = item.ID;
 //                            $scope.go('http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/script/'+item.ID);
                             window.open('http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/referral/'+item.ID);
@@ -56,7 +56,9 @@ angular.module('app.loggedIn.referral.list.controller',[
                 
             }
         };
-    
+        // $scope.showPopupAddMakeReferral.openPopup = function(){
+        //     $scope.referralAddForm.open();
+        // };
        $scope.referralAddForm = {
             is_show: false,
             open: function () {
@@ -67,11 +69,10 @@ angular.module('app.loggedIn.referral.list.controller',[
             },
             success: function (response) {
                 if (response.status == 'success')
-                    $scope.referral_panel.reload();
                     $scope.referralAddForm.close();
             }
         }
-       
+        
        $scope.referralEditForm = {
             is_show: false,
             open: function () {

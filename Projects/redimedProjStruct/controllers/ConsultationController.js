@@ -481,8 +481,33 @@ module.exports = {
             res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN003')});
         },true);
 
+    },
+    /**
+     * get list consultation of patient
+     * pahnquocchien.c1109g@gmail.com@gmail.com
+     */
+    getListConsultOfPatient:function(req,res)
+    {
+        var patientId=kiss.checkData(req.body.patient_id)?req.body.patient_id:'';
+        if(!kiss.checkListData(patientId))
+        {
+            kiss.exlog("getListConsultOfPatient Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
+        var sql=
+            " SELECT * FROM `cln_patient_consults` WHERE `patient_id` = ? ";
+        kiss.executeQuery(req,sql,patientId,function(rows){
+            if(rows.length>0)
+            {
+                res.json({status:'success',data:rows[0]});
+            }
+            else
+            {
+                res.json({status:'fail'});
+            }
+        })
     }
-
 }
 
 function base64Image(src) {
