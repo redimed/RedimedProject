@@ -16,7 +16,7 @@
                 <a href="index.html#tab_1_2" data-toggle="tab">Measurements</a>
             </li>
             <li >
-                <a href="index.html#tab_1_3" data-toggle="tab">Scripts</a>
+                <a href="index.html#tab_1_3" data-toggle="tab">Medication</a>
             </li>
             <li>
                 <a href="index.html#tab_1_4" data-toggle="tab">Medical Devices</a>
@@ -30,9 +30,9 @@
             <li>
                 <a href="index.html#tab_1_7" data-toggle="tab">Workcover</a>
             </li> 
-            <li>
+            <!--<li>
                 <a href="index.html#tab_1_8" data-toggle="tab">Script</a>
-            </li>  
+            </li>-->
             <li>
                 <a href="index.html#tab_1_9" data-toggle="tab">Make Referral</a>
             </li>
@@ -381,6 +381,9 @@
                              Add New Script
                         </a>
                     </div>
+                </div>
+                <div class="row" ng-controller="ScriptListController">
+                    <script-list></script-list>
                 </div>
             </div>
             <div class="un-tab-content" id="tab_1_4">
@@ -974,19 +977,18 @@
                     </div>
                 </div>
             </div>
-            <div class="un-tab-content" id="tab_1_8">
+            <!--<div class="un-tab-content" id="tab_1_8">
                 <div class="row" ng-controller="ScriptListController">
-
                     <script-list></script-list>
                 </div>
-            </div>
+            </div>-->
             <div class="un-tab-content" id="tab_1_9">
                 <div class="row" ng-controller="ReferralListController">
                     
                     <div class="panel panel-default un-header-top">
                         <div class="panel-body">
                             <label class="un-label-header-custom un-bgWhite-custom">Make Referral</label>
-                            <button class="un-btn-red-add" ng-click="referralAddForm.open()" style="margin-top: -60px !important;">Add New</button>
+                            <button class="un-btn-red-add" ng-click="referralAddForm.open()" style="margin-top: -60px !important; float: right !important;">Add New</button>
                             <div class="un-background-gray-dv">
                                 <my-data-table options="referrals.options" rowclass="referrals.class" numrows="10"></my-data-table>
                                 <div class="clearfix"></div>
