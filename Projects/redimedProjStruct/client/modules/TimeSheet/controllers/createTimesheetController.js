@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.timesheet.create.controller", [])
 
-.controller("TimesheetCreateController", function($rootScope, ConfigService, $scope, $stateParams, $cookieStore, $filter, $modal, calendarHelper, moment, StaffService, $state, toastr, FileUploader) {
+.controller("TimesheetCreateController", function($rootScope, ConfigService, $scope, $stateParams, $cookieStore, $filter, $modal, calendarHelper, moment, StaffService, $state, toastr, FileUploader, $timeout) {
     //CLOSE MEMU
     $('body').addClass("page-sidebar-closed");
     $('ul').addClass("page-sidebar-menu-closed");

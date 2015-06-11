@@ -90,32 +90,13 @@ angular.module("app.loggedIn.staff.service", [])
         });
     };
 
-    service.getFortMatTimeTemp = function(time_charge) {
-        if (time_charge) {
-            var hourInLieu = parseInt(time_charge.substring(0, 2));
-            if (time_charge.length == 4) {
-                var minuteInLieu = parseInt(time_charge.substring(2, 4));
-            } else {
-                var minuteInLieu = parseInt(time_charge.substring(3, 5));
-            }
-            return hourInLieu + (minuteInLieu / 60);
-        } else {
-            return 0;
-        }
-    };
-
     //thanh
     service.convertShowToFull = function(time_charge) {
         if (time_charge !== undefined && time_charge !== null && !(isNaN(time_charge)) && time_charge !== 0 && time_charge.length !== 0) {
             var hours = 0;
             var minutes = 0;
-            if (time_charge.length < 5) {
-                hours = parseInt(time_charge.toString().substr(0, 2));
-                minutes = parseInt(time_charge.toString().substr(2, 2));
-            } else {
-                hours = parseInt(time_charge.toString().substr(0, 3));
-                minutes = parseInt(time_charge.toString().substr(3, 2));
-            }
+            hours = parseInt(time_charge.toString().substring(0, time_charge.toString().length - 2));
+            minutes = parseInt(time_charge.toString().substring(time_charge.toString().length - 2, time_charge.toString().length));
             return (parseInt(hours * 60) + parseInt(minutes));
         } else {
             return 0;

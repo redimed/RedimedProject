@@ -109,8 +109,14 @@
                             ) && task.activity_id===1) || task.notPopup===true" ng-click="chooseItem(task, uploader, isEdit, key)" class="btn btn-xs blue-dark btn-circle" style="margin-left:5px; margin-top:5px;">Choose</a>
                         </td>
                         <td style="text-align: center;width:100px;">
-                            <input ng-if="!(task.time_charge>=10000)" type="text" ng-model="task.time_charge" ui-mask="99:99" name="time_charge" ng-change="changeTimeCharge()" style="font-style: 'normal';text-align: center;" ng-disabled="!((task.department_code_id===19 || task.department_code_id===27 ||task.department_code_id===29 || task.department_code_id===30 ||task.department_code_id===31) && task.activity_id===1)" class="form-control input-sm" time-charge />
-                            <input ng-if="task.time_charge>=10000" type="text" ng-model="task.time_charge" ui-mask="999:99" name="time_charge" ng-change="changeTimeCharge()" style="font-style: 'normal';text-align: center;" ng-disabled="!((task.department_code_id===19 || task.department_code_id===27 ||task.department_code_id===29 || task.department_code_id===30 ||task.department_code_id===31) && task.activity_id===1)" class="form-control input-sm" time-charge />
+                            <!-- ENTER VALUE -->
+                            <input type="text" ui-mask="99:99" ng-model="task.time_charge" name="time_charge" ng-change="changeTimeCharge()" style="font-style: 'normal';text-align: center;" ng-if="((task.department_code_id===19 || task.department_code_id===27 ||task.department_code_id===29 || task.department_code_id===30 ||task.department_code_id===31) && task.activity_id===1)" class="form-control input-sm" time-charge/>
+                            <!-- END -->
+                            <!-- VIEW OTHER VALUE -->
+                            <label type="text" disabled name="time_charge" style="font-style: 'normal';text-align: center;" ng-if="!((task.department_code_id===19 || task.department_code_id===27 ||task.department_code_id===29 || task.department_code_id===30 ||task.department_code_id===31) && task.activity_id===1)" class="form-control input-sm">
+                                <label style="margin-top:-3px;" ng-bind="task.time_charge | customTotalHours"></label>
+                            </label>
+                            <!-- END -->
                         </td>
                         <td>
                             <input type="text" class="form-control input-sm" ng-model="task.task" />
@@ -121,8 +127,9 @@
                             <label class="bold pull-right" style="margin-top:5px;">Total Worked Hours: </label>
                         </td>
                         <td style="width:100px;">
-                            <input ng-if="!(info.time_charge>=10000)" disabled class="form-control input-sm" ng-model="info.time_charge" ui-mask="{{info.time_charge>=10000?'999:99':'99:99'}}" style="text-align:center; font-weight:bold;" />
-                            <input ng-if="info.time_charge>=10000" disabled class="form-control input-sm" ng-model="info.time_charge" ui-mask="999:99" style="text-align:center; font-weight:bold;" />
+                            <label disabled class="form-control input-sm" style="text-align:center;">
+                                <label style="font-weight:bold; margin-top:-3px;" ng-bind="info.time_charge | customTotalHoursAll"></label>
+                            </label>
                         </td>
                         <td colspan="2">
                         </td>
@@ -130,7 +137,7 @@
                 </tbody>
             </table>
             <footer class="table-footer">
-                <!-- BUTTON -->
+                <!-- BUTTON
                 <!-- BUTTON WHEN ADDNEW -->
                 <!-- BUTTON WHEN EDIT -->
                 <a class="btn btn-xs yellow pull-right" ng-show='!isEdit' ui-sref="loggedIn.home" style="width:70px;margin-right:-8px;">Cancel</a>
