@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2015-06-10T14:32:06 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cln_fa_section_types" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="f792a86b-3ea3-493a-8a33-702db9611c61">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="patient_id" class="java.lang.String"/>
+	<parameter name="cal_id" class="java.lang.String"/>
+	<parameter name="fa_id" class="java.lang.String"/>
+	<parameter name="real_path" class="java.lang.String"/>
+	<parameter name="sub_report_dir" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select * from `cln_fa_df_sections` section
+where
+	section.`ISENABLE` =  1 
+    and
+	section.`PATIENT_ID` =  $P{patient_id} 
+    and
+    section.`CAL_ID` =  $P{cal_id} 
+    and
+    section.`FA_ID` =  $P{fa_id}]]>
+	</queryString>
+	<field name="PATIENT_ID" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CAL_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SECTION_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FA_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SECTION_NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ISENABLE" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ORD" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="USER_TYPE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Created_by" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Creation_date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Last_updated_by" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Last_update_date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SECTION_TYPE" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<detail>
+		<band height="50">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<subreport>
+				<reportElement x="-3" y="0" width="560" height="50" uuid="41bd5fe5-b053-4097-8ebc-10478ef59414"/>
+				<subreportParameter name="patient_id">
+					<subreportParameterExpression><![CDATA[$P{patient_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="cal_id">
+					<subreportParameterExpression><![CDATA[$P{cal_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="fa_id">
+					<subreportParameterExpression><![CDATA[$P{fa_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="section_id">
+					<subreportParameterExpression><![CDATA[$F{SECTION_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="real_path">
+					<subreportParameterExpression><![CDATA[$P{real_path}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="sub_report_dir">
+					<subreportParameterExpression><![CDATA[$P{sub_report_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["cln_fa_section_type_0.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="50">
+			<subreport>
+				<reportElement x="0" y="0" width="560" height="50" uuid="0690f339-832d-47c1-b7b6-d62b51712f96"/>
+				<subreportParameter name="patient_id">
+					<subreportParameterExpression><![CDATA[$P{patient_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="cal_id">
+					<subreportParameterExpression><![CDATA[$P{cal_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="fa_id">
+					<subreportParameterExpression><![CDATA[$P{fa_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="section_id">
+					<subreportParameterExpression><![CDATA[$F{SECTION_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="real_path">
+					<subreportParameterExpression><![CDATA[$P{real_path}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="sub_report_dir">
+					<subreportParameterExpression><![CDATA[$P{sub_report_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["cln_fa_section_type_1.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

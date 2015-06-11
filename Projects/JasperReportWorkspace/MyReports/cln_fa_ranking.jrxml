@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cln_fa_ranking" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="7e2e43a5-e836-43e7-afad-dc9a8a6aa8af">
+	<property name="ireport.zoom" value="1.7715610000000013"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="RANKING_HEADER_ID_PARAM" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DIR_PATH" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT DISTINCT 	header.`RATING_ID`,header.`DESCRIPTION`,header.`RANK_CODE`,
+	line.GENDER,
+	CONCAT(line.`RATE`, '(' ,line.`VALUE`, ')' ) AS RATES
+	,
+	CASE
+	WHEN line.FROM_AGE=0 AND line.TO_AGE=220 THEN ''
+	WHEN line.FROM_AGE=0 THEN CONCAT('<=',line.TO_AGE)
+	WHEN line.TO_AGE=220 THEN CONCAT('>=',line.FROM_AGE)
+	ELSE
+	CONCAT(line.FROM_AGE,'-',line.TO_AGE)
+	END
+	AS RANGE_AGES
+	,
+	CASE
+	WHEN line.FROM_VALUE=0 AND line.TO_VALUE=220 THEN ''
+	WHEN line.FROM_VALUE=0 THEN CONCAT('<=',line.TO_VALUE)
+	WHEN line.TO_VALUE=220 THEN CONCAT('>=',line.FROM_VALUE)
+	ELSE
+	CONCAT(line.FROM_VALUE,'-',line.TO_VALUE)
+	END
+	AS RANGE_VALUES
+FROM 	`sys_ranking_headers` header INNER JOIN `sys_rankings` line ON header.`RATING_ID`=line.`HEADER_ID`
+WHERE
+	header.ISENABLE=1 AND line.ISENABLE=1
+	AND
+	line.HEADER_ID=$P{RANKING_HEADER_ID_PARAM}
+ORDER BY
+	line.FROM_AGE ASC,line.VALUE DESC]]>
+	</queryString>
+	<field name="RATING_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DESCRIPTION" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="RANK_CODE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="GENDER" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="RATES" class="java.lang.String"/>
+	<field name="RANGE_AGES" class="java.lang.String"/>
+	<field name="RANGE_VALUES" class="java.lang.String"/>
+	<group name="RATING_HEADER_GROUP">
+		<groupExpression><![CDATA[$F{RATING_ID}]]></groupExpression>
+		<groupHeader>
+			<band height="15">
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="0" y="0" width="558" height="15" uuid="dd8b5296-8ec2-41bf-9e17-f9ba22434813"/>
+					<textElement verticalAlignment="Bottom">
+						<font size="8" isBold="true" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{DESCRIPTION}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<summary>
+		<band height="28" splitType="Stretch">
+			<crosstab>
+				<reportElement x="0" y="0" width="558" height="28" uuid="16be9900-aa77-47d4-9187-3edd27525330"/>
+				<crosstabHeaderCell>
+					<cellContents>
+						<staticText>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="15" backcolor="#B2E1DB" uuid="eabf7c1f-62cd-4ab0-84c1-9d56a6ea0ac7"/>
+							<box>
+								<pen lineWidth="0.25"/>
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.0"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement verticalAlignment="Middle">
+								<font size="9"/>
+							</textElement>
+							<text><![CDATA[CATEGORY]]></text>
+						</staticText>
+						<staticText>
+							<reportElement style="Crosstab Data Text" x="0" y="15" width="70" height="15" backcolor="#B2E1DB" uuid="4fdbb192-a8ad-4578-beea-69bb71ca48ad"/>
+							<box>
+								<pen lineWidth="0.25"/>
+								<topPen lineWidth="0.0"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement verticalAlignment="Middle">
+								<font size="9"/>
+							</textElement>
+							<text><![CDATA[SEX]]></text>
+						</staticText>
+					</cellContents>
+				</crosstabHeaderCell>
+				<rowGroup name="RATES" width="70">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{RATES}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="15" uuid="dcb99ba8-2147-4fda-b914-b07a73348202"/>
+								<textElement>
+									<font size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{RATES}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents/>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="RANGE_AGES" height="15">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{RANGE_AGES}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="40" height="15" uuid="a0ac01d7-7dfb-4c61-800c-cc28ed419ffe"/>
+								<textElement>
+									<font size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{RANGE_AGES}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents/>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<columnGroup name="GENDER" height="15">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{GENDER}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#F0F8FF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="40" height="15" uuid="de8c980c-695b-4c80-8f3e-064ee633d267"/>
+								<textElement>
+									<font size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{GENDER}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents/>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="RANGE_VALUESMeasure" class="java.lang.String">
+					<measureExpression><![CDATA[$F{RANGE_VALUES}]]></measureExpression>
+				</measure>
+				<crosstabCell width="40" height="15">
+					<cellContents>
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField isStretchWithOverflow="true">
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="40" height="15" uuid="870b17d4-d982-4f1c-ae3a-8434105d8ca4"/>
+							<textElement>
+								<font size="9"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{RANGE_VALUESMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell height="25" rowTotalGroup="RATES">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="8a254dd1-206f-46d9-84f3-eefcb7bcaedc"/>
+							<textFieldExpression><![CDATA[$V{RANGE_VALUESMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="50" columnTotalGroup="RANGE_AGES">
+					<cellContents backcolor="#005FB3" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" forecolor="#FFFFFF" uuid="78a65833-2ea0-4aed-99ac-d3473ec67db7"/>
+							<textFieldExpression><![CDATA[$V{RANGE_VALUESMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="RATES" columnTotalGroup="RANGE_AGES">
+					<cellContents backcolor="#005FB3" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" forecolor="#FFFFFF" uuid="cd5ecb2a-b2e6-48e1-9a72-7a8e07a25005"/>
+							<textFieldExpression><![CDATA[$V{RANGE_VALUESMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="50" columnTotalGroup="GENDER">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="1dd1238b-01f9-4e12-a4ec-af42efff092e"/>
+							<textFieldExpression><![CDATA[$V{RANGE_VALUESMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="RATES" columnTotalGroup="GENDER">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="0bc91cdb-00ef-4d38-8d57-2f2661939e49"/>
+							<textFieldExpression><![CDATA[$V{RANGE_VALUESMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+		</band>
+	</summary>
+</jasperReport>
