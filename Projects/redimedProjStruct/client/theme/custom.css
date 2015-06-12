@@ -3692,6 +3692,7 @@ label{
     border-color: rgb(190, 190, 190)!important;
 }
 .re_bg_info{
+    margin-top: 5px;
     background: linear-gradient(to bottom, #FFF 0%,#DBEFFF 100%);
     color: #006666 !important;
     border: 1px solid #B1B1B2 !important;
