@@ -240,8 +240,12 @@ module.exports = {
                     for(var i=0; i<info.scripts.length;i++)
                     {
                         var s = info.scripts[i];
-                        var start_date = s.start_date.split("/").reverse().join("-");
-                        var end_date = s.end_date.split("/").reverse().join("-");
+                        if(s.start_date) {
+                            var start_date = s.start_date.split("/").reverse().join("-");
+                        };
+                        if(s.end_date) {
+                            var end_date = s.end_date.split("/").reverse().join("-");
+                        };
                         chainer.add(
                             db.ClnPatientMedication.create({
                                 patient_id: info.patient_id,
