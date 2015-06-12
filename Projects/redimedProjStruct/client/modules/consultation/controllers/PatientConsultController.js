@@ -10,6 +10,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		/* END VUONG */
 		/*chien star*/
 		//buttom add make referral
+    	$scope.loadDataAddMakeReferral = {};
 		$scope.referralAddForm = {
 			is_show: false,
             open: function () {
@@ -20,7 +21,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
             },
             success: function (response) {
                 if (response.status == 'success')
-                    $scope.referral_panel.reload();
+                	$scope.loadDataAddMakeReferral.load();
                     $scope.referralAddForm.close();
             }
 		};

@@ -3666,6 +3666,31 @@ label{
 .pt_img_padding_left_15{
     padding-right: 15px;
 }
+.re_bg_color_E0EFFF{
+    background: #E0EFFF !important;
+}
+.re_color_005A59{
+    color: #005A59 !important;
+}
+.re_padding_0{
+    padding: 0 !important;
+}
+.re_boder_crop_item{
+    color: #9E9E9E;
+    border: 1px dashed #C3C3C3;
+    border-radius: 5px !important;
+    background-color: white;
+    padding: 15px !important;
+}
+.re_boder_none{
+    border: none !important;
+}
+.re_bg_seach{
+    background: linear-gradient(to bottom, #F8F8F8 0%,#979797 100%);
+    border-top-left-radius: 8px !important;
+    border-bottom-left-radius: 8px !important;
+    border-color: rgb(190, 190, 190)!important
+}
 /*phanquocchien patient end*/
 
 .ql-container{
