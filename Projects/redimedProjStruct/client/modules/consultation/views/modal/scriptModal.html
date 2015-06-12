@@ -1,7 +1,17 @@
 <style type="text/css" class="ng-scope">
-          .modal.in .modal-dialog {
-           margin-top:50px;
-          }
+    .modal.in .modal-dialog {
+        margin-top:50px;
+    }
+    .has-error .form-control {
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        border: 1px solid red;
+    }
+    .has-error .form-control:focus {
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        border: 1px solid red;
+    }
 </style>
 <div class="modal-body">
     <div class="active">
@@ -9,26 +19,32 @@
 			<label class="un-label-popup-header-m un-bg-label-B41E46-m">Add Medication</label>
 		</a>
 	</div>
-	<div>
+	<form name="medicationForm" novalidate>
 		<div id="tab_1">
 			<div class="row">
                 <div class="col-md-6 col-sm-6">
-                    <label class="un-label-form-3 un-label-whidth-130">Name</label>
-                    <input ng-model="scriptInfo.medication_name" class="form-control input-sm select-outside ng-pristine ng-valid" />
+                    <div ng-class="{'has-error': medicationForm.name.$invalid && isSubmit}">
+                        <label class="un-label-form-3 un-label-whidth-130">Name</label>
+                        <input ng-model="scriptInfo.medication_name" class="form-control input-sm select-outside ng-pristine ng-valid" required float-label id="name" name="name" />
+                    </div>
                 </div>
                 <div class="col-md-6 col-sm-6">
+                    <div ng-class="{'has-error': medicationForm.start_date.$invalid && isSubmit}">
                     <label class="un-label-form-3 un-label-whidth-130">Start Date</label>
-                    <input ng-model="scriptInfo.start_date"  class="form-control input-sm select-outside" custom-date />
+                    <input readonly ng-model="scriptInfo.start_date"  class="form-control input-sm select-outside" custom-date id="start_date" name="start_date" required float-label />
+                    </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 col-sm-6">
                     <label class="un-label-form-3 un-label-whidth-130">Dose</label>
-                     <input ng-model="scriptInfo.dose"  class="form-control input-sm select-outside ng-pristine ng-valid" />
+                     <input ng-minlength='0' ng-model="scriptInfo.dose"  class="form-control input-sm select-outside ng-pristine ng-valid"/>
                 </div>
                 <div class="col-md-6 col-sm-6">
+                     <div ng-class="{'has-error': medicationForm.end_date.$invalid && isSubmit}">
                     <label class="un-label-form-3 un-label-whidth-130">End Date</label>
-                     <input ng-model="scriptInfo.end_date" class="form-control input-sm select-outside" custom-date />
+                     <input readonly ng-model="scriptInfo.end_date" class="form-control input-sm select-outside" custom-date required float-label name="end_date" id="end_date"/>
+                     </div>
                 </div>
             </div>
             <div class="row">
@@ -71,10 +87,10 @@
                 </div>
             </div>
 		</div>
-	</div>
+	</form>
     <div align="right" style ="margin-top: 15px;margin-right: 16px;">
         <a href="javascript:;" class="un-button un-bgXam-colBlack" ng-click='cancelClick()'>Cancel</a>
-       <a href="javascript:;" ng-click="okClick()" class="un-button un-bgBlack"  >Submit</a>
+       <a href="javascript:;" ng-click="okClick()" class="un-button un-bgBlack">Submit</a>
     </div>
 	
 </div>

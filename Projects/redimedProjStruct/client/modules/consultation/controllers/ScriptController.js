@@ -40,7 +40,17 @@ angular.module("app.loggedIn.patient.consult.scriptController",[])
 		}
 
 		$scope.okClick = function(){
-			$modalInstance.close({'type':'ok','value':$scope.scriptInfo});
+			var start = new Date($scope.scriptInfo.start_date); 
+			var end = new Date($scope.scriptInfo.end_date);
+			if( start <= end){
+				$scope.isSubmit = true;
+				if (!$scope.medicationForm.$invalid) {
+					$modalInstance.close({'type':'ok','value':$scope.scriptInfo});
+				};
+			}
+			else{
+				toastr.error('Start date must be before end date');
+			}
 		}
 
 		$scope.$watch('selectedMedication',function(val){
