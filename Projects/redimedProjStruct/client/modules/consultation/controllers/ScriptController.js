@@ -40,17 +40,21 @@ angular.module("app.loggedIn.patient.consult.scriptController",[])
 		}
 
 		$scope.okClick = function(){
-			var start = new Date($scope.scriptInfo.start_date); 
-			var end = new Date($scope.scriptInfo.end_date);
-			if( start <= end){
-				$scope.isSubmit = true;
+			// var start = new Date($scope.scriptInfo.start_date); 
+			// var end = new Date($scope.scriptInfo.end_date);
+			// if(moment(to_date).diff(moment(from_date),'days')<0){
+			// 	$scope.isSubmit = true;
+			// 	if (!$scope.medicationForm.$invalid) {
+			// 		$modalInstance.close({'type':'ok','value':$scope.scriptInfo});
+			// 	};
+			// }
+			// else{
+			// 	toastr.error('Start date must be before end date');
+			// }
+			$scope.isSubmit = true;
 				if (!$scope.medicationForm.$invalid) {
 					$modalInstance.close({'type':'ok','value':$scope.scriptInfo});
 				};
-			}
-			else{
-				toastr.error('Start date must be before end date');
-			}
 		}
 
 		$scope.$watch('selectedMedication',function(val){
