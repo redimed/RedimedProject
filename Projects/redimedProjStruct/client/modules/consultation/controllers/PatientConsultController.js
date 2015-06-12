@@ -261,7 +261,21 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 				modalInstance.result.then(function(data){
 					if(data.type == 'ok')
 					{
-						$scope.consultInfo.scripts.push(data.value);
+						console.log(data.value.medication_name)
+						if (data.value.medication_name !== null) {
+							var count = 0;
+							for (var i = 0; i < $scope.consultInfo.scripts.length; i++) {
+								if($scope.consultInfo.scripts[i].medication_name === data.value.medication_name)
+								{
+									count ++;
+								}
+							};
+							if (count === 0) {
+								$scope.consultInfo.scripts.push(data.value);
+							};
+						};
+						
+						
 					}
 				})
 			}
