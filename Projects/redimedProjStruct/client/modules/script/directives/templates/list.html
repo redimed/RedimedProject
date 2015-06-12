@@ -58,7 +58,8 @@
 	</div>
 </div>
 <div>
-	<button class="un-btn-red-add" ng-click="Scripts('new')" style="margin-top: 5px; margin-bottom: 5px;">Add</button>
+	<button class="un-button un-bgBlack" ng-click="Scripts('new')" style="margin-top: -13px;
+  margin-left: 11px;">Add New Script</button>
 </div>
 <script type="text/ng-template" id="notifyToAdd">
 	<style>
@@ -69,7 +70,7 @@
 		}
 	</style>
     <div class="modal-body">
-        <script-add success='scriptadd.success'></script-add>
+        <script-add success='scriptadd.success' medicaname='scriptadd.medicaname'></script-add>
     </div>
  </script>
  <script type="text/ng-template" id="notifyToEdit">
@@ -81,7 +82,7 @@
 		}
 	</style>
     <div class="modal-body">
-        <script-edit id='scriptedit.ID' success='scriptedit.success'></script-edit>
+        <script-edit id='scriptedit.ID' success='scriptedit.success' medicaname='scriptedit.medicaname'></script-edit>
     </div>
 
  </script>

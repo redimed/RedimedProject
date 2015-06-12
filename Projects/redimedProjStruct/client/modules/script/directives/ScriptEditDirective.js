@@ -9,7 +9,8 @@ angular.module('app.loggedIn.script.directive.edit', [])
 		scope: {
 			options: '=',
 			success: '=',
-			id: '='
+			id: '=',
+			medicaname:'='
 		},
 		link: function(scope, ele, attr){
 
@@ -33,12 +34,25 @@ angular.module('app.loggedIn.script.directive.edit', [])
 				scope.$watch('id', function(success){
 					  scope.id = success;
 				 })
-				//console.log( scope.id);
 				ScriptModel.byid(scope.id).then(function(response){
-					//console.log(response.data);
+					
 					scope.script.form = angular.copy(response.data);
 					scope.script.form.doctordate = ConfigService.convertToDate_F(scope.script.form.doctordate);
 					scope.script.form.patientDate = ConfigService.convertToDate_F(scope.script.form.patientDate);
+					var count = 0;
+					if (scope.medicaname.length != 0) {
+							for (var i = 0; i < scope.medicaname.length; i++) {
+								if (scope.medicaname[i].medication_name === scope.script.form.Medicare) {
+									count ++;
+								};
+							};
+							if (count !== 1) {
+								scope.medicaname.push({'medication_name':scope.script.form.Medicare});
+							};
+					}else{
+						scope.medicaname.push({'medication_name':scope.script.form.Medicare});
+					};
+					
 				}, function(error){})
 			}
 

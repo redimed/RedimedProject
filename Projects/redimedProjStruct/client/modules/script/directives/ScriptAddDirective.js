@@ -8,7 +8,8 @@ angular.module('app.loggedIn.script.directive.add', [])
 		templateUrl: 'modules/script/directives/templates/add.html',
 		scope: {
 			options: '=',
-			success:'='
+			success:'=',
+			medicaname:'='
 		},
 
 		link: function(scope, ele, attrs){

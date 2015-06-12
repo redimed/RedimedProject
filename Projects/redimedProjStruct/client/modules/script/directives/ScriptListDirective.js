@@ -7,10 +7,11 @@ angular.module('app.loggedIn.script.directive.list', [])
 		templateUrl: 'modules/script/directives/templates/list.html',
 		scope:{
 			options: '=',
-			limit: '@'
+			limit: '@',
+			medicaname :'='
 		},
 		link: function(scope, ele, attrs){
-
+			
 			var search = {
 				page: 1,
 				limit: 20,
@@ -81,13 +82,21 @@ angular.module('app.loggedIn.script.directive.list', [])
 			}
 
 			scope.Scripts = function(type, index){
-				
+				scope.script.medication_name = [];
+				 for (var i = 0; i < scope.medicaname.length; i++) {
+					scope.script.medication_name.push({'medication_name':scope.medicaname[i].medication_name});
+				};
 				if(type == 'new')
 				{
 					var modalInstance = $modal.open({
 			         templateUrl: 'notifyToAdd',
 			         controller: 'ScriptAddController',
-			         size :'lg'
+			         size :'lg',
+			         resolve :{
+			         	medicaname :function(){
+			         		return scope.medicaname;
+			         	}
+			         }
 			       })
 			       .result.then(function(response){
 			        	scope.script.load();
@@ -103,7 +112,10 @@ angular.module('app.loggedIn.script.directive.list', [])
 			         	resolve: {
 				         	ID: function(){
 				         		return index;
-				         	}
+				         	},
+				         	medicaname :function(){
+			         			return scope.script.medication_name;
+			         		}
 			         	}
 			       	})
 			       .result.then(function(response){
@@ -141,6 +153,7 @@ angular.module('app.loggedIn.script.directive.list', [])
 			}
 
 			scope.script = {
+				medication_name :[],
 				search: search,
 				dialog: {
 					remove: function(id){ remove(id); }
