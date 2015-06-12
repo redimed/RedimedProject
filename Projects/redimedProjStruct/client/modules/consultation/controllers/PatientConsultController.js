@@ -243,6 +243,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		};
 
 		$scope.scriptAction = function(type,index){
+			alert($scope.actual_doctor_id.NAME);
 			if(type == 'new')
 			{
 				var modalInstance = $modal.open({
@@ -250,6 +251,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 					windowClass: "consult-modal-window",
 					controller:'ScriptController',
 					resolve: {
+
 						actual_doctor_id: function(){
 							return $scope.actual_doctor_id;
 						},
@@ -262,7 +264,6 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 				modalInstance.result.then(function(data){
 					if(data.type == 'ok')
 					{
-						console.log(data.value.medication_name)
 						if (data.value.medication_name !== null) {
 							var count = 0;
 							for (var i = 0; i < $scope.consultInfo.scripts.length; i++) {
@@ -682,7 +683,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		 * Lay thong tin appt patient
 		 */
 		$scope.apptPatient={};
-		$scope.actual_doctor_id={}
+		$scope.actual_doctor_id={};
 		$scope.apptStatus=ptnConst.apptStatus;
 		$scope.getApptPatient=function()
 		{
@@ -713,10 +714,13 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 					{
 						$scope.startSessionTime=$scope.apptPatient.SESSION_START_TIME;
 					}
-
 				}
 				else
 				{
+					$scope.actual_doctor_id={
+						NAME :null
+					}
+					console.log('-----------------',$scope.actual_doctor_id);
 					exlog.log(data);
 				}
 			},function(err){
