@@ -243,7 +243,6 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		};
 
 		$scope.scriptAction = function(type,index){
-			alert($scope.actual_doctor_id.NAME);
 			if(type == 'new')
 			{
 				var modalInstance = $modal.open({
