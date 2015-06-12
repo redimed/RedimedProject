@@ -697,8 +697,12 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 					$scope.apptPatient=data.data;
 					DoctorService.getById($scope.apptPatient.actual_doctor_id)
 					.then(function(data){
+						if (data === undefined) {
+							$scope.actual_doctor_id ={
+								NAME:null
+							}
+						};
 						$scope.actual_doctor_id = data;
-						console.log('-----------------',$scope.actual_doctor_id);
 					})
 
 					if($scope.apptPatient.SESSION_START_TIME  && $scope.apptPatient.SESSION_END_TIME)
