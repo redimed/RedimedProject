@@ -3,25 +3,99 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<parameter name="patient_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cal_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="real_path" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="key" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\MEDITEK\\SOURCECODE\\RedimedProject\\Projects\\JasperReportWorkspace\\MyReports\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="line_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$F{LINE_ID}]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[]]>
+		<![CDATA[SELECT line.LINE_ID,
+line.FA_ID
+FROM cln_fa_df_lines line
+WHERE line.CAL_ID = $P{cal_id}
+AND line.PATIENT_ID = $P{patient_id}
+AND line.FA_ID = $P{key}
+AND line.ISENABLE = 1
+AND line.LineType = 1
+AND line.SCORE_TYPE1 IS NULL]]>
 	</queryString>
-	<field name="id" class="java.lang.Integer">
+	<field name="LINE_ID" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="user_name" class="java.lang.String">
+	<field name="FA_ID" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="password" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="company_id" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
+	<group name="summary_detail1">
+		<groupExpression><![CDATA[$F{FA_ID}]]></groupExpression>
+		<groupHeader>
+			<band height="50">
+				<subreport>
+					<reportElement x="0" y="0" width="555" height="50" uuid="6ec21084-baf2-46ce-9375-092cd8a51b99"/>
+					<subreportParameter name="SUBREPORT_DIR">
+						<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="real_path">
+						<subreportParameterExpression><![CDATA[$P{real_path}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="line_id">
+						<subreportParameterExpression><![CDATA[$F{LINE_ID}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="cal_id">
+						<subreportParameterExpression><![CDATA[$P{cal_id}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="patient_id">
+						<subreportParameterExpression><![CDATA[$P{patient_id}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="key">
+						<subreportParameterExpression><![CDATA[$P{key}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "cln_fa_summary_sub_first_one.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="50">
+				<subreport>
+					<reportElement x="0" y="0" width="555" height="50" uuid="b45845cd-115f-439e-95b9-30d5d27ade68"/>
+					<subreportParameter name="SUBREPORT_DIR">
+						<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="real_path">
+						<subreportParameterExpression><![CDATA[$P{real_path}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="line_id">
+						<subreportParameterExpression><![CDATA[$F{LINE_ID}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="cal_id">
+						<subreportParameterExpression><![CDATA[$P{cal_id}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="patient_id">
+						<subreportParameterExpression><![CDATA[$P{patient_id}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="key">
+						<subreportParameterExpression><![CDATA[$P{key}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "cln_fa_summary_sub_first_two.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</groupFooter>
+	</group>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<detail>
-		<band height="125" splitType="Stretch"/>
-	</detail>
 </jasperReport>
