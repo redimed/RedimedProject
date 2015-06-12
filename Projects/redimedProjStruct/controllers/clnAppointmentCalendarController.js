@@ -368,8 +368,10 @@ module.exports =
             " AS appointment_time,`redimedsite`.`Site_name`,`redimedsite`.`Site_addr`, doctor.`NAME`           "+                                       
             " FROM      `cln_appointment_calendar` h                                                           "+                                                                                                           
             " INNER JOIN `redimedsites` redimedsite ON h.`SITE_ID`=`redimedsite`.id                            "+                     
-            " INNER JOIN `doctors` doctor ON doctor.`doctor_id`=h.`DOCTOR_ID`                                  "+                     
-            " WHERE h.`DOCTOR_ID` LIKE ?                                                                       "+
+            " INNER JOIN `doctors` doctor ON doctor.`doctor_id`=h.`DOCTOR_ID`                                  "+ 
+            " LEFT JOIN `cln_appt_patients` patient ON h.`CAL_ID` = patient.`CAL_ID`                           "+
+            " WHERE patient.`Patient_id` IS NULL                                                               "+
+            " AND h.`DOCTOR_ID` LIKE ?                                                                         "+
             " AND h.`SITE_ID` LIKE ?                                                                           "+
             " AND DATE(h.`FROM_TIME`)=?                                                                        "+
             " AND MINUTE(TIMEDIFF(h.`TO_TIME`,h.`FROM_TIME`)) >?                                               "+                    
@@ -380,7 +382,7 @@ module.exports =
             kiss.exlog("getAppointmentCalendar","Loi truy van",err);
             rows=[];
             res.json(rows);
-        });
+        },true);
     },
     
     updateCalendarNote:function(req,res)
