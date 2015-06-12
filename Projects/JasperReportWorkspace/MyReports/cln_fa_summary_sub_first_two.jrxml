@@ -56,7 +56,7 @@ AND line.`SCORE_TYPE1`  = 5]]>
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="104" splitType="Stretch">
+		<band height="101" splitType="Stretch">
 			<textField>
 				<reportElement x="0" y="0" width="294" height="20" uuid="1d0393ed-5e7e-4078-b5a3-45ca9230e0b0"/>
 				<textElement verticalAlignment="Bottom">
@@ -65,7 +65,7 @@ AND line.`SCORE_TYPE1`  = 5]]>
 				<textFieldExpression><![CDATA[($F{sections}!=null && $F{sections}!="")?$F{sections}:""]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="29" width="187" height="20" uuid="c0dd0725-6611-49ad-a9f7-246971375b02"/>
+				<reportElement x="0" y="25" width="187" height="20" uuid="c0dd0725-6611-49ad-a9f7-246971375b02"/>
 				<box>
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -76,7 +76,7 @@ AND line.`SCORE_TYPE1`  = 5]]>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="187" y="29" width="52" height="20" uuid="94e0bebb-7d94-432b-94c8-4a045934f323"/>
+				<reportElement x="187" y="25" width="52" height="20" uuid="94e0bebb-7d94-432b-94c8-4a045934f323"/>
 				<box>
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -87,7 +87,7 @@ AND line.`SCORE_TYPE1`  = 5]]>
 				<text><![CDATA[   Score]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="239" y="29" width="110" height="20" uuid="07e4fa58-012c-4f33-955d-92fea188830f"/>
+				<reportElement x="239" y="25" width="110" height="20" uuid="07e4fa58-012c-4f33-955d-92fea188830f"/>
 				<box>
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -98,7 +98,7 @@ AND line.`SCORE_TYPE1`  = 5]]>
 				<text><![CDATA[   Rating]]></text>
 			</staticText>
 			<subreport>
-				<reportElement x="0" y="49" width="349" height="34" uuid="9030eeee-13ab-4bd7-b895-5e11c3ab4471"/>
+				<reportElement x="0" y="45" width="349" height="34" uuid="9030eeee-13ab-4bd7-b895-5e11c3ab4471"/>
 				<subreportParameter name="SUBREPORT_DIR">
 					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -121,18 +121,18 @@ AND line.`SCORE_TYPE1`  = 5]]>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "cln_fa_summary_sub_first_two_repeat.jasper"]]></subreportExpression>
 			</subreport>
 			<staticText>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="83" width="187" height="21" uuid="419beb8f-d1a8-48b6-847e-30ec420aa75e"/>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="79" width="187" height="21" uuid="419beb8f-d1a8-48b6-847e-30ec420aa75e"/>
 				<box>
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="0.0"/>
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement verticalAlignment="Bottom"/>
+				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[   Total]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="FixRelativeToBottom" x="187" y="83" width="52" height="21" uuid="16c84db9-883c-458f-8d0f-30e94be563eb"/>
+				<reportElement positionType="FixRelativeToBottom" x="187" y="79" width="52" height="21" uuid="16c84db9-883c-458f-8d0f-30e94be563eb"/>
 				<box>
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="0.0"/>
@@ -142,7 +142,7 @@ AND line.`SCORE_TYPE1`  = 5]]>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="FixRelativeToBottom" x="239" y="83" width="110" height="21" uuid="63b1e219-b27d-43a3-8a0e-3a8b9aa22ec5"/>
+				<reportElement positionType="FixRelativeToBottom" x="239" y="79" width="110" height="21" uuid="63b1e219-b27d-43a3-8a0e-3a8b9aa22ec5"/>
 				<box>
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="0.0"/>
@@ -152,13 +152,13 @@ AND line.`SCORE_TYPE1`  = 5]]>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<textField>
-				<reportElement positionType="FixRelativeToBottom" x="249" y="84" width="100" height="20" uuid="fb70b113-5e4b-4bfd-a4b2-9435f9fae822"/>
-				<textElement verticalAlignment="Bottom"/>
+				<reportElement positionType="FixRelativeToBottom" x="249" y="80" width="100" height="20" uuid="fb70b113-5e4b-4bfd-a4b2-9435f9fae822"/>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[($F{RATE1}!=null && $F{RATE1}!="")?$F{RATE1}:""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement positionType="FixRelativeToBottom" x="187" y="83" width="42" height="20" uuid="68080112-a3e6-4a0a-846a-69e41a6c956e"/>
-				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<reportElement positionType="FixRelativeToBottom" x="187" y="79" width="42" height="20" uuid="68080112-a3e6-4a0a-846a-69e41a6c956e"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[($F{SCORE1}!=null && $F{SCORE1}!="")?$F{SCORE1}:""]]></textFieldExpression>
 			</textField>
 		</band>
