@@ -716,10 +716,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 				}
 				else
 				{
-					$scope.actual_doctor_id={
-						NAME :null
-					}
-					console.log('-----------------',$scope.actual_doctor_id);
+					$scope.actual_doctor_id={NAME :null};
 					exlog.log(data);
 				}
 			},function(err){
@@ -727,6 +724,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			});
 		}
 		$scope.getApptPatient();
+
 		/**
 		 * tannv.dts@gmail.com
 		 * chuyen appt patient status thanh Work In Progress

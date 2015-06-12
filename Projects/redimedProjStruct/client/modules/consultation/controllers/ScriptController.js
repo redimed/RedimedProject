@@ -1,5 +1,11 @@
 angular.module("app.loggedIn.patient.consult.scriptController",[])
 	.controller("ScriptController",function($scope,$filter,$state,$modal,toastr,$modalInstance,ConsultationService,$stateParams, actual_doctor_id,script){
+		if (actual_doctor_id === undefined) {
+			$scope.actual_doctor_id ={
+				NAME :null
+			};
+		};
+		alert(actual_doctor_id.NAME);
 		$scope.scriptInfo = {
 			        medication_name:null,
 			        start_date:null,
