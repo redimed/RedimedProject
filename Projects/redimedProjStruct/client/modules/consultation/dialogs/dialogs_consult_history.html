@@ -1,5 +1,14 @@
-<div class="panel panel-default">
-	<div class="panel-body" ng-if="listConsult">
+<style type="text/css" class="ng-scope">
+    .modal.in .modal-dialog {
+       	margin-top:50px;
+    }
+</style>
+<!--<div class="panel panel-default">-->
+<div class="modal-body" ng-if="listConsult">
+	<div class="active">
+		<label class="un-label-popup-header-m un-bg-label-B41E46-m">Consultation History</label>
+	</div>
+	<div>
 		<div class="row">
 			<div class="col-xs-6">
 				<div class="un-label-forms-custom">
@@ -42,10 +51,9 @@
 				<textarea rows="6" class="form-control" disabled="disabled" style="resize: none;">{{listConsult.diagnosis}}</textarea>
 			</div>
 		</div>
-		<div class="row" style="float: right; margin-top: 15px;">
-			<div class="col-xs-12">
-				<a href="javascript:;" class="un-button un-bgXam-colBlack" ng-click='cancelDetail()'>Cancel</a>
-			</div>
-		</div>
+	</div>
+	<div align="right" style="margin-top: 15px; margin-right: 15px;">
+		<a href="javascript:;" class="un-button un-bgXam-colBlack" ng-click='cancelDetail()'>Cancel</a>
 	</div>
 </div>
+<!--</div>-->
