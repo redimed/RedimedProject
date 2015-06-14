@@ -3,15 +3,15 @@ angular.module("app.loggedIn.patient.consult.consulthistoryController", [])
 	$scope.consultion = {
 		consults: consults
 	}
-	//console.log('%%%%%%%%: ', consults.consult_id);
-	$scope.setListConsultHistory = function(){
-	 	//console.log('------', consults.consult_id);
-		ConsultationService.getByIdConsult(consults.consult_id).then(function(response){
-			$scope.listConsult = response.data;
-			//console.log('+++++++', response.data);
-		});
-	}
-	$scope.setListConsultHistory();
+	//phanquocchien edit
+	$scope.listConsult = consults;
+	// console.log(consults);
+	// $scope.setListConsultHistory = function(){
+	// 	ConsultationService.getByIdConsult(consults.consult_id).then(function(response){
+	// 		$scope.listConsult = response.data;
+	// 	});
+	// }
+	// $scope.setListConsultHistory();
 
 	$scope.cancelDetail = function(){
 		$modalInstance.close({'type':'cancel'});
