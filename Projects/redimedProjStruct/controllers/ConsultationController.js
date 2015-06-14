@@ -8,11 +8,39 @@ var chainer = new db.Sequelize.Utils.QueryChainer;
 var kiss=require('./kissUtilsController');
 var errorCode=require('./errorCode');
 var invoiceUtil=require('./invoiceUtilController');
+var knex = require('../knex-connect.js');
+var commonFunction =  require('../knex-function.js');
 
 //tannv.dts@gmail.com
 var controllerCode="RED_CONSULT";
 
 module.exports = {
+
+    getByIdProblem: function(req, res){
+
+        var postData = req.body.consult_id;
+
+        var sql = knex
+        .column('cln_patient_consults.history',
+        'cln_patient_consults.Creation_date',
+        'cln_patient_consults.examination',
+        'cln_patient_consults.treatment_plan',
+        'cln_patient_consults.diagnosis',
+        'cln_problems.Notes')
+        .from('cln_patient_consults')
+        .innerJoin('cln_problems', 'cln_patient_consults.problem_id', 'cln_problems.Problem_id')
+        .where({'consult_id': postData})
+        .toString();
+        db.sequelize.query(sql)
+        .success(function(data){
+            res.json({data: data[0]});
+        })
+        .error(function(error){
+            res.json({'status': 'error', 'message': error})
+        })
+
+    },
+
 	getPatientProblem: function(req,res){
 		var patientId = req.body.patient_id;
 
@@ -212,8 +240,12 @@ module.exports = {
                     for(var i=0; i<info.scripts.length;i++)
                     {
                         var s = info.scripts[i];
-                        var start_date = s.start_date.split("/").reverse().join("-");
-                        var end_date = s.end_date.split("/").reverse().join("-");
+                        if(s.start_date) {
+                            var start_date = s.start_date.split("/").reverse().join("-");
+                        };
+                        if(s.end_date) {
+                            var end_date = s.end_date.split("/").reverse().join("-");
+                        };
                         chainer.add(
                             db.ClnPatientMedication.create({
                                 patient_id: info.patient_id,
@@ -481,8 +513,35 @@ module.exports = {
             res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN003')});
         },true);
 
+    },
+    /**
+     * get list consultation of patient
+     * pahnquocchien.c1109g@gmail.com@gmail.com
+     */
+    getListConsultOfPatient:function(req,res)
+    {
+        var patientId=kiss.checkData(req.body.patient_id)?req.body.patient_id:'';
+        if(!kiss.checkListData(patientId))
+        {
+            kiss.exlog("getListConsultOfPatient Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
+        var sql=
+            " SELECT consult.*,problem.`Notes` FROM `cln_patient_consults` consult               "+
+            " LEFT JOIN `cln_problems` problem ON consult.`problem_id` = problem.`Problem_id`    "+
+            " WHERE consult.`patient_id` = ?                                                     ";
+        kiss.executeQuery(req,sql,patientId,function(rows){
+            if(rows.length>0)
+            {
+                res.json({status:'success',data:rows});
+            }
+            else
+            {
+                res.json({status:'fail'});
+            }
+        })
     }
-
 }
 
 function base64Image(src) {

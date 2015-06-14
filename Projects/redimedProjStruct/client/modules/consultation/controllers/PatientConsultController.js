@@ -6,10 +6,50 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		$scope.addTemplate = function(){
 			$state.go('loggedIn.template');
 			$cookieStore.put('template_patient_id', $stateParams.patient_id);
-		}
+		}		
 		/* END VUONG */
-
-
+		/*chien star*/
+		//buttom add make referral
+    	$scope.loadDataAddMakeReferral = {};
+		$scope.referralAddForm = {
+			is_show: false,
+            open: function () {
+                this.is_show = true;
+            },
+            close: function () {
+                this.is_show = false;
+            },
+            success: function (response) {
+                if (response.status == 'success')
+                	$scope.loadDataAddMakeReferral.load();
+                    $scope.referralAddForm.close();
+            }
+		};
+		//get list consultation of patient
+		$scope.setListConsultationOfPatient = function(){
+			ConsultationService.getListConsultOfPatient($stateParams.patient_id).then(function(data){
+				if (data.status == 'success') {
+					$scope.listConsultOfPatient = data.data;
+					console.log(data.data);
+				};
+			});
+		}
+		$scope.setListConsultationOfPatient();
+		//
+		$scope.showPopupHistory = function(data){
+			//console.log('---------------', data);
+			var modalInstance = $modal.open({
+				templateUrl:'modules/consultation/dialogs/dialogs_consult_history.html',
+				controller: 'ConsultHistoryController',
+				resolve: {
+					consults:function(){
+						return data;
+					}
+				}
+			})
+			
+		}
+		/*chien end*/
 		$scope.patient_id = $stateParams.patient_id;
 		$scope.cal_id = $stateParams.cal_id;
 		$scope.userInfo = $cookieStore.get('userInfo');
@@ -210,6 +250,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 					windowClass: "consult-modal-window",
 					controller:'ScriptController',
 					resolve: {
+
 						actual_doctor_id: function(){
 							return $scope.actual_doctor_id;
 						},
@@ -222,7 +263,20 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 				modalInstance.result.then(function(data){
 					if(data.type == 'ok')
 					{
-						$scope.consultInfo.scripts.push(data.value);
+						if (data.value.medication_name !== null) {
+							var count = 0;
+							for (var i = 0; i < $scope.consultInfo.scripts.length; i++) {
+								if($scope.consultInfo.scripts[i].medication_name === data.value.medication_name)
+								{
+									count ++;
+								}
+							};
+							if (count === 0) {
+								$scope.consultInfo.scripts.push(data.value);
+							};
+						};
+						
+						
 					}
 				})
 			}
@@ -601,6 +655,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		                if(response.status === 'success'){
 		                   	toastr.success('Save Item Success!');
 		                    PatientService.endInvoice($scope.appointment.Patient_id, $scope.appointment.CAL_ID);
+		                    $scope.setListConsultationOfPatient();
 		                }
 		                else{
 		                    toastr.error('Save Item Failed!');
@@ -627,7 +682,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		 * Lay thong tin appt patient
 		 */
 		$scope.apptPatient={};
-		$scope.actual_doctor_id={}
+		$scope.actual_doctor_id={};
 		$scope.apptStatus=ptnConst.apptStatus;
 		$scope.getApptPatient=function()
 		{
@@ -642,8 +697,12 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 					$scope.apptPatient=data.data;
 					DoctorService.getById($scope.apptPatient.actual_doctor_id)
 					.then(function(data){
+						if (data === undefined) {
+							$scope.actual_doctor_id ={
+								NAME:null
+							}
+						};
 						$scope.actual_doctor_id = data;
-						console.log('-----------------',$scope.actual_doctor_id);
 					})
 
 					if($scope.apptPatient.SESSION_START_TIME  && $scope.apptPatient.SESSION_END_TIME)
@@ -658,10 +717,10 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 					{
 						$scope.startSessionTime=$scope.apptPatient.SESSION_START_TIME;
 					}
-
 				}
 				else
 				{
+					$scope.actual_doctor_id={NAME :null};
 					exlog.log(data);
 				}
 			},function(err){
@@ -669,6 +728,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			});
 		}
 		$scope.getApptPatient();
+
 		/**
 		 * tannv.dts@gmail.com
 		 * chuyen appt patient status thanh Work In Progress

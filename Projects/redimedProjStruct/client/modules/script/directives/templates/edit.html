@@ -27,7 +27,9 @@
 					<div class="un-label-form-custom">
 						<span>Medicare</span>
 					</div>
-					<input type="text" class="form-control" ng-model="script.form.Medicare" placeholder="Medicare" id="Medicare" name="Medicare" required />
+					<select ng-model="script.form.Medicare" class="form-control" ng-options=" item.medication_name as item.medication_name for item in medicaname"  required>
+						<option value="script.form.Medicare" class="">{{script.form.Medicare}}</option>
+					</select>
 				</div>
 				<div class="col-xs-4">
 					<div class="un-label-form-custom">

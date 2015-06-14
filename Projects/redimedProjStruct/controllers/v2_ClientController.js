@@ -6,7 +6,7 @@ var S = require('string');
 var moment = require('moment');
 var _ = require('lodash');
 var mdtFunction = require('../functions');
-
+var kiss=require('./kissUtilsController');
 module.exports = {
 
 	postAppointments: function(req, res) {
@@ -113,6 +113,7 @@ module.exports = {
 		        })
     },
 
+
 	postClaims: function(req, res) {
 		var limit = (req.body.limit) ? req.body.limit : 10;
         var offset = (req.body.offset) ? req.body.offset : 0;
@@ -129,8 +130,6 @@ module.exports = {
 				limit: limit,
 				attributes: fields
 			}).success(function(result){
-				console.log(result);
-
 				res.json({"status": "success", "list": result.rows, "count": result.count});
 			})
 			.error(function(error){

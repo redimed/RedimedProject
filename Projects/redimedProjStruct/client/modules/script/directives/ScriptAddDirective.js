@@ -1,17 +1,19 @@
 angular.module('app.loggedIn.script.directive.add', [])
 
-.directive('scriptAdd', function(ScriptModel, PatientService, ConfigService, toastr, $cookieStore, $filter, $state, $stateParams){
+.directive('scriptAdd', function(ScriptModel, PatientService, ConfigService, toastr, $cookieStore, $filter, $state, $stateParams, $modal){
 	
 	return {
 
 		restrict: 'EA',
 		templateUrl: 'modules/script/directives/templates/add.html',
 		scope: {
-			options: '='
+			options: '=',
+			success:'=',
+			medicaname:'='
 		},
+
 		link: function(scope, ele, attrs){
 			var user_id = $cookieStore.get('userInfo').id;
-
 			var save = function(){
 
 				ConfigService.beforeSave(scope.script.errors);
@@ -31,8 +33,9 @@ angular.module('app.loggedIn.script.directive.add', [])
 
 				ScriptModel.add(postData)
 				.then(function(response){
-					toastr.success('Added Successfully');
-					$state.go('loggedIn.patient.script');
+						toastr.success('Added Successfully');
+						scope.success =  true;
+					//$state.go('loggedIn.patient.script');
 				}, function(error){
 					scope.script.errors = angular.copy(error.data.errors);
 					ConfigService.beforeError(scope.script.errors);

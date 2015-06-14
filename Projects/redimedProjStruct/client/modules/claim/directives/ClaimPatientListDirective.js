@@ -13,7 +13,7 @@ angular.module('app.loggedIn.claim.directives.patientList', [])
 .controller('ClaimPatientEditDialog', function($scope, $modalInstance, $stateParams, list){
 	$scope.claim = {
 		Claim_id: list.Claim_id,
-		Patient_id: $stateParams.patientId,
+		Patient_id: $stateParams.patient_id,
 		success: false
 	}
 
@@ -27,7 +27,7 @@ angular.module('app.loggedIn.claim.directives.patientList', [])
 .controller('ClaimPatientShowDialog', function($scope, $modalInstance, $stateParams, list){
 	$scope.claim = {
 		Claim_id: list.Claim_id,
-		Patient_id: $stateParams.patientId,
+		Patient_id: $stateParams.patient_id,
 		success: false
 	}
 

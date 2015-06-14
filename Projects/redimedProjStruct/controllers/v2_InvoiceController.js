@@ -1,7 +1,11 @@
 var db = require('../models');
 var InvoiceLineModel = require('../v1_models/Cln_invoice_lines.js');
+var kiss=require('./kissUtilsController');//tan add
+var errorCode=require('./errorCode'); //tan add
 
 var ERP_REST = require('../helper/ERP_Rest');
+
+var controllerCode="RED_INVOICEv2";//tan add
 
 var inc_common_model =  [
 	{ 
@@ -79,7 +83,19 @@ module.exports = {
 
 			company_id = patient.company_id;
 			if(patient_claim && patient_claim.claim) {
-				insurer_id = patient_claim.claim.insurer_site;
+				console.log("TTTTTTTTTTTTTTTTTTTTTTTTT")
+				console.log("TTTTTTTTTTTTTTTTTTTTTTTTT")
+				console.log("TTTTTTTTTTTTTTTTTTTTTTTTT")
+				console.log("TTTTTTTTTTTTTTTTTTTTTTTTT")
+				console.log("TTTTTTTTTTTTTTTTTTTTTTTTT")
+				console.log("TTTTTTTTTTTTTTTTTTTTTTTTT")
+				console.log("TTTTTTTTTTTTTTTTTTTTTTTTT")
+				console.log("TTTTTTTTTTTTTTTTTTTTTTTTT")
+				console.log("TTTTTTTTTTTTTTTTTTTTTTTTT")
+				console.log("TTTTTTTTTTTTTTTTTTTTTTTTT")
+				kiss.exlog(patient_claim.claim);
+				// insurer_id = patient_claim.claim.insurer_site;//tan frame
+				insurer_id = patient_claim.claim.insurer_id;//tan add
 				claim_id = patient_claim.Claim_id;
 			}
 
@@ -187,6 +203,10 @@ module.exports = {
 			res.json(500, {"status": "error", "message": error});
 		});
 	},
+
+	/**
+	 * tannv.dts@gmail.com mark
+	 */
 	postDetail: function(req, res) {
 		var header_id = req.body.header_id;
 		var inc_model = inc_common_model.concat([
@@ -199,7 +219,7 @@ module.exports = {
 				attributes: ['Title', 'Sur_name', 'First_name', 'Middle_name']
 			},
 			{
-				model: db.Claim, as: 'Claim', attributes: ['Injury_name','Insurer']
+				model: db.Claim, as: 'Claim', attributes: ['Injury_name','Insurer','insurer_id']
 			},
 			{ 
 				model: db.mdtInvoiceLine , as: 'Lines',
@@ -210,6 +230,7 @@ module.exports = {
 					},
 				]
 			}
+
 		]);
 		db.mdtInvoiceHeader.find({
 			where: {header_id: header_id},
@@ -219,11 +240,18 @@ module.exports = {
 		})
 		.error(function(error){
 			console.log(error)
+			kiss.exlog(error);
 			res.json(500, {"status": "error", "message": error});
 		});
 	},
+
+	/**
+	 * create by: unknown
+	 * modify by:tannv.dts@gmail.com
+	 */
 	postUpdate: function(req, res) {
 	 	var postData = req.body.data;	
+	 	kiss.exlog(postData)
         var header_id =  req.body.header_id;
 
         db.mdtInvoiceHeader.find({
@@ -378,5 +406,70 @@ module.exports = {
 		}, function(err){
 			res.json({err: err})
 		});
+	},
+
+	/**
+	 * tannv.dts@gmail.com
+	 * xoa invoice line
+	 */
+	postRemoveInvoiceLine:function(req,res)
+	{
+		var fHeader="v2_InvoiceController->removeInvoiceLine";
+		var functionCode="FN001";
+		var postData=kiss.checkData(req.body.data)?req.body.data:{};
+		var invoiceLineId=kiss.checkData(postData.invoiceLineId)?postData.invoiceLineId:'';
+		var apptItemId=kiss.checkData(postData.apptItemId)?postData.apptItemId:'';
+		if(!kiss.checkListData(invoiceLineId,apptItemId))
+		{
+			kiss.exlog(fHeader,'Loi truyen data den');
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN000')});
+			return;
+		}
+		
+		kiss.beginTransaction(req,function(){
+			var sql="DELETE FROM `cln_invoice_lines` WHERE line_id=?";
+			kiss.executeQuery(req,sql,[invoiceLineId],function(result){
+				if(result.affectedRows>0)
+				{
+					var sql="DELETE FROM `cln_appt_items` WHERE `appt_item_id`=?";
+					kiss.executeQuery(req,sql,[apptItemId],function(result){
+						if(result.affectedRows>0)
+						{
+							kiss.commit(req,function(){
+                                res.json({status:'success'});
+                            },function(err){
+                                kiss.exlog(fHeader,"Loi commit",err);
+                                res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'FN006')});
+                            })
+						}
+						else
+						{
+							kiss.exlog(fHeader,'Khong co appt item nao duoc xoa');
+							kiss.rollback(req,function(){
+			                    res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'FN005')});
+			                })
+						}
+					},function(err){
+						kiss.exlog(fHeader,'Loi truy van xoa cln_appt_patients',err);
+						kiss.rollback(req,function(){
+		                    res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'FN004')});
+		                })
+					});
+				}
+				else
+				{
+					kiss.exlog(fHeader,"Khong co data invoice line nao duoc xoa");
+					res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN003')});
+				}
+			},function(err){
+				kiss.exlog(fHeader,'Loi truy van xoa',err);
+				res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN002')});
+			});
+		},function(err){
+			kiss.exlog(fHeader,"Loi mo transaction",err);
+            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
+		})
+
+		
 	}
 }

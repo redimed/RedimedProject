@@ -51,8 +51,14 @@
                           <input style="background:white;height: 36px;" ng-required="true" type="text" placeholder="Phone" ng-model="shopInfo.phone" name="phone"  />
                     </label>
                     <br>
-                  	 <div style="float: right;">
-                       <button class=" btn-red waves-effect" ng-click="createNewShop()">Save</button>
+                  	<div style="float: right;">
+                       <button class=" btn-red waves-effect" ng-click="createNewShop()" ng-show="title == 'Add New Shop'">
+                          Add
+                       </button>
+
+                       <button class=" btn-red waves-effect" ng-click="updateShopCompany()" ng-show="title == 'Edit Shop'">
+                          Edit
+                       </button>
                     </div>
                      <div style="float: left;">
                        <button class="  btn-red waves-effect fa fa-reply fa-2x" ui-sref="app.main.shop"></button>

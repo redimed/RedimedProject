@@ -1277,6 +1277,7 @@ table.timetable-table td:last-child {
     border-right: 1.5px solid #ddd;
     -moz-user-select: none;
     -webkit-user-select: none;
+    width: 15;
 }
 
 .odd {
@@ -2592,8 +2593,9 @@ label{
     border: 2px solid #ffffff;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
     border-radius: 20px !important;
-    float: right;
+    float: left;
     margin-top: -45px;
+    margin-bottom: 20px;
 }
 .un-label-header-custom{
     padding: 0px 10px 2px 10px;
@@ -2617,11 +2619,21 @@ label{
     background: rgb(221, 221, 221);
 }
 .un-header-top{
-    margin-top: 40px;
+    margin-top: 60px;
 }
 .un-label-form-custom{
     color: #ffffff;
     width: 95%;
+    margin-bottom: 0;
+    background: rgb(102, 102, 102) !important;
+    padding-top: 2px;
+    padding-left: 5px;
+    font-weight: bold;
+    padding-bottom: 2px;
+}
+.un-label-forms-custom{
+    color: #ffffff;
+    width: 50%;
     margin-bottom: 0;
     background: rgb(102, 102, 102) !important;
     padding-top: 2px;
@@ -3088,6 +3100,9 @@ label{
     box-shadow: 0px 3px 5px rgba(50, 50, 50, 0.75);
     outline: none;
 }
+.un-button:hover{
+    text-decoration: none;
+}
 .un-popup-config{
     top: 50px !important;
     overflow: inherit !important;
@@ -3232,6 +3247,12 @@ label{
 .un_tn_btn_sm{
     font-size: 10px;
 }
+
+.un_tn_btn_zip{
+    padding-left:3px;
+    padding-right:3px;
+}
+
 
 .un_tn_txt_notify{
     /*border-radius: 20px !important;*/
@@ -3644,6 +3665,71 @@ label{
 }
 .pt_img_padding_left_15{
     padding-right: 15px;
+}
+.re_bg_color_E0EFFF{
+    background: #E0EFFF !important;
+}
+.re_color_005A59{
+    color: #005A59 !important;
+}
+.re_padding_0{
+    padding: 0 !important;
+}
+.re_boder_crop_item{
+    color: #9E9E9E;
+    border: 1px dashed #C3C3C3;
+    border-radius: 5px !important;
+    background-color: white;
+    padding: 15px !important;
+}
+.re_boder_none{
+    border: none !important;
+}
+.re_bg_seach{
+    background: linear-gradient(to bottom, #F8F8F8 0%,#979797 100%);
+    border-top-left-radius: 8px !important;
+    border-bottom-left-radius: 8px !important;
+    border-color: rgb(190, 190, 190)!important;
+}
+.re_bg_info{
+    margin-top: 5px;
+    background: linear-gradient(to bottom, #FFF 0%,#DBEFFF 100%);
+    color: #006666 !important;
+    border: 1px solid #B1B1B2 !important;
+    border-radius: 5px !important;
+    -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+
+}
+.re_margin_bottom_5{
+    margin-bottom: 5px !important;
+}
+.re_portlet_title{
+    min-height: 0px !important;
+    background-color: #ccc;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    margin-bottom: 5px !important;
+    font-size: 10px !important;
+}
+.re_booking{
+    /*background-color: rgb(244, 123, 33) !important;*/
+    color: white !important;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+}
+.re_buttom_sreach{
+    background: linear-gradient(to bottom, #F8F8F8 0%,#979797 100%);
+    border-top-right-radius: 8px !important;
+    border-bottom-right-radius: 8px !important;
+    border:1px solid rgb(190, 190, 190)!important;
+    width: 12%;
+    margin-left: 2px;
+    height: 34px;
+}
+.re_bg_white{
+    background-color: white;
 }
 /*phanquocchien patient end*/
 

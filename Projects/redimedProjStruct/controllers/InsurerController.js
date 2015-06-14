@@ -4,6 +4,7 @@ var db = require('../models');
 var S = require('string');
 var moment = require('moment');
 var _ = require('lodash');
+var kiss=require('./kissUtilsController');
 
 module.exports = {
 	postOneFollowPatient: function(req, res){
@@ -18,7 +19,7 @@ module.exports = {
 				'cln_patients.Patient_id': postData.Patient_id
 			})
 			.toString();
-
+		kiss.exlog(sql);
 		db.sequelize.query(sql)
 		.success(function(rows){
 			res.json({data: rows[0], sql: sql});

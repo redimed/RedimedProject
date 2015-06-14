@@ -1,16 +1,17 @@
 angular.module('app.loggedIn.script.directive.list', [])
 
-.directive('scriptList', function(ScriptModel, $modal, $filter, $stateParams, $state, toastr){
+.directive('scriptList', function(ScriptModel, PatientService, $modal, $filter, $stateParams, $state, toastr){
 	return {
 
 		restrict: 'EA',
 		templateUrl: 'modules/script/directives/templates/list.html',
 		scope:{
 			options: '=',
-			limit: '@'
+			limit: '@',
+			medicaname :'='
 		},
 		link: function(scope, ele, attrs){
-
+			
 			var search = {
 				page: 1,
 				limit: 20,
@@ -80,11 +81,60 @@ angular.module('app.loggedIn.script.directive.list', [])
 				})
 			}
 
-			var add = function(){
+			scope.Scripts = function(type, index){
+				scope.script.medication_name = [];
+				 for (var i = 0; i < scope.medicaname.length; i++) {
+					scope.script.medication_name.push({'medication_name':scope.medicaname[i].medication_name});
+				};
+				if(type == 'new')
+				{
+					var modalInstance = $modal.open({
+			         templateUrl: 'notifyToAdd',
+			         controller: 'ScriptAddController',
+			         size :'lg',
+			         resolve :{
+			         	medicaname :function(){
+			         		return scope.medicaname;
+			         	}
+			         }
+			       })
+			       .result.then(function(response){
+			        	scope.script.load();
+			       })
+			   }
+
+			   if(type == 'edit'){
+			   		console.log('chien',index);
+			   		var modalInstance = $modal.open({
+			         	templateUrl: 'notifyToEdit',
+			         	controller: 'ScriptEditController',
+			         	size :'lg',
+			         	resolve: {
+				         	ID: function(){
+				         		return index;
+				         	},
+				         	medicaname :function(){
+			         			return scope.script.medication_name;
+			         		}
+			         	}
+			       	})
+			       .result.then(function(response){
+			       		if(response){
+							scope.script.load();
+						}
+			       })
+
+			   }
+
+			}
+			
+			/*var add = function(){
+
+				//$
 
 				$state.go('loggedIn.patient.script.add');
 
-			}
+			}*/
 
 			var disable = function(row){
 				
@@ -94,15 +144,16 @@ angular.module('app.loggedIn.script.directive.list', [])
 
 			}
 
-			var edit = function(id){
+			/*var edit = function(id){
 				$state.go('loggedIn.patient.script.edit', {scriptId: id});
-			}
+			}*/
 			scope.setPage = function (page) {
 				scope.script.search.offset = (page-1)*scope.script.search.limit;
 				scope.script.load();
 			}
 
 			scope.script = {
+				medication_name :[],
 				search: search,
 				dialog: {
 					remove: function(id){ remove(id); }
@@ -113,8 +164,8 @@ angular.module('app.loggedIn.script.directive.list', [])
 				error: '',
 				disable: function(row){ disable(row); },
 				load: function(){ load(); },
-				add: function(){ add(); },
-				edit: function(id){ edit(id); },
+				//add: function(){ add(); },
+				//edit: function(id){ edit(id); },
 				onSearch: function(option){ onSearch(option); }
 			}
 

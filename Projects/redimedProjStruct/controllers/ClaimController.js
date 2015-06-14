@@ -3,6 +3,10 @@ var commonFunction =  require('../knex-function.js');
 var S = require('string');
 var db = require('../models');
 var _ = require('lodash');
+var kiss=require('./kissUtilsController');//tan add
+var errorCode=require('./errorCode');//tan add
+
+var controllerCode="RED_CLAIM";//tan add
 
 module.exports = {
 	postEdit: function(req, res){
@@ -107,6 +111,83 @@ module.exports = {
 			res.json(500, {error: error});	
 		})
 	},
+
+	/**
+	 * get patient Insurer
+	 * tannv.dts@gmail.com
+	 */
+	getPatientInsurer:function(req,res)
+	{	
+		var fHeader="ClaimController->getPatientInsurer";
+		var functionCode="FN001";
+		var patientId=req.query.patientId;
+		if(!kiss.checkListData(patientId))
+		{
+			kiss.exlog(fHeader,"Loi data truyen den");
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
+			return;
+		}
+		var sql="SELECT * FROM `cln_patients` patient WHERE patient.`Patient_id`=?";
+		kiss.executeQuery(req,sql,[patientId],function(rows){
+			if(rows.length>0)
+			{
+				var patient=rows[0];
+				if(patient.company_id!=null)
+				{
+					//neu patient thuoc company
+					var sql="SELECT * FROM `companies` c WHERE c.`id`=?";
+					kiss.executeQuery(req,sql,[patient.company_id],function(rows){
+						if(rows.length>0)
+						{
+							var company=rows[0];
+							if(company.Insurer!=null)
+							{
+								var sql="SELECT * FROM `cln_insurers` insurer WHERE insurer.`id`=?";
+								kiss.executeQuery(req,sql,[company.Insurer],function(rows){
+									if(rows.length>0)
+									{
+										res.json({status:'success',insurer:rows[0]});
+									}
+									else
+									{
+										res.json({status:'success',insurer:null});
+									}
+								},function(err){
+									kiss.exlog(fHeader,"Loi truy van lay thong tin insurer");
+									res.json({staus:'fail',error:errorCode.get(controllerCode,functionCode,'TN005')});
+								})
+							}
+							else
+							{
+								res.json({status:'success',insurer:null});
+							}
+						}
+						else
+						{
+							res.json({status:'success',insurer:null});
+						}
+					},function(err){
+						kiss.exlog(fHeader,"Loi truy van lay thong tin company cua patient");
+						res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN004')});
+					});
+				}
+				else
+				{
+					//neu patient khong thuoc company
+					res.json({status:'success',insurer:null});
+				}
+			}
+			else
+			{
+				kiss.exlog(fHeader,"Khong ton tai patient id");
+				res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN002')});
+			}
+		},function(err){
+			kiss.exlog(fHeader,"Loi truy van lay thong tin patient");
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN003')});
+		})
+	},
+
 
 	postAdd: function(req, res){
 		var postData = req.body.data;

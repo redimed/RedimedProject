@@ -2,15 +2,12 @@
 <div class="bar bar-subheader customHeaderBar">
 <div class="welcom" style=" margin-left: 130px;">Welcom {{userInfo.firstname}} &nbsp; {{userInfo.surname}}</div>
 	<div class="ava">
-		<img alt="Avartar"
-      	ng-src="https://testapp.redimed.com.au:3000/api/phUser/getAvatar/{{userInfo.user_id}}" 
+		<!-- <img alt="Avartar"
+      	ng-src = "https://testapp.redimed.com.au:3000/api/phUser/getAvatar/{{userInfo.user_id}}"
+      	id="avatar"/> -->
+      	<img alt="Avartar"
+      	ng-src="https://192.168.1.102:3000/api/phUser/getAvatar/{{userInfo.user_id}}" 
       	id="avatar"/>
-      	<!-- <img alt="Avartar"
-      	ng-src="{{linkImg}}" 
-      	id="avatar"/> -->
-      <!-- 	<img alt="Avartar"
-      	ng-src="https://192.168.1.107:3000/api/phUser/getAvatar/{{userInfo.user_id}}" 
-      	id="avatar"/> -->
 	</div>
   <h2 class="title customHeaderBar " style="margin-left: 14%;font-size: 20px;top: 11px;">Home</h2>
 </div>

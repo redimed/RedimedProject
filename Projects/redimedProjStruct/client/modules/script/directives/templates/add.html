@@ -27,7 +27,9 @@
 					<div class="un-label-form-custom">
 						<span>Medicare</span>
 					</div>
-					<input type="text" class="form-control" ng-model="script.form.Medicare" placeholder="Medicare" id="Medicare" name="Medicare" required />
+					<select ng-model="script.form.Medicare" class="form-control" ng-options=" item.medication_name as item.medication_name for item in medicaname"  required>
+						<option value="" class=""></option>
+					</select>
 				</div>
 				<div class="col-xs-4">
 					<div class="un-label-form-custom">
@@ -110,14 +112,14 @@
 			<div class="row" style="margin-top: 15px;">
 				<div class="col-xs-6">
 					<span>
-			            <canvas width="500" height="200" id="canvas" style="background-color: #DDDDDD; margin-bottom: 15px; border: 2px solid 64A0D9" signature ng-model="script.form.doctorSign">
+			            <canvas width="580" height="200" id="canvas" style="background-color: #DDDDDD; margin-bottom: 15px; border: 2px solid 64A0D9" signature ng-model="script.form.doctorSign">
 			            </canvas>
 			        </span>
 
 				</div>
 				<div class="col-xs-6">
 					<span>
-			            <canvas width="500" height="200" id="canvas_paient" style="background-color: #DDDDDD; margin-bottom: 15px; border: 2px solid 64A0D9" signature ng-model="script.form.patientSign">
+			            <canvas width="580" height="200" id="canvas_paient" style="background-color: #DDDDDD; margin-bottom: 15px; border: 2px solid 64A0D9" signature ng-model="script.form.patientSign">
 			            </canvas>
 			        </span>
 				</div>

@@ -32,6 +32,8 @@ module.exports =
         var DATE=kiss.checkData(req.body.info.DATE)?req.body.info.DATE:null;
         var LOCATION=kiss.checkData(req.body.info.LOCATION)?req.body.info.LOCATION:null;
         var TIME=kiss.checkData(req.body.info.TIME)?req.body.info.TIME:null;
+        var REMEMBER_PATIENTS=kiss.checkData(req.body.info.REMEMBER_PATIENTS)?req.body.info.REMEMBER_PATIENTS:0;
+        var RECEIVE_REDIMED=kiss.checkData(req.body.info.RECEIVE_REDIMED)?req.body.info.RECEIVE_REDIMED:0;
         var currentDate=moment().format("YYYY/MM/DD HH:mm:ss");
         if(!kiss.checkListData(FIRSTNAME,LASTNAME,GENDER,DOB,CONTACT_NO,INJURY,TYPE_NAME,CAL_ID,BookingType,EMAIL))
         {
@@ -52,7 +54,9 @@ module.exports =
             CAL_ID:CAL_ID,
             email:EMAIL,
             BookingType:BookingType,
-            CREATION_DATE:currentDate
+            CREATION_DATE:currentDate,
+            remember_patients:REMEMBER_PATIENTS,
+            receive_redimed:RECEIVE_REDIMED
         }
 
         var sql="INSERT INTO `waf_sponsor1` SET ?";
