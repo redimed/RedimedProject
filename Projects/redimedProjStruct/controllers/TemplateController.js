@@ -3,8 +3,11 @@ var commonFunction =  require('../knex-function.js');
 var S = require('string');
 var db = require('../models');
 var _ = require('lodash');
-var fs = require('fs');
+var fs = require('fs-extra');
 var moment = require('moment');
+var https = require('https');
+var http = require('http');
+var mkdirp = require('mkdirp');
 
 module.exports = {
 	postDelete: function(req, res){
@@ -110,5 +113,50 @@ module.exports = {
 		.error(function(error){
 			res.json(500, {error: error});
 		})			
+	},
+
+	getTemplate: function(req,res){
+		var id = req.params.id;
+		var patientId = req.params.patientId;
+		var calId = req.params.calId;
+
+		db.sequelize.query("SELECT * FROM template WHERE id = ?",null,{raw:true},[id])
+			.success(function(data){
+				if(data.length > 0)
+				{
+					var item = data[0];
+
+					var optionsget = {
+					    host : 'testapp.redimed.com.au',
+					    port : 3003,
+					    path : '/RedimedJavaREST/api/document/template/'+id,
+					    method : 'GET' 
+					};
+
+					var targetFolder = '.\\uploadFile\\Template\\PatientID-'+patientId;
+
+					mkdirp(targetFolder, function(err) {
+		         		if(err)
+		         		  return console.log(err);
+
+		         		var file = fs.createWriteStream(targetFolder+'\\'+item.name+".pdf");
+						var request = http.get(optionsget, function(response) {
+						  response.pipe(file);
+						  response.on('end',function(){
+						  	res.download(targetFolder+'\\'+item.name+".pdf");
+						  })
+						});
+
+						request.on('error', function(e) {
+						    res.json(500, {error: e});
+						});
+
+						request.end();
+		         	});
+				}
+			})
+			.error(function(error){
+				res.json(500, {error: error});
+			})		
 	}
 }
