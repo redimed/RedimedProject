@@ -73,6 +73,7 @@ app.get('/',function(req, res) {
 });
 app.use(busboy());
 
+app.use(express.static(path.join(__dirname, 'public')));
 app.use('/img/patient/avt', express.static(uploadedFile));
 app.use('/document/fa/images', express.static(documentImage));
 /**

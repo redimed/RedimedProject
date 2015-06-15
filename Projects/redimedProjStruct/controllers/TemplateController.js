@@ -101,6 +101,7 @@ module.exports = {
 	postList: function(req, res){
 		var sql = knex('template')
 				.select()
+				.orderBy('Creation_date', 'desc')
 				.toString();
 
 		db.sequelize.query(sql)

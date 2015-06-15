@@ -1,20 +1,19 @@
-angular.module('app.loggedIn.template.directives.add', [])
+angular.module('app.loggedIn.template.directives.patient_add', [])
 
-.directive('templateAdd', function($modal, $cookieStore, $state, TemplateModel, toastr){
+.directive('templatePatientAdd', function($modal, $cookieStore, $state, TemplateModel, toastr, PatientService){
 	return {
 		restrict: 'EA',
 		scope: {
+			patientId: '=',
+			calId: '=',
+			success: '='
 		},
-		templateUrl: 'modules/template/directives/templates/add.html',
+		templateUrl: 'modules/template/directives/templates/patient_add.html',
 		link: function(scope, elem, attrs){
 			var user_id = $cookieStore.get('userInfo').id;
 
 			var quill = new Quill('#editor', {
 				modules: {
-					'authorship': {
-						authorId: 'advanced',
-				      	enabled: true
-				    },
 				    'link-tooltip': true,
 			    	'image-tooltip': true,
 			    	'multi-cursor': true
@@ -28,13 +27,14 @@ angular.module('app.loggedIn.template.directives.add', [])
 			}
 
 			scope.save = function(){
+
 				var html = quill.getHTML();
 
 				var postData = {name: scope.form.name, content: html, user_id: user_id};
 
 				TemplateModel.add(postData)
 				.then(function(response){
-					$state.go('loggedIn.template');
+					scope.success = true;
 				}, function(error){})
 			}
 		}

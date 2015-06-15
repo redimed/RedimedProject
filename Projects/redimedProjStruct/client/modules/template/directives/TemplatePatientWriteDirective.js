@@ -1,35 +1,23 @@
-angular.module('app.loggedIn.template.directives.write', [])
+angular.module('app.loggedIn.template.directives.patient_write', [])
 
-.directive('templateWrite', function($modal, $cookieStore, $state, $stateParams, $timeout, TemplateModel, toastr, PatientService){
+.directive('templatePatientWrite', function($modal, $cookieStore, $state, $stateParams, $timeout, TemplateModel, toastr, PatientService){
 	return {
 		restrict: 'EA',
 		scope: {
+			id: '=',
+			patientId: '=',
+			calId: '=',
+			success: '='
 		},
-		templateUrl: 'modules/template/directives/templates/write.html',
+		templateUrl: 'modules/template/directives/templates/patient_write.html',
 		link: function(scope, elem, attrs){
-
-			scope.savePDF = function(){
-				var doc = new jsPDF();
-
-				var specialElementHandlers = {
-					'#editor': function(element, renderer){
-						return true;
-					}
-				};
-
-				doc.fromHTML($('#writeTemplate').get(0), 15, 15, {
-					'width': 170
-				});
-
-				doc.save('test.pdf');
-			}
 
 			/* PATIENT LOAD */
 			var patientLoad = function(patient_id){
 				PatientService.get(patient_id)
 				.then(function(response){
 					scope.patient.one = response.data;
-					loadTemplate();
+					loadTemplate(scope.id);
 				}, function(error){})
 			}
 
@@ -40,21 +28,24 @@ angular.module('app.loggedIn.template.directives.write', [])
 				}
 			}
 
-			if($cookieStore.get('template_patient_id')){
-				var patient_id = $cookieStore.get('template_patient_id');
-
-				scope.patient.load(patient_id);
-			}
+			
+			scope.$watch('patientId', function(patientId){
+				if(typeof patientId !== 'undefined'){
+					scope.patient.load(patientId);
+				}
+			})
 			/* END PATIENT LOAD */
 
-			var loadTemplate = function(){
-				TemplateModel.one({id: $stateParams.id})
+			var loadTemplate = function(id){
+				TemplateModel.one({id: id})
 				.then(function(response){
 					scope.template.one = response.data[0];
 
 					var content = scope.template.one.content;
 					var new_content = '';
 					var index_first_new = 0;
+
+					console.log(content);
 
 					while(content.indexOf('{#input') !== -1){
 						var index_first = content.indexOf('{#input');
@@ -82,18 +73,12 @@ angular.module('app.loggedIn.template.directives.write', [])
 						content = content.substring(index_last+2, content.length);
 					}
 
+					new_content += content;
+
 					$('#writeTemplate').html(new_content);
 					$('.custom-input-template').on('input', function(e){
 						$(this).attr('size', e.target.value.length);
 					});
-
-					/*var content = scope.template.one.content.replace(/{#input#}/g, '<input class="custom-input-template" placeholder="Please fill in"/>');
-
-					$('#writeTemplate').html(content);
-
-					$('.custom-input-template').on('input', function(e){
-						$(this).attr('size', e.target.value.length);
-					});*/
 				})
 			}
 
