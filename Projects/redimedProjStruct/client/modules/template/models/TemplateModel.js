@@ -36,7 +36,7 @@ angular.module("app.loggedIn.template.model", [])
     }
 
     instanceService.download = function(data){
-        return "https://localhost:3000/"+uploadUrl+"download/"+data.id+"/"+data.cal_id+"/"+data.patient_id;
+        return "https://localhost:3000/"+uploadUrl+"download/"+data.id+"/"+data.patient_id+"/"+data.cal_id;
     }
 
     return instanceService;

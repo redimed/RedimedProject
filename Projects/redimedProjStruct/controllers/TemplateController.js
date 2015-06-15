@@ -159,6 +159,20 @@ module.exports = {
 		    method : 'GET' 
 		};
 
+		var now = moment().format('YYYY-MM-DD');
+
+		/* INSERT INTO DOCUMENT */
+		var document_insert = {
+			patient_id: patientId,
+			cal_id: calId,
+			document_path: 'uploadFile/Template/PatientID-'+patientId,
+			document_name: null,
+			Creation_date: now,
+			Last_update_date: now
+		}
+
+		/* END INSERT INTO DOCUMENT */
+
 		var targetFolder = '.\\uploadFile\\Template\\PatientID-'+patientId;
 
 		var sql = knex('cln_template_temp')
@@ -167,24 +181,35 @@ module.exports = {
 
 		db.sequelize.query(sql)
 		.success(function(rows){
-			mkdirp(targetFolder, function(err) {
-	     		if(err)
-	     		  return console.log(err);
+			document_insert.document_name = rows[0].name+".pdf";
+			var document_sql = knex('cln_appt_document')
+							.insert(document_insert)
+							.toString();
 
-	     		var file = fs.createWriteStream(targetFolder+'\\'+rows[0].name+".pdf");
-				var request = http.get(optionsget, function(response) {
-				  response.pipe(file);
-				  response.on('end',function(){
-				  	res.download(targetFolder+'\\'+rows[0].name+".pdf");
-				  })
-				});
+			db.sequelize.query(document_sql)
+			.success(function(created){
+				mkdirp(targetFolder, function(err) {
+		     		if(err)
+		     		  return console.log(err);
 
-				request.on('error', function(e) {
-				    res.json(500, {error: e});
-				});
+		     		var file = fs.createWriteStream(targetFolder+'\\'+rows[0].name+".pdf");
+					var request = http.get(optionsget, function(response) {
+					  response.pipe(file);
+					  response.on('end',function(){
+					  	res.download(targetFolder+'\\'+rows[0].name+".pdf");
+					  })
+					});
 
-				request.end();
-	     	});
+					request.on('error', function(e) {
+					    res.json(500, {error: e});
+					});
+
+					request.end();
+		     	});
+			})
+			.error(function(error){
+				res.json(500, {error: error});
+			})
 		})
 		.error(function(error){
 			res.json(500, {error: error});
