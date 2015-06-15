@@ -1,6 +1,6 @@
 angular.module('starter.main.controller',[])
 
-    .controller('mainController', function ($scope, $state,$q,localStorageService ,SecurityService,$ionicPopup,$ionicLoading,$ionicModal,$timeout,MainService,$filter) {
+    .controller('mainController', function ($scope, $state, $q, localStorageService , SecurityService, $ionicPopup, $ionicLoading, $ionicModal, $timeout, MainService, $filter, $templateCache, $ionicHistory) {
         $scope.userInfo = localStorageService.get('userInfo');
         $scope.user_type =  $scope.userInfo.user_type;
         
@@ -24,9 +24,11 @@ angular.module('starter.main.controller',[])
               $timeout(function() {
                   $ionicLoading.hide();
                   localStorageService.clearAll();
-                  $scope.userInfo={};
+                  $scope.userInfo = {};
+                  $ionicHistory.clearCache();
+                  $ionicHistory.clearHistory();
+                  $templateCache.removeAll();
                   $state.go("security.login", null, {reload: true});
-
               }, 300);
     	}
 
@@ -43,9 +45,6 @@ angular.module('starter.main.controller',[])
               $state.go('app.main.shop');
            }
       }
-    
-
-       	
 })
 
     

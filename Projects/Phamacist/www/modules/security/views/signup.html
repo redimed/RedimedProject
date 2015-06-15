@@ -1,17 +1,16 @@
  <ion-view>
-    <ion-content class="content-scroll">
-      <div  class="ic-tabs" style="width: 160px;">
-                <img src="img/Design-Appb_01.png" alt="" style="width: 129px;
-  margin-top: -2px;">
-            </div>
+    <ion-content class="content-scroll background-content" >
+      <div  class="ic-tabs">
+          <img src="img/Design-Appb_01.png"  style="margin-top: -2px;">
+      </div>
          <div class="form-group">
-                <div style="width: 100%;background-color: #ef4e52;height: 49px;margin-left: 80px;"><h1 class="logo_login" style="width:120px">SignUp</h1></div>
+                <div class="action_bar"><h1 class="logo_login" >SignUp</h1></div>
                 <form name="signUpForm" style="padding-top: 3px;">
-                  <label class="item item-input input_us" >
-                        <span class="input-label span-input-color">Username</span>
-                        <input style="background:white;height: 36px;" ng-required="true" type="text" placeholder="Username" ng-model="signupData.username" name="username" required ng-minlength=5 ng-maxlength=20 
-                        ng-class="{'error':iserr|| signUpForm.username.$dirty && signUpForm.username.$invalid}"  />
-                      </label>
+
+                   <label class=" item-input item-floating-label">
+                    <span class="input-label sp_custom">Username</span>
+                    <input type="text"  class="ip_custom pl"  placeholder="Username" ng-model="signupData.username" name="username" required ng-minlength=5 ng-maxlength=20 ng-class="{'error':iserr|| signUpForm.username.$dirty && signUpForm.username.$invalid}" >
+                  </label>
                     
                     <div class="err"  ng-messages="signUpForm.username.$error" ng-show="iserr || signUpForm.username.$dirty && signUpForm.username.$invalid">
                             <small ng-message="required"
@@ -28,9 +27,9 @@
                             </small>
                         </div>
                         <br>
-                    <label class="item item-input input_us" >
-                        <span class="input-label span-input-color">Password</span>
-                        <input style="background:white;height: 36px;" ng-required="true"  ng-model="signupData.password" placeholder="Password" type="password" name="password" required ng-minlength=7 
+                    <label class="item-input item-floating-label" >
+                        <span class="input-label sp_custom">Password</span>
+                        <input  class="ip_custom pl" ng-required="true"  ng-model="signupData.password" placeholder="Password" type="password" name="password" required ng-minlength=7 
                          ng-class="{'error':iserr|| signUpForm.password.$dirty && signUpForm.password.$invalid}" />
                       </label>
                     <div class="err" ng-messages="signUpForm.password.$error" ng-show="iserr || signUpForm.password.$dirty && signUpForm.password.$invalid">
@@ -44,9 +43,9 @@
                             </small>
                     </div>
                     <br>
-                     <label class="item item-input input_us" >
-                        <span class="input-label span-input-color">Confirm Password</span>
-                        <input style="background:white;height: 36px;" ng-required="true"  ng-model="signupData.cfpassword" placeholder="Confirm Password" data-password-verify="signupData.password" type="password" name="cfpassword" required ng-class="{'error':iserr|| signUpForm.cfpassword.$dirty && signUpForm.cfpassword.$invalid}" />
+                     <label class="item-input item-floating-label" >
+                        <span class="input-label sp_custom">Confirm Password</span>
+                        <input  class="ip_custom pl" ng-required="true"  ng-model="signupData.cfpassword" placeholder="Confirm Password" data-password-verify="signupData.password" type="password" name="cfpassword" required ng-class="{'error':iserr|| signUpForm.cfpassword.$dirty && signUpForm.cfpassword.$invalid}" />
                       </label>
                     
                     <div class="err" ng-messages="signUpForm.cfpassword.$error" ng-show="iserr ||signUpForm.cfpassword.$dirty && signUpForm.cfpassword.$invalid">
@@ -56,28 +55,30 @@
                             </small>
                     </div>
                    <br>
-                    <label class="item item-input input_us" >
-                        <span class="input-label span-input-color">User Type</span>
-                       <select ng-required="true" ng-model="signupData.user_type" name="Title" class="browser-default" style="border:none" >
-                            <option value="">--User Type--</option>
-                            <option>Company</option>
-                            <option >Pharmacist</option>
-                        </select>
+                    <label class="item-input item-floating-label" >
+                      <span class="span-ex" style="color:white">User Type</span>
+                      <select ng-required="true" ng-model="signupData.user_type" name="User Type" class="browser-default" style="float: right; margin-top: -2px; border: none; height: 21px; 
+                      background-color: transparent; color:white">
+                            <option value="" style="color:black">--User Type--</option>
+                            <option style="color:black">Company</option>
+                            <option style="color:black">Pharmacist</option>
+                      </select>
+                      <hr>
                     </label>
                     <br>
-                     <label class="item item-input input_us" >
-                        <span class="input-label span-input-color">First Name</span>
-                        <input style="background:white;height: 36px;" type="text" placeholder="First Name" ng-model="signupData.firstname"/>
+                     <label class="item-input item-floating-label" >
+                        <span class="input-label sp_custom">First Name</span>
+                        <input  class="ip_custom pl" type="text" placeholder="First Name" ng-model="signupData.firstname"/>
                       </label>
                      <br>
-                      <label class="item item-input input_us" >
-                        <span class="input-label span-input-color">Sur Name</span>
-                        <input style="background:white;height: 36px;" type="text" placeholder="Sur Name" ng-model="signupData.surname" />
+                      <label class="item-input item-floating-label" >
+                        <span class="input-label sp_custom">Sur Name</span>
+                        <input  class="ip_custom pl" type="text" placeholder="Sur Name" ng-model="signupData.surname" />
                       </label>
                     <br>
-                    <label class="item item-input input_us" >
-                        <span class="input-label span-input-color">Mobile</span>
-                        <input style="background:white;height: 36px;" ng-required="true"  placeholder="Mobile" type="number" ng-model="signupData.mobile" name="mobile"  required ng-minlength=10 ng-maxlength=15 ng-class="{'error':iserr|| signUpForm.mobile.$dirty && signUpForm.mobile.$invalid}" />
+                    <label class="item-input item-floating-label" >
+                        <span class="input-label sp_custom">Mobile</span>
+                        <input  class="ip_custom pl" ng-required="true"  placeholder="Mobile" type="number" ng-model="signupData.mobile" name="mobile"  required ng-minlength=10 ng-maxlength=15 ng-class="{'error':iserr|| signUpForm.mobile.$dirty && signUpForm.mobile.$invalid}" />
                       </label>
                     
                      <div class="err" ng-messages="signUpForm.mobile.$error " ng-show="iserr ||signUpForm.mobile.$dirty && signUpForm.mobile.$invalid">
@@ -88,9 +89,9 @@
                            
                     </div>
                     <br>
-                     <label class="item item-input input_us" >
-                        <span class="input-label span-input-color">Email</span>
-                        <input style="background:white;height: 36px;" ng-required="true"  placeholder="Email" type="email" name="email" ng-model="signupData.email" required ng-class="{'error':iserr|| signUpForm.email.$dirty && signUpForm.email.$invalid}" />
+                     <label class="item-input item-floating-label" >
+                        <span class="input-label sp_custom">Email</span>
+                        <input  class="ip_custom pl" ng-required="true"  placeholder="Email" type="email" name="email" ng-model="signupData.email" required ng-class="{'error':iserr|| signUpForm.email.$dirty && signUpForm.email.$invalid}" />
                       </label>
                     
                      <div class="err" ng-messages="signUpForm.email.$error" ng-show="iserr ||signUpForm.email.$dirty && signUpForm.email.$invalid">
@@ -101,7 +102,7 @@
                         </div>
                     <br>
                     <div>
-                        <button class="btn" ng-click="updatePicture()" style="float:left; margin-top: 30px; width:160px;" 
+                        <button class="btn" ng-click="updatePicture()" style="float:left; margin:30px 0px 0px 15px; width:160px;" 
                         data-tap-disabled="true">
                           Upload Avatar
                         </button>
@@ -110,10 +111,8 @@
                     </div>
                     <!--  <md-button class="md-raised md-primary" ng-click="signup()" style="float:right" data-tap-disabled="true">Sign Up</md-button> -->
                     <button class="btn"  style="float:right" data-tap-disabled="true" ng-click="nextForm(signUpForm)" >Next </button> 
-                     <button class="btn" ui-sref="security.login"  style="float:left" data-tap-disabled="true">Back </button>
+                    <button class="btn" ui-sref="security.login"  style="float:left; margin-left: 15px;" data-tap-disabled="true">Back </button>
                 </form>
-
-                   
         </div>
    </ion-content>
 </ion-view>

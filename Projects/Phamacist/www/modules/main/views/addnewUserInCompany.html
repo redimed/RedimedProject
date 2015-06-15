@@ -7,12 +7,12 @@
           <h1 class="title" style="color:white">{{title}}</h1>
          
         </div>
-        <ion-content class="has-header">
+        <ion-content class="has-header background-content">
         <form name="UserInCompanyForm">
            <div class="form-group">
-                    <label class="item item-input input_us" >
-                          <span class="input-label span-input-color">Username</span><div class="im1"></div>
-                          <input ng-keypress="keyPress($event.keyCode)" style="background:white;height: 36px;" ng-required="true" type="text" placeholder="Username" ng-model="signupData.username" name="username" required ng-minlength=5 ng-maxlength=20 
+                    <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">Username</span><div class="im1"></div>
+                          <input ng-keypress="keyPress($event.keyCode)" class="ip_custom pl" ng-required="true" type="text" placeholder="Username" ng-model="signupData.username" name="username" required ng-minlength=5 ng-maxlength=20 
                         ng-class="{'error':iserr|| UserInCompanyForm.username.$dirty && UserInCompanyForm.username.$invalid}"/>
                     </label>
                     <div class="err"  ng-messages="UserInCompanyForm.username.$error" ng-show="iserr || UserInCompanyForm.username.$dirty && UserInCompanyForm.username.$invalid">
@@ -30,9 +30,9 @@
                             </small>
                         </div>
                     <br>
-                    <label class="item item-input input_us" >
-                          <span class="input-label span-input-color">Password</span><div class="im1"></div>
-                          <input ng-keypress="keyPress($event.keyCode)" style="background:white;height: 36px;" ng-required="true"  ng-model="signupData.password" placeholder="Password" type="password" name="password" required ng-minlength=7 
+                    <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">Password</span><div class="im1"></div>
+                          <input ng-keypress="keyPress($event.keyCode)" class="ip_custom pl" ng-required="true"  ng-model="signupData.password" placeholder="Password" type="password" name="password" required ng-minlength=7 
                          ng-class="{'error':iserr|| UserInCompanyForm.password.$dirty && UserInCompanyForm.password.$invalid}" />
                     </label>
                   
@@ -47,9 +47,9 @@
                             </small>
                     </div>
                     <br>
-                      <label class="item item-input input_us" >
-                          <span class="input-label span-input-color">Confirm Password</span><div class="im1"></div>
-                          <input ng-keypress="keyPress($event.keyCode)" style="background:white;height: 36px;" ng-required="true"  ng-model="signupData.cfpassword" placeholder="Confirm Password" data-password-verify="signupData.password" type="password" name="cfpassword" required ng-class="{'error':iserr|| UserInCompanyForm.cfpassword.$dirty && UserInCompanyForm.cfpassword.$invalid}"/>
+                      <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">Confirm Password</span><div class="im1"></div>
+                          <input ng-keypress="keyPress($event.keyCode)" class="ip_custom pl" ng-required="true"  ng-model="signupData.cfpassword" placeholder="Confirm Password" data-password-verify="signupData.password" type="password" name="cfpassword" required ng-class="{'error':iserr|| UserInCompanyForm.cfpassword.$dirty && UserInCompanyForm.cfpassword.$invalid}"/>
                     </label>
              
                     <div class="err" ng-messages="UserInCompanyForm.cfpassword.$error" ng-show="iserr ||UserInCompanyForm.cfpassword.$dirty && UserInCompanyForm.cfpassword.$invalid">
@@ -59,24 +59,24 @@
                             </small>
                     </div>
                    <br>
-                     <label class="item item-input input_us" >
-                          <span class="input-label span-input-color">User Type</span><div class="im1"></div>
-                          <span style="background:white;height: 36px;width: 100%;" ng-required="true"  ng-model="signupData.user_type" >Company</span>
+                     <label class="item-input item-floating-label" ng-init="signupData.user_type='Company'">
+                          <span class="input-label sp_custom">User Type</span><div class="im1"></div>
+                          <input type="text" class="ip_custom" ng-required="true"  ng-model="signupData.user_type">
                     </label>
                     <br>
-                      <label class="item item-input input_us" >
-                          <span class="input-label span-input-color">First Name</span><div class="im1"></div>
-                          <input ng-keypress="keyPress($event.keyCode)" style="background:white;height: 36px;" type="text" placeholder="First Name" ng-model="signupData.firstname"/>
+                      <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">First Name</span><div class="im1"></div>
+                          <input ng-keypress="keyPress($event.keyCode)" class="ip_custom pl" type="text" placeholder="First Name" ng-model="signupData.firstname"/>
                     </label>
                     <br>
-                    <label class="item item-input input_us" >
-                          <span class="input-label span-input-color">Sur Name</span><div class="im1"></div>
-                          <input ng-keypress="keyPress($event.keyCode)" style="background:white;height: 36px;" type="text" placeholder="Sur Name" ng-model="signupData.surname"/>
+                    <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">Sur Name</span><div class="im1"></div>
+                          <input ng-keypress="keyPress($event.keyCode)" class="ip_custom pl" type="text" placeholder="Sur Name" ng-model="signupData.surname"/>
                     </label>
                     <br>
-                     <label class="item item-input input_us" >
-                          <span class="input-label span-input-color">Mobile</span><div class="im1"></div>
-                          <input ng-keypress="keyPress($event.keyCode)" style="background:white;height: 36px;" ng-required="true"  placeholder="Mobile" type="number" ng-model="signupData.mobile" name="mobile"  required ng-minlength=10 ng-maxlength=15 ng-class="{'error':iserr|| UserInCompanyForm.mobile.$dirty && UserInCompanyForm.mobile.$invalid}"/>
+                     <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">Mobile</span><div class="im1"></div>
+                          <input ng-keypress="keyPress($event.keyCode)" class="ip_custom pl" ng-required="true"  placeholder="Mobile" type="number" ng-model="signupData.mobile" name="mobile"  required ng-minlength=10 ng-maxlength=15 ng-class="{'error':iserr|| UserInCompanyForm.mobile.$dirty && UserInCompanyForm.mobile.$invalid}"/>
                     </label>
                    
                      <div class="err" ng-messages="UserInCompanyForm.mobile.$error " ng-show="iserr ||UserInCompanyForm.mobile.$dirty && UserInCompanyForm.mobile.$invalid">
@@ -87,9 +87,9 @@
                            
                     </div>
                     <br>
-                    <label class="item item-input input_us" >
-                          <span class="input-label span-input-color">Email</span><div class="im1"></div>
-                          <input ng-keypress="keyPress($event.keyCode)" style="background:white;height: 36px;" ng-required="true"  placeholder="Email" type="email" name="email" ng-model="signupData.email" required ng-class="{'error':iserr|| UserInCompanyForm.email.$dirty && UserInCompanyForm.email.$invalid}"/>
+                    <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">Email</span><div class="im1"></div>
+                          <input ng-keypress="keyPress($event.keyCode)" class="ip_custom pl" ng-required="true"  placeholder="Email" type="email" name="email" ng-model="signupData.email" required ng-class="{'error':iserr|| UserInCompanyForm.email.$dirty && UserInCompanyForm.email.$invalid}"/>
                     </label>
                     
                      <div class="err" ng-messages="UserInCompanyForm.email.$error" ng-show="iserr ||UserInCompanyForm.email.$dirty && UserInCompanyForm.email.$invalid">

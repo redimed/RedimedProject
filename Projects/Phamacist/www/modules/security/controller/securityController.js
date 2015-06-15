@@ -2,7 +2,7 @@ angular.module('starter.security.controller',[
     'starter.security.login.controller',
     'starter.security.forgot.controller',
 ])
-    .controller('securityController',function($scope, $state, SecurityService, $ionicPopup ,$ionicLoading,  $cordovaCamera, $cordovaFileTransfer, HOST_CONFIG){
+    .controller('securityController',function($scope, $state, SecurityService, $ionicPopup ,$ionicLoading,  $cordovaCamera, $cordovaFileTransfer, HOST_CONFIG, $filter){
         $scope.modelUser = {
             username: "",
             password: "",
@@ -52,6 +52,8 @@ angular.module('starter.security.controller',[
                     $scope.signupData.address_company = document.getElementById('autocomplete').value;
                 }else{
                     $scope.signupData.address_pharmacist = document.getElementById('autocomplete').value;
+                    $scope.signupData.DOB_pharmacist = $filter('date')( Date.parse($scope.signupData.DOB_pharmacist.year +'/'+  $scope.signupData.DOB_pharmacist.month +'/'+ $scope.signupData.DOB_pharmacist.date), 'yyyy/MM/dd');
+                    console.log($scope.signupData.DOB_pharmacist);
                 };
                 // var geocoder = new google.maps.Geocoder();
                 // geocoder.geocode({'address': $scope.address}, function (results, status) {
@@ -169,6 +171,24 @@ angular.module('starter.security.controller',[
               document.getElementById('autocomplete').blur();
           });
         };
+
+        $scope.checkdate= function(type){
+          if(type == "date"){
+            if($scope.signupData.DOB_pharmacist.date > 31){
+              $scope.signupData.DOB_pharmacist.date = "";
+            }
+          }
+          if(type=='month'){
+            if($scope.signupData.DOB_pharmacist.month > 12){
+              $scope.signupData.DOB_pharmacist.month = "";
+            }
+          }
+          if(type=='year'){
+            if($scope.signupData.DOB_pharmacist.year > 2000){
+              $scope.signupData.DOB_pharmacist.year = "";
+            }
+          }
+        }
     })
 
   .directive("passwordVerify", function() {

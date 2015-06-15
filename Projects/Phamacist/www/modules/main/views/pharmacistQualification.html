@@ -5,7 +5,7 @@
   <button class="button button-icon icon fa fa-plus " style="color:#fff" ng-click="openModalQualification('Add New Qualification','addNew')"></button>
 </div>
   
-    <ion-content >    
+    <ion-content class="background-content">    
       <div  ng-repeat="pq in pharmacist_qualification">
         <a class="item item-icon-left" on-hold="show(pq)" >  
           {{pq.qualification}}

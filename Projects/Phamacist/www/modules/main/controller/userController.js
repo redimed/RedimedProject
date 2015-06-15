@@ -5,27 +5,7 @@ angular.module('starter.main.usercontroller',[])
       $scope.userInfo = localStorageService.get('userInfo');
       var serverUpload = "https://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port + "/api/phUser/uploadAvatar";
       $scope.flag = false;
-
-      // $scope.getAvatar = function(){
-      //   MainService.getAvatar($scope.userInfo.user_id).then(function(result){
-      //     // if(result.status=="success"){
-      //     //   console.log(result.data);
-      //     //   $scope.userInfo.user_img = result.data;
-      //     //   console.log( $scope.userInfo.user_img);
-      //     // }else{
-      //       // $scope.linkImg = "https://192.168.1.108:3000/api/phUser/getAvatar/";
-      //       // $scope.userInfo.user_img = $scope.linkImg.concat(result);
-      //       console.log(result);
-      //       $scope.userInfo.user_img = result;
-      //       console.log($scope.userInfo.user_img);
-      //     // }
-      //   })
-      // }
-
-      // if ($scope.userInfo) {
-      //   $scope.getAvatar();
-      // };
-
+     
       //function update user info 
       $scope.UpdateUserInfo = function(){
         $ionicLoading.show({
