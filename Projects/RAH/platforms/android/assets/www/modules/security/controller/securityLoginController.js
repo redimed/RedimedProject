@@ -1,5 +1,5 @@
 angular.module('starter.security.login.controller',[])
-    .controller('securityLoginController',function($scope, $state, $ionicLoading,$timeout,$cordovaInAppBrowser){
+    .controller('securityLoginController',function($scope, $state, $ionicLoading,$timeout,$cordovaInAppBrowser, $cordovaDevice){
      	
 
       $scope.emergency = function(){
@@ -35,6 +35,23 @@ angular.module('starter.security.login.controller',[])
       }
 
       $scope.dialNumber = function(number) {
+         var device = $cordovaDevice.getDevice();
+         console.log()
+         if(device.platform=="Android"){
+              window.plugins.webintent.startActivity({
+            action: window.plugins.webintent.ACTION_CALL,
+                  url: 'tel:1300881301'
+              },
+              function(){
+                // alert('success');
+              },
+              function(e){
+                alert('error');
+            });
+         }else{
+            document.location.href = 'tel:1300881301';
+         }
+
         
          // $cordovaInAppBrowser.open('tel:0468996833', '_system')
          //      .then(function(event) {
@@ -45,16 +62,8 @@ angular.module('starter.security.login.controller',[])
          //      });
          //      
          //      
-         window.plugins.webintent.startActivity({
-            action: window.plugins.webintent.ACTION_CALL,
-                  url: 'tel:1300881301'
-              },
-              function(){
-                // alert('success');
-              },
-              function(e){
-                alert('error');
-            });
+         
+             
       }
        
     });
