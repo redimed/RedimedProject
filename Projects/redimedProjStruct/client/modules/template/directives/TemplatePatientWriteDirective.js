@@ -14,6 +14,9 @@ angular.module('app.loggedIn.template.directives.patient_write', [])
 
 			scope.exportPDF = function(){
 				var content = $('#writeTemplate').html();
+
+				content = content.replace(/buivuong/g, '</input>');
+
 				content = content.replace(/<br>/g, '<br/>');
 
 				TemplateModel.write({name: scope.template.one.name, content: content})
@@ -68,7 +71,7 @@ angular.module('app.loggedIn.template.directives.patient_write', [])
 						var new_string_change = "";
 
 						if(split_string_change.length === 1){
-							new_string_change = '<input class="custom-input-template" placeholder="Please fill in"></input>';
+							new_string_change = '<input class="custom-input-template" placeholder="Please fill in">buivuong';
 						}else{
 							var field = split_string_change[1];
 
