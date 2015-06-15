@@ -1,0 +1,74 @@
+<ion-view title="History Detail">
+    <<!-- ion-nav-buttons side="left">
+        <a class="button button-icon icon ion-ios-arrow-left " style="color:#fff" ng-click="backToHistory()"></a>
+    </ion-nav-buttons> -->
+    <!--<ion-nav-buttons side="right">-->
+        <!--<a menu-toggle="right" class="button button-icon icon ion-android-contacts" style="color:#fff"></a>-->
+    <!--</ion-nav-buttons>-->
+
+
+    <ion-content class="content-scroll" style="background:#015190">
+        <div class="transparent-modal-phone" style="width: 100%; height: 100%">
+            <div >
+                <div class="header-logo">
+                    <img src="img/main_logo.png" class="img-header">
+                </div>
+                <div class="background-header-logo-child">
+                    <span class="span-header">Injury Management</span>
+
+                </div>
+                <div style="width: 100%;height: 49px;float: left;position: absolute;">
+                    <span style="float: right;padding-right: 10%;padding-top: 30px;font-weight: 600;color: white;">History Detail</span>
+                </div>
+            </div>
+            <div style="margin-top:50px">
+             <div class="actionBar">
+                    <a class="button button-icon icon ion-ios-arrow-left " style="color:#fff;float:left" ng-click="backToHistory()"></a>
+            </div>
+                 <label class="item-input label-custom-field">
+                    <span class="input-label span-input-color">Full Name</span>
+                    <span style="color:white">{{historyDetail.detail.FullName}}</span>
+                </label>
+<div class="bd-bottom"></div>
+                <label class="item-input label-custom-field">
+                    <span class="input-label span-input-color">Mobile</span>
+                    <span style="color:white">{{historyDetail.detail.Mobile}}</span>
+                </label>
+                <div class="bd-bottom"></div>
+                <label class="item-input label-custom-field">
+                    <span class="input-label span-input-color">Injury Date</span>
+                    <span style="color:white">{{historyDetail.detail.injury_date|date:'yyyy-MM-dd'}}</span>
+                </label>
+                <div class="bd-bottom"></div>
+                <label class="item-input label-custom-field">
+                    <span class="input-label span-input-color">Injury Description</span>
+                    <span style="color:white">{{historyDetail.detail.injury_description}}</span>
+                </label>
+                <div class="bd-bottom"></div>
+                <label class=" item-input label-custom-field">
+                    <span class="input-label span-input-color">Injury Pickup Address</span>
+                    <span style="color:white">{{historyDetail.detail.pickup_address}}</span>
+                </label>
+
+                <label class="item-input label-custom-field">
+                    <span class="input-label span-input-color">Image</span>
+                    <!--  <div ng-repeat="im in historyDetail.img">
+                       <img ng-src="{{im.image}}" style="width:200px;height:200px">
+                     </div>  -->
+                    <ion-scroll direction="y">
+                        <a ng-repeat="im in historyDetail.detail.injuryImg" >
+                            <img ng-src="https://testapp.redimed.com.au:3000/api/im/image/{{im}}" class="a-img-custom img-thumbnail"/>
+                        </a>
+                    </ion-scroll>
+                </label>
+            </div>
+         
+        </div>
+
+    </ion-content>
+    
+
+
+       
+   
+</ion-view>

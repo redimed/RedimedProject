@@ -1,0 +1,298 @@
+angular.module('starter.driver.controller',[])
+
+    .controller('DriverController', function ($scope, $state, DriverServices, localStorageService, $timeout, $ionicLoading,
+                                              $cordovaBarcodeScanner, $cordovaInAppBrowser, $window, HOST_CONFIG) {
+
+        $scope.he = $window.innerHeight - 50 +'px';
+        $scope.geo = {};
+        $scope.ll = {};
+        $scope.lstPatient = {};
+        $scope.hideButton = false;
+
+        if(DriverServices.notifi !== undefined ){
+            alert(JSON.stringify(DriverServices.notifi));
+            $scope.ll.lat=DriverServices.notifi.payload.lat;
+            $scope.ll.lng=DriverServices.notifi.payload.lng;
+        }
+
+        //INIT LIST PATIENT
+        function init() {
+            DriverServices.getListPatient().then(function (result){
+                if(result.status.toLocaleLowerCase() == "success")
+                {
+                    $scope.lstPatient = result.data;
+                    for(var i = 0 ; i < $scope.lstPatient.length; i++) {
+                        if($scope.lstPatient[i].avatar == null) {
+                            $scope.lstPatient[i].avatar = 'img/avatar.png';
+                        } else {
+                            $scope.lstPatient[i].avatar = "https://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port + "/" + $scope.lstPatient[i].avatar;
+                        }
+                    }
+                }
+            })
+        }
+
+        $scope.doRefreshList = function() {
+            DriverServices.getListPatient().then(function (result) {
+                if(result.status.toLocaleLowerCase() == "success")
+                {
+                    $scope.lstPatient = result.data;
+                    for(var i = 0 ; i < $scope.lstPatient.length; i++) {
+                        if($scope.lstPatient[i].avatar == null) {
+                            $scope.lstPatient[i].avatar = 'img/avatar.png';
+                        } else {
+                            $scope.lstPatient[i].avatar = "https://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port + "/" + $scope.lstPatient[i].avatar;
+                        }
+                    }
+                }
+            }).finally(function() {
+                $scope.$broadcast('scroll.refreshComplete');
+            });
+        };
+
+        $scope.selectPatient = function (injuryID){
+            $state.go('app.driver.detailInjury', {injuryID:injuryID});
+        };
+
+        init();
+
+        $scope.removeValinput = function() {
+            $scope.hideButton = !$scope.hideButton;
+            $state.go('app.driver.list', null, {reload: true});
+        }
+    })
+
+    .directive("pickupMap", function( $state,DriverServices,localStorageService,$ionicLoading){
+        return {
+            restrict: "A",
+            replace: "true",
+            scope:{
+                address: '=',
+                add:'&',
+                geo:'='
+            },
+            link: function(scope, element, attrs){
+                var id = "#"+attrs.id;
+                var lstPatient = {};
+                scope.distance = 0 ;
+                scope.duration = 0;
+                if(attrs.id=='map-pickup'){
+                           var map = new GMaps({
+                                el: id,
+                                lat: -32.280625,
+                                lng: 115.736246,
+                                zoomControl : true,
+                                zoomControlOpt: {
+                                    style : 'SMALL',
+                                    position: 'TOP_LEFT'
+                                },
+                                panControl : false,
+                                streetViewControl : false,
+                                mapTypeControl: false,
+                                overviewMapControl: false
+                            });
+                            var getInjury = function() {
+                                DriverServices.getListPatient().then(function (result){
+                                    if(result.status.toLocaleLowerCase() == "success")
+                                    {
+                                        scope.lstPatient = result.data;
+                                        location();
+                                    }
+                                });
+                            };
+                            getInjury();
+
+                            var location =  function(){
+                                map.removeMarkers();
+                                $ionicLoading.show({
+                                    template: "<div class='icon ion-ios7-reloading'></div>"+
+                                    "<br />"+
+                                    "<span>Waiting...</span>",
+                                    animation: 'fade-in',
+                                    showBackdrop: true,
+                                    maxWidth: 200,
+                                    showDelay: 0
+                                });
+
+                                GMaps.geolocate({
+                                    success: function(position) {
+                                        map.setCenter(position.coords.latitude, position.coords.longitude);
+                                        map.addMarker({
+                                            lat: position.coords.latitude,
+                                            lng: position.coords.longitude,
+                                            icon:'img/icon/ambulance.png'
+                                        });
+
+                                        angular.forEach(scope.lstPatient,function(item){
+                                            if(item.latitude !== null && item.longitude !== null && item.cal_id == null && item.STATUS.toLowerCase() !== 'done'){
+                                                if(item.STATUS.toLowerCase() == 'new'){
+                                                    map.addMarker({
+                                                        lat: item.latitude,
+                                                        lng: item.longitude,
+                                                        click: function(){
+                                                            scope.add({injuryID:item.injury_id});
+                                                        }
+                                                    });
+                                                }
+                                                else if( item.STATUS.toLowerCase()=='waiting' && item.driver_id == localStorageService.get("userInfo").id  ){
+                                                    map.addMarker({
+                                                        lat: item.latitude,
+                                                        lng: item.longitude,
+                                                        infoWindow: {
+                                                            content:item.longitude
+                                                        },
+                                                        click: function(){
+                                                            scope.add({injuryID:item.injury_id});
+                                                        },
+                                                        icon:'img/icon/waitingMaker.png'
+                                                    });
+                                                    map.drawRoute({
+                                                        origin: [position.coords.latitude, position.coords.longitude],
+                                                        destination: [item.latitude, item.longitude],
+                                                        travelMode: 'driving',
+                                                        strokeColor: '#131540',
+                                                        strokeOpacity: 0.6,
+                                                        strokeWeight: 6
+                                                    });
+                                                }
+                                            }
+                                        });
+                                        $ionicLoading.hide();
+                                    },
+                                    error: function(error) {
+                                        alert('Geolocation failed: '+error.message);
+                                    },
+                                    not_supported: function() {
+                                        alert("Your browser does not support geolocation");
+                                    }
+                                });
+                            };
+                            scope.$watch('lstPatient',function(newval,oldval){
+                                if(newval!== null){
+                                    location();
+                                }
+                            });
+                            map.addControl({
+                                position:'RIGHT_CENTER',
+                                content:'<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABHklEQVRYw+2XvQqDMBDHbR2c3AWhpXNfwofppLOTkNdxdi4dSl/FBxC7xSGe8A8cRahfNFfw4Dd4Jrm75HJJPO/PJQDOpAG7A04kJFoQ/srolVDEi+gIAzroFNpsLj5REJoZrYkK1Eyv0dbfyniM6IbB30RGRCPtBl2KJTHoE28RuTX+JC5s/RMiBwnLgzPxYE6smomCGT9Cd2NRclr8G+RA3KEv1iScxrTbyMsRw5+UaHuCU3ppYioMmLHIzUTsTKT4VkscsGsfsT0/1QFbGyKWC7OLTIft5SHJzEwS9K0xVvjtVGsYNtoK//MFDuToW7FZ4TYCUQ44XwJxSShiGzovRM5LsYjDyPlxLOJCIuJKJuZSur8LxDng/HG6WnqF5QpMmxbHKwAAAABJRU5ErkJgggcc54fda4e11ef33e15a873a4d4da3cfe"/>',
+                                events:{
+                                    click: function(){
+                                        getInjury();
+                                    }
+                                }
+                            });
+
+                }
+             
+
+            }
+        }
+    })
+
+    .directive("driverMap", function( $state,DriverServices,localStorageService,$ionicLoading,$timeout,$stateParams){
+        return {
+            restrict: "A",
+            replace: "true",
+            scope:{
+                ll:'=',
+               
+            },
+            link: function(scope, element, attrs){
+               console.log(attrs.id)
+                var id = "#"+attrs.id;
+                var lstPatient = {};
+                scope.ll.duration = 0;
+                scope.ll.distance = 0;
+             
+                var map  = new GMaps({
+                        el: id,
+                        lat: -32.280625,
+                        lng: 115.736246,
+                        zoomControl : true,
+                        zoomControlOpt: {
+                            style : 'SMALL',
+                            position: 'TOP_LEFT'
+                        },
+                        panControl : false,
+                        streetViewControl : false,
+                        mapTypeControl: false,
+                        overviewMapControl: false
+                    });
+                    if(attrs.id =='map-canvas'){
+                        DriverServices.getPatientID($stateParams.injuryID).then(function (result){
+
+                        scope.worker = result.data[0];
+
+                        if(scope.worker !== undefined){
+
+                            localStorageService.set('worker',result.data[0])
+
+
+                            var location =  function(){
+                                map.removeMarkers();
+
+                                map.addMarker({
+                                    lat: scope.worker.latitude,
+                                    lng: scope.worker.longitude,
+                                    icon:'img/icon/waitingMaker.png'
+                                });
+
+                                GMaps.geolocate({
+                                    success: function(position) {
+                                        map.setCenter(position.coords.latitude, position.coords.longitude);
+                                        map.addMarker({
+                                            lat: position.coords.latitude,
+                                            lng: position.coords.longitude,
+                                            icon:'img/icon/ambulance.png'
+                                        });
+
+                                        map.drawRoute({
+                                            origin: [position.coords.latitude, position.coords.longitude],
+                                            destination: [ scope.worker.latitude,  scope.worker.longitude],
+                                            travelMode: 'driving',
+                                            strokeColor: '#131540',
+                                            strokeOpacity: 0.6,
+                                            strokeWeight: 6
+                                        });
+
+                                        map.travelRoute({
+                                            origin: [position.coords.latitude, position.coords.longitude],
+                                            destination: [scope.worker.latitude, scope.worker.longitude],
+                                            travelMode: 'driving',
+                                            step: function(e) {
+                                                scope.ll.duration = parseInt(scope.ll.duration) + parseInt(e.duration.value);
+                                                scope.ll.distance = parseInt(scope.ll.distance) + parseInt(e.distance.value);
+                                            }
+                                        });
+                                    },
+                                    error: function(error) {
+                                        alert('Geolocation failed: '+error.message);
+                                    },
+                                    not_supported: function() {
+                                        alert("Your browser does not support geolocation");
+                                    }
+                                });
+                            };
+
+                            map.addControl({
+                                position:'RIGHT_CENTER',
+                                content:'<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABHklEQVRYw+2XvQqDMBDHbR2c3AWhpXNfwofppLOTkNdxdi4dSl/FBxC7xSGe8A8cRahfNFfw4Dd4Jrm75HJJPO/PJQDOpAG7A04kJFoQ/srolVDEi+gIAzroFNpsLj5REJoZrYkK1Eyv0dbfyniM6IbB30RGRCPtBl2KJTHoE28RuTX+JC5s/RMiBwnLgzPxYE6smomCGT9Cd2NRclr8G+RA3KEv1iScxrTbyMsRw5+UaHuCU3ppYioMmLHIzUTsTKT4VkscsGsfsT0/1QFbGyKWC7OLTIft5SHJzEwS9K0xVvjtVGsYNtoK//MFDuToW7FZ4TYCUQ44XwJxSShiGzovRM5LsYjDyPlxLOJCIuJKJuZSur8LxDng/HG6WnqF5QpMmxbHKwAAAABJRU5ErkJgggcc54fda4e11ef33e15a873a4d4da3cfe"/>',
+                                events:{
+                                    click: function(){
+                                        location();
+
+                                    }
+                                }
+                            });
+
+
+                            location();
+                        }
+                    });
+                }
+                    
+              
+            }
+        }
+    });
+

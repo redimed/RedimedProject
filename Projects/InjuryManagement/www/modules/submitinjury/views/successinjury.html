@@ -1,0 +1,150 @@
+<ion-view >
+    <!-- <div class="bar bar-subheader bar-sub-color">
+        <a class="button button-icon icon ion-ios-arrow-left" ui-sref="app.injury.desInjury" style="#fff">&nbsp;Back</a>
+    </div> -->
+    <ion-content class="content-scroll" style="background:#015190">
+        <div class="transparent-modal-phone" style="width: 100%; height: 100%">
+            <div >
+                <div class="header-logo">
+                    <img src="img/main_logo.png" class="img-header">
+                </div>
+                <div class="background-header-logo-child">
+                    <span class="span-header">Injury Management</span>
+
+                </div>
+                <div style="width: 100%;height: 49px;float: left;position: absolute;">
+                    <span style="float: right;padding-right: 10%;padding-top: 30px;font-weight: 600;color: white;">Success Injury</span>
+                     <button class="button button-clear button-positive ion-arrow-left-c" style="text-decoration: underline;color: white;letter-spacing: 0.15em;border: none;float: left;margin-left: 130px;margin-top: 15px;" ui-sref="app.injury.desInjury">
+                </div>
+            </div>
+
+        <div class="bg-info-success text-center">
+
+        <div class="portlet light">    
+            <div id="map-canvas" mdt-map address="location.format_address" ad="ad" sc="sc"  lo="test"  style="height: 300px; width: 100%"></div>
+            <div class="clearfix"></div>
+             <div class="item-input label-custom-field item-input label-custom-field-input-inset" >
+              <label class="item-input label-custom-field" style="width:100%">
+                        <span class="input-label span-input-color" style="width:20px">Address</span>
+                        <ion-google-place placeholder="{{location.format_address}}" ng-model="location.format_address" ng-change="test=!test" class="pl"/>  
+                    </label>
+                   
+            </div>
+        </div>
+
+        </div>
+
+            <div class="col s12">
+                <div id="Infomation" class="col s6">
+           
+                    <div class="row customrow">
+                        <label class=" item-input label-custom-field .col text-left padding-right" style="border:none; border-radius: 5px !important">
+                            <span>
+                                 <i class="fa fa-user margin-right-10"></i> Name</span>
+                        </label>
+                        <label class=" item-input label-custom-field col-xs-6 text-left padding-left" style="border:none; border-radius: 5px !important">
+                              <span >
+                                    {{worker.Title}}<span ng-show="worker.Title != null">.</span>{{worker.First_name}} {{worker.Sur_name}} {{worker.Middle_name}}
+                            </span>
+                        </label>
+                    </div>
+                    <div class="bd-bottom"></div>
+                    <div class="row customrow">
+                        <label class=" item-input label-custom-field .col text-left padding-right" style="border:none; border-radius: 5px !important">
+                            <span>
+                                 <i class="fa fa-birthday-cake margin-right-10"></i> Birthday</span>
+                        </label>
+                        <label class=" item-input label-custom-field col-xs-6 text-left padding-left" style="border:none; border-radius: 5px !important">
+                            <span>
+                               {{worker.DOB}}
+                            </span>
+                        </label>
+                    </div>
+                    <div class="bd-bottom"></div>
+                    <div class="row customrow">
+                        <label class=" item-input label-custom-field col-xs-6 text-left padding-right" style="border:none; border-radius: 5px !important">
+                            <span>
+                                <i class="icon ion-transgender"></i> Gender
+                            </span>
+                        </label>
+                        <label class="item-input label-custom-field col-xs-6 text-left padding-left" style="border:none; border-radius: 5px !important">
+                            <span>{{worker.Sex}}</span>
+                        </label>
+                    </div>
+                        <div class="bd-bottom"></div>
+                    <div class="row customrow">
+                        <label class=" item-input label-custom-field col-xs-6 text-left padding-right" style="border:none; border-radius: 5px !important">
+                            <span>
+                                <i class="fa fa-mobile-phone margin-right-10"></i> Mobile</span>
+                        </label>
+                        <label class=" item-input label-custom-field col-xs-6 text-left padding-left" style="border:none; border-radius: 5px !important">
+                            <span>{{worker.Mobile}}</span>
+                        </label>
+                    </div>
+                    <div class="bd-bottom"></div>
+                    <div class="row customrow">
+                        <label class=" item-input label-custom-field col-xs-6 text-left padding-right" style="border:none; border-radius: 5px !important">
+                            <span>
+                                <i class="fa fa-envelope-o margin-right-10"></i> Email</span>
+                        </label>
+                        <label class=" item-input label-custom-field col-xs-6 text-left padding-left" style="border:none; border-radius: 5px !important">
+                            <span>{{worker.Email}}</span>
+                        </label>
+                    </div>
+                    <div class="bd-bottom"></div>
+                       <div class="row customrow">
+                        <label class=" item-input label-custom-field col-xs-6 text-left padding-right" style="border:none; border-radius: 5px !important">
+                            <span>
+                                <i class="fa fa-file-text-o margin-right-10"></i> Description</span>
+                        </label>
+                        <label class=" item-input label-custom-field col-xs-6 text-left padding-left" style="border:none; border-radius: 5px !important">
+                            <span>{{worker.injury_description}}</span>
+                        </label>
+                    </div>
+                    <div class="bd-bottom"></div>
+                    <div class="row customrow">
+                        <label class=" item-input label-custom-field col-xs-6 text-left padding-right" style="border:none; border-radius: 5px !important">
+                            <span>
+                                <i class="fa fa-calendar-o margin-right-10"></i> Date</span>
+                        </label>
+                        <label class=" item-input label-custom-field col-xs-6 text-left padding-left" style="border:none; border-radius: 5px !important">
+                            <span>{{worker.injury_date}}</span>
+                        </label>
+                    </div>
+                    <div class="bd-bottom"></div>
+                    <div class="row customrow">
+                        <label class=" item-input label-custom-field col-xs-6 text-left padding-left" style="border:none; border-radius: 5px !important">
+                            <span>
+                                <i class="fa fa-picture-o margin-right-10"></i> Image</span>
+                        </label>
+
+                        <label class="ion-scroll-custom item-input label-custom-field col-xs-6 text-left padding-left">
+                            <ion-scroll direction="x">
+                                <a ng-repeat="imgDetail in imgURI" ng-click="selectImg(imgDetail)">
+                                    <img ng-src="{{imgDetail.image}}" class="a-img-custom img-thumbnail"/>
+                                </a>
+                            </ion-scroll>
+                        </label>
+                    </div>
+                    <div class="bd-bottom"></div>
+                     <div class="row">
+                            <div class="col col-50 col-offset-25 padding-bottom">
+                                <button class="button button-block bg-btn-custom" ng-click="submitInjuryAll()">
+                                    Submit
+                                </button>
+                            </div>
+                        </div>
+                </div>
+               
+            </div>
+       
+        </div>
+
+              
+         
+        </div>
+
+    </ion-content>
+
+    
+</ion-view>
