@@ -3,7 +3,7 @@ angular.module('starter.injury.controller', ['ngCordova'])
     .controller('InjuryController', function($scope, $state, $filter, $stateParams,
                                              InjuryServices, $cordovaCamera, $ionicPopup, localStorageService,
                                              $cordovaFile, $ionicModal, ConfigService, $ionicSlideBoxDelegate,
-                                             $ionicLoading, $compile, $timeout, $rootScope, HOST_CONFIG){
+                                             $ionicLoading, $compile, $timeout, $rootScope, HOST_CONFIG, $ionicSideMenuDelegate, $ionicPopover){
 
         $scope.isSubmit = false;
         $scope.isShow = true;
@@ -26,6 +26,10 @@ angular.module('starter.injury.controller', ['ngCordova'])
         var serverUpload = "https://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port + "/api/im/upload";
         var checkNonemerg = localStorageService.get("checkNonemer");
         var userInfoLS = localStorageService.get("userInfo");
+
+        $scope.toogleMenu = function() {
+            $ionicSideMenuDelegate.toggleLeft();
+        }
 
         //INIT OBJECT WORKER FOR FORM
         $scope.worker = {
@@ -229,16 +233,20 @@ angular.module('starter.injury.controller', ['ngCordova'])
             //    }
             //);
             $cordovaCamera.getPicture(options).then(function(imageData) {
+                $scope.popUpDesInjury = true;
                 $ionicPopup.show({
-                    template: '<textarea rows="5" type="text" ng-model="worker.description">',
-                    title: 'Description for picture',
-                    subTitle: 'Please use description picture',
+                    templateUrl: "modules/popup/PopUpConfirm.html",
                     scope: $scope,
                     buttons: [
-                        { text: 'Cancel' },
                         {
-                            text: '<b>Save</b>',
-                            type: 'button-positive',
+                            text: 'Cancel',
+                            type: 'btn-cancel-popUp',
+                            onTap: function() {
+                                $scope.popUpDesInjury = false;
+                            }
+                        },
+                        {
+                            text: 'Save',
                             onTap: function(e) {
                                 if (!$scope.worker.description) {
                                     $scope.imgURI.push({
@@ -255,6 +263,7 @@ angular.module('starter.injury.controller', ['ngCordova'])
                                     })
                                 }
                                 $scope.worker.description = '';
+                                $scope.popUpDesInjury = false;
                             }
                         },
                     ]
@@ -617,8 +626,13 @@ angular.module('starter.injury.controller', ['ngCordova'])
                     $scope.result_row_surname = $filter('filter')($scope.list, {Sur_name: input });
                     break;
             }
-            console.log($scope.result_row);
         }
+        $ionicPopover.fromTemplateUrl('modules/popoverValidate.html', {
+            scope: $scope,
+        }).then(function(popover) {
+            document.body.classList.add('platform-ios');
+            $scope.popover = popover;
+        });
     })
 
     .directive("mdtMap", function($http, $ionicLoading, $timeout){
@@ -804,14 +818,15 @@ angular.module('starter.injury.controller', ['ngCordova'])
 
                 var location =  function(){
                     map.removeMarkers();
-                    scope.messageLoading = {message: "Waiting..."};
-                    $ionicLoading.show({
-                        templateUrl: "modules/loadingTemplate.html",
-                        animation: 'fade-in',
-                        scope: scope,
-                        maxWidth: 500,
-                        showDelay: 0
-                    });
+                    // $ionicLoading.show({
+                    //     template: "<div class='icon ion-ios7-reloading'></div>"+
+                    //     "<br />"+
+                    //     "<span>Waiting...</span>",
+                    //     animation: 'fade-in',
+                    //     showBackdrop: true,
+                    //     maxWidth: 200,
+                    //     showDelay: 0
+                    // });
                     GMaps.geolocate({
                         success: function(position) {
 
@@ -859,7 +874,7 @@ angular.module('starter.injury.controller', ['ngCordova'])
                 };
                 map.addControl({
                     position:'RIGHT_CENTER',
-                    content:'<a class="btn-floating btn-small  black"><i class="fa fa-crosshairs fa-2x"></i></a>',
+                    content:'<a class="" style="font-size: 25px;"><i class="icon ion-android-locate"></i></a>',
                     events:{
                         click: function(){
                             getWokerbyIdCompany();

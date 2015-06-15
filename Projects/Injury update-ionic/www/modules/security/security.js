@@ -6,7 +6,6 @@ angular.module('starter.security',[
         $stateProvider
             .state('security',{
                 abstract:true,
-                cache: false,
                 views:{
                     'root':{
                         templateUrl: 'modules/security/views/structure.html',
@@ -16,7 +15,6 @@ angular.module('starter.security',[
             })
             .state('security.login',{
                 url:'/login',
-                cache: false,
                 views:{
                     'main-content':{
                         templateUrl: 'modules/security/views/login.html',
@@ -26,7 +24,6 @@ angular.module('starter.security',[
             })
             .state('security.forgot',{
                 url:'/forgot',
-                cache: false,
                 views:{
                     'main-content':{
                         templateUrl: 'modules/security/views/forgot.html',
@@ -36,7 +33,6 @@ angular.module('starter.security',[
             })
             .state('security.register',{
                 url:'/register',
-                cache: false,
                 views:{
                     'main-content':{
                         templateUrl: 'modules/security/views/structure_register.html',
@@ -46,7 +42,6 @@ angular.module('starter.security',[
             })
             .state('security.register.info1',{
                 url:'/register_info1',
-                cache: false,
                 views:{
                     'wrap_register':{
                         templateUrl: 'modules/security/views/register_info1.html',
@@ -55,7 +50,6 @@ angular.module('starter.security',[
             })
             .state('security.register.info2',{
                 url:'/register_info2',
-                cache: false,
                 views:{
                     'wrap_register':{
                         templateUrl: 'modules/security/views/register_info2.html',
@@ -64,7 +58,6 @@ angular.module('starter.security',[
             })
             .state('security.register.info3',{
                 url:'/register_info3',
-                cache: false,
                 views:{
                     'wrap_register':{
                         templateUrl: 'modules/security/views/register_info3.html',

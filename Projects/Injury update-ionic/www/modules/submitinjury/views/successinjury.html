@@ -21,18 +21,22 @@
         <div class="bg-info-success text-center">
 
         <div class="portlet light">    
-            <div id="map-canvas" mdt-map address="location.format_address" ad="ad" sc="sc" class="col-md-12" lo="test"  style="height: 300px; width: 100%"></div>
+            <div id="map-canvas" mdt-map address="location.format_address" ad="ad" sc="sc"  lo="test"  style="height: 300px; width: 100%"></div>
             <div class="clearfix"></div>
              <div class="item-input label-custom-field item-input label-custom-field-input-inset" >
-                <ion-google-place placeholder="{{location.format_address}}" ng-model="location.format_address" ng-change="test=!test" />     
+              <label class="item-input label-custom-field" style="width:100%">
+                        <span class="input-label span-input-color" style="width:20px">Address</span>
+                        <ion-google-place placeholder="{{location.format_address}}" ng-model="location.format_address" ng-change="test=!test" class="pl"/>  
+                    </label>
+                   
             </div>
-            <!-- <input type="text" id="autocomplete" class="form-control" ng-autocomplete disable-tap ng-model="result1" /> -->
         </div>
 
         </div>
 
             <div class="col s12">
                 <div id="Infomation" class="col s6">
+           
                     <div class="row customrow">
                         <label class=" item-input label-custom-field .col text-left padding-right" style="border:none; border-radius: 5px !important">
                             <span>

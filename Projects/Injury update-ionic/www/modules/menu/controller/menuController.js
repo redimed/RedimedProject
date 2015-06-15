@@ -2,8 +2,7 @@ angular.module("starter.menu.controller",[])
     .controller("menuController",function($scope, $rootScope, localStorageService, $state, UserService,
                                           $ionicPopover, SecurityService, $ionicPopup, $cordovaDialogs,
                                           $ionicLoading, $timeout, $cordovaMedia, phoneCallService, signaling,
-                                          $cordovaGeolocation, $interval, $ionicPlatform, DriverServices,
-                                          HOST_CONFIG, $ionicModal){
+                                          $cordovaGeolocation, $interval, $ionicPlatform, DriverServices, $ionicModal){
         signaling.removeAllListeners();
 
         var userInfo= localStorageService.get("userInfo");
@@ -96,7 +95,6 @@ angular.module("starter.menu.controller",[])
                 buttons : [
                     {
                         text: "Yes, I do!",
-                        type: 'button button-assertive',
                         onTap: function(e) {
                             signaling.emit('logout', userInfo.user_name, userInfo.id, userInfo.UserType.user_type, $scope.userInfoLS);
                             $scope.messageLoading = {message: "Waiting..."};
@@ -115,7 +113,10 @@ angular.module("starter.menu.controller",[])
                             })
                         }
                     },
-                    { text: "Cancel" }
+                    {
+                        text: "Cancel",
+                        type: 'btn-cancel-popUp'
+                    }
                 ]
             })
         }
@@ -205,6 +206,7 @@ angular.module("starter.menu.controller",[])
                 $interval.cancel(stopInterval);
                 stopInterval = undefined;
                 alert("Could not get the current position. Either GPS signals are weak or GPS has been switched off");
+                window.plugins.SettingOpener.Open("ACTION_LOCATION_SOURCE_SETTINGS");
             });
         }
 
@@ -256,9 +258,9 @@ angular.module("starter.menu.controller",[])
         signaling.on('messageReceived', function (fromId, fromUsername, message) {
             UserService.getUserInfo(fromId).then( function(data) {
                 if(data.img == null) {
-                    $scope.avatarCaller = 'img/avatar.png'
+                    $scope.avatarCaller = 'img/avatar.png';
                 } else {
-                    $scope.avatarCaller = data.img
+                    $scope.avatarCaller = data.img;
                 }
                 $scope.fromUsername = fromUsername;
             });
@@ -292,7 +294,10 @@ angular.module("starter.menu.controller",[])
             $scope.popupMessage = { message: "Some is logged into your account!"};
             $ionicPopup.show({
                 templateUrl: 'modules/popup/PopUpError.html',
-                scope: $scope
+                scope: $scope,
+                buttons: [
+                    { text: "Ok" }
+                ]
             });
             localStorageService.clearAll();
             $state.go("security.login", null, {location: "replace", reload: true});

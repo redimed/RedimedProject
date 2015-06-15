@@ -1,23 +1,23 @@
-<ion-modal-view class="custom-modal-size" style="background-color: #FDFBF8; height: 460px;">
+<ion-modal-view class="custom-modal-size" style="background-color: #f3c90a; height: 50%; overflow: auto;">
+    <div style="margin: 60px auto 60px auto;">
         <div class="parent-img-caller">
             <img width="180" height="180" ng-src="{{avatarCaller}}" class="img-content"/>
         </div>
         <div class="name-caller">
-            <label>{{fromUsername}}</label>
-            <br>
-            <span>is calling you</span>
+            <h3>{{fromUsername}}&nbsp;<span>is calling you</span></h3>
         </div>
         <div class="row btn-modal-parent">
             <div class="col">
-                <a class="button button-stable button-icon btn-modal-talk" style="background-color: #6FAD75; border-bottom: 3px solid #48864e;" ng-click="acceptCall()">
-                    <i class="icon ion-ios7-videocam" style="margin-right: 12px; color: #6B8D88;"></i>Talk
+                <a class="btn-modal-talk"ng-click="acceptCall()">
+                    <i class="icon ion-ios-videocam" style="margin-right: 12px; color: #000;"></i>Talk
                 </a>
             </div>
             <div class="col">
-                <a class="button button-stable button-icon btn-modal-later" style="background-color: #CC6A64; border-bottom: 3px solid #b35a5a;" ng-click="ignoreCall()">
-                    <i class="icon ion-ios7-close-empty" style="margin-right: 12px; color: #6B8D88;"></i>Later
+                <a class="btn-modal-later" ng-click="ignoreCall()">
+                    <i class="icon ion-ios-close-empty" style="margin-right: 12px; color: #000;"></i>Later
                 </a>
             </div>
         </div>
+    </div>
 </ion-modal-view>
 

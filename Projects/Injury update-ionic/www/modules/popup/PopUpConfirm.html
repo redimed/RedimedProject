@@ -1,37 +1,27 @@
-<div class="sweetAlert">
-    <div class="iconPopup warning" style="border-color: dodgerblue;">  <!--pulseWarning class animation icon-->
-        <span class="body" style="background-color: dodgerblue;"></span>
-        <span class="dot" style="background-color: dodgerblue;"></span>
+<div ng-if="!popUpDesInjury">
+    <div class="sweetAlert">
+        <div class="iconPopup warning" style="border-color: dodgerblue;">  <!--pulseWarning class animation icon-->
+            <span class="body" style="background-color: dodgerblue;"></span>
+            <span class="dot" style="background-color: dodgerblue;"></span>
+        </div>
+    </div>
+    <div class="wrap-mes-popup">
+        <h2 style="color: #ffffff">Are you sure?</h2>
+        <div style="background-color: #ffffff; width: 100%; padding: 10px 0 10px 0;">
+            <span>{{popupMessage.message}}</span>
+        </div>
     </div>
 </div>
-<div class="wrap-mes-popup">
-    <h2 style="color: #ffffff">Are you sure?</h2>
-    <div style="background-color: #ffffff; width: 100%; padding: 10px 0 10px 0;">
-        <span>{{popupMessage.message}}</span>
+<div ng-if="popUpDesInjury">
+    <div class="sweetAlert">
+        <div class="iconPopup warning pulseWarning">
+            <span class="body"></span>
+            <span class="dot"></span>
+        </div>
+    </div>
+    <div class="wrap-mes-popup">
+        <h3 style="color: #ffffff">Description for picture?</h3>
+        <textarea rows="10" type="text" placeholder="Please use description for picture."
+                  ng-model="worker.description" style="line-height: 1.37em; padding: 10px;"></textarea>
     </div>
 </div>
-<!--<div ng-if="popUpForgotPass">-->
-    <!--<div class="sweetAlert">-->
-        <!--<div class="iconPopup warning pulseWarning">-->
-            <!--<span class="body"></span>-->
-            <!--<span class="dot"></span>-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div class="wrap-mes-popup">-->
-        <!--<h2>Problem sign in?</h2>-->
-        <!--<div>-->
-            <!--<form novalidate name="formForgot">-->
-                <!--<div class="row">-->
-                    <!--<div class="col">-->
-                        <!--<input type="email" ng-model="objForgotpass.email"-->
-                               <!--name="input" placeholder="Enter your email address!" required />-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</form>-->
-
-            <!--<button class="button btn-login-custom button-full" ng-disabled="formForgot.input.$error.email || objForgotpass.email == null" ng-click="submitResetPassword()">-->
-                <!--<h4>Request Password Reset</h4>-->
-            <!--</button>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</div>-->

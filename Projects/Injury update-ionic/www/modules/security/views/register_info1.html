@@ -42,7 +42,7 @@
                     <div class="bd-bottom"></div>
                     <label class="item-input">
                         <span class=" span-input-color">Title</span>
-                        <select ng-required="true" ng-model="userInfo.title" name="Title" class="select-custom" 
+                        <select ng-required="true" ng-model="patientInfo.title" name="Title" class="select-custom"
                                 ng-options="row.name as row.name for row in titleIndex">
                             <option value="">--Select Title--</option>
                         </select>
@@ -50,55 +50,64 @@
                      <div class="bd-bottom"></div>
                     <label class="item-input label-custom-field" >
                         <span class=" span-input-color">First Name</span>
-                        <input ng-required="true" type="text" ng-model="userInfo.firstName" name="First_name"  class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
+                        <input ng-required="true" type="text" ng-model="patientInfo.firstName" name="First_name"  class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
                     </label>
                      <div class="bd-bottom"></div>
                     <label class="item-input label-custom-field" >
                         <span class=" span-input-color">Sur Name</span>
-                        <input ng-required="true" type="text" ng-model="userInfo.surName" name="Sur_name"  class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
+                        <input ng-required="true" type="text" ng-model="patientInfo.surName" name="Sur_name"  class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
                     </label>
                      <div class="bd-bottom"></div>
                     <label class="item-input label-custom-field">
                         <span class=" span-input-color">Middle Name</span>
-                        <input type="text" ng-model="userInfo.middleName" name="Middle_name"  class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
+                        <input type="text" ng-model="patientInfo.middleName" name="Middle_name"  class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
                     </label>
                      <div class="bd-bottom"></div>
                     <label class="item-input label-custom-field">
                         <span class=" span-input-color">Mobile Phone</span>
-                        <input type="tel" name="phone" ng-model="userInfo.phone" required maxlength="11"  class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
+                        <input type="tel" name="phone" ng-model="patientInfo.phone" required maxlength="11"  class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
                     </label>
                     <div class="bd-bottom"></div>
                     <label class="item-input label-custom-field">
                         <span class=" span-input-color">Email</span>
-                        <input type="email" name="email" ng-model="userInfo.email" required ng-keyup="validEmail()"  class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
+                        <input type="email" name="email" ng-model="patientInfo.email" required ng-keyup="validEmail()"  class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
                     </label>
                     <div class="bd-bottom"></div>
                     <label  class="item-input ">
                         <span class=" span-input-color">Gender</span>
-                        <select ng-required="true" ng-model="userInfo.sex" name="Sex" class="select-custom"
+                        <select ng-required="true" ng-model="patientInfo.sex" name="Sex" class="select-custom"
                                 ng-options="row.name as row.name for row in sexIndex">
                             <option value="">--Select Sex--</option>
                         </select>
                     </label>
                     <div class="bd-bottom"></div>
-                    <label  class="item-input label-custom-field">
-                        <span class=" span-input-color">Birthday</span>
-                        <input type="date" name="birthday" ng-model="userInfo.dob" required  class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
-                    </label>
+                    <div  class="item-input label-custom-field" show-errors='{showSuccess: true}'>
+                       
+                          <span class="input-label span-input-color">DOB<span style="color: red;">*</span></span>
+                          <div style="width:100%" >
+                              <input id="day" auto-tab-to="month" type="tel" maxlength="2" placeholder="DD" ng-model="patientInfo.date" ng-change="checkdate('date')" style="background-color: transparent;"  class="pl"/>
+                              <span style="float: left;width: 15px;margin-top: 6px;margin-left: -20px;" >/</span>              
+                              <input id="month" auto-tab-to="year" type="tel" maxlength="2" placeholder="MM" ng-model="patientInfo.month" ng-change="checkdate('month')" style="background-color: transparent;" class="pl" />
+                              <span style="float: left;width: 15px;margin-top: 6px;margin-left: -20px;">/</span>
+                              <input id="year" type="tel" maxlength="4" placeholder="YYYY" ng-model="patientInfo.year" ng-change="checkdate('year')" style="background-color: transparent;"  class="pl" />
+                          </div>
+                         
+                       
+                </div>
                     <div class="bd-bottom"></div>
                     <label class="item-input label-custom-field">
-                        <span class="input-label span-input-color">Know as</span>
-                        <input type="text" ng-model="userInfo.Known_as" name="Known_as" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white" />
+                        <span class="span-input-color">Know as</span>
+                        <input type="text" ng-model="patientInfo.Known_as" name="Known_as" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white" />
                     </label>
                     <div class="bd-bottom"></div>
                     <label class="item-input label-custom-field" >
-                        <span class="input-label span-input-color">Address</span>
-                        <input ng-required="true" type="text" ng-model="userInfo.Address1" name="Address1" ng-class="{'has-error':isSubmit && first.Address1.$invalid}" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
+                        <span class="span-input-color">Address</span>
+                        <input ng-required="true" type="text" ng-model="patientInfo.Address1" name="Address1" ng-class="{'has-error':isSubmit && first.Address1.$invalid}" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
                     </label>
                     <div class="bd-bottom"></div>
                     <label class="item-input label-custom-field">
-                        <span class="input-label span-input-color">Address 2</span>
-                        <input type="text" ng-model="userInfo.Address2" name="Address2" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
+                        <span class="span-input-color">Address 2</span>
+                        <input type="text" ng-model="patientInfo.Address2" name="Address2" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
                     </label>
                     <div class="bd-bottom"></div>
                 </form>

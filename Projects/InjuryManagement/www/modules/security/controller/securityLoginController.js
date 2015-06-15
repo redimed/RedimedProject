@@ -223,20 +223,4 @@ angular.module('starter.security.login.controller',[])
             });
         }
 
-        document.addEventListener("deviceready", onDeviceReady, false);
-
-        function onDeviceReady() {
-            gpsDetect = cordova.require('cordova/plugin/GPSCheck');
-
-            var success = function(message) {
-                alert("Success calling plugin", message);
-            }
-
-            var failure = function() {
-                alert("Error calling plugin");
-            }
-
-            gpsDetect.locationCheck(success, failure);
-        }
-
     });

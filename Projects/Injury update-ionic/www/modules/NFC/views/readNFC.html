@@ -1,9 +1,5 @@
-<ion-view title="Read NFC Tag" >
-   <!--  <ion-nav-buttons side="left">
-        <button menu-toggle="left" class="button button-icon icon ion-navicon " style="color:#fff"></button>
-    </ion-nav-buttons> -->
-<ion-content class="content-scroll" style="background:#015190">
-
+<ion-view title="Read NFC Tag">
+    <ion-content class="content-scroll" style="background:#015190">
         <div class="transparent-modal-phone" style="width: 100%; height: 100%">
             <div >
                 <div class="header-logo">
@@ -19,6 +15,13 @@
             </div>
                <div class="actionBar">
                     <button menu-toggle="left" class="button button-icon icon ion-navicon " style="color:#fff;float:left;"></button>
+                     <div class="list list-inset" style="margin-top: 40px;">
+                      <label class="item item-input">
+                        <i class="icon ion-search placeholder-icon"></i>
+                        <input id="icon_prefix" class="validate" ize="40" ng-required="true" type="text" ng-model="testData.data.SearchKey" name="SearchKey"  ng-change="getInfoPatien(testData.data.SearchKey)" placeholder="Search key" >
+                      </label>
+                    </div>
+
                 </div>
             <div style="margin-top:170px">
                    <div class="app">
@@ -35,24 +38,24 @@
                     </div>
                 </form>
             </div> -->
-            <ion-scroll direction="y" class="list searchform" ng-hide="!testData.data.SearchKey || !isShow" style="margin-top: -34px;">
-                <a class="itemsearch"
+          <ion-scroll direction="y" class="list searchform" ng-hide="!testData.data.SearchKey || !isShow" style="background-color: #0169ff;box-shadow: 2px 2px 11px -1px rgba(0,0,0,0.66);border: none;margin-top: -70px;">
+                <div style="border-bottom: 1px solid;padding: 10px;" 
                    ng-repeat="result in list | filter:testData.data.SearchKey" ng-click="selectInfo(result)">
-                    <h3 style="text-decoration: underline;">
+                    <h3 style="text-decoration: underline;color:#f3c90a">
                         {{ (result.Title == null ? '' : result.Title + " . ") +
                         (result.First_name == null ? '' : result.First_name) + " " +
                         (result.Middle_name == null ? '' : result.Middle_name) + " " +
                         (result.Sur_name == null ? '' : result.Sur_name) }}
                     </h3>
-                    <h4 ng-hide="result.DOB == null">
+                    <h4 ng-hide="result.DOB == null" style="color:white">
                         <i class="fa fa-calendar"></i>
                         {{result.DOB | date:"dd/MM/yyyy"}}
                     </h4>
-                    <h4 ng-hide="result.Mobile == null">
+                    <h4 ng-hide="result.Mobile == null" style="color:white">
                         <i class="fa fa-phone"></i>
                         {{result.Mobile}}
                     </h4>
-                </a>
+                </div>
             </ion-scroll>
 
             <div class="row">
@@ -60,7 +63,7 @@
                     <ul class="tabs" style="border-top: none; margin-top: -35px;">
                         <li class="tab col" ng-repeat="tab in tabs"
                             ng-click="onClickTab(tab)" ng-class="{'active-li':isActiveTab(tab.url)}">
-                            <a href style="text-decoration: none; width: 40%; margin: auto;color:white" >
+                            <a href style="text-decoration: none;color: white;text-align: center;" >
                                 {{tab.title}}
                             </a>
                         </li>
@@ -72,12 +75,12 @@
 
                     <script type="text/ng-template" id="info.html">
                         <div id="Infomation">
-                            <label class="item-input label-custom-field" ng-class="{'has-error':isSubmit && infor.Email.$invalid || isFailEmail}">
+                            <label class="item-input label-custom-field" >
                                 <span class="input-label span-input-color">Email</span>
                                 <input ng-required="true" type="email" ng-model="testData.data.Email" name="Email" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white" >
                             </label> <div class="bd-bottom"></div>
 
-                            <label class="item-input  label-custom-field" ng-class="{'has-error':isSubmit && infor.Title.$invalid}">
+                            <label class="item-input  label-custom-field" >
                                 <span class="input-label span-input-color">Title</span>
                                 <select ng-required="true" ng-model="testData.data.Title" name="Title" class="select-custom"
                                         ng-options="row.name as row.name for row in titleIndex" >
@@ -86,16 +89,15 @@
                                
                             </label> <div class="bd-bottom"></div>
 
-                            <label class="item-input label-custom-field" ng-class="{'has-error':isSubmit && infor.First_name.$invalid}">
+                            <label class="item-input label-custom-field" >
                                 <span class="input-label span-input-color">First Name</span>
                                 <input ng-required="true" type="text" ng-model="testData.data.First_name" name="First_name"  class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white" />
-                                <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && infor.First_name.$invalid}"></i>
                             </label> <div class="bd-bottom"></div>
 
-                            <label class="item-input label-custom-field" ng-class="{'has-error':isSubmit && infor.Sur_name.$invalid}">
+                            <label class="item-input label-custom-field" >
                                 <span class="input-label span-input-color">Sur Name</span>
                                 <input ng-required="true" type="text" ng-model="testData.data.Sur_name" name="Sur_name" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"  />
-                                <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && infor.Sur_name.$invalid}"></i>
+                               
                             </label> <div class="bd-bottom"></div>
 
 
@@ -105,7 +107,7 @@
                             </label> <div class="bd-bottom"></div>
 
 
-                            <label class="item-input label-custom-field" ng-class="{'has-error':isSubmit && infor.Address1.$invalid}">
+                            <label class="item-input label-custom-field" >
                                 <span class="input-label span-input-color">Address</span>
                                 <input ng-required="true" type="text" ng-model="testData.data.Address1" name="Address1" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white" >
                                 <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && infor.Address1.$invalid}"></i>
@@ -126,15 +128,15 @@
                                
                             </label> <div class="bd-bottom"></div>
 
-                            <label class="item-input label-custom-field" ng-class="{'has-error':isSubmit && infor.Mobile.$invalid || isFailMobile}">
+                            <label class="item-input label-custom-field" >
                                 <span class="input-label span-input-color">Mobile Phone</span>
                                 <input ng-required="true" type="tel" ng-model="testData.data.Mobile" name="Mobile" ng-change="Checkfield(isMobile = true)" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white" >
-                                <i ng-class="{'icon ion-alert-circled error col col-10':isSubmit && infor.Mobile.$invalid || isFailMobile}"></i>
+                               
                             </label> <div class="bd-bottom"></div>
+                             <label class="item-input label-custom-field" >
+                                <span class="input-label span-input-color">Occupation</span>
+                                <input ng-required="true" type="text" ng-model="testData.data.Occupation" name="Occupation"  class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white" >
 
-                            <label class="item-input label-custom-field">
-                                <span class="input-label span-input-color label-custom-field">Occupation</span>
-                                <input type="text" ng-model="testData.data.Occupation" name="Occupation" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white" >
                             </label> <div class="bd-bottom"></div>
 
                         </div>
@@ -196,7 +198,7 @@
 
                             <label class="item-input label-custom-field">
                                 <span class="input-label span-input-color">Account Holder</span>
-                                <input type="text" class="materialize-textarea" ng-model="testData.data.Account_holder" name="testData.data.Account_holder" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white" ></input>
+                                <input type="text"  ng-model="testData.data.Account_holder" name="testData.data.Account_holder" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white" ></input>
 
                             </label> <div class="bd-bottom"></div>
 
@@ -235,8 +237,7 @@
                                     this.focus();" ng-model="testData.data.Exp_pension" name="Exp_pension" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white" />
                             </label> <div class="bd-bottom"></div>
 
-                            <div class="row" >
-                                <div class="col col-75" style="padding-top: 1px">
+                            
                                     <label class="item-input label-custom-field">
                                         <span class="input-label span-input-color">Health Fund</span>
                                         <select ng-model="testData.data.Private_fund_id" class="select-custom"
@@ -245,12 +246,13 @@
                                         </select>
 
                                     </label> <div class="bd-bottom"></div>
-                                </div>
-                                <div class="col" style="padding-top: 1px">
-                                    <label class="item-input label-custom-field" style="padding-bottom: 8px;">
-                                        <input type="tel" ng-model="testData.data.UPI" name="UPI" placeholder="UPI" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white" >
+                              
+                                
+                                    <label class="item-input label-custom-field">
+                                    <span class="input-label span-input-color">UPI</span>
+                                        <input type="tel" ng-model="testData.data.UPI" name="UPI"  class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white" >
                                     </label> <div class="bd-bottom"></div>
-                                </div>
+                               
                             </div>
 
 

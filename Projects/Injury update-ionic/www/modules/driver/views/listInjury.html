@@ -1,14 +1,5 @@
 <ion-view title="List Injury">
-   <!--  <div class="bg-list"></div>
- -->
-<!--     <ion-nav-buttons side="left">
-        <a menu-toggle="left" class="button button-icon icon ion-navicon" style="color:#fff"></a>
-    </ion-nav-buttons>
-
-    <ion-nav-buttons side="right">
-        <a menu-toggle="right" class="button button-icon icon ion-android-contacts" style="color:#fff"></a>
-    </ion-nav-buttons> -->
-<ion-content class="content-scroll" style="background:#015190;z-index: 9999" >
+    <ion-content class="content-scroll" style="background:#015190;z-index: 9999" >
         <div class="transparent-modal-phone" style="width: 100%; height: 100%">
             <div >
                 <div class="header-logo">
@@ -16,17 +7,14 @@
                 </div>
                 <div class="background-header-logo-child">
                     <span class="span-header">Injury Management</span>
-
                 </div>
                 <div style="width: 100%;height: 49px;float: left;position: absolute;">
                     <span style="float: right;padding-right: 10%;padding-top: 30px;font-weight: 600;color: white;">Driver List</span>
                 </div>
             </div>
-              <div class="actionBar">
-                   
-                            <button menu-toggle="left" class="button button-icon icon ion-navicon " style="color:#fff;float:left;"></button>
-                     
-                        </div>
+            <div class="actionBar">
+                <button menu-toggle="left" class="button button-icon icon ion-navicon" style="color:#fff;float:left;"></button>
+            </div>
             <div style="margin-top:100px">
                 <div class="item-input-inset">
                     <label class="item-input-wrapper">
@@ -34,51 +22,52 @@
                         <input id="inputSearch" type="search" placeholder="Search" ng-model="searchText"
                                style="border: none; margin: 7px 0px 7px 10px; color: #2B2B2B">
                     </label>
-                    <a class="button button-clear" onclick="$('#inputSearch').val('')" style="position: absolute; top: 8.5px; bottom: 8.5px; right: 15px;">
-                        <i class="icon ion-close-circled" ng-hide="searchText == undefined || searchText == ''"></i>
+                    <a class="button button-clear" onclick="$('#inputSearch').val('')"
+                       style="position: absolute; top: 8.5px; bottom: 8.5px; right: 15px;" ng-click="removeValinput()">
+                        <i class="icon ion-close-circled" ng-hide="searchText == undefined || searchText == '' || hideButton"></i>
                     </a>
                 </div>
                 <ion-list style="text-align: left;">
-                    
-                    
                     <a ng-click="selectPatient(listPatient.injury_id,listPatient.latitude,listPatient.longitude)"
                        class="item-avatar custom-item-listpatient"
-                       ng-repeat="listPatient in lstPatient | filter: searchText" 
-                       >
+                       ng-repeat="listPatient in lstPatient | filter: searchText">
                         <div class="padding fLeft"  style="color:white">
-                            <div ng-class="{'img-image-name': listPatient}" ng-style={"background-color":listPatient.background} style="color:white">
-                                {{listPatient.letter}}
-                            </div>
+                            <img ng-src="{{listPatient.avatar}}" class="img-image-name">
                         </div>
                         <div class="padding">
                             <div>
-                                <h2 style="line-height: 2; font-size: 19px;color:white" >{{listPatient.Title}}<span ng-show="listPatient.Title != null">.</span> {{listPatient.First_name}} {{listPatient.Sur_name}} {{listPatient.Middle_name}}</h2>
-                                <span class="text-right fRight">
-                                    <i class="icon ion-ios7-arrow-right"></i>
-                                </span>
+                                <h2 style="line-height: 2; font-size: 19px;color:white" >{{listPatient.Title}}<span ng-show="listPatient.Title != null">.</span> {{listPatient.First_name}} {{listPatient.Sur_name}} {{listPatient.Middle_name}}
+                                    <i class="icon ion-arrow-right-b" style="float: right; margin-right: 2%;"
+                                       ng-class="{'color-new-iconstatus': listPatient.STATUS == 'New',
+                                        'color-waiting-iconstatus':listPatient.STATUS == 'Waiting',
+                                        'color-done-iconstatus': listPatient.STATUS == 'Done'}"></i>
+                                </h2>
                             </div>
 
-                            <p class="lstinjury-address"  style="color:white">
-                                <i class="icon ion-ios7-location"></i> - {{listPatient.pickup_address}}
+                            <p class="lstinjury-address">
+                                <i class="icon ion-location" ng-hide="listPatient.pickup_address == null"></i>&nbsp;{{listPatient.pickup_address}}
                             </p>
 
                             <p  style="color:white">
-                                <i class="icon ion-ios7-telephone"></i> - {{listPatient.Mobile}}
+                                <i class="icon ion-android-call" ng-hide="listPatient.Mobile == null"></i>&nbsp;{{listPatient.Mobile}}
                             <span ng-class="{'span-new': listPatient.STATUS == 'New'}" ng-show="listPatient.STATUS == 'New'">
                                 new
                             </span>
 
-                            <span   style="color:white" ng-class="{'span-waiting': listPatient.STATUS == 'Waiting'}" ng-show="listPatient.STATUS == 'Waiting'">
+                            <span ng-class="{'span-waiting': listPatient.STATUS == 'Waiting'}" ng-show="listPatient.STATUS == 'Waiting'">
                                 waiting
                             </span>
 
+                            <span ng-class="{'span-done': listPatient.STATUS == 'Done'}" ng-show="listPatient.STATUS == 'Done'">
+                                done
+                            </span>
                             </p>
                         </div>
-                         <div class="bd-bottom"></div>
+                        <div class="bd-bottom"></div>
                     </a>
                 </ion-list>
             </div>
-         
+
         </div>
 
     </ion-content>
@@ -86,5 +75,5 @@
 
 
 
-   
+
 </ion-view>
