@@ -15,9 +15,11 @@ angular.module('app.loggedIn.template.directives.patient_write', [])
 			scope.exportPDF = function(){
 				var content = $('#writeTemplate').html();
 
-				content = content.replace(/buivuong/g, '</input>');
+				content = content.replace(/&nbsp;&nbsp;/g, '</input>');
 
 				content = content.replace(/<br>/g, '<br/>');
+
+				console.log(content);
 
 				TemplateModel.write({name: scope.template.one.name, content: content})
 				.then(function(response){
@@ -71,7 +73,7 @@ angular.module('app.loggedIn.template.directives.patient_write', [])
 						var new_string_change = "";
 
 						if(split_string_change.length === 1){
-							new_string_change = '<input class="custom-input-template" placeholder="Please fill in">buivuong';
+							new_string_change = '<input class="custom-input-template" value="" placeholder="Please fill in">&nbsp;&nbsp;';
 						}else{
 							var field = split_string_change[1];
 
@@ -93,6 +95,7 @@ angular.module('app.loggedIn.template.directives.patient_write', [])
 					$('#writeTemplate').html(new_content);
 					$('.custom-input-template').on('input', function(e){
 						$(this).attr('size', e.target.value.length);
+						$(this).attr('value', e.target.value);
 					});
 				})
 			}
