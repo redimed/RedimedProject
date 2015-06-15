@@ -1,0 +1,62 @@
+<ion-view >
+    <ion-content class="content-scroll">
+             <div>
+                    <img src="img/logo-1.png">
+              </div>
+              <div style="height: 50px;background-color: #13b2cf;">
+                  <div style="font-size: 15px;color: white;margin-left: 28px;padding-top: 14px;margin: 0 auto;">Thank you for using REDiMED's system</div>
+              </div>
+              <div>
+                  <!-- <div style="height: 30px;background: #ebebeb;">
+                      <div class="inbo">Patient information</div>
+                  </div> -->
+                  <!-- start -->
+                    <div class="card">
+                      <a class="item item-icon-left" >
+                       <i class="icon fa fa-user fa-2x"></i>
+                        {{data.FIRSTNAME}}-{{data.LASTNAME}}
+                      </a>
+                      <a class="item item-icon-left" >
+                        <i class="icon fa fa-transgender fa-2x"></i>
+                       {{data.GENDER}}
+                       
+                      </a>
+                      <a class="item item-icon-left">
+                        <i class="icon fa fa-mobile fa-2x"></i>
+                        {{data.CONTACT_NO}}
+                      </a>
+                      <a class="item item-icon-left" >
+                        <i class="icon fa fa-map-marker fa-2x"></i>
+                        {{data.ADD}}
+                      </a>
+                      <a class="item item-icon-left" >
+                        <i class="icon ion-ios-email-outline"></i>
+                        {{data.EMAIL}}
+                      </a>
+                      <a class="item item-icon-left" >
+                        <i class="icon fa fa-file-text-o fa-2x"></i>
+                        {{data.INJURY}}
+                      </a>
+                      
+                    </div>
+                    <div style="padding-left: 12px;font-weight: 700;">
+                      <div>
+                        What should I expect after submitting an Urgent Care request ?
+                      </div>
+                      <div style="font-weight: 100;">
+                        Following the completion of an Urgent Care request, you will receive a return call within 20 minutes from a REDIMED Doctor or team member who will determine the appropriate course of treatment.
+                      </div>
+                    </div>
+                   <br>
+                      <div style="padding-left: 12px;font-weight: 700;">
+                          <div style="width: 311px;font-size: 16px;padding-bottom: 17px;">
+                             <a  ng-click="openWeb('http://www.redimed.com.au/')">https://www.redimed.com.au</a>
+                          </div>
+                       
+                    </div>
+                    <br>
+                   <div style="width: 200px;margin: 0 auto;margin-top: -15px;"><button class="btn" style="white-space: nowrap;" ui-sref="security.login">Back to Home</button></div>
+                  <!-- end -->
+              </div>
+    </ion-content>
+</ion-view>
