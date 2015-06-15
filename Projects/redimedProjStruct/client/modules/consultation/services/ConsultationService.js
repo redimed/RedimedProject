@@ -1,4 +1,14 @@
 angular.module("app.loggedIn.patient.consult.services",[])
+	.service('ConsultInfoService', function(){
+	    var consultInfoScripts=[];
+	    this.getConsultInfoScripts=function(){
+	        return consultInfoScripts;
+	    }
+	    this.setConsultInfoScripts=function(list)
+	    {
+	        consultInfoScripts=angular.copy(list);
+	    }
+	})
 	.factory("ConsultationService",function(Restangular){
 		var services = {};
 		var api = Restangular.all("api");

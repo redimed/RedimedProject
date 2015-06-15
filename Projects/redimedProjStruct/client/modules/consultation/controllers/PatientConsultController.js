@@ -1,9 +1,10 @@
 angular.module("app.loggedIn.patient.consult.controller",[])
 
-	.controller("PatientConsultController",function(DoctorService,$filter,$rootScope,$interval,$window,$document,$cookieStore,$scope,$state,$modal,InsurerService,toastr,socket,OTSession,ReceptionistService,$stateParams,ConsultationService,PatientService,UserService,$interval){
+	.controller("PatientConsultController",function(ConsultInfoService,DoctorService,$filter,$rootScope,$interval,$window,$document,$cookieStore,$scope,$state,$modal,InsurerService,toastr,socket,OTSession,ReceptionistService,$stateParams,ConsultationService,PatientService,UserService,$interval){
 
 		$scope.templates = [];
 
+	
 		/* VUONG */
 		$scope.addTemplate = function(){
 			$modal.open({
@@ -91,9 +92,13 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			treatment: null,
 			diagnosis: null,
 			measurements: [],
-			scripts: [],
+			scripts: ConsultInfoService.getConsultInfoScripts(),
 			images: []
 		}
+		// $scope.consultInfo.scripts = ConsultInfoService.getConsultInfoScripts();
+		$scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){ 
+		   ConsultInfoService.setConsultInfoScripts($scope.consultInfo.scripts);
+		})
 		//tannv.dts@gmail.com
 		$scope.timerDisplay=null;
 		//-------------------------------------------------
