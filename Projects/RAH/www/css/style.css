@@ -315,7 +315,7 @@ h.customHr.has-error  {
 .urgent{
    background-image: url(../img/2_02.png);
  background-position: -7px -2px;
-  width: 124px;height: 128px;border-radius: 100px;position: absolute;margin-top: 60px;margin-left: -50px;
+  width: 124px;height: 128px;border-radius: 100px;position: absolute;margin-top: 60px;margin-left: -43px;
 }
 .hot-line{
   background-image: url(../img/2_01.png);
@@ -330,7 +330,7 @@ h.customHr.has-error  {
   border-radius: 100px;
   position: absolute;
   margin-top: 40px;
-  margin-left: 146px;
+  margin-left: 140px;
 }
 .f-1{
   background-image: url(../img/1_04.png);
