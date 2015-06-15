@@ -15,6 +15,13 @@ module.exports = [
         ]
     },
     {
+        "file": "plugins/com.phonegap.core.phonedialer/www/dialer.js",
+        "id": "com.phonegap.core.phonedialer.phonedialer",
+        "merges": [
+            "phonedialer"
+        ]
+    },
+    {
         "file": "plugins/com.plugin.datepicker/www/ios/DatePicker.js",
         "id": "com.plugin.datepicker.DatePicker",
         "clobbers": [
@@ -293,6 +300,7 @@ module.exports.metadata =
 {
     "com.borismus.webintent": "1.0.0",
     "com.ionic.keyboard": "1.0.4",
+    "com.phonegap.core.phonedialer": "0.2.0",
     "com.plugin.datepicker": "0.6.0",
     "cordova-plugin-geolocation": "1.0.1-dev",
     "cordova-plugin-network-information": "1.0.1-dev",
