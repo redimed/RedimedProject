@@ -113,7 +113,38 @@ module.exports = {
 		})
 		.error(function(error){
 			res.json(500, {error: error});
-		})			
+		})
+	},
+
+	postWrite: function(req, res){
+		var postData = req.body.data;
+		var insert_data = {
+			name: postData.name,
+			content: postData.content
+		}
+
+		var sql = knex('cln_template_temp')
+				.insert(insert_data)
+				.toString();
+
+		db.sequelize.query(sql)
+		.success(function(created){
+			var sub_sql = knex('cln_template_temp')
+						.max('id as id')
+						.select('name')
+						.toString();
+
+			db.sequelize.query(sub_sql)
+			.success(function(rows){
+				res.json({data: rows[0]});
+			})
+			.error(function(error){
+				res.json(500, {error: error});
+			})	
+		})
+		.error(function(error){
+			res.json(500, {error: error});
+		})
 	},
 
 	getTemplate: function(req,res){
@@ -121,43 +152,42 @@ module.exports = {
 		var patientId = req.params.patientId;
 		var calId = req.params.calId;
 
-		db.sequelize.query("SELECT * FROM template WHERE id = ?",null,{raw:true},[id])
-			.success(function(data){
-				if(data.length > 0)
-				{
-					var item = data[0];
+		var optionsget = {
+		    host : 'testapp.redimed.com.au',
+		    port : 3003,
+		    path : '/RedimedJavaREST/api/document/template/'+id,
+		    method : 'GET' 
+		};
 
-					var optionsget = {
-					    host : 'testapp.redimed.com.au',
-					    port : 3003,
-					    path : '/RedimedJavaREST/api/document/template/'+id,
-					    method : 'GET' 
-					};
+		var targetFolder = '.\\uploadFile\\Template\\PatientID-'+patientId;
 
-					var targetFolder = '.\\uploadFile\\Template\\PatientID-'+patientId;
+		var sql = knex('cln_template_temp')
+				.where({id: id})
+				.toString();
 
-					mkdirp(targetFolder, function(err) {
-		         		if(err)
-		         		  return console.log(err);
+		db.sequelize.query(sql)
+		.success(function(rows){
+			mkdirp(targetFolder, function(err) {
+	     		if(err)
+	     		  return console.log(err);
 
-		         		var file = fs.createWriteStream(targetFolder+'\\'+item.name+".pdf");
-						var request = http.get(optionsget, function(response) {
-						  response.pipe(file);
-						  response.on('end',function(){
-						  	res.download(targetFolder+'\\'+item.name+".pdf");
-						  })
-						});
+	     		var file = fs.createWriteStream(targetFolder+'\\'+rows[0].name+".pdf");
+				var request = http.get(optionsget, function(response) {
+				  response.pipe(file);
+				  response.on('end',function(){
+				  	res.download(targetFolder+'\\'+rows[0].name+".pdf");
+				  })
+				});
 
-						request.on('error', function(e) {
-						    res.json(500, {error: e});
-						});
+				request.on('error', function(e) {
+				    res.json(500, {error: e});
+				});
 
-						request.end();
-		         	});
-				}
-			})
-			.error(function(error){
-				res.json(500, {error: error});
-			})		
+				request.end();
+	     	});
+		})
+		.error(function(error){
+			res.json(500, {error: error});
+		})
 	}
 }

@@ -5,7 +5,8 @@ angular.module('app.loggedIn.template.directives.patient_list', [])
 		restrict: 'EA',
 		scope: {
 			patientId: '=',
-			calId: '='
+			calId: '=',
+			success: '='
 		},
 		templateUrl: 'modules/template/directives/templates/patient_list.html',
 		link: function(scope, elem, attrs){
@@ -16,12 +17,12 @@ angular.module('app.loggedIn.template.directives.patient_list', [])
 					controller: function($scope, $modalInstance, patientId, calId){
 						$scope.patient_id = patientId;
 						$scope.cal_id = calId;
-						$scope.success = false;
+						$scope.success = null;
 						$scope.template_id = list.id;
 
 						$scope.$watch('success', function(success){
 							if(success)
-								$modalInstance.close('success');
+								$modalInstance.close(success);
 						})
 					},
 					resolve: {
@@ -35,9 +36,7 @@ angular.module('app.loggedIn.template.directives.patient_list', [])
 				})
 
 				modalInstance.result.then(function(result){
-					if(result === 'success'){
-						load();
-					}
+					scope.success = result;
 				})
 			}
 

@@ -12,6 +12,17 @@ angular.module('app.loggedIn.template.directives.patient_write', [])
 		templateUrl: 'modules/template/directives/templates/patient_write.html',
 		link: function(scope, elem, attrs){
 
+			scope.exportPDF = function(){
+				TemplateModel.write({name: scope.template.one.name, content: scope.template.one.content})
+				.then(function(response){
+					console.log(response);
+					TemplateModel.download({id: response.data.id, cal_id: $stateParams.cal_id, patient_id: $stateParams.patient_id})
+					.then(function(result){
+						scope.success = {template_temp_id: response.data.id, template_temp_name: response.data.name};
+					}, function(error){})
+				}, function(error){})
+			}
+
 			/* PATIENT LOAD */
 			var patientLoad = function(patient_id){
 				PatientService.get(patient_id)
@@ -44,8 +55,6 @@ angular.module('app.loggedIn.template.directives.patient_write', [])
 					var content = scope.template.one.content;
 					var new_content = '';
 					var index_first_new = 0;
-
-					console.log(content);
 
 					while(content.indexOf('{#input') !== -1){
 						var index_first = content.indexOf('{#input');

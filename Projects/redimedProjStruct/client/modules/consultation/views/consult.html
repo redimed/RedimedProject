@@ -169,6 +169,16 @@
                          <button class="un-button un-bgBlack" ng-click="scriptAction('new',null)">Add Medication</button>
                     </div>
                 </div>
+                <div class="row" ng-if="templates.length > 0">
+                    <div class="col-md-12 col-sm-12">
+                        <h3>List of Templates</h3>
+                        <ul>
+                            <li ng-repeat="template in templates">
+                                {{template.template_temp_name}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
             <div class="un-tab-content" id="tab_1_2">
                 <div class="table-dynamic">
@@ -1348,7 +1358,7 @@
 
 <script type="text/ng-template" id="listTemplateDialog">
     <div class="modal-body">
-        <template-patient-list patient-id="patient_id" cal-id="cal_id"></template-patient-list>
+        <template-patient-list patient-id="patient_id" cal-id="cal_id" success="success"></template-patient-list>
     </div>
 </script>
 

@@ -30,5 +30,15 @@ angular.module("app.loggedIn.template.model", [])
         return detailApi.post({data: data});
     }
 
+    instanceService.write = function(data){
+        var detailApi = appApi.all("write");
+        return detailApi.post({data: data});
+    }
+
+    instanceService.download = function(data){
+        var detailApi = appApi.one("download/"+data.id+"/"+data.cal_id+"/"+data.patient_id);
+        return detailApi.get();
+    }
+
     return instanceService;
 })

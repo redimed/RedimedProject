@@ -2,6 +2,8 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 
 	.controller("PatientConsultController",function(DoctorService,$filter,$rootScope,$interval,$window,$document,$cookieStore,$scope,$state,$modal,InsurerService,toastr,socket,OTSession,ReceptionistService,$stateParams,ConsultationService,PatientService,UserService,$interval){
 
+		$scope.templates = [];
+
 		/* VUONG */
 		$scope.addTemplate = function(){
 			$modal.open({
@@ -9,8 +11,18 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 				controller: function($scope, $modalInstance, $stateParams){
 					$scope.patient_id = $stateParams.patient_id;
 					$scope.cal_id = $stateParams.cal_id;
+					$scope.success = null;
+
+					$scope.$watch('success', function(success){
+						if(success){
+							$modalInstance.close(success);
+						}
+					})
 				}
-			});
+			})
+			.result.then(function(success){
+				$scope.templates.push(success);
+			})
 		}		
 		/* END VUONG */
 		/*chien star*/
