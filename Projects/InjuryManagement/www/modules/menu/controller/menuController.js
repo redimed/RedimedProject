@@ -160,30 +160,22 @@ angular.module("starter.menu.controller",[])
 
         //iOS.
         function handleIOS(notification) {
-            if (notification.foreground == "1") {
-                if (notification.sound) {
-                    var mediaSrc = $cordovaMedia.newMedia(notification.sound);
-                    mediaSrc.promise.then($cordovaMedia.play(mediaSrc.media));
-                }
-
-                if (notification.body && notification.messageFrom) {
-                    $cordovaDialogs.alert(notification.body, notification.messageFrom);
-                }
-                else $cordovaDialogs.alert(notification.alert, "Push Notification Received");
-
-                if (notification.badge) {
-                    $cordovaPush.setBadgeNumber(notification.badge).then(function (result) {
-                        console.log("Set badge success " + result)
-                    }, function (err) {
-                        console.log("Set badge error " + err)
-                    });
-                }
+            if (notification.alert) {
+                cordovaDialogs.alert(notification.alert);
+                navigator.notification.alert(notification.alert);
             }
-            else {
-                if (notification.body && notification.messageFrom) {
-                    $cordovaDialogs.alert(notification.body, "(RECEIVED WHEN APP IN BACKGROUND) " + notification.messageFrom);
-                }
-                else $cordovaDialogs.alert(notification.alert, "(RECEIVED WHEN APP IN BACKGROUND) Push Notification Received");
+
+            if (notification.sound) {
+                var snd = new Media(event.sound);
+                snd.play();
+            }
+
+            if (notification.badge) {
+                $cordovaPush.setBadgeNumber(notification.badge).then(function(result) {
+                    // Success!
+                }, function(err) {
+                    // An error occurred. Show a message to the user
+                });
             }
         }
 
@@ -296,7 +288,9 @@ angular.module("starter.menu.controller",[])
                 templateUrl: 'modules/popup/PopUpError.html',
                 scope: $scope,
                 buttons: [
-                    { text: "Ok" }
+                    {
+                        text: "Ok",
+                    }
                 ]
             });
             localStorageService.clearAll();

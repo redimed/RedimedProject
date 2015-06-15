@@ -3,7 +3,9 @@ angular.module('starter.bluetooth.mainBlueController',[])
     .controller('mainBlueController', function($scope, localStorageService, $http, BluetoothServices, $ionicLoading, $ionicPopup, signaling) {
 
         document.addEventListener("deviceready", function() {
-            bluetooth.enable();
+            if (ionic.Platform.isAndroid()) {
+                bluetooth.enable();
+            }
         })
         $scope.checkdataReviceStatus = false;
         $scope.disableList = false;

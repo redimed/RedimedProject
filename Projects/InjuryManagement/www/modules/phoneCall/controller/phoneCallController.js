@@ -236,28 +236,32 @@ angular.module('starter.phoneCall.controller',[])
         }
 
         $scope.medicalDeviceToggle = function() {
-            document.addEventListener("deviceready", function() {
-                bluetooth.enable();
-            })
-            $scope.blueTooth = !$scope.blueTooth;
-            $scope.isImage= false;
-            if($scope.blueTooth) {
+            if(ionic.Platform.isIOS()) {
+                $cordovaToast.showShortTop("Sorry platform not support");
+            } else {
+                document.addEventListener("deviceready", function() {
+                    bluetooth.enable();
+                })
+                $scope.blueTooth = !$scope.blueTooth;
+                $scope.isImage= false;
+                if($scope.blueTooth) {
 
-                $scope.subscriber.subscribeToVideo(false);
-                TB.updateViews();
-
-                $timeout(function(){
                     $scope.subscriber.subscribeToVideo(false);
                     TB.updateViews();
-                }, 0.5 * 1000);
 
-            } else {
-                $scope.subscriber.subscribeToVideo(true);
-                TB.updateViews();
-                $timeout(function(){
+                    $timeout(function(){
+                        $scope.subscriber.subscribeToVideo(false);
+                        TB.updateViews();
+                    }, 0.5 * 1000);
+
+                } else {
                     $scope.subscriber.subscribeToVideo(true);
                     TB.updateViews();
-                }, 0.5 * 1000);
+                    $timeout(function(){
+                        $scope.subscriber.subscribeToVideo(true);
+                        TB.updateViews();
+                    }, 0.5 * 1000);
+                }
             }
         }
 

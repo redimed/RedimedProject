@@ -84,14 +84,6 @@ angular.module('starter', ['ionic',
                 signaling.emit('reconnected', localStorageService.get("userInfo").id);
             }
         })
-
-        //$interval(function() {
-        //    if (localStorageService.get("userInfo") != null) {
-        //        signaling.emit('checkApp', localStorageService.get("userInfo").id);
-        //    }
-        //}, 3 * 1000);
-
-
         signaling.on('reconnect_failed',function(){
             localStorageService.removeAll();
             $state.go("security.login",null,{location: "replace", reload: true});
