@@ -71,7 +71,7 @@ public class DocumentService {
         		ResultSet rs = null;
         		try
         		{
-        			ps = connection.prepareStatement("SELECT * FROM template WHERE id = ?");
+        			ps = connection.prepareStatement("SELECT * FROM cln_template_temp WHERE id = ?");
         			ps.setInt(1, id);
         			rs = ps.executeQuery();
         			if(rs.next())
