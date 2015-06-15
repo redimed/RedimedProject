@@ -20,15 +20,12 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 		else
 			toastr.error("Site Error!");
 	})
-	$scope.goToStatePatient = function(PatientID){
-		//phanquocchien.c1109g@gmail.com
-		//luu thong tin vao server
-		receptionStileService.setreceptionStile($scope.apptSite);
+	$scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){ 
+	    receptionStileService.setreceptionStile($scope.apptSite);
 		receptionStileService.setupcomingApptList($scope.upcomingAppt);
 		receptionStileService.setprogressApptList($scope.progressAppt);
 		receptionStileService.setcompleteApptList($scope.completeAppt);
-		$state.go('loggedIn.patient.appointment',{patient_id: PatientID, cal_id: '1'});
-	}
+	})
 	
 	$scope.getAppointment = function()
 	{
