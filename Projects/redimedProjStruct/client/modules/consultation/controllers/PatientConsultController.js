@@ -15,6 +15,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		/* END VUONG */
 		/*chien star*/
 		//buttom add make referral
+    	$scope.loadDataAddMakeReferral = {};
 		$scope.referralAddForm = {
 			is_show: false,
             open: function () {
@@ -25,7 +26,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
             },
             success: function (response) {
                 if (response.status == 'success')
-                    $scope.referral_panel.reload();
+                	$scope.loadDataAddMakeReferral.load();
                     $scope.referralAddForm.close();
             }
 		};
@@ -254,6 +255,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 					windowClass: "consult-modal-window",
 					controller:'ScriptController',
 					resolve: {
+
 						actual_doctor_id: function(){
 							return $scope.actual_doctor_id;
 						},
@@ -266,7 +268,20 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 				modalInstance.result.then(function(data){
 					if(data.type == 'ok')
 					{
-						$scope.consultInfo.scripts.push(data.value);
+						if (data.value.medication_name !== null) {
+							var count = 0;
+							for (var i = 0; i < $scope.consultInfo.scripts.length; i++) {
+								if($scope.consultInfo.scripts[i].medication_name === data.value.medication_name)
+								{
+									count ++;
+								}
+							};
+							if (count === 0) {
+								$scope.consultInfo.scripts.push(data.value);
+							};
+						};
+						
+						
 					}
 				})
 			}
@@ -672,7 +687,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		 * Lay thong tin appt patient
 		 */
 		$scope.apptPatient={};
-		$scope.actual_doctor_id={}
+		$scope.actual_doctor_id={};
 		$scope.apptStatus=ptnConst.apptStatus;
 		$scope.getApptPatient=function()
 		{
@@ -687,8 +702,12 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 					$scope.apptPatient=data.data;
 					DoctorService.getById($scope.apptPatient.actual_doctor_id)
 					.then(function(data){
+						if (data === undefined) {
+							$scope.actual_doctor_id ={
+								NAME:null
+							}
+						};
 						$scope.actual_doctor_id = data;
-						console.log('-----------------',$scope.actual_doctor_id);
 					})
 
 					if($scope.apptPatient.SESSION_START_TIME  && $scope.apptPatient.SESSION_END_TIME)
@@ -703,10 +722,10 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 					{
 						$scope.startSessionTime=$scope.apptPatient.SESSION_START_TIME;
 					}
-
 				}
 				else
 				{
+					$scope.actual_doctor_id={NAME :null};
 					exlog.log(data);
 				}
 			},function(err){
@@ -714,6 +733,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			});
 		}
 		$scope.getApptPatient();
+
 		/**
 		 * tannv.dts@gmail.com
 		 * chuyen appt patient status thanh Work In Progress

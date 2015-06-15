@@ -4,6 +4,7 @@ angular.module('app.loggedIn.referral.list.controller',[
     .controller('ReferralListController',function($scope, $stateParams){
         $scope.referral_panel = {};
         $scope.referral = {};
+
         $scope.referrals = {
             select:0,
             class:function(referral){
@@ -69,10 +70,13 @@ angular.module('app.loggedIn.referral.list.controller',[
             },
             success: function (response) {
                 if (response.status == 'success')
+                    $scope.referral_panel.reload();
                     $scope.referralAddForm.close();
             }
         }
-        
+        $scope.loadDataAddMakeReferral.load = function(){
+            $scope.referral_panel.reload();
+        }
        $scope.referralEditForm = {
             is_show: false,
             open: function () {

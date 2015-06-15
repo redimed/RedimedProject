@@ -3666,6 +3666,71 @@ label{
 .pt_img_padding_left_15{
     padding-right: 15px;
 }
+.re_bg_color_E0EFFF{
+    background: #E0EFFF !important;
+}
+.re_color_005A59{
+    color: #005A59 !important;
+}
+.re_padding_0{
+    padding: 0 !important;
+}
+.re_boder_crop_item{
+    color: #9E9E9E;
+    border: 1px dashed #C3C3C3;
+    border-radius: 5px !important;
+    background-color: white;
+    padding: 15px !important;
+}
+.re_boder_none{
+    border: none !important;
+}
+.re_bg_seach{
+    background: linear-gradient(to bottom, #F8F8F8 0%,#979797 100%);
+    border-top-left-radius: 8px !important;
+    border-bottom-left-radius: 8px !important;
+    border-color: rgb(190, 190, 190)!important;
+}
+.re_bg_info{
+    margin-top: 5px;
+    background: linear-gradient(to bottom, #FFF 0%,#DBEFFF 100%);
+    color: #006666 !important;
+    border: 1px solid #B1B1B2 !important;
+    border-radius: 5px !important;
+    -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+
+}
+.re_margin_bottom_5{
+    margin-bottom: 5px !important;
+}
+.re_portlet_title{
+    min-height: 0px !important;
+    background-color: #ccc;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    margin-bottom: 5px !important;
+    font-size: 10px !important;
+}
+.re_booking{
+    /*background-color: rgb(244, 123, 33) !important;*/
+    color: white !important;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+}
+.re_buttom_sreach{
+    background: linear-gradient(to bottom, #F8F8F8 0%,#979797 100%);
+    border-top-right-radius: 8px !important;
+    border-bottom-right-radius: 8px !important;
+    border:1px solid rgb(190, 190, 190)!important;
+    width: 12%;
+    margin-left: 2px;
+    height: 34px;
+}
+.re_bg_white{
+    background-color: white;
+}
 /*phanquocchien patient end*/
 
 .ql-container{
