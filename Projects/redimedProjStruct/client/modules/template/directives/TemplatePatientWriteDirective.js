@@ -1,6 +1,6 @@
 angular.module('app.loggedIn.template.directives.patient_write', [])
 
-.directive('templatePatientWrite', function($modal, $cookieStore, $state, $stateParams, $timeout, TemplateModel, toastr, PatientService){
+.directive('templatePatientWrite', function($modal, $window, $cookieStore, $state, $stateParams, $timeout, TemplateModel, toastr, PatientService){
 	return {
 		restrict: 'EA',
 		scope: {
@@ -13,13 +13,16 @@ angular.module('app.loggedIn.template.directives.patient_write', [])
 		link: function(scope, elem, attrs){
 
 			scope.exportPDF = function(){
-				TemplateModel.write({name: scope.template.one.name, content: scope.template.one.content})
+				var content = $('#writeTemplate').html();
+				content = content.replace(/<br>/g, '<br/>');
+
+				TemplateModel.write({name: scope.template.one.name, content: content})
 				.then(function(response){
-					console.log(response);
-					TemplateModel.download({id: response.data.id, cal_id: $stateParams.cal_id, patient_id: $stateParams.patient_id})
+					$window.location.href = TemplateModel.download({id: response.data.id, cal_id: $stateParams.cal_id, patient_id: $stateParams.patient_id});
+					/*TemplateModel.download({id: response.data.id, cal_id: $stateParams.cal_id, patient_id: $stateParams.patient_id})
 					.then(function(result){
 						scope.success = {template_temp_id: response.data.id, template_temp_name: response.data.name};
-					}, function(error){})
+					}, function(error){})*/
 				}, function(error){})
 			}
 

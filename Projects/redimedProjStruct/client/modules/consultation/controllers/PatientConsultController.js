@@ -21,6 +21,8 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 				}
 			})
 			.result.then(function(success){
+				console.log(success);
+
 				$scope.templates.push(success);
 			})
 		}		
@@ -636,7 +638,11 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 				$scope.consultInfo.measurements[i].patient_id = $scope.patient_id;
 				$scope.consultInfo.measurements[i].cal_id = $scope.cal_id;
 			}
-        	ConsultationService.submitConsult($scope.consultInfo).then(function(res){
+
+			var consultInfoTemp = angular.copy($scope.consultInfo);
+			consultInfoTemp.templates = $scope.templates;
+
+        	ConsultationService.submitConsult(consultInfoTemp).then(function(res){
 				if(res.status == 'success')
 				{
 				 	toastr.success('Submit Consultation Success!');

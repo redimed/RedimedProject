@@ -36,8 +36,7 @@ angular.module("app.loggedIn.template.model", [])
     }
 
     instanceService.download = function(data){
-        var detailApi = appApi.one("download/"+data.id+"/"+data.cal_id+"/"+data.patient_id);
-        return detailApi.get();
+        return "https://localhost:3000/"+uploadUrl+"download/"+data.id+"/"+data.cal_id+"/"+data.patient_id;
     }
 
     return instanceService;
