@@ -788,6 +788,7 @@ module.exports = {
         d.setDate(d.getDate() + 4 - (d.getDay() || 7));
         var yearStart = new Date(d.getFullYear(), 0, 1);
         var weeks = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+
         var sql_delete_time_in_lieu_detail_report="DELETE FROM time_in_lieu_report WHERE create_id= :user_id";
         db.sequelize.query(sql_delete_time_in_lieu_detail_report,null,{
             raw: true
@@ -1127,6 +1128,7 @@ module.exports = {
                                         });
                                         return;
                                     }
+                                    
                                     for(var t = 0;t<data.length;t++){
                                         chainer.add(db.time_in_lieu_report.create({
                                             create_id                   : data[t].create_id,
@@ -1144,8 +1146,7 @@ module.exports = {
                                             time_in_lieu_used_all       : data[t].time_in_lieu_used_all,
                                             time_in_lieu_remain_all     : data[t].time_in_lieu_remain_all,
                                             time_in_lieu_gan_nhat_all   : data[t].time_in_lieu_gan_nhat_all,
-                                            user_id                     : data[t].user_id,
-                                            create_day                  : moment(d).format('DD/MM/YYYY')
+                                            user_id                     : data[t].user_id
                                         }));
                                     }
                                     chainer.runSerially()

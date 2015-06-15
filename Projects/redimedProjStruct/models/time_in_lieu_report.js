@@ -17,7 +17,6 @@ module.exports = function(sequelize,DataTypes){
         time_in_lieu_remain_all:  DataTypes.INTEGER(11),
         time_in_lieu_gan_nhat_all:  DataTypes.INTEGER(11),
         user_id :DataTypes.INTEGER(11),
-        create_day :DataTypes.DATE,
         Creation_date : DataTypes.DATE ,
         Creation_by : DataTypes.INTEGER(11),
         Last_updated_by : DataTypes.INTEGER(11) ,
