@@ -7,42 +7,61 @@
           <h1 class="title" style="color:white">{{titleExp}}</h1>
          
         </div>
-        <ion-content class="has-header">
+        <ion-content class="has-header background-content">
            <div class="form-group">
-
-                 	    <label class="item item-input input_us" >
-                        <span class="input-label span-input-color">Company</span>
-                        <input style="background:white;height: 36px;" ng-required="true" type="text" placeholder="Company" ng-model="exp.company" name="company"  />
+                 	    <label class=" item-input item-floating-label" >
+                        <span class="input-label sp_custom">Company</span>
+                        <input clss="ip_custom pl" ng-required="true" type="text" placeholder="Company" ng-model="exp.company" name="company"  />
                       </label>
                       <br>
-                       <label class="item item-input input_us" >
-                        <span class="input-label span-input-color">Position</span>
-                        <input style="background:white;height: 36px;" ng-required="true" type="text" placeholder="Position" ng-model="exp.POSITION" name="position"  />
+                       <label class=" item-input item-floating-label" >
+                        <span class="input-label sp_custom">Position</span>
+                        <input clss="ip_custom pl" ng-required="true" type="text" placeholder="Position" ng-model="exp.POSITION" name="position"  />
                       </label>
                       <br>
-                       <label class="item item-input input_us" >
-                        <span class="input-label span-input-color">From Date</span>
-                        <input style="background:white;height: 36px;" ng-required="true" type="date" placeholder="fromdate" ng-model="exp.from_date" name="fromdate"  />
+                       <div class=" item-input item-floating-label" >
+                        <span class="input-label sp_custom">From Date</span>
+                        <!-- <input clss="ip_custom pl" ng-required="true" type="date" placeholder="fromdate" ng-model="exp.from_date" name="fromdate"  /> -->
+                        <div style="width: 100%;">
+                          <input id="day" auto-tab-to="month" type="tel" maxlength="2" placeholder="DD" 
+                          ng-model="exp.from_date.date" ng-change="checkdate('date')" required/>
+                          <span style="float: left;width: 15px;margin-top: 13px; color:white">/</span>              
+                          <input id="month" auto-tab-to="year" type="tel" maxlength="2" placeholder="MM" 
+                          ng-model="exp.from_date.month" ng-change="checkdate('month')" required/>
+                          <span style="float: left;width: 15px;margin-top: 13px; color:white">/</span>
+                          <input id="year" type="tel" maxlength="4" placeholder="YYYY" 
+                          ng-model="exp.from_date.year" ng-change="checkdate('year')" required/>
+                        </div>
+                      </div>
+                      <br>
+                       <div class=" item-input  item-floating-label" >
+                        <span class="input-label sp_custom">To Date</span>
+                        <!-- <input clss="ip_custom pl" ng-required="true" type="date" placeholder="To date" ng-model="exp.to_date" name="todate"  /> -->
+                        <div style="width: 100%;">
+                          <input id="day" auto-tab-to="month" type="tel" maxlength="2" placeholder="DD" 
+                          ng-model="exp.to_date.date" ng-change="checkdate('date')" required/>
+                          <span style="float: left;width: 15px;margin-top: 13px; color:white">/</span>              
+                          <input id="month" auto-tab-to="year" type="tel" maxlength="2" placeholder="MM" 
+                          ng-model="exp.to_date.month" ng-change="checkdate('month')" required/>
+                          <span style="float: left;width: 15px;margin-top: 13px; color:white">/</span>
+                          <input id="year" type="tel" maxlength="4" placeholder="YYYY" 
+                          ng-model="exp.to_date.year" ng-change="checkdate('year')" required/>
+                        </div>
+                      </div>
+                      <br>
+                       <label class=" item-input  item-floating-label" >
+                        <span class="input-label sp_custom">Duty</span>
+                        <input clss="ip_custom pl" ng-required="true" type="text" placeholder="Duty" ng-model="exp.duty" name="duty"  />
                       </label>
                       <br>
-                       <label class="item item-input input_us" >
-                        <span class="input-label span-input-color">To Date</span>
-                        <input style="background:white;height: 36px;" ng-required="true" type="date" placeholder="To date" ng-model="exp.to_date" name="todate"  />
+                       <label class=" item-input  item-floating-label" >
+                        <span class="input-label sp_custom">Reference Name</span>
+                        <input clss="ip_custom pl" ng-required="true" type="text" placeholder="Reference Name" ng-model="exp.reference_name" name="reference"  />
                       </label>
                       <br>
-                       <label class="item item-input input_us" >
-                        <span class="input-label span-input-color">Duty</span>
-                        <input style="background:white;height: 36px;" ng-required="true" type="text" placeholder="Duty" ng-model="exp.duty" name="duty"  />
-                      </label>
-                      <br>
-                       <label class="item item-input input_us" >
-                        <span class="input-label span-input-color">Reference Name</span>
-                        <input style="background:white;height: 36px;" ng-required="true" type="text" placeholder="Reference Name" ng-model="exp.reference_name" name="reference"  />
-                      </label>
-                      <br>
-                       <label class="item item-input input_us" >
-                        <span class="input-label span-input-color">Reference Contact</span>
-                        <input style="background:white;height: 36px;" ng-required="true" type="text" placeholder="Refer" ng-model="exp.reference_contact" name="referencecontact"  />
+                       <label class=" item-input  item-floating-label" >
+                        <span class="input-label sp_custom">Reference Contact</span>
+                        <input clss="ip_custom pl" ng-required="true" type="text" placeholder="Refer" ng-model="exp.reference_contact" name="referencecontact"  />
                       </label>
                     <br>
                   	<button class="btn" ng-click="addNewExp()" style="width: 100%;margin: 0 auto;" ng-show="optionsExp == 'addNew'">Add</button>

@@ -7,18 +7,21 @@
           <h1 class="title" style="color:white">Change Password</h1>
          
         </div>
-        <ion-content class="has-header">
+        <ion-content class="has-header background-content">
            <div class="form-group">
-                 	<label class="item item-input label-custom-field" >
-                    <span class="input-label span-input-color">Old Password</span>
-                    <input ng-required="true" type="password" placeholder="Old Password" ng-model="infoPass.oldpass" name="oldpass"  />
+                 	<label class=" item-input item-floating-label" >
+                    <span class="input-label sp_custom">Old Password</span>
+                    <input type="text"  class="ip_custom pl" ng-required="true" type="password" placeholder="Old Password" 
+                    ng-model="infoPass.oldpass" name="oldpass"  />
                   </label>
-                  <label class="item item-input label-custom-field" >
-                    <span class="input-label span-input-color">New Password</span>
-                    <input ng-required="true" type="password" placeholder="New Password" ng-model="infoPass.newpass" name="newpass"  />
+                  <label class=" item-input item-floating-label" >
+                    <span class="input-label sp_custom">New Password</span>
+                    <input type="text"  class="ip_custom pl" ng-required="true" type="password" placeholder="New Password" 
+                    ng-model="infoPass.newpass" name="newpass"  />
                   </label>
+                  <br>
                   	<button class="btn" ng-click="changepass()" 
-                    style="width: 100%; margin: 0 auto; background-color: #2bbbd6 !important;">Change</button>
+                    style="width: 100%">Change</button>
           </div>
         </ion-content>
   </div>

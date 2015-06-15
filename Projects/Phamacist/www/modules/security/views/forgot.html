@@ -1,14 +1,15 @@
 <ion-view >
    
-    <ion-content class="content-scroll">
+    <ion-content class="content-scroll background-content">
          <div class="form-group">
               
                     <h3 class="logo_login" style="width:225px">Problems signing in?</h3>
                     <p style="">
                         Enter your register email address below to reset your password.
                     </p>
-                      <label class="item item-input label-custom-field" >
-                        <input ng-required="true" type="text" placeholder="Enter User Name" ng-model="forgot.username"/>
+                      <label class="item-input item-floating-label" >
+                       <span class="input-label sp_custom">Enter User Name</span>
+                        <input ng-required="true" type="text" placeholder="Enter User Name" ng-model="forgot.username" class="ip_custom pl" />
                         
                     </label>
                         <button class="btn " ui-sref="security.login" style="float:left">
