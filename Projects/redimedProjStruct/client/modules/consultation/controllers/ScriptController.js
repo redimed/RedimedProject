@@ -1,10 +1,10 @@
 angular.module("app.loggedIn.patient.consult.scriptController",[])
-	.controller("ScriptController",function($scope,$filter,$state,$modal,toastr,$modalInstance,ConsultationService,$stateParams, actual_doctor_id,script){
-		if (actual_doctor_id === undefined) {
-			actual_doctor_id ={
-				NAME :null
-			};
-		};
+	.controller("ScriptController",function($cookieStore,$scope,$filter,$state,$modal,toastr,$modalInstance,ConsultationService,$stateParams, actual_doctor_id,script){
+		// if (actual_doctor_id === undefined) {
+		// 	actual_doctor_id ={
+		// 		NAME :null
+		// 	};
+		// };
 		$scope.scriptInfo = {
 			        medication_name:null,
 			        start_date:null,
@@ -13,7 +13,7 @@ angular.module("app.loggedIn.patient.consult.scriptController",[])
 			        unit:null,
 			        qty:null,
 			        route:null,
-			        doctor_id:actual_doctor_id.NAME,
+			        doctor_id:$cookieStore.get("userInfo").user_name,
 			        frequency:null,
 			        condition_Indication:null
 		};

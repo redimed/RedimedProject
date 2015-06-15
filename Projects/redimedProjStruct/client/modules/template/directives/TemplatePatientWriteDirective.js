@@ -68,7 +68,7 @@ angular.module('app.loggedIn.template.directives.patient_write', [])
 						var new_string_change = "";
 
 						if(split_string_change.length === 1){
-							new_string_change = '<input class="custom-input-template" placeholder="Please fill in"/>';
+							new_string_change = '<input class="custom-input-template" placeholder="Please fill in"></input>';
 						}else{
 							var field = split_string_change[1];
 
