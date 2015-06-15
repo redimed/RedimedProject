@@ -8393,7 +8393,7 @@ ImageTooltip = (function(superClass) {
   ImageTooltip.prototype._onToolbar = function(range, value) {
     if (value) {
       if (!this.textbox.value) {
-        this.textbox.value = 'http://';
+        this.textbox.value = 'https://localhost:3000/img/';
       }
       this.show();
       this.textbox.focus();

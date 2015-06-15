@@ -11,16 +11,14 @@
                 </div>
                 <div style="width: 100%;height: 49px;float: left;position: absolute;">
                     <span style="float: right;padding-right: 2%;padding-top: 30px;font-weight: 600;color: white;">Injury Infomation</span>
-
                 </div>
             </div>
             <form name="info" novalidate style="margin-top: 50px">
-
                 <ion-list>
                     <div class="actionBar">
-                        <button menu-toggle="left" class="button button-icon icon ion-navicon " style="color:#fff;float:left;"></button>
+                        <a menu-toggle="left" style="color: #fff; float: left" class="button button-icon icon ion-navicon-round" ng-click="toogleMenu()"></a>
                     </div>
-                    <div style="z-index: 1; position:relative; width: 100%; top: 20px;">
+                    <div> <!--style="z-index: 1; position:relative; width: 100%; top: 20px;"-->
                         <label class="item-input label-custom-field" >
                             <span class="input-label span-input-color">Title</span>
                             <select ng-required="true" ng-model="worker.Title" name="Title" class="select-custom"
@@ -36,11 +34,12 @@
                             <span class="input-label span-input-color">First Name</span>
                             <input ng-required="true" type="text" ng-model="worker.First_name"
                                    name="First_name" ng-disabled="worker.Patient_id != -1 && temp1.First_name"
-                                   ng-maxlength=30  ng-class="{'has-error':isSubmit && info.First_name.$invalid}"
+                                   ng-maxlength=30
                                    ng-pattern="/^[\w&.-]+$/" class="pl"
                                    placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"
                                    style="color:white"
-                                   ng-change="searchPatient(0 ,worker.First_name)" />
+                                   ng-change="searchPatient(0 ,worker.First_name)"/>
+                            <i ng-class="{'icon-error icon ion-android-alert':isSubmit && info.First_name.$invalid}"></i>
                         </label>
                         <small class="error"
                                ng-show="info.First_name.$error.maxlength">
@@ -53,7 +52,7 @@
                         <div class="bd-bottom"></div>
                         <ion-scroll direction="y" class="item list searchform" ng-hide="!worker.First_name || !isShow || result_row_firstname == ''">
                             <div class="child-ion-scroll-searchform"
-                                  ng-repeat="result in result_row_firstname" ng-click="selectWorker(result.Patient_id)">
+                                 ng-repeat="result in result_row_firstname" ng-click="selectWorker(result.Patient_id)">
                                 <h2>
                                     {{ (result.Title == null ? '' : result.Title + ". ") +
                                     (result.First_name == null ? '' : result.First_name) + " " +
@@ -94,23 +93,23 @@
                         </small>
                         <div class="bd-bottom"></div>
                         <!--<ion-scroll direction="y" class=" item list searchform" ng-hide="!worker.Middle_name || !isShow || result_row == ''" style="background-color: #0169ff;box-shadow: 2px 2px 11px -1px rgba(0,0,0,0.66);border: none;margin-top: 10px;">-->
-                            <!--<div style="border-bottom: 1px solid;padding: 10px;"-->
-                                 <!--ng-repeat="result in result_row" ng-click="selectWorker(result.Patient_id)">-->
-                                <!--<h3 style="text-decoration: underline;color:#f3c90a">-->
-                                    <!--{{ (result.Title == null ? '' : result.Title + " . ") +-->
-                                    <!--(result.First_name == null ? '' : result.First_name) + " " +-->
-                                    <!--(result.Middle_name == null ? '' : result.Middle_name) + " " +-->
-                                    <!--(result.Sur_name == null ? '' : result.Sur_name) }}-->
-                                <!--</h3>-->
-                                <!--<h4 ng-hide="result.DOB == null" style="color:white">-->
-                                    <!--<i class="fa fa-calendar"></i>-->
-                                    <!--{{result.DOB | date:"dd/MM/yyyy"}}-->
-                                <!--</h4>-->
-                                <!--<h4 ng-hide="result.Mobile == null" style="color:white">-->
-                                    <!--<i class="fa fa-phone"></i>-->
-                                    <!--{{result.Mobile}}-->
-                                <!--</h4>-->
-                            <!--</div>-->
+                        <!--<div style="border-bottom: 1px solid;padding: 10px;"-->
+                        <!--ng-repeat="result in result_row" ng-click="selectWorker(result.Patient_id)">-->
+                        <!--<h3 style="text-decoration: underline;color:#f3c90a">-->
+                        <!--{{ (result.Title == null ? '' : result.Title + " . ") +-->
+                        <!--(result.First_name == null ? '' : result.First_name) + " " +-->
+                        <!--(result.Middle_name == null ? '' : result.Middle_name) + " " +-->
+                        <!--(result.Sur_name == null ? '' : result.Sur_name) }}-->
+                        <!--</h3>-->
+                        <!--<h4 ng-hide="result.DOB == null" style="color:white">-->
+                        <!--<i class="fa fa-calendar"></i>-->
+                        <!--{{result.DOB | date:"dd/MM/yyyy"}}-->
+                        <!--</h4>-->
+                        <!--<h4 ng-hide="result.Mobile == null" style="color:white">-->
+                        <!--<i class="fa fa-phone"></i>-->
+                        <!--{{result.Mobile}}-->
+                        <!--</h4>-->
+                        <!--</div>-->
                         <!--</ion-scroll>-->
 
                         <label class="item-input label-custom-field" >
@@ -202,31 +201,23 @@
                         <div class="bd-bottom"></div>
                         <div class="row" style="margin-bottom: 20px;">
                             <div class="col" style="text-align: right">
-                                <a class="button button-icon icon ion-refresh im-button-custom" ng-click="resetFormInjury()"></a>
+                                <a class="button button-icon icon ion-ios-refresh-empty btn-submitinjury" ng-click="resetFormInjury()"></a>
                             </div>
                             <div class="col" style="text-align: center">
-                                <a class="button button-icon icon ion-arrow-right-c im-button-custom" ng-click="nextform(info)"></a>
+                                <a class="button button-icon icon ion-arrow-right-c next-button-submitinjury" ng-click="nextform(info)"></a>
                             </div>
                             <div class="col" style="text-align: left">
-                                <a class="button button-icon icon ion-bluetooth im-button-custom" ng-click="goBluetoothState()"></a>
+                                <a class="button button-icon icon ion-bluetooth btn-submitinjury" ng-click="goBluetoothState()"></a>
                             </div>
+                            <!-- test popover alert -->
+                            <!--<div class="col" style="text-align: left">-->
+                                <!--<a class="button button-icon icon ion-bluetooth btn-submitinjury" ng-click="popover.show($event)"></a>-->
+                            <!--</div>-->
+                            <!-- +++++++++++++++++++ -->
                         </div>
                     </div>
+                </ion-list>
+            </form>
         </div>
-
-        </ion-list>
-
-        </form>
-
-
-
-
-
-        </div>
-
     </ion-content>
-
-
-
-
 </ion-view>

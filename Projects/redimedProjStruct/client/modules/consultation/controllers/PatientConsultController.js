@@ -4,8 +4,13 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 
 		/* VUONG */
 		$scope.addTemplate = function(){
-			$state.go('loggedIn.template');
-			$cookieStore.put('template_patient_id', $stateParams.patient_id);
+			$modal.open({
+				templateUrl: 'listTemplateDialog',
+				controller: function($scope, $modalInstance, $stateParams){
+					$scope.patient_id = $stateParams.patient_id;
+					$scope.cal_id = $stateParams.cal_id;
+				}
+			});
 		}		
 		/* END VUONG */
 		/*chien star*/

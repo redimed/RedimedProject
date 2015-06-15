@@ -30,4 +30,24 @@ angular.module('app.loggedIn.template', [
 		controller: 'TemplateEditController'
 	})
 
+	.state('loggedIn.patient.template', {
+		url: '/template',
+		views: {
+			"main-content": {
+				templateUrl: 'modules/template/views/patient_list.html',
+				controller: 'TemplatePatientListController'
+			}
+		}
+	})
+
+	.state('loggedIn.patient.template_add', {
+		url: '/template/add',
+		views: {
+			"main-content": {
+				templateUrl: 'modules/template/views/patient_add.html',
+				controller: 'TemplatePatientAddController'
+			}
+		}
+	})
+
 })

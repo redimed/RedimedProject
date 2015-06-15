@@ -1,40 +1,18 @@
 angular.module('starter.driver.controller',[])
 
     .controller('DriverController', function ($scope, $state, DriverServices, localStorageService, $timeout, $ionicLoading,
-                                              $cordovaBarcodeScanner, $cordovaInAppBrowser, $window) {
+                                              $cordovaBarcodeScanner, $cordovaInAppBrowser, $window, HOST_CONFIG) {
 
         $scope.he = $window.innerHeight - 50 +'px';
         $scope.geo = {};
         $scope.ll = {};
         $scope.lstPatient = {};
+        $scope.hideButton = false;
 
         if(DriverServices.notifi !== undefined ){
             alert(JSON.stringify(DriverServices.notifi));
             $scope.ll.lat=DriverServices.notifi.payload.lat;
             $scope.ll.lng=DriverServices.notifi.payload.lng;
-        }
-        var colors = ['#FF5E3A','#FF9500','#FFDB4C','#87FC70','#52EDC7','#1AD6FD','#C644FC','#898C90'];
-
-        $scope.tabs = [{
-            title: 'Information',
-            url: 'info.html'
-        }, {
-            title: 'Injury',
-            url: 'iDesc.html'
-        }];
-
-        $scope.currentTab = 'info.html';
-
-        $scope.onClickTab = function (tab) {
-            $scope.currentTab = tab.url;
-        };
-
-        $scope.isActiveTab = function(tabUrl) {
-            return tabUrl == $scope.currentTab;
-        };
-
-        $scope.clearInput = function() {
-
         }
 
         //INIT LIST PATIENT
@@ -42,11 +20,13 @@ angular.module('starter.driver.controller',[])
             DriverServices.getListPatient().then(function (result){
                 if(result.status.toLocaleLowerCase() == "success")
                 {
-
                     $scope.lstPatient = result.data;
                     for(var i = 0 ; i < $scope.lstPatient.length; i++) {
-                        $scope.lstPatient[i].background = colors[Math.floor(Math.random() * colors.length)];
-                        $scope.lstPatient[i].letter = String($scope.lstPatient[i].First_name).substr(0,1).toUpperCase();
+                        if($scope.lstPatient[i].avatar == null) {
+                            $scope.lstPatient[i].avatar = 'img/avatar.png';
+                        } else {
+                            $scope.lstPatient[i].avatar = "https://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port + "/" + $scope.lstPatient[i].avatar;
+                        }
                     }
                 }
             })
@@ -58,8 +38,11 @@ angular.module('starter.driver.controller',[])
                 {
                     $scope.lstPatient = result.data;
                     for(var i = 0 ; i < $scope.lstPatient.length; i++) {
-                        $scope.lstPatient[i].background = colors[Math.floor(Math.random() * colors.length)];
-                        $scope.lstPatient[i].letter = String($scope.lstPatient[i].First_name).substr(0,1).toUpperCase();
+                        if($scope.lstPatient[i].avatar == null) {
+                            $scope.lstPatient[i].avatar = 'img/avatar.png';
+                        } else {
+                            $scope.lstPatient[i].avatar = "https://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port + "/" + $scope.lstPatient[i].avatar;
+                        }
                     }
                 }
             }).finally(function() {
@@ -68,16 +51,15 @@ angular.module('starter.driver.controller',[])
         };
 
         $scope.selectPatient = function (injuryID){
-            $state.go('app.driver.detailInjury',{injuryID:injuryID});
+            $state.go('app.driver.detailInjury', {injuryID:injuryID});
         };
-
-       
 
         init();
 
-        
-         
-                    
+        $scope.removeValinput = function() {
+            $scope.hideButton = !$scope.hideButton;
+            $state.go('app.driver.list', null, {reload: true});
+        }
     })
 
     .directive("pickupMap", function( $state,DriverServices,localStorageService,$ionicLoading){

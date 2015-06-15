@@ -1,48 +1,48 @@
 <ion-view hide-nav-bar="true">
     <div class="content content-scroll-custom">
-        <div class="waiting-screen" ng-show="!isAccept">
-            <div style="border: 1px solid rgba(255, 255, 255, .1); border-radius: 50%; width: 400px; height: 400px;" class="waiting-screen" ></div>
-            <div style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 50%; width: 300px; height: 300px;" class="waiting-screen div2" ></div>
-            <div style="border: 1px solid rgba(255, 255, 255, .5); border-radius: 50%; width: 200px; height: 200px;" class="waiting-screen div1" ></div>
-            <div class="main">
-                <img width="145" height="145" ng-src="{{avatarCaller}}" class="avatar-calling"/>
-            </div>
-        </div>
+        <!--<div class="waiting-screen" ng-show="!isAccept">-->
+            <!--<div style="border: 1px solid rgba(255, 255, 255, .1); border-radius: 50%; width: 400px; height: 400px;" class="waiting-screen" ></div>-->
+            <!--<div style="border: 1px solid rgba(255, 255, 255, .3); border-radius: 50%; width: 300px; height: 300px;" class="waiting-screen div2" ></div>-->
+            <!--<div style="border: 1px solid rgba(255, 255, 255, .5); border-radius: 50%; width: 200px; height: 200px;" class="waiting-screen div1" ></div>-->
+            <!--<div class="main">-->
+                <!--<img width="145" height="145" ng-src="{{avatarCaller}}" class="avatar-calling"/>-->
+            <!--</div>-->
+        <!--</div>-->
 
         <div class="controllers-call reveal-animation" ng-if="controllerbtn">
-            <div style="color: whitesmoke; margin-bottom: 20px;" ng-show="!isAccept">
-                <div style="margin-bottom: 15px;">
-                    <span style="font-size: 15px; font-weight: 300">Calling...</span><br>
-                </div>
-                <div>
-                    <span style="font-size: 30px; text-align: center">{{ contactNameJson.contactName }}</span>
-                </div>
-            </div>
+            <!--<div style="color: whitesmoke; margin-bottom: 20px;" ng-show="!isAccept">-->
+                <!--<div style="margin-bottom: 15px;">-->
+                    <!--<span style="font-size: 15px; font-weight: 300">Calling...</span><br>-->
+                <!--</div>-->
+                <!--<div>-->
+                    <!--<span style="font-size: 30px; text-align: center">{{ contactNameJson.contactName }}</span>-->
+                <!--</div>-->
+            <!--</div>-->
 
             <!--controller button calling to...-->
-            <div style="width: 100%; text-align: center;" ng-if="isCaller">
-                <a class="button custom-bottom-control button-icon"
-                   ng-class="{'icon ion-eye-disabled': !camera, 'icon ion-eye': camera}" ng-click="videoToggle()">
-                </a>
-                <a class="button custom-bottom-control button-icon"
-                   ng-class="{'icon ion-ios7-mic-off': !mic, 'icon ion-ios7-mic': mic}" ng-click="micToggle()">
-                </a>
-                <a class="button custom-bottom-control button-icon icon ion-ios7-monitor" ng-click="viewImage()">
-                    <span style="background-color: #E74C3C; width: 10px; height: 10px;"></span>
-                </a>
-                <a class="button button-cancel_main button-icon icon ion-power" ng-click="cancelCall(offMedia = true)">
-                </a>
-            </div>
+            <!--<div style="width: 100%; text-align: center;" ng-if="isCaller">-->
+                <!--<a class="button custom-bottom-control button-icon"-->
+                   <!--ng-class="{'icon ion-eye-disabled': !camera, 'icon ion-eye': camera}" ng-click="videoToggle()">-->
+                <!--</a>-->
+                <!--<a class="button custom-bottom-control button-icon"-->
+                   <!--ng-class="{'icon ion-ios7-mic-off': !mic, 'icon ion-ios7-mic': mic}" ng-click="micToggle()">-->
+                <!--</a>-->
+                <!--<a class="button custom-bottom-control button-icon icon ion-ios7-monitor" ng-click="viewImage()">-->
+                    <!--<span style="background-color: #E74C3C; width: 10px; height: 10px;"></span>-->
+                <!--</a>-->
+                <!--<a class="button button-cancel_main button-icon icon ion-power" ng-click="cancelCall(offMedia = true)">-->
+                <!--</a>-->
+            <!--</div>-->
 
             <!--controller button receive call-->
             <div class="div_controlButton" ng-if="!isCaller">
                 <a class="button buttonCall-control button-icon icon ion-ios-videocam"
                    ng-class="{'active-buttonCall-control': !camera}" ng-click="videoToggle()">
                 </a>
-                <a class="button buttonCall-control button-icon icon ion-ios7-mic"
+                <a class="button buttonCall-control button-icon icon ion-mic-a"
                    ng-class="{'active-buttonCall-control': !mic}" ng-click="micToggle()">
                 </a>
-                <a class="button buttonCall-control button-icon icon ion-ios7-monitor"
+                <a class="button buttonCall-control button-icon icon ion-ios-monitor"
                    ng-class="{'active-buttonCall-control': isImage}" ng-click="imageShareToggle()">
                     <span class="image-count" ng-if="imgCount !== null">
                         <span>{{imgCount}}</span>
@@ -52,7 +52,7 @@
                    ng-class="{'active-buttonCall-control': blueTooth}" ng-click="medicalDeviceToggle()">
                 </a>
                 <a class="button buttonCall-control button-icon icon ion-power"
-                   style="color: #E74C3C;" ng-click="cancelCall(offMedia = true)">
+                   style="color: #E74C3C;" ng-click="cancelCall()">
                 </a>
             </div>
         </div>
@@ -91,6 +91,7 @@
                     </div>
                 </div>
             </div>
+
             <!--blueTooth calling-->
             <div class="wrap-ble" ng-show="blueTooth" ng-controller="mainBlueController" ng-click="actionControlButton()">
                 <ion-content>

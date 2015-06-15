@@ -65,13 +65,13 @@ angular.module('starter.security.login.controller',[])
             document.addEventListener("deviceready", function() {
                 cordova.plugins.Keyboard.close();
             });
-            $scope.popupMessage = {message: "Can't login. Because account is using!"};
+            $scope.popupMessage = {message: "Can't login, because account is using, push out!"};
             $ionicPopup.show({
                 templateUrl: 'modules/popup/PopUpConfirm.html',
                 scope: $scope,
                 buttons: [
                     {
-                        text: '<span>Yes, push out!</span>',
+                        text: "Ok",
                         onTap: function(e) {
                             signaling.emit('forceLogin', $scope.modelUser.username);
                         }
@@ -91,7 +91,7 @@ angular.module('starter.security.login.controller',[])
 
         // SUBMIT LOGIN
         $scope.loginApp = function() {
-            $scope.messageLoading = {message: "Waiting..."};
+            $scope.messageLoading = {message: "Signing..."};
             $ionicLoading.show({
                 templateUrl: "modules/loadingTemplate.html",
                 animation: 'fade-in',
@@ -125,7 +125,6 @@ angular.module('starter.security.login.controller',[])
                         });
                     }
                 });
-
             });
         }
 
@@ -139,14 +138,6 @@ angular.module('starter.security.login.controller',[])
         }
 
         function sigInApp() {
-            $scope.messageLoading = {message: "Signing..."};
-            $ionicLoading.show({
-                templateUrl: "modules/loadingTemplate.html",
-                animation: 'fade-in',
-                scope: $scope,
-                maxWidth: 500,
-                showDelay: 0
-            });
             SecurityService.login($scope.modelUser).then(function(response) {
                 signaling.emit('updateSocketLogin', response.userInfo.user_name);
                 signaling.on('login_success',function(){
@@ -156,32 +147,6 @@ angular.module('starter.security.login.controller',[])
 
                         if(typeof response.companyInfo !== 'undefined')
                             localStorageService.set("companyInfo", response.companyInfo);
-
-                        //check function_mobile then go
-
-                        //if(response.userInfo['function_mobile'] != null){
-                        //    UserService.getFunction(response.userInfo['function_mobile']).then(function(data) {
-                        //        console.log(data);
-                        //        console.log(data.definition);
-                        //        var rs = data.definition.split('(');
-                        //        console.log(rs[0] + "------" +  rs[1]);
-                        //        if(rs[0] != null)
-                        //        {
-                        //            if(rs[1] != null)
-                        //            {
-                        //                var r = rs[1].split(')');
-                        //                var params = eval("("+r[0]+")");
-                        //                $state.go(rs[0],params,{reload:true});
-                        //                $ionicLoading.hide();
-                        //            }
-                        //            else
-                        //            {
-                        //                $state.go(rs[0],{reload:true});
-                        //                $ionicLoading.hide();
-                        //            }
-                        //        }
-                        //    })
-                        //}
 
                         switch (response.userInfo.UserType.user_type) {
                             case "Driver":
@@ -196,10 +161,9 @@ angular.module('starter.security.login.controller',[])
                         }
                         $timeout(function(){
                             $ionicLoading.hide();
-                        }, 2.5 * 1000);
+                        }, 1.5 * 1000);
                     });
                 })
-
             }, function(error) {
                 $ionicLoading.hide();
                 console.log(error);
@@ -211,17 +175,6 @@ angular.module('starter.security.login.controller',[])
                         { text: "Ok" },
                     ]
                 });
-            });
-        }
-
-        $scope.demoShowpopup = function() {
-            $scope.popupMessage = { message: "Please select patient, before using Bluetooth." };
-            $ionicPopup.show({
-                templateUrl: "modules/popup/PopUpError.html",
-                scope: $scope,
-                buttons: [
-                    { text: "Ok" }
-                ]
             });
         }
     });

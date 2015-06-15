@@ -1,0 +1,41 @@
+<a class="un-button un-bgBlack" ng-click="goToAdd()">
+     Add New Template
+</a>
+<br/><br/>
+<table class="mdt-table">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="l in template.list">
+			<td>{{l.name}}</td>
+			<td>
+				<button class="btn btn-success btn-sm" ng-click="goToWrite(l)">Write</button>
+				<button class="btn btn-success btn-sm" ng-click="goToEdit(l)">Edit</button>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<script type="text/ng-template" id="addTemplateDialog">
+    <div class="modal-body">
+        <template-patient-add patient-id="patient_id" cal-id="cal_id" success="success"></template-patient-add>
+    </div>
+</script>
+
+<script type="text/ng-template" id="editTemplateDialog">
+    <div class="modal-body">
+        <template-patient-edit id="template_id" patient-id="patient_id" cal-id="cal_id" success="success">
+        </template-patient-edit>
+    </div>
+</script>
+
+<script type="text/ng-template" id="writeTemplateDialog">
+	<div class="modal-body">	
+		<template-patient-write id="template_id" patient-id="patient_id" cal-id="cal_id" success="success">
+		</template-patient-write>
+	</div>
+</script>

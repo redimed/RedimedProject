@@ -59,7 +59,7 @@ angular.module('starter.booking.rlobChooseAppointmentCalendar.controller',[
         $scope.updateAppoinmentsList=function()
         {
             var specialityId=$scope.selectedFilter.clnSpecialitySelected && $scope.selectedFilter.clnSpecialitySelected.Specialties_id?$scope.selectedFilter.clnSpecialitySelected.Specialties_id:'%';
-            var doctorId=$scope.selectedFilter.doctorSelected  && $scope.selectedFilter.doctorSelected.DOCTOR_ID?$scope.selectedFilter.doctorSelected.DOCTOR_ID:'%';
+            var doctorId=$scope.selectedFilter.doctorSelected  && $scope.selectedFilter.doctorSelected.doctor_id?$scope.selectedFilter.doctorSelected.doctor_id:'%';
 
             var locationId=$scope.selectedFilter.locationSelected  && $scope.selectedFilter.locationSelected.id?$scope.selectedFilter.locationSelected.id:'%';
             var fromTime=$filter('date')($scope.selectedFilter.date, "yyyy-MM-dd");

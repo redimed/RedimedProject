@@ -21,58 +21,59 @@
 
                 <form novalidate name="registerForm" style="margin-top: 50px">
                     <label class="item-input label-custom-field">
-                        <span class="input-label span-input-color">Suburb</span>
-                        <input type="text" ng-model="userInfo.Suburb" name="Suburb" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
+                        <span class="span-input-color">Suburb</span>
+                        <input type="text" ng-model="patientInfo.Suburb" name="Suburb" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
                     </label>
                     <div class="bd-bottom"></div>
                     <label class="item-input label-custom-field">
-                        <span class="input-label span-input-color">State</span>
-                        <input type="text" ng-model="userInfo.State" name="State" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
+                        <span class="span-input-color">State</span>
+                        <input type="text" ng-model="patientInfo.State" name="State" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
                     </label>
                     <div class="bd-bottom"></div>
                     <label class="item-input label-custom-field">
-                        <span class="input-label span-input-color">Country</span>
-                        <input type="text" ng-model="userInfo.Country" name="Country" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
+                        <span class="span-input-color">Country</span>
+                        <input type="text" ng-model="patientInfo.Country" name="Country" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
                     </label>
                     <div class="bd-bottom"></div>
                     <label class="item-input label-custom-field">
-                        <span class="input-label span-input-color">Post Code</span>
-                        <input type="number" ng-model="userInfo.Post_code" name="Post_code" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
+                        <span class="span-input-color">Post Code</span>
+                        <input type="number" ng-model="patientInfo.Post_code" name="Post_code" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
                     </label>
                     <div class="bd-bottom"></div>
                     <label class="item-input  label-custom-field">
-                        <span class="input-label span-input-color">Account Type</span>
-                        <select ng-model="userInfo.Account_type" class="select-custom" name="type"
+                        <span class="span-input-color">Account Type</span>
+                        <select ng-model="patientInfo.Account_type" class="select-custom" name="type"
                                 ng-options="row.Account_id as row.Account_name for row in accTypeIndex">
                             <option value="">--Select Type--</option>
                         </select>
                     </label>
                     <div class="bd-bottom"></div>
                     <label class="item-input label-custom-field">
-                        <span class="input-label span-input-color">Account Holder</span>
-                        <input type="text" ng-model="userInfo.Account_holder" name="userInfo.Account_holder" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
+                        <span class="span-input-color">Account Holder</span>
+                        <input type="text" ng-model="patientInfo.Account_holder" name="patientInfo.Account_holder" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
                     </label>
                     <div class="bd-bottom"></div>
                     <label class="item-input label-custom-field" ng-class="{'has-error':isSubmit2 && second.Medicare_no.$invalid}">
-                        <span class="input-label span-input-color">Medicare No</span>
-                        <input ng-required="true" type="tel" ng-model="userInfo.Medicare_no" name="Medicare_no" ng-class="{'has-error':isSubmit2 && second.Medicare_no.$invalid}" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
+                        <span class="span-input-color">Medicare No</span>
+                        <input ng-required="true" type="tel" ng-model="patientInfo.Medicare_no" name="Medicare_no" ng-class="{'has-error':isSubmit2 && second.Medicare_no.$invalid}" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
                     </label>
                     <div class="bd-bottom"></div>
                     <label class="item-input label-custom-field">
-                        <span class="input-label span-input-color">Expire Medicare</span>
+                        <span class="span-input-color">Expire Medicare</span>
                         <input type="text" onfocus="this.type='date';
                     this.setAttribute('onfocus','');this.blur();
-                    this.focus();" ng-model="userInfo.Exp_medicare" name="Exp_medicare" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
+                    this.focus();" ng-model="patientInfo.Exp_medicare" name="Exp_medicare" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
                     </label>
                     <div class="bd-bottom"></div>
                     <label class="item-input label-custom-field">
-                        <span class="input-label span-input-color">MemberShip No</span>
-                        <input type="tel" ng-model="userInfo.MemberShip_no" name="MemberShip_no" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
+                        <span class="span-input-color">MemberShip No</span>
+                        <input type="tel" ng-model="patientInfo.MemberShip_no" name="MemberShip_no" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
                     </label>
                     <div class="bd-bottom"></div>
                     <label class="item-input label-custom-field">
-                        <span class="input-label span-input-color">DVA No</span>
-                        <input ng-model="userInfo.DVA_No" type="number" name="DVA_No" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
+                        <span class="span-input-color">DVA No</span>
+                        <input ng-model="patientInfo.DVA_No" type="tel" name="DVA_No" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"
+                               style="color:white" maxlength="10">
                     </label>
                 </form>
             </div>
