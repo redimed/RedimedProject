@@ -368,8 +368,11 @@
                                  <td style="vertical-align: middle">
                                     {{m.qty}}
                                 </td>
-                                 <td style="vertical-align: middle">
-                                    {{m.doctor_id}}
+                                 <td style="vertical-align: middle" ng-if="!m.Provider_no">
+                                    {{m.user_name}}
+                                </td>
+                                <td style="vertical-align: middle" ng-if="m.Provider_no">
+                                    {{m.user_name}} , {{m.Provider_no}}
                                 </td>
                                 <td style="vertical-align: middle">
                                     {{m.condition_Indication}}

@@ -47,10 +47,10 @@ var ptnConst={
 		Topical:{value:'Topical',display:'Topical'}
 	},
 	frequency:{
-		OD:{value:'OD',display:'OD'},
-		BD:{value:'BD',display:'BD'},
-		TDS:{value:'TDS',display:'TDS'},
-		QID:{value:'QID',display:'QID'}
+		OD:{value:'1',display:'OD'},
+		BD:{value:'2',display:'BD'},
+		TDS:{value:'3',display:'TDS'},
+		QID:{value:'4',display:'QID'}
 	}
 }
 
