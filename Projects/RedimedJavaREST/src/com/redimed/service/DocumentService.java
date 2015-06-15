@@ -90,7 +90,9 @@ public class DocumentService {
        				 	f.mkdirs();
 
 	       				long start = System.currentTimeMillis();
-	       		        String outputFile = workingDir+"\\tempPDF\\"+name+".pdf";
+
+	       				String outputFile = workingDir+"\\tempPDF\\"+name+".pdf";
+	       		         
 	       		        OutputStream os = new FileOutputStream(outputFile);
 	
 	       		        ITextRenderer renderer = new ITextRenderer();
