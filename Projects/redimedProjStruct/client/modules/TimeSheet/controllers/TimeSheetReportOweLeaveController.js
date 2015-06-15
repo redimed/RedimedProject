@@ -13,6 +13,7 @@ angular.module("app.loggedIn.TimeSheet.ReportOweLeave.Controller", [])
         $scope.listEmployeeChoose = [];
         $scope.listDept = [];
         $scope.listEmp = [];
+        $scope.isHavedata = 0;
         //SERVICE LOAD DEPT
 
         $scope.ListNew = function(listNew) {
@@ -57,6 +58,7 @@ angular.module("app.loggedIn.TimeSheet.ReportOweLeave.Controller", [])
             if ($scope.dateWeekFrom !== undefined && $scope.dateWeekFrom !== null && $scope.dateWeekFrom !== "" &&
                 $scope.dateWeekTo !== undefined && $scope.dateWeekTo !== null && $scope.dateWeekTo !== "" &&
                 $scope.listEmployeeChoose.length !== 0) {
+                $scope.isHavedata = 1;
                 var info = {};
                 var weekNoFrom = $scope.dateWeekFrom;
                 var weekNoTo = $scope.dateWeekTo;
@@ -78,7 +80,12 @@ angular.module("app.loggedIn.TimeSheet.ReportOweLeave.Controller", [])
                             "reload": true
                         });
                         toastr.error("Loading reports fail!", 'Error');
-                    } else {
+                    }
+                    else if(response.status === "null") {
+                        $scope.isHavedata = 0;
+                        toastr.error("No Data!!!!",'Error');
+                    } 
+                    else {
                         //catch exception
                         $state.go("loggedIn.home", null, {
                             "reload": true

@@ -1,20 +1,27 @@
 angular.module("app.loggedIn.patient.consult.scriptController",[])
-	.controller("ScriptController",function($scope,$filter,$state,$modal,toastr,$modalInstance,ConsultationService,$stateParams, script){
-		$scope.scriptInfo = {
-			medication: null,
-			strength: null,
-			form: null,
-			qty: 0,
-			code: null,
-			script: null,
-			dose: null,
-			frequency: null,
-			instructions: null,
-			repeat: null,
-			reason: null,
-			category: null
+	.controller("ScriptController",function($scope,$filter,$state,$modal,toastr,$modalInstance,ConsultationService,$stateParams, actual_doctor_id,script){
+		if (actual_doctor_id === undefined) {
+			actual_doctor_id ={
+				NAME :null
+			};
 		};
-
+		$scope.scriptInfo = {
+			        medication_name:null,
+			        start_date:null,
+			        dose:null,
+			        end_date:null,
+			        unit:null,
+			        qty:null,
+			        route:null,
+			        doctor_id:actual_doctor_id.NAME,
+			        frequency:null,
+			        condition_Indication:null
+		};
+		//phan quoc chien set list 
+		$scope.listUnit = ptnConst.unit;
+		$scope.listRoute = ptnConst.route;
+		$scope.listFrequency = ptnConst.frequency;
+		//chien end
 		$scope.medications = [];
 		$scope.selectedMedication = null;
 		$scope.checkMedication = true;
@@ -38,7 +45,21 @@ angular.module("app.loggedIn.patient.consult.scriptController",[])
 		}
 
 		$scope.okClick = function(){
-			$modalInstance.close({'type':'ok','value':$scope.scriptInfo});
+			// var start = new Date($scope.scriptInfo.start_date); 
+			// var end = new Date($scope.scriptInfo.end_date);
+			// if(moment(to_date).diff(moment(from_date),'days')<0){
+			// 	$scope.isSubmit = true;
+			// 	if (!$scope.medicationForm.$invalid) {
+			// 		$modalInstance.close({'type':'ok','value':$scope.scriptInfo});
+			// 	};
+			// }
+			// else{
+			// 	toastr.error('Start date must be before end date');
+			// }
+			$scope.isSubmit = true;
+				if (!$scope.medicationForm.$invalid) {
+					$modalInstance.close({'type':'ok','value':$scope.scriptInfo});
+				};
 		}
 
 		$scope.$watch('selectedMedication',function(val){

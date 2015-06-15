@@ -1,6 +1,7 @@
 var db = require('../models');
 var mdt_functions = require('../mdt-functions.js');
 var ApptItemsModel = require('../v1_models/Cln_appt_items.js');
+var kiss=require('./kissUtilsController');
 
 module.exports = {
     postDeptItems: function(req,res){
@@ -26,10 +27,14 @@ module.exports = {
         })
 	},
     
+    /**
+     * created by: unknown
+     * tannv.dts@gmail.com mark
+     */
     postInsertDeptItems: function(req,res){
         var insert_arr = req.body.list;
         var sql = ApptItemsModel.sql_insert_cln_appt_items(insert_arr);
-        
+        kiss.exlog(sql);
         db.sequelize.query(sql)
         .success(function(result){
             res.json({status:'success',data:result});

@@ -1,0 +1,28 @@
+<ion-view title="Shop Company" >
+      <div class="bar bar-subheader customHeaderBar">
+      <button class="button button-icon icon fa fa-newspaper-o" style="color:#fff;padding-top: 12px;" ng-click="openModalPost('Add New Post','addNew')" ></button>
+        <h2 class="title customHeaderBar"  style="margin-left: 14%;font-size: 20px;top: 11px;">Shop</h2>
+        <!-- <button class="button button-icon icon fa fa-plus " style="color:#fff" ng-click="openModalShop('Add New Shop','addNew')">
+        </button> -->
+
+        <button class="button button-icon icon fa fa-plus " style="color:#fff" ng-click="addNewShop()">
+        </button>
+      </div>
+
+  <ion-content style="background: #2bbbd6">
+  <div class="list card" ng-repeat="shop in Shops">
+    <div class="item item-avatar">
+      <img ng-src="img/app-icons/android/mipmap-hdpi/logo.png" ng-click="getPostForShop(shop.shop_id)">
+      <h2>{{shop.shop_name}}</h2>
+      <p>Address: {{shop.address}}</p>
+      <p>Phone: {{shop.phone}}</p>
+      <p> 
+        <i class="icon fa fa-trash-o fa-2x" ng-click="deletePostShop(shop.shop_id)"></i>
+        <i class="icon fa fa-pencil fa-2x" ng-click="editShop(shop)"></i>
+      </p>
+    </div>
+    <div class="item item-image"></div>
+    <a class="assertive"></a>
+  </div>
+  </ion-content>
+</ion-view>

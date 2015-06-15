@@ -1,0 +1,116 @@
+<style type="text/css">
+    .setColorDatePicker{
+        background-color: #5bbd72 !important;
+        color: #fff !important;
+        text-shadow: none !important;
+        background-image: none !important;
+        border: 1px solid rgb(241, 243, 250) !important;
+    }
+    .setColorDatePicker:hover{
+        background-color: rgba(102, 193, 123, 0.5) !important;
+        color: #fff !important;
+        text-shadow: none !important;
+    }
+    .ablue{
+        background-color: #00b5ad;
+        color: #fff;
+        text-shadow: none;
+        background-image: none;
+    }
+    .ablue:hover{
+        background-color: rgba(0, 196, 188, 0.5);
+        color: #fff;
+        text-shadow: none;
+    }
+</style>
+<div class="row pt_header_box_shadow">
+    <img class="pt_header_img_logo" src="./theme/un/LOGO_30.png">
+    <img class="pt_header_img" src="./theme/un/2_06.png">
+</div>
+<div class="pt_contein">
+    <div class="actions">
+        <div class="row pt_boder_bottom">
+            <div class="col-md-4 col-sm-4">
+                <div class="form-group">
+                  <label class="col-md-3 control-label">Date</label>
+                  <div class="col-md-9">
+                    <input ng-model="selectedFilter.var1" id="daydatepicker" name="daydatepicker" class="form-control pt_width_100" type="text" required>
+                  </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-4">
+                <div class="form-group">
+                  <label class="col-md-3 control-label">Location</label>
+                  <div class="col-md-9">
+                    <select class="form-control pt_width_100" ng-model="selectedFilter.locationSelected" ng-options="location.Site_name for location in locationsFilter" ng-change="updateAppoinmentsList()">
+                        <option  value="">All</option>
+                    </select>
+                  </div>
+                </div>
+            </div>
+            <div class="col-md-4  col-sm-4">
+                <div class="form-group">
+                  <label class="col-md-3 control-label">Doctor</label>
+                  <div class="col-md-9">
+                    <select class="form-control pt_width_100"  ng-model="selectedFilter.doctorSelected" ng-options="doctor.NAME for doctor in doctorsFilter" ng-change="updateAppoinmentsList();">
+                        <option  value="">All</option>
+                    </select>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+    <div style="margin-top: 40px;">
+        <div class="row">
+          <img style="padding-bottom: 10px;padding-right: 10px;" class="pull-right" src="../theme/un/paient-dESIGN_07.png" ng-click="submitCalendar()">
+        </div>
+        <div ng-if="appointmentsFilter.length<=0" style="text-align: center">
+            <h4>No Results</h4>
+        </div>
+        <div ng-repeat="doctor in appointmentsFilter" class="row pt_boder_calendar">
+              <div class="col-md-12">
+                 <span><i class="fa fa-user-md"></i> &nbsp{{doctor.DOCTOR_NAME}}</span>
+              </div>
+              <div class="col-md-12" ng-repeat="location in doctor.LOCATION_ITEMS">
+                  <div class="row">
+                      <div class="col-md-12">
+                         <span><i class="fa fa-map-marker"></i> &nbsp{{location.SITE_NAME}}</span>
+                      </div>
+                      <div class="col-md-12">
+                          <i class="fa fa-calendar"></i>
+                          <div ng-repeat="appointment in location.APPOINTMENT_ITEMS" class="btn-group">
+                              <a ng-show="CAL_ID != appointment.CAL_ID" class="btn btn-sm ablue filter-submit margin-bottom"
+                                 style="margin-bottom: 10px; width: 55px" ng-click="selectAppointmentCalendar(appointment)">
+                                  {{ appointment.APPOINTMENT_TIME }}
+                              </a>
+                              <a ng-show="CAL_ID == appointment.CAL_ID" class="btn btn-sm ablue filter-submit margin-bottom"
+                                 style="margin-bottom: 10px; width: 55px; background-color: rgb(6, 126, 121);" ng-click="selectAppointmentCalendar(appointment)">
+                                  {{ appointment.APPOINTMENT_TIME }}
+                              </a>
+                          </div>
+                       </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="notifyid">
+    <div class="modal-body">
+        <div class="row pt_padding_20_test_center">
+          <img class="pt_img_padding_left_15" src="../theme/un/Untitled-2_07.png"/>Booking Successfully !!!
+          <br/>
+          <br/>
+          <P class="pt_boder_dotted un-padding-10">
+            <label><i class="fa fa-user-md"></i></label>&nbsp{{selectCalendar.DOCTOR_NAME}}<br/>
+            <label><i class="fa fa-map-marker"></i></label>&nbsp{{selectCalendar.SITE_NAME}}<br/>
+            <label><i class="fa fa-calendar"></i></label>&nbsp{{selectCalendar.APPOINTMENT_TIME}}&nbsp-&nbsp{{selectCalendar.FROM_TIME | date:"MM/dd/yyyy"}}
+          </p>
+        </div>
+        <div class="row pt_display_table_margin_auto">
+          <img src="../theme/un/Untitled-2_21.png" ui-sref="security.portalPatient"/>
+        </div>
+    </div>
+ </script>

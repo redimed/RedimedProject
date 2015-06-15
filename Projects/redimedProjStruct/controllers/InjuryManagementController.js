@@ -27,34 +27,15 @@ var transport = nodemailer.createTransport(smtpTransport({
 module.exports = {
       register: function(req,res){
         var info = req.body.user;
-        var hashPass = bcrypt.hashSync(info.password);
-
-        var fullNameArr = [];
-        fullNameArr.push(info.firstName,info.surName,info.middleName);
+        var patient = req.body.patient;
+        
+        info.password = bcrypt.hashSync(info.password);
 
         db.UserType.find({where:{user_type:'Patient'}},{raw:true})
           .success(function(type){
-               db.User.create({
-                  Booking_Person: fullNameArr.join(' '),
-                  Contact_email: info.email,
-                  user_name: info.user_name,
-                  password: hashPass,
-                  Contact_number: info.phone,
-                  isEnable: 1,
-                  user_type: type.ID
-              },{raw:true})
+               db.User.create(info)
                   .success(function(){
-                      db.Patient.create({
-                        Title: info.title,
-                        First_name: info.firstName,
-                        Sur_name: info.surName,
-                        Middle_name: info.middleName,
-                        DOB: info.dob,
-                        Sex: info.sex,
-                        Mobile: info.phone,
-                        Email: info.email,
-                        Isenable: 1
-                      })
+                      db.Patient.create(patient)
                       .success(function(){
                         res.json({status:'success'});
                       })

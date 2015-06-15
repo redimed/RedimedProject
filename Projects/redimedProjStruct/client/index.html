@@ -14,6 +14,13 @@
     <script type="text/javascript" src="vendor/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="vendor/jquery-ui/ui/jquery-ui.js"></script>
     <script src="theme/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+
+    <!-- QUILL -->
+    <link rel="stylesheet" type="text/css" href="lib/quill/quill.base.css">
+    <link rel="stylesheet" type="text/css" href="lib/quill/quill.snow.css">
+    <script type="text/javascript" src="lib/quill/quill.js"></script>
+    <!-- END QUILL -->
+
     <script src="vendor/angular/angular.js"></script>
     <script src="vendor/angular-bindonce/bindonce.js"></script>
     <script src="theme/assets/global/plugins/moment.min.js" type="text/javascript"></script>
@@ -51,9 +58,6 @@
     <!-- BOOTSTRAP JS -->
     <script src="theme/assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"></script>
     <!-- END BOOTSTRAP JS -->
-    <!-- JS PDF -->
-    <script type="text/javascript" src="lib/jsPDF/dist/jspdf.debug.js"></script>
-    <!-- END JS PDF -->
     <!-- SANITIZE -->
     <script type="text/javascript" src="lib/angular-sanitize.min.js"></script>
     <!-- END SANITIZE -->
@@ -366,12 +370,15 @@
 TANNV.DTS@GMAIL.COM
 RLOB PAPERLESS STRUCTURE -->
     <script src="modules/kissModule/js/kiss.js"></script>
+    <script src="modules/kissModule/directives/kissTimerDirective.js"></script>
+
     <script src="modules/rediLegalOnlineBooking/controllers/rlob_paperlessController.js"></script>
     <script src="modules/rediLegalOnlineBooking/controllers/paperless/rlob_paperless_ams6Controller.js"></script>
     <script src="modules/rediLegalOnlineBooking/controllers/paperless/rlob_paperless_ams5Controller.js"></script>
     <script src="modules/rediLegalOnlineBooking/controllers/rlob_rltypeController.js"></script>
     <script src="modules/rediLegalOnlineBooking/controllers/rlob_specialtiesController.js"></script>
     <script src="modules/rediLegalOnlineBooking/controllers/mobile/rlobSponsor1Controller.js"></script>
+    <script src="modules/rediLegalOnlineBooking/controllers/mobile/rlobCalendarMobileMasterController.js"></script>
     <script src="modules/rediLegalOnlineBooking/controllers/mobile/rlobEmergencyController.js"></script>
     <script src="modules/rediLegalOnlineBooking/controllers/mobile/rlobNonEmergencyController.js"></script>
     <!-- TANNV.DTS@GMAIL.COM RLOB REGISTER -->
@@ -853,6 +860,7 @@ RLOB PAPERLESS STRUCTURE -->
     <script type="text/javascript" src="modules/consultation/controllers/PatientConsultItemsheetController.js"></script>
     <script type="text/javascript" src="modules/consultation/controllers/ScriptController.js"></script>
     <script type="text/javascript" src="modules/consultation/controllers/MeasurementController.js"></script>
+    <script type="text/javascript" src="modules/consultation/controllers/ConsultHistoryController.js"></script>
     <script type="text/javascript" src="modules/consultation/controllers/PatientConsultController.js"></script>
 
     <script type="text/javascript" src="modules/consultation/consultation.js"></script>
@@ -912,6 +920,18 @@ RLOB PAPERLESS STRUCTURE -->
     <script type="text/javascript" src="modules/template/models/TemplateModel.js"></script>
     <script type="text/javascript" src="modules/template/controllers/TemplateListController.js"></script>
     <script type="text/javascript" src="modules/template/directives/TemplateListDirective.js"></script>
+    <script type="text/javascript" src="modules/template/controllers/TemplatePatientListController.js"></script>
+    <script type="text/javascript" src="modules/template/directives/TemplatePatientListDirective.js"></script>
+    <script type="text/javascript" src="modules/template/controllers/TemplatePatientAddController.js"></script>
+    <script type="text/javascript" src="modules/template/directives/TemplatePatientAddDirective.js"></script>
+    <script type="text/javascript" src="modules/template/directives/TemplatePatientWriteDirective.js"></script>
+    <script type="text/javascript" src="modules/template/directives/TemplatePatientEditDirective.js"></script>
+    <script type="text/javascript" src="modules/template/controllers/TemplateAddController.js"></script>
+    <script type="text/javascript" src="modules/template/directives/TemplateAddDirective.js"></script>
+    <script type="text/javascript" src="modules/template/controllers/TemplateWriteController.js"></script>
+    <script type="text/javascript" src="modules/template/directives/TemplateWriteDirective.js"></script>
+    <script type="text/javascript" src="modules/template/controllers/TemplateEditController.js"></script>
+    <script type="text/javascript" src="modules/template/directives/TemplateEditDirective.js"></script>
     <!-- END MODULE TEMPLATE -->
     <!-- ------------------------------------------------------ VUONG TEAM --------------------------------------------- -->
     <!-- MODULE COMPANIES -->

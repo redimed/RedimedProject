@@ -1,27 +1,33 @@
-<div class="panel panel-default">
-	<div class="panel-body">
-		<form enctype="multipart/form-data">
-			<div class="form-group">
-				<label for="fileinput">Import File: </label>
-				<input type="file" file-model="template.inputfile"/>
-				{{template.inputfile}}
-			</div>
-		</form>
-	</div>
-</div>
+<a class="un-button un-bgBlack" ng-click="goToAdd()">
+     Add
+</a>
+<br/><br/>
 <table class="mdt-table">
 	<thead>
 		<tr>
 			<th>Name</th>
-			<th>Description</th>
 			<th>Action</th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="l in alert.list">
+		<tr ng-repeat="l in template.list">
 			<td>{{l.name}}</td>
-			<td>{{l.description}}</td>
-			<td></td>
+			<td>
+				<button class="btn btn-success btn-sm" ng-click="goToEdit(l)">Edit</button>
+				<button class="btn btn-success btn-sm" ng-click="removeList(l)">Delete</button>
+			</td>
 		</tr>
 	</tbody>
 </table>
+
+<script type="text/ng-template" id="removeTemplate">
+	<div class="modal-body">
+	    <p>
+	    	Do you want to really remove this template ???
+	    </p>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-primary btn-xs" ng-click="clickYes()">Yes</button>
+	    <button class="btn btn-warning btn-xs" ng-click="clickNo()">No</button>
+	</div>
+</script>

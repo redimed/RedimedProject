@@ -15,6 +15,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
+import org.codehaus.jettison.json.JSONObject;
+import org.xhtmlrenderer.pdf.ITextRenderer;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,9 +37,15 @@ import com.google.gson.JsonObject;
 import com.mysql.jdbc.Driver;
 
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.FileInputStream;
+import java.io.OutputStream;
 
 import util.Database;
 
@@ -54,6 +63,66 @@ public class DocumentService {
 						{
         try {
         	HashMap params = new HashMap();
+        	
+        	//Template Document
+        	if(report.equalsIgnoreCase("template")){
+        		Connection connection = Database.getConnection();
+        		PreparedStatement ps = null;
+        		ResultSet rs = null;
+        		try
+        		{
+        			ps = connection.prepareStatement("SELECT * FROM template WHERE id = ?");
+        			ps.setInt(1, id);
+        			rs = ps.executeQuery();
+        			if(rs.next())
+        			{
+        				String name = rs.getString("name");
+       				 	String content = rs.getString("content");
+   				 		content = content.replaceAll("<br>", "</br>");
+
+       				 	StringBuffer sf = new StringBuffer();
+       				 	sf.append("<html>");
+       				 	sf.append(content);
+       				 	sf.append("</html>");
+       				 	
+       				 	String workingDir = System.getProperty("user.dir");
+       				 	File f = new File(workingDir+"\\tempPDF");
+       				 	f.mkdirs();
+
+	       				long start = System.currentTimeMillis();
+	       		        String outputFile = workingDir+"\\tempPDF\\"+name+".pdf";
+	       		        OutputStream os = new FileOutputStream(outputFile);
+	
+	       		        ITextRenderer renderer = new ITextRenderer();
+	       		        renderer.setDocumentFromString(sf.toString());
+	       		        renderer.layout();
+	       		        renderer.createPDF(os);
+	
+	       		        os.close();
+	       		        long end = System.currentTimeMillis();
+	       		        System.out.println("Generate PDF in: " + (end-start) + "ms");
+
+	       		        File file = new File(workingDir+"\\tempPDF\\"+name+".pdf");
+		       		    FileInputStream fis = new FileInputStream(file);
+		       		    
+			       	    return Response.ok(fis, "application/pdf") 
+				                    .header("content-disposition","inline")
+				                    .build();
+        			}
+        		}
+        		catch(Exception e)
+        		{
+        			throw e;
+        		}
+        		finally {
+        			if(rs != null)
+        				rs.close();
+        			if (ps != null) 
+        				ps.close();
+        			if (connection != null) 
+        				connection.close();
+        		}
+        	}
         	
         	//OwLeave
         	if(report.equalsIgnoreCase("timeSheetOweLeave"))

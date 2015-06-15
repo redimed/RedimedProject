@@ -124,15 +124,21 @@ angular.module("app.security",[
             }
         }
     })  
+    
     .state("webpatient.checkin", {
         url: "/portal-patient/web-checkin",
         templateUrl: "/modules/patient/views/web-checkin.html",
         controller:'PatientCheckinController'
     })
+
     .state("webpatient.register", {
         url: "/portal-patient/register",
         templateUrl: "/modules/patient/views/patient-register.html",
-        controller:'WebPatientController'
+    })
+
+    .state("webpatient.booking", {
+        url: "/portal-patient/booking",
+        templateUrl: "/modules/rediLegalOnlineBooking/views/mobile/patient-booking.html"
     })
     //chien end
 })

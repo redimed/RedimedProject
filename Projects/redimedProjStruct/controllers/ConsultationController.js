@@ -8,11 +8,39 @@ var chainer = new db.Sequelize.Utils.QueryChainer;
 var kiss=require('./kissUtilsController');
 var errorCode=require('./errorCode');
 var invoiceUtil=require('./invoiceUtilController');
+var knex = require('../knex-connect.js');
+var commonFunction =  require('../knex-function.js');
 
 //tannv.dts@gmail.com
 var controllerCode="RED_CONSULT";
 
 module.exports = {
+
+    getByIdProblem: function(req, res){
+
+        var postData = req.body.consult_id;
+
+        var sql = knex
+        .column('cln_patient_consults.history',
+        'cln_patient_consults.Creation_date',
+        'cln_patient_consults.examination',
+        'cln_patient_consults.treatment_plan',
+        'cln_patient_consults.diagnosis',
+        'cln_problems.Notes')
+        .from('cln_patient_consults')
+        .innerJoin('cln_problems', 'cln_patient_consults.problem_id', 'cln_problems.Problem_id')
+        .where({'consult_id': postData})
+        .toString();
+        db.sequelize.query(sql)
+        .success(function(data){
+            res.json({data: data[0]});
+        })
+        .error(function(error){
+            res.json({'status': 'error', 'message': error})
+        })
+
+    },
+
 	getPatientProblem: function(req,res){
 		var patientId = req.body.patient_id;
 
@@ -212,23 +240,26 @@ module.exports = {
                     for(var i=0; i<info.scripts.length;i++)
                     {
                         var s = info.scripts[i];
+                        if(s.start_date) {
+                            var start_date = s.start_date.split("/").reverse().join("-");
+                        };
+                        if(s.end_date) {
+                            var end_date = s.end_date.split("/").reverse().join("-");
+                        };
                         chainer.add(
                             db.ClnPatientMedication.create({
                                 patient_id: info.patient_id,
                                 consult_id: consultId,
-                                medication_name: s.medication,
-                                strength: s.strength,
-                                form: s.form,
+                                medication_name: s.medication_name,
+                                unit: s.unit,
                                 qty: s.qty,
-                                code: s.code,
-                                script: s.script,
                                 dose: s.dose,
                                 frequency: s.frequency,
-                                instructions: s.instructions,
-                                repeat: s.repeat,
-                                reason: s.reason,
-                                category: s.category,
-                                price: s.price
+                                start_date : start_date,
+                                end_date : end_date,
+                                route : s.route,
+                                doctor_id : s.doctor_id,
+                                condition_Indication : s.condition_Indication
                             })
                         )
                     }
@@ -320,6 +351,32 @@ module.exports = {
      * ----------------------------------------------------------------------
      * ----------------------------------------------------------------------
      */
+    beforeStartSession:function(req,res)
+    {
+        var fHeader="ConsultationController->beforeStartSession";
+        var functionCode="FN006";
+        var doctorId=kiss.checkData(req.body.doctorId)?req.body.doctorId:'';
+        if(!kiss.checkListData(doctorId))
+        {
+            kiss.exlog(fHeader,"Loi data truyen den");
+            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,"TN001")});
+            return;
+        }
+        var sql=
+            " SELECT patient.*,calendar.`FROM_TIME`,apptPatient.appt_status,apptPatient.CAL_ID           "+
+            " FROM `cln_appt_patients` apptPatient                                                       "+
+            " INNER JOIN `cln_appointment_calendar` calendar ON apptPatient.`CAL_ID`=calendar.`CAL_ID`   "+
+            " INNER JOIN `cln_patients` patient ON `apptPatient`.`Patient_id`=patient.`Patient_id`       "+
+            " WHERE calendar.`DOCTOR_ID`=? AND `apptPatient`.`appt_status`=?                             ";
+
+        kiss.executeQuery(req,sql,[doctorId,invoiceUtil.apptStatus.workInProgress.value],function(rows){
+            res.json({status:'success',data:rows});
+        },function(err){
+            kiss.exlog(fHeader,"Loi truy van select du lieu",err);
+            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,"TN002")});
+        },true);
+    },
+
     startSession:function(req,res)
     {
         var fHeader="ConsultationController->startSession";
@@ -327,15 +384,16 @@ module.exports = {
         var postData=kiss.checkData(req.body.data)?req.body.data:{};
         var calId=kiss.checkData(postData.calId)?postData.calId:'';
         var patientId=kiss.checkData(postData.patientId)?postData.patientId:'';
-        if(!kiss.checkListData(calId,patientId))
+        var startSessionTime=kiss.checkData(postData.startSessionTime)?postData.startSessionTime:'';
+        if(!kiss.checkListData(calId,patientId,startSessionTime))
         {
             kiss.exlog(fHeader,"Loi data truyen den");
             res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
             return;
         }
 
-        var sql="UPDATE `cln_appt_patients` SET appt_status=? WHERE `Patient_id`=? AND `CAL_ID`=? AND appt_status<>?";
-        var params=[invoiceUtil.apptStatus.workInProgress.value,patientId,calId,invoiceUtil.apptStatus.cancelled.value];
+        var sql="UPDATE `cln_appt_patients` SET appt_status=?,SESSION_START_TIME=? WHERE `Patient_id`=? AND `CAL_ID`=? AND appt_status<>?";
+        var params=[invoiceUtil.apptStatus.workInProgress.value,startSessionTime,patientId,calId,invoiceUtil.apptStatus.cancelled.value];
         kiss.executeQuery(req,sql,params,function(result){
             if(result.affectedRows>0)
             {
@@ -391,15 +449,16 @@ module.exports = {
         var postData=kiss.checkData(req.body.data)?req.body.data:{};
         var calId=kiss.checkData(postData.calId)?postData.calId:'';
         var patientId=kiss.checkData(postData.patientId)?postData.patientId:'';
-        if(!kiss.checkListData(calId,patientId))
+        var endSessionTime=kiss.checkData(postData.endSessionTime)?postData.endSessionTime:'';
+        if(!kiss.checkListData(calId,patientId,endSessionTime))
         {
             kiss.exlog(fHeader,"Loi data truyen den");
             res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
             return;
         }
 
-        var sql="UPDATE `cln_appt_patients` SET appt_status=? WHERE `Patient_id`=? AND `CAL_ID`=? AND appt_status=?";
-        var params=[invoiceUtil.apptStatus.completed.value,patientId,calId,invoiceUtil.apptStatus.workInProgress.value];
+        var sql="UPDATE `cln_appt_patients` SET appt_status=?,SESSION_END_TIME=? WHERE `Patient_id`=? AND `CAL_ID`=? AND appt_status=?";
+        var params=[invoiceUtil.apptStatus.completed.value,endSessionTime,patientId,calId,invoiceUtil.apptStatus.workInProgress.value];
         kiss.executeQuery(req,sql,params,function(result){
             if(result.affectedRows>0)
             {
@@ -433,7 +492,11 @@ module.exports = {
             res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
             return;
         }
-        var sql="SELECT * FROM `cln_appt_patients` WHERE `Patient_id`=? AND `CAL_ID`=? AND `appt_status`<>?";
+        var sql=
+            " SELECT `apptPatient`.*,calendar.`DOCTOR_ID`                                               "+
+            " FROM `cln_appt_patients` apptPatient                                                      "+
+            " INNER JOIN `cln_appointment_calendar` calendar ON apptPatient.`CAL_ID`=calendar.`CAL_ID`  "+
+            " WHERE apptPatient.`Patient_id`=? AND apptPatient.`CAL_ID`=? AND apptPatient.`appt_status`<>?; ";
         var params=[patientId,calId,invoiceUtil.apptStatus.cancelled.value];
         kiss.executeQuery(req,sql,params,function(rows){
             if(rows.length>0)
@@ -450,8 +513,35 @@ module.exports = {
             res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN003')});
         },true);
 
+    },
+    /**
+     * get list consultation of patient
+     * pahnquocchien.c1109g@gmail.com@gmail.com
+     */
+    getListConsultOfPatient:function(req,res)
+    {
+        var patientId=kiss.checkData(req.body.patient_id)?req.body.patient_id:'';
+        if(!kiss.checkListData(patientId))
+        {
+            kiss.exlog("getListConsultOfPatient Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
+        var sql=
+            " SELECT consult.*,problem.`Notes` FROM `cln_patient_consults` consult               "+
+            " LEFT JOIN `cln_problems` problem ON consult.`problem_id` = problem.`Problem_id`    "+
+            " WHERE consult.`patient_id` = ?                                                     ";
+        kiss.executeQuery(req,sql,patientId,function(rows){
+            if(rows.length>0)
+            {
+                res.json({status:'success',data:rows});
+            }
+            else
+            {
+                res.json({status:'fail'});
+            }
+        })
     }
-
 }
 
 function base64Image(src) {

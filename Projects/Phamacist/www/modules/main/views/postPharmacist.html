@@ -1,0 +1,27 @@
+<ion-view title="Post Shop" >
+    <div class="bar bar-subheader customHeaderBar">
+     <button class="button button-icon icon fa fa-reply " style="color:#fff;padding-top: 12px" ui-sref="app.main.profile">
+     </button>
+  		<h2 class="title customHeaderBar"  style="margin-left: 14%;font-size: 20px;top: 11px;">Join Pharmacist</h2>
+	</div>
+    <ion-content style="background: #2bbbd6">
+    
+    	<div class="list card" ng-repeat="post in postByUser">
+        	<div class="item item-avatar">
+		        <img ng-src="img/app-icons/android/mipmap-hdpi/logo.png">
+		        <h2>{{post.job_title}}</h2>
+		        <p>Post Type: {{post.post_type}}</p>
+		        <p>Job Description: {{post.job_description}}</p>
+		        <p>Start Date: {{post.Start_date | date:MM/dd/yyyy}}</p>
+		        <p>Shop name: {{post.shop_name}}</p>
+<!-- 		        <p> 
+			        <a class="button icon-right ion-chevron-right button-calm" 
+				        style="background-color:#26a69a; font-size: 15px;"
+				        ng-click="getDetailPost(post)">
+				        Learn More
+			        </a>
+	          	</p> -->
+        	</div>
+    	</div>
+    </ion-content> 
+</ion-view>

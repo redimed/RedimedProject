@@ -29,6 +29,8 @@ app.post('/api/phCompany/getPostForShopId',ph_companyController.getPostForShopId
 app.post('/api/phCompany/countMember',ph_companyController.countMember);
 app.post('/api/phCompany/deletePostShop',ph_companyController.deletePostShop);
 app.post('/api/phCompany/deleteUserInCompany',ph_companyController.deleteUserInCompany);
+app.post('/api/phCompany/getCompanyId',ph_companyController.getCompanyId);
+app.post('/api/phCompany/getPostCompany',ph_companyController.getPostCompany);
 
 //pharmacis controller
 app.post('/api/phPharmacist/getPharmacist',ph_companyController.getPharmacist);

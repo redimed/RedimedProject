@@ -38,14 +38,24 @@ module.exports ={
 		var fields = req.body.fields;
 		var search_data = {};
   		
+  		// if(kiss.checkData(req.body.search.First_name))
+  		// 	search_data.First_name={'like':kiss.concat('%',req.body.search.First_name,'%')};
+
+  		// if(kiss.checkData(req.body.search.Sur_name))
+  		// 	search_data.Sur_name={'like':kiss.concat('%',req.body.search.Sur_name,'%')};
+  		
+  		// if(kiss.checkData(req.body.search.DOB))
+  		// 	search_data.DOB=req.body.search.DOB;
+
   		if(kiss.checkData(req.body.search.First_name))
-  			search_data.First_name={'like':kiss.concat('%',req.body.search.First_name,'%')};
+  			search_data.First_name=req.body.search.First_name;
 
   		if(kiss.checkData(req.body.search.Sur_name))
-  			search_data.Sur_name={'like':kiss.concat('%',req.body.search.Sur_name,'%')};
+  			search_data.Sur_name=req.body.search.Sur_name;
   		
   		if(kiss.checkData(req.body.search.DOB))
   			search_data.DOB=req.body.search.DOB;
+
 
 
 		db.Patient.findAndCountAll({

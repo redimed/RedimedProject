@@ -21,6 +21,67 @@ module.exports = function(io,cookie,cookieParser) {
         var source = header['user-agent'];
         ua = useragent.parse(source);
 
+        socket.on('notifyPatient',function(apptId){
+            db.sequelize.query("SELECT p.Title,p.`First_name`,p.`Sur_name`,p.`Middle_name`, d.`NAME` as doctor_name "+
+                                "FROM cln_appt_patients a "+
+                                "INNER JOIN cln_patients p ON a.`Patient_id` = p.`Patient_id` "+
+                                "INNER JOIN doctors d ON a.`actual_doctor_id` = d.`doctor_id` "+
+                                "WHERE a.id = ?",null,{raw:true},[apptId])
+                .success(function(data){
+                    if(data.length > 0)
+                    {
+                        var item = data[0];
+                        var arrName = [];
+                        arrName.push(item.Title, item.First_name, item.Sur_name, item.Middle_name);
+
+                        io.sockets.emit('receiveNotifyPatient',arrName.join(' '), item.doctor_name);
+                    }
+                })
+        })
+
+        socket.on('notifyDoctor',function(doctorId){
+            db.Doctor.find({where:{doctor_id: doctorId}},{raw:true})
+                .success(function(doctor){
+                    if(doctor.User_id)
+                    {
+                        db.User.find({where:{id: doctor.User_id}},{raw:true})
+                            .success(function(user){
+                                if(user.socket)
+                                    io.to(user.socket).emit('receiveNotifyDoctor');
+                            })
+                            .error(function(err){
+                                console.log(err);
+                            })
+                    }
+                })
+                .error(function(err){
+                    console.log(err);
+                })
+        })
+
+        socket.on('notifyReceptionist',function(){
+            db.UserType.find({where:{user_type: 'Receptionist'}},{raw:true})
+                .success(function(type){
+                    db.User.findAll({where:{user_type: type.ID}},{raw:true})
+                        .success(function(users){
+                            if(users.length > 0)
+                            {
+                                for(var i=0; i< users.length; i++)
+                                {
+                                    if(users[i].socket)
+                                        io.to(users[i].socket).emit('receiveNotifyReceptionist');
+                                }   
+                            }
+                        })
+                        .error(function(err){
+                            console.log(err);
+                        })
+                })
+                .error(function(err){
+                    console.log(err);
+                })
+        })
+
         socket.on("shareImage",function(id,callUser){
             db.User.find({where:{id: callUser}},{raw:true})
                 .success(function(user){

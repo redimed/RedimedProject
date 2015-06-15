@@ -12,6 +12,7 @@ angular.module('app.loggedIn.claim.directives.patientAdd', [])
 		link: function(scope, elem, attrs){
 			var user_id = $cookieStore.get('userInfo').id;
 
+
 			var form = {
 				Patient_id: scope.patientId,
 				Injury_name: '',
@@ -29,6 +30,29 @@ angular.module('app.loggedIn.claim.directives.patientAdd', [])
 				Last_updated_by: user_id,
 				CAL_ID: scope.calId
 			}
+
+			/**
+			 * Lay thong tin insurer cua patient
+			 * tannv.dts@gmail.com
+			 */
+			// ClaimModel.getPatientInsurer(scope.patientId)
+			// .then(function(data){
+			// 	// exlog.alert(data);
+			// 	if(data.status=='success')
+			// 	{
+			// 		if(data.insurer!=null)
+			// 		{
+			// 			form.insurer_id=data.insurer.id;
+			// 			form.Insurer=data.insurer.insurer_name;
+			// 		}
+			// 	}
+			// 	else
+			// 	{
+			// 		exlog.logErr(data);
+			// 	}
+			// },function(err){
+			// 	exlog.logErr(err);
+			// });
 
 			var save = function(){
 				ConfigService.beforeSave(scope.claim.errors);
@@ -56,6 +80,8 @@ angular.module('app.loggedIn.claim.directives.patientAdd', [])
 				InsurerService.oneFollowPatient(postData).then(function(response){
 					if(typeof response.data !== 'undefined'){
 						scope.insurer.name = response.data.insurer_name;
+						form.insurer_id=response.data.id;
+						form.Insurer=response.data.insurer_name;
 					}else{
 						scope.insurer.name = 'No Insurer';
 					}

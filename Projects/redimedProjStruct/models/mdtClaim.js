@@ -21,7 +21,8 @@ module.exports = function (sequelize, DataTypes) {
         Created_by: DataTypes.INTEGER(11),
         Last_updated_by: DataTypes.INTEGER(11),
         isCurr: DataTypes.INTEGER(11),
-        insurer_site: DataTypes.INTEGER(11)
+        insurer_site: DataTypes.INTEGER(11),
+        insurer_id: DataTypes.INTEGER(11)
     }, {
         tableName: "cln_claims",
         createdAt: "Creation_date",

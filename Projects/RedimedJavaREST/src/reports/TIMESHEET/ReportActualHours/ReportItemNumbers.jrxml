@@ -364,7 +364,7 @@ WHERE report_item_code.user_id =$P{id}]]>
 	<summary>
 		<band height="19" splitType="Stretch">
 			<line>
-				<reportElement x="158" y="18" width="221" height="1" uuid="4c586d9a-8bd2-4ff6-9695-bafe42b44b9e"/>
+				<reportElement x="268" y="18" width="111" height="1" uuid="4c586d9a-8bd2-4ff6-9695-bafe42b44b9e"/>
 				<graphicElement>
 					<pen lineWidth="3.5" lineStyle="Double"/>
 				</graphicElement>

@@ -86,10 +86,10 @@ module.exports = {
 		console.log(data);
 		var DOB =  moment(data.DOB).format("YYYY-MM-DD")
 		var sqlupdatePharmacist = 
-					"UPDATE ph_phamacists SET surname = ?,firstname = ?,DOB = ?,email= ?,phone= ?,mobile= ?,address= ?,surburb= ?,postcode= ?,state= ?,country = ?,gender= ?,preferred_name = ? ,APHRA = ?,Proficient = ? ,isHMR = ?,isCPOP = ?,isCompounding = ? "+
+					"UPDATE ph_phamacists SET surname = ?,firstname = ?,DOB = ?,email= ?,phone= ?,mobile= ?,address= ?,surburb= ?,postcode= ?,state= ?,country = ?,gender= ?,preferred_name = ? ,APHRA = ?,Proficient = ? ,isHMR = ?,isCPOP = ?,isCompounding = ?, lat = ?, lng = ? "+
 					"WHERE user_id = ? ";
 		req.getConnection(function(err,connection){
-			var query = connection.query(sqlupdatePharmacist,[data.surname,data.firstname,DOB,data.email,data.phone,data.mobile,data.address,data.surburb,data.postcode,data.state,data.country,data.gender,data.preferred_name,data.APHRA,data.Proficient,data.isHMR,data.isCPOP,data.isCompounding,data.user_id],function(err,rows){
+			var query = connection.query(sqlupdatePharmacist,[data.surname,data.firstname,DOB,data.email,data.phone,data.mobile,data.address,data.surburb,data.postcode,data.state,data.country,data.gender,data.preferred_name,data.APHRA,data.Proficient,data.isHMR,data.isCPOP,data.isCompounding, data.latitude, data.longitude ,data.user_id],function(err,rows){
 				if(err){
 					console.log(err);
 					res.json({status:'fail'});
@@ -268,7 +268,7 @@ module.exports = {
 	//get shop by company id
 	getCompanyShopById:function(req,res){
 		var company_id = req.query.company_id;
-		var sql = " SELECT * FROM ph_company_shops WHERE company_id = ? ";
+		var sql = "SELECT * FROM ph_company_shops cs WHERE cs.`company_id` = ? ORDER BY cs.`shop_id` DESC";
 		req.getConnection(function(err,connection){
 			var query = connection.query(sql,company_id,function(err,rows){
 				if(err){
@@ -460,11 +460,11 @@ module.exports = {
 	getAllShopPost:function(req, res) {
 		var records = req.body.records;
 		console.log(records);
-		var sql = "SELECT * FROM `ph_shops_post` sp " +
-					   "INNER JOIN `ph_posts` po ON sp.`post_id` = po.`post_id` " +
-					   "INNER JOIN `ph_company_shops` cs ON sp.`shop_id` = cs.`shop_id` " +
-					   "ORDER BY po.`post_id` DESC ";
-					   // "LIMIT ?,? ";
+		var sql = 	"SELECT * FROM `ph_shops_post` sp " +
+					"INNER JOIN `ph_posts` po ON sp.`post_id` = po.`post_id` " +
+					"INNER JOIN `ph_company_shops` cs ON sp.`shop_id` = cs.`shop_id` " +
+					"ORDER BY po.`post_id` DESC ";
+					// "LIMIT ?,? ";
 		// db.sequelize.query(sql, null, {raw:true}, [records,5])
 		db.sequelize.query(sql, null, {raw:true})
 			.success(function(rows){
@@ -538,6 +538,41 @@ module.exports = {
 			})
 			.error(function(err){
 				console.log("--------error", err);
+			})
+	},
+
+	getCompanyId: function(req, res){
+		var user_id = req.body.user_id;
+		console.log("--------------", user_id);
+		var sql = 	"SELECT cu.`company_id` FROM `ph_company_users` cu " +
+					"INNER JOIN `ph_users` u ON cu.`user_id` = u.`user_id` " +
+					"WHERE u.`user_id` = ? ";
+		db.sequelize.query(sql, null, {raw:true}, [user_id])
+			.success(function(rows){
+				console.log("-------------", rows);
+				res.json({status:'success', data:rows[0]});
+			})
+			.error(function(err){
+				console.log("--------error", err);
+			})
+	},
+
+	getPostCompany: function(req,res){
+		var company_id = req.body.company_id;
+		var sql =	"SELECT * FROM `ph_shops_post` sp " + 
+					"INNER JOIN `ph_posts` p ON sp.`post_id` = p.`post_id` " +
+					"INNER JOIN `ph_company_shops` cs ON sp.`shop_id` = cs.`shop_id` " +
+					"WHERE cs.`company_id` = ? " + 
+					"ORDER BY p.`post_id` DESC"; 
+					// "LIMIT ?,? ";
+		// db.sequelize.query(sql, null, {raw:true}, [records,5])
+		db.sequelize.query(sql, null, {raw:true}, [company_id])
+			.success(function(rows){
+				console.log(rows);
+				res.json({status:'success', data:rows});
+			})
+			.error(function(err){
+				res.json({status:'error', err:err});
 			})
 	},
 }

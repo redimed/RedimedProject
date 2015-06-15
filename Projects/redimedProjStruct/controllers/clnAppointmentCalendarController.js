@@ -354,6 +354,36 @@ module.exports =
             res.json(rows);
         });
     },
+    /**
+     * phanquocchien.c1109g@gmail.com
+     */
+    getAppointmentCalendarNotService: function(req,res)
+    {
+        var DOCTOR_ID=req.query.DOCTOR_ID;
+        var SITE_ID=req.query.SITE_ID;
+        var FROM_TIME=req.query.FROM_TIME;
+        var periodTimeDefault=0;
+        var sql =
+            " SELECT  DISTINCT h.*,CONCAT(DATE_FORMAT(h.`FROM_TIME`,'%H'),':',DATE_FORMAT(h.`FROM_TIME`,'%i')) "+
+            " AS appointment_time,`redimedsite`.`Site_name`,`redimedsite`.`Site_addr`, doctor.`NAME`           "+                                       
+            " FROM      `cln_appointment_calendar` h                                                           "+                                                                                                           
+            " INNER JOIN `redimedsites` redimedsite ON h.`SITE_ID`=`redimedsite`.id                            "+                     
+            " INNER JOIN `doctors` doctor ON doctor.`doctor_id`=h.`DOCTOR_ID`                                  "+ 
+            " LEFT JOIN `cln_appt_patients` patient ON h.`CAL_ID` = patient.`CAL_ID`                           "+
+            " WHERE patient.`Patient_id` IS NULL                                                               "+
+            " AND h.`DOCTOR_ID` LIKE ?                                                                         "+
+            " AND h.`SITE_ID` LIKE ?                                                                           "+
+            " AND DATE(h.`FROM_TIME`)=?                                                                        "+
+            " AND MINUTE(TIMEDIFF(h.`TO_TIME`,h.`FROM_TIME`)) >?                                               "+                    
+            " ORDER BY `appointment_time` ASC                                                                  ";
+        kiss.executeQuery(req,sql,[DOCTOR_ID,SITE_ID,FROM_TIME,periodTimeDefault],function(rows){
+            res.json(rows);
+        },function(err){
+            kiss.exlog("getAppointmentCalendar","Loi truy van",err);
+            rows=[];
+            res.json(rows);
+        },true);
+    },
     
     updateCalendarNote:function(req,res)
     {

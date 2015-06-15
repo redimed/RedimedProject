@@ -1,5 +1,5 @@
 angular.module('app.loggedIn.patient.checkin.controller',[])
-	.controller('PatientCheckinController',function($scope, ConfigService, PatientService, toastr){
+	.controller('PatientCheckinController',function($scope, ConfigService, PatientService, toastr,$state){
         $scope.showPatientResult = false;
         $scope.showAppointmentOfId = null;
         $scope.patient_panel={};
@@ -39,6 +39,11 @@ angular.module('app.loggedIn.patient.checkin.controller',[])
                         {type:'button', btnlabel:'Appointment', 
                             btnfn:function(item){
                                 $scope.appointments.show(item.Patient_id);
+                                if ($scope.patientInfoCalendar) {
+                                    $scope.patientInfoCalendar.Patient_id = item.Patient_id;
+                                    console.log($scope.patientInfoCalendar);
+                                    $scope.bottomNewBooking = true;
+                                };
                             }
                         }
                     ],
@@ -101,28 +106,42 @@ angular.module('app.loggedIn.patient.checkin.controller',[])
             };
 
         $scope.searchClick = function(){
-            if(!$scope.patientSearch.First_name&&!$scope.patientSearch.Sur_name&&!$scope.patientSearch.DOB){
-                toastr.error('Please provide at least 1 information!','Error!');
-            }
-            else{
-                var searchData = {
-                    First_name: $scope.patientSearch.First_name,
-                    Sur_name: $scope.patientSearch.Sur_name,
-                    DOB: $scope.patientSearch.DOB
-                };
-                if(searchData.First_name==='') searchData.First_name=undefined;
-                if(searchData.Sur_name==='') searchData.Sur_name=undefined;
-                if(searchData.DOB==='') searchData.DOB=undefined;
-                if(!!searchData.DOB){
-                    searchData.DOB = ConfigService.getCommonDate(searchData.DOB);
+            $scope.isSubmit = true;
+            if (!$scope.sysservicesForm.$invalid) {
+                if(!$scope.patientSearch.First_name&&!$scope.patientSearch.Sur_name&&!$scope.patientSearch.DOB){
+                    toastr.error('Please provide at least 1 information!','Error!');
                 }
-                $scope.patients.show(searchData);  
-            }
+                else{
+                    var searchData = {
+                        First_name: $scope.patientSearch.First_name,
+                        Sur_name: $scope.patientSearch.Sur_name,
+                        DOB: $scope.patientSearch.DOB
+                    };
+                    if(searchData.First_name==='') searchData.First_name=undefined;
+                    if(searchData.Sur_name==='') searchData.Sur_name=undefined;
+                    if(searchData.DOB==='') searchData.DOB=undefined;
+                    if(!!searchData.DOB){
+                        searchData.DOB = ConfigService.getCommonDate(searchData.DOB);
+                    }
+                    $scope.patients.show(searchData);  
+                }
+            };
         }
         
         $scope.resetClick = function(){
-           $scope.appointments.reset();
-           $scope.patients.reset();
-           $scope.patientSearch={};
+            $scope.isSubmit = true;
+            if (!$scope.sysservicesForm.$invalid) {
+                $scope.appointments.reset();
+                $scope.patients.reset();
+                $scope.patientSearch={};
+            }
+        }
+        $scope.goToNewBooking = function(){
+            if ($scope.patientInfoCalendar) {
+                console.log($scope.patientInfoCalendar.Patient_id);
+                $state.go('webpatient.booking');
+            }else{
+                toastr.error("No information available on the patient", "Error");
+            };
         }
 	});

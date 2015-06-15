@@ -1,16 +1,17 @@
 angular.module("app.loggedIn.template.model", [])
     
-.factory("TemplateModel", function (Restangular) {
+.factory("TemplateModel", function (Restangular, $http) {
     var instanceService = {};
-    var appApi = Restangular.all("api/meditek/v1/alert");
+    var appApi = Restangular.all("api/meditek/v1/template");
+    var uploadUrl = "api/meditek/v1/template/";
 
-    instanceService.listFollowPatient = function (data) {
-        var detailApi = appApi.all("listFollowPatient");
+    instanceService.add = function (data) {
+        var detailApi = appApi.all("add");
         return detailApi.post({data: data});
     }
 
-    instanceService.listNoFollowPatient = function (data) {
-        var detailApi = appApi.all("listNoFollowPatient");
+    instanceService.update = function (data) {
+        var detailApi = appApi.all("update");
         return detailApi.post({data: data});
     }
 
@@ -18,37 +19,14 @@ angular.module("app.loggedIn.template.model", [])
         var detailApi = appApi.all("list");
         return detailApi.post({data: data});
     }
-  
-    instanceService.add = function(data){
-    	var detailApi = appApi.all('add');
-    	return detailApi.post({data: data});
-    }
-
-    instanceService.edit = function(data){
-        var detailApi = appApi.all('edit');
-        return detailApi.post({data: data});
-    }    
-
-    instanceService.remove = function(data){
-        var detailApi = appApi.all('remove');
-        return detailApi.post({data: data});   
-    }
 
     instanceService.one = function(data){
-        var detailApi = appApi.all('one');
-        return detailApi.post({data: data});   
+        var detailApi = appApi.all("one");
+        return detailApi.post({data: data});
     }
 
-    instanceService.select = function(data){
-        var detailApi = appApi.all('select');
-        return detailApi.post({data: data});
-    }
-    instanceService.disableAlert = function(data){
-        var detailApi = appApi.all('disableAlert');
-        return detailApi.post({data: data});
-    }
-    instanceService.disablePatientAlert = function(data){
-        var detailApi = appApi.all('disablePatientAlert');
+    instanceService.delete = function(data){
+        var detailApi = appApi.all("delete");
         return detailApi.post({data: data});
     }
 

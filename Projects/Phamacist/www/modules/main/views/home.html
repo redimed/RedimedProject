@@ -1,0 +1,91 @@
+<ion-view title="Home" >
+<div class="bar bar-subheader customHeaderBar">
+<div class="welcom" style=" margin-left: 130px;">Welcom {{userInfo.firstname}} &nbsp; {{userInfo.surname}}</div>
+	<div class="ava">
+		<!-- <img alt="Avartar"
+      	ng-src = "https://testapp.redimed.com.au:3000/api/phUser/getAvatar/{{userInfo.user_id}}"
+      	id="avatar"/> -->
+      	<img alt="Avartar"
+      	ng-src="https://192.168.1.102:3000/api/phUser/getAvatar/{{userInfo.user_id}}" 
+      	id="avatar"/>
+	</div>
+  <h2 class="title customHeaderBar " style="margin-left: 14%;font-size: 20px;top: 11px;">Home</h2>
+</div>
+<div class="sub-ss">
+</div>
+  	<ion-content style="background: #2bbbd6">
+  		<div class="list card" style="height:250px" ng-if="userInfo.user_type == 'Pharmacist'">
+
+			<div class="mod-field">
+	            <label id="keywordLabel">KM</label>
+	            <input id="Keywords" placeholder="Enter kilometer(s)" type="number" maxlength="50" 
+	            ng-model="search.kilometer" name="kilometer" ng-required="true">
+        	</div>
+
+        	<div class="mod-field" style="margin-top: 10px">
+	            <label id="keywordLabel">Title</label>
+	            <input id="Keywords" placeholder="Enter keyword(s)" type="text" maxlength="500" 
+	            ng-model="search.job_title" name="title" ng-required="true">
+        	</div>
+
+        	<div class="mod-field">
+	            <label id="keywordLabel">Description</label>
+	            <input id="Keywords" placeholder="Enter keyword(s)" type="text" maxlength="500" 
+	            ng-model="search.description" name="description" ng-required="true">
+        	</div>
+
+        	<p> 
+		        <a class="button ion-chevron button-calm" 
+		           style="background-color:#26a69a; font-size: 15px; float:right; margin: 15px 20px 0px 12px;"
+		           ng-click="searchPost(search)">
+		        	Search
+		        </a>
+		    </p>
+  		</div>
+  		
+  		<ion-list>
+			<ion-item class="item-avatar"
+			collection-repeat="post in resultSearch"
+			style="background: #2bbbd6; margin-left: -60px;">
+				<div class="item item-avatar">
+			      <img ng-src="img/app-icons/android/mipmap-hdpi/logo.png">
+			      <h2>{{post.job_title}}</h2>
+			      <p>Post Type: {{post.post_type}}</p>
+			      <p>Job Description: {{post.job_description}}</p>
+			      <p>Start Date: {{post.Start_date | date:MM/dd/yyyy}}</p>
+			      <p>Shop name: {{post.shop_name}}</p>
+			      <p> 
+			        <a class="button icon-right ion-chevron-right button-calm" 
+			           style="background-color:#26a69a; font-size: 15px;"
+			           ng-click="getDetailPost(post)">
+			        	Learn More
+			        </a>
+			      </p>
+			    </div>
+			</ion-item>
+		</ion-list>
+
+  		<!-- <ion-list>
+			<ion-item class="item-avatar" collection-repeat="post in Posts | limitTo:pageSize" 
+			style="background: #2bbbd6; margin-left: -60px;">
+				<div class="item item-avatar">
+			      <img ng-src="img/app-icons/android/mipmap-hdpi/logo.png">
+			      <h2>{{post.job_title}}</h2>
+			      <p>Post Type: {{post.post_type}}</p>
+			      <p>Job Description: {{post.job_description}}</p>
+			      <p>Start Date: {{post.Start_date | date:MM/dd/yyyy}}</p>
+			      <p>Shop name: {{post.shop_name}}</p>
+			      <p> 
+			        <a class="button icon-right ion-chevron-right button-calm" 
+			           style="background-color:#26a69a; font-size: 15px;"
+			           ng-click="getDetailPost(post)">
+			        	Learn More
+			        </a>
+			      </p>
+			    </div>
+			</ion-item>
+		</ion-list> -->
+  		<!-- <ion-infinite-scroll on-infinite="loadMore()" distance="10%" ng-if="!noMoreItemsAvailable">
+  		</ion-infinite-scroll> -->
+  	</ion-content> 
+</ion-view>

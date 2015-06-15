@@ -1,12 +1,7 @@
-<div>
-	<button class="un-btn-red-add" ng-click="script.add()" style="margin-bottom: 10px;">Add</button>
-</div>
 <div class="panel panel-default un-header-top">
 	<div class="panel-body">
 		<label class="un-label-header-custom un-bgWhite-custom">Script</label>
 		<div class="un-background-gray-dv">
-			<pagination boundary-links="true" total-items="script.count" ng-model="script.search.page" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" items-per-page="script.search.limit" max-size="script.search.max_size" ng-change="setPage(script.search.page)" >
-			</pagination>
 			<table class="mdt-table">
 				<thead>
 					<tr>
@@ -39,19 +34,59 @@
 						<td>{{row.scriptNum}}</td>
 						<td>{{row.Medicare}}</td>
 						<td align="center">
-							<a><i class="fa fa-pencil-square-o" ng-click="script.edit(row.ID)"></i></a>
+							<a><button class="un_tn_btn un-bgBlack" ng-click="Scripts('edit', row.ID)">Edit</button>
+							<!--<i class="fa fa-pencil-square-o" ng-click="script.edit(row.ID)"></i></a>-->
 							<!--<a><i class="fa fa-times" ng-click="script.dialog.remove(row.ID)"></i></a>&nbsp;-->
 							<a>
+								<button  class="un_tn_btn un-bgXam-colBlack"  ng-if="row.isEnable"  ng-click="script.disable(row)">Enable</button>
+								<button  class="un_tn_btn un-bgBlack"  ng-if="!row.isEnable"  ng-click="script.disable(row)">Disable</button>
+								<!--
 								<span ng-if="row.isEnable" ng-click="script.disable(row)">Enable</span>
-								<span ng-if="!row.isEnable" ng-click="script.disable(row)">Disable</span>
+								<span ng-if="!row.isEnable" ng-click="script.disable(row)">Disable</span>-->
+							</a>
+							<a target="_blank" href="http://testapp.redimed.com.au:3000/RedimedJavaREST/api/document/script/{{row.ID}}"><button class="un_tn_btn un-bgBlack">Print</button>
 							</a>
 						</td>
 					</tr>
 				</tbody>
 			</table>
+			<div style="text-align: right;">
+				<pagination boundary-links="true" total-items="script.count" ng-model="script.search.page" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" items-per-page="script.search.limit" max-size="script.search.max_size" ng-change="setPage(script.search.page)" >
+				</pagination>
+			</div>
 		</div>
 	</div>
 </div>
+<div>
+	<button class="un-button un-bgBlack" ng-click="Scripts('new')" style="margin-top: -13px;
+  margin-left: 11px;">Add New Script</button>
+</div>
+<script type="text/ng-template" id="notifyToAdd">
+	<style>
+		.modal-content {
+	  	 	border: none;
+			background-color: rgba(252, 250, 250, 0);
+			box-shadow: none;
+		}
+	</style>
+    <div class="modal-body">
+        <script-add success='scriptadd.success' medicaname='scriptadd.medicaname'></script-add>
+    </div>
+ </script>
+ <script type="text/ng-template" id="notifyToEdit">
+	<style>
+		.modal-content {
+	  	 	border: none;
+			background-color: rgba(252, 250, 250, 0);
+			box-shadow: none;
+		}
+	</style>
+    <div class="modal-body">
+        <script-edit id='scriptedit.ID' success='scriptedit.success' medicaname='scriptedit.medicaname'></script-edit>
+    </div>
+
+ </script>
+ <!--
 <script type="text/ng-template" id="notifyToRemove">
     <div class="modal-body">
         <p>Do you want to remove this site ?</p>
@@ -61,3 +96,4 @@
         <button class="btn btn-warning btn-xs" ng-click="cancel()">Cancel</button>
     </div>
  </script>
+-->

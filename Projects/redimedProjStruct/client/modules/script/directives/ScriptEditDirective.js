@@ -7,12 +7,15 @@ angular.module('app.loggedIn.script.directive.edit', [])
 		restrict: 'EA',
 		templateUrl: 'modules/script/directives/templates/edit.html',
 		scope: {
-			options: '='
+			options: '=',
+			success: '=',
+			id: '=',
+			medicaname:'='
 		},
 		link: function(scope, ele, attr){
 
 			var user_id = $cookieStore.get('userInfo').id;
-
+			 
 			patientLoad = function(){
 				PatientService.get($stateParams.patient_id)
 				.then(function(response){
@@ -28,12 +31,28 @@ angular.module('app.loggedIn.script.directive.edit', [])
 			}
 
 			var load = function(){
-				ScriptModel.byid($stateParams.scriptId).then(function(response){
-					//console.log(response.data);
+				scope.$watch('id', function(success){
+					  scope.id = success;
+				 })
+				ScriptModel.byid(scope.id).then(function(response){
+					
 					scope.script.form = angular.copy(response.data);
 					scope.script.form.doctordate = ConfigService.convertToDate_F(scope.script.form.doctordate);
-					console.log(scope.script.form.doctordate);
 					scope.script.form.patientDate = ConfigService.convertToDate_F(scope.script.form.patientDate);
+					var count = 0;
+					if (scope.medicaname.length != 0) {
+							for (var i = 0; i < scope.medicaname.length; i++) {
+								if (scope.medicaname[i].medication_name === scope.script.form.Medicare) {
+									count ++;
+								};
+							};
+							if (count !== 1) {
+								scope.medicaname.push({'medication_name':scope.script.form.Medicare});
+							};
+					}else{
+						scope.medicaname.push({'medication_name':scope.script.form.Medicare});
+					};
+					
 				}, function(error){})
 			}
 
@@ -48,7 +67,7 @@ angular.module('app.loggedIn.script.directive.edit', [])
 				postData.Patient_id = $stateParams.patient_id;
 				postData.CAL_ID = $stateParams.cal_id;
 				postData.Last_updated_by = user_id;
-				postData.ID = $stateParams.scriptId;
+				postData.ID = scope.id;
 				postData.Creation_date = moment().format('YYYY-MM-DD');
 				postData.Last_update_date =  moment().format('YYYY-MM-DD');
 				postData.doctordate = ConfigService.convertToDB(postData.doctordate);
@@ -58,7 +77,8 @@ angular.module('app.loggedIn.script.directive.edit', [])
 				.then(function(response){
 					//console.log(postData);
 					toastr.success('Edited Successfully');
-					$state.go('loggedIn.patient.script');
+					scope.success =  true;
+					//$state.go('loggedIn.patient.script');
 				}, function(error){
 					scope.script.errors = angular.copy(error.data.errors);
 					ConfigService.beforeError(scope.script.errors);

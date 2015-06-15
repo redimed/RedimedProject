@@ -4,7 +4,7 @@
 	        <i class="fa fa-medkit"></i> Invoice Detail
 	    </div>
 	    <div class="pull-right navbar-right">
-            <button ng-click="clickAction()" class="btn btn-default" ng-show="showSave"><i class="fa fa-save"></i> Edit </button>
+            <button ng-click="clickAction()" class="un_tn_btn un_tn_btn_pink" ng-show="showSave"><i class="fa fa-save"></i> Save </button>
         </div>
 	</div>
 	<div class="portlet-body">
@@ -169,7 +169,10 @@
 	        <i class="fa fa-medkit"></i> Invoice Items
 	    </div>
 	    <div class="pull-right navbar-right" ng-hide="statusDisable">
-            <button ng-click="itemSearch.open()" class="btn btn-default"><i class="fa fa-search"></i> Choose Item </button>
+            <button ng-click="itemSearch.open()" class="un_tn_btn un_tn_btn_gray"><i class="fa fa-search">
+            	</i> Choose Item 
+        	</button>
+            <button ng-click="clickAction()" class="un_tn_btn un_tn_btn_pink" ng-show="showSave"><i class="fa fa-save"></i> Save </button>
         </div>
 	</div>
 	<div class="portlet-body">
@@ -181,6 +184,7 @@
 				<th> Quantity </th>
 				<th> Price </th>
 				<th> Amount </th>
+				<th>Actions</th>
 			</tr>
 			<tr ng-if="statusDisable" ng-repeat="item in InvoiceMap.lines" ng-show="item.IS_ENABLE != 0">
 				<td>{{item.invItem.ITEM_CODE}}</td>
@@ -189,6 +193,11 @@
 				<td>{{item.QUANTITY}}</td>
 				<td class="text-right">${{item.PRICE}}</td>
 				<td class="text-right">${{item.AMOUNT}}</td>
+				<td class="text-right">
+					<!-- <button class="un_tn_btn un_tn_btn_gray un_tn_btn_sm" ng-click="removeInvoiceLine(item)">
+						Remove
+					</button> -->
+				</td>
 			</tr>
 
 			<tr ng-if="!statusDisable" ng-repeat="item in InvoiceMap.lines" ng-show="item.IS_ENABLE != 0">
@@ -196,20 +205,28 @@
 				<td>{{item.invItem.ITEM_NAME}}</td>
 
 				<td>
-					<span ng-if="item.appt_item_id">{{item.TIME_SPENT}}</span>
-					<input  ng-if="!item.appt_item_id" type="number" min="0" class="form-control" ng-model="item.TIME_SPENT" />
+					<!-- <span ng-if="item.appt_item_id">{{item.TIME_SPENT}}</span>
+					<input  ng-if="!item.appt_item_id" type="number" min="0" class="form-control" ng-model="item.TIME_SPENT" /> --> <!-- tannv.dts frame -->
+					<input type="number" min="0" class="form-control" ng-model="item.TIME_SPENT" /> <!-- tannv.dts add -->
 				</td>
 
 				<td>
-					<span ng-if="item.appt_item_id">{{item.QUANTITY}}</span>
-					<input ng-if="!item.appt_item_id" type="number" min="0" class="form-control" ng-model="item.QUANTITY" />
+					<!-- <span ng-if="item.appt_item_id">{{item.QUANTITY}}</span>
+					<input ng-if="!item.appt_item_id" type="number" min="0" class="form-control" ng-model="item.QUANTITY" /> --> <!-- tannv.dts frame -->
+					<input type="number" min="0" class="form-control" ng-model="item.QUANTITY" /><!-- tannv.dts add -->
 				</td>
 
 				<td class="text-right">
-					<span ng-if="item.appt_item_id">${{item.PRICE}}</span>
-					<input ng-if="!item.appt_item_id" type="number" min="0" class="form-control" ng-model="item.PRICE" />
+					<!-- <span ng-if="item.appt_item_id">${{item.PRICE}}</span>
+					<input ng-if="!item.appt_item_id" type="number" min="0" class="form-control" ng-model="item.PRICE" /> --> <!-- tannv.dts frame -->
+					<input type="number" min="0" class="form-control" ng-model="item.PRICE" /><!-- tannv.dts add -->
 				</td>
 				<td class="text-right">${{item.PRICE * item.QUANTITY}}</td>
+				<td class="text-right">
+					<button class="un_tn_btn un_tn_btn_gray un_tn_btn_sm un_tn_btn_zip" ng-click="removeInvoiceLine(item)">
+						Remove
+					</button>
+				</td>
 			</tr>
 
 
@@ -217,6 +234,9 @@
 			<tr>
 				<td colspan="5"><strong> Total </strong></td>
 				<td class="text-right">${{InvoiceMap.AMOUNT}}</td>
+				<td class="text-right">
+					
+				</td>
 			</tr>
 		</table>
 	</div>
@@ -266,3 +286,13 @@
     <mdtdoctor-search click-row="doctorSearch.click(row)"></mdtdoctor-search>
 </div>
  <!-- END POPUP DOCTOR SEARCH  -->
+
+ <script type="text/ng-template" id="notifyToRemoveInvoiceLine">
+    <div class="modal-body">
+        <p>Do you want to remove this item?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary btn-xs" ng-click="ok()">OK</button>
+        <button class="btn btn-warning btn-xs" ng-click="cancel()">Cancel</button>
+    </div>
+</script>

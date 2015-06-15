@@ -1,7 +1,6 @@
 angular.module("app.loggedIn.doctor.home.controller",[])
 
-.controller("DoctorHomeController", function($scope, $state, $cookieStore, DoctorService, ConfigService, localStorageService, toastr, moment,$modal){
-
+.controller("DoctorHomeController", function($scope,socket, $state, $cookieStore, DoctorService, ConfigService, localStorageService, toastr, moment,$modal){
 	var nowtime = moment();
 
 	$scope.selectDate = moment().range(moment().subtract(1, 'days'), moment());
@@ -45,7 +44,16 @@ angular.module("app.loggedIn.doctor.home.controller",[])
 	 * modify: tannv.dts@gmail.com
 	 */
 	$scope.goToApptDetail = function (item) {
-		var fromDate = moment(($scope.selectDate.start).format("YYYY-MM-DD"));
+		console.log('this is item',item);
+		if(!item.CAL_ID || !item.Patient_id) {
+			toastr.error('Unexpected error!','Error!')
+			return;
+		}
+  		// $state.go("loggedIn.patient.appointment", {patient_id: item.Patient_id, cal_id: item.CAL_ID});// tan frame
+  		$state.go("loggedIn.patient.consult", {patient_id: item.Patient_id, cal_id: item.CAL_ID});
+
+		// tannv.dts@gmail.com add and frame  		
+		/*var fromDate = moment(($scope.selectDate.start).format("YYYY-MM-DD"));
 		var toDate = moment(($scope.selectDate.end).format("YYYY-MM-DD"));
 		var doctor_id = $scope.doctorInfo.doctor_id;
 		DoctorService.getApptWorkInProgress(doctor_id, fromDate._i, toDate._i)
@@ -66,12 +74,7 @@ angular.module("app.loggedIn.doctor.home.controller",[])
 					});
 					return;
 				}
-				console.log('this is item',item);
-				if(!item.CAL_ID || !item.Patient_id) {
-					toastr.error('Unexpected error!','Error!')
-					return;
-				}
-		  		$state.go("loggedIn.patient.appointment", {patient_id: item.Patient_id, cal_id: item.CAL_ID});
+				
 			}
 			else
 			{
@@ -79,7 +82,7 @@ angular.module("app.loggedIn.doctor.home.controller",[])
 			}
 		},function(err){
 			toastr.error("Error when check info.","Error!");
-		})
+		})*/
     }
 
 
@@ -87,32 +90,8 @@ angular.module("app.loggedIn.doctor.home.controller",[])
 		$scope.loadCalendar();
 	}
 
-    /**
-	 * tannv.dts@gmail.com
-	 * Kiem tra doctor Info co ton tai chua
-	 */
-	$scope.userInfo=$cookieStore.get('userInfo');
-	if($cookieStore.get('doctorInfo') && $cookieStore.get('doctorInfo').doctor_id)
-	{
-		DoctorService.getByUserId($scope.userInfo.id).then(function (data) {
-	        if (data) 
-	        {
-	            $cookieStore.put('doctorInfo', {
-	                doctor_id: data.doctor_id,
-	                NAME: data.NAME,
-	                Provider_no: data.Provider_no,
-	                CLINICAL_DEPT_ID: data.CLINICAL_DEPT_ID
-	            });
-	            getDoctorInfo();
-	        }
-	    });
-	}
-	else
-	{
-		getDoctorInfo();
-	}
 	//tannv.dts@gmail.com
-	var getDoctorInfo=function()
+	function getDoctorInfo()
 	{
 		$scope.doctorInfo = $cookieStore.get('doctorInfo');
         console.log("Doctor Info: ",$scope.doctorInfo);
@@ -121,4 +100,35 @@ angular.module("app.loggedIn.doctor.home.controller",[])
 		}
         init();
 	}
+
+    /**
+	 * tannv.dts@gmail.com
+	 * Kiem tra doctor Info co ton tai chua
+	 */
+	$scope.checkIsDoctor=function(){
+		$scope.userInfo=$cookieStore.get('userInfo');
+		if($cookieStore.get('doctorInfo') && $cookieStore.get('doctorInfo').doctor_id)
+		{
+			getDoctorInfo();
+		}
+		else
+		{
+			DoctorService.getByUserId($scope.userInfo.id).then(function (data) {
+		        if (data) 
+		        {
+		            $cookieStore.put('doctorInfo', {
+		                doctor_id: data.doctor_id,
+		                NAME: data.NAME,
+		                Provider_no: data.Provider_no,
+		                CLINICAL_DEPT_ID: data.CLINICAL_DEPT_ID
+		            });
+		            getDoctorInfo();
+		        }
+		    });
+		}
+	}
+	$scope.checkIsDoctor();
+	socket.on('receiveNotifyDoctor', function() {
+        $scope.checkIsDoctor();
+    })
 })

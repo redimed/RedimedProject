@@ -37,6 +37,10 @@ eval(fs.readFileSync('./routes/mdt_route.js')+'');
 
 //tannv.dts@gmail.com
 eval(fs.readFileSync('./routes/iso_route.js') + '');
+
+// //tannv.dts@gmail.com
+// eval(fs.readFileSync('./routes/invoice_route.js') + '');
+
 //treeApprove
 eval(fs.readFileSync('./routes/Tree_Route.js') + '');
 
@@ -66,5 +70,6 @@ eval(fs.readFileSync('./routes/timetable.js') + '');
 eval(fs.readFileSync('./routes/appointment.js') + '');
 eval(fs.readFileSync('./routes/insurer.js') + '');
 eval(fs.readFileSync('./routes/waitingList.js') + '');
+eval(fs.readFileSync('./routes/template.js') + '');
 /* ************************************************ END VUONG TEAM ********************************************* */
 
