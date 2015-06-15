@@ -2,6 +2,8 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 
 	.controller("PatientConsultController",function(DoctorService,$filter,$rootScope,$interval,$window,$document,$cookieStore,$scope,$state,$modal,InsurerService,toastr,socket,OTSession,ReceptionistService,$stateParams,ConsultationService,PatientService,UserService,$interval){
 
+		$scope.templates = [];
+
 		/* VUONG */
 		$scope.addTemplate = function(){
 			$modal.open({
@@ -9,8 +11,20 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 				controller: function($scope, $modalInstance, $stateParams){
 					$scope.patient_id = $stateParams.patient_id;
 					$scope.cal_id = $stateParams.cal_id;
+					$scope.success = null;
+
+					$scope.$watch('success', function(success){
+						if(success){
+							$modalInstance.close(success);
+						}
+					})
 				}
-			});
+			})
+			.result.then(function(success){
+				console.log(success);
+
+				$scope.templates.push(success);
+			})
 		}		
 		/* END VUONG */
 		/*chien star*/
@@ -624,7 +638,11 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 				$scope.consultInfo.measurements[i].patient_id = $scope.patient_id;
 				$scope.consultInfo.measurements[i].cal_id = $scope.cal_id;
 			}
-        	ConsultationService.submitConsult($scope.consultInfo).then(function(res){
+
+			var consultInfoTemp = angular.copy($scope.consultInfo);
+			consultInfoTemp.templates = $scope.templates;
+
+        	ConsultationService.submitConsult(consultInfoTemp).then(function(res){
 				if(res.status == 'success')
 				{
 				 	toastr.success('Submit Consultation Success!');

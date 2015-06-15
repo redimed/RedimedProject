@@ -37,8 +37,7 @@ angular.module('app.loggedIn.template.directives.patient_edit', [])
 			var quill = new Quill('#editor', {
 				modules: {
 				    'link-tooltip': true,
-			    	'image-tooltip': true,
-			    	'multi-cursor': true
+			    	'image-tooltip': true
 				},
 			    theme: 'snow'
 			});
