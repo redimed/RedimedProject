@@ -1,0 +1,74 @@
+<ion-view >
+    <ion-content class="content-scroll">
+              <div>
+                    <img src="img/bk.png" style="width:200px">
+              </div>
+              <div style="height: 50px;background-color: #13b2cf;">
+                  <div style="font-size: 14px;color: white;margin-left: 28px;padding-top: 14px;margin: 0 auto;">Thank you for using REDiMED's system</div>
+              </div>
+              <div>
+                  <!-- <div style="height: 30px;background: #ebebeb;">
+                      <div class="inbo">Infomation Online Booking</div>
+                  </div> -->
+                  <!-- start -->
+                    <div class="card">
+                      <a class="item item-icon-left" >
+                       <i class="icon fa fa-user fa-2x"></i>
+                        {{non.FIRSTNAME}}-{{non.LASTNAME}}
+                      </a>
+                      <a class="item item-icon-left" >
+                        <i class="icon fa fa-transgender fa-2x"></i>
+                       {{non.GENDER}}
+                       
+                      </a>
+                      <a class="item item-icon-left">
+                        <i class="icon fa fa-mobile fa-2x"></i>
+                        {{non.CONTACT_NO}}
+                      </a>
+                      <a class="item item-icon-left" >
+                        <i class="icon fa fa-map-marker fa-2x"></i>
+                        {{non.LOCATION}}
+                      </a>
+                      <a class="item item-icon-left" >
+                        <i class="icon fa fa-clock-o fa-2x"></i>
+                        {{non.TIME}}
+                      </a>
+                      <a class="item item-icon-left" style="padding-bottom: 30px;" >
+                        <i class="icon fa fa-calendar fa-2x"></i>
+                        {{non.DATE|date:'dd-MM-yyyy'}}
+                      </a>
+                    </div>
+                     <div style="padding-left: 12px;">
+                      <img src="img/2_12.png" alt="" style="float:left"><div class="xp"></div>
+                    </div>
+                     <div style="padding-left: 12px;">
+                      <img src="img/2_15.png" alt="" style="float:left"><div class="xp1"></div>
+                    </div>
+                     <div style="padding-left: 12px;font-weight: 600;">
+                        <span>What should I expect after booking?</span><br>
+                        <span style="font-weight: 100;">
+                          Immediately following completion of booking, you will receive a confirmation email outlining your booking details. This signifies your booking has been confirmed. 
+                        </span><br>
+                        <span style="font-weight: 100;">
+                          Whilst a RediMed team member may contact you to confirm your booking details or provide advice relating to your appointment, you should proceed as normal with the appointment.  
+                        </span><br>
+                        <span style="font-weight: 100;">
+                          RediMed advises its patients to phone the relevant clinic prior to arrival to ensure the practitioner is running on time as per their schedule.  
+                        </span><br>
+                        <span>
+                          What happens if I cancel my appointment?  
+                        </span><br>
+                        <span style="font-weight: 100;">
+                          If you cannot attend your scheduled appointment, please notify the relevant clinic at your earliest convenience. You may be required to pay a cancellation fee depending on how late the clinic is advised of your intent to cancel.
+
+                        </span>
+                    </div>
+                      <div style="padding-left: 12px;">
+                          <a  style="margin-left: 57px;font-weight: 600;" ng-click="openWeb('http://www.redimed.com.au/')">https://www.redimed.com.au</a>
+                    </div>
+                    <br>
+                   <div style="width: 200px;margin: 0 auto;margin-top: -15px;white-space: nowrap;"><button class="btn" ng-click="backtohome()">Back to Home</button></div>
+                  <!-- end -->
+              </div>
+    </ion-content>
+</ion-view>
