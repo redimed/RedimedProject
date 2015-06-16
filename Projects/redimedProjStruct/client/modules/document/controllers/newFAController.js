@@ -11,6 +11,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 	$scope.header = {};
 	$scope.patient_info = {};
 	$scope.isSignatureShow = false;
+	$scope.clickedValidation = false;
 
 	
 	//End Init params
@@ -24,6 +25,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 				$scope.header = headerAndSectionRes.data;
 				$scope.header.PATIENT_ID = patient_id;
 				$scope.header.CAL_ID = cal_id;
+				$scope.header.ASSESSED_SIGN = '';
 				//get lines of section
 				$scope.header.sections.forEach(function(section){
 					section.PATIENT_ID = patient_id;
@@ -504,25 +506,39 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
         $scope.header.ASSESSED_SIGN = '';
     }
     $scope.newFASubmit = function(){
-    	var insertInfo = getInsertInformation($scope.header);
-    	DocumentService.insertNewFA(insertInfo).then(function(result){
-    		if(result.status==='success') {
-    			$scope.editMode=true;
-    			toastr.success('Functional Assessment Submitted!','Success!');
-    			init();
-    		}
-    		else toastr.error('Failed to submit functional assessment!','Error!');
-    	})
+    	$scope.clickedValidation = true;
+    	if($scope.FAForm.$invalid){
+    		toastr.error('Invalid fields!','Error!');
+    	}
+    	else{
+    		var insertInfo = getInsertInformation($scope.header);
+	    	DocumentService.insertNewFA(insertInfo).then(function(result){
+	    		if(result.status==='success') {
+	    			$scope.editMode=true;
+	    			toastr.success('Functional Assessment Submitted!','Success!');
+	    			init();
+	    		}
+	    		else toastr.error('Failed to submit functional assessment!','Error!');
+	    	})
+    	}
+    	
     }
     $scope.faUpdate = function(){
-    	var updateInfo = getInsertInformation($scope.header);
-    	DocumentService.updateNewFA(updateInfo, patient_id, cal_id).then(function(result){
-    		if(result.status==='success') {
-    			toastr.success('Functional assessment updated!','Success!');
+    	$scope.clickedValidation = true;
+    	if($scope.FAForm.$invalid){
+    		toastr.error('Invalid fields!','Error!');
+    	}
+    	else{
+    		var updateInfo = getInsertInformation($scope.header);
+	    	DocumentService.updateNewFA(updateInfo, patient_id, cal_id).then(function(result){
+	    		if(result.status==='success') {
+	    			toastr.success('Functional assessment updated!','Success!');
 
-    		}
-    		else toastr.error('Failed to update functional assessment!','Error!');
-    	})
+	    		}
+	    		else toastr.error('Failed to update functional assessment!','Error!');
+	    	})
+    	}
+	    	
     }
 
     var getInsertInformation = function(header){

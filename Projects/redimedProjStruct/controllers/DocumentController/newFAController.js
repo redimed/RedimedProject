@@ -97,18 +97,32 @@ module.exports = {
 		var patient_gender = req.body.patient_gender;
 		var valueToRate = req.body.valueToRate;
 		var rating_id = req.body.rating_id;
-
-		knex.raw("select `RATE`, `VALUE` from `sys_rankings` where `HEADER_ID` = ? and ? between `FROM_AGE` and `TO_AGE` and `GENDER` like ? and ? between `FROM_VALUE` and `TO_VALUE`",[rating_id, patient_age, patient_gender,valueToRate])
-		.then(function(result){
-			console.log('this is result.length', result);
-			if(result[0].length===0){
-				res.json({status:'unrated'});
-			}
-			else res.json({status:'success', data:result[0]});
-		})
-		.error(function(err){
-			res.json({status:'error'});
-		})
+		if(rating_id === 16 || rating_id === 17){
+			knex.raw("select `RATE`, `VALUE` from `sys_rankings` where `HEADER_ID` = ? and ? between `FROM_AGE` and `TO_AGE` and `GENDER` like ?",[rating_id, patient_age, patient_gender])
+			.then(function(result){
+				console.log('this is result.length', result);
+				if(result[0].length===0){
+					res.json({status:'unrated'});
+				}
+				else res.json({status:'success', data:result[0]});
+			})
+			.error(function(err){
+				res.json({status:'error'});
+			})
+		}
+		else{
+			knex.raw("select `RATE`, `VALUE` from `sys_rankings` where `HEADER_ID` = ? and ? between `FROM_AGE` and `TO_AGE` and `GENDER` like ? and ? between `FROM_VALUE` and `TO_VALUE`",[rating_id, patient_age, patient_gender,valueToRate])
+			.then(function(result){
+				console.log('this is result.length', result);
+				if(result[0].length===0){
+					res.json({status:'unrated'});
+				}
+				else res.json({status:'success', data:result[0]});
+			})
+			.error(function(err){
+				res.json({status:'error'});
+			})
+		}	
 	},
 
 	checkExistFA: function(req,res){
