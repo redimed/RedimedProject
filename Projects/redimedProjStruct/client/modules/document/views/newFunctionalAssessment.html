@@ -1,4 +1,4 @@
-<form name="FAForm" novalidate>
+<form name="FAForm" accessible-form novalidate>
 	<div class="row">
 		<div class="col-md-12 col-sm-12 col-xs-12">
 			<p style="font-size: xx-large;text-align: center;font-weight: bolder">{{header.FA_NAME}}</p>
@@ -24,115 +24,120 @@
 					</div>
 					<!-- this is end line image -->
 					<div ng-repeat="detail in line.details">
-						<!-- this is detail title -->
-						<div class="row">
-							<div class="col-md-12 col-sm-12 col-xs-12">
-								<label class="control-label"><b>{{detail.QUESTION}}</b></label>
+						<ng-form name="detailForm">
+							<!-- this is detail title -->
+							<div class="row">
+								<div class="col-md-12 col-sm-12 col-xs-12">
+									<label class="control-label"><b>{{detail.QUESTION}}</b></label>
+								</div>
 							</div>
-						</div>
-						<!-- this is end detail title -->
-						<!-- this is detail image if that detail has image  -->
-						<div class="row" style="margin-bottom:15px;" ng-if="detail.PICTURE!==null && detail.PICTURE!==''">
-							<div class="col-md-12 col-sm-12 col-xs-12">
-								<img ng-src="{{detail.previewPath}}" height="100px" />
+							<!-- this is end detail title -->
+							<!-- this is detail image if that detail has image  -->
+							<div class="row" style="margin-bottom:15px;" ng-if="detail.PICTURE!==null && detail.PICTURE!==''">
+								<div class="col-md-12 col-sm-12 col-xs-12">
+									<img ng-src="{{detail.previewPath}}" height="100px" />
+								</div>
 							</div>
-						</div>
-						<!-- this is end detail image -->
+							<!-- this is end detail image -->
 
-						<!-- text box with detail comment-->
-						<div class="row">
-							<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL1_ISVALUE===1">
-								<label class="control-label pull-right" style="margin-top:10px;" >{{detail.VAL1_NAME}}</label>
-							</div>
-							<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL1_ISVALUE===1">
-								<input type="text" class="form-control" ng-model="detail.VAL1_VALUE" ng-change="autoCalculationVal1(line, detail)">
-							</div>
-							<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL2_ISVALUE===1">
-								<label class="control-label pull-right" style="margin-top:10px;">{{detail.VAL2_NAME}}</label>
-							</div>
-							<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL2_ISVALUE===1">
-								<input type="text" class="form-control" ng-model="detail.VAL2_VALUE" ng-change="autoCalculationVal2(line)">
-							</div>
-							
-						<!-- end text box with detail comment -->
+							<!-- text box with detail comment-->
+							<div class="row">
+								<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL1_ISVALUE===1">
+									<label class="control-label pull-right" style="margin-top:10px;" >{{detail.VAL1_NAME}}</label>
+								</div>
+								<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL1_ISVALUE===1">
+									<input type="text" class="form-control" ng-model="detail.VAL1_VALUE" ng-change="autoCalculationVal1(line, detail)">
+								</div>
+								<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL2_ISVALUE===1">
+									<label class="control-label pull-right" style="margin-top:10px;">{{detail.VAL2_NAME}}</label>
+								</div>
+								<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL2_ISVALUE===1">
+									<input type="text" class="form-control" ng-model="detail.VAL2_VALUE" ng-change="autoCalculationVal2(line)">
+								</div>
+								
+							<!-- end text box with detail comment -->
 
-						<!-- simple check box with detail comment -->
-							<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL1_ISCHECKBOX===1">
-								<label class="control-label pull-right" style="margin-top:10px;">{{detail.VAL1_NAME}}</label>
-							</div>
-							<div class="col-md-1 col-sm-1 col-xs-1" ng-if="detail.VAL1_ISCHECKBOX===1">
-								<input type="checkbox" class="form-control" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL1_CHECKBOX===1 || detail.VAL1_CHECKBOX==='1'" ng-model="detail.VAL1_CHECKBOX">
-							</div>
-							<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL2_ISCHECKBOX===1">
-								<label class="control-label pull-right" style="margin-top:10px;">{{detail.VAL2_NAME}}</label>
-							</div>
-							<div class="col-md-1 col-sm-1 col-xs-1" ng-if="detail.VAL2_ISCHECKBOX===1">
-								<input type="checkbox" class="form-control" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL2_CHECKBOX===1 || detail.VAL2_CHECKBOX==='1'" ng-model="detail.VAL2_CHECKBOX">
-							</div>
-						<!-- end simple check box with detail comment -->
+							<!-- simple check box with detail comment -->
+								<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL1_ISCHECKBOX===1">
+									<label class="control-label pull-right" style="margin-top:10px;">{{detail.VAL1_NAME}}</label>
+								</div>
+								<div class="col-md-1 col-sm-1 col-xs-1" ng-if="detail.VAL1_ISCHECKBOX===1">
+									<input type="checkbox" class="form-control" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL1_CHECKBOX===1 || detail.VAL1_CHECKBOX==='1'" ng-model="detail.VAL1_CHECKBOX">
+								</div>
+								<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL2_ISCHECKBOX===1">
+									<label class="control-label pull-right" style="margin-top:10px;">{{detail.VAL2_NAME}}</label>
+								</div>
+								<div class="col-md-1 col-sm-1 col-xs-1" ng-if="detail.VAL2_ISCHECKBOX===1">
+									<input type="checkbox" class="form-control" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL2_CHECKBOX===1 || detail.VAL2_CHECKBOX==='1'" ng-model="detail.VAL2_CHECKBOX">
+								</div>
+							<!-- end simple check box with detail comment -->
 
 
-						<!-- Yes/No checkbox with detail comment -->
-							<div class="col-md-1 col-sm-1 col-xs-1" ng-if="detail.VAL1_ISCHECKBOX===3">
-								<label class="control-label pull-right" style="margin-top:10px;">{{detail.VAL1_NAME}}</label>
-							</div>
-							<div class="col-md-2 col-sm-2 col-xs-2 btn-group" ng-if="detail.VAL1_ISCHECKBOX===3">
-								<label class="btn">
-									<input type="radio" ng-model="detail.VAL1.CHECKBOX" value="1"> Yes
-								</label>
-								<label class="btn">
-									<input type="radio" ng-model="detail.VAL1.CHECKBOX" value="0"> No
-								</label>
-							</div>
-							<div class="col-md-1 col-sm-1 col-xs-1" ng-if="detail.VAL2_ISCHECKBOX===3">
-								<label class="control-label pull-right" style="margin-top:10px;">{{detail.VAL2_NAME}}</label>
-							</div>
-							<div class="col-md-2 col-sm-2 col-xs-2 btn-group" ng-if="detail.VAL2_ISCHECKBOX===3">
-								<label class="btn">
-									<input type="radio" ng-model="detail.VAL2.CHECKBOX" value="1"> Yes
-								</label>
-								<label class="btn">
-									<input type="radio" ng-model="detail.VAL2.CHECKBOX" value="0"> No
-								</label>
-							</div>
-						<!-- end yes/no checkbox with detail comment -->
+							<!-- Yes/No checkbox with detail comment -->
+								<div class="col-md-1 col-sm-1 col-xs-1" ng-if="detail.VAL1_ISCHECKBOX===3">
+									<label class="control-label pull-right" style="margin-top:10px;">{{detail.VAL1_NAME}}</label>
+								</div>
+								<div class="col-md-2 col-sm-2 col-xs-2 btn-group" ng-if="detail.VAL1_ISCHECKBOX===3">
+									<label class="btn">
+										<input type="radio" ng-model="detail.VAL1.CHECKBOX" value="1"> Yes
+									</label>
+									<label class="btn">
+										<input type="radio" ng-model="detail.VAL1.CHECKBOX" value="0"> No
+									</label>
+								</div>
+								<div class="col-md-1 col-sm-1 col-xs-1" ng-if="detail.VAL2_ISCHECKBOX===3">
+									<label class="control-label pull-right" style="margin-top:10px;">{{detail.VAL2_NAME}}</label>
+								</div>
+								<div class="col-md-2 col-sm-2 col-xs-2 btn-group" ng-if="detail.VAL2_ISCHECKBOX===3">
+									<label class="btn">
+										<input type="radio" ng-model="detail.VAL2.CHECKBOX" value="1"> Yes
+									</label>
+									<label class="btn">
+										<input type="radio" ng-model="detail.VAL2.CHECKBOX" value="0"> No
+									</label>
+								</div>
+							<!-- end yes/no checkbox with detail comment -->
 
-						<!-- Unable/Partial/Able checkbox with detail comment-->
-							<div class="col-md-1 col-sm-1 col-xs-1" ng-if="detail.VAL1_ISCHECKBOX===2">
-								<label class="control-label pull-right" style="margin-top:10px;">{{detail.VAL1_NAME}}</label>
+							<!-- Unable/Partial/Able checkbox with detail comment-->
+								<div class="col-md-1 col-sm-1 col-xs-1" ng-if="detail.VAL1_ISCHECKBOX===2">
+									<label class="control-label pull-right" style="margin-top:10px;">{{detail.VAL1_NAME}}</label>
+								</div>
+								<div class="col-md-4 col-sm-4 col-xs-4 btn-group" ng-if="detail.VAL1_ISCHECKBOX===2 || detail.VAL1_ISCHECKBOX===4 || detail.VAL1_ISCHECKBOX===5">
+									<label class="btn">
+										<input type="radio" ng-model="detail.VAL1_CHECKBOX" value="0" ng-change="autoCalculationVal1(line,detail)"> UNABLE
+									</label>
+									<label class="btn">
+										<input type="radio" ng-model="detail.VAL1_CHECKBOX" value="1" ng-change="autoCalculationVal1(line,detail)"> PARTIAL
+									</label>
+									<label class="btn">
+										<input type="radio" ng-model="detail.VAL1_CHECKBOX" value="2" ng-change="autoCalculationVal1(line,detail)"> ABLE
+									</label>
+								</div>
+								<div class="col-md-1 col-sm-1 col-xs-1" ng-if="detail.VAL2_ISCHECKBOX===2">
+									<label class="control-label pull-right" style="margin-top:10px;">{{detail.VAL2_NAME}}</label>
+								</div>
+								<div class="col-md-4 col-sm-4 col-xs-4 btn-group" ng-if="detail.VAL2_ISCHECKBOX===2">
+									<label class="btn">
+										<input type="radio" ng-model="detail.VAL2_CHECKBOX" value="0"> UNABLE
+									</label>
+									<label class="btn">
+										<input type="radio" ng-model="detail.VAL2_CHECKBOX" value="1"> PARTIAL
+									</label>
+									<label class="btn">
+										<input type="radio" ng-model="detail.VAL2_CHECKBOX" value="2"> ABLE
+									</label>
+								</div>
+								<label class="control-label col-md-1 col-sm-1 col-xs-1 caption" style="margin-top:10px;" ng-if="detail.IsCommentText===1">Comment</label>
+								<div class="col-md-3 col-sm-3 col-xs-3" ng-if="detail.IsCommentText===1" >
+									<input type="text" name="detailComment" class="form-control" ng-model="detail.COMMENTS" ng-required="(detail.VAL1_ISCOMMENT_WHEN_YES === 1 && detail.VAL1_CHECKBOX==='1') || (detail.VAL1_ISCOMMENT_WHEN_NO === 1 && detail.VAL1_CHECKBOX!=='1') (detail.VAL2_ISCOMMENT_WHEN_YES === 1 && detail.VAL2_CHECKBOX==='1') || (detail.VAL2_ISCOMMENT_WHEN_NO === 1 && detail.VAL2_CHECKBOX!=='1')">
+									<!-- <input type="text" name="detailComment" class="form-control" ng-model="detail.COMMENTS" ng-required="(detail.VAL1_ISCOMMENT_WHEN_NO === 1 && (detail.VAL1_CHECKBOX!=='1')"> -->
+									<label style="color: #8b0000" ng-show="clickedValidation && detailForm
+									.detailComment.$invalid">Required!</label>
+								</div>
+							<!-- end Unable/Partial/Able checkbox with detail comment -->
 							</div>
-							<div class="col-md-4 col-sm-4 col-xs-4 btn-group" ng-if="detail.VAL1_ISCHECKBOX===2 || detail.VAL1_ISCHECKBOX===4 || detail.VAL1_ISCHECKBOX===5">
-								<label class="btn">
-									<input type="radio" ng-model="detail.VAL1_CHECKBOX" value="0" ng-change="autoCalculationVal1(line,detail)"> UNABLE
-								</label>
-								<label class="btn">
-									<input type="radio" ng-model="detail.VAL1_CHECKBOX" value="1" ng-change="autoCalculationVal1(line,detail)"> PARTIAL
-								</label>
-								<label class="btn">
-									<input type="radio" ng-model="detail.VAL1_CHECKBOX" value="2" ng-change="autoCalculationVal1(line,detail)"> ABLE
-								</label>
-							</div>
-							<div class="col-md-1 col-sm-1 col-xs-1" ng-if="detail.VAL2_ISCHECKBOX===2">
-								<label class="control-label pull-right" style="margin-top:10px;">{{detail.VAL2_NAME}}</label>
-							</div>
-							<div class="col-md-4 col-sm-4 col-xs-4 btn-group" ng-if="detail.VAL2_ISCHECKBOX===2">
-								<label class="btn">
-									<input type="radio" ng-model="detail.VAL2_CHECKBOX" value="0"> UNABLE
-								</label>
-								<label class="btn">
-									<input type="radio" ng-model="detail.VAL2_CHECKBOX" value="1"> PARTIAL
-								</label>
-								<label class="btn">
-									<input type="radio" ng-model="detail.VAL2_CHECKBOX" value="2"> ABLE
-								</label>
-							</div>
-							<label class="control-label col-md-1 col-sm-1 col-xs-1 caption" style="margin-top:10px;" ng-if="detail.IsCommentText===1">Comment</label>
-							<div class="col-md-3 col-sm-3 col-xs-3" ng-if="detail.IsCommentText===1">
-								<input type="text" class="form-control" ng-model="detail.COMMENTS">
-							</div>
-						<!-- end Unable/Partial/Able checkbox with detail comment -->
-						</div>
-					<!-- this is end line details -->
+						<!-- this is end line details -->
+						</ng-form>
 					</div>
 					
 					<!-- Detail Score -->
@@ -598,6 +603,8 @@
         </button>
         <button ng-click="faUpdate()" class="btn green pull-right" ng-show="editMode===true"> Update
         </button>
+        <a class="btn blue pull-right" ng-show="editMode===true"> Print
+        </a>
         <!-- <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/FA/{{infoH.FA_ID}}/{{infoH.CAL_ID}}/{{infoH.PATIENT_ID}}"
            ng-disabled="isNew " target="_blank"
            class="btn btn-primary blue pull-right">Print PDF
