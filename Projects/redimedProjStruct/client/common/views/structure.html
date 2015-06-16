@@ -195,7 +195,7 @@
         <!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
         <div class="page-sidebar navbar-collapse collapse un-backbar-side">
             <div class="page-logo un-header-left" style="background: rgb(15, 26, 52); padding-right: 0 !important;">
-            <img src="img/icon/icon2_10.png" class="un-icon-drop sidebar-toggler" ng-click="toggleMenu()" />
+            <img src="img/icon/icon2_10.png" class="un-icon-drop sidebar-toggler" ng-click="toggleMenu()" ng-model="change_menu" />
         </div>
             <!-- BEGIN SIDEBAR MENU -->
             <ul style="margin-bottom: 0px; margin-top: 40px;" class="page-sidebar-menu page-sidebar-menu-hover-submenu " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
@@ -215,7 +215,7 @@
 
                     </a>
 
-                    <a href="javascript:;" ng-click="menuParentClick(menu.parent.definition)" ng-if="menu.parent.icon===undefined||menu.parent.icon===null||menu.parent.icon.length===0" >
+                    <a href="javascript:;" ng-click="menuParentClick(menu.parent.definition)" ng-if="menu.parent.icon===undefined||menu.parent.icon===null||menu.parent.icon.length===0" ng-class="{'edit_sub_menu': change_menu===true }" >
                         <i class="glyphicon glyphicon-star-empty"></i>
                         <span class="title">{{menu.parent.name}}</span>
                     </a>
@@ -228,7 +228,7 @@
                         </li>
                     </ul>
                     <!-- FOR EMPLOYEE -->
-                    <ul class="sub-menu" ng-if="menu.parent.menu_id===159" style="width:250px; position: absolute; top: 113%">
+                    <ul class="sub-menu " ng-if="menu.parent.menu_id===159" style="width:250px; position: absolute; top: 113%">
                         <!-- LEAVE FORM -->
                         <li>
                             <a ui-sref="#" class="title">

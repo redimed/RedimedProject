@@ -372,14 +372,17 @@ angular.module("app.loggedIn.controller",[
     $scope.toggle = false;
 
     $scope.toggleMenu = function(){
+        $scope.change_menu = false;
         $scope.toggle = !$scope.toggle;
 
         if($scope.toggle){
             angular.element("#main-page").addClass("page-sidebar-closed");
             angular.element("#main-menu").addClass("page-sidebar-menu-closed");
+            $scope.change_menu = true;
         }else{
             angular.element("#main-page").removeClass("page-sidebar-closed");
             angular.element("#main-menu").removeClass("page-sidebar-menu-closed");
+            $scope.change_menu = false;
         }
     }
     $scope.$on('$idleTimeout', function() {

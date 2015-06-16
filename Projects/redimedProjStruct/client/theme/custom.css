@@ -3086,7 +3086,9 @@ label{
     float:right;
     outline: none;
 }
-
+.edit_sub_menu:hover {
+   width: 122.5%;
+}
 
 /*giang css end*/
 /* END VUONG */
