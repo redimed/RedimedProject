@@ -2,6 +2,9 @@
     .modal.in .modal-dialog {
        	margin-top:50px;
     }
+    .modal {
+		z-index: 10050 !important;
+	}
 </style>
 <!--<div class="panel panel-default">-->
 <div class="modal-body" ng-if="listConsult">
@@ -14,7 +17,7 @@
 				<div class="un-label-forms-custom">
 					<span>Date</span>
 				</div>
-				<label>{{listConsult.Creation_date | date:'dd-MM-yyyy'}}</label>
+				<label>{{listConsult.Creation_date | date:'dd-MM-yyyy - hh:mm'}}</label>
 			</div>
 			<div class="col-xs-6">
 				<div class="un-label-forms-custom">

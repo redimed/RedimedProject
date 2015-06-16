@@ -91,6 +91,11 @@ angular.module("app.loggedIn.patient.consult.services",[])
 		services.getByIdConsult = function(consult_id){
 			return api.all('consultation/byidConsult').post({consult_id:consult_id});
 		}
-		
+		/*phanquocchien.c1109g@gmail.com
+		*check consultation
+		*/
+		services.checkConsultation = function(patient_id,cal_id){
+			return api.all('consultation/check-consultation-patientID-calID').post({patient_id:patient_id,cal_id:cal_id});
+		}
 		return services;
 	})

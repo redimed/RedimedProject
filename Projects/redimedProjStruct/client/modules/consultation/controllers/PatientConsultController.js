@@ -45,19 +45,14 @@ angular.module("app.loggedIn.patient.consult.controller",[])
                     $scope.referralAddForm.close();
             }
 		};
-		//get list consultation of patient
-		$scope.setListConsultationOfPatient = function(){
-			ConsultationService.getListConsultOfPatient($stateParams.patient_id).then(function(data){
-				if (data.status == 'success') {
-					$scope.listConsultOfPatient = data.data;
-					console.log(data.data);
-				};
-			});
+		/*
+		* phanquocchien.c1109g@gmail.com
+		* set actionCenter history
+		 */
+		$scope.actionCenterTabHistory = {
+			patient_id : $stateParams.patient_id
 		}
-		$scope.setListConsultationOfPatient();
-		//
-		$scope.showPopupHistory = function(data){
-			//console.log('---------------', data);
+		$scope.actionCenterTabHistory.showPopupHistory = function(data){
 			var modalInstance = $modal.open({
 				templateUrl:'modules/consultation/dialogs/dialogs_consult_history.html',
 				controller: 'ConsultHistoryController',
@@ -68,6 +63,24 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 				}
 			})
 			
+		}
+		$scope.actionCenterBottomHistory = {
+			patient_id : $stateParams.patient_id
+		}
+		$scope.actionCenterBottomHistory.showPopupHistory = function(data){
+			var modalInstance = $modal.open({
+				templateUrl:'modules/consultation/dialogs/dialogs_consult_history.html',
+				controller: 'ConsultHistoryController',
+				resolve: {
+					consults:function(){
+						return data;
+					}
+				}
+			})
+			
+		}
+		$scope.showPopupConsultationHistory = function(){
+			angular.element('#popupConsultationHistory').modal('show');
 		}
 		/*chien end*/
 		$scope.patient_id = $stateParams.patient_id;
@@ -646,54 +659,69 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 
 			var consultInfoTemp = angular.copy($scope.consultInfo);
 			consultInfoTemp.templates = $scope.templates;
-
-        	ConsultationService.submitConsult(consultInfoTemp).then(function(res){
-				if(res.status == 'success')
-				{
-				 	toastr.success('Submit Consultation Success!');
-					var insertArr = []; 
-            
-		            var fnInsertArr = function(item) {
-		                 var t = {
-		                    CLN_ITEM_ID: item.ITEM_ID,
-		                    Patient_id: $scope.appointment.Patient_id,
-		                    cal_id: $scope.appointment.CAL_ID,
-		                    PRICE: item.PRICE,
-		                    TIME_SPENT: !item.TIME_SPENT ? 0: item.TIME_SPENT,
-		                    QUANTITY: item.QUANTITY,
-		                    is_enable: item.checked == '1' ? 1 : 0
-		                }
-		                insertArr.push(t);
-		            }
-		            
-		            if($scope.deptItems)
-		            {
-	            		angular.forEach($scope.deptItems, function(cat, key) {
-			                angular.forEach(cat.items, fnInsertArr);
+			$scope.submitConsultation = function(){
+				ConsultationService.submitConsult(consultInfoTemp).then(function(res){
+					if(res.status == 'success')
+					{
+					 	toastr.success('Submit Consultation Success!');
+						var insertArr = []; 
+	            
+			            var fnInsertArr = function(item) {
+			                 var t = {
+			                    CLN_ITEM_ID: item.ITEM_ID,
+			                    Patient_id: $scope.appointment.Patient_id,
+			                    cal_id: $scope.appointment.CAL_ID,
+			                    PRICE: item.PRICE,
+			                    TIME_SPENT: !item.TIME_SPENT ? 0: item.TIME_SPENT,
+			                    QUANTITY: item.QUANTITY,
+			                    is_enable: item.checked == '1' ? 1 : 0
+			                }
+			                insertArr.push(t);
+			            }
+			            
+			            if($scope.deptItems)
+			            {
+		            		angular.forEach($scope.deptItems, function(cat, key) {
+				                angular.forEach(cat.items, fnInsertArr);
+				            });
+			            }
+			            
+			            if($scope.extraItems)
+			            {
+			            	angular.forEach($scope.extraItems, fnInsertArr);
+			            }
+			            
+			            PatientService.saveItemSheet(insertArr).then(function(response){
+			                console.log(response);
+			                if(response.status === 'success'){
+			                   	toastr.success('Save Item Success!');
+			                    PatientService.endInvoice($scope.appointment.Patient_id, $scope.appointment.CAL_ID);
+			                    /*phanquocchien.c1109g@gmail.com
+								* load data consultation history
+			                    */
+			                    $scope.actionCenterTabHistory.load();
+			                    $scope.actionCenterBottomHistory.load();
+			                }
+			                else{
+			                    toastr.error('Save Item Failed!');
+			                }
 			            });
-		            }
-		            
-		            if($scope.extraItems)
-		            {
-		            	angular.forEach($scope.extraItems, fnInsertArr);
-		            }
-		            
-		            PatientService.saveItemSheet(insertArr).then(function(response){
-		                console.log(response);
-		                if(response.status === 'success'){
-		                   	toastr.success('Save Item Success!');
-		                    PatientService.endInvoice($scope.appointment.Patient_id, $scope.appointment.CAL_ID);
-		                    $scope.setListConsultationOfPatient();
-		                }
-		                else{
-		                    toastr.error('Save Item Failed!');
-		                }
-		            });
+					}
+					else
+						toastr.success("Submit Consultation Failed!");
+				})
+			}
+			ConsultationService.checkConsultation($scope.patient_id,$scope.cal_id).then(function(data){
+				if (data.status == 'update') {
+					consultInfoTemp.consult_id = data.data.consult_id;
+					$scope.submitConsultation();
 				}
-				else
-					toastr.success("Submit Consultation Failed!");
-			})
-
+				if (data.status == 'insert') {
+					$scope.submitConsultation();
+				};
+			});
+			
+        	
         }
 
         /**

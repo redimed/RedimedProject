@@ -220,75 +220,140 @@ module.exports = {
             )
         }
     }
-
-    db.ClnPatientConsult.max('consult_id')
-      .success(function(max){
-            var consultId = max + 1;
-            db.ClnPatientConsult.create({
-                consult_id: consultId,
-                patient_id: info.patient_id,
-                problem_id: info.problem_id,
-                cal_id: info.cal_id,
-                history: info.history,
-                examination: info.examination,
-                treatment_plan: info.treatment,
-                diagnosis: info.diagnosis
-            })
-            .success(function(data){
-                if(info.scripts.length > 0)
+    if (info.consult_id) {
+        db.ClnPatientConsult.update({
+            patient_id: info.patient_id,
+            problem_id: info.problem_id,
+            cal_id: info.cal_id,
+            history: info.history,
+            examination: info.examination,
+            treatment_plan: info.treatment,
+            diagnosis: info.diagnosis
+        }, {consult_id: info.consult_id}, {raw: true})
+        .success(function(data){
+            if(info.scripts.length > 0)
+            {
+                for(var i=0; i<info.scripts.length;i++)
                 {
-                    for(var i=0; i<info.scripts.length;i++)
-                    {
-                        var s = info.scripts[i];
-                        if(s.start_date) {
-                            var start_date = s.start_date.split("/").reverse().join("-");
-                        };
-                        if(s.end_date) {
-                            var end_date = s.end_date.split("/").reverse().join("-");
-                        };
-                        chainer.add(
-                            db.ClnPatientMedication.create({
-                                patient_id: info.patient_id,
-                                consult_id: consultId,
-                                medication_name: s.medication_name,
-                                unit: s.unit,
-                                qty: s.qty,
-                                dose: s.dose,
-                                frequency: s.frequency,
-                                start_date : start_date,
-                                end_date : end_date,
-                                route : s.route,
-                                doctor_id : s.doctor_id,
-                                condition_Indication : s.condition_Indication
-                            })
-                        )
-                    }
+                    var s = info.scripts[i];
+                    if(s.start_date) {
+                        var start_date = s.start_date.split("/").reverse().join("-");
+                    };
+                    if(s.end_date) {
+                        var end_date = s.end_date.split("/").reverse().join("-");
+                    };
+                    chainer.add(
+                        db.ClnPatientMedication.create({
+                            patient_id: info.patient_id,
+                            consult_id: consultId,
+                            medication_name: s.medication_name,
+                            unit: s.unit,
+                            qty: s.qty,
+                            dose: s.dose,
+                            frequency: s.frequency,
+                            start_date : start_date,
+                            end_date : end_date,
+                            route : s.route,
+                            doctor_id : s.doctor_id,
+                            condition_Indication : s.condition_Indication
+                        })
+                    )
                 }
+            }
 
-                if(info.images.length > 0)
+            if(info.images.length > 0)
+            {
+                for(var i=0; i<info.images.length;i++)
                 {
-                    for(var i=0; i<info.images.length;i++)
-                    {
-                        chainer.add(
-                            db.ClnPatientDrawing.update({
-                                consult_id: consultId
-                            },{id: info.images[i]})
-                        )
-                    }
+                    chainer.add(
+                        db.ClnPatientDrawing.update({
+                            consult_id: consultId
+                        },{id: info.images[i]})
+                    )
                 }
+            }
 
-                chainer.runSerially().success(function(){
-                    res.json({status:'success',rs:data});
-                }).error(function(err){
-                    res.json({status:'error'});
-                    console.log(err);
-                })
-            })
-            .error(function(err){
+            chainer.runSerially().success(function(){
+                res.json({status:'success',rs:data});
+            }).error(function(err){
                 res.json({status:'error'});
                 console.log(err);
             })
-      })
+        })
+        .error(function(err){
+            res.json({status:'error'});
+            console.log(err);
+        })
+    }else{
+        db.ClnPatientConsult.max('consult_id')
+          .success(function(max){
+                var consultId = max + 1;
+                db.ClnPatientConsult.create({
+                    consult_id: consultId,
+                    patient_id: info.patient_id,
+                    problem_id: info.problem_id,
+                    cal_id: info.cal_id,
+                    history: info.history,
+                    examination: info.examination,
+                    treatment_plan: info.treatment,
+                    diagnosis: info.diagnosis
+                })
+                .success(function(data){
+                    if(info.scripts.length > 0)
+                    {
+                        for(var i=0; i<info.scripts.length;i++)
+                        {
+                            var s = info.scripts[i];
+                            if(s.start_date) {
+                                var start_date = s.start_date.split("/").reverse().join("-");
+                            };
+                            if(s.end_date) {
+                                var end_date = s.end_date.split("/").reverse().join("-");
+                            };
+                            chainer.add(
+                                db.ClnPatientMedication.create({
+                                    patient_id: info.patient_id,
+                                    consult_id: consultId,
+                                    medication_name: s.medication_name,
+                                    unit: s.unit,
+                                    qty: s.qty,
+                                    dose: s.dose,
+                                    frequency: s.frequency,
+                                    start_date : start_date,
+                                    end_date : end_date,
+                                    route : s.route,
+                                    doctor_id : s.doctor_id,
+                                    condition_Indication : s.condition_Indication
+                                })
+                            )
+                        }
+                    }
+
+                    if(info.images.length > 0)
+                    {
+                        for(var i=0; i<info.images.length;i++)
+                        {
+                            chainer.add(
+                                db.ClnPatientDrawing.update({
+                                    consult_id: consultId
+                                },{id: info.images[i]})
+                            )
+                        }
+                    }
+
+                    chainer.runSerially().success(function(){
+                        res.json({status:'success',rs:data});
+                    }).error(function(err){
+                        res.json({status:'error'});
+                        console.log(err);
+                    })
+                })
+                .error(function(err){
+                    res.json({status:'error'});
+                    console.log(err);
+                })
+          })
+    };
   },
 
   /**
@@ -541,7 +606,33 @@ module.exports = {
                 res.json({status:'fail'});
             }
         })
-    }
+    },
+    /*
+    * phanquocchien.c1109g@gmail.com
+    * check consultation
+    */
+   checkConsultation:function(req,res){
+        var patientId=kiss.checkData(req.body.patient_id)?req.body.patient_id:'';
+        var calId=kiss.checkData(req.body.cal_id)?req.body.cal_id:'';
+        if(!kiss.checkListData(patientId,calId))
+        {
+            kiss.exlog("checkConsultation Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
+        var sql=
+            " SELECT * FROM `cln_patient_consults` WHERE `patient_id` = ? AND `cal_id` = ? ";
+        kiss.executeQuery(req,sql,[patientId,calId],function(rows){
+            if(rows.length>0)
+            {
+                res.json({status:'update',data:rows[0]});
+            }
+            else
+            {
+                res.json({status:'insert'});
+            }
+        })
+   }
 }
 
 function base64Image(src) {

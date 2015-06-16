@@ -1277,7 +1277,7 @@ table.timetable-table td:last-child {
     border-right: 1.5px solid #ddd;
     -moz-user-select: none;
     -webkit-user-select: none;
-    width: 15;
+    width: 70;
 }
 
 .odd {
@@ -3102,6 +3102,11 @@ label{
 }
 .un-button:hover{
     text-decoration: none;
+    color: white;
+}
+.un-button:focus{
+    text-decoration: none;
+    color: white;
 }
 .un-popup-config{
     top: 50px !important;
