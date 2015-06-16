@@ -7,6 +7,10 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 	// var patient_id= 677;
 	var patient_id = $stateParams.patient_id*1;
 	var cal_id = $stateParams.cal_id*1;
+	$scope.print_fa_id = fa_id;
+	$scope.print_patient_id = patient_id;
+	$scope.print_cal_id = cal_id;
+
 	$scope.patient_age = null;
 	$scope.header = {};
 	$scope.patient_info = {};
