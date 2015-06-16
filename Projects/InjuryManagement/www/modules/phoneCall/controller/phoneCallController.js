@@ -236,9 +236,7 @@ angular.module('starter.phoneCall.controller',[])
         }
 
         $scope.medicalDeviceToggle = function() {
-            if(ionic.Platform.isIOS()) {
-                $cordovaToast.showShortTop("Sorry platform not support");
-            } else {
+            if(ionic.Platform.isAndroid()) {
                 document.addEventListener("deviceready", function() {
                     bluetooth.enable();
                 })
@@ -262,6 +260,8 @@ angular.module('starter.phoneCall.controller',[])
                         TB.updateViews();
                     }, 0.5 * 1000);
                 }
+            } else {
+                $cordovaToast.showShortTop("Sorry platform not support");
             }
         }
 

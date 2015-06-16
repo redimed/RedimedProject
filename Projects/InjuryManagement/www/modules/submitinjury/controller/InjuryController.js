@@ -568,11 +568,22 @@ angular.module('starter.injury.controller', ['ngCordova'])
         $scope.location =  $scope.ad;
 
         $scope.goBluetoothState = function() {
-            if($scope.worker.Patient_id > -1) {
-                $state.go('app.mainBluetooth', null, {reload: true});
-            }
-            else {
-                $scope.popupMessage = { message: "Please select patient, before using Bluetooth." };
+            if(ionic.Platform.isAndroid()) {
+                if($scope.worker.Patient_id > -1) {
+                    $state.go('app.mainBluetooth', null, {reload: true});
+                }
+                else {
+                    $scope.popupMessage = { message: "Please select patient, before using Bluetooth." };
+                    $ionicPopup.show({
+                        templateUrl: "modules/popup/PopUpError.html",
+                        scope: $scope,
+                        buttons: [
+                            { text: "Ok" }
+                        ]
+                    });
+                }
+            } else {
+                $scope.popupMessage = { message: "Sorry application not support platform" };
                 $ionicPopup.show({
                     templateUrl: "modules/popup/PopUpError.html",
                     scope: $scope,

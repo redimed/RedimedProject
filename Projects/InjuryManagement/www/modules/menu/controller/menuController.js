@@ -83,11 +83,21 @@ angular.module("starter.menu.controller",[])
         $scope.logoutApp = function() {
             $interval.cancel(stopInterval);
             stopInterval = undefined;
-            $scope.userInfoLS.push({
-                platform: ionic.Platform.platform(),
-                info: userInfo,
-                token: notificationLS.regid
-            });
+            document.addEventListener("deviceready", function () {
+                if(ionic.Platform.isAndroid()) {
+                    $scope.userInfoLS.push({
+                        platform: ionic.Platform.platform(),
+                        info: userInfo,
+                        token: notificationLS.regid
+                    });
+                } else if(ionic.Platform.isIOS()) {
+                    $scope.userInfoLS.push({
+                        platform: ionic.Platform.platform(),
+                        info: userInfo,
+                        token: null
+                    });
+                }
+            })
             $scope.popupMessage = {message: "Do you want log out?" };
             $ionicPopup.show({
                 templateUrl: 'modules/popup/PopUpConfirm.html',
@@ -96,21 +106,24 @@ angular.module("starter.menu.controller",[])
                     {
                         text: "Yes, I do!",
                         onTap: function(e) {
-                            signaling.emit('logout', userInfo.user_name, userInfo.id, userInfo.UserType.user_type, $scope.userInfoLS);
-                            $scope.messageLoading = {message: "Waiting..."};
-                            $ionicLoading.show({
-                                templateUrl: "modules/loadingTemplate.html",
-                                animation: 'fade-in',
-                                scope: $scope,
-                                maxWidth: 500,
-                                showDelay: 0
-                            });
-                            signaling.on('logoutSuccess', function(){
-                                signaling.removeAllListeners();
-                                localStorageService.clearAll();
-                                $state.go("security.login", null, {reload: true});
-                                $ionicLoading.hide();
-                            })
+                            if($scope.userInfoLS.length > 0) {
+                                signaling.emit('logout', userInfo.user_name, userInfo.id, userInfo.UserType.user_type, $scope.userInfoLS);
+                                $ionicLoading.show({
+                                    templateUrl: "modules/loadingTemplate.html",
+                                    animation: 'fade-in',
+                                    scope: $scope,
+                                    maxWidth: 500,
+                                    showDelay: 0
+                                });
+                                signaling.on('logoutSuccess', function () {
+                                    signaling.removeAllListeners();
+                                    localStorageService.clearAll();
+                                    $state.go("security.login", null, {reload: true});
+                                    $ionicLoading.hide();
+                                })
+                            } else {
+                                alert("You are using app on browser.");
+                            }
                         }
                     },
                     {
