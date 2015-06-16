@@ -66,6 +66,9 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 												var fileName = strarr[strarr.length-1];
 												detail.previewPath = "https://"+location.host+"/document/fa/images/"+fileName;
 											}
+											if(line.SCORE_TYPE1===7 || line.SCORE_TYPE1===9){
+												$scope.autoCalculationVal1(line, detail);
+											}
 										})
 										line.comments.forEach(function(comment){
 											comment.PATIENT_ID = patient_id;
@@ -216,7 +219,6 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 	}
 
 	$scope.autoCalculationVal1 = function(line,detail){
-		console.log(detail);
 		if(detail!==undefined){
 			if(detail.VAL1_ISCHECKBOX === 4 || detail.VAL1_ISCHECKBOX === 5){
 				line.RATING_VALUE1 = 0;
