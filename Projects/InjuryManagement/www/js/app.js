@@ -117,28 +117,26 @@ angular.module('starter', ['ionic',
                     config = {
                         "senderID": "137912318312"
                     };
+                    $cordovaPush.register(config).then(function (result) {
+                        console.log("Register Push Notification Status: " + result)
+                    }, function (err) {
+                        console.log("Register Push Notification Status: " + err)
+                    });
                 }
                 else if (ionic.Platform.isIOS()) {
-                    config = {
-                        "badge": "true",
-                        "sound": "true",
-                        "alert": "true"
-                    }
+                    //alert("Sorry aplication not support push notification.");
                 }
-                $cordovaPush.register(config).then(function (result) {
-                    console.log("Register Push Notification Status: " + result)
-                }, function (err) {
-                    console.log("Register Push Notification Status: " + err)
-                });
-                AudioToggle.setAudioMode(AudioToggle.SPEAKER);
+                //AudioToggle.setAudioMode(AudioToggle.SPEAKER);
             });
         });
 
         document.addEventListener("deviceready", function() {
-            checkConnection();
-            $rootScope.$on("$stateChangeSuccess", function () {
+            if(!ionic.Platform.isIOS()) {
                 checkConnection();
-            });
+                $rootScope.$on("$stateChangeSuccess", function () {
+                    checkConnection();
+                });
+            }
         });
 
         function checkConnection() {

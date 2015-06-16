@@ -243,9 +243,7 @@ angular.module("starter.menu.controller",[])
                 var apikey = opentokRoom.apiKey;
                 var sessionid = opentokRoom.sessionId;
                 var token = opentokRoom.token;
-
                 $state.go('app.phoneCall', { callUser: id, apiKey: apikey, sessionID: sessionid, tokenID: token, isCaller: true }, {reload: true});
-
             });
         };
 
@@ -271,18 +269,24 @@ angular.module("starter.menu.controller",[])
             });
             switch (message.type) {
                 case 'call':
-                    media = new Media(src, null, null, loop);
-                    media.play();
+                    if(!ionic.Platform.isIOS()) {
+                        media = new Media(src, null, null, loop);
+                        media.play();
+                    }
                     $scope.modalreceivePhone.show();
                     $scope.acceptCall = function() {
                         $scope.modalreceivePhone.hide();
-                        media.pause();
+                        if(!ionic.Platform.isIOS()) {
+                            media.pause();
+                        }
                         $state.go('app.phoneCall', { callUser: fromId, apiKey: message.apiKey, sessionID: message.sessionId,
                             tokenID: message.token, isCaller: false }, {reload: true});
                     }
                     $scope.ignoreCall = function() {
                         $scope.modalreceivePhone.hide();
-                        media.pause();
+                        if(!ionic.Platform.isIOS()) {
+                            media.pause();
+                        }
                         signaling.emit('sendMessage', localStorageService.get('userInfo').id, fromId, { type: 'ignore' });
                     }
                     break;

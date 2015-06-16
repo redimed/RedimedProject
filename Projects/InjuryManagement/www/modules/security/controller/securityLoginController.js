@@ -63,7 +63,9 @@ angular.module('starter.security.login.controller',[])
         signaling.on('isError', function () {
             $ionicLoading.hide();
             document.addEventListener("deviceready", function() {
-                cordova.plugins.Keyboard.close();
+                if(!ionic.Platform.isIOS()) {
+                    cordova.plugins.Keyboard.close();
+                }
             });
             $scope.popupMessage = {message: "Can't login, because account is using, push out!"};
             $ionicPopup.show({
