@@ -493,7 +493,7 @@ angular.module('starter.injury.controller', ['ngCordova'])
                 $timeout(function () {
                     if(data.status == 'success')
                     {
-
+                        $ionicLoading.hide();
                         $scope.popupMessage = { message: "Success insert injury!" };
                         $ionicPopup.show({
                             templateUrl: "modules/popup/PopUpSuccess.html",
@@ -722,7 +722,7 @@ angular.module('starter.injury.controller', ['ngCordova'])
                 //call againt location reload map
                 map.addControl({
                     position:'right_center',
-                    content:'<i class="fa fa-crosshairs fa-3x" style="color:black;"></i>',
+                    content:'<i class="icon ion-android-locate"></i>',
 
                     events:{
                         click: function(){

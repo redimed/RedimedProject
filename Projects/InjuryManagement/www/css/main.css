@@ -2407,4 +2407,40 @@ input[disabled], input[readonly]:not(.cloned-text-input), select[disabled], sele
           -webkit-transform: scale(1.0);
       }
 }
+.ion-input-select,
+select {
+  -webkit-appearance: none;
+  border: none;
+  font-weight: 300;
+  display: inline;
+  vertical-align: middle;
+  color: white;
+  overflow: hidden;
+  box-sizing: border-box;
+}
 
+
+
+.ion-input-select {
+ width: 210px;
+  font-size: 1rem;
+  background-image: url(../img/sl.png);
+  background-position-x: 225px;
+  background-position-y: 35px;
+  white-space: normal;
+}
+
+option {
+  background:#015190;
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+:focus {
+  outline:none;
+}
+.btn-black {
+    color: black;
+}
