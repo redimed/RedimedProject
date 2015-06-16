@@ -267,7 +267,7 @@ module.exports = {
                 {
                     chainer.add(
                         db.ClnPatientDrawing.update({
-                            consult_id: consultId
+                            consult_id: info.consult_id
                         },{id: info.images[i]})
                     )
                 }
