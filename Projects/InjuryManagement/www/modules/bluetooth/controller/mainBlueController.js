@@ -3,7 +3,9 @@ angular.module('starter.bluetooth.mainBlueController',[])
     .controller('mainBlueController', function($scope, localStorageService, $http, BluetoothServices, $ionicLoading, $ionicPopup, signaling) {
 
         document.addEventListener("deviceready", function() {
-            bluetooth.enable();
+            if (ionic.Platform.isAndroid()) {
+                bluetooth.enable();
+            }
         })
         $scope.checkdataReviceStatus = false;
         $scope.disableList = false;
@@ -74,13 +76,12 @@ angular.module('starter.bluetooth.mainBlueController',[])
 
             $scope.isLoad = true;
             $scope.deviceType = null;
+            $scope.messageLoading = {message: "Waiting..."};
             $ionicLoading.show({
-                template: "<div class='icon ion-ios7-reloading'></div>"+
-                "<br />"+
-                "<span>Waiting...</span>",
+                templateUrl: "modules/loadingTemplate.html",
                 animation: 'fade-in',
-                showBackdrop: true,
-                maxWidth: 200,
+                scope: $scope,
+                maxWidth: 500,
                 showDelay: 0
             });
 

@@ -1,12 +1,13 @@
 angular.module("app.loggedIn.receptionist.home.controller", [])
 
-.controller("ReceptionistHomeController", function ($scope,$filter, $state, $timeout, $modal,socket, $cookieStore, toastr, ConfigService, DoctorService, ReceptionistService, PatientService, localStorageService, sysServiceService) {
+.controller("ReceptionistHomeController", function ($scope,$filter, $state, $timeout, $modal,socket, $cookieStore, toastr, ConfigService, DoctorService, ReceptionistService, PatientService, localStorageService, sysServiceService, receptionStileService) {
 	$scope.apptDate = new Date();
-	$scope.apptSite = null;
-
-	$scope.upcomingAppt = [];
-	$scope.progressAppt = [];
-	$scope.completeAppt = [];
+	//phanquocchien.c1109g@gmail.com
+	//lay thong tin su server
+	$scope.apptSite = receptionStileService.getreceptionStile();
+	$scope.upcomingAppt = receptionStileService.getupcomingApptList();
+	$scope.progressAppt = receptionStileService.getprogressApptList();
+	$scope.completeAppt = receptionStileService.getcompleteApptList();
 	$scope.doctors = [];
 
 	$scope.undoArr= [];
@@ -19,7 +20,13 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 		else
 			toastr.error("Site Error!");
 	})
-
+	$scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){ 
+	    receptionStileService.setreceptionStile($scope.apptSite);
+		receptionStileService.setupcomingApptList($scope.upcomingAppt);
+		receptionStileService.setprogressApptList($scope.progressAppt);
+		receptionStileService.setcompleteApptList($scope.completeAppt);
+	})
+	
 	$scope.getAppointment = function()
 	{
 		if($scope.apptSite == null)
@@ -33,7 +40,6 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 		else
 			getAppt($scope.apptDate,$scope.apptSite);
 	}
-
 	function getAppt(date,site){
 		var d = moment(date).format('YYYY-MM-DD');
 

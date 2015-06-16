@@ -1,0 +1,409 @@
+/*
+	@license md-date-time
+	@author SimeonC
+	@license 2015 MIT
+	@version 0.0.14
+	
+	See README.md for requirements and use.
+*//* Start Variable Declaration */
+/* End Variable Declaration */
+/* Start Main Styling */
+.visuallyhidden {
+  visibility: hidden !important;
+}
+.time-date {
+  overflow: hidden!important;
+  border: none!important;
+  width: 46.1rem!important;
+  font-size: 1.2rem!important;
+}
+.time-date > .display {
+  position: relative!important;
+  width: 47%!important;
+  height: 100%!important;
+  cursor: pointer!important;
+  transition: color 0.6s ease-in-out!important;
+}
+.time-date > .display > .title {
+  background-color: #00796b!important;
+  color: #e1e1e1!important;
+  line-height: 2.5rem!important;
+}
+.time-date > .display > .content {
+  position: absolute!important;
+  left: 0px!important;
+  right: 0px!important;
+  bottom: 0px!important;
+  top: 2.4rem!important;
+  padding: 0.3rem 0!important;
+  font-size: 1.5rem!important;
+  background-color: #009688!important;
+  color: #e1e1e1!important;
+}
+.time-date > .display > .content > .super-title {
+  text-transform: uppercase!important;
+  width: 100px;
+  float: left;
+}
+.time-date > .display > .content > .main-title {
+  font-size: 30px;
+  line-height: 5.1rem!important;
+  height: 4.1rem!important;
+  width: 180px;
+  float: left;
+}
+.time-date > .display > .content > .main-title > small {
+  font-size: 1.1rem!important;
+  margin-left: 0.3rem!important;
+}
+.time-date > .display > .content > .sub-title {
+  color: rgba(255,255,255,0.5)!important;
+}
+.time-date > .control {
+  width: 53%!important;
+  overflow-x: hidden!important;
+  position: relative!important;
+}
+.time-date > .control > .full-title {
+  display: none!important;
+  background-color: #00796b!important;
+  color: #e1e1e1!important;
+  line-height: 2.4rem!important;
+}
+.time-date > .control > .slider-md {
+  position: absolute !important;
+  width: 200%!important;
+  transition: left 0.6s ease-in-out!important;
+}
+.time-date > .control > .slider-md > .date-control,
+.time-date > .control > .slider-md > .time-control,
+.time-date > .control > .slider-md > .switch-control {
+  float: left!important;
+  height: 20.9rem!important;
+}
+.time-date > .control > .slider-md > .date-control,
+.time-date > .control > .slider-md > .time-control {
+  width: 45%!important;
+  overflow-y: hidden!important;
+}
+.time-date > .control > .slider-md > .switch-control {
+  width: 10%!important;
+  cursor: pointer!important;
+  padding: 0 0.6rem!important;
+}
+.time-date > .control > .slider-md > .switch-control > i.fa:first-child {
+  margin-right: 1.4rem!important;
+}
+.time-date > .control > .slider-md > .switch-control > i.fa:last-child {
+  margin-left: 1.4rem!important;
+}
+.time-date > .control > .slider-md > .date-control > .title {
+  font-weight: 500!important;
+  line-height: 2.4rem!important;
+}
+.time-date > .control > .slider-md > .date-control > .title:after,
+.time-date > .control > .slider-md > .date-control > .title:before {
+  display: table!important;
+  content: " "!important;
+}
+.time-date > .control > .slider-md > .date-control > .title:after {
+  clear: both!important;
+}
+.time-date > .control > .slider-md > .date-control > .title > span.month-part {
+  cursor: pointer!important;
+  position: relative!important;
+  margin-right: 0.5rem!important;
+}
+.time-date > .control > .slider-md > .date-control > .title > span.month-part:hover {
+  text-decoration: underline!important;
+}
+.time-date > .control > .slider-md > .date-control > .title > span.month-part > select {
+  position: absolute!important;
+  top: 0px!important;
+  bottom: 0px!important;
+  left: 0px!important;
+  right: 0px!important;
+  opacity: 0!important;
+  width: 100%!important;
+}
+.time-date > .control > .slider-md > .date-control > .title > input {
+  border: none!important;
+  width: 4.3rem!important;
+  display: -webkit-inline-box;
+  padding-top: 3px;
+  height: 27px;
+  vertical-align: baseline;
+}
+.time-date > .control > .slider-md > .date-control > .headers {
+  /*margin-top: -0.7rem!important;*/
+  font-weight: 500!important;
+  font-size: 1rem!important;
+  padding-left: 1.5rem!important;
+  color: #737373!important;
+  text-align: left!important;
+}
+.time-date > .control > .slider-md > .date-control > .headers > .day-cell {
+  text-align: center!important;
+  cursor: default!important;
+}
+.time-date > .control > .slider-md > .date-control .day-cell {
+  float: left!important;
+  width: 2.7rem!important;
+  height: 2.7rem!important;
+  padding: 0.7rem 6px 6px 6px!important;
+  cursor: pointer!important;
+  border-radius: 3rem!important;
+}
+.time-date > .control > .slider-md > .date-control > .days {
+  font-size: 1rem!important;
+  padding-left: 1.5rem!important;
+  width: 20.790000000000003rem!important;
+}
+.time-date > .control > .slider-md > .date-control > .days .day-cell {
+  color: #202020!important;
+  margin: 1px -4px;
+  min-width: 50px;
+  min-height: 50px;
+  margin-top: -8px;
+}
+.time-date > .control > .slider-md > .date-control > .days .day-cell.today {
+  color: #009688!important;
+}
+.time-date > .control > .slider-md > .date-control > .days .day-cell.selected {
+  color: #fff!important;
+  background-color: #009688!important;
+}
+.time-date > .control > .slider-md > .date-control > .days .day-cell:hover,
+.time-date > .control > .slider-md > .date-control > .days .day-cell:active {
+  color: #e6e6e6!important;
+  background-color: #00baa9!important;
+}
+.time-date > .control > .slider-md > .time-control {
+  position: relative!important;
+}
+.time-date > .control > .slider-md > .time-control > .time-inputs {
+  bottom: 60%!important;
+  margin-bottom: -4.3rem!important;
+  text-align: center!important;
+  position: absolute!important;
+  left: 0!important;
+  right: 0!important;
+}
+.time-date > .control > .slider-md > .time-control > .time-inputs > button.md-button {
+  font-size: 3rem!important;
+  line-height: 1rem!important;
+  width: 8.4rem!important;
+  margin: 0 0.8rem!important;
+  position: absolute!important;
+  padding-top: 0px!important;
+  padding-bottom: 0px!important;
+}
+.time-date > .control > .slider-md > .time-control > .time-inputs > button.md-button.hours {
+  left: 1.5rem!important;
+  right: 50%!important;
+  margin-right: 1rem!important;
+}
+.time-date > .control > .slider-md > .time-control > .time-inputs > button.md-button.minutes {
+  right: 0.7rem!important;
+  left: 50%!important;
+}
+.time-date > .control > .slider-md > .time-control > .time-inputs > button.md-button.up {
+  top: -2.3rem!important;
+}
+.time-date > .control > .slider-md > .time-control > .time-inputs > button.md-button.down {
+  bottom: -3rem!important;
+}
+.time-date > .control > .slider-md > .time-control > .time-inputs > input {
+  border: none!important;
+  border-bottom: 1px solid #000!important;
+  text-align: right!important;
+  font-size: 6.1rem!important;
+  line-height: 3rem!important;
+  width: 8.4rem!important;
+  margin: 0 0.7rem!important;
+}
+.time-date > .control > .slider-md > .time-control > .buttons {
+  position: absolute!important;
+  bottom: 3rem!important;
+  right: 0!important;
+  width: 9.2rem!important;
+}
+.time-date.date-mode > .control > .slider-md {
+  left: 0%!important;
+}
+.time-date:not(.time-mode-add):not(.time-mode-remove):not(.date-mode-add):not(.date-mode-remove).date-mode > .control > .slider-md > .time-control > *,
+.time-date:not(.time-mode-add):not(.time-mode-remove):not(.date-mode-add):not(.date-mode-remove).time-mode > .control > .slider-md > .date-control > * {
+  display: none!important;
+}
+.time-date.time-mode-add > .display,
+.time-date.time-mode-remove > .display,
+.time-date.date-mode-add > .display,
+.time-date.date-mode-remove > .display {
+  color: transparent !important;
+}
+.time-date.time-mode > .display > .content {
+  padding-top: 4.6rem!important;
+}
+.time-date.time-mode > .control > .slider-md {
+  left: -100%!important;
+}
+.time-date.date-only > .control > .slider-md > .switch-control,
+.time-date.date-only > .control > .slider-md > .time-control {
+  display: none!important;
+}
+.time-date.date-only > .control > .slider-md > .date-control {
+  width: 50%!important;
+  /*padding-left: 1rem!important;*/
+}
+.time-date.time-only > .display > .title {
+  display: none!important;
+}
+.time-date.time-only > .display > .content {
+  top: 0px!important;
+  padding-top: 6.3rem!important;
+}
+.time-date.time-only > .control > .slider-md > .switch-control,
+.time-date.time-only > .control > .slider-md > .date-control {
+  display: none!important;
+}
+.time-date.time-only > .control > .slider-md > .time-control {
+  width: 50%!important;
+}
+.time-date > .display,
+.time-date > .control {
+  height: 20.9rem!important;
+  float: left!important;
+  text-align: center!important;
+}
+.time-date > .buttons {
+  clear: both!important;
+  padding: 0.7rem!important;
+  text-align: right!important;
+}
+.time-date button,
+.time-date .button {
+  color: #009688!important;
+  min-width:24px;
+}
+.time-date.full-mode > .display {
+  display: none!important;
+}
+.time-date.full-mode > .control {
+  width: 100%!important;
+  height: 23.4rem!important;
+}
+.time-date.full-mode > .control > .full-title {
+  display: block!important;
+}
+.time-date.full-mode > .control > .slider-md {
+  float: none!important;
+  width: 100%!important;
+}
+.time-date.full-mode > .control > .slider-md > .time-control,
+.time-date.full-mode > .control > .slider-md > .date-control {
+  width: 50%!important;
+}
+.time-date.full-mode > .control > .slider-md > .switch-control {
+  display: none!important;
+}
+.time-date.full-mode > .buttons {
+  background-color: #009688!important;
+}
+.time-date.full-mode > .buttons > button {
+/* Invert colours for bottom bar */
+  color: #fff !important;
+}
+.time-date.vertical {
+  width: 23.1rem!important;
+}
+.time-date.vertical > .display {
+  width: 100%!important;
+  height: auto!important;
+  transition: color 0.6s ease-in-out, height 0.6s ease-in-out!important;
+}
+.time-date.vertical > .display > .content {
+position: relative!important;
+  width: 100%!important;
+  top: 0px!important;
+  height: 4.5rem!important;
+}
+.time-date.vertical > .control {
+  width: 100%!important;
+}
+.time-date.vertical.time-mode > .display > .content {
+  padding-top: 4.6rem!important;
+}
+.time-date.vertical.time-only > .display > .content {
+  top: 0px!important;
+  padding-top: 0.8rem!important;
+  height: 10rem!important;
+}
+.time-date.vertical.full-mode > .display {
+  display: none!important;
+}
+.time-date.vertical.full-mode > .control {
+  width: 100%!important;
+  height: 44.2rem!important;
+}
+.time-date.vertical.full-mode > .control > .full-title {
+  display: block!important;
+}
+.time-date.vertical.full-mode > .control > .slider-md {
+  float: none!important;
+  width: 100%!important;
+  height: auto!important;
+  overflow: auto!important;
+}
+.time-date.vertical.full-mode > .control > .slider-md > .time-control,
+.time-date.vertical.full-mode > .control > .slider-md > .date-control {
+  width: 100%!important;
+  float: left!important;
+}
+@media (max-width: 51rem) {
+  .time-date {
+    width: 23.1rem!important;
+  }
+  .time-date > .display {
+    width: 100%!important;
+    height: auto!important;
+    transition: color 0.6s ease-in-out, height 0.6s ease-in-out!important;
+  }
+  .time-date > .display > .content {
+    position: relative!important;
+    width: 100%!important;
+    top: 0px!important;
+    height: 9.5rem!important;
+  }
+  .time-date > .control {
+    width: 100%!important;
+  }
+  .time-date.time-mode > .display > .content {
+    padding-top: 4.6rem!important;
+  }
+  .time-date.time-only > .display > .content {
+    top: 0px!important;
+    padding-top: 0.8rem!important;
+    height: 10rem!important;
+  }
+  .time-date.full-mode > .display {
+    display: none!important;
+  }
+  .time-date.full-mode > .control {
+    width: 100%!important;
+    height: 44.2rem!important;
+  }
+  .time-date.full-mode > .control > .full-title {
+    display: block!important;
+  }
+  .time-date.full-mode > .control > .slider-md {
+    float: none!important;
+    width: 100%!important;
+    height: auto!important;
+    overflow: auto!important;
+  }
+  .time-date.full-mode > .control > .slider-md > .time-control,
+  .time-date.full-mode > .control > .slider-md > .date-control {
+    width: 100%!important;
+    float: left!important;
+  }
+}

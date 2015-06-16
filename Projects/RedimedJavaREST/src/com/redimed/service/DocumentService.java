@@ -71,7 +71,7 @@ public class DocumentService {
         		ResultSet rs = null;
         		try
         		{
-        			ps = connection.prepareStatement("SELECT * FROM template WHERE id = ?");
+        			ps = connection.prepareStatement("SELECT * FROM cln_template_temp WHERE id = ?");
         			ps.setInt(1, id);
         			rs = ps.executeQuery();
         			if(rs.next())
@@ -90,7 +90,9 @@ public class DocumentService {
        				 	f.mkdirs();
 
 	       				long start = System.currentTimeMillis();
-	       		        String outputFile = workingDir+"\\tempPDF\\"+name+".pdf";
+
+	       				String outputFile = workingDir+"\\tempPDF\\"+name+".pdf";
+	       		         
 	       		        OutputStream os = new FileOutputStream(outputFile);
 	
 	       		        ITextRenderer renderer = new ITextRenderer();

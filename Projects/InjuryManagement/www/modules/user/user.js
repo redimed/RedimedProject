@@ -6,6 +6,7 @@ angular.module("starter.user",[
         $stateProvider
             .state('app.profile',{
                 url:"/profile",
+                cache: false,
                 views:{
                     'menuContent':{
                         templateUrl:"modules/user/views/profile.html",
@@ -13,14 +14,9 @@ angular.module("starter.user",[
                     }
                 }
             })
-
-            //.state('home', {
-            //    url: "/home",
-            //    templateUrl: "home.html",
-            //    controller: 'HomeTabCtrl'
-            //})
             .state('app.changePass', {
                 url: "/changePass",
+                cache: false,
                 views:{
                     'menuContent':{
                         templateUrl:"modules/user/views/changePassword.html",

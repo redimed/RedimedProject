@@ -25,8 +25,7 @@ angular.module('starter', ['ionic',
     'starter.phoneCall',
     'ion-google-place',
     'ngAutocomplete',
-    'starter.bluetooth',
-    'starter.model'
+    'starter.bluetooth'
 ])
 
     .factory(("ionPlatform"), function( $q ){
@@ -85,14 +84,6 @@ angular.module('starter', ['ionic',
                 signaling.emit('reconnected', localStorageService.get("userInfo").id);
             }
         })
-
-        $interval(function() {
-            if (localStorageService.get("userInfo") != null) {
-                signaling.emit('checkApp', localStorageService.get("userInfo").id);
-            }
-        }, 3 * 1000);
-
-
         signaling.on('reconnect_failed',function(){
             localStorageService.removeAll();
             $state.go("security.login",null,{location: "replace", reload: true});
@@ -104,7 +95,7 @@ angular.module('starter', ['ionic',
         $rootScope.$on("$stateChangeSuccess", function (e, toState,toParams, fromState, fromParams) {
             localStorageService.set("fromState",{fromState:fromState,fromParams:fromParams});
             if(!localStorageService.get("userInfo")){
-                if(toState.name !== "security.forgot" && toState.name !== "security.login" && toState.name !== "security.register") {
+                if(toState.name !== "security.forgot" && toState.name !== "security.login" && toState.name !== "security.register.info1"  && toState.name !== "security.register.info2"  && toState.name !== "security.register.info3") {
                     e.preventDefault();
                     $state.go("security.login");
                 }
@@ -167,9 +158,21 @@ angular.module('starter', ['ionic',
                     templateUrl: 'modules/popup/PopUpError.html',
                     scope: $rootScope,
                     buttons: [
-                        { text: "Ok" },
+                        {
+                            text: "Ok",
+                            onTap: function() {
+                                window.plugins.SettingOpener.Open("ACTION_SETTINGS");
+                            }
+
+                        },
                     ]
                 });
             }
         }
-    });
+    })
+
+    .filter('currentDate',['$filter',  function($filter) {
+        return function() {
+            return  $filter('date')(new Date(), 'yyyy-MM-dd');
+        };
+    }])

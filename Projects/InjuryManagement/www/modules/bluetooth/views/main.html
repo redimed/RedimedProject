@@ -1,11 +1,26 @@
 <ion-view title="bluetooth">
-    <ion-nav-buttons side="left">
+   <!--  <ion-nav-buttons side="left">
         <button class="button button-icon icon ion-ios7-arrow-back  " style="color:#fff" ui-sref="app.injury.info">&nbsp;Back</button>
-    </ion-nav-buttons>
+    </ion-nav-buttons> -->
+    <ion-content class="content-scroll" style="background:#015190">
+        <div class="transparent-modal-phone" style="width: 100%; height: 100%">
+            <div >
+                <div class="header-logo">
+                    <img src="img/main_logo.png" class="img-header">
+                </div>
+                <div class="background-header-logo-child">
+                    <span class="span-header">Injury Management</span>
 
-    <ion-content class="has-header">
-
-        <div class="item-input label-custom-field padding" style="text-align: center">
+                </div>
+                <div style="width: 100%;height: 49px;float: left;position: absolute;">
+                    <span style="float: right;padding-right: 2%;padding-top: 30px;font-weight: 600;color: white;">Bluetooth</span>
+                </div>
+            </div>
+            <div class="actionBar">
+                    <button menu-toggle="left" class="button button-icon icon ion-navicon " style="color:#fff;float:left;"></button>
+                </div>
+            <div style="margin-top:100px">
+                  <div class="item-input label-custom-field padding" style="text-align: center">
             <div class="col">
                 <a class="button button-stable" ng-click="DiscoveryDevice(Isclick = false)" ng-disabled="isLoad" style="background-color: #e74c3c !important; color: whitesmoke; border: none; border-radius: 5px; width: 60%;">
                     <i class="fa fa-hand-o-right"></i> All Device
@@ -88,5 +103,9 @@
                 </a>
             </div>
         </ion-list>
+            </div>
+         
+        </div>
+
     </ion-content>
 </ion-view>

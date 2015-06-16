@@ -10,7 +10,16 @@ angular.module('app.loggedIn.template.directives.add', [])
 			var user_id = $cookieStore.get('userInfo').id;
 
 			var quill = new Quill('#editor', {
-				theme: 'snow'
+				modules: {
+					'authorship': {
+						authorId: 'advanced',
+				      	enabled: true
+				    },
+				    'link-tooltip': true,
+			    	'image-tooltip': true,
+			    	'multi-cursor': true
+				},
+			    theme: 'snow'
 			});
 			quill.addModule('toolbar', {container: '#toolbar'});
 

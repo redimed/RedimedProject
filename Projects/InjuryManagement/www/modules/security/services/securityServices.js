@@ -28,9 +28,9 @@ angular.module('starter.security.services',[])
             var forgotMail = securityApi.one('users/forgotPassword');
             return forgotMail.get({email:email});
         }
-        securityService.signup = function(userInfo) {
+        securityService.signup = function(userInfo, patientInfo) {
             var signUpApi = securityApi.all('im/register');
-            return signUpApi.post({user:userInfo});
+            return signUpApi.post({user:userInfo, patient:patientInfo});
         }
 
         return securityService;

@@ -7,7 +7,7 @@
           <h1 class="title" style="color:white">{{titlePost}}</h1>
          
         </div>
-        <ion-content class="has-header">
+        <ion-content class="has-header background-content">
            <div class="form-group"> 
                     <!-- <div style="margin: 10px 0px 5px -1px;" 
                         isteven-multi-select
@@ -23,8 +23,8 @@
                     </div> -->
                   
             <div class="ui-field-contain" style="border: none;">
-              <label class="item item-input input_us" for="select-custom-19" style="border: none; float: left;">
-                <span class="input-label span-input-color">Multiple</span>
+              <label class="item-input item-floating-label" for="select-custom-19" style="border: none; float: left; width:65%">
+                <span class="span-ex" style="color:white; font-size:14px">Multiple</span>
               </label>
                 <select name="select-custom-19" 
                         id="select-custom-19" 
@@ -32,133 +32,163 @@
                         data-native-menu="false"
                         ng-options="outputShop.name for outputShop in modernShop" id="itemShop" 
                         ng-model="outputShop"
-                        style="border:none; margin-top: 7px;" class="browser-default">
+                        style="margin-top: 5px;
+                               border: none;
+                               background-color: transparent;
+                               color: white;
+                               float: right;"  
+                        class="browser-default">
                 </select>
             </div>
-
+            <hr style=" margin: 20px 0px 30px 15px;">
             <br>
-            <label class="item item-input input_us">
-              <span class="input-label span-input-color">User Type</span>
-              <select ng-required="true" ng-model="post.post_type" name="Title" class="browser-default" 
-                      style="border:none" >
-                <option value="">Choose Post Type</option>
-                <option>Locum</option>
-                <option >Ads</option>
+            <label class="item-input item-floating-label">
+              <span class="span-ex" style="color:white; font-size:14px">User Type</span>
+              <select ng-required="true" ng-model="post.post_type" name="User Type" class="browser-default"
+                style="float: right; margin-top: -2px; border: none; height: 21px; 
+                background-color: transparent; color:white">
+                <option value="" style="color:black">Choose Post Type</option>
+                <option style="color:black">Locum</option>
+                <option style="color:black">Ads</option>
               </select>
+              <hr>
             </label>
             <br>
-            <label class="item item-input input_us">
-            <span class="input-label span-input-color">Job Title</span><div class="im1"></div>
-            <input  style="background:white;height: 36px;border:none" placeholder="Job Title" ng-model="post.job_title" name="job_title"/>
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Job Title</span><div class="im1"></div>
+            <input type="text" class="pl" placeholder="Job Title" ng-model="post.job_title" name="job_title"/>
             </label>
             <br>
-            <label class="item item-input input_us">
-            <span class="input-label span-input-color">Job Descriptiton</span><div class="im1"></div>
-            <input  style="background:white;height: 36px;border:none" placeholder="Job Descriptiton" ng-model="post.job_description" name="job_description"/>
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Job Descriptiton</span><div class="im1"></div>
+            <input  type="text" class="pl" placeholder="Job Descriptiton" ng-model="post.job_description" name="job_description"/>
             </label>
             <br>
-            <label class="item item-input input_us">
-            <span class="input-label span-input-color">Required Date</span><div class="im1"></div>
-            <input  style="background:white;height: 36px;border:none" placeholder="Required Date" 
-            ng-model="post.required_date" required name="required_date" type="date"/>
-            </label>
+            <div class="item-input item-floating-label">
+                <span class="input-label sp_custom">Required Date</span><div class="im1"></div>
+            <!-- <input  style="background:white;height: 36px;border:none" placeholder="Required Date" 
+            ng-model="post.required_date" required name="required_date" type="date"/> -->
+                <div style="width: 100%">
+                    <input id="day" class="pl" auto-tab-to="month" type="tel" maxlength="2" placeholder="DD" 
+                    ng-model="post.required_date.date" ng-change="checkdate('date')" required/>
+                    <span style="float: left;width: 15px;margin-top: 13px; color:white">/</span>              
+                    <input id="month" class="pl" auto-tab-to="year" type="tel" maxlength="2" placeholder="MM" 
+                    ng-model="post.required_date.month" ng-change="checkdate('month')" required/>
+                    <span style="float: left;width: 15px;margin-top: 13px; color:white">/</span>
+                    <input id="year" class="pl" type="tel" maxlength="4" placeholder="YYYY" 
+                    ng-model="post.required_date.year" ng-change="checkdate('year')" required/>
+                </div>
+            </div>
             <br>
-            <label class="item item-input input_us">
-            <span class="input-label span-input-color">Time Od Shift</span><div class="im1"></div>
-            <input style="background:white;height: 36px;border:none" placeholder="Time Od Shift" ng-required="true" 
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Time Od Shift</span><div class="im1"></div>
+            <input type="text" class="pl" placeholder="Time Od Shift" ng-required="true" 
             type="time" ng-model="post.time_od_shift" name="time_od_shift"/>
             </label>
             <br>
-            <label class="item item-input input_us">
-            <span class="input-label span-input-color">Local Weekday Rate</span><div class="im1"></div>
-            <input style="background:white;height: 36px;border:none" placeholder="Local Weekday Rate" 
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Local Weekday Rate</span><div class="im1"></div>
+            <input type="text" class="pl" placeholder="Local Weekday Rate" 
             ng-required="true" type="number" ng-model="post.local_weekday_rate" name="local_weekday_rate"/>
             </label>
             <br>
-            <label class="item item-input input_us">
-            <span class="input-label span-input-color">None Local Weekday Rate</span><div class="im1"></div>
-            <input  style="background:white;height: 36px;border:none" placeholder="None Local Weekday Rate" 
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">None Local Weekday Rate</span><div class="im1"></div>
+            <input type="text" class="pl" placeholder="None Local Weekday Rate" 
             ng-required="true" type="number" ng-model="post.nonelocal_weekday_rate" name="nonelocal_weekday_rate" />
             </label>
             <br>
-            <label class="item item-input input_us">
-            <span class="input-label span-input-color">Sat Rate</span><div class="im1"></div>
-            <input  style="background:white;height: 36px;border:none" placeholder="Sat Rate" ng-required="true" type="number" ng-model="post.sat_rate" name="sat_rate"/>
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Sat Rate</span><div class="im1"></div>
+            <input type="text" class="pl" placeholder="Sat Rate" ng-required="true" type="number" ng-model="post.sat_rate" name="sat_rate"/>
             </label>
             <br>
-            <label class="item item-input input_us">
-            <span class="input-label span-input-color">Sun Rate</span><div class="im1"></div>
-            <input  style="background:white;height: 36px;border:none" placeholder="Sun Rate" ng-required="true" type="number" ng-model="post.sun_rate" name="sun_rate"/>
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Sun Rate</span><div class="im1"></div>
+            <input type="text" class="pl" placeholder="Sun Rate" ng-required="true" type="number" ng-model="post.sun_rate" name="sun_rate"/>
             </label>
             <br>
-            <label class="item item-input input_us">
-            <span class="input-label span-input-color">PH Rate</span><div class="im1"></div>
-            <input  style="background:white;height: 36px;border:none" placeholder="PH Rate" ng-required="true" type="number" ng-model="post.ph_rate" name="ph_rate" />
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">PH Rate</span><div class="im1"></div>
+            <input type="text" class="pl" placeholder="PH Rate" ng-required="true" type="number" ng-model="post.ph_rate" name="ph_rate" />
             </label>
             <br>
-            <li class="item item-checkbox " style="border:none" >
+            <li class=" item  item-checkbox " style="border: none;background-color: transparent;color: white;" >
               <label class="checkbox ">
                 <input type="checkbox" ng-model="post.isTravel"  ng-true-value="1" ng-false-value="0">
               </label>
                 Travel
             </li>
-            <li class="item item-checkbox " style="border:none" >
+            <li class=" item  item-checkbox " style="border: none;background-color: transparent;color: white;" >
                 <label class="checkbox ">
                   <input type="checkbox" ng-model="post.isAccommodation"  ng-true-value="1" ng-false-value="0">
                 </label>
                 Accommodation
             </li>
             <br>
-            <label class="item item-input input_us">
-            <span class="input-label span-input-color">Start Day</span><div class="im1"></div>
-            <input  style="background:white;height: 36px;border:none" placeholder="Start Day" 
-            ng-required="true" type="date" ng-model="post.Start_date" name="Start_date"/>
+            <div class="item-input item-floating-label">
+                <span class="input-label sp_custom">Start Day</span><div class="im1"></div>
+            <!-- <input  style="background:white;height: 36px;border:none" placeholder="Start Day" 
+            ng-required="true" type="date" ng-model="post.Start_date" name="Start_date"/> -->
+                <div style="width: 100%">
+                    <input id="day" class="pl" auto-tab-to="month" type="tel" maxlength="2" placeholder="DD" 
+                    ng-model="post.Start_date.date" ng-change="checkdate('date')" required/>
+                    <span style="float: left;width: 15px;margin-top: 13px; color:white">/</span>              
+                    <input id="month" class="pl" auto-tab-to="year" type="tel" maxlength="2" placeholder="MM" 
+                    ng-model="post.Start_date.month" ng-change="checkdate('month')" required/>
+                    <span style="float: left;width: 15px;margin-top: 13px; color:white">/</span>
+                    <input id="year" class="pl" type="tel" maxlength="4" placeholder="YYYY" 
+                    ng-model="post.Start_date.year" ng-change="checkdate('year')" required/>
+                </div>
+            </div>
+            <br>
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Duration</span><div class="im1"></div>
+            <input  type="text" class="pl" placeholder="Duration" ng-required="true" type="number" ng-model="post.Duration" name="Duration" />
             </label>
             <br>
-            <label class="item item-input input_us">
-            <span class="input-label span-input-color">Duration</span><div class="im1"></div>
-            <input  style="background:white;height: 36px;border:none" placeholder="Duration" ng-required="true" type="number" ng-model="post.Duration" name="Duration" />
-            </label>
-            <br>
-            <label class="item item-input input_us">
-              <span class="input-label span-input-color">Job Type</span>
-              <select ng-required="true" ng-model="post.job_type" name="Title" class="browser-default" style="border:none">
-                <option value="">Choose Job Type</option>
-                <option>Full Time</option>
-                <option >Part Time</option>
-                <option >Casual</option>
+            <label class="item-input item-floating-label">
+              <span class="span-ex" style="color:white; font-size:14px">Job Type</span>
+              <select ng-required="true" ng-model="post.job_type" name="Title" class="browser-default" 
+                style="float: right; margin-top: -2px; border: none; height: 21px; 
+                background-color: transparent; color:white">
+                <option value="" style="color:black">Choose Job Type</option>
+                <option style="color:black">Full Time</option>
+                <option style="color:black">Part Time</option>
+                <option style="color:black">Casual</option>
               </select>
             <hr class="customHr" ng-class="{'error':iserr|| signUpForm.gender_pharmacist.$dirty && signUpForm.gender_pharmacist.$invalid}">
             </label>
             <br>
-            <label class="item item-input input_us">
-            <span class="input-label span-input-color">Qualification</span><div class="im1"></div>
-            <input  style="background:white;height: 36px;border:none" placeholder="Qualification" ng-required="true" type="text" ng-model="post.Qualification" name="Qualification" />
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Qualification</span><div class="im1"></div>
+            <input  type="text" class="pl" placeholder="Qualification" ng-required="true" type="text" ng-model="post.Qualification" name="Qualification" />
             </label>
             <br>
-            <label class="item item-input input_us">
-            <span class="input-label span-input-color">Experiences Require</span><div class="im1"></div>
-            <input  style="background:white;height: 36px;border:none" placeholder="Experiences Require" ng-required="true" type="text" ng-model="post.experiences_require" name="experiences_require" />
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Experiences Require</span><div class="im1"></div>
+            <input  type="text" class="pl" placeholder="Experiences Require" ng-required="true" type="text" ng-model="post.experiences_require" name="experiences_require" />
             </label>
             <br>
-            <label class="item item-input input_us">
-            <span class="input-label span-input-color">Hours Per Week</span><div class="im1"></div>
-            <input  style="background:white;height: 36px;border:none" placeholder="Hours Per Week" ng-required="true" type="number" ng-model="post.hours_per_week" name="hours_per_week" />
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Hours Per Week</span><div class="im1"></div>
+            <input type="text" class="pl" placeholder="Hours Per Week" ng-required="true" type="number" ng-model="post.hours_per_week" name="hours_per_week" />
             </label>
             <br>
-            <label class="item item-input input_us">
-            <span class="input-label span-input-color">Day Per Week</span><div class="im1"></div>
-            <input  style="background:white;height: 36px;border:none" placeholder="Day Per Week" ng-required="true" type="number" ng-model="post.days_per_week" name="days_per_week" />
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Day Per Week</span><div class="im1"></div>
+            <input type="text" class="pl" placeholder="Day Per Week" ng-required="true" type="number" ng-model="post.days_per_week" name="days_per_week" />
             </label>
             <br>
-            <li class="item item-checkbox " style="border:none" >
+            <li class=" item  item-checkbox " style="border: none;background-color: transparent;color: white;" >
               <label class="checkbox ">
                 <input type="checkbox" ng-model="post.isweekend_shift"  ng-true-value="1" ng-false-value="0">
               </label>
               Weekend Shift
             </li>
-
-           	<button class="btn"  style="width: 100%;margin: 0 auto;" ng-show="optionsPost == 'addNew'" ng-click="addNewPost(outputShop)" >Add</button>
+            <br>
+           	<button class="btn"  style="width: 100%;margin: 0 auto;" ng-show="optionsPost == 'addNew'" 
+            ng-click="addNewPost(outputShop)" >Add</button>
             <button class="btn"  style="width: 100%;margin: 0 auto;" ng-show="optionsPost == 'editQua'">Edit</button>
           </div>
         </ion-content>

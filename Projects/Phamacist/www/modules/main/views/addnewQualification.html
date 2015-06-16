@@ -7,11 +7,11 @@
           <h1 class="title" style="color:white">{{titleQua}}</h1>
          
         </div>
-        <ion-content class="has-header">
+        <ion-content class="has-header background-content"> 
            <div class="form-group" style="padding-top:65px">
-           <label class="item item-input input_us" >
-                          <span class="input-label span-input-color">Qualification</span><div class="im1"></div>
-                          <input ng-keypress="keyPress($event.keyCode)" style="background:white;height: 36px;" ng-required="true" type="text" ng-model="addnewQa.qualification" name="qualification" />
+           <label class=" item-input item-floating-label" >
+                          <span class="input-label sp_custom">Qualification</span><div class="im1"></div>
+                          <input ng-keypress="keyPress($event.keyCode)" class="ip_custom pl" ng-required="true" type="text" ng-model="addnewQa.qualification" name="qualification" placeholder="Qualification" />
                     </label>
                  	  <br>
                   	<button class="btn" ng-click="addnewqualification(Qualification)" style="width: 100%;margin: 0 auto;" ng-show="optionsQua == 'addNew'" >Add</button>

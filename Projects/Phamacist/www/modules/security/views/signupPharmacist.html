@@ -1,17 +1,17 @@
  <ion-view>
-    <ion-content class="content-scroll">
+    <ion-content class="content-scroll background-content">
     <div  class="ic-tabs" style="width: 160px;">
                 <img src="img/Design-Appb_01.png" alt="" style="width: 129px;
   margin-top: -2px;">
             </div>
          <div class="form-group">
-                 <div style="width: 100%;background-color: #ef4e52;height: 49px;margin-left: 80px;"><h1 class="logo_login" style="width:225px">Pharmacist</h1></div>
+                 <div class="action_bar"><h1 class="logo_login" >Pharmacist</h1></div>
                 <form name="formPharmacist" style="padding-top:10px">
 
 
-                    <label class="item item-input input_us" >
-                        <span class="input-label span-input-color">Sur Name Pharmacis</span>
-                        <input style="background:white;height: 36px;" ng-required="true" type="text"placeholder="Surname" name="surname" ng-model="signupData.surname_pharmacist"
+                    <label class="item-input item-floating-label" >
+                        <span class="input-label sp_custom">Sur Name Pharmacis</span>
+                        <input class="ip_custom pl"  ng-required="true" type="text"placeholder="Surname" name="surname" ng-model="signupData.surname_pharmacist"
                         ng-class="{'error':iserr|| formPharmacist.surname.$dirty && formPharmacist.surname.$invalid}" />
                     </label>
                     <div class="err" ng-messages="formPharmacist.surname.$error" ng-show="iserr||formPharmacist.surname.$dirty && formPharmacist.surname.$invalid">
@@ -21,9 +21,9 @@
                             </small>
                      </div>
                      <br>
-                    <label class="item item-input input_us" >
-                        <span class="input-label span-input-color">First Name Pharmacis</span>
-                        <input style="background:white;height: 36px;" ng-required="true" type="text"placeholder="First Name" name="firstName" ng-model="signupData.firstname_pharmacist"
+                    <label class="item-input item-floating-label" >
+                        <span class="input-label sp_custom">First Name Pharmacis</span>
+                        <input class="ip_custom pl"  ng-required="true" type="text"placeholder="First Name" name="firstName" ng-model="signupData.firstname_pharmacist"
                         ng-class="{'error':iserr|| formPharmacist.firstName.$dirty && formPharmacist.firstName.$invalid}" />
                     </label>
                      <div class="err" ng-messages="formPharmacist.firstName.$error" ng-show="iserr||formPharmacist.firstName.$dirty && formPharmacist.firstName.$invalid">
@@ -33,33 +33,44 @@
                             </small>
                       </div>
                       <br>
-                    <label class="item item-input input_us" >
-                        <span class="input-label span-input-color">DOB</span>
-                        <input style="background:white;height: 36px;" ng-required="true" type="date" placeholder="DOB" name="DOB" ng-model="signupData.DOB_pharmacist" 
-                        ng-class="{'error':iserr|| formPharmacist.DOB.$dirty && formPharmacist.DOB.$invalid}" />
-                    </label>
-                    <div class="err" ng-messages="formPharmacist.DOB.$error" ng-show="iserr||formPharmacist.DOB.$dirty && formPharmacist.DOB.$invalid">
-                            <small ng-message="required"
-                                ng-show="formPharmacist.DOB.$error">
-                                DOB is required 
-                            </small>
+                    <div class="item-input item-floating-label" >
+                      <span class="input-label sp_custom">DOB</span>
+                      <!-- <input class="ip_custom pl"  ng-required="true" type="date" placeholder="DOB" name="DOB" ng-model="signupData.DOB_pharmacist" 
+                      ng-class="{'error':iserr|| formPharmacist.DOB.$dirty && formPharmacist.DOB.$invalid}" /> -->
+
+                      <div style="width:100%">
+                        <input id="day" class="pl" auto-tab-to="month" type="tel" maxlength="2" placeholder="DD" 
+                        ng-model="signupData.DOB_pharmacist.date" ng-change="checkdate('date')" required/>
+                        <span style="float: left;width: 15px;margin-top: 13px; color:white">/</span>              
+                        <input id="month" class="pl" auto-tab-to="year" type="tel" maxlength="2" placeholder="MM" 
+                        ng-model="signupData.DOB_pharmacist.month" ng-change="checkdate('month')" required/>
+                        <span style="float: left;width: 15px;margin-top: 13px; color:white">/</span>
+                        <input id="year" class="pl" type="tel" maxlength="4" placeholder="YYYY" 
+                        ng-model="signupData.DOB_pharmacist.year" ng-change="checkdate('year')" required/>
+                      </div>
                     </div>
+                    <!-- <div class="err" ng-messages="formPharmacist.DOB.$error" ng-show="iserr||formPharmacist.DOB.$dirty && formPharmacist.DOB.$invalid">
+                      <small ng-message="required"
+                             ng-show="formPharmacist.DOB.$error">
+                             DOB is required 
+                      </small>
+                    </div> -->
                     <br>
-                     <label class="item item-input input_us" >
-                        <span class="input-label span-input-color">Email Pharmacis</span>
-                        <input style="background:white;height: 36px;" ng-required="true" type="email" placeholder="Email" name="email" ng-model="signupData.email_pharmacist" 
-                        ng-class="{'error':iserr|| formPharmacist.email.$dirty && formPharmacist.email.$invalid}" />
+                    <label class="item-input item-floating-label" >
+                      <span class="input-label sp_custom">Email Pharmacis</span>
+                      <input class="ip_custom pl"  ng-required="true" type="email" placeholder="Email" name="email" ng-model="signupData.email_pharmacist" 
+                      ng-class="{'error':iserr|| formPharmacist.email.$dirty && formPharmacist.email.$invalid}" />
                     </label>
-                     <div class="err" ng-messages="formPharmacist.email.$error" ng-show="iserr||formPharmacist.email.$dirty && formPharmacist.email.$invalid">
+                    <div class="err" ng-messages="formPharmacist.email.$error" ng-show="iserr||formPharmacist.email.$dirty && formPharmacist.email.$invalid">
                             <small ng-message="required"
                                 ng-show="formPharmacist.email.$error">
                                 Email is required 
                             </small>
                       </div>
                       <br>
-                    <label class="item item-input input_us" >
-                        <span class="input-label span-input-color">Phone Pharmacis</span>
-                        <input style="background:white;height: 36px;" type="number" placeholder="Phone" ng-model="signupData.phone_pharmacist" name="phone"
+                    <label class="item-input item-floating-label" >
+                        <span class="input-label sp_custom">Phone Pharmacis</span>
+                        <input class="ip_custom pl"  type="number" placeholder="Phone" ng-model="signupData.phone_pharmacist" name="phone"
                         ng-class="{'error':iserr|| formPharmacist.phone.$dirty && formPharmacist.phone.$invalid}" />
                     </label>
                      <div class="err" ng-messages="formPharmacist.phone.$error" ng-show="iserr||formPharmacist.phone.$dirty && formPharmacist.phone.$invalid">
@@ -69,9 +80,9 @@
                             </small>
                       </div>
                       <br>
-                      <label class="item item-input input_us" >
-                        <span class="input-label span-input-color">Mobile Pharmacis</span>
-                        <input style="background:white;height: 36px;" placeholder="Mobile" name="mobile" ng-model="signupData.mobile_pharmacist" required type="number"
+                      <label class="item-input item-floating-label" >
+                        <span class="input-label sp_custom">Mobile Pharmacis</span>
+                        <input class="ip_custom pl"  placeholder="Mobile" name="mobile" ng-model="signupData.mobile_pharmacist" required type="number"
                         ng-class="{'error':iserr|| formPharmacist.mobile.$dirty && formPharmacist.mobile.$invalid}" />
                     </label>
                     <div class="err" ng-messages="formPharmacist.mobile.$error" ng-show="iserr||formPharmacist.mobile.$dirty && formPharmacist.mobile.$invalid">
@@ -81,10 +92,10 @@
                             </small>
                         </div>
                         <br>
-                     <label class="item item-input input_us" >
-                        <span class="input-label span-input-color">Address Pharmacis</span>
+                     <label class="item-input item-floating-label" >
+                        <span class="input-label sp_custom">Address Pharmacis</span>
                     <br>
-                        <input placeholder="Address" name="address" ng-model="signupData.address_pharmacist" required type="text"
+                        <input placeholder="Address" name="address" ng-model="signupData.address_pharmacist" required type="text" class="ip_custom pl" 
                         gm-places-autocomplete id="autocomplete" ng-focus="disableTap()"
                         ng-class="{'error':iserr|| formPharmacist.address.$dirty && formPharmacist.address.$invalid}" />
                     </label>
@@ -95,9 +106,9 @@
                             </small>
                       </div>
                       <br>
-                    <label class="item item-input input_us" >
-                        <span class="input-label span-input-color">Surburb Pharmacis</span>
-                        <input style="background:white;height: 36px;"  placeholder="Surburb" name="surburb" ng-model="signupData.surburb_pharmacist" required type="text"
+                    <label class="item-input item-floating-label" >
+                        <span class="input-label sp_custom">Surburb Pharmacis</span>
+                        <input class="ip_custom pl"   placeholder="Surburb" name="surburb" ng-model="signupData.surburb_pharmacist" required type="text"
                         ng-class="{'error':iserr|| formPharmacist.surburb.$dirty && formPharmacist.surburb.$invalid}" />
                     </label> 
                      <div class="err" ng-messages="formPharmacist.surburb.$error" ng-show="iserr||formPharmacist.surburb.$dirty && formPharmacist.surburb.$invalid">
@@ -107,9 +118,9 @@
                             </small>
                       </div>
                       <br>
-                     <label class="item item-input input_us" >
-                        <span class="input-label span-input-color">PostCode Pharmacis</span>
-                        <input style="background:white;height: 36px;"  placeholder="PostCode" name="postcode" ng-model="signupData.postcode_pharmacist" required type="number"
+                     <label class="item-input item-floating-label" >
+                        <span class="input-label sp_custom">PostCode Pharmacis</span>
+                        <input class="ip_custom pl"   placeholder="PostCode" name="postcode" ng-model="signupData.postcode_pharmacist" required type="number"
                         ng-class="{'error':iserr|| formPharmacist.postcode.$dirty && formPharmacist.postcode.$invalid}" />
                     </label> 
                       <div class="err" ng-messages="formPharmacist.postcode.$error" ng-show="iserr||formPharmacist.postcode.$dirty && formPharmacist.postcode.$invalid">
@@ -119,9 +130,9 @@
                             </small>
                         </div>
                         <br>
-                      <label class="item item-input input_us" >
-                        <span class="input-label span-input-color">State Pharmacis</span>
-                        <input style="background:white;height: 36px;"  placeholder="State" name="state" ng-model="signupData.state_pharmacist" required type="text"
+                      <label class="item-input item-floating-label" >
+                        <span class="input-label sp_custom">State Pharmacis</span>
+                        <input class="ip_custom pl"   placeholder="State" name="state" ng-model="signupData.state_pharmacist" required type="text"
                         ng-class="{'error':iserr|| formPharmacist.state.$dirty && formPharmacist.state.$invalid}" />
                     </label> 
                      <div class="err" ng-messages="formPharmacist.state.$error" ng-show="iserr||formPharmacist.state.$dirty && formPharmacist.state.$invalid">
@@ -131,9 +142,9 @@
                             </small>
                       </div>
                       <br>
-                  <label class="item item-input input_us" >
-                        <span class="input-label span-input-color">Country Pharmacis</span>
-                        <input style="background:white;height: 36px;"  placeholder="Country" name="country" ng-model="signupData.country_pharmacist" required type="text"
+                  <label class="item-input item-floating-label" >
+                        <span class="input-label sp_custom">Country Pharmacis</span>
+                        <input class="ip_custom pl"   placeholder="Country" name="country" ng-model="signupData.country_pharmacist" required type="text"
                         ng-class="{'error':iserr|| formPharmacist.country.$dirty && formPharmacist.country.$invalid}" />
                     </label> 
                     <div class="err" ng-messages="formPharmacist.country.$error" ng-show="iserr||formPharmacist.country.$dirty && formPharmacist.country.$invalid">
@@ -143,45 +154,47 @@
                             </small>
                      </div>
                      <br>
-                    <label class="item item-input item-select input_us" >
-                        <span class="input-label span-input-color">Gender</span>
-                        <select ng-required="true" ng-model="signupData.gender_pharmacist" name="Title" class="browser-default">
-                            <option value="">Choose Gender</option>
-                            <option>Male</option>
-                            <option >Famale</option>
+                    <label class="item-input item-floating-label">
+                        <span class="span-ex" style="color:white; font-size:14px">Gender</span>
+                        <select ng-required="true" ng-model="signupData.gender_pharmacist" name="Gender" class="browser-default" 
+                        style="float: right; margin-top: -2px; border: none; height: 21px; 
+                        background-color: transparent; color:white">
+                            <option value="" style="color:black">Choose Gender</option>
+                            <option style="color:black">Male</option>
+                            <option style="color:black">Famale</option>
                         </select>
                         <hr class="customHr" ng-class="{'error':iserr|| signUpForm.gender_pharmacist.$dirty && signUpForm.gender_pharmacist.$invalid}">
                     </label>
                       <br>
 
-                    <label class="item item-input input_us" >
-                        <span class="input-label span-input-color">Preferred Name </span>
-                        <input style="background:white;height: 36px;"  placeholder="Preferred" ng-model="signupData.preferred_pharmacist" type="text"/>
+                    <label class="item-input item-floating-label" >
+                        <span class="input-label sp_custom">Preferred Name </span>
+                        <input class="ip_custom pl"   placeholder="Preferred" ng-model="signupData.preferred_pharmacist" type="text"/>
                     </label> 
                     <br>
-                    <label class="item item-input input_us" >
-                        <span class="input-label span-input-color">APHRA Pharmacis</span>
-                        <input style="background:white;height: 36px;"  placeholder="Preferred" ng-model="signupData.APHRA_pharmacist" type="text"/>
+                    <label class="item-input item-floating-label" >
+                        <span class="input-label sp_custom">APHRA Pharmacis</span>
+                        <input class="ip_custom pl"   placeholder="Preferred" ng-model="signupData.APHRA_pharmacist" type="text"/>
                     </label> 
                     <br>
-                    <label class="item item-input input_us" >
-                        <span class="input-label span-input-color">Proficident Pharmacis</span>
-                        <input style="background:white;height: 36px;"  placeholder="Preferred" ng-model="signupData.proficient_pharmacist" type="text"/>
+                    <label class="item-input item-floating-label" >
+                        <span class="input-label sp_custom">Proficident Pharmacis</span>
+                        <input class="ip_custom pl"   placeholder="Preferred" ng-model="signupData.proficient_pharmacist" type="text"/>
                     </label> 
                     <br>
-                     <li class="item item-checkbox " style="border:none" >
+                     <li class=" item item-checkbox " style="border: none;background-color: transparent;color: white;" >
                          <label class="checkbox ">
                            <input type="checkbox" ng-model="signupData.CPOP_pharmacist"  ng-true-value="1" ng-false-value="0">
                          </label>
                          CPOP
                     </li>
-                     <li class="item item-checkbox " style="border:none" >
+                     <li class=" item item-checkbox " style="border: none;background-color: transparent;color: white;" >
                          <label class="checkbox ">
                            <input type="checkbox" ng-model="signupData.HMR_pharmacist"  ng-true-value="1" ng-false-value="0">
                          </label>
                          HMR
                     </li>
-                     <li class="item item-checkbox " style="border:none" >
+                     <li class=" item item-checkbox " style="border: none;background-color: transparent;color: white;" >
                          <label class="checkbox ">
                            <input type="checkbox" ng-model="signupData.Compouding_pharmacist"  ng-true-value="1" ng-false-value="0">
                          </label>

@@ -10,7 +10,8 @@ angular.module('ion-google-place', [])
             return {
                 require: '?ngModel',
                 restrict: 'EA',
-                template: '<input type="text" readonly="readonly" class="ion-google-place" autocomplete="off">',
+                template: '<input type="text" readonly="readonly" class="ion-google-place" autocomplete="off" style="color:white">',
+                // template:'<label class="item-input label-custom-field"><span class="input-label span-input-color">Address</span><input type="text" readonly="readonly" autocomplete="off"  /></label>' ,
                 replace: true,
                 link: function(scope, element, attrs, ngModel) {
                     scope.locations = [];
@@ -31,7 +32,7 @@ angular.module('ion-google-place', [])
                             '<div class="bar bar-header item-input-inset">',
                                 '<label class="item-input-wrapper">',
                                     '<i class="icon ion-ios7-search placeholder-icon"></i>',
-                                    '<input class="google-place-search" style="color:black;padding-top: 18px;" type="search" ng-model="searchQuery" placeholder="Enter an address, place or ZIP code">',
+                                    '<input class="google-place-search" style="color:black;" type="search" ng-model="searchQuery" placeholder="Enter an address, place or ZIP code">',
                                 '</label>',
                                 '<button class="button button-clear">',
                                     'Cancel',

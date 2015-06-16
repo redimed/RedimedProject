@@ -10,12 +10,21 @@ angular.module('starter.main.pharmacistController',[])
 
                   if(result.status=="success"){
                       $scope.pharmacisinfo = result.data;
+
                       $scope.pharmacisinfo.DOB = new Date($scope.pharmacisinfo.DOB);
+                      var dateString = new Date($scope.pharmacisinfo.DOB).toString();
+                      var monthStr = new Date(dateString).getMonth();
+                      console.log(monthStr + 1);
+
+                      $scope.pharmacisinfo.DOB.date = dateString.substring(8,10);
+                      $scope.pharmacisinfo.DOB.month = dateString.substring(4,7);
+                      $scope.pharmacisinfo.DOB.year = dateString.substring(11,15);
+
                       $scope.pharmacisinfo.phone = parseInt($scope.pharmacisinfo.phone);
                       $scope.pharmacisinfo.mobile = parseInt($scope.pharmacisinfo.mobile);
                       
-                       $scope.getQualification();
-                        $scope.getExp();
+                      $scope.getQualification();
+                      $scope.getExp();
                   }
               })
        }
@@ -47,6 +56,8 @@ angular.module('starter.main.pharmacistController',[])
               $scope.pharmacisinfo.latitude = results[0].geometry.location.lat();
               $scope.pharmacisinfo.longitude = results[0].geometry.location.lng();
             }
+        $scope.pharmacisinfo.DOB = $filter('date')(Date.parse($scope.pharmacisinfo.DOB.year +'/'+  $scope.pharmacisinfo.DOB.month +'/'+ $scope.pharmacisinfo.DOB.date), 'yyyy/MM/dd');
+        console.log($scope.pharmacisinfo.DOB);
         console.log($scope.pharmacisinfo);
 	     	MainService.updatePharmasictInfo($scope.pharmacisinfo).then(function(result){
 	     		  if(result.status=="success"){
@@ -174,8 +185,11 @@ angular.module('starter.main.pharmacistController',[])
       $scope.exp = {};
       //add new exp 
       $scope.addNewExp = function(){
-        
+        $scope.exp.from_date = $filter('date')(Date.parse($scope.exp.from_date.year +'/'+  $scope.exp.from_date.month +'/'+ $scope.exp.from_date.date), 'yyyy/MM/dd');
+        $scope.exp.to_date = $filter('date')(Date.parse($scope.exp.to_date.year +'/'+  $scope.exp.to_date.month +'/'+ $scope.exp.to_date.date), 'yyyy/MM/dd');
+        console.log($scope.exp)
         MainService.addNewExp($scope.exp,$scope.pharmacisinfo.phamacist_id).then(function(result){
+              $scope.closeModalExperience();
               var alertPopup = $ionicPopup.alert({
                       title: 'Alert',
                       template: 'Add Exp Success'
@@ -202,7 +216,6 @@ angular.module('starter.main.pharmacistController',[])
             if(result.status=="success"){
                 $scope.expInfo = result.data;
                 $ionicLoading.hide();
-
             }else{
                 var alertPopup = $ionicPopup.alert({
                       title: 'Alert',
@@ -228,17 +241,34 @@ angular.module('starter.main.pharmacistController',[])
       }
       //oppen model exp edit
       $scope.modalEditExp = function(exp){
-           $scope.openModalExperience("Edit Experiences","editExp");
-           $scope.exp = exp;
-           $scope.exp.from_date =  new Date($scope.exp.from_date);
-            $scope.exp.to_date = new Date($scope.exp.to_date);
-            $scope.exp.exp_id = exp.exp_id;
+          $scope.openModalExperience("Edit Experiences","editExp");
+          $scope.exp = exp;
+          
+          $scope.exp.from_date =  new Date($scope.exp.from_date);
+          $scope.exp.to_date = new Date($scope.exp.to_date);
 
+          var fromString = new Date($scope.exp.from_date).toString();
+          var monthFromStr = $scope.exp.from_date.getMonth();
+          $scope.exp.from_date.date = fromString.substring(8,10);
+          $scope.exp.from_date.month = monthFromStr + 1;
+          $scope.exp.from_date.year = fromString.substring(11,15);
+
+          var toString = new Date($scope.exp.to_date).toString();
+          var monthToStr = $scope.exp.to_date.getMonth();
+          $scope.exp.to_date.date = toString.substring(8,10);
+          $scope.exp.to_date.month = monthToStr + 1;
+          $scope.exp.to_date.year = toString.substring(11,15);
+
+          $scope.exp.exp_id = exp.exp_id;
       }
       //update exp 
       $scope.updateExp = function(){
+          $scope.exp.from_date = $filter('date')(Date.parse($scope.exp.from_date.year +'/'+  $scope.exp.from_date.month +'/'+ $scope.exp.from_date.date), 'yyyy/MM/dd');
+          $scope.exp.to_date = $filter('date')(Date.parse($scope.exp.to_date.year +'/'+  $scope.exp.to_date.month +'/'+ $scope.exp.to_date.date), 'yyyy/MM/dd');
+          console.log($scope.exp);
           MainService.updateExp($scope.exp).then(function(result){
             if(result.status=="success"){
+               $scope.closeModalExperience();
                var alertPopup = $ionicPopup.alert({
                       title: 'Alert',
                       template: 'Edit Exp Success'
@@ -310,7 +340,24 @@ angular.module('starter.main.pharmacistController',[])
          //       }
          // });
         
-         
+         $scope.checkdate = function(type){
+          console.log("ADA")
+          if(type == "date"){
+            if($scope.pharmacisinfo.DOB.date > 31){
+              $scope.pharmacisinfo.DOB.date = "";
+            }
+          }
+          if(type=='month'){
+            if($scope.pharmacisinfo.DOB.month > 12){
+              $scope.pharmacisinfo.DOB.month = "";
+            }
+          }
+          if(type=='year'){
+            if($scope.pharmacisinfo.DOB.year > 2000){
+              $scope.pharmacisinfo.DOB.year = "";
+            }
+          }
+        }
           
    }
      
