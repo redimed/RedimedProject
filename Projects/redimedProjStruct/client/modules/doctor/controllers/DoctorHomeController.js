@@ -113,7 +113,14 @@ angular.module("app.loggedIn.doctor.home.controller",[])
 		}
 		else
 		{
-			DoctorService.getByUserId($scope.userInfo.id).then(function (data) {
+			$cookieStore.put('doctorInfo', {
+				doctor_id: 22,
+				NAME: 'Master',
+				Provider_no: '',
+				CLINICAL_DEPT_ID: 1
+			});
+			getDoctorInfo();
+			/*DoctorService.getByUserId(401).then(function (data) {
 		        if (data) 
 		        {
 		            $cookieStore.put('doctorInfo', {
@@ -124,7 +131,7 @@ angular.module("app.loggedIn.doctor.home.controller",[])
 		            });
 		            getDoctorInfo();
 		        }
-		    });
+		    });*/
 		}
 	}
 	$scope.checkIsDoctor();
