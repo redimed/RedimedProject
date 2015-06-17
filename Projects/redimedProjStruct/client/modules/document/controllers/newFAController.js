@@ -379,10 +379,26 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 						}
 					}
 					else{
-						line.RATE1 = result.data[0].RATE;
-						if(totalMode!==1){ 
-							line.RATING_VALUE1 = result.data[0].VALUE;
-							autoSummary(line);
+						if(line.SCORE_TYPE1 === 3){
+							console.log('rating result', result);
+							line.RATE1 = result.data[0].RATE;
+							if(line.details[0].VAL1_VALUE==="L"){
+								if(line.SCORE1<result.data[0].FROM_VALUE) line.comments[0].VALUE = 1;
+								else if(line.SCORE1>result.data[0].TO_VALUE) line.comments[0].VALUE = 3;
+								else line.comments[0].VALUE = 2;
+							}
+							else {
+								if(line.SCORE2<result.data[0].FROM_VALUE) line.comments[0].VALUE = 1;
+								else if(line.SCORE2>result.data[0].TO_VALUE) line.comments[0].VALUE = 3;
+								else line.comments[0].VALUE = 2;
+							}
+						}
+						else{
+							line.RATE1 = result.data[0].RATE;
+							if(totalMode!==1){ 
+								line.RATING_VALUE1 = result.data[0].VALUE;
+								autoSummary(line);
+							}
 						}
 					}
 				}
@@ -428,8 +444,25 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 						line.RATING_VALUE2 = null;
 					}
 					else{
-						line.RATE2 = result.data[0].RATE;
-						line.RATING_VALUE2 = result.data[0].VALUE;
+						if(line.SCORE_TYPE1 === 3){
+							console.log('rating result', result);
+							line.RATE2 = result.data[0].RATE;
+							if(line.details[0].VAL1_VALUE==="L"){
+								if(line.SCORE1<result.data[0].FROM_VALUE) line.comments[0].VALUE = 1;
+								else if(line.SCORE1>result.data[0].TO_VALUE) line.comments[0].VALUE = 3;
+								else line.comments[0].VALUE = 2;
+							}
+							else {
+								if(line.SCORE2<result.data[0].FROM_VALUE) line.comments[0].VALUE = 1;
+								else if(line.SCORE2>result.data[0].TO_VALUE) line.comments[0].VALUE = 3;
+								else line.comments[0].VALUE = 2;
+							}
+						}
+						else{
+							line.RATE2 = result.data[0].RATE;
+							line.RATING_VALUE2 = result.data[0].VALUE;
+						}
+						
 					}
 				}
 			});
