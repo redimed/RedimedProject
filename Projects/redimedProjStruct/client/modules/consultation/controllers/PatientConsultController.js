@@ -45,14 +45,23 @@ angular.module("app.loggedIn.patient.consult.controller",[])
                     $scope.referralAddForm.close();
             }
 		};
+		$scope.patient_id = $stateParams.patient_id;
+		$scope.cal_id = $stateParams.cal_id;
+		$scope.userInfo = $cookieStore.get('userInfo');
 		/*
 		* phanquocchien.c1109g@gmail.com
-		* set actionCenter history
 		 */
-		$scope.actionCenterTabHistory = {
-			patient_id : $stateParams.patient_id
+		$scope.actionCenter = {};
+		$scope.setListConsultationOfPatient = function(){
+			ConsultationService.getListConsultOfPatient($stateParams.patient_id).then(function(data){
+				if (data.status == 'success') {
+					$scope.actionCenter.listConsultOfPatient = data.data;
+					console.log($scope.actionCenter.listConsultOfPatient);
+				};
+			});
 		}
-		$scope.actionCenterTabHistory.showPopupHistory = function(data){
+		$scope.setListConsultationOfPatient();
+		$scope.actionCenter.showPopupHistory = function(data){
 			var modalInstance = $modal.open({
 				templateUrl:'modules/consultation/dialogs/dialogs_consult_history.html',
 				controller: 'ConsultHistoryController',
@@ -64,28 +73,25 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			})
 			
 		}
-		$scope.actionCenterBottomHistory = {
-			patient_id : $stateParams.patient_id
-		}
-		$scope.actionCenterBottomHistory.showPopupHistory = function(data){
-			var modalInstance = $modal.open({
-				templateUrl:'modules/consultation/dialogs/dialogs_consult_history.html',
-				controller: 'ConsultHistoryController',
-				resolve: {
-					consults:function(){
-						return data;
-					}
-				}
+		$scope.getImgDrawingHistory = function(){
+			console.log($scope.cal_id)
+			console.log($stateParams.patient_id)
+			$scope.listImgDrawingHistory = {};
+			ConsultationService.getImgDrawingHistory($stateParams.patient_id,$scope.cal_id).then(function(data){
+				if (data.status == 'success') {
+					$scope.listImgDrawingHistory = data.data;
+					console.log('aaaa',$scope.listImgDrawingHistory);
+				};
 			})
-			
+		}
+		$scope.getImgDrawingHistory();
+		$scope.loadImgDrawing = function(){
+			$scope.getImgDrawingHistory();
 		}
 		$scope.showPopupConsultationHistory = function(){
 			angular.element('#popupConsultationHistory').modal('show');
 		}
-		/*chien end*/
-		$scope.patient_id = $stateParams.patient_id;
-		$scope.cal_id = $stateParams.cal_id;
-		$scope.userInfo = $cookieStore.get('userInfo');
+
 		//chien show patien bar
         $scope.patientBarVer.version='zip';
         
@@ -699,8 +705,8 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			                    /*phanquocchien.c1109g@gmail.com
 								* load data consultation history
 			                    */
-			                    $scope.actionCenterTabHistory.load();
-			                    $scope.actionCenterBottomHistory.load();
+			                    $scope.setListConsultationOfPatient();
+								$scope.getImgDrawingHistory();
 			                }
 			                else{
 			                    toastr.error('Save Item Failed!');

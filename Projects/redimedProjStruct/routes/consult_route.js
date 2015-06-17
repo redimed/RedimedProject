@@ -24,6 +24,8 @@ app.post('/api/consultation/beforeFinishSession',ConsultationController.beforeFi
 app.post('/api/consultation/finishSession',ConsultationController.finishSession);
 app.post('/api/consultation/getApptPatient',ConsultationController.getApptPatient);
 app.post('/api/consultation/check-consultation-patientID-calID',ConsultationController.checkConsultation);
+app.post('/api/consultation/get-img-drawing-history',ConsultationController.getImgDrawingHistory);
+app.get('/api/consultation/drawing/image/:imageId',ConsultationController.drawingImageById);
 //
 //phanquocchien.c1109g@gmail.com
 //11-06-2015

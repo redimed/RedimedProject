@@ -146,7 +146,7 @@
 										<span class="input-group-btn ">
 										<button class="btn un-btn-black-label" type="button">Time</button>
 										</span>
-										<label type="text" class="form-control un-input-xam-fig">{{current_patient.FROM_TIME|date:'dd/MM/yyyy - hh:mm'}}</label>
+										<label type="text" class="form-control un-input-xam-fig">{{current_patient.FROM_TIME | moment: 'utc' | moment: 'format': 'DD/MM/YYYY hh:mm'}}</label>
 									</div>
 								</div>
 							</div>
@@ -206,7 +206,7 @@
 										<span class="input-group-btn ">
 										<button class="btn un-btn-black-label" type="button">Time</button>
 										</span>
-										<label type="text" class="form-control un-input-xam-fig">{{current_patient.FROM_TIME|date:'dd/MM/yyyy - hh:mm'}}</label>
+										<label type="text" class="form-control un-input-xam-fig">{{current_patient.FROM_TIME| moment: 'utc' | moment: 'format': 'DD/MM/YYYY hh:mm'}}</label>
 									</div>
 								</div>
 							</div>
