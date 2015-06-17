@@ -32,7 +32,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 				$scope.header.PATIENT_ID = patient_id;
 				$scope.header.CAL_ID = cal_id;
 				$scope.header.ASSESSED_SIGN = '';
-				$scope.header.ASSESSED_DATE = moment($scope.header.ASSESSED_DATE).format("YYYY-MM-DD hh:mm:ss");
+				$scope.header.ASSESSED_DATE = moment().format("YYYY-MM-DD hh:mm:ss");
 				//get lines of section
 				$scope.header.sections.forEach(function(section){
 					section.PATIENT_ID = patient_id;
