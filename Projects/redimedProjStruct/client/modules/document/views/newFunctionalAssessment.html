@@ -144,7 +144,7 @@
 								<div class="col-md-3 col-sm-3 col-xs-3" ng-if="detail.IsCommentText===1" >
 									<input type="text" name="detailComment" class="form-control" ng-model="detail.COMMENTS" ng-required="(detail.VAL1_ISCOMMENT_WHEN_YES === 1 && detail.VAL1_CHECKBOX==='1') || (detail.VAL1_ISCOMMENT_WHEN_NO === 1 && detail.VAL1_CHECKBOX!=='1') || (detail.VAL2_ISCOMMENT_WHEN_YES === 1 && detail.VAL2_CHECKBOX==='1') || (detail.VAL2_ISCOMMENT_WHEN_NO === 1 && detail.VAL2_CHECKBOX!=='1')">
 									<!-- <input type="text" name="detailComment" class="form-control" ng-model="detail.COMMENTS" ng-required="(detail.VAL1_ISCOMMENT_WHEN_NO === 1 && detail.VAL1_CHECKBOX!=='1') || (detail.VAL2_ISCOMMENT_WHEN_NO === 1 && detail.VAL2_CHECKBOX!=='1')"> -->
-									<label style="color: #8b0000" ng-show="detailForm.detailComment.$invalid">Required!</label>
+									<label style="color: #8b0000" ng-show="clickedValidation && detailForm.detailComment.$invalid">Required!</label>
 								</div>
 							<!-- end Unable/Partial/Able checkbox with detail comment -->
 							</div>
