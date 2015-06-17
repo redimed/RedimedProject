@@ -1,54 +1,64 @@
 <ion-view title="Profile">
+    <ion-content class="content-scroll" style="background:#015190">
+        <div class="transparent-modal-phone" style="width: 100%; height: 100%">
+            <div >
+                <div class="header-logo">
+                    <img src="img/main_logo.png" class="img-header">
+                </div>
+                <div class="background-header-logo-child">
+                    <span class="span-header">Injury Management</span>
 
-  <ion-nav-buttons side="left">
-    <a menu-toggle="left" class="button button-icon icon ion-navicon  " style="color:#fff"></a>
-  </ion-nav-buttons>
+                </div>
+                <div style="width: 100%;height: 49px;float: left;position: absolute;">
+                    <span style="float: right;padding-right: 10%;padding-top: 30px;font-weight: 600;color: white;">Profile</span>
+                </div>
+            </div>
+            <div class="actionBar">
+                <button menu-toggle="left" class="button button-icon icon ion-navicon " style="color:#fff;float:left;"></button>
+            </div>
+            <div style="margin-top:100px">
+                <form name="userForm" ng-submit="updateUserProfile(userForm)" method="post" novalidate>
+                    <ion-list>
 
-  <ion-nav-buttons side="right">
-    <a menu-toggle="right" class="button button-icon icon ion-android-contacts" style="color:#fff"></a>
-  </ion-nav-buttons>
-
-  <ion-content class="padding has-header">
-    <form name="userForm" ng-submit="updateUserProfile(userForm)" method="post" novalidate>
-      <ion-list>
-        <label class="item item-input label-custom-field">
-          <span class="input-label">User Name</span>
-          <input type="text" ng-model="info.username" disabled>
-        </label>
-
-        <label class="item item-input label-custom-field">
-          <span class="input-label">Password</span>
-          <div class="col-md-5">
-            <button type="submit" class="button button-clear button-full" style="border: 1px solid #e67e22;
-                        color: #e67e22; border-radius: 5px;" ui-sref="app.changePass">
-              <i class="icon ion-edit"></i> change password
-            </button>
-          </div>
-        </label>
-
-        <label class="item item-input label-custom-field">
-          <span class="input-label">Full Name</span>
-          <input type="text" ng-model="detail.Booking_Person" />
-        </label>
-
-        <label class="item item-input label-custom-field">
-          <span class="input-label">Phone</span>
-          <input type="tel" maxlength="11" ng-model="detail.Contact_number" />
-        </label>
-
-        <label class="item item-input label-custom-field">
-          <span class="input-label">Email</span>
-          <input type="text" ng-model="detail.Contact_email" />
-        </label>
-      </ion-list>
-      <div class="row responsive-sm">
-        <div class="col col-80 col-offset-10">
-          <button type="submit" class="button button-clear button-full" style="border: none; background-color: #1ABC9C;color: #f0f0f0; font-size: 20px; border-radius: 5px;">
-            Save
-          </button>
+                        <label class="item-input label-custom-field">
+                            <span class="input-label span-input-color span-input-color">User Name</span>
+                            <input type="text" ng-model="info.username" disabled class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
+                        </label>
+                        <div class="bd-bottom"></div>
+                        <label class="item-input label-custom-field">
+                            <span class="input-label span-input-color">Password</span>
+                            <div class="col-md-5">
+                                <button type="submit" class="button-changepass" ui-sref="app.changePass">
+                                    Change Password
+                                </button>
+                            </div>
+                        </label>
+                        <div class="bd-bottom"></div>
+                        <label class="item-input label-custom-field">
+                            <span class="input-label span-input-color">Full Name</span>
+                            <input type="text" ng-model="detail.Booking_Person"  class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
+                        </label>
+                        <div class="bd-bottom"></div>
+                        <label class="item-input label-custom-field">
+                            <span class="input-label span-input-color">Phone</span>
+                            <input type="tel" maxlength="11" ng-model="detail.Contact_number" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
+                        </label>
+                        <div class="bd-bottom"></div>
+                        <label class="item-input label-custom-field">
+                            <span class="input-label span-input-color">Email</span>
+                            <input type="text" ng-model="detail.Contact_email" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
+                        </label>
+                        <div class="bd-bottom"></div>
+                    </ion-list>
+                    <div class="row responsive-sm">
+                        <div class="col col-80 col-offset-10">
+                            <button type="submit" class="button-saveprofile">
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
-      </div>
-    </form>
-  </ion-content>
-
+    </ion-content>
 </ion-view>

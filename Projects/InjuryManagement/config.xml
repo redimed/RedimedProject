@@ -33,9 +33,6 @@
   <feature name="Insomnia">
     <param name="android-package" value="nl.xservices.plugins.Insomnia" />
   </feature>
-  <feature name="GpsDetectionPlugin">
-    <param name="android-package" value="com.hp.gpsdetection.GPSDetectionPlugin" />
-  </feature>
 
   <!--ANDROID CONFIG ICON APPLICATION-->
   <platform name="android">

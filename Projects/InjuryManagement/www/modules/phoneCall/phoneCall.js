@@ -6,6 +6,7 @@ angular.module('starter.phoneCall',[
         $stateProvider
             .state('app.phoneCall',{
                 url: "/phoneCall/:callUser/:apiKey/:sessionID/:tokenID:?isCaller",
+                cache: false,
                 views: {
                     'menuContent' : {
                         templateUrl: "modules/phoneCall/views/main.html",

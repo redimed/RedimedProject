@@ -532,7 +532,10 @@ angular.module('app.config', [])
             {id:2,label:'Normal Unable/Partial/Able'},
             {id:4,label:'Unable=Partial=0, Able=1'},
             {id:5,label:'Unable=0, Partial=1, Able=2'},
-            {id:3,label:'Yes/No'}
+            {id:3,label:'Yes/No'},
+            {id:6,label:'Dominant Hand'},
+            {id:7,label:'Job Demand (weight in kg)'},
+            {id:8,label:'Job Demand (distance in m)'},
         ])
 .factory('ConfigService', function(VALUE_TYPE, SCORE_TYPE, COMMENT_TYPE, TIMETABLE_DAY_OF_WEEK, PRIORITY_OPTION, DAY_OF_WEEK, NUMBER_OF_WEEK, SEX_LIST, YES_NO_OPT, ACC_TYPE, APP_TYPE, APPT_STATUS, MONTH_IN_YEAR, INVOICE_STATUS, RECALL_PERIOD, RECALL_REMIND, MEDICINE_UNIT, Restangular) {
     var configService = {};

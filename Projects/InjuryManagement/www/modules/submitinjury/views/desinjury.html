@@ -1,63 +1,66 @@
-<ion-view title="Description Injury">
-    <ion-nav-buttons side="left">
-        <button class="button button-icon icon ion-ios-arrow-left" style="color:#fff" ui-sref="app.injury.info">&nbsp;Back</button>
-    </ion-nav-buttons>
-
-    <!--<ion-nav-buttons side="right">-->
-        <!--<button class="button button-icon fa fa-camera" style="color:#fff" ng-click="takePicture()"></button>-->
-    <!--</ion-nav-buttons>-->
-
-    <form name="descinjury" novalidate>
-        <ion-content class="padding has-header">
-            <ion-list>
-                <div style="z-index: 1; position:relative; width: 100%; top: 20px;">
-                    <label class="item item-input label-custom-field" >
-                        <span class="input-label span-input-color">Injury Date</span>
-                        <input ng-required="true" type="date" ng-model="worker.injury_date" name="injury_date" ng-class="{'has-error':isSubmitdesc && descinjury.injury_date.$invalid}" />
-                    </label>
-
-
-                    <label class="item item-input item-stacked-label label-custom-field">
-                        <span class="input-label span-input-color">Injury Description</span>
-                        <textarea class="materialize-textarea" ng-required="true" type="text" ng-model="worker.injury_description" name="injury_description" rows="8" cols="10"  ng-class="{'has-error':isSubmitdesc && descinjury.injury_description.$invalid}"></textarea>
-                    </label>
-
-
-                    <!-- <div class="row">
-                      <form class="col s12">
-                        <div class="row">
-                          <div class="input-field col s12">
-                            <textarea class="materialize-textarea" ng-required="true" type="text" ng-model="worker.injury_description" name="injury_description" rows="8" cols="10" ng-class="{'has-error':isSubmitdesc && descinjury.injury_description.$invalid}"></textarea>
-                            <label>Injury Description</label>
-                          </div>
-                        </div>
-                      </form>
-                    </div> -->
-                    <div class="footer_injury padding-top">
-                        <ion-scroll direction="x">
-                            <a ng-repeat="imgDetail in imgURI" ng-click="selectImg(imgDetail)">
-                                <img ng-src="{{imgDetail.image}}" class="a-img-custom img-thumbnail"/>
-                            </a>
-                        </ion-scroll>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <button class="button button-clear btn-emer red" ng-click="showConfirm(descinjury,isClick=true)" >
-                                <i class="fa fa-ambulance"></i>
-                                <br>
-                                <span>Emergency</span>
-                            </button>
-                        </div>
-                        <div class="col">
-                            <button class="button button-clear btn-non-emer blue" ng-click="showConfirm(descinjury,isClick=false)">
-                                <i class="fa fa-calendar"></i>
-                                <span>Non-Emergency</span>
-                            </button>
-                        </div>
-                    </div>
+<ion-view >
+    <ion-content class="content-scroll" style="background:#015190">
+        <div class="transparent-modal-phone" style="width: 100%; height: 100%">
+            <div >
+                <div class="header-logo">
+                    <img src="img/main_logo.png" class="img-header">
                 </div>
-            </ion-list>
-        </ion-content>
-    </form>
+                <div class="background-header-logo-child">
+                    <span class="span-header">Injury Management</span>
+                </div>
+                <div style="width: 100%;height: 49px;float: left;position: absolute;">
+                    <span style="float: right;padding-right: 10%;padding-top: 30px;font-weight: 600;color: white;">Description Injury</span>
+                </div>
+                <div class="actionBar">
+                    <a class="button button-icon" style="color:#fff;float:left" ui-sref="app.injury.info"><i class="icon ion-arrow-left-c"></i></a>
+                    <a class="button button-icon icon ion-ios-camera" style="color:#fff;float:right" ng-click="takePicture()"></a>
+                </div>
+            </div>
+
+            <form name="descinjury" novalidate style="margin-top: 50px">
+                <ion-list>
+                    <div style="position: absolute;margin-top: 50px;width: 100%;">
+                        <label class="item-input label-custom-field" >
+                            <span class="input-label span-input-color">Injury Date</span>
+                            <input ng-required="true" type="date" ng-model="worker.injury_date" name="injury_date" ng-class="{'has-error':isSubmitdesc && descinjury.injury_date.$invalid}" class="pl " style="color:white"/>
+                            <i class="icon ion-android-arrow-dropdown" style="font-size: 20px;margin-right: 52px;"></i>
+                        </label>
+                        <div class="bd-bottom"></div>
+
+                        <label class=" item-input label-custom-field">
+                            <span class="input-label span-input-color">Injury Description</span>
+                            <input  ng-required="true" type="text" ng-model="worker.injury_description" name="injury_description" rows="8" cols="10"  ng-class="{'has-error':isSubmitdesc && descinjury.injury_description.$invalid}" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"></input>
+                        </label>
+                        <div class="bd-bottom"></div>
+                        <br>
+
+                        <div class="footer_injury padding-top">
+                            <ion-scroll direction="x">
+                                <a ng-repeat="imgDetail in imgURI" ng-click="selectImg(imgDetail)">
+                                    <img ng-src="{{imgDetail.image}}" class="a-img-custom"/>
+                                </a>
+                            </ion-scroll>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <a class="button btn-emer" ng-click="showConfirm(descinjury,isClick=true)" >
+                                    <span>Emergency</span>
+                                </a>
+                            </div>
+                            <div class="col">
+                                <a class="button btn-non-emer" ng-click="showConfirm(descinjury,isClick=false)">
+                                    <span>Non-Emergency</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </ion-list>
+            </form>
+
+        </div>
+
+    </ion-content>
+
+
 </ion-view>
 

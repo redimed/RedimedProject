@@ -37616,14 +37616,10 @@ function($ionicModal, $ionicPosition, $document, $window) {
 var POPUP_TPL =
   '<div class="popup-container">' +
     '<div class="popup">' +
-      '<div class="popup-head">' +
-        '<h3 class="popup-title" ng-bind-html="title"></h3>' +
-        '<h5 class="popup-sub-title" ng-bind-html="subTitle" ng-if="subTitle"></h5>' +
-      '</div>' +
       '<div class="popup-body">' +
       '</div>' +
       '<div class="popup-buttons">' +
-        '<button ng-repeat="button in buttons" ng-click="$buttonTapped(button, $event)" class="button" ng-class="button.type || \'button-default\'" ng-bind-html="button.text"></button>' +
+        '<button ng-repeat="button in buttons" ng-click="$buttonTapped(button, $event)" class="button btn-bgImage-popUp" ng-class="button.type || \'button-default\'" ng-bind-html="button.text"></button>' +
       '</div>' +
     '</div>' +
   '</div>';

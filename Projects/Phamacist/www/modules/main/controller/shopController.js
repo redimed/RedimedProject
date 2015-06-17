@@ -189,24 +189,25 @@ angular.module('starter.main.shopController',["isteven-multi-select", 'ngAutocom
                   }else{
                   MainService.updateShopCompany($scope.shopInfo).then(function(result){
                   if(result.status=="success"){
-                       $scope.closeModalShop();
+                       $ionicLoading.hide();
                        var alertPopup = $ionicPopup.alert({
                           title: 'Alert',
                           template: 'Update Shop Success'
                         });
                        alertPopup.then(function(res) { 
                               $scope.selectShopByCompany();
-                              $scope.closeModalShop()
+                              $state.go('app.main.shop');
+                              // $scope.closeModalShop()
                        });
                  }
                 })
               }
               }else{
                   $ionicLoading.hide();
-                        var alertPopup = $ionicPopup.alert({
-                              title: 'Alert',
-                              template: 'Error'
-                            });
+                  var alertPopup = $ionicPopup.alert({
+                    title: 'Alert',
+                    template: 'Error'
+                  });
               }
             })
           }
@@ -299,6 +300,10 @@ angular.module('starter.main.shopController',["isteven-multi-select", 'ngAutocom
                   //     console.log(selValues);
                   alert("Please choose Shop");
                 }else{
+                  $scope.post.Start_date = $filter('date')( Date.parse($scope.post.Start_date.year +'/'+  $scope.post.Start_date.month +'/'+ $scope.post.Start_date.date), 'yyyy/MM/dd');
+                  $scope.post.required_date = $filter('date')( Date.parse($scope.post.required_date.year +'/'+  $scope.post.required_date.month +'/'+ $scope.post.required_date.date), 'yyyy/MM/dd');
+                  console.log($scope.post);
+
                   $scope.post.company_id = $scope.companyinfo.company_id;
                   $scope.itemShop_id = [];
                   for (var i = 0; i < outputShop.length; i++) {

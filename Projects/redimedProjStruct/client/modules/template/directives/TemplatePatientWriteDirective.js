@@ -1,6 +1,6 @@
 angular.module('app.loggedIn.template.directives.patient_write', [])
 
-.directive('templatePatientWrite', function($modal, $cookieStore, $state, $stateParams, $timeout, TemplateModel, toastr, PatientService){
+.directive('templatePatientWrite', function($modal, $window, $cookieStore, $state, $stateParams, $timeout, TemplateModel, toastr, PatientService){
 	return {
 		restrict: 'EA',
 		scope: {
@@ -13,13 +13,21 @@ angular.module('app.loggedIn.template.directives.patient_write', [])
 		link: function(scope, elem, attrs){
 
 			scope.exportPDF = function(){
-				TemplateModel.write({name: scope.template.one.name, content: scope.template.one.content})
+				var content = $('#writeTemplate').html();
+
+				content = content.replace(/&nbsp;&nbsp;/g, '</input>');
+
+				content = content.replace(/<br>/g, '<br/>');
+
+				console.log(content);
+
+				TemplateModel.write({name: scope.template.one.name, content: content})
 				.then(function(response){
-					console.log(response);
-					TemplateModel.download({id: response.data.id, cal_id: $stateParams.cal_id, patient_id: $stateParams.patient_id})
+					$window.open(TemplateModel.download({id: response.data.id, cal_id: $stateParams.cal_id, patient_id: $stateParams.patient_id}));
+					/*TemplateModel.download({id: response.data.id, cal_id: $stateParams.cal_id, patient_id: $stateParams.patient_id})
 					.then(function(result){
 						scope.success = {template_temp_id: response.data.id, template_temp_name: response.data.name};
-					}, function(error){})
+					}, function(error){})*/
 				}, function(error){})
 			}
 
@@ -65,7 +73,7 @@ angular.module('app.loggedIn.template.directives.patient_write', [])
 						var new_string_change = "";
 
 						if(split_string_change.length === 1){
-							new_string_change = '<input class="custom-input-template" placeholder="Please fill in"/>';
+							new_string_change = '<input class="custom-input-template" value="" placeholder="Please fill in">&nbsp;&nbsp;';
 						}else{
 							var field = split_string_change[1];
 
@@ -87,6 +95,7 @@ angular.module('app.loggedIn.template.directives.patient_write', [])
 					$('#writeTemplate').html(new_content);
 					$('.custom-input-template').on('input', function(e){
 						$(this).attr('size', e.target.value.length);
+						$(this).attr('value', e.target.value);
 					});
 				})
 			}

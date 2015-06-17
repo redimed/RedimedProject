@@ -13,6 +13,10 @@
                             "count": 1
                         },
                         {
+                            "xml": "<feature name=\"PhoneDialer\"><param name=\"ios-package\" value=\"PhoneDialer\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"DatePicker\"><param name=\"ios-package\" value=\"DatePicker\" /></feature>",
                             "count": 1
                         },
@@ -116,6 +120,9 @@
             "PACKAGE_NAME": "com.ionicframework.webinjury303714"
         },
         "com.ionic.keyboard": {
+            "PACKAGE_NAME": "com.ionicframework.webinjury303714"
+        },
+        "com.phonegap.core.phonedialer": {
             "PACKAGE_NAME": "com.ionicframework.webinjury303714"
         },
         "com.plugin.datepicker": {

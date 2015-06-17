@@ -36,6 +36,7 @@ angular.module('app.loggedIn.template.directives.patient_list', [])
 				})
 
 				modalInstance.result.then(function(result){
+					console.log(result);
 					scope.success = result;
 				})
 			}

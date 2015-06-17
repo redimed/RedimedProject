@@ -5,7 +5,7 @@
          <button class="button button-icon icon fa fa-plus " style="color:#fff" ng-click="openModalUserInCompany('Add New User','addNew')"></button>
       </div>
     
-    <ion-content style="background: #2bbbd6">
+    <ion-content class="background-content">
         <div class="list card" ng-repeat="user in dataUserIncompany" ng-if="user.user_id !== userInfo.user_id">
           <div class="item item-avatar" >
             <img ng-src="img/app-icons/android/mipmap-hdpi/logo.png">

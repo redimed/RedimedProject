@@ -15,7 +15,8 @@ angular.module('starter.booking',[
                     }
                 })
                 .state('app.detailBooking', {
-                    url:"/DetailBooking/:PatientID",
+                      cache: false,
+                    url:"/DetailBooking",
                     views:{
                         'menuContent':{
                             templateUrl:"modules/onlineBooking/views/rlob_info_booking.html",

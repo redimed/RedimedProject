@@ -8,7 +8,6 @@
     display: none;
 }
 
-
 input.ion-google-place[readonly]{
     background-color: transparent;
     cursor: text;
