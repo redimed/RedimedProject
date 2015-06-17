@@ -3086,10 +3086,30 @@ label{
     float:right;
     outline: none;
 }
-.edit_sub_menu:hover {
-   width: 122.5%;
+.edit_sub_menu:hover{
+   width: 122.5% ;
 }
-
+.edit_sub_menu{
+   width: 122.5% ;
+}
+.edit_sub_menu2_change {
+    width:250px !important;
+    margin-top: -0.5% !important;
+}
+.edit_sub_menu2_not_change {
+    width:250px !important; 
+    position: absolute; 
+    margin-top: -28.1% !important;
+}
+.change_menus {
+    width: 80%;
+}
+.span_menus {
+    margin-top:-5px !important;
+    margin-left:38px;
+    font-size:10px; 
+    float:left;
+}
 /*giang css end*/
 /* END VUONG */
 /*TAN NAV ITEM DROPDOWN END*/
@@ -3750,3 +3770,8 @@ label{
     outline: 0;
     background-color: transparent;
 }
+
+
+
+
+
