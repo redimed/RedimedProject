@@ -1,6 +1,6 @@
 var db = require('../models');
 var mdt_functions = require('../mdt-functions.js');
-
+var moment=require('moment');
 var InvoiceLineModel = require('../v1_models/Cln_invoice_lines.js');
 
 module.exports = {
@@ -160,9 +160,14 @@ module.exports = {
 	postCheckIn: function(req, res) {
 		var cal_id = req.body.CAL_ID;
 		var patient_id = req.body.Patient_id;
-		var postData = req.body.data;
+		var start_time = moment().format("YYYY/MM/DD HH:mm:ss");
+		var appt_status = req.body.data.appt_status;
+		var postData = {
+			appt_status:appt_status,
+            checkedin_start_time:start_time
+		};
 
-		 db.ApptPatient.update(postData, {
+		db.ApptPatient.update(postData, {
             CAL_ID: cal_id,
             Patient_id: patient_id
         })
