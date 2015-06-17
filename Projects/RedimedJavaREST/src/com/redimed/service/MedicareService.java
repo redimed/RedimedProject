@@ -40,7 +40,7 @@ public class MedicareService {
 	Ini ini = null;
 	
 	public int getSessionId(){
-		
+
 		InputStream asStream = MedicareService.class.getResourceAsStream("/iniFile/ErrorList.ini");
 		try {
 			ini = new Ini(asStream);
@@ -77,7 +77,6 @@ public class MedicareService {
 
 		EasyclaimAPI.getInstance().setSessionElement(sessionId, "LogicPackDir", logicPackDir);
 		
-
 		return sessionId;
 	}
 
@@ -88,7 +87,7 @@ public class MedicareService {
 	public Response verifyPVM(String json) {
 		
 		Map<String,Object> patient = new Gson().fromJson(json, Map.class);
-
+			
 		int sessionId = getSessionId();
 
 		Vector rs = new Vector();
@@ -125,9 +124,7 @@ public class MedicareService {
 			return returnOPVJson(rval);
 
 		if(rval == 0)
-		{
 			rval = EasyclaimAPI.getInstance().sendContent(sessionId, "HIC/HolMedical/PatientVerificationRequest@4", "Pass-123");
-		}
 		else
 			return returnOPVJson(rval);
 
@@ -135,14 +132,10 @@ public class MedicareService {
 			rval = EasyclaimAPI.getInstance().isReportAvailable(sessionId);
 		else
 			return returnOPVJson(rval);
-
 		
 		Vector statusCode = new Vector();
 		if(rval == 0)
-		{
 			rval = EasyclaimAPI.getInstance().getReportElement(sessionId,"MedicareStatusCode", statusCode);
-			
-		}
 		else
 			return returnOPVJson(rval);
 
@@ -164,16 +157,10 @@ public class MedicareService {
 				
 			}
 			else
-			{
-				return returnOPVJson(code);
-			}
-			
+				return returnOPVJson(code);			
 		}
 		else
-		{
 			return returnOPVJson(rval);
-		}
-
 	}
 	
 	@Path("bulkBill")
@@ -186,9 +173,7 @@ public class MedicareService {
 //		ArrayList itemArr = new Gson().fromJson(jsonObj.get("items").toString(), ArrayList.class);
 		
 		int sessionId = getSessionId();
-		
-		System.out.println(sessionId);
-		
+
 		Vector r1 = new Vector();
 		rval = EasyclaimAPI.getInstance().createBusinessObject(sessionId, "HIC/HolClassic/DirectBillClaim@1", "", "", r1);
 		
@@ -209,12 +194,12 @@ public class MedicareService {
 			return returnOPVJson(rval);
 
 		if(rval == 0)
-			rval = EasyclaimAPI.getInstance().setBusinessObjectElement(sessionId,r1.get(0).toString(), "ServicingProviderNum", "2422621L");
+			rval = EasyclaimAPI.getInstance().setBusinessObjectElement(sessionId,r1.get(0).toString(), "ServicingProviderNum", jsonObj.get("providerNum").toString());
 		else
 			return returnOPVJson(rval);
 		
 		if(rval == 0)
-			rval = EasyclaimAPI.getInstance().setBusinessObjectElement(sessionId,r1.get(0).toString(), "ServiceTypeCde", "S");
+			rval = EasyclaimAPI.getInstance().setBusinessObjectElement(sessionId,r1.get(0).toString(), "ServiceTypeCde", jsonObj.get("typeCode").toString());
 		else
 			return returnOPVJson(rval);
 		
@@ -250,7 +235,7 @@ public class MedicareService {
 			return returnOPVJson(rval);
 		
 		if(rval == 0)
-			rval = EasyclaimAPI.getInstance().setBusinessObjectElement(sessionId,r3.get(0).toString(), "PatientMedicareCardNum", "3950328551");
+			rval = EasyclaimAPI.getInstance().setBusinessObjectElement(sessionId,r3.get(0).toString(), "PatientMedicareCardNum", "3950328550");
 		else
 			return returnOPVJson(rval);
 		
@@ -288,11 +273,8 @@ public class MedicareService {
 		}
 		else
 			return returnOPVJson(rval);
-		
-		
-		
-		EasyclaimAPI.getInstance().resetSession(sessionId);
 
+		EasyclaimAPI.getInstance().resetSession(sessionId);
 
 		return returnOPVJson(rval);
 	}
