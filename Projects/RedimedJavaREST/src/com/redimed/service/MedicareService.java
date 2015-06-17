@@ -238,20 +238,36 @@ public class MedicareService {
 		else
 			return returnOPVJson(rval);
 		
-		Vector r4 = new Vector();
-		if(rval == 0)
-			rval = EasyclaimAPI.getInstance().createBusinessObject(sessionId, "Service",r3.get(0).toString(),"C001", r4);
-		else
-			return returnOPVJson(rval);
-		
 		if(rval == 0)
 		{
 			for(int i=0; i<itemArr.size(); i++)
 			{
 				Map<String, Object> item = new Gson().fromJson(itemArr.get(i).toString(), Map.class);
 				
-				EasyclaimAPI.getInstance().setBusinessObjectElement(sessionId,r4.get(0).toString(), "ItemNum", item.get("itemNum").toString());
-				EasyclaimAPI.getInstance().setBusinessObjectElement(sessionId,r4.get(0).toString(), "ChargeAmount", item.get("amount").toString());
+				Vector r4 = new Vector();
+				
+				int length = (int)(Math.log10(i+1)+1);
+				String serviceId = length == 1 ? "C00"+(i+1) : "C0"+(i+1);
+				
+				int val = 0;
+				val = EasyclaimAPI.getInstance().createBusinessObject(sessionId, "Service",r3.get(0).toString(),serviceId, r4);
+				String itemNum = item.get("itemNum").toString();
+				String amount = item.get("amount").toString();
+				
+				if(itemNum.contains("."))
+					itemNum = itemNum.split("\\.")[0];
+				if(amount.contains("."))
+				    amount = amount.split("\\.")[0];
+					
+				if(val == 0)
+					EasyclaimAPI.getInstance().setBusinessObjectElement(sessionId,r4.get(0).toString(), "ItemNum", itemNum);
+				else
+					return returnOPVJson(val);
+
+				if(val == 0)
+					EasyclaimAPI.getInstance().setBusinessObjectElement(sessionId,r4.get(0).toString(), "ChargeAmount", amount);
+				else
+					return returnOPVJson(val);	
 			}
 		}
 		
@@ -259,7 +275,7 @@ public class MedicareService {
 			rval = EasyclaimAPI.getInstance().sendContent(sessionId, "HIC/HolClassic/DirectBillClaim@1", "");
 		else
 			return returnOPVJson(rval);
-
+		
 		if(rval == 9501)
 			rval = EasyclaimAPI.getInstance().isReportAvailable(sessionId);
 		else
