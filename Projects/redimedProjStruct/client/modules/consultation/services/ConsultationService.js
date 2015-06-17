@@ -97,5 +97,11 @@ angular.module("app.loggedIn.patient.consult.services",[])
 		services.checkConsultation = function(patient_id,cal_id){
 			return api.all('consultation/check-consultation-patientID-calID').post({patient_id:patient_id,cal_id:cal_id});
 		}
+		/*phanquocchien.c1109g@gmail.com
+		*get img drawing history
+		*/
+		services.getImgDrawingHistory = function(patient_id,cal_id){
+			return api.all('consultation/get-img-drawing-history').post({patient_id:patient_id,cal_id:cal_id});
+		}
 		return services;
 	})

@@ -1,5 +1,5 @@
 angular.module("app.calendar.mobile.controller",[])
-.controller('rlobCalendarMobileMasterController',function($modal,$scope,toastr,$http,$stateParams,Mailto,$cookieStore,$window,rlobService,$timeout,ConfigService,$state){
+.controller('rlobCalendarMobileMasterController',function(socket,$modal,$scope,toastr,$http,$stateParams,Mailto,$cookieStore,$window,rlobService,$timeout,ConfigService,$state){
 	$scope.loginInfo = $cookieStore.get('userInfo');
 
     //-------------------------------------------------------------
@@ -175,6 +175,7 @@ angular.module("app.calendar.mobile.controller",[])
                 console.log("hehe",selectCalendar);
                 rlobService.addApptPatient($scope.patientInfoCalendar.Patient_id,$scope.selectedAppointmentCalendar.CAL_ID).then(function(data){
                     if (data.status == 'success') {
+                        socket.emit('notifyReceptionist');
                         var modalInstance = $modal.open({
                             templateUrl: 'notifyid',
                             controller: function($scope, $modalInstance,$state){
