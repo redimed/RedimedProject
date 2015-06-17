@@ -33,6 +33,7 @@ module.exports = {
 
         db.UserType.find({where:{user_type:'Patient'}},{raw:true})
           .success(function(type){
+              info.user_type = type.ID
                db.User.create(info)
                   .success(function(){
                       db.Patient.create(patient)

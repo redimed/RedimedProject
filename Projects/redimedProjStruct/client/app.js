@@ -228,7 +228,8 @@ angular.module("app", [
 //When update any route
 .run(function(beforeUnload, $window, $modalStack, $cookieStore, $interval, $state, $rootScope, $idle, $log, $keepalive, editableOptions, socket, toastr, localStorageService,rlobService, TimeSheetService) {
 
-
+    window.loading_screen.finish();
+    
     socket.on('reconnect', function() {
         if ($cookieStore.get("userInfo")) {
             socket.emit("reconnected", $cookieStore.get("userInfo").id);
@@ -288,7 +289,7 @@ angular.module("app", [
 
 
     $rootScope.$on("$stateChangeSuccess", function(e, toState, toParams, fromState, fromParams) {
-
+        
         $modalStack.dismissAll();
 
         var locationHref = location.href;
