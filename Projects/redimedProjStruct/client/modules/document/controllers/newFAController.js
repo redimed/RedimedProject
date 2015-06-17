@@ -33,6 +33,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 				$scope.header.CAL_ID = cal_id;
 				$scope.header.ASSESSED_SIGN = '';
 				$scope.header.ASSESSED_DATE = moment().format("YYYY-MM-DD hh:mm:ss");
+				$scope.header.Comments = "Meet all manual handling requirements with good technique."
 				//get lines of section
 				$scope.header.sections.forEach(function(section){
 					section.PATIENT_ID = patient_id;
