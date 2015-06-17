@@ -370,19 +370,21 @@ angular.module("app.loggedIn.controller",[
 
     // Toggle Menu
     $scope.toggle = false;
-
+    $scope.change_menu = false;
     $scope.toggleMenu = function(){
-        $scope.change_menu = false;
+        
         $scope.toggle = !$scope.toggle;
 
         if($scope.toggle){
             angular.element("#main-page").addClass("page-sidebar-closed");
             angular.element("#main-menu").addClass("page-sidebar-menu-closed");
             $scope.change_menu = true;
+            console.log($scope.change_menu);
         }else{
             angular.element("#main-page").removeClass("page-sidebar-closed");
             angular.element("#main-menu").removeClass("page-sidebar-menu-closed");
             $scope.change_menu = false;
+            console.log($scope.change_menu);
         }
     }
     $scope.$on('$idleTimeout', function() {

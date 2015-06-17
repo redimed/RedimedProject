@@ -127,6 +127,19 @@
 										<input type="radio" ng-model="detail.VAL2_CHECKBOX" value="2"> ABLE
 									</label>
 								</div>
+								<!-- Dominant hand radio -->
+								<div class="col-md-1 col-sm-1 col-xs-1" ng-if="detail.VAL1_ISCHECKBOX===6">
+									<label class="control-label pull-right" style="margin-top:10px;">{{detail.VAL1_NAME}}</label>
+								</div>
+								<div class="col-md-2 col-sm-2 col-xs-2 btn-group" ng-if="detail.VAL1_ISCHECKBOX===6">
+									<label class="btn">
+										<input type="radio" ng-model="detail.VAL1_VALUE" value="L" ng-change="autoCalculationVal1(line,detail)"> Left
+									</label>
+									<label class="btn">
+										<input type="radio" ng-model="detail.VAL1_VALUE" value="R" ng-change="autoCalculationVal1(line,detail)"> Right
+									</label>
+								</div>
+
 								<label class="control-label col-md-1 col-sm-1 col-xs-1 caption" style="margin-top:10px;" ng-if="detail.IsCommentText===1">Comment</label>
 								<div class="col-md-3 col-sm-3 col-xs-3" ng-if="detail.IsCommentText===1" >
 									<input type="text" name="detailComment" class="form-control" ng-model="detail.COMMENTS" ng-required="(detail.VAL1_ISCOMMENT_WHEN_YES === 1 && detail.VAL1_CHECKBOX==='1') || (detail.VAL1_ISCOMMENT_WHEN_NO === 1 && detail.VAL1_CHECKBOX!=='1') || (detail.VAL2_ISCOMMENT_WHEN_YES === 1 && detail.VAL2_CHECKBOX==='1') || (detail.VAL2_ISCOMMENT_WHEN_NO === 1 && detail.VAL2_CHECKBOX!=='1')">
