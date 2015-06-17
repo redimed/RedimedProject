@@ -14,7 +14,6 @@ angular.module("app.loggedIn.TimeSheet.Report1.Controller", [])
         $scope.listEmployeeChoose = [];
         $scope.listDept = [];
         $scope.listEmp = [];
-        $scope.isHavedata = 0;
         //SERVICE LOAD DEPT
 
         $scope.ListNew = function(listNew) {
@@ -32,6 +31,7 @@ angular.module("app.loggedIn.TimeSheet.Report1.Controller", [])
                             });
                         });
                         $scope.listEmp = angular.copy(arrayEmp);
+                        $scope.listEmployeeChoose = [];
                         //END
                     } else if (response.status === "error") {
                         $state.go("loggedIn.home", null, {
@@ -62,7 +62,6 @@ angular.module("app.loggedIn.TimeSheet.Report1.Controller", [])
 
         $scope.changeEmp = function(list) {
             if ($scope.listEmployeeChoose.length !== 0) {
-                $scope.isHavedata = 1;
                 var info = {};
                 info.listEMP = angular.copy($scope.listEmployeeChoose);
                 info.USER_ID = $cookieStore.get('userInfo').id;
@@ -72,18 +71,12 @@ angular.module("app.loggedIn.TimeSheet.Report1.Controller", [])
                         // PROCESSING PDF
                         $scope.USER_ID = $cookieStore.get('userInfo').id;
                         //END PDF
-                    } 
-                    else if (response.status === "error") {
+                    } else if (response.status === "error") {
                         $state.go("loggedIn.home", null, {
                             "reload": true
                         });
                         toastr.error("Loading reports fail!", 'Error');
-                    }
-                    else if(response.status === "null") {
-                        $scope.isHavedata = 0;
-                        toastr.error("No Data!!!!",'Error');
-                    } 
-                    else {
+                    } else {
                         //catch exception
                         $state.go("loggedIn.home", null, {
                             "reload": true

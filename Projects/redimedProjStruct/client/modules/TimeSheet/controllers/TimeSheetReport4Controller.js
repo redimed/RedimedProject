@@ -14,7 +14,6 @@ angular.module("app.loggedIn.TimeSheet.Report4.Controller", [])
         $scope.listEmployeeChoose = [];
         $scope.listDept = [];
         $scope.listEmp = [];
-        $scope.isHavedata = 0;
         //SERVICE LOAD DEPT
 
         $scope.ListNew = function(listNew) {
@@ -32,6 +31,7 @@ angular.module("app.loggedIn.TimeSheet.Report4.Controller", [])
                             });
                         });
                         $scope.listEmp = angular.copy(arrayEmp);
+                        $scope.listEmployeeChoose = [];
                         //END
                     } else if (response.status === "error") {
                         $state.go("loggedIn.home", null, {
@@ -59,11 +59,16 @@ angular.module("app.loggedIn.TimeSheet.Report4.Controller", [])
         };
         //FUNCTION GET WEEK NUMBER
 
+        //FUNCTION CHANGE DATE
+        $scope.changeDate = function() {
+            $scope.changeEmp($scope.listEmployeeChoose);
+        };
+        //END
+
         $scope.changeEmp = function(list) {
             if ($scope.dateWeekFrom !== undefined && $scope.dateWeekFrom !== null && $scope.dateWeekFrom !== "" &&
                 $scope.dateWeekTo !== undefined && $scope.dateWeekTo !== null && $scope.dateWeekTo !== "" &&
                 $scope.listEmployeeChoose.length !== 0) {
-                $scope.isHavedata = 1;
                 var info = {};
                 var weekNoFrom = $scope.dateWeekFrom;
                 var weekNoTo = $scope.dateWeekTo;
@@ -80,18 +85,12 @@ angular.module("app.loggedIn.TimeSheet.Report4.Controller", [])
                         // PROCESSING PDF
                         $scope.USER_ID = $cookieStore.get('userInfo').id;
                         //END PDF
-                    } 
-                    else if (response.status === "error") {
+                    } else if (response.status === "error") {
                         $state.go("loggedIn.home", null, {
                             "reload": true
                         });
                         toastr.error("Loading reports fail!", 'Error');
-                    } 
-                    else if (response.status === "null") {
-                        $scope.isHavedata = 0;
-                        toastr.error("No Data!!!!",'Error');
-                    }
-                    else {
+                    } else {
                         //catch exception
                         $state.go("loggedIn.home", null, {
                             "reload": true

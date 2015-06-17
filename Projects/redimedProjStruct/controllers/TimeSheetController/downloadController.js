@@ -17,7 +17,6 @@ module.exports = {
                     result !== null &&
                     result.length !== 0) {
                     res.download(result.path_file);
-                    return;
                 }
             })
             .error(function(err) {

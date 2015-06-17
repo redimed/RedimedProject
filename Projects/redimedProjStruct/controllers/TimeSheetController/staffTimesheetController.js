@@ -3,6 +3,7 @@ var db = require('../../models');
 var moment = require('moment');
 var chainer = new db.Sequelize.Utils.QueryChainer;
 var FunctionSendMail = require("./sendMailSystemController");
+var functionForTimesheet = require("./functionForTimesheet");
 //END EXPORTS
 module.exports = {
     addAllTask: function(req, res) {
@@ -92,7 +93,7 @@ module.exports = {
                             .success(function(result) {
                                 if (result[0] !== undefined && result[0].dataValues !== undefined && result[0].dataValues.tasks_week_id !== undefined) {
                                     //TRACKER
-                                    info.date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                                    info.date = moment().format("YYYY-MM-DD HH:mm:ss");
                                     var idTaskWeek = result[0].dataValues.tasks_week_id;
                                     var tracKer = {
                                         statusID: info.statusID,
@@ -356,7 +357,7 @@ module.exports = {
 
         chainer.runSerially().success(function(result) {
             //TRACKER
-            var date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+            var date = moment().format("YYYY-MM-DD HH:mm:ss");
             var idTaskWeek = info.idWeek;
             var tracKer = {
                 statusID: info.statusID,
@@ -577,7 +578,8 @@ module.exports = {
 
     showEdit: function(req, res) {
         var info = req.body.info;
-        var query = "SELECT * FROM time_tasks WHERE time_tasks.tasks_week_id = " + info + " AND time_tasks.deleted = 0 ORDER BY time_tasks.order ASC";
+        var query = "SELECT * FROM time_tasks WHERE time_tasks.tasks_week_id = " +
+            info + " AND time_tasks.deleted = 0 ORDER BY time_tasks.order ASC";
         db.sequelize.query(query)
             .success(function(tasks) {
                 if (tasks === null || tasks.length === 0) {
@@ -762,6 +764,7 @@ module.exports = {
 
     getAllTaskAMonth: function(req, res) {
         var searchObj = req.body.search;
+        var yearNow = moment(searchObj.dateFrom).format("YYYY");
         //SEARCH
         var strSearch = " AND ";
         var strWeek = "";
@@ -780,18 +783,26 @@ module.exports = {
         if (searchObj.week_no !== undefined &&
             searchObj.week_no !== null &&
             searchObj.week_no !== "") {
-            strWeek = " AND time_tasks_week.week_no = " + searchObj.week_no;
+            strWeek = " AND time_tasks_week.week_no = " + searchObj.week_no + " AND YEAR(time_tasks_week.end_date) = :yearNow";
         }
         //END SEARCH
         var query = "SELECT time_tasks_week.start_date,time_tasks_week.task_week_id, time_tasks_week.end_date, time_tasks_week.time_charge, time_task_status.name, " +
             "time_tasks_week.comments FROM time_tasks_week INNER JOIN time_task_status ON time_task_status.task_status_id = " +
             "time_tasks_week.task_status_id WHERE time_tasks_week.user_id = " + searchObj.userID + strWeek + strSearch + " ORDER BY time_tasks_week.start_date DESC LIMIT " +
             searchObj.limit + " OFFSET " + searchObj.offset;
-        db.sequelize.query(query)
+        db.sequelize.query(query, null, {
+                raw: true
+            }, {
+                yearNow: yearNow
+            })
             .success(function(result) {
                 var queryCount = "SELECT COUNT(time_tasks_week.task_week_id) AS COUNT FROM time_tasks_week INNER JOIN time_task_status ON time_task_status.task_status_id = " +
                     "time_tasks_week.task_status_id WHERE time_tasks_week.user_id = " + searchObj.userID + strWeek + strSearch;
-                db.sequelize.query(queryCount)
+                db.sequelize.query(queryCount, null, {
+                        raw: true
+                    }, {
+                        yearNow: yearNow
+                    })
                     .success(function(count) {
                         if ((result === null || result.length === 0) && strSearch === "" && strWeek === "") {
                             res.json({
@@ -935,7 +946,7 @@ module.exports = {
         db.sequelize.query(query)
             .success(function(result) {
                 //TRACKER
-                var date = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                var date = moment().format("YYYY-MM-DD HH:mm:ss");
                 var tracKer = {
                     statusID: info.status,
                     USER_ID: info.USER_ID,
@@ -965,17 +976,47 @@ module.exports = {
     },
 
     CheckTimeInLieu: function(req, res) {
-        var weekNo = req.body.weekNo;
-        var USER_ID = req.body.USER_ID;
-        var weekStart = weekNo - 2;
+        var info = req.body.info;
+        var weekNoEnd = functionForTimesheet.getWeekNo(info.date);
+        var yearEnd = moment(info.date).year();
+        var numberWeek = functionForTimesheet.defineNumberWeekTimeSheet();
+        var arrayWeekNo = [{
+            weekNo: weekNoEnd,
+            year: yearEnd
+        }];
+        for (var i = 0; i < numberWeek; i++) {
+            var dateAdd = (7 - moment(info.date).day()) % 7;
+            var lastDateOfWeek = moment(info.date).add(dateAdd, 'day').subtract((i + 1) * 7, 'day').format("YYYY-MM-DD");
+            var weekNo = functionForTimesheet.getWeekNo(lastDateOfWeek);
+            var yearOfFirstDate = moment(lastDateOfWeek).year();
+            arrayWeekNo.push({
+                weekNo: weekNo,
+                year: yearOfFirstDate,
+            });
+        }
+        var strWeekNo = "";
+        arrayWeekNo.forEach(function(valueWeekNo, indexWeekNo) {
+            if (valueWeekNo !== null &&
+                valueWeekNo.weekNo !== undefined &&
+                valueWeekNo.weekNo !== null &&
+                valueWeekNo.year !== undefined &&
+                valueWeekNo.year !== null &&
+                !isNaN(valueWeekNo.weekNo) &&
+                !isNaN(valueWeekNo.year)) {
+                strWeekNo += "(" + valueWeekNo.weekNo + "," + valueWeekNo.year + "), ";
+            }
+        });
+        if (strWeekNo !== "") {
+            strWeekNo = "(" + strWeekNo.substring(0, strWeekNo.length - 2) + ")";
+        } else {
+            strWeekNo = "((-1,-1))";
+        }
         var queryGetTimInLieuHas = "SELECT time_tasks_week.time_in_lieu FROM time_tasks_week WHERE user_id = :userId " +
-            "AND time_tasks_week.task_status_id = 3 AND time_tasks_week.week_no BETWEEN :weekStart AND :weekNo";
+            "AND time_tasks_week.task_status_id = 3 AND (time_tasks_week.week_no, YEAR(time_tasks_week.end_date)) IN " + strWeekNo;
         db.sequelize.query(queryGetTimInLieuHas, null, {
                 raw: true
             }, {
-                userId: USER_ID,
-                weekStart: weekStart,
-                weekNo: weekNo
+                userId: info.userId
             })
             .success(function(result) {
                 var queryGetTimInLieuChoose = "SELECT time_tasks_week.time_in_lieuChoose FROM time_tasks_week WHERE user_id = :userId " +
@@ -983,7 +1024,7 @@ module.exports = {
                 db.sequelize.query(queryGetTimInLieuChoose, null, {
                         raw: true
                     }, {
-                        userId: USER_ID
+                        userId: info.userId
                     })
                     .success(function(result2) {
                         var totalTimeInieuHas = 0;

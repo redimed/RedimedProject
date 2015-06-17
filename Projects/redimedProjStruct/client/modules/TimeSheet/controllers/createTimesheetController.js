@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.timesheet.create.controller", [])
 
-.controller("TimesheetCreateController", function($rootScope, ConfigService, $scope, $stateParams, $cookieStore, $filter, $modal, calendarHelper, moment, StaffService, $state, toastr, FileUploader) {
+.controller("TimesheetCreateController", function($rootScope, ConfigService, $scope, $stateParams, $cookieStore, $filter, $modal, calendarHelper, moment, StaffService, $state, toastr, FileUploader, $timeout) {
     //CLOSE MEMU
     $('body').addClass("page-sidebar-closed");
     $('ul').addClass("page-sidebar-menu-closed");
@@ -53,9 +53,11 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
 
     //CHECK TIME IN LIEU
     $scope.checkTimeInLieu = function() {
-        var toDate = new Date();
-        var weekNo = $scope.getWeekNumber(toDate);
-        StaffService.checkTimeInLieu(weekNo, $cookieStore.get('userInfo').id).then(function(response) {
+        var info = {
+            date: new Date(),
+            userId: $cookieStore.get('userInfo').id
+        };
+        StaffService.checkTimeInLieu(info).then(function(response) {
             if (response.status === "error") {
                 toastr.error("Check Time in Lieu fail!", "Fail");
             } else if (response.status === "success") {
@@ -169,8 +171,8 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
     //END CHANGE
 
     //FUNCTION GET WEEK NUMBER
-    $scope.getWeekNumber = function(d) {
-        d = new Date(+d);
+    $scope.getWeekNumber = function(date) {
+        var d = new Date(+date);
         d.setHours(0, 0, 0);
         d.setDate(d.getDate() + 4 - (d.getDay() || 7));
         var yearStart = new Date(d.getFullYear(), 0, 1);
@@ -182,9 +184,11 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
     //GET TIM IN LIEU
 
     // GET TIME IN LIEU TO CHECK SUBMIT
-    var toDate = new Date();
-    var weekNo = $scope.getWeekNumber(toDate);
-    StaffService.checkTimeInLieu(weekNo, $cookieStore.get('userInfo').id).then(function(response) {
+    var info = {
+        date: new Date(),
+        userId: $cookieStore.get('userInfo').id
+    };
+    StaffService.checkTimeInLieu(info).then(function(response) {
         if (response.status === "error") {
             toastr.error("Check Time in Lieu fail!", "Fail");
         } else if (response.status === "success") {
@@ -233,6 +237,52 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                         };
                         $scope.tasks.push($scope.task);
                     });
+                    //PUSH WEEKEND LEAVE
+                    //SET DEFAULT WEEKEND
+                    if ($scope.tasks !== undefined &&
+                        $scope.tasks !== null &&
+                        $scope.tasks.length !== 0 &&
+                        $scope.tasks[$scope.tasks.length - 1] !== undefined &&
+                        $scope.tasks[$scope.tasks.length - 2] !== undefined) {
+                        $scope.tasks[$scope.tasks.length - 1].activity_id = 5; //SET ATIVITY_ID DEFAULT FOR SUN
+                        $scope.tasks[$scope.tasks.length - 2].activity_id = 5; //SET ATIVITY_ID DEFAULT FOR SAT
+
+                        //SET DEFAULT ITEM FOR SUN
+                        if ($scope.tasks[$scope.tasks.length - 1].item !== undefined && $scope.tasks[$scope.tasks.length - 1].item !== null) {
+                            var item = {};
+                            item.isAction = 'insert';
+                            item.time_temp = 0;
+                            item.totalUnits = 0;
+                            item.ratio = 0;
+                            item.time_charge = '0000';
+                            item.ITEM_ID = 18;
+                            item.ITEM_NAME = "Weekend Leave";
+                            $scope.tasks[$scope.tasks.length - 1].item.push(item);
+                            $scope.tasks[$scope.tasks.length - 1].time_charge = '0000';
+                            $scope.tasks[$scope.tasks.length - 1].time_temp = 0;
+                            $scope.tasks[$scope.tasks.length - 1].notPopup = true;
+                        }
+                        //END SUN
+
+                        //SET DEFAULT ITEM FOR SAT
+                        if ($scope.tasks[$scope.tasks.length - 2].item !== undefined && $scope.tasks[$scope.tasks.length - 2].item !== null) {
+                            var item = {};
+                            item.isAction = 'insert';
+                            item.time_temp = 0;
+                            item.totalUnits = 0;
+                            item.ratio = 0;
+                            item.time_charge = '0000';
+                            item.ITEM_ID = 18;
+                            item.ITEM_NAME = "Weekend Leave";
+                            $scope.tasks[$scope.tasks.length - 2].item.push(item);
+                            $scope.tasks[$scope.tasks.length - 2].time_charge = '0000';
+                            $scope.tasks[$scope.tasks.length - 2].time_temp = 0;
+                            $scope.tasks[$scope.tasks.length - 2].notPopup = true;
+                        }
+                        //EN SAT
+                    }
+                    //END SET
+                    //END
                 }
             }
         });
@@ -250,7 +300,6 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 if (response['status'] === 'success') {
                     $scope.nextDay = moment(response['maxDate']).add(7, 'day').toDate();
                 } else if (response['status'] === 'no maxDate') {
-
                     $scope.nextDay = moment($scope.calendarDay).add(7, 'day').toDate();
                 }
                 $scope.viewWeek = calendarHelper.getWeekView($scope.nextDay, true);

@@ -8,14 +8,14 @@
             </li>
             <li>
                 <a ui-sref="loggedIn.home">
-                    <span>Leave Management System</span>
+                    <span>Leave Management</span>
                 </a>
                 <i class="fa fa-angle-right"></i>
             </li>
             <li>
                 <a ui-sref="loggedIn.TimeSheetHome.CreateLeave">
-                    <span ng-if="isEdit===false">Apply a Leave Form</span>
-                    <span ng-if="isEdit===true">Edit a Leave Form</span>
+                    <span ng-if="isEdit===false">Apply Leave Form</span>
+                    <span ng-if="isEdit===true">Edit Leave Form</span>
                 </a>
                 <i class="fa fa-angle-right"></i>
             </li>
@@ -25,8 +25,8 @@
     <div class="portlet box blue-hoki">
         <div class="portlet-title">
             <div class="caption">
-                <span ng-if="isEdit===false">Apply a Leave Form</span>
-                <span ng-if="isEdit===true">Edit a Leave Form</span>
+                <span ng-if="isEdit===false">Apply Leave Form</span>
+                <span ng-if="isEdit===true">Edit Leave Form</span>
             </div>
             <div class="tools">
                 <a href="javascript:;" class="collapse">
@@ -161,8 +161,12 @@
                             </td>
                             <td style="width:10%;">
                                 <div ng-class="{'error-input':(info.infoTypeLeave[$index].reason_leave!==undefined && info.infoTypeLeave[$index].reason_leave!==null && info.infoTypeLeave[$index].reason_leave!=='') && (info.infoTypeLeave[$index].time_leave===undefined || info.infoTypeLeave[$index].time_leave===null || info.infoTypeLeave[$index].time_leave==='')}">
-                                    <input type="text" ui-mask="999:99" ng-if="info.standard===0 && l.leave_type_id===1" class='form-control input-sm' ng-model="info.infoTypeLeave[$index].time_leave" ng-change="changeTime()" style="text-align:center; margin-bottom:0px;width:100%;" ng-required="info.infoTypeLeave[$index].reason_leave!==undefined && info.infoTypeLeave[$index].reason_leave!==null && info.infoTypeLeave[$index].reason_leave!==''" />
-                                    <input type="text" ui-mask="99:99" ng-if="info.standard===1 || (info.standard===0 && l.leave_type_id!==1)" class='form-control input-sm' ng-model="info.infoTypeLeave[$index].time_leave" ng-change="changeTime()" style="text-align:center; margin-bottom:0px;width:100%;" ng-required="(info.infoTypeLeave[$index].reason_leave!==undefined && info.infoTypeLeave[$index].reason_leave!==null && info.infoTypeLeave[$index].reason_leave!=='') && (info.infoTypeLeave[$index].time_leave===undefined || info.infoTypeLeave[$index].time_leave===null || info.infoTypeLeave[$index].time_leave==='')" />
+                                    <!-- WHEN BEWEEN NON-STANDARD -->
+                                    <input type="text" ui-mask="999:99" ng-if="info.standard===0 && l.leave_type_id===1" class='form-control input-sm' ng-model="info.infoTypeLeave[$index].time_leave" ng-change="changeTime()" style="text-align:center; margin-bottom:0px;width:100%;" ng-required="info.infoTypeLeave[$index].reason_leave!==undefined && info.infoTypeLeave[$index].reason_leave!==null && info.infoTypeLeave[$index].reason_leave!==''" time-chargenon/>
+                                    <!-- END -->
+                                    <!-- WHEN STANDARD -->
+                                    <input type="text" ui-mask="99:99" ng-if="(info.standard===1 || (info.standard===0 && l.leave_type_id!==1))" class='form-control input-sm' ng-model="info.infoTypeLeave[$index].time_leave" ng-change="changeTime()" style="text-align:center; margin-bottom:0px;width:100%;" ng-required="(info.infoTypeLeave[$index].reason_leave!==undefined && info.infoTypeLeave[$index].reason_leave!==null && info.infoTypeLeave[$index].reason_leave!=='') && (info.infoTypeLeave[$index].time_leave===undefined || info.infoTypeLeave[$index].time_leave===null || info.infoTypeLeave[$index].time_leave==='')" time-charge/>
+                                    <!-- END -->
                                 </div>
                             </td>
                             <td style="width:40%; text-align:center; ">
@@ -174,8 +178,9 @@
                                 <label style="margin-top:3px;">Total Number of Hours Taken:</label>
                             </td>
                             <td style="width:10%;">
-                                <input type="text" ng-if="!(info.time_leave>=10000)" ng-model="info.time_leave" ui-mask="99:99" class='form-control input-sm' style="text-align:center; margin-bottom:0px; margin-left:2.5px;" ng-disabled="true" />
-                                <input type="text" ng-if="info.time_leave>=10000" ui-mask="999:99" class='form-control input-sm' ng-model="info.time_leave" style="text-align:center; margin-bottom:0px; margin-left:2.5px;" ng-disabled="true" />
+                                <label disabled class="form-control input-sm" style="text-align:center;">
+                                    <label style="font-weight:bold; margin-top:-3px;" ng-bind="info.time_leave | customTotalHoursAll"></label>
+                                </label>
                             </td>
                             <td style="width:40%;">
                                 <input type="text" style="margin-bottom:0px; width:100%; margin-left:2.5px;" class="form-control input-sm" ng-model="info.reason_leave" />

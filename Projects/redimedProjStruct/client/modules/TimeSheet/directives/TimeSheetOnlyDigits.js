@@ -3,20 +3,16 @@ angular.module("app.loggedIn.TimeSheet.Digits.Directive", [])
         return {
             require: 'ngModel',
             restrict: 'A',
-            link: function(scope, element, attr, ctrl) {
-                function inputValue(val) {
-                    if (val) {
-                        var digits = val.replace(/[^0-9]/g, '');
-
-                        if (digits !== val) {
-                            ctrl.$setViewValue(digits);
-                            ctrl.$render();
-                        }
-                        return parseInt(digits, 10);
+            link: function(scope, element, attrs, modelCtrl) {
+                modelCtrl.$parsers.push(function(inputValue) {
+                    if (inputValue == undefined) return ''
+                    var transformedInput = inputValue.replace(/[^0-9]/g, '');
+                    if (transformedInput != inputValue) {
+                        modelCtrl.$setViewValue(transformedInput);
+                        modelCtrl.$render();
                     }
-                    return undefined;
-                }
-                ctrl.$parsers.push(inputValue);
+                    return transformedInput;
+                });
             }
         };
     });

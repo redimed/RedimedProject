@@ -66,10 +66,10 @@
                         <tbody>
                             <tr ng-repeat="task in tasks track by $index" ng-class-odd="'odd'">
                                 <td style="text-align:left;font-size:13px;">{{task.date | date: 'EEE, dd MMM yyyy'}}</td>
-                                <td style="font-size:13px; text-align:center;" ng-repeat="act in task.arrActivity track by $index">
-                                    {{act}}
+                                <td style="font-size:13px; text-align:center;" ng-repeat="act in task.timeActivity track by $index">
+                                    {{act.time_charge|customHours}}
                                 </td>
-                                <td class="bold" style="font-size:13px; text-align:center;">{{task.total}}</td>
+                                <td class="bold" style="font-size:13px; text-align:center;">{{task.time_charge_date | customHours}}</td>
                                 <td class="btn btn-xs">
                                     <a ng-click="viewDetailDate(week,task.date)" class="btn btn-xs" style="font-size:13px;">View Detail</a>
                                 </td>
@@ -79,7 +79,7 @@
                 </div>
             </div>
             <div class="col-md-12" style="margin-top:5px; font-size:13px;">
-                <span>Total Worked Hours:&nbsp;<span class="text-info bold">{{getFortMatTimeCharge(week.time_charge)}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span>Total Worked Hours:&nbsp;<span class="text-info bold">{{week.time_charge | customHours}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span style="font-size:13px;">Status:&nbsp;
                 <span ng-class="{'reject':STATUS==='Rejected','submited':STATUS==='Submitted', 'approved':STATUS==='Approved', 'pending':STATUS==='Awaiting for Submit',
                             're-submitted':STATUS==='Re-submitted'}">{{STATUS}}</span> </span>

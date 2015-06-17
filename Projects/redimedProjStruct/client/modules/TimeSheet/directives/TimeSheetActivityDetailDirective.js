@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
-    .directive("activityDetail", function(TimeSheetService, $state, toastr, MODE_ROW, StaffService, FileUploader, $cookieStore, $timeout) {
+    .directive("activityDetail", function(TimeSheetService, $state, toastr, MODE_ROW, StaffService, FileUploader, $cookieStore, $timeout, $window, $modal) {
         return {
             restrict: "EA",
             required: "ngModel",
@@ -321,11 +321,13 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                     //DO NOTHING
                 };
                 scope.uploader.onProgressItem = function(fileItem, progress) {
+                    scope.fileNameProgress = fileItem.file.name;
                     scope.progress = progress;
                 };
-                scope.uploader.onProgressAll = function(progress) {
-                    //DO NOTHING 
+                scope.uploader.onProgressAll = function(progressAll) {
+                    //DO NOTHING
                 };
+
                 scope.uploader.onSuccessItem = function(fileItem, response, status, headers) {
                     //FIND FIRST FILE UPLOADING
                     var isFound = false;
@@ -390,7 +392,7 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                         });
                         if (check === true) {
                             return {
-                                width: "250px"
+                                width: "100px"
                             };
                         } else {
                             return {
