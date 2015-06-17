@@ -1,6 +1,6 @@
 angular.module('app.loggedIn.invoice.add.directive', [])
 
-.directive('invoiceAdd', function(InvoiceHeaderModel, PatientService, ConfigService, InvoiceService, ReceptionistService, toastr, $filter, $state, CompanyService){
+.directive('invoiceAdd', function($stateParams,InvoiceHeaderModel, PatientService, ConfigService, InvoiceService, ReceptionistService, toastr, $filter, $state, CompanyService){
 	var arrGetBy = $filter('arrGetBy');	
 	return {
 		restrict: 'EA',
@@ -246,14 +246,34 @@ angular.module('app.loggedIn.invoice.add.directive', [])
 				delete postData.patient;
 				delete postData.company;
 
-				console.log(postData)
-					
+				//console.log("postData.lines",postData.lines);
+				var insertArr = []; 
+            
+	           for (var i = 0; i < postData.lines.length; i++) {
+	           		var t = {
+	                    CLN_ITEM_ID: postData.lines[i].ITEM_ID,
+	                    Patient_id: $stateParams.patient_id,
+	                    cal_id:  $stateParams.cal_id,
+	                    PRICE: postData.lines[i].PRICE,
+	                    TIME_SPENT: !postData.lines[i].TIME_SPENT ? 0: postData.lines[i].TIME_SPENT,
+	                    QUANTITY: postData.lines[i].QUANTITY,
+	                    is_enable: 1
+	                }
+	                insertArr.push(t);
+	           };
 				InvoiceService.add(postData).then(function(response){
 					if(response.status == 'error') {
 						toastr.error('Cannot Insert', 'Error')
 					} else if(response.status == 'success') {
-						toastr.success('Insert Successfully !!!', 'Success');
-
+						 PatientService.saveItemSheet(insertArr).then(function(response){
+			               // console.log(response);
+			                if(response.status === 'success'){
+			                    toastr.success('Save successfully!','Success!');
+			                }
+			                else{
+			                    toastr.error('Save failed!','Error!');
+			                }
+			            });		
 						if(scope.onsuccess) {
 							scope.onsuccess();
 						}
