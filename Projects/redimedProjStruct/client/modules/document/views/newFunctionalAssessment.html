@@ -517,7 +517,7 @@
 					<label class="control-label bold">*Comments/Recommendations:</label>
 				</div>
 				<div class="col-md-9 col-sm-9 col-xs-9">
-					<textarea rows="4" class="form-control"></textarea>
+					<textarea rows="4" class="form-control" ng-model="header.Comments"></textarea>
 				</div>
 			</div>
 
@@ -538,19 +538,19 @@
 			<label class="control-label text-info bold">Additional Tests Attached:</label>
 			<div class="row">
 				<div class="col-md-3 col-sm-3 col-xs-3" >
-					<label class="control-label pull-right">Flexibility</label>
+					<label class="control-label pull-right">Ankle</label>
 				</div>
 				<div class="col-md-1 col-sm-1 col-xs-1">
 					<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="header.Att_Flexibility===1 || header.Att_Flexibility==='1'" ng-model="header.Att_Flexibility"/>
 				</div>
 				<div class="col-md-3 col-sm-3 col-xs-3">
-					<label class="control-label pull-right">Score Stability</label>
+					<label class="control-label pull-right">Knee</label>
 				</div>
 				<div class="col-md-1 col-sm-1 col-xs-1">
 					<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="header.Att_Core_Stability===1 || header.Att_Core_Stability==='1'" ng-model="header.Att_Core_Stability"/>
 				</div>
 				<div class="col-md-3 col-sm-3 col-xs-3">
-					<label class="control-label pull-right">Wrist/elbow function</label>
+					<label class="control-label pull-right">Hip</label>
 				</div>
 				<div class="col-md-1 col-sm-1 col-xs-1">
 					<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="header.Att_Wirst_Elbow_func===1 || header.Att_Wirst_Elbow_func==='1'" ng-model="header.Att_Wirst_Elbow_func"/>
@@ -558,19 +558,19 @@
 			</div>
 			<div class="row">
 				<div class="col-md-3 col-sm-3 col-xs-3">
-					<label class="control-label pull-right">Shoulder function</label>
+					<label class="control-label pull-right">Back</label>
 				</div>
 				<div class="col-md-1 col-sm-1 col-xs-1">
 					<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="header.Att_Shoulder_func===1 || header.Att_Shoulder_func==='1'" ng-model="header.Att_Shoulder_func"/>
 				</div>
 				<div class="col-md-3 col-sm-3 col-xs-3">
-					<label class="control-label pull-right">Lower limb function</label>
+					<label class="control-label pull-right">Elbow/Wrist</label>
 				</div>
 				<div class="col-md-1 col-sm-1 col-xs-1">
 					<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="header.Att_Lower_Limb_func===1 || header.Att_Lower_Limb_func==='1'" ng-model="header.Att_Lower_Limb_func"/>
 				</div>
 				<div class="col-md-3 col-sm-3 col-xs-3">
-					<label class="control-label pull-right">Balance</label>
+					<label class="control-label pull-right">Shoulder</label>
 				</div>
 				<div class="col-md-1 col-sm-1 col-xs-1">
 					<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="header.Att_Balance===1 || header.Att_Balance==='1'" ng-model="header.Att_Balance"/>

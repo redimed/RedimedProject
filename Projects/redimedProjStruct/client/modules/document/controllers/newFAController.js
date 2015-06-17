@@ -13,6 +13,8 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 
 	$scope.patient_age = null;
 	$scope.header = {};
+	$scope.header.Comments = "Meet all manual handling requirements with good technique."
+	$scope.header.ASSESSED_DATE = moment().format("YYYY-MM-DD hh:mm:ss");
 	$scope.patient_info = {};
 	$scope.isSignatureShow = false;
 	$scope.clickedValidation = false;
@@ -30,6 +32,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 				$scope.header.PATIENT_ID = patient_id;
 				$scope.header.CAL_ID = cal_id;
 				$scope.header.ASSESSED_SIGN = '';
+				$scope.header.ASSESSED_DATE = moment($scope.header.ASSESSED_DATE).format("YYYY-MM-DD hh:mm:ss");
 				//get lines of section
 				$scope.header.sections.forEach(function(section){
 					section.PATIENT_ID = patient_id;
@@ -91,6 +94,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 			if(headerAndSectionRes.status === 'error') toastr.error('Unexpected error', 'Error!');
 			else{
 				$scope.header = headerAndSectionRes.data;
+				$scope.header.ASSESSED_DATE = moment($scope.header.ASSESSED_DATE).format("YYYY-MM-DD hh:mm:ss");
 				//get lines of section
 				$scope.header.sections.forEach(function(section){
 					DocumentService.loadExistLines(section.SECTION_ID, getHeaderId, patient_id, cal_id).then(function(lineRes){
