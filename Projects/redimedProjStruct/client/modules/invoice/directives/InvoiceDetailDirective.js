@@ -1,6 +1,6 @@
 angular.module('app.loggedIn.invoice.detail.directive', [])
 
-.directive('invoiceDetail', function(InvoiceHeaderModel, ConfigService, InvoiceService, ReceptionistService, toastr, $state, $timeout, $filter,CompanyService,$modal){
+.directive('invoiceDetail', function(InvoiceHeaderModel, ConfigService, InvoiceService, ReceptionistService, toastr, $state, $timeout, $filter,CompanyService){
 	var arrGetBy = $filter('arrGetBy');	
 	return {
 		restrict: 'EA',
@@ -92,7 +92,6 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 					this.is_show = false;
 				},
 				click: function(item) {
-					// var postData = {claim_id: item.Claim_id,Insurer_id:item.insurer_id};
 					var postData = {claim_id: item.Claim_id};
 					InvoiceService.update($scope.params.id, postData)
 					.then(function(response){
@@ -114,8 +113,7 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 	                	{field: 'Claim_id', is_hide: true},
 	                    {field: 'Injury_name', label: 'Injury'},
 	                    {field: 'Insurer'} ,
-	                    {field: 'insurer_site', is_hide: true},
-	                    {field: 'insurer_id',is_hide:true}
+	                    {field: 'insurer_site', is_hide: true}
 	                ],
 	                not_load: true,
 	                search: {}
@@ -216,7 +214,6 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 				scope.isSubmit = false;
 				if(scope.params.permission.edit === true){
 					InvoiceService.headerDetail(scope.params.id).then(function(response){
-						exlog.log(response);
 						if(response.status == 'error') 
 							toastr.error('Error Get Detail', 'Error')
 						angular.extend(scope.InvoiceMap, response.data);
@@ -275,7 +272,6 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 							var r = confirm("You cannot change this invoice information once you change the status to \"Done\". \n Are you sure?");
 							if(r==false) return;
 						}
-						exlog.log(scope.InvoiceMap);//tan exlog
 						InvoiceService.save(scope.params.id, scope.InvoiceMap).then(function(response){
 							if(response.status == 'error') 
 								toastr.error('Cannot send to ERP', 'Error')
@@ -285,7 +281,6 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 						})
 					}
 				}else{
-
 					InvoiceService.add(postData).then(function(data){
 						if(data.status == 'error') toastr.error('Cannot Insert', 'Error')
 						toastr.success('Insert Successfully !!!', 'Success');
@@ -295,56 +290,6 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 				}
 			
 			}//end clickAction
-
-			/**
-			 * tannv.dts@gmail.com
-			 * --------------------------------------------------
-			 * --------------------------------------------------
-			 * --------------------------------------------------
-			 */
-			
-			scope.removeInvoiceLine=function(item){
-				var modalInstance = $modal.open({
-					templateUrl: 'notifyToRemoveInvoiceLine',
-					controller: function($scope, $modalInstance){
-						$scope.ok = function(){
-							$modalInstance.close();
-						}
-
-						$scope.cancel = function(){
-							$modalInstance.dismiss('cancel');
-						}
-					},
-					size: 'sm'
-					
-				});
-
-				modalInstance.result.then(function(){
-					var postData={
-						invoiceLineId:item.line_id,
-						apptItemId:item.appt_item_id
-					}
-					InvoiceService.removeInvoiceLine(postData)
-					.then(function(data){
-						// exlog.alert(data);
-						if(data.status=='success')
-						{
-							toastr.success('Remove success.', 'Success');
-							init();//chay lai
-						}
-						else
-						{
-							toastr.error('Remove fail.', 'Error');
-							exlog.logErr(data);
-						}
-					},function(err){
-						toastr.error('Remove fail.', 'Error');
-						exlog.logErr(err);
-					})
-				})
-
-				
-			}
 		}//end link
 	}//end return
 })

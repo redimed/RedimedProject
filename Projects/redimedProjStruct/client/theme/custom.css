@@ -111,6 +111,13 @@ a:focus {
 .modal-dialog-center {
     margin-top: 25%;
 }
+
+.mporlet-black {
+      border: 1px solid #333333 !important;
+}
+.mporlet-titleblack {
+     background-color: #333333 !important;
+}
 /*end Toom*/
 
 .mdt-logo {
