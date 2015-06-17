@@ -98,7 +98,8 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 						if(response.status == 'success') {
 							toastr.success('Save Claim Successfully !!!', 'Success');
 							$scope.InvoiceMap.claim = item;
-							$scope.InvoiceMap.Insurer_id = item.insurer_site;
+							// $scope.InvoiceMap.Insurer_id = item.insurer_site;//tan comment
+							$scope.InvoiceMap.Insurer_id = item.insurer_id;//tan add
 							$scope.InvoiceMap.claim_id = item.Claim_id;
 							$scope.InvoiceMap.insurer = {insurer_name: item.Insurer }
 							$scope.patientClaim.close();
@@ -174,6 +175,7 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 					item.invItem = {ITEM_CODE : item.ITEM_CODE, ITEM_NAME: item.ITEM_NAME };
 
 					$scope.InvoiceMap.lines.push(item);
+					exlog.log(item)//tan exlog
 					ReceptionistService.itemFeeAppt($scope.InvoiceMap.SERVICE_ID,[item.ITEM_ID]).then(function(response){
 
 	                    if(response.list.length > 0) {
@@ -183,6 +185,10 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 	                        item.PRICE = 0;
 	                        item.has_price = false;
 	                    }
+
+	                    //tannv.dts@gmail.com
+	                    //luu thong tin invoice line vao database
+	                    
 	                });
 				}
 			}
@@ -259,10 +265,6 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 
 			scope.clickAction = function(){
 				console.log('this is edit data', scope.InvoiceMap);
-				// var postData = angular.copy(scope.InvoiceMap);
-				// for(var key in postData){
-				// 	if(postData[key] instanceof Date) postData[key] = ConfigService.getCommonDate(postData[key]);
-				// }//end for
 				if(scope.params.permission.edit === true){
 					if(!scope.InvoiceMap.lines || scope.InvoiceMap.lines.length===0){
 						toastr.error("Missing header / lines","Error!");

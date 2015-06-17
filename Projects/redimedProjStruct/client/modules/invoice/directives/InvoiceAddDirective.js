@@ -100,7 +100,8 @@ angular.module('app.loggedIn.invoice.add.directive', [])
 				},
 				click: function(item) {
 					$scope.InvoiceMap.claim = item;
-					$scope.InvoiceMap.Insurer_id = item.insurer_site;
+					// $scope.InvoiceMap.Insurer_id = item.insurer_site;//tan comment
+					$scope.InvoiceMap.Insurer_id = item.insurer_id;//tan add
 					$scope.InvoiceMap.claim_id = item.Claim_id;
 					$scope.InvoiceMap.insurer = { insurer_name: item.Insurer };
 					$scope.patientClaim.close();
@@ -114,7 +115,8 @@ angular.module('app.loggedIn.invoice.add.directive', [])
 	                	{field: 'Claim_id', is_hide: true},
 	                    {field: 'Injury_name', label: 'Injury'},
 	                    {field: 'Insurer'} ,
-	                    {field: 'insurer_site', is_hide: true}
+	                    // {field: 'insurer_site', is_hide: true}//tan comment
+	                    {field: 'insurer_id', is_hide: true}//tan add
 	                ],
 	                not_load: false,
 	                search: {Patient_id: $scope.patient}
