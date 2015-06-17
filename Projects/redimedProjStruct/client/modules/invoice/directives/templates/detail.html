@@ -12,47 +12,55 @@
 
 	<!--Patient_id-->
 	<div class="col-md-3 col-sm-6 col-xs-12">
-		<span class="field">
+
+		<div class="form-group">
+		    <label class="un_tn_form_label un_tn_form_label_gray" style="width:100px" >Patient</label>
+		    <input disabled type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="InvoiceMap.patient.full_name">
+		</div>
+
+
+		<!-- <span class="field">
 			<label>Patient</label>
 			<div>
 				<input disabled type="text" placeholder="Patient" class="form-control" 
 				ng-model="InvoiceMap.patient.full_name" float-label>
 			</div>
 			<div style="position: absolute;right: 0;top: 0px;">
-			<button  style="height: 32px;width: 40px;margin-right: 0px;" class="btn btn-block green" ng-click="patientSearch.open()">
-				<i class="fa fa-search"></i>
-			</button>
+			
 			</div>
-		</span>	
+		</span>	 -->
 	</div>
 	<!--Patient_id-->
 
 	<!--Company_id-->
+
 	<div class="col-md-3 col-sm-6 col-xs-12">
-		<span class="field">
+		<div class="form-group">
+		    <label class="un_tn_form_label un_tn_form_label_gray" style="width:100px" >Company</label>
+		    <input disabled type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="InvoiceMap.company.Company_name">
+		</div>
+		<!-- <span class="field">
 			<label for="company_id">Company</label>
-			<input type="text" disabled placeholder="Company" ng-model="InvoiceMap.company.Company_name" class="form-control"float-label>
-		</span>	
+			<input type="text" disabled placeholder="Company" ng-model="InvoiceMap.company.Company_name" class="form-control" float-label>
+		</span>	 -->
+
+
 	</div>
 	<!--Company_id-->
 
 	<!--Insurer_id-->
 	<div class="col-md-3 col-sm-6 col-xs-12">
-		<span class="field">
+		<div class="form-group">
+		    <label class="un_tn_form_label un_tn_form_label_gray" style="width:100px" >Insurer</label>
+		    <input disabled type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="InvoiceMap.insurer.insurer_name">
+		</div>
+		<!-- <span class="field">
 			<label>Insurer</label>
 			<input type="text" disabled placeholder="Insurer" ng-model="InvoiceMap.insurer.insurer_name" class="form-control"  float-label>
-		</span>	
+		</span>	 -->
 	</div>
 	<!--Insurer_id-->
 
-	<!--SERVICE_ID-->
-	<!-- <div class="col-md-3 col-sm-6 col-xs-12">
-		<span class="field">
-			<label>Service</label>
-			<input type="text" disabled placeholder="Service" ng-model="InvoiceMap.service.SERVICE_NAME" class="form-control" float-label>
-		</span>	
-	</div> -->
-	<!--SERVICE_ID-->
 	<!--SERVICE_ID-->
 	<div class="col-md-3 col-sm-6 col-xs-12">
 		<span class="field">
