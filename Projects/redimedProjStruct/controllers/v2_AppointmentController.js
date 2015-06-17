@@ -165,8 +165,7 @@ module.exports = {
 		var postData = {
 			appt_status:appt_status,
             checkedin_start_time:start_time
-		};
-
+		}
 		db.ApptPatient.update(postData, {
             CAL_ID: cal_id,
             Patient_id: patient_id

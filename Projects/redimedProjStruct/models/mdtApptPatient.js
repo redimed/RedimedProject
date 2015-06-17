@@ -14,6 +14,9 @@ module.exports = function(sequelize, DataTypes){
         },
         'appt_status': {
             type:DataTypes.STRING(20)
+        },
+        'checkedin_start_time': {
+            type:DataTypes.DATE
         }
         
     }, {
