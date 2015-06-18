@@ -30,7 +30,7 @@ angular.module('starter.booking.rlobDetailBooking.controller',[
         $scope.addbooking = function(des){
             $scope.injuryInfo.info.cal_id = $scope.selectedBooking.CAL_ID;
              $scope.injuryInfo.info.doctor_id = $scope.selectedBooking.DOCTOR_ID;
-             console.log($scope.injuryInfo.info);
+             console.log();
             // var infoBooking = {
             //     Patient_id:  $scope.patientID,
             //     doctor_id:$scope.selectedBooking.DOCTOR_ID,
@@ -53,7 +53,12 @@ angular.module('starter.booking.rlobDetailBooking.controller',[
                         uploadFile($scope.imgURI[i].image,serverUpload,params);
                     }
                     alert('Add Booking Success');
-                    $state.go('app.injury.info');
+                    if($scope.injuryInfo.info.user_type == "Patient"){
+                         $state.go('app.injury.desInjury');
+                    }else{
+                         $state.go('app.injury.info');
+                    }
+                   
                 }
                 else{
                     alert('Error');

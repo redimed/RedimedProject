@@ -68,7 +68,12 @@ angular.module('starter', ['ionic',
                                 {
                                     $state.go('app.driver.list');
                                 } else {
-                                    $state.go('app.injury.info');
+                                    if(localStorageService.get("userInfo").UserType.user_type == "Patient"){
+                                            $state.go('app.injury.desInjury');
+                                    }else{
+                                          $state.go('app.injury.info');
+                                    }
+                                  
                                 }
                             }, 1000);
                         }
@@ -77,7 +82,8 @@ angular.module('starter', ['ionic',
             })
     })
 
-    .run(function($state, $rootScope,localStorageService, $ionicSideMenuDelegate, $cordovaPush, ionPlatform, signaling, $ionicModal, $ionicPopup, $interval) {
+    .run(function($state, $rootScope,localStorageService, $ionicSideMenuDelegate, $cordovaPush,
+                  ionPlatform, signaling, $ionicModal, $ionicPopup, SecurityService, $cordovaDialogs) {
 
         signaling.on('reconnect',function(){
             if (localStorageService.get("userInfo") != null) {
@@ -111,25 +117,80 @@ angular.module('starter', ['ionic',
                 screen.lockOrientation('landscape');
             }
             document.addEventListener("deviceready", function() {
-                //var config = null;
-                //
-                //if (ionic.Platform.isAndroid()) {
-                //    config = {
-                //        "senderID": "137912318312"
-                //    };
-                //} else if (ionic.Platform.isIOS()) {
-                //
-                //}
-                var iOSconfig = {
-                    "badge": true,
-                    "sound": true,
-                    "alert": true,
-                };
-                $cordovaPush.register(iOSconfig).then(function (result) {
+                var config = null;
+
+                if (ionic.Platform.isAndroid()) {
+                    config = {
+                        "senderID": "137912318312"
+                    };
+                } else if (ionic.Platform.isIOS()) {
+                    config = {
+                        "badge": true,
+                        "sound": true,
+                        "alert": true,
+                    };
+                }
+
+                $cordovaPush.register(config).then(function (result) {
                     console.log("Success Push: " + result)
+                    if (ionic.Platform.isIOS()){
+                        SecurityService.setIosToken(result);
+                    }
                 }, function (err) {
                     console.log("Error Push: " + err)
                 });
+
+                $rootScope.$on('$cordovaPush:notificationReceived', function (event, notification) {
+                    localStorageService.set("notificationLS", notification);
+                    if (ionic.Platform.isAndroid()) {
+                        handleAndroid(notification);
+                    }
+                    else if (ionic.Platform.isIOS()) {
+                        //handleIOS(event, notification);
+                    }
+                });
+
+                //Android.
+                function handleAndroid(notification) {
+                    if (notification.event == "registered") {
+                        SecurityService.setIosToken(notification.regid);
+                    }
+                }
+
+                //iOS.
+                //function handleIOS(event, notification) {
+                //    console.log(notification);
+                //    switch (notification.type) {
+                //        case 'call':
+                //            var snd = new Media(event.sound);
+                //            snd.play();
+                //    }
+                //
+                //    if (notification.alert) {
+                //        $cordovaDialogs.alert(notification.alert, "Emergency").then(function (){
+                //            snd.pause();
+                //            //localStorageService.set("idpatient_notice", notification.payload.injury_id)
+                //            //
+                //            //DriverServices.notifi = notification;
+                //            //
+                //            //if(userInfo.UserType.user_type == "Driver") {
+                //            //    $state.go('app.driver.detailInjury', {}, {reload: true});
+                //            //}
+                //        });
+                //    }
+                //
+                //    if (notification.sound) {
+                //
+                //    }
+                //
+                //    if (notification.badge) {
+                //        $cordovaPush.setBadgeNumber(notification.badge).then(function(result) {
+                //            console.log(result, 'setBadgeNumber');
+                //        }, function(err) {
+                //            console.log(err, 'error ----setBadgeNumber');
+                //        });
+                //    }
+                //}
                 AudioToggle.setAudioMode(AudioToggle.SPEAKER);
             });
         });
@@ -141,9 +202,7 @@ angular.module('starter', ['ionic',
             });
             if (window.device.platform === 'iOS' && parseFloat(window.device.version) >= 7.0) {
                 StatusBar.hide();
-
             }
-            app.receivedEvent('deviceready');
         });
 
         function checkConnection() {

@@ -2,7 +2,7 @@ angular.module("starter.menu.controller",[])
     .controller("menuController",function($scope, $rootScope, localStorageService, $state, UserService,
                                           $ionicPopover, SecurityService, $ionicPopup, $cordovaDialogs,
                                           $ionicLoading, $timeout, $cordovaMedia, phoneCallService, signaling,
-                                          $cordovaGeolocation, $interval, $ionicPlatform, DriverServices, $ionicModal){
+                                          $cordovaGeolocation, $interval, $ionicPlatform, DriverServices, $ionicModal, $cordovaPush){
         signaling.removeAllListeners();
 
         var userInfo= localStorageService.get("userInfo");
@@ -53,24 +53,51 @@ angular.module("starter.menu.controller",[])
         $scope.userInfoLS = [];
 
         var loadMenu = function() {
-            UserService.menu(userInfo.id).then(function(response){
-                var i = 0;
-                angular.forEach(response, function(menu){
-                    if(menu.Parent_Id === -1)
-                        $scope.Injurymenu.push({"parent": {"name": menu.Description, "definition":menu.Definition , "menu_id": menu.Menu_Id, "childs":[]}});
-                    else{
-                        var j = 0;
-                        angular.forEach($scope.Injurymenu, function(lmenu){
-                            if(lmenu.parent.menu_id === menu.Parent_Id){
-                                $scope.Injurymenu[j].parent.childs.push({"name": menu.Description, "definition":menu.Definition, "id": menu.Menu_Id});
-                            }
-                            j++;
+            
+            if(userInfo.UserType.user_type == "Patient"){
+                var menuPatient = [];
+                UserService.getPatientMenu().then(function(response){
+                        // console.log("response",response)
+                        angular.forEach(response,function(menu){
+                            if(menu.Description=="Submit Injury")
+                                menu.Definition = "app.injury.desInjury";
+
+
                         })
-                    }
-                    i++;
+                       var evens = _.remove(response, function(n) {
+                              return  n.Description !== "Add Worker" && n.Description !== "Injury History";
+                        });
+                       console.log("event---",evens);
+
+                        renderMenu(evens);
+                        
+                })
+            }else
+            {
+            // console.log(userInfo)
+                UserService.menu(userInfo.id).then(function(response){
+                    renderMenu(response);
                 });
-            });
+            }
             // END MENU
+        }
+        var renderMenu = function(response){
+            console.log('ren',response)
+                var i = 0;
+                    angular.forEach(response, function(menu){
+                        if(menu.Parent_Id === -1)
+                            $scope.Injurymenu.push({"parent": {"name": menu.Description, "definition":menu.Definition , "menu_id": menu.Menu_Id, "childs":[]}});
+                        else{
+                            var j = 0;
+                            angular.forEach($scope.Injurymenu, function(lmenu){
+                                if(lmenu.parent.menu_id === menu.Parent_Id){
+                                    $scope.Injurymenu[j].parent.childs.push({"name": menu.Description, "definition":menu.Definition, "id": menu.Menu_Id});
+                                }
+                                j++;
+                            })
+                        }
+                        i++;
+                    });
         }
 
         loadMenu();
@@ -94,7 +121,7 @@ angular.module("starter.menu.controller",[])
                     $scope.userInfoLS.push({
                         platform: ionic.Platform.platform(),
                         info: userInfo,
-                        token: notificationLS.regid
+                        token: SecurityService.getIosToken()
                     });
                 }
             })
@@ -146,7 +173,7 @@ angular.module("starter.menu.controller",[])
                 handleAndroid(notification);
             }
             else if (ionic.Platform.isIOS()) {
-                handleIOS(notification);
+                handleIOS(event, notification);
             }
         });
 
@@ -164,32 +191,40 @@ angular.module("starter.menu.controller",[])
                     if(userInfo.UserType.user_type == "Driver") {
                         $state.go('app.driver.detailInjury', {}, {reload: true});
                     }
-                    else {
-                        alert(JSON.stringify(notification));
-                    }
                 })
             }
         }
 
-        //iOS.
-        function handleIOS(notification) {
-            console.log(notification);
-            if (notification.alert) {
-                cordovaDialogs.alert(notification.alert);
-                navigator.notification.alert(notification.alert);
-            }
+        //iOS
+        function handleIOS(event, notification) {
+            console.log(event, '----', notification);
+            switch (notification.type) {
+                case 'call':
+                    $scope.modalreceivePhone.show();
+                    var snd = new Media(event.sound);
+                    snd.play();
+                    $scope.acceptCall = function() {
+                        snd.pause();
+                        $scope.modalreceivePhone.hide();
+                        $state.go('app.phoneCall', { callUser: localStorageService.get('fromId'), apiKey: localStorageService.get('message').apiKey, sessionID: localStorageService.get('message').sessionId,
+                            tokenID: localStorageService.get('message').token, isCaller: false }, {reload: true});
+                    }
+                    $scope.ignoreCall = function() {
+                        $scope.modalreceivePhone.hide();
+                        snd.pause();
+                        signaling.emit('sendMessage', localStorageService.get('userInfo').id, localStorageService.get('fromId'), { type: 'ignore' });
+                    }
+                    break;
+                default :
+                    $cordovaDialogs.alert(notification.alert, "Emergency").then(function (){
+                        mediaSource.pause();
+                        localStorageService.set("idpatient_notice", notification.payload.injury_id)
 
-            if (notification.sound) {
-                var snd = new Media(event.sound);
-                snd.play();
-            }
-
-            if (notification.badge) {
-                $cordovaPush.setBadgeNumber(notification.badge).then(function(result) {
-                    // Success!
-                }, function(err) {
-                    // An error occurred. Show a message to the user
-                });
+                        DriverServices.notifi = notification;
+                        if(userInfo.UserType.user_type == "Driver") {
+                            $state.go('app.driver.detailInjury', {}, {reload: true});
+                        }
+                    })
             }
         }
 
@@ -264,6 +299,9 @@ angular.module("starter.menu.controller",[])
 
         signaling.removeListener('messageReceived');
         signaling.on('messageReceived', function (fromId, fromUsername, message) {
+            localStorageService.set('fromId', fromId);
+            localStorageService.set('fromUsername', fromUsername);
+            localStorageService.set('message', message);
             UserService.getUserInfo(fromId).then( function(data) {
                 if(data.img == null) {
                     $scope.avatarCaller = 'img/avatar.png';

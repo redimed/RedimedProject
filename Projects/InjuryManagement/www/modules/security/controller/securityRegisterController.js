@@ -1,6 +1,6 @@
 angular.module('starter.security.register.controller',[])
 
-    .controller('securityRegisterController', function($scope, $state, InjuryServices, SecurityService, ConfigService, $ionicPopup,WorkerServices){
+    .controller('securityRegisterController', function($scope, $state, InjuryServices, SecurityService, ConfigService, $ionicPopup,WorkerServices, $filter){
 
         $scope.titleIndex = ConfigService.title_option();
         console.log($scope.titleIndex)
@@ -25,7 +25,8 @@ angular.module('starter.security.register.controller',[])
 
         $scope.submitRegister = function() {
             console.log($scope.userInfo);
-            $scope.userInfo.dob = new Date($scope.userInfo.dob);
+            $scope.userInfo.DOB = $filter('date')( Date.parse($scope.patientInfo.month +'/'+  $scope.patientInfo.date +'/'+ $scope.patientInfo.year), 'dd/MM/yyyy');
+            $scope.patientInfo.DOB = $filter('date')( Date.parse($scope.patientInfo.month +'/'+  $scope.patientInfo.date +'/'+ $scope.patientInfo.year), 'dd/MM/yyyy');
             var fullname = [];
             fullname.push($scope.patientInfo.firstName, $scope.patientInfo.surName, $scope.patientInfo.middleName);
             $scope.userInfo.Booking_Person = fullname.join(' ');

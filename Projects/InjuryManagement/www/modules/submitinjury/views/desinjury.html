@@ -12,7 +12,8 @@
                     <span style="float: right;padding-right: 10%;padding-top: 30px;font-weight: 600;color: white;">Description Injury</span>
                 </div>
                 <div class="actionBar">
-                    <a class="button button-icon" style="color:#fff;float:left" ui-sref="app.injury.info"><i class="icon ion-arrow-left-c"></i></a>
+                 <a menu-toggle="left" style="color: #fff; float: left" class="button button-icon icon ion-navicon-round" ng-click="toogleMenu()" ng-if="user_type == 'Patient'"></a>
+                    <a class="button button-icon" style="color:#fff;float:left" ui-sref="app.injury.info" ng-if="user_type !== 'Patient'"><i class="icon ion-arrow-left-c"></i></a>
                     <a class="button button-icon icon ion-ios-camera" style="color:#fff;float:right" ng-click="takePicture()"></a>
                 </div>
             </div>

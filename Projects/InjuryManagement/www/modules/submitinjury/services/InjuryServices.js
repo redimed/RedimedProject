@@ -60,6 +60,10 @@ angular.module('starter.injury.services',[])
             var detailApi = injuryApi.all("im/images");
             return detailApi.post({injury_id:injury_id});
         }
+        injuryServices.getPatientByUser = function(id){
+            var detailApi = injuryApi.all("im/patients/getByUser");
+            return detailApi.post({user:id});
+        }
         
         return injuryServices;
     })
