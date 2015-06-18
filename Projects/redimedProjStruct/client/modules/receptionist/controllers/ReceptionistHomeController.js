@@ -100,11 +100,12 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 	        }, function(isConfirm) {
 	        	if(isConfirm)
 	        	{
-	        		ReceptionistService.updateAppointment($scope.fromAppt, doctor.doctor_id, 'progress').then(function(rs){
+	        		var doctorId = (typeof doctor.appointment != 'undefined' && doctor.appointment.length > 0) ? doctor.appointment[0].doctor_id : doctor.doctor_id;
+	        		ReceptionistService.updateAppointment($scope.fromAppt,doctorId, 'progress').then(function(rs){
 			        	if(rs.status == 'success')
 			        	{
 			        		toastr.success("Update Appointment Success!");
-			        		socket.emit('notifyDoctor',doctor.doctor_id);
+			        		socket.emit('notifyDoctor',doctorId);
 			        		socket.emit('notifyPatient',$scope.fromAppt.appt_id);
 			        		$scope.undoArr = [];
 			        		$scope.undoArr.push($scope.fromAppt);

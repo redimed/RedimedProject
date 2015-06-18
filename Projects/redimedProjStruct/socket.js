@@ -59,17 +59,21 @@ module.exports = function(io,cookie,cookieParser) {
         socket.on('notifyDoctor',function(doctorId){
             db.Doctor.find({where:{doctor_id: doctorId}},{raw:true})
                 .success(function(doctor){
-                    if(doctor.User_id)
+                    if(doctor)
                     {
-                        db.User.find({where:{id: doctor.User_id}},{raw:true})
-                            .success(function(user){
-                                if(user.socket)
-                                    io.to(user.socket).emit('receiveNotifyDoctor');
-                            })
-                            .error(function(err){
-                                console.log(err);
-                            })
+                        if(doctor.User_id)
+                        {
+                            db.User.find({where:{id: doctor.User_id}},{raw:true})
+                                .success(function(user){
+                                    if(user.socket)
+                                        io.to(user.socket).emit('receiveNotifyDoctor');
+                                })
+                                .error(function(err){
+                                    console.log(err);
+                                })
+                        }
                     }
+                    
                 })
                 .error(function(err){
                     console.log(err);

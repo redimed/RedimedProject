@@ -31,3 +31,5 @@ app.get('/api/im/image/:imageId',injuryController.injuryImageById);
 app.get('/api/im/pushSound',function(req,res){
     res.sendfile('./sound/notification.mp3');
 })
+
+app.get('/api/im/menu',injuryController.loadSideMenu);
