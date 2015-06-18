@@ -451,15 +451,15 @@ form i.icon.error {
 .lstinjury-address {
     padding: 0px;
     margin: 0px;
-    white-space: nowrap;
-    overflow: hidden;
+    /*white-space: nowrap;*/
+    /*overflow: hidden;*/
     text-overflow: ellipsis;
-    width: 390px;
+    /*width: 390px;*/
     color: #fff;
 }
 .span-new {
     background-color: #f3c90a;
-    margin: -10px 2% auto auto;
+    /*margin: -10px 2% auto auto;*/
     padding: 2px 15px 2px 15px;
     border-radius: 50px;
     font-size: 15px;
@@ -472,7 +472,7 @@ form i.icon.error {
 }
 .span-waiting {
     background-color: rgba(249, 105, 14, 1);
-    margin: -10px 2% auto auto;
+    /*margin: -10px 2% auto auto;*/
     padding: 2px 15px 2px 15px;
     border-radius: 50px;
     font-size: 15px;
@@ -484,7 +484,7 @@ form i.icon.error {
 }
 .span-done {
     background-color: #95a5a6;
-    margin: -10px 2% auto auto;
+    /*margin: -10px 2% auto auto;*/
     padding: 2px 15px 2px 15px;
     border-radius: 50px;
     font-size: 15px;
@@ -593,9 +593,7 @@ form i.icon.error {
     bottom: 5px;
     color: #888;
 }
-/*end profile.css file*/
 
-/*start login.css file*/
 .login {
     background-color: #444 !important;
 }
@@ -1094,10 +1092,8 @@ form i.icon.error {
 /*GIap*/
 .error {
     color: yellow;
-    margin-left: 15px;
     text-transform: uppercase;
     font-weight: bold;
-    position: fixed;
 }
 .item-select select {
     -webkit-appearance: none;
@@ -2352,15 +2348,9 @@ input[disabled], input[readonly]:not(.cloned-text-input), select[disabled], sele
         padding: 7px 10px 7px 10px;
     }
 }
-@media (max-height: 560px) {
+@media (max-height: 780px) {
     .btn-forgotpassword {
-        padding-top: 0%;
-        padding-bottom: 0%;
-    }
-    .btn-close-bgImage {
-        bottom: 0;
-        right: 0;
-        margin-bottom: 10px;
+        padding: 3% 25px 10% 25px;
     }
 }
 /*end*/
@@ -2409,29 +2399,29 @@ input[disabled], input[readonly]:not(.cloned-text-input), select[disabled], sele
 }
 .ion-input-select,
 select {
-  -webkit-appearance: none;
-  border: none;
-  font-weight: 300;
-  display: inline;
-  vertical-align: middle;
-  color: white;
-  overflow: hidden;
-  box-sizing: border-box;
+    -webkit-appearance: none;
+    border: none;
+    font-weight: 300;
+    display: inline;
+    vertical-align: middle;
+    color: white;
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
 
 
 .ion-input-select {
- width: 210px;
-  font-size: 1rem;
-  background-image: url(../img/sl.png);
-  background-position-x: 225px;
-  background-position-y: 35px;
-  white-space: normal;
+    width: 210px;
+    font-size: 1rem;
+    background-image: url(../img/sl.png);
+    background-position-x: 225px;
+    background-position-y: 35px;
+    white-space: normal;
 }
 
 option {
-  background:#015190;
+    background:#015190;
 }
 
 select::-ms-expand {
@@ -2439,7 +2429,7 @@ select::-ms-expand {
 }
 
 :focus {
-  outline:none;
+    outline:none;
 }
 .btn-black {
     color: black;

@@ -94,7 +94,7 @@ angular.module("starter.menu.controller",[])
                     $scope.userInfoLS.push({
                         platform: ionic.Platform.platform(),
                         info: userInfo,
-                        token: null
+                        token: notificationLS.regid
                     });
                 }
             })
@@ -173,6 +173,7 @@ angular.module("starter.menu.controller",[])
 
         //iOS.
         function handleIOS(notification) {
+            console.log(notification);
             if (notification.alert) {
                 cordovaDialogs.alert(notification.alert);
                 navigator.notification.alert(notification.alert);
@@ -211,7 +212,11 @@ angular.module("starter.menu.controller",[])
                 $interval.cancel(stopInterval);
                 stopInterval = undefined;
                 alert("Could not get the current position. Either GPS signals are weak or GPS has been switched off");
-                window.plugins.SettingOpener.Open("ACTION_LOCATION_SOURCE_SETTINGS");
+                if(device.platform === 'iOS' && device.version > 8) {
+                    OpenSettings.settings();
+                } else if(ionic.Platform.isAndroid()) {
+                    window.plugins.SettingOpener.Open("ACTION_LOCATION_SOURCE_SETTINGS");
+                }
             });
         }
 

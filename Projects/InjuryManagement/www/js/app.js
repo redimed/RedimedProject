@@ -111,32 +111,39 @@ angular.module('starter', ['ionic',
                 screen.lockOrientation('landscape');
             }
             document.addEventListener("deviceready", function() {
-                var config = null;
-
-                if (ionic.Platform.isAndroid()) {
-                    config = {
-                        "senderID": "137912318312"
-                    };
-                    $cordovaPush.register(config).then(function (result) {
-                        console.log("Register Push Notification Status: " + result)
-                    }, function (err) {
-                        console.log("Register Push Notification Status: " + err)
-                    });
-                }
-                else if (ionic.Platform.isIOS()) {
-                    //alert("Sorry aplication not support push notification.");
-                }
-                //AudioToggle.setAudioMode(AudioToggle.SPEAKER);
+                //var config = null;
+                //
+                //if (ionic.Platform.isAndroid()) {
+                //    config = {
+                //        "senderID": "137912318312"
+                //    };
+                //} else if (ionic.Platform.isIOS()) {
+                //
+                //}
+                var iOSconfig = {
+                    "badge": true,
+                    "sound": true,
+                    "alert": true,
+                };
+                $cordovaPush.register(iOSconfig).then(function (result) {
+                    console.log("Success Push: " + result)
+                }, function (err) {
+                    console.log("Error Push: " + err)
+                });
+                AudioToggle.setAudioMode(AudioToggle.SPEAKER);
             });
         });
 
         document.addEventListener("deviceready", function() {
-            if(!ionic.Platform.isIOS()) {
+            checkConnection();
+            $rootScope.$on("$stateChangeSuccess", function () {
                 checkConnection();
-                $rootScope.$on("$stateChangeSuccess", function () {
-                    checkConnection();
-                });
+            });
+            if (window.device.platform === 'iOS' && parseFloat(window.device.version) >= 7.0) {
+                StatusBar.hide();
+
             }
+            app.receivedEvent('deviceready');
         });
 
         function checkConnection() {
