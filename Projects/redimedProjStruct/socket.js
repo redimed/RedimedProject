@@ -26,6 +26,22 @@ var options = {
 
 var apnsConnection = new apns.Connection(options);
 
+function log(type) {
+    return function() {
+        console.log(type, arguments);
+    }
+}
+
+apnsConnection.on('error', log('error'));
+apnsConnection.on('transmitted', log('transmitted'));
+apnsConnection.on('timeout', log('timeout'));
+apnsConnection.on('connected', log('connected'));
+apnsConnection.on('disconnected', log('disconnected'));
+apnsConnection.on('socketError', log('socketError'));
+apnsConnection.on('transmissionError', log('transmissionError'));
+apnsConnection.on('cacheTooSmall', log('cacheTooSmall')); 
+apnsConnection.on('completed',log('completed'));
+
 module.exports = function(io,cookie,cookieParser) {
     var userList = [];
     var ua = null;

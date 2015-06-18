@@ -208,8 +208,6 @@ module.exports = {
 		var toAppt = req.body.toAppt;
 		var state = req.body.state;
 
-		console.log("===========",state);
-
 		if(state.toLowerCase() == 'checked')
 		{
 			db.sequelize.query("UPDATE cln_appt_patients SET CAL_ID = ?, appt_status = ?, checkedin_start_time = ? WHERE id = ?",

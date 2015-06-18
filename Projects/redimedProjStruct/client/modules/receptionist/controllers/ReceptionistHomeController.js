@@ -101,6 +101,7 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 	        	if(isConfirm)
 	        	{
 	        		var doctorId = (typeof doctor.appointment != 'undefined' && doctor.appointment.length > 0) ? doctor.appointment[0].doctor_id : doctor.doctor_id;
+	        		console.log(doctor);
 	        		ReceptionistService.updateAppointment($scope.fromAppt,doctorId, 'progress').then(function(rs){
 			        	if(rs.status == 'success')
 			        	{
