@@ -14,8 +14,8 @@ var apns = require('apn');
 var sender = new gcm.Sender('AIzaSyDsSoqkX45rZt7woK_wLS-E34cOc0nat9Y');
 
 var options = {
-        cert: './key/APN/PushCert.pem',                                                    
-        key:  './key/APN/PushKey.pem',                                                     
+        cert: 'key/APN/PushCert.pem',                                                    
+        key:  'key/APN/PushKey.pem',                                                     
         passphrase: '123456',                              
         production: false,                                 
         port: 2195,                                    
