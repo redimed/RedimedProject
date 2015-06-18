@@ -755,7 +755,7 @@ module.exports = {
                                     "INNER JOIN departments ON hr_employee.Dept_ID = departments.departmentid  "+//INNER JOIN
                                     "INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id "+//INNER JOIN
                                     "WHERE time_tasks_week.task_status_id = 3 AND "+//WHERE
-                                    "YEAR(time_tasks_week.start_date)=:years AND "+
+                                    "YEAR(time_tasks_week.end_date)=:years AND "+
                                     "departments.departmentid IN ("+stringDept+") AND "+//WHERE
                                     // "time_tasks_week.week_no<"+info.weekNoFrom+" AND "+
                                     "hr_employee.Employee_ID IN ("+stringEMP+")";//WHERE
@@ -820,7 +820,7 @@ module.exports = {
                                                 "INNER JOIN time_tasks ON time_tasks.tasks_week_id = time_tasks_week.task_week_id "+//INNER JOIN
                                                 "INNER JOIN time_item_task ON time_item_task.task_id = time_tasks.tasks_id "+//INNER JOIN
                                                 "WHERE time_tasks_week.task_status_id = 3 AND "+//WHERE
-                                                "YEAR(time_tasks_week.start_date)=:years AND "+
+                                                "YEAR(time_tasks_week.end_date)=:years AND "+
                                                 "departments.departmentid IN ("+stringDept+") AND "+//WHERE
                                                 // "(time_tasks_week.week_no <"+info.weekNoFrom+") AND "+
                                                 "hr_employee.Employee_ID IN ("+stringEMP+") AND "+//WHERE
@@ -987,7 +987,7 @@ module.exports = {
                                     "WHERE time_tasks_week.task_status_id = 3 AND "+//WHERE
                                     "departments.departmentid IN ("+stringDept+") AND "+//WHERE
                                     "(time_tasks_week.week_no BETWEEN "+week2+" AND "+weeks+" ) AND "+//WHERE
-                                    "YEAR(time_tasks_week.start_date)=:years AND "+
+                                    "YEAR(time_tasks_week.end_date)=:years AND "+
                                     "hr_employee.Employee_ID IN ("+stringEMP+")";//WHERE
                             db.sequelize.query(sql_get_data3,null,{
                                 raw:true
@@ -1304,7 +1304,7 @@ module.exports = {
                                                                        " INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id " + //INNER JOIN
                                                                        " WHERE time_tasks_week.task_status_id = 3 "+//WHERE
                                                                             " AND departments.departmentid IN ( " + stringDept + " ) "+//WHERE
-                                                                            " AND (time_tasks_week.week_no,YEAR(time_tasks_week.start_date)) IN (" + stringline2 + ")  "+//WHERE
+                                                                            " AND (time_tasks_week.week_no,YEAR(time_tasks_week.end_date)) IN (" + stringline2 + ")  "+//WHERE
                                                                             " AND hr_employee.Employee_ID IN ( " + stringEMP + " )";//WHERE
                                 db.sequelize.query(sql_get_data_time_activity_table)
                                     .success(function(data_time_activity_table) {
@@ -1820,7 +1820,7 @@ module.exports = {
                                                                                " INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id " +//INNER JOIN 
                                                                                " WHERE time_tasks_week.task_status_id = 3 "+//WHERE
                                                                                " AND departments.departmentid IN ( " + stringDept + " ) "+//WHERE
-                                                                               " AND (time_tasks_week.week_no,YEAR(time_tasks_week.start_date)) IN ("+stringline2+") "+//WHERE
+                                                                               " AND (time_tasks_week.week_no,YEAR(time_tasks_week.end_date)) IN ("+stringline2+") "+//WHERE
                                                                                " AND hr_employee.Employee_ID IN ( " + stringEMP + " ) ";//WHERE
                                 //GET DATA TABLE time_activity_summary_table
                                 db.sequelize.query(sql_get_data_time_activity_summary_table)
