@@ -34,6 +34,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 				$scope.header.ASSESSED_SIGN = '';
 				$scope.header.ASSESSED_DATE = moment().format("YYYY-MM-DD hh:mm:ss");
 				$scope.header.Comments = "Meet all manual handling requirements with good technique."
+				getDoctorInfo(cal_id, patient_id);
 				//get lines of section
 				$scope.header.sections.forEach(function(section){
 					section.PATIENT_ID = patient_id;
@@ -77,7 +78,6 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 										line.comments.forEach(function(comment){
 											comment.PATIENT_ID = patient_id;
 											comment.CAL_ID = cal_id;
-											console.log($scope.header);
 										})
 									}
 								})
@@ -179,7 +179,6 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 			if(result.status==='error') toastr.error('Unexpected error!','Error!');
 			else if(result.status==='not existed') {
 				getNewFA(fa_id);
-				getDoctorInfo(cal_id, patient_id);
 				$scope.editMode=false;
 			}
 			else {
