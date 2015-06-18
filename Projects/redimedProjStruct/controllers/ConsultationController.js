@@ -230,6 +230,9 @@ module.exports = {
             treatment_plan: info.treatment,
             investigation: info.investigation,
             specialist: info.specialist,
+            progress_note: info.progress_note,
+            attendance_record: info.attendance_record,
+            communication_record: info.communication_record,
             diagnosis: info.diagnosis
         }, {consult_id: info.consult_id}, {raw: true})
         .success(function(data){
@@ -300,6 +303,9 @@ module.exports = {
                     treatment_plan: info.treatment,
                     investigation: info.investigation,
                     specialist: info.specialist,
+                    progress_note: info.progress_note,
+                    attendance_record: info.attendance_record,
+                    communication_record: info.communication_record,
                     diagnosis: info.diagnosis
                 })
                 .success(function(data){

@@ -5,7 +5,6 @@ module.exports = function(sequelize,DataTypes){
         Department_id : DataTypes.INTEGER(11) ,
         activity_id   : DataTypes.INTEGER(11),
         time_charge_Dept: DataTypes.INTEGER(11),
-        time_charge_Dept_per : DataTypes.FLOAT,
         time_charge_Dept_all: DataTypes.INTEGER(11),
         time_charge_all      : DataTypes.INTEGER(11),
         from_date :DataTypes.DATE,

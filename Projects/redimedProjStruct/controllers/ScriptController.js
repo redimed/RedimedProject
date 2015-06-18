@@ -328,17 +328,33 @@ module.exports = {
 		.error(function(error){
 			res.json(500, {'status': 'error', 'message': error});
 		})
+		console.log('_____________________ ', sql_d);
 
-		var sql = knex('script_head')
-		.insert(post_array)
-		.toString();
-		db.sequelize.query(sql)
-		.success(function(data){
-			res.json({data: data});
+		var p_arr = [];
+		
+		_.forEach(post_array, function(value, index){
+			var flag = true;
+			if(post_array.length < 0){
+				flag = false;
+				return;
+			}
+			if(flag)
+				p_arr.push(value);
 		})
-		.error(function(error){
-			res.json(500, {'status': 'error', 'message': error});
-		})
+		console.log('@#$%^&*(: ', p_arr);
+
+		if(p_arr.length > 0){
+			var sql = knex('script_head')
+			.insert(p_arr)
+			.toString();
+			db.sequelize.query(sql)
+			.success(function(data){
+				res.json({data: data});
+			})
+			.error(function(error){
+				res.json(500, {'status': 'error', 'message': error});
+			})
+		}
 
 	}
 

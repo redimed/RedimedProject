@@ -57,8 +57,9 @@ angular.module('app.loggedIn.script.directive.edit', [])
 								return;
 							}
 						});
-						if(flag)
+						if(flag){
 							scope.script.s_array.push(value_script);
+						}
 					});
 
 
@@ -120,14 +121,11 @@ angular.module('app.loggedIn.script.directive.edit', [])
 				});*/
 
 				var postDatar = [];
-
-				if(scope.script.s_array.length > 0){
-					angular.forEach(scope.script.s_array, function(values, indexs){
-						if(scope.script.s_array[indexs].Checked === "1"){
-							postDatar.push(values);
-						}
-					});
-				}
+				angular.forEach(scope.script.s_array, function(values, indexs){
+					if(scope.script.s_array[indexs].Checked === "1"){
+						postDatar.push(values);
+					}
+				});
 				var postDatary = [];
 				angular.forEach(scope.list, function(valuesy, indexsy){
 					if(scope.list[indexsy].Checked === "0"){
