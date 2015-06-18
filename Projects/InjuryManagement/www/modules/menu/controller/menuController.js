@@ -53,24 +53,51 @@ angular.module("starter.menu.controller",[])
         $scope.userInfoLS = [];
 
         var loadMenu = function() {
-            UserService.menu(userInfo.id).then(function(response){
-                var i = 0;
-                angular.forEach(response, function(menu){
-                    if(menu.Parent_Id === -1)
-                        $scope.Injurymenu.push({"parent": {"name": menu.Description, "definition":menu.Definition , "menu_id": menu.Menu_Id, "childs":[]}});
-                    else{
-                        var j = 0;
-                        angular.forEach($scope.Injurymenu, function(lmenu){
-                            if(lmenu.parent.menu_id === menu.Parent_Id){
-                                $scope.Injurymenu[j].parent.childs.push({"name": menu.Description, "definition":menu.Definition, "id": menu.Menu_Id});
-                            }
-                            j++;
+            
+            if(userInfo.UserType.user_type == "Patient"){
+                var menuPatient = [];
+                UserService.getPatientMenu().then(function(response){
+                        // console.log("response",response)
+                        angular.forEach(response,function(menu){
+                            if(menu.Description=="Submit Injury")
+                                menu.Definition = "app.injury.desInjury";
+
+
                         })
-                    }
-                    i++;
+                       var evens = _.remove(response, function(n) {
+                              return  n.Description !== "Add Worker" && n.Description !== "Injury History";
+                        });
+                       console.log("event---",evens);
+
+                        renderMenu(evens);
+                        
+                })
+            }else
+            {
+            // console.log(userInfo)
+                UserService.menu(userInfo.id).then(function(response){
+                    renderMenu(response);
                 });
-            });
+            }
             // END MENU
+        }
+        var renderMenu = function(response){
+            console.log('ren',response)
+                var i = 0;
+                    angular.forEach(response, function(menu){
+                        if(menu.Parent_Id === -1)
+                            $scope.Injurymenu.push({"parent": {"name": menu.Description, "definition":menu.Definition , "menu_id": menu.Menu_Id, "childs":[]}});
+                        else{
+                            var j = 0;
+                            angular.forEach($scope.Injurymenu, function(lmenu){
+                                if(lmenu.parent.menu_id === menu.Parent_Id){
+                                    $scope.Injurymenu[j].parent.childs.push({"name": menu.Description, "definition":menu.Definition, "id": menu.Menu_Id});
+                                }
+                                j++;
+                            })
+                        }
+                        i++;
+                    });
         }
 
         loadMenu();
