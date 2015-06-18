@@ -358,7 +358,7 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 	}
 
 	$scope.value1TypeInit = function(detail){
-		if($stateParams.action!=='add'){
+		if($stateParams.action!=='add' || ($stateParams.action==='add' && $stateParams.headerId!==0)){
 			if((detail.VAL1_ISVALUE===0 ||detail.VAL1_ISVALUE===null) && (detail.VAL1_ISCHECKBOX===0 || detail.VAL1_ISCHECKBOX===null)){
 				return -1;
 			}
@@ -377,7 +377,7 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 	}
 
 	$scope.value2TypeInit = function(detail){
-		if($stateParams.action!=='add'){
+		if($stateParams.action!=='add' || ($stateParams.action==='add' && $stateParams.headerId!==0)){
 			if((detail.VAL2_ISVALUE===0 ||detail.VAL2_ISVALUE===null) && (detail.VAL2_ISCHECKBOX===0 || detail.VAL2_ISCHECKBOX===null)){
 				return -1;
 			}
