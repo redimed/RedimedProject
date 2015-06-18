@@ -1032,7 +1032,7 @@ angular.module('app.config', [])
             return '';
 
         var k = string.slice(0,10).split('-');
-        console.log(k);
+        //console.log(k);
 
         return k[2]+'/'+k[1]+'/'+k[0];
     };

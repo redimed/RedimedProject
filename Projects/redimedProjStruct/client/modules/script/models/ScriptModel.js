@@ -29,6 +29,34 @@ angular.module('app.loggedIn.script.model', [])
 		var instanceApi = mainApi.all('disable');
 		return instanceApi.post({data: data});
 	}
+	mainModel.postSing = function(data){
+		var instanceApi = mainApi.all('signature');
+		return instanceApi.post({data: data});
+	}
+	mainModel.postScriptHead = function(data){
+		var instanceApi = mainApi.all('addScriptHead');
+		return instanceApi.post({data: data});
+	}
+	mainModel.listpostHead = function(data, datar){
+		var instanceApi = mainApi.all('listscriptHead');
+		return instanceApi.post({data: data, datar: datar});
+	}
+	mainModel.editHead = function(data, datar){
+		var instanceApi = mainApi.all('editcriptHead');
+		return instanceApi.post({data: data, datar: datar});
+	}
+	/*mainModel.updatepostHead = function(data){
+		var instanceApi = mainApi.all('updatescriptHead');
+		return instanceApi.post({data: data});
+	}
+	mainModel.removepostHead = function(data){
+		var instanceApi = mainApi.all('removescriptHead');
+		return instanceApi.post({data: data});
+	}*/
+	/*mainModel.postID = function(data){
+		var instanceApi = mainApi.all('scriptHead');
+		return instanceApi.post({data: data});
+	}*/
 	return mainModel;
 
 });
