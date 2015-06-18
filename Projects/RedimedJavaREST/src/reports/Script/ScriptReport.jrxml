@@ -1,10 +1,259 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ScriptReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c2b6103d-271a-46dc-b501-29c4a01f4289">
-	<property name="ireport.zoom" value="1.2100000000000006"/>
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="336"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#C3CFD9">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#E6F3FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="43ae679f-64ac-4afc-97ef-b412682d11a0"/>
+	<subDataset name="Table Dataset 2" uuid="93a1bb46-d5c4-49a4-b810-408606b820d6"/>
+	<subDataset name="Table Dataset 3" uuid="5c7e494b-2973-42ee-b9e4-48c6de1b236d"/>
+	<subDataset name="Table Dataset 4" uuid="9a29a8d8-83fd-4881-b0d8-c7230fbc5ca0"/>
+	<subDataset name="New Dataset 1" uuid="6db086f5-d8a1-4b03-bdb7-b7c317df43b0">
+		<queryString language="SQL">
+			<![CDATA[SELECT
+     script_head.`ID` AS script_head_ID,
+     script_head.`Checked` AS script_head_Checked,
+     script_head.`Provider_no` AS script_head_Provider_no,
+     script_head.`condition_Indication` AS script_head_condition_Indication,
+     script_head.`doctor_id` AS script_head_doctor_id,
+     script_head.`dose` AS script_head_dose,
+     script_head.`end_date` AS script_head_end_date,
+     script_head.`frequency` AS script_head_frequency,
+     script_head.`medication_name` AS script_head_medication_name,
+     script_head.`qty` AS script_head_qty,
+     script_head.`route` AS script_head_route,
+     script_head.`start_date` AS script_head_start_date,
+     script_head.`user_name` AS script_head_user_name,
+     script_head.`unit` AS script_head_unit,
+     script_head.`CAL_ID` AS script_head_CAL_ID,
+     script_head.`ID_SCRIPT` AS script_head_ID_SCRIPT,
+     script_head.`Created_by` AS script_head_Created_by,
+     script_head.`Creation_date` AS script_head_Creation_date,
+     script_head.`Last_updated_by` AS script_head_Last_updated_by,
+     script_head.`Last_update_date` AS script_head_Last_update_date,
+     script_head.`isEnable` AS script_head_isEnable,
+     cln_scripts.`ID` AS cln_scripts_ID,
+     cln_scripts.`Patient_id` AS cln_scripts_Patient_id,
+     cln_scripts.`CAL_ID` AS cln_scripts_CAL_ID,
+     cln_scripts.`prescriber` AS cln_scripts_prescriber,
+     cln_scripts.`scriptNum` AS cln_scripts_scriptNum,
+     cln_scripts.`isRefNo` AS cln_scripts_isRefNo,
+     cln_scripts.`EntitlementNo` AS cln_scripts_EntitlementNo,
+     cln_scripts.`isSafety` AS cln_scripts_isSafety,
+     cln_scripts.`isConcessional` AS cln_scripts_isConcessional,
+     cln_scripts.`isPBS` AS cln_scripts_isPBS,
+     cln_scripts.`isRPBS` AS cln_scripts_isRPBS,
+     cln_scripts.`isBrand` AS cln_scripts_isBrand,
+     cln_scripts.`doctorSign` AS cln_scripts_doctorSign,
+     cln_scripts.`doctordate` AS cln_scripts_doctordate,
+     cln_scripts.`patientSign` AS cln_scripts_patientSign,
+     cln_scripts.`patientDate` AS cln_scripts_patientDate,
+     cln_scripts.`agentAddress` AS cln_scripts_agentAddress,
+     cln_scripts.`Created_by` AS cln_scripts_Created_by,
+     cln_scripts.`Creation_date` AS cln_scripts_Creation_date,
+     cln_scripts.`Last_updated_by` AS cln_scripts_Last_updated_by,
+     cln_scripts.`Last_update_date` AS cln_scripts_Last_update_date,
+     cln_scripts.`isEnable` AS cln_scripts_isEnable,
+     cln_scripts.`MedicareNo` AS cln_scripts_MedicareNo
+FROM
+     `script_head` script_head,
+     `cln_scripts` cln_scripts
+WHERE
+     cln_scripts.`ID` = script_head.`ID_SCRIPT`]]>
+		</queryString>
+		<field name="script_head_dose" class="java.lang.Integer"/>
+		<field name="script_head_end_date" class="java.sql.Timestamp"/>
+		<field name="script_head_frequency" class="java.lang.Integer"/>
+		<field name="script_head_medication_name" class="java.lang.String"/>
+		<field name="script_head_qty" class="java.lang.Integer"/>
+		<field name="script_head_route" class="java.lang.Integer"/>
+		<field name="script_head_start_date" class="java.sql.Timestamp"/>
+		<field name="script_head_unit" class="java.lang.Integer"/>
+	</subDataset>
+	<subDataset name="Table Dataset 5" uuid="68b74d5b-9196-4d58-949b-a0a5314856f3"/>
+	<subDataset name="medicare_table" uuid="39cf9537-8b03-4294-b1fe-ec8924df4f6d">
+		<queryString language="SQL">
+			<![CDATA[SELECT
+     cln_scripts.`ID` AS cln_scripts_ID,
+     cln_scripts.`Patient_id` AS cln_scripts_Patient_id,
+     cln_scripts.`CAL_ID` AS cln_scripts_CAL_ID,
+     cln_scripts.`prescriber` AS cln_scripts_prescriber,
+     cln_scripts.`scriptNum` AS cln_scripts_scriptNum,
+     cln_scripts.`isRefNo` AS cln_scripts_isRefNo,
+     cln_scripts.`EntitlementNo` AS cln_scripts_EntitlementNo,
+     cln_scripts.`isSafety` AS cln_scripts_isSafety,
+     cln_scripts.`isConcessional` AS cln_scripts_isConcessional,
+     cln_scripts.`isPBS` AS cln_scripts_isPBS,
+     cln_scripts.`isRPBS` AS cln_scripts_isRPBS,
+     cln_scripts.`isBrand` AS cln_scripts_isBrand,
+     cln_scripts.`MedicareNo` AS cln_scripts_MedicareNo,
+     cln_scripts.`doctorSign` AS cln_scripts_doctorSign,
+     cln_scripts.`doctordate` AS cln_scripts_doctordate,
+     cln_scripts.`patientSign` AS cln_scripts_patientSign,
+     cln_scripts.`patientDate` AS cln_scripts_patientDate,
+     cln_scripts.`agentAddress` AS cln_scripts_agentAddress,
+     cln_scripts.`Created_by` AS cln_scripts_Created_by,
+     cln_scripts.`Creation_date` AS cln_scripts_Creation_date,
+     cln_scripts.`Last_updated_by` AS cln_scripts_Last_updated_by,
+     cln_scripts.`Last_update_date` AS cln_scripts_Last_update_date,
+     cln_scripts.`isEnable` AS cln_scripts_isEnable,
+     script_head.`ID` AS script_head_ID,
+     script_head.`Checked` AS script_head_Checked,
+     script_head.`Provider_no` AS script_head_Provider_no,
+     script_head.`condition_Indication` AS script_head_condition_Indication,
+     script_head.`doctor_id` AS script_head_doctor_id,
+     script_head.`dose` AS script_head_dose,
+     script_head.`end_date` AS script_head_end_date,
+     script_head.`frequency` AS script_head_frequency,
+     script_head.`medication_name` AS script_head_medication_name,
+     script_head.`qty` AS script_head_qty,
+     script_head.`route` AS script_head_route,
+     script_head.`start_date` AS script_head_start_date,
+     script_head.`user_name` AS script_head_user_name,
+     script_head.`unit` AS script_head_unit,
+     script_head.`CAL_ID` AS script_head_CAL_ID,
+     script_head.`ID_SCRIPT` AS script_head_ID_SCRIPT,
+     script_head.`Created_by` AS script_head_Created_by,
+     script_head.`Creation_date` AS script_head_Creation_date,
+     script_head.`Last_updated_by` AS script_head_Last_updated_by,
+     script_head.`Last_update_date` AS script_head_Last_update_date,
+     script_head.`isEnable` AS script_head_isEnable
+FROM
+     `cln_scripts` cln_scripts,
+     `script_head` script_head
+WHERE
+     cln_scripts.`ID` = script_head.`ID_SCRIPT`]]>
+		</queryString>
+		<field name="script_head_medication_name" class="java.lang.String"/>
+		<field name="script_head_dose" class="java.lang.Integer"/>
+		<field name="script_head_unit" class="java.lang.Integer"/>
+		<field name="script_head_route" class="java.lang.Integer"/>
+		<field name="script_head_frequency" class="java.lang.Integer"/>
+		<field name="script_head_qty" class="java.lang.Integer"/>
+		<field name="script_head_start_date" class="java.sql.Timestamp"/>
+		<field name="script_head_end_date" class="java.sql.Timestamp"/>
+	</subDataset>
 	<parameter name="id" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -22,13 +271,20 @@
 	p.`Address1`,
 	p.`Ref`,
 	p.`Post_code`,
+	h.`medication_name`,
+	h.`dose`,
+	h.`unit`,
+	h.`route`,
+	h.`frequency`,
+	h.`qty`,
+	h.`start_date`,
+	h.`end_date`,
 	s.`EntitlementNo`,
 	IFNULL(s.`isSafety`,0) AS 'isSafety',
 	IFNULL(s.`isConcessional`,0) AS 'isConcessional',
 	IFNULL(s.`isPBS`,0) AS 'isPBS',
 	IFNULL(s.`isRPBS`,0) AS 'isRPBS',
 	IFNULL(s.`isBrand`,0) AS 'isBrand',
-	s.`pharmacist`,
 	IFNULL(SUBSTRING_INDEX(s.`doctorSign`, ',', -1),'') AS 'doc_sign',
 	s.`doctordate`,
 	IFNULL(SUBSTRING_INDEX(s.`patientSign`, ',', -1),'') AS 'patient_sign',
@@ -36,6 +292,7 @@
 	s.`agentAddress`
 FROM `cln_scripts` s
 INNER JOIN `cln_patients` p ON s.`Patient_id` = p.`Patient_id`
+INNER JOIN `script_head` h ON s.`ID` = h.`ID_SCRIPT`
 WHERE s.`ID`= $P{id}]]>
 	</queryString>
 	<field name="prescriber" class="java.lang.String">
@@ -44,7 +301,7 @@ WHERE s.`ID`= $P{id}]]>
 	<field name="scriptNum" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="Medicare_no" class="java.lang.Integer">
+	<field name="Medicare_no" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="Fullname" class="java.lang.String"/>
@@ -58,6 +315,30 @@ WHERE s.`ID`= $P{id}]]>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="Post_code" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="medication_name" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="dose" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="unit" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="route" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="frequency" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="qty" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="start_date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="end_date" class="java.sql.Timestamp">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="EntitlementNo" class="java.lang.String">
@@ -76,9 +357,6 @@ WHERE s.`ID`= $P{id}]]>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="isBrand" class="java.lang.Long">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="pharmacist" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="doc_sign" class="java.lang.String"/>
@@ -223,7 +501,7 @@ Or Safety Net concession cardholder]]></text>
 	<detail>
 		<band height="440" splitType="Stretch">
 			<rectangle>
-				<reportElement x="109" y="75" width="428" height="313" uuid="6bf833d9-e3b1-45f4-bd32-2035c97afd91"/>
+				<reportElement x="109" y="75" width="433" height="313" uuid="6bf833d9-e3b1-45f4-bd32-2035c97afd91"/>
 			</rectangle>
 			<staticText>
 				<reportElement x="17" y="74" width="88" height="314" uuid="f4e5162a-d774-40bf-9fde-a1da8aa85660"/>
@@ -231,10 +509,6 @@ Or Safety Net concession cardholder]]></text>
 				<text><![CDATA[Pharmacist/Patient
 copy]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="120" y="83" width="404" height="295" uuid="cd224fab-cbca-4a5b-81b6-20114118a6dc"/>
-				<textFieldExpression><![CDATA[$F{pharmacist} != null ? $F{pharmacist} : ""]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="13" y="398" width="88" height="17" uuid="0c5b4dcc-9382-4f81-b635-b4f6c2eb804c"/>
 				<text><![CDATA[Doctor's signature:]]></text>
@@ -285,6 +559,156 @@ copy]]></text>
 				<reportElement x="357" y="46" width="13" height="13" uuid="3482b255-762b-460b-96ee-722804a1a8ec"/>
 				<imageExpression><![CDATA[$F{isBrand}.intValue() == 1 ? "checked.png" : "uncheck.png"]]></imageExpression>
 			</image>
+			<componentElement>
+				<reportElement key="table 5" style="table 5" x="115" y="81" width="422" height="303" uuid="c2c0f6dc-d39e-48b5-9882-8d71a3da3e7d"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="medicare_table" uuid="e86acc4a-273d-4184-a45d-36a03144fc86">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="60" uuid="bb19920a-6c93-43ee-9c95-6e072b8f6f45">
+						<jr:tableHeader style="table 5_TH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="60" height="30" uuid="15967e66-7314-464f-a662-951ad507d31d"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Medicare Name]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="table 5_TD" height="26" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="60" height="26" uuid="68f4dd09-40f4-40de-ba92-350ed476affd"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{script_head_medication_name}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="41" uuid="95e52398-9933-4a95-a09e-7d34aadee21c">
+						<jr:tableHeader style="table 5_TH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="41" height="30" uuid="568d0a93-3841-4ed7-94cb-f8d2c8c8d096"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Dose]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="table 5_TD" height="26" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="41" height="26" uuid="c3bfe6ed-21bd-43ae-a7d6-cd61916cf71d"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{script_head_dose}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="38" uuid="68151bdc-0787-4b35-b382-e281f55a925d">
+						<jr:tableHeader style="table 5_TH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="38" height="30" uuid="49650c16-0bf6-4d97-99ee-14f0157c856a"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Unit]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="table 5_TD" height="26" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="38" height="26" uuid="22f26ef3-12b4-4c6a-97c4-e987df3cf697"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{script_head_unit}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="35" uuid="de349b2c-ed97-4fb7-816c-941ffcdc7b6f">
+						<jr:tableHeader style="table 5_TH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="35" height="30" uuid="5298b9e3-8b60-4480-bfe4-1011925ad94e"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Route]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="table 5_TD" height="26" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="35" height="26" uuid="1f6c2d2a-f0ac-423d-9f01-21858d7c2fd0"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{script_head_route}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="54" uuid="f1d9ee31-4e47-4c9f-9a97-a88d48474b83">
+						<jr:tableHeader style="table 5_TH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="54" height="30" uuid="5eda33df-8adf-4e0c-ab77-80032c0c62b8"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Frequency]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="table 5_TD" height="26" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="54" height="26" uuid="1bb0302e-ac65-47db-b1c2-a56167135cb2"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{script_head_frequency}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="53" uuid="259f0332-7fe5-4874-bc28-c52377263b76">
+						<jr:tableHeader style="table 5_TH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="53" height="30" uuid="bb65ca5f-9f6b-4740-b4d9-0834121b9064"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Quanlity]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="table 5_TD" height="26" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="53" height="26" uuid="fcf495fc-3681-472b-9537-5dc8c2320514"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{script_head_qty}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="74" uuid="a5069c21-dfaf-49b1-b492-e0c65d86fe58">
+						<jr:tableHeader style="table 5_TH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="74" height="30" uuid="7f6f962f-dc6c-4695-b323-0b2cc719cc23"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Start Date]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="table 5_TD" height="26" rowSpan="1">
+							<textField pattern="dd/MM/yyyy">
+								<reportElement x="0" y="0" width="74" height="26" uuid="f29bdf92-5069-45e2-b0be-8c15ce318c0a"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{script_head_start_date}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="68" uuid="cdb0e544-87b9-4823-bcc1-c0defb7b8f97">
+						<jr:tableHeader style="table 5_TH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="68" height="30" uuid="4d7d48f8-dd6d-4238-b591-b6313e6e41af"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[End Date]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="table 5_TD" height="26" rowSpan="1">
+							<textField pattern="dd/MM/yyyy">
+								<reportElement x="0" y="0" width="68" height="26" uuid="2a5791c0-18bc-476f-bd94-78ee8324410e"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<paragraph lineSpacing="Single"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{script_head_end_date}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
 		</band>
 	</detail>
 	<pageFooter>
