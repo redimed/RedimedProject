@@ -156,9 +156,8 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 		DocumentService.getDoctor(apptInfo).then(function(result){
 			if(result.status === "no doctor") toastr.error("This functional assessment have no assessed doctor.", "Critical Error!");
 			else {
-				var docInfo = result.data[0];
-				$scope.header.ASSESSED_NAME = docInfo.NAME;
-				$scope.header.ASSESSED_SIGN = docInfo.Signature;
+				$scope.header.ASSESSED_NAME = result.data[0].NAME;
+				$scope.header.ASSESSED_SIGN = result.data[0].Signature;
 			}
 		})
 	}
