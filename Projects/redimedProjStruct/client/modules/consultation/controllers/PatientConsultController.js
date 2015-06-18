@@ -63,6 +63,9 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			diagnosis: null,
 			investigation: null,
 			specialist: null,
+			progress_note: null,
+			attendance_record: null,
+			communication_record: null,
 			measurements: [],
 			scripts: ConsultInfoService.getConsultInfoScripts(),
 			images: []
@@ -82,6 +85,9 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 					$scope.consultInfo.diagnosis = data.data.diagnosis;		
 					$scope.consultInfo.investigation = data.data.investigation;		
 					$scope.consultInfo.specialist = data.data.specialist;		
+					$scope.consultInfo.progress_note = data.data.progress_note;		
+					$scope.consultInfo.attendance_record = data.data.attendance_record;		
+					$scope.consultInfo.communication_record = data.data.communication_record;		
 					$scope.consultInfo.consult_id = data.data.consult_id;		
 				}
 			});
