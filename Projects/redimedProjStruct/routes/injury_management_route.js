@@ -20,7 +20,7 @@ app.post('/api/im/getById',injuryController.injuryById);
 
 app.post('/api/im/register',injuryController.register);
 
-app.get('/api/im/testGCM',injuryController.testPushGCM);
+app.get('/api/im/testAPN',injuryController.testPushAPN);
 app.get('/api/im/getOnlineUsers',injuryController.getOnlineUsers);
 app.post('/api/im/getInjuryByCompany',injuryController.getInjuryByCompany);
 

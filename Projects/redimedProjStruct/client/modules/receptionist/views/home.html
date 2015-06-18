@@ -170,10 +170,10 @@
 				                    		{{a.FROM_TIME | moment: 'utc' | moment: 'format': 'hh:mm A'}}
 			                    		</span>
 			                    		<span class="col-md-6 col-sm-6 ">
-			                    			<span class="re_booking label-success" ng-if="a.appt_status == 'Pre-progress'">
+			                    			<span class="re_booking label-success" ng-if="a.appt_status == 'Waiting'">
 				                    			{{a.appt_status}}
 			                    			</span>
-			                    			<span class="re_booking label-warning" ng-if="a.appt_status == 'Work In Progress'">
+			                    			<span class="re_booking label-warning" ng-if="a.appt_status == 'In Consult'">
 				                    			{{a.appt_status}}
 			                    			</span>
 				                    	</span>
