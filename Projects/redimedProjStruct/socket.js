@@ -9,6 +9,23 @@ var apiSecret = "dbc771fe427700feea2e481c56457f6024c72088";
 var OpenTok = require('opentok'),
     opentok = new OpenTok(apiKey, apiSecret);
 
+var gcm = require('node-gcm');
+var apns = require('apn');
+var sender = new gcm.Sender('AIzaSyDsSoqkX45rZt7woK_wLS-E34cOc0nat9Y');
+
+var options = {
+        cert: './key/APN/PushCert.pem',                                                    
+        key:  './key/APN/PushKey.pem',                                                     
+        passphrase: '123456',                              
+        production: false,                                 
+        port: 2195,                                    
+        rejectUnauthorized: true,                                                                    
+        cacheLength: 1000,                              
+        autoAdjustCache: true,                         
+    }
+
+var apnsConnection = new apns.Connection(options);
+
 module.exports = function(io,cookie,cookieParser) {
     var userList = [];
     var ua = null;
@@ -82,22 +99,6 @@ module.exports = function(io,cookie,cookieParser) {
                 })
         })
 
-        socket.on("shareImage",function(id,callUser){
-            db.User.find({where:{id: callUser}},{raw:true})
-                .success(function(user){
-                    io.to(user.socket)
-                        .emit('receiveImage',id);
-                })
-        })
-
-        socket.on("shareFile",function(id,fileName,callUser){
-            db.User.find({where:{id: callUser}},{raw:true})
-                .success(function(user){
-                    io.to(user.socket)
-                        .emit('receiveFile',id,fileName);
-                })
-        })
-
         socket.on("generateSession",function(id){
             opentok.createSession({mediaMode:"routed"},function(err, ses) {
                 if (err) 
@@ -137,6 +138,53 @@ module.exports = function(io,cookie,cookieParser) {
 
                                            io.to(contact.socket)
                                                 .emit('messageReceived',currentUser.id ,currentUser.user_name, message);
+
+                                            // ==============GCM PUSH==============
+                                            var gcmMessage = new gcm.Message();
+                                            gcmMessage.addData('title','REDiMED');
+                                            gcmMessage.addData('message', currentUser.user_name+" Is Calling!");
+                                            gcmMessage.addData('soundname','beep.wav');
+                                            gcmMessage.collapseKey = 'REDiMED';
+                                            gcmMessage.delayWhileIdle = true;
+                                            gcmMessage.timeToLive = 3;
+
+                                            // =============APN PUSH=============
+                                            var notify = new apns.Notification();
+                                            notify.expiry = Math.floor(Date.now() / 1000) + 3600; 
+                                            notify.badge = 1;
+                                            notify.sound = 'beep.wav';
+                                            notify.alert = currentUser.user_name+" Is Calling!";
+                                            notify.payload = {'messageFrom': 'REDiMED','type':'call'}; 
+
+                                            var androidToken = [];
+                                            var iosToken = [];
+
+                                            db.UserToken.find({where:{user_id: contact.id}},{raw:true})
+                                                .success(function(user){
+                                                    if(user)
+                                                    {
+                                                        if(user.android_token != null)
+                                                            androidToken.push(user.android_token);
+                                                        if(user.ios_token != null)
+                                                            iosToken.push(user.ios_token);
+
+                                                        if(androidToken.length > 0)
+                                                        {
+                                                          sender.send(gcmMessage, androidToken, 4, function (err,result) {
+                                                              if(err)
+                                                                  console.log("ERROR:",err);
+                                                              else
+                                                                  console.log("SUCCESS:",result);
+                                                          });
+                                                        }
+
+                                                        if(iosToken.length > 0)
+                                                          apnsConnection.pushNotification(notify, iosToken);
+                                                    }
+                                                })
+                                                .error(function(err){
+                                                    console.log(err);
+                                                })
                                         }
                                         else
                                         {
@@ -200,23 +248,15 @@ module.exports = function(io,cookie,cookieParser) {
                 .success(function(user){
                     if(user)
                     {
-                       
-                        if(user.socket == null){
+                        if(user.socket == null)
                             socket.emit('isSuccess');
-                        }
                         else
-                        {
-                            socket.emit('isError');
-                        }
-                        
+                            socket.emit('isError');                        
                     }
-
                 })
                 .error(function(err){
                     console.log(err);
                 })
-
-
         });
 
         socket.on('updateSocketLogin',function(username){

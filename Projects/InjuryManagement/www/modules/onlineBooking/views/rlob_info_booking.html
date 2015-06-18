@@ -52,22 +52,26 @@
                            
                         </label>
                         <div class="bd-bottom"></div>
-                                <div class="portlet light">
-                                        <a class="btn-floating btn-small  #26a69a"><i class="fa fa-location-arrow"></i></a>
-                                       <div id="map-canvas" class="col-md-12" style="height: 200px; width: 100%"></div>
-                                            <div class="clearfix"></div>  
-                                </div>
-                                <div class="footer_injury">
-                                    <ion-scroll direction="x">
-                                        <a class="button button-clear button-positive"
-                                           ng-repeat="imgDetail in imgURI"   style="width: 80px; height: 50px;">
-                                            <img ng-src="{{imgDetail.image}}" class="img-responsive"/>
-                                        </a>
-                                    </ion-scroll>
-                                </div>
-                            </div>
+                          <div class="footer_injury" style="margin-top: 12px;">
+                            <ion-scroll direction="x">
+                                <a 
+                                   ng-repeat="imgDetail in imgURI"  >
+                                    <img ng-src="{{imgDetail.image}}" class="a-img-custom"/>
+                                </a>
+                            </ion-scroll>
+                        </div>
+                        <div class="bd-bottom"></div>
+                        <div class="portlet light" style="margin-top: 8px;
+  padding-bottom: 5px;">
+                                <a class="btn-floating btn-small  #26a69a"><i class="fa fa-location-arrow"></i></a>
+                               <div id="map-canvas" class="col-md-12" style="height: 200px; width: 100%"></div>
+                                    
+                        </div>
+                      
+                          
                        
-                        <button class="button button-full button-energized" style="border-top: 3px solid #fff; border-bottom: 3px solid #fff;" ng-click="addbooking(description)">
+                        <button class="button button-full button-energized" style="border-top: 3px solid #fff;
+  border-bottom: 3px solid #fff;width: 90%;margin: 0 auto;border-radius: 27px;" ng-click="addbooking(description)">
                             Add Booking
                         </button>
                     </ion-list>

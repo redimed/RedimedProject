@@ -9,6 +9,7 @@ app.post('/api/im/patients/search',injuryController.search);
 app.post('/api/im/patients/getById',injuryController.getById);
 app.post('/api/im/patients/checkMobile',injuryController.checkMobile);
 app.post('/api/im/patients/checkEmail',injuryController.checkEmail);
+app.post('/api/im/patients/getByUser',injuryController.patientByUser);
 app.post('/api/im/submit',injuryController.submitInjury);
 app.post('/api/im/edit',injuryController.editInjury);
 app.post('/api/im/upload',multipartMiddleware,injuryController.uploadInjuryPic);
@@ -20,7 +21,6 @@ app.post('/api/im/getById',injuryController.injuryById);
 
 app.post('/api/im/register',injuryController.register);
 
-app.get('/api/im/testAPN',injuryController.testPushAPN);
 app.get('/api/im/getOnlineUsers',injuryController.getOnlineUsers);
 app.post('/api/im/getInjuryByCompany',injuryController.getInjuryByCompany);
 

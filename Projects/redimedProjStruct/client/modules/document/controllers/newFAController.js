@@ -34,6 +34,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 				$scope.header.ASSESSED_SIGN = '';
 				$scope.header.ASSESSED_DATE = moment().format("YYYY-MM-DD hh:mm:ss");
 				$scope.header.Comments = "Meet all manual handling requirements with good technique."
+				getDoctorInfo(cal_id, patient_id);
 				//get lines of section
 				$scope.header.sections.forEach(function(section){
 					section.PATIENT_ID = patient_id;
@@ -77,7 +78,6 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 										line.comments.forEach(function(comment){
 											comment.PATIENT_ID = patient_id;
 											comment.CAL_ID = cal_id;
-											console.log($scope.header);
 										})
 									}
 								})
@@ -144,6 +144,20 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 				if(result.Sex !=="Female" && result.Sex !=="Male") result.Sex="Male";
 				$scope.patient_info= result;
 				getPatientAge($scope.patient_info.DOB);
+			}
+		})
+	}
+
+	var getDoctorInfo = function(cal_id, patient_id){
+		var apptInfo = {
+			cal_id: cal_id,
+			patient_id: patient_id
+		}
+		DocumentService.getDoctor(apptInfo).then(function(result){
+			if(result.status === "no doctor") toastr.error("This functional assessment have no assessed doctor.", "Critical Error!");
+			else {
+				$scope.header.ASSESSED_NAME = result.data[0].NAME;
+				$scope.header.ASSESSED_SIGN = result.data[0].Signature;
 			}
 		})
 	}
@@ -547,7 +561,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
         $scope.isSignatureShow = false;
     }
     $scope.clearClick = function () {
-        $scope.header.ASSESSED_SIGN = '';
+        $scope.header.PATIENT_SIGN = '';
     }
     $scope.newFASubmit = function(){
     	$scope.clickedValidation = true;

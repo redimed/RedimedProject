@@ -88,7 +88,7 @@ angular.module('starter.security.login.controller',[])
                 $scope.loginApp();
             }
         }
-
+ 
         function sigInApp() {
             SecurityService.login($scope.modelUser).then(function(response) {
                 signaling.emit('updateSocketLogin', response.userInfo.user_name);
@@ -106,6 +106,9 @@ angular.module('starter.security.login.controller',[])
                                 break;
                             case "Company":
                                 $state.go('app.injury.info', null, {reload:true});
+                                break;
+                            case "Patient":
+                                $state.go('app.injury.desInjury', null, {reload:true});
                                 break;
                             default :
                                 $state.go('app.injury.info', null, {reload:true});

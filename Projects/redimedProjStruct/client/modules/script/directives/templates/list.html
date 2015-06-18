@@ -23,7 +23,7 @@
 						</td>
 						<td>
 							<div class="form-group">
-								<input type="text" class="form-control" ng-model="script.search.Medicare" ng-enter="script.onSearch({field: 'Medicare', value: script.search.Medicare})" placeholder="Medicare" />
+								<input type="text" class="form-control" ng-model="script.search.medication_name" ng-enter="script.onSearch({field: 'medication_name', value: script.search.medication_name})" placeholder="Medicare" />
 							</div>
 						</td>
 						<td></td>
@@ -32,7 +32,7 @@
 						<td>{{row.First_name}}&nbsp;{{row.Sur_name}}</td>
 						<td>{{row.CAL_ID}}</td>
 						<td>{{row.scriptNum}}</td>
-						<td>{{row.Medicare}}</td>
+						<td>{{row.medication_name}}</td>
 						<td align="center">
 							<a><button class="un_tn_btn un-bgBlack" ng-click="Scripts('edit', row.ID)">Edit</button>
 							<!--<i class="fa fa-pencil-square-o" ng-click="script.edit(row.ID)"></i></a>-->
@@ -44,7 +44,7 @@
 								<span ng-if="row.isEnable" ng-click="script.disable(row)">Enable</span>
 								<span ng-if="!row.isEnable" ng-click="script.disable(row)">Disable</span>-->
 							</a>
-							<a target="_blank" href="http://testapp.redimed.com.au:3000/RedimedJavaREST/api/document/script/{{row.ID}}"><button class="un_tn_btn un-bgBlack">Print</button>
+							<a target="_blank" href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/script/{{row.ID}}"><button class="un_tn_btn un-bgBlack">Print</button>
 							</a>
 						</td>
 					</tr>
@@ -70,7 +70,7 @@
 		}
 	</style>
     <div class="modal-body">
-        <script-add success='scriptadd.success' medicaname='scriptadd.medicaname'></script-add>
+        <script-add success='scriptadd.success' medicare='scriptadd.medicare'></script-add>
     </div>
  </script>
  <script type="text/ng-template" id="notifyToEdit">
@@ -82,7 +82,7 @@
 		}
 	</style>
     <div class="modal-body">
-        <script-edit id='scriptedit.ID' success='scriptedit.success' medicaname='scriptedit.medicaname'></script-edit>
+        <script-edit id='scriptedit.ID' success='scriptedit.success' medicare='scriptedit.medicare'></script-edit>
     </div>
 
  </script>

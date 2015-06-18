@@ -223,9 +223,9 @@
                                         <!-- ERROR -->
                                     </div> 
                                     <div ng-class="{'has-error': patientForm.address2.$invalid && isSubmit}">
-                                        <label class="un-label-form-2 un-label-whidth-85">Address 2 *</label>
+                                        <label class="un-label-form-2 un-label-whidth-85">Address 2 </label>
                                         <input type="text" name="address2" ng-model="modelObjectMap.Address2"
-                                            class="form-control un-input-custom" id="address2" required float-label>
+                                            class="form-control un-input-custom" id="address2" float-label>
                                         <!-- ERROR -->
                                         <!-- <span ng-show="patientForm.address2.$invalid && isSubmit">
                                             <span style="left: -10px;" class="mdt-popover above" ng-show="patientForm.address2.$error.required">
@@ -654,7 +654,7 @@
 <div class="row">
     <div class="col-lg-12 col-md-12">
     <button class="btn pull-right un-submit" ng-if="params.permission.create !== false" ng-click="buttonclick()">&nbsp SAVE</button>
-    <button class="btn pull-right un-submit" ng-if="params.permission.edit !== false" ng-click="buttonclick()"></i>&nbsp EDIT</button>
+    <button class="btn pull-right un-submit" ng-if="params.permission.edit !== false" ng-click="buttonclick()"></i>&nbsp Save</button>
     <button class="btn pull-right un-submit" ng-if="isClose" ng-click="closePopup()">&nbsp CLOSE</button>
     </div>
 </div>
