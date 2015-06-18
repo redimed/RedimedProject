@@ -64,7 +64,7 @@
 	       							</span>
 	       							<ul ng-if="a.appt_status != 'Cancelled'" class="dropdown-menu" role="menu">
 	       								<li>
-									    	<a ui-sref="loggedIn.patient.consult({patient_id: a.Patient_id, cal_id: '1'})" href="javascript:;">Details</a>
+									    	<a ui-sref="loggedIn.patient.consult({patient_id: a.Patient_id, cal_id: a.CAL_ID})" href="javascript:;">Details</a>
 								    	</li>
 	       								<li ng-if="a.appt_status == 'Booking'">
 									    	<a ng-click="changeAppt(a,'checked')" href="javascript:;">Checked In</a>
@@ -156,7 +156,7 @@
    									<img width="100%" height="100%" class="img-circle" ng-src="{{(a.avatar == null || a.avatar == '') ? 'theme/assets/icon.png' : a.avatar}}">
 			                    </div>
 			                    <div class="media-body">
-			                    	<span style="font-size: 15px;" class="media-heading bold" ui-sref="loggedIn.patient.consult({patient_id: a.Patient_id, cal_id: '1'})">{{a.patient_name}}</span>
+			                    	<span style="font-size: 15px;" class="media-heading bold" ui-sref="loggedIn.patient.consult({patient_id: a.Patient_id, cal_id: a.CAL_ID})">{{a.patient_name}}</span>
 			                    	<div class="row" style="font-size: 10px;color: #585757;">
 			                    		<span class="col-md-6 col-sm-6">
 				                    		<i class="fa fa-calendar"></i>
@@ -234,11 +234,11 @@
    					<div style="color: black; border-color: #7FA8CB" 
    						class="re_bg_info appt-profile" ng-repeat="a in completeAppt">
    						<div class="media">
-   							<div style="width: 70px; height: 70px;" class="pull-left">
+   							<div style="width: 50px; height: 50px;" class="pull-left">
 								<img width="100%" height="100%" class="img-circle" ng-src="{{(a.avatar == null || a.avatar == '') ? 'theme/assets/icon.png' : a.avatar}}">
 		                    </div>
 		                    <div class="media-body">
-		                    	<span style="font-size: 15px;" class="media-heading bold" ui-sref="loggedIn.patient.consult({patient_id: a.Patient_id, cal_id: '1'})">{{a.patient_name}}</span>
+		                    	<span style="font-size: 15px;" class="media-heading bold" ui-sref="loggedIn.patient.consult({patient_id: a.Patient_id, cal_id: a.CAL_ID})">{{a.patient_name}}</span>
 		                    	<div class="row" style="font-size: 10px;color: #585757;">
 		                    		<span class="col-md-6 col-sm-6">
 			                    		<i class="fa fa-calendar"></i>

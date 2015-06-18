@@ -691,6 +691,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 				if(res.status == 'success')
 				{
 				 	toastr.success('Submit Consultation Success!');
+					$scope.loadConsultationInfo();
 					var insertArr = []; 
             
 		            var fnInsertArr = function(item) {
