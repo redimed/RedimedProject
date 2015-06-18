@@ -708,7 +708,10 @@ angular.module('app.loggedIn.document.services', [])
                 actions: [
                     { class:'fa fa-pencil', title: 'Edit', callback: function(item) {
                         $state.go('loggedIn.FA', {patient_id: patient_id, cal_id: item.CAL_ID, fa_id: item.FA_ID})
-                    } }
+                    }},
+                    { class:'fa fa-print', title: 'Print', callback: function(item) {
+                          window.open("http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/FA/"+item.FA_ID+"/"+item.CAL_ID+"/"+patient_id);
+                    }},
                 ]
             };
         }
