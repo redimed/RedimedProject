@@ -195,6 +195,7 @@
 										<button class="btn un-btn-black-label" type="button">Allergy</button>
 										</span>
 										<label type="text" class="form-control un-input-xam-fig">
+											<label ng-if="listAllergyinPAtient.length <= 0">No Allergy</label>
 											<label ng-repeat="item in listAllergyinPAtient">
 												<label ng-if="!$last">{{item.allergy_name}},&nbsp</label>
 												<label ng-if="$last">{{item.allergy_name}}</label>
