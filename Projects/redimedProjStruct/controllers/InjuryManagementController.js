@@ -547,8 +547,8 @@ module.exports = {
         var dateString =  date.getUTCDate()+ "/" + (date.getUTCMonth()+1) + "/" + date.getUTCFullYear() + " - " + date.getUTCHours() + ":" + date.getUTCMinutes() + ":" + date.getUTCSeconds();
 
         var options = {
-            cert: './key/APN/cert.pem',                                                    
-            key:  './key/APN/key.pem',                                                     
+            cert: './key/APN/PushCert.pem',                                                    
+            key:  './key/APN/PushKey.pem',                                                     
             passphrase: 'hnguyenhuyH1012',                              
             production: false,                                 
             port: 2195,                                    

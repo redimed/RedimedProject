@@ -63,6 +63,9 @@
 	       								<i style="color:black" class="fa fa-caret-down"></i>
 	       							</span>
 	       							<ul ng-if="a.appt_status != 'Cancelled'" class="dropdown-menu" role="menu">
+	       								<li>
+									    	<a ui-sref="loggedIn.patient.consult({patient_id: a.Patient_id, cal_id: '1'})" href="javascript:;">Details</a>
+								    	</li>
 	       								<li ng-if="a.appt_status == 'Booking'">
 									    	<a ng-click="changeAppt(a,'checked')" href="javascript:;">Checked In</a>
 								    	</li>
@@ -76,7 +79,7 @@
    									<img width="100%" height="100%" class="img-circle" ng-src="{{(a.avatar == null || a.avatar == '') ? 'theme/assets/icon.png' : a.avatar}}">
 			                    </div>
 			                    <div class="media-body">
-			                    	<span style="font-size: 15px;" class="media-heading bold" ui-sref="loggedIn.patient.consult({patient_id: a.Patient_id, cal_id: '1'})">{{a.patient_name}}{{a.appt_status == 'Checked In' ?' - '+timerDisplay : ''}}</span>
+			                    	<span style="font-size: 15px;" class="media-heading bold">{{a.patient_name}}{{a.appt_status == 'Checked In' ?' - '+timerDisplay : ''}}</span>
 			                    	<div class="row" style="font-size: 10px;color: #585757;">
 			                    		<span class="col-md-6 col-sm-6">
 				                    		<i class="fa fa-calendar"></i>
