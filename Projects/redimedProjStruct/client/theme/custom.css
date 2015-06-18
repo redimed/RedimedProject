@@ -1277,7 +1277,7 @@ table.timetable-table td:last-child {
     border-right: 1.5px solid #ddd;
     -moz-user-select: none;
     -webkit-user-select: none;
-    width: 70;
+    width: 50;
 }
 
 .odd {
@@ -1493,7 +1493,7 @@ table.timetable-table td:last-child {
 
 /*Phan Qu?c Chiên tang dong :v*/
 .un-background{
-    background-color: rgb(37, 33, 34)!important;
+    /*background-color: rgb(37, 33, 34)!important;*/
     position: relative;
     margin-top: 54px;
 
@@ -1725,7 +1725,8 @@ table.timetable-table td:last-child {
     padding-bottom: 0px;
 }
 .un-div-p-r-30{
-    padding-right: 30px;
+    padding-left: 20px;
+    padding-right: 10px;
 }
 .un-div-p-r-5{
     padding-right: 5px;
@@ -3802,6 +3803,12 @@ label{
 }
 .un_img_width_100{
     width: 100%;
+}
+.un_padding_right_5{
+    padding-right: 5px;
+}
+.un_padding_left_5{
+    padding-left: 5px;
 }
 /*phanquocchien patient end*/
 

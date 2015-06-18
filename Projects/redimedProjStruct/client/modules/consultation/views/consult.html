@@ -6,7 +6,7 @@
 <!-- dsfasdf -->
 
 <div class="row">
-    <div class="col-md-10 col-sm-10">
+    <div class="col-md-10 col-sm-10 un-padding-right-0">
         
         <ul class="un-tabs">
             <li class="active">
@@ -49,28 +49,24 @@
         <div class="un-tabs-content"> 
             <div class="un-tab-content active" id="tab_1_1">
                 <div class="row">
-                    
-                    <div class="col-md-5 col-sm-5">
-                        <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Existing problems</label>
-                        <select class="form-control" 
-                                ng-change="viewProblem(consultInfo.problem_id)" ng-options="p.Problem_id as p.Notes for p in problemList"
-                                ng-model="consultInfo.problem_id" float-label>
-                            <option value=""selected>--Select A Problem--</option>
-                        </select>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="row un_padding_right_5">
+                            <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Existing problems</label>
+                            <select class="form-control pt_width_100" 
+                                    ng-change="viewProblem(consultInfo.problem_id)" ng-options="p.Problem_id as p.Notes for p in problemList"
+                                    ng-model="consultInfo.problem_id" float-label>
+                                <option value=""selected>--Select A Problem--</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="col-md-7 col-sm-7">
-                        <a href="javascript:;" ng-click="problemAddForm.open()" class="un-button un-bgBlack">
-                            Add New Problem
-                        </a>
-                        <a href="javascript:;" ng-click="showPopupConsultationHistory()" class="un-button un-bgBlack">
-                            Consultation History
-                        </a>
-                        <a href="javascript:;" ng-click="popupNewDrawing()" class="un-button un-bgBlack">
-                            Add Drawing
-                        </a>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="row pull-right">
+                            <button class="un-button un-bgBlack" ng-click="problemAddForm.open()">Add New Problem</button>
+                            <button class="un-button un-bgBlack" ng-click="popupNewDrawing()">Add Drawing</button>
+                            <button class="un-button un-bgBlack" ng-click="showPopupConsultationHistory()">Consultation History</button>
+                        </div>
                     </div>
                 </div>
-                <br/>
                 <!-- <div class="row">
                     <div class="col-md-12 col-sm-12">
                         <div class="table-dynamic">
@@ -137,70 +133,84 @@
                 </div> -->
                 <div class="row">
                     <div class="col-md-6 col-sm-6">
-                        <div class="form-group" >
-                            <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">History</label>
-                            <textarea rows="6" ng-model="consultInfo.history" 
-                                class="form-control un-input-custom-1 un-select-p-5" float-label></textarea>
+                        <div class="row un_padding_right_5">
+                            <div class="form-group pt_margin_bottom_0">
+                                <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">History</label>
+                                <textarea rows="6" ng-model="consultInfo.history" 
+                                    class="form-control pt_width_100 un-input-custom-1 un-select-p-5" float-label></textarea>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-6">
-                        <div class="form-group" >
-                            <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Examination</label>
-                            <textarea rows="6" ng-model="consultInfo.examination" 
-                                class="form-control un-input-custom-1 un-select-p-5" float-label></textarea>
-                        </div>
-                    </div>
-                </div>
-                <br/>
-                <div class="row">
-                    <div class="col-md-6 col-sm-6">
-                        <div class="form-group" >
-                            <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Treatment/Plan</label>
-                            <textarea rows="6" ng-model="consultInfo.treatment" 
-                                class="form-control un-input-custom-1 un-select-p-5" float-label></textarea>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-                        <div class="form-group" >
-                            <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Diagnosis</label>
-                            <textarea rows="6" ng-model="consultInfo.diagnosis" 
-                                class="form-control un-input-custom-1 un-select-p-5" float-label></textarea>
+                        <div class="row un_padding_left_5">
+                            <div class="form-group pt_margin_bottom_0">
+                                <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Examination</label>
+                                <textarea rows="6" ng-model="consultInfo.examination" 
+                                    class="form-control pt_width_100 un-input-custom-1 un-select-p-5" float-label></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <br/>
                 <div class="row">
                     <div class="col-md-6 col-sm-6">
-                        <div class="form-group" >
-                            <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Investigation</label>
-                            <textarea rows="6" ng-model="consultInfo.investigation" 
-                                class="form-control un-input-custom-1 un-select-p-5" float-label></textarea>
+                        <div class="row un_padding_right_5">
+                            <div class="form-group pt_margin_bottom_0">
+                                <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Treatment/Plan</label>
+                                <textarea rows="6" ng-model="consultInfo.treatment" 
+                                    class="form-control pt_width_100 un-input-custom-1 un-select-p-5" float-label></textarea>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-6">
-                        <div class="form-group" >
-                            <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Specialist</label>
-                            <textarea rows="6" ng-model="consultInfo.specialist" 
-                                class="form-control un-input-custom-1 un-select-p-5" float-label></textarea>
+                        <div class="row un_padding_left_5">
+                            <div class="form-group pt_margin_bottom_0">
+                                <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Diagnosis</label>
+                                <textarea rows="6" ng-model="consultInfo.diagnosis" 
+                                    class="form-control pt_width_100 un-input-custom-1 un-select-p-5" float-label></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <div class="row un_padding_right_5">
+                            <div class="form-group pt_margin_bottom_0">
+                                <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Investigation</label>
+                                <textarea rows="6" ng-model="consultInfo.investigation" 
+                                    class="form-control pt_width_100 un-input-custom-1 un-select-p-5" float-label></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="row un_padding_left_5">
+                            <div class="form-group pt_margin_bottom_0">
+                                <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Specialist</label>
+                                <textarea rows="6" ng-model="consultInfo.specialist" 
+                                    class="form-control pt_width_100 un-input-custom-1 un-select-p-5" float-label></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
-                        <button class="un-button un-bgBlack" ng-click="addTemplate()">Add Template</button>
-                        <button class="un-button un-bgBlack" ng-click="referralAddForm.open()">Add Referral</button>
-                         <button class="un-button un-bgBlack" ng-click="scriptAction('new',null)">Add Medication</button>
-                         <button class="un-button un-bgBlack" ng-click="measureAction('new',null)">Add New Measure</button>
+                        <div class="row">
+                            <button class="un-button un-bgBlack" ng-click="addTemplate()">Add Template</button>
+                            <button class="un-button un-bgBlack" ng-click="referralAddForm.open()">Add Referral</button>
+                            <button class="un-button un-bgBlack" ng-click="scriptAction('new',null)">Add Medication</button>
+                            <button class="un-button un-bgBlack" ng-click="measureAction('new',null)">Add New Measure</button>
+                        </div>
                     </div>
                 </div>
                 <div class="row" ng-if="templates.length > 0">
                     <div class="col-md-12 col-sm-12">
-                        <h3>List of Templates</h3>
-                        <ul>
-                            <li ng-repeat="template in templates">
-                                {{template.template_temp_name}}
-                            </li>
-                        </ul>
+                        <div class="row">
+                            <h3>List of Templates</h3>
+                            <ul>
+                                <li ng-repeat="template in templates">
+                                    {{template.template_temp_name}}
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1213,7 +1223,7 @@
                                                 <div class="col-md-12 col-sm-12">
                                                     <hr/>
                                                     <div class="col-md-4 col-sm-4 un_padding_bottom_15" ng-repeat="img in listImgDrawingHistory">
-                                                        <img class="un_img_width_100 pt_boder_dotted" ng-src="api/consultation/drawing/image/{{img.id}}">
+                                                        <img style="height:35%" class="un_img_width_100 pt_boder_dotted" ng-src="api/consultation/drawing/image/{{img.id}}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -1266,31 +1276,31 @@
                         <br/>
                         <div class="row ">
                             <label class="un-label-form-3 un-label-whidth-130">Company Name</label>
-                            <label style="height: 30px; line-height: 2" class="form-control un-input-custom-1 un-select-p-5">
+                            <label style="height: 30px; line-height: 2" class="form-control pt_width_100 un-input-custom-1 un-select-p-5">
                                 {{(companyInfo.Company_name == '' || companyInfo.Company_name == null) ? 'N/A' : companyInfo.Company_name}}
                             </label>
                         </div>
                         <div class="row ">
                             <label class="un-label-form-3 un-label-whidth-130">NOK Contact</label>
-                            <label style="height: 30px; line-height: 2" class="form-control un-input-custom-1 un-select-p-5">
+                            <label style="height: 30px; line-height: 2" class="form-control pt_width_100 un-input-custom-1 un-select-p-5">
                                 {{(patientInfo.NOK_Emerg_Contact == '' || patientInfo.NOK_Emerg_Contact == null) ? 'N/A' : patientInfo.NOK_Emerg_Contact}}
                             </label>
                         </div>
                          <div class="row ">
                             <label class="un-label-form-3 un-label-whidth-130">NOK Phone</label>
-                            <label style="height: 30px; line-height: 2" class="form-control un-input-custom-1 un-select-p-5">
+                            <label style="height: 30px; line-height: 2" class="form-control pt_width_100 un-input-custom-1 un-select-p-5">
                                 {{(patientInfo.NOK_Phone == '' || patientInfo.NOK_Phone == null) ? 'N/A' : patientInfo.NOK_Phone}}
                             </label>
                         </div>
                          <div class="row ">
                             <label class="un-label-form-3 un-label-whidth-130">Insurer</label>
-                            <label style="height: 30px; line-height: 2" class="form-control un-input-custom-1 un-select-p-5">
+                            <label style="height: 30px; line-height: 2" class="form-control pt_width_100 un-input-custom-1 un-select-p-5">
                                 {{(patientInfo.insurer == '' || patientInfo.insurer == null) ? 'N/A' : patientInfo.insurer}}
                             </label>
                         </div>
                          <div class="row ">
                             <label class="un-label-form-3 un-label-whidth-130">Treating Doctor</label>
-                            <label style="height: 30px; line-height: 2" class="form-control un-input-custom-1 un-select-p-5">
+                            <label style="height: 30px; line-height: 2" class="form-control pt_width_100 un-input-custom-1 un-select-p-5">
                                 {{(userInfo.Booking_Person == '' || userInfo.Booking_Person == null) ? userInfo.user_name : userInfo.Booking_Person}}
                             </label>
                         </div>
