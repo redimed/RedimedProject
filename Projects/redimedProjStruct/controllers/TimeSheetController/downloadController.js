@@ -3,7 +3,7 @@ var db = require("../../models");
 //END
 module.exports = {
     DownloadFile: function(req, res) {
-        var file_id = req.params.id;
+        var file_id = req.body.idFile;
         //FIND FILE DOWNLOAD
         db.time_task_file.find({
                 where: {
@@ -16,7 +16,16 @@ module.exports = {
                 if (result !== undefined &&
                     result !== null &&
                     result.length !== 0) {
-                    res.download(result.path_file);
+                    res.json({
+                        status: "success",
+                        result: result.path_file
+                    });
+                    return;
+                } else {
+                    res.json({
+                        status: "error"
+                    });
+                    return;
                 }
             })
             .error(function(err) {

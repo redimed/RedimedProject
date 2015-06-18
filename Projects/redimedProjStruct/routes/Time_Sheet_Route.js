@@ -55,7 +55,7 @@ app.post("/api/TimeSheet/post-del-file", uploadController.DeleteFile);
 //END UPLOAD FILE TIMESHEET
 
 //DOWNLOAD FILE TIMESHEET
-app.get("/api/TimeSheet/get-download-file/:id", downloadController.DownloadFile);
+app.post("/api/TimeSheet/get-download-file", downloadController.DownloadFile);
 //END DOWNLOAD FILE
 
 

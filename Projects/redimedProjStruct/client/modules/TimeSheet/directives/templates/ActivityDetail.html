@@ -119,7 +119,7 @@
                                         </i>
                                         </a>
                                         <div style='height: 0px;width: 0px; overflow:hidden;'>
-                                        <input type="file" id="uploadTimesheet" nv-file-select uploader="uploader" multiple filters="customFilter"/>
+                                        <input type="file" id="uploadTimesheet" nv-file-select uploader="uploader" multiple filters="limitFile,limitSize"/>
                                         </div>
                                     <!-- END INPUT FILE -->
 
@@ -131,7 +131,8 @@
                                             <div class="col-md-3">
                                             </div>
                                             <div class="col-md-4" style="width:auto;">
-                                                <a href="/api/TimeSheet/get-download-file/{{itemFile.file_id}}" target="_blank" title="{{itemFile.file_name}}">
+                                                <!-- <a href="/api/TimeSheet/get-download-file/{{itemFile.file_id}}" target="_blank" title="{{itemFile.file_name}}"> -->
+                                                <a ng-click="clickDownloadFile(itemFile.file_id)" title="{{itemFile.file_name}}">
                                                 <!-- WHEN FILE NAME TOO LONG -->
                                                 <i class="glyphicon glyphicon-file" style="font-size:12px;"></i>
                                                 </a>

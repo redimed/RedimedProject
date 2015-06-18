@@ -609,8 +609,14 @@ module.exports = {
                                 users[0].user_id !== undefined &&
                                 users[0].user_id !== null) {
                                 var userId = users[0].user_id;
+                                var numberWeek = functionForTimesheet.defineNumberWeekTimeSheet();
+                                var dateAddEnd = (7 - moment().day()) % 7;
+                                var dateEnd = moment().add(dateAddEnd, 'day');
+                                var weekNoEnd = functionForTimesheet.getWeekNo(dateEnd);
+                                var yearEnd = moment(dateEnd).year();
                                 var arrayWeekNo = [{
-                                    weekNo: 1
+                                    weekNo: weekNoEnd,
+                                    year: yearEnd
                                 }];
                                 for (var i = 0; i < numberWeek; i++) {
                                     var dateAdd = (7 - moment().day()) % 7;
@@ -644,13 +650,71 @@ module.exports = {
                                     "FROM time_tasks_week " + //FROM
                                     "WHERE time_tasks_week.user_id = :userId AND " + //WHERE
                                     "(time_tasks_week.week_no, YEAR(time_tasks_week.end_date)) IN " + strWeekNo;
-                                db.sequelize.query(strWeekNo, null, {
+                                db.sequelize.query(queryGetTimeInLieu, null, {
                                         raw: true
                                     }, {
                                         userId: userId
                                     })
                                     .success(function(resultTimeInLieu) {
+                                        if (resultTimeInLieu !== null &&
+                                            resultTimeInLieu.length !== 0) {
+                                            // FOR SUBTRACT TIME IN LIEU
+                                            resultTimeInLieu.forEach(function(valueTimeInLieu, indexTimeInLieu) {
+                                                if (valueTimeInLieu !== null &&
+                                                    valueTimeInLieu.time_in_lieu !== undefined &&
+                                                    valueTimeInLieu.time_in_lieu !== null &&
+                                                    !isNaN(valueTimeInLieu.time_in_lieu) &&
+                                                    valueTimeInLieu.time_in_lieu > 0 &&
+                                                    time_in_lieuChoose > 0) {
+                                                    if (time_in_lieuChoose <= valueTimeInLieu.time_in_lieu) {
+                                                        resultTimeInLieu[indexTimeInLieu].time_in_lieu -= time_in_lieuChoose;
+                                                        time_in_lieuChoose = 0;
+                                                    } else {
+                                                        time_in_lieuChoose -= valueTimeInLieu.time_in_lieu;
+                                                        resultTimeInLieu[indexTimeInLieu].time_in_lieu = 0;
+                                                    }
+                                                }
+                                            });
+                                            //END
 
+                                            //NOT ENOUGH TIME IN LIEU
+                                            if (time_in_lieuChoose > 0) {
+                                                res.json({
+                                                    status: "error"
+                                                });
+                                            }
+                                            //END
+
+                                            //FOR UPDATE TIME IN LIEU
+                                            var queryUpdateTimeInLieu = "UPDATE time_tasks_week " + //UPDATE
+                                                "SET time_tasks_week.time_in_lieu = :timeInLieu " +
+                                                "WHERE time_tasks_week.task_week_id = :taskWeekId";
+                                            resultTimeInLieu.forEach(function(valueTimeInLieu, indexTimeInLieu) {
+                                                chainer.add(
+                                                    db.sequelize.query(queryUpdateTimeInLieu, null, {
+                                                        raw: true
+                                                    }, {
+                                                        timeInLieu: valueTimeInLieu.time_in_lieu,
+                                                        taskWeekId: valueTimeInLieu.task_week_id
+                                                    }))
+                                            });
+                                            chainer.runSerially()
+                                                .success(function(resultSuccess) {
+                                                    res.json({
+                                                        status: "success"
+                                                    });
+                                                    return;
+                                                })
+                                                .error(function(err) {
+
+                                                });
+                                            //END
+                                        } else {
+                                            res.json({
+                                                status: "error"
+                                            });
+                                            return;
+                                        }
                                     })
                                     .error(function(err) {
                                         console.log("*****ERROR:" + err + "*****");
@@ -676,7 +740,6 @@ module.exports = {
                         });
                     //END
                 }
-                return;
                 //SET APPROVE
                 info.date = moment().format("YYYY-MM-DD HH:mm:ss");
                 info.status = 3;

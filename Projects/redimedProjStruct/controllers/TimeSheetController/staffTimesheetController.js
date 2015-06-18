@@ -788,19 +788,22 @@ module.exports = {
         //END SEARCH
         var query = "SELECT time_tasks_week.start_date,time_tasks_week.task_week_id, time_tasks_week.end_date, time_tasks_week.time_charge, time_task_status.name, " +
             "time_tasks_week.comments FROM time_tasks_week INNER JOIN time_task_status ON time_task_status.task_status_id = " +
-            "time_tasks_week.task_status_id WHERE time_tasks_week.user_id = " + searchObj.userID + strWeek + strSearch + " ORDER BY time_tasks_week.start_date DESC LIMIT " +
-            searchObj.limit + " OFFSET " + searchObj.offset;
+            "time_tasks_week.task_status_id WHERE time_tasks_week.user_id = :userId" + strWeek + strSearch + " ORDER BY time_tasks_week.start_date DESC LIMIT :limit OFFSET :offset";
         db.sequelize.query(query, null, {
                 raw: true
             }, {
-                yearNow: yearNow
+                userId: searchObj.userID,
+                yearNow: yearNow,
+                limit: searchObj.limit,
+                offset: searchObj.offset
             })
             .success(function(result) {
                 var queryCount = "SELECT COUNT(time_tasks_week.task_week_id) AS COUNT FROM time_tasks_week INNER JOIN time_task_status ON time_task_status.task_status_id = " +
-                    "time_tasks_week.task_status_id WHERE time_tasks_week.user_id = " + searchObj.userID + strWeek + strSearch;
+                    "time_tasks_week.task_status_id WHERE time_tasks_week.user_id = :userId" + strWeek + strSearch;
                 db.sequelize.query(queryCount, null, {
                         raw: true
                     }, {
+                        userId: searchObj.userID,
                         yearNow: yearNow
                     })
                     .success(function(count) {
@@ -922,8 +925,12 @@ module.exports = {
 
     LoadContract: function(req, res) {
         var ID = req.body.ID;
-        var query = "SELECT hr_employee.TypeOfContruct FROM hr_employee INNER JOIN users ON users.employee_id = hr_employee.Employee_ID WHERE users.id = " + ID;
-        db.sequelize.query(query)
+        var query = "SELECT hr_employee.TypeOfContruct FROM hr_employee INNER JOIN users ON users.employee_id = hr_employee.Employee_ID WHERE users.id = :id";
+        db.sequelize.query(query, null, {
+                raw: true
+            }, {
+                id: ID
+            })
             .success(function(result) {
                 res.json({
                     status: "success",
@@ -942,8 +949,13 @@ module.exports = {
 
     SubmitOnView: function(req, res) {
         var info = req.body.info;
-        var query = "UPDATE time_tasks_week SET time_tasks_week.task_status_id = " + info.status + " WHERE time_tasks_week.task_week_id = " + info.ID_WEEK;
-        db.sequelize.query(query)
+        var query = "UPDATE time_tasks_week SET time_tasks_week.task_status_id = :statusId WHERE time_tasks_week.task_week_id = :idWeek";
+        db.sequelize.query(query, null, {
+                raw: true
+            }, {
+                statusId: info.status,
+                idWeek: info.ID_WEEK
+            })
             .success(function(result) {
                 //TRACKER
                 var date = moment().format("YYYY-MM-DD HH:mm:ss");
@@ -977,8 +989,10 @@ module.exports = {
 
     CheckTimeInLieu: function(req, res) {
         var info = req.body.info;
-        var weekNoEnd = functionForTimesheet.getWeekNo(info.date);
-        var yearEnd = moment(info.date).year();
+        var dateAddEnd = (7 - moment(info.date).day()) % 7;
+        var dateEnd = moment(info.date).add(dateAddEnd, 'day')
+        var weekNoEnd = functionForTimesheet.getWeekNo(dateEnd);
+        var yearEnd = moment(dateEnd).year();
         var numberWeek = functionForTimesheet.defineNumberWeekTimeSheet();
         var arrayWeekNo = [{
             weekNo: weekNoEnd,
@@ -1185,27 +1199,48 @@ var SendMailSubmit = function(req, res, info) {
     var idTaskWeek = info.idTaskWeek;
     var queryNodeChildren = "SELECT DISTINCT sys_hierarchies_users.NODE_ID, sys_hierarchies_users.DEPARTMENT_CODE_ID FROM sys_hierarchies_users " +
         "INNER JOIN hr_employee ON hr_employee.Dept_ID = sys_hierarchies_users.DEPARTMENT_CODE_ID " +
-        "WHERE sys_hierarchies_users.USER_ID = " + USER_ID_SUBMIT;
-    db.sequelize.query(queryNodeChildren)
+        "WHERE sys_hierarchies_users.USER_ID = :userId";
+    db.sequelize.query(queryNodeChildren, null, {
+            raw: true
+        }, {
+            userId: USER_ID_SUBMIT
+        })
         .success(function(result) {
             if (result[0] !== undefined && result[0] !== null && result[0].NODE_ID !== undefined && result[0].NODE_ID !== null && result[0].DEPARTMENT_CODE_ID !== undefined && result[0].DEPARTMENT_CODE_ID !== null) {
-                var queryParentNodeId = "SELECT sys_hierarchy_nodes.TO_NODE_ID FROM sys_hierarchy_nodes WHERE sys_hierarchy_nodes.NODE_ID = " + result[0].NODE_ID;
-                db.sequelize.query(queryParentNodeId)
+                var queryParentNodeId = "SELECT sys_hierarchy_nodes.TO_NODE_ID FROM sys_hierarchy_nodes WHERE sys_hierarchy_nodes.NODE_ID = :nodeId";
+                db.sequelize.query(queryParentNodeId, null, {
+                        raw: true
+                    }, {
+                        nodeId: result[0].NODE_ID
+                    })
                     .success(function(result2) {
                         if (result2[0] !== undefined && result2[0] !== null && result2[0].TO_NODE_ID !== undefined && result2[0].TO_NODE_ID !== null) {
                             var queryGetUser = "SELECT sys_hierarchies_users.USER_ID FROM sys_hierarchies_users " +
-                                "WHERE sys_hierarchies_users.NODE_ID = " + result2[0].TO_NODE_ID +
-                                " AND sys_hierarchies_users.DEPARTMENT_CODE_ID = " + result[0].DEPARTMENT_CODE_ID;
-                            db.sequelize.query(queryGetUser)
+                                "WHERE sys_hierarchies_users.NODE_ID = :toNodeId" +
+                                " AND sys_hierarchies_users.DEPARTMENT_CODE_ID = :departmentCode";
+                            db.sequelize.query(queryGetUser, null, {
+                                    raw: true
+                                }, {
+                                    toNodeId: result2[0].TO_NODE_ID,
+                                    departmentCode: result[0].DEPARTMENT_CODE_ID
+                                })
                                 .success(function(result3) {
                                     if (result3[0] !== undefined && result3[0] !== null && result3[0].USER_ID !== undefined && result3[0].USER_ID !== null) {
                                         var queryManage = "SELECT hr_employee.Email, hr_employee.FirstName, hr_employee.LastName FROM hr_employee " +
-                                            "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID WHERE users.id = " + result3[0].USER_ID;
-                                        db.sequelize.query(queryManage)
+                                            "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID WHERE users.id = :userId";
+                                        db.sequelize.query(queryManage, null, {
+                                                raw: true
+                                            }, {
+                                                userId: result3[0].USER_ID
+                                            })
                                             .success(function(resultManage) {
                                                 var queryEmp = "SELECT hr_employee.FirstName, hr_employee.LastName FROM hr_employee " +
-                                                    "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID WHERE users.id = " + USER_ID_SUBMIT;
-                                                db.sequelize.query(queryEmp)
+                                                    "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID WHERE users.id = :userId";
+                                                db.sequelize.query(queryEmp, null, {
+                                                        raw: true
+                                                    }, {
+                                                        userId: USER_ID_SUBMIT
+                                                    })
                                                     .success(function(resultEmp) {
                                                         if (resultManage[0] !== undefined && resultManage[0] !== null && resultEmp[0] !== undefined && resultEmp[0] !== null) {
                                                             //SEND MAIL

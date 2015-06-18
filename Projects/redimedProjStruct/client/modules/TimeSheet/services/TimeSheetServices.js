@@ -225,5 +225,12 @@ angular.module("app.loggedIn.TimeSheet.Service", [])
             });
         };
 
+        TimeSheetService.DownloadFile = function(idFilePost) {
+            var DownloadFile = api.all("TimeSheet/get-download-file");
+            return DownloadFile.post({
+                idFile: idFilePost
+            });
+        };
+
         return TimeSheetService;
     });

@@ -223,9 +223,16 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
 
                 //FILETER LIMIT FILE UPLOAD
                 scope.uploader.filters.push({
-                    name: "customFilter",
+                    name: "limitFile",
                     fn: function(item /*{File|FileLikeObject}*/ , options) {
-                        return this.queue.length < 5;
+                        return (this.queue.length < 5);
+                    }
+                });
+
+                scope.uploader.filters.push({
+                    name: "limitSize",
+                    fn: function(item) {
+                        return (item.size / 1048576) < 10;
                     }
                 });
                 //END FILTER LIMIT FILE UPLOAD
@@ -259,9 +266,17 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                 //SOME CALLBACKS UPLOAD FILE
                 scope.uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/ , filter, options) {
                     //CHECK FILTER
-                    if (filter) {
+                    if (filter.name === "folder") {
                         swal({
-                            title: "Limit 5 file to upload!",
+                            title: "Limit 5 file to upload.",
+                            type: "warning",
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "Yes",
+                            closeOnConfirm: true
+                        });
+                    } else if (filter.name === "queueLimit") {
+                        swal({
+                            title: "The file you are trying to send exceeds the 10MB attachment limit.",
                             type: "warning",
                             confirmButtonColor: "#DD6B55",
                             confirmButtonText: "Yes",
@@ -418,6 +433,16 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                     }, 0);
                 };
                 //END SHOW FILE
+
+                //FUNCTION DOWNLOAD FILE
+                scope.clickDownloadFile = function(idFile) {
+                    TimeSheetService.DownloadFile(idFile).then(function(response) {
+                        if (response.status === 'success') {
+                            console.log(response);
+                        }
+                    });
+                };
+                //END
             },
             templateUrl: "modules/TimeSheet/directives/templates/ActivityDetail.html"
         };
