@@ -111,24 +111,12 @@ module.exports = {
 				for(var i=0; i<result.length; i++)
 				{
 					var d = result[i];
-					
 					if(d.appointment[0].numsOfRoom != 0)
 					{
-						db.Doctor.find({where:{doctor_id: d.appointment[0].actual_doctor_id}},{raw:true})
-							.success(function(doc){
-								if(doc)
-								{
-									while(d.appointment.length < d.appointment[0].numsOfRoom)
-									{
-										doc.isEmpty = true;
-										d.appointment.push(doc)
-									}
-								}
-							})
-							.error(function(err){
-								res.json({status:'error'});
-								console.log(err);
-							})
+						while(d.appointment.length < d.appointment[0].numsOfRoom)
+						{	
+							d.appointment.push({doctor_id: d.appointment[0].actual_doctor_id, isEmpty: true});
+						}
 					}
 				}
 

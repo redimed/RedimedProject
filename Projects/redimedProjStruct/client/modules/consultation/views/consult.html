@@ -1308,7 +1308,8 @@
                             <label class="un-label-form-3 un-label-whidth-130">Online Users</label>
                             <br/>
                             <button style="margin-right: 0px !important;" ng-repeat="u in companyInfo.users" ng-click="makeCall(u)" class="btn btn-sm" style="color: white;" ng-class="(companyInfo.users.length % $index) == 0 ? 'red' : 'blue'">
-                                <i class="fa fa-phone"></i> &nbsp; {{u.Booking_Person}}
+                                <i class="fa fa-phone"></i> 
+                                &nbsp; {{(u.Booking_Person == null || u.Booking_Person == '') ? u.user_name : u.Booking_Person}}
                             </button>
                         </div>
                     </div>

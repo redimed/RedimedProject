@@ -137,7 +137,7 @@
                         </span>
                     </div>
 	        	</div>
-           		<div ng-if="progressAppt.length > 0" style="margin-bottom: 0px !important;margin-top: 0px ! important;" class="portlet" ng-repeat="appt in progressAppt">
+           		<div ng-if="progressAppt.length > 0" style="margin-bottom: 0px !important;margin-top: 0px ! important;" class="portlet" ng-repeat="appt in progressAppt" >
            			<div class="portlet-title re_portlet_title" style="min-height: 0px !important;">
            				<div class="caption">
            					<span style="font-size: 15px;" class="caption-subject">
@@ -149,9 +149,9 @@
            				</div>
            			</div>
            			<div class="portlet-body">
-           				<div ng-repeat="a in appt.appointment">
+           				<div ng-repeat="a in appt.appointment" >
 	       					<div style=" color: black; border-color: #7FA8CB" 
-	       						class="re_bg_info appt-profile"  ng-if="!a.isEmpty">
+	       						class="re_bg_info appt-profile" ng-if="!a.isEmpty && a.numsOfRoom > 0">
 	       						<div class="media">
 	       							<div style="width: 50px; height: 50px;border-radius: 5px !important;" class="pull-left">
 	   									<img width="100%" height="100%" class="img-circle" ng-src="{{(a.avatar == null || a.avatar == '') ? 'theme/assets/icon.png' : a.avatar}}">
@@ -192,8 +192,7 @@
 	   							  	jqyoui-droppable="{onDrop: 'dropAppt(a)'}">
 
 	   							  	<span style="font-size: 15px; font-style: italic;">
-	   							  		<!-- Drop item here -->
-	   							  		{{a}}
+	   							  		Drop item here
 	   							  	</span>
 	       								
 	       						</div>
