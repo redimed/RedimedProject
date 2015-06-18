@@ -3,7 +3,8 @@ angular.module('starter.injury.controller', ['ngCordova'])
     .controller('InjuryController', function($scope, $state, $filter, $stateParams,
                                              InjuryServices, $cordovaCamera, $ionicPopup, localStorageService,
                                              $cordovaFile, $ionicModal, ConfigService, $ionicSlideBoxDelegate,
-                                             $ionicLoading, $compile, $timeout, $rootScope, HOST_CONFIG, $ionicSideMenuDelegate, $ionicPopover){
+                                             $ionicLoading, $compile, $timeout, $rootScope, HOST_CONFIG,
+                                             $ionicSideMenuDelegate, $ionicPopover, $cordovaFileTransfer){
 
         $scope.isSubmit = false;
         $scope.isShow = true;
@@ -158,7 +159,7 @@ angular.module('starter.injury.controller', ['ngCordova'])
             $scope.isFailEmail = false;
             InjuryServices.getPatientID(id).then(function (data) {
                 $scope.worker = data;
-                $scope.worker.DOB = new Date($scope.worker.DOB);
+                $scope.worker.DOB = $filter(new Date($scope.worker.DOB));
                 $scope.temp1 = angular.copy($scope.worker);
                 localStorageService.set('patientID_select', $scope.worker.Patient_id);
             })
@@ -272,31 +273,24 @@ angular.module('starter.injury.controller', ['ngCordova'])
         };
 
         //UPLOAD IMAGE FUNCTION
-        // function uploadFile(server, img, params) {
-        //     var trustHosts = true;
-        //     var filePath = img.split(/[?]/)[0];
+        function uploadFile(img, server, params) {
+            var options =  new FileUploadOptions();
+            options.fileKey = "file";
+            options.fileName = img.substr(img.lastIndexOf('/') + 1);
+            options.mimeType = "image/jpeg";
+            options.chunkedMode = false;
+            options.params = params;
 
-        //     var options =  new FileUploadOptions();
-        //     options.fileKey = "file";
-        //     options.fileName = Number(new Date()) + ".jpg";
-        //     options.mimeType = "image/jpeg";
-        //     options.chunkedMode = false;
-        //     options.params = params;
-        //     console.log(img.substr(img.lastIndexOf('/')+1));
-
-        //     $cordovaFileTransfer.upload(server, filePath, options, true)
-        //         .then(function(result) {
-        //             if (typeof params !== 'undefined') {
-        //                 InjuryServices.uploadImg(params.injury_id, params.injury_part, params.description);
-        //                 console.log("Upload success " + result);
-        //             }
-        //         }, function(err) {
-        //             console.log(err);
-        //             console.log("Upload Failed " + err);
-        //             return;
-        //         }, function (progress) {
-        //         });
-        // }
+            $cordovaFileTransfer.upload(server, filePath, options, true)
+                .then(function(result) {
+                    if (typeof params !== 'undefined') {
+                        InjuryServices.uploadImg(params.injury_id, params.injury_part, params.description);
+                    }
+                }, function(err) {
+                    console.log("Upload Failed " + err);
+                    return;
+                }, function (progress) {});
+        }
 
 
         //CHECK VALID MOBILE AND EMAIL
@@ -467,18 +461,6 @@ angular.module('starter.injury.controller', ['ngCordova'])
             }
         };
 
-        // function getInforImg(){
-        //     $scope.items = InjuryServices.getInjuryInfo.Model;
-        //     for(var part in $scope.items) {
-        //         if ($scope.items[part].length !== 0) {
-        //             for(var i = 0; i < $scope.items[part].length; i++){
-        //                 console.log("Inside: " + part);
-        //                 console.log($scope.items[part][i]);
-        //             }
-        //         };
-        //     }
-        // }
-
         //SUBMIT END INSERT INJURY LAST
         $scope.submitInjuryAll = function () {
             $scope.messageLoading = {message: "Waiting..."};
@@ -493,7 +475,16 @@ angular.module('starter.injury.controller', ['ngCordova'])
                 $timeout(function () {
                     if(data.status == 'success')
                     {
-                        $ionicLoading.hide();
+                        for(var part in $scope.items) {
+                            for(var i = 0 ; i < $scope.imgURI.length; i++)
+                            {
+                                var params = {
+                                    injury_id: data.injury_id,
+                                    description: $scope.imgURI[i].des
+                                };
+                                uploadFile(serverUpload, $scope.imgURI[i].image, params);
+                            }
+                        }
                         $scope.popupMessage = { message: "Success insert injury!" };
                         $ionicPopup.show({
                             templateUrl: "modules/popup/PopUpSuccess.html",
@@ -509,6 +500,7 @@ angular.module('starter.injury.controller', ['ngCordova'])
                                 }
                             ]
                         });
+                        $ionicLoading.hide();
                     }
                     else {
                         $ionicLoading.hide();

@@ -4,8 +4,340 @@
         "uninstalled": []
     },
     "config_munge": {
-        "files": {}
+        "files": {
+            "framework": {
+                "parents": {
+                    "AVFoundation.framework": [
+                        {
+                            "xml": false,
+                            "count": 2
+                        }
+                    ],
+                    "AudioToolbox.framework": [
+                        {
+                            "xml": false,
+                            "count": 2
+                        },
+                        {
+                            "xml": true,
+                            "count": 1
+                        }
+                    ],
+                    "Foundation.framework": [
+                        {
+                            "xml": false,
+                            "count": 1
+                        }
+                    ],
+                    "UIKit.framework": [
+                        {
+                            "xml": false,
+                            "count": 1
+                        }
+                    ],
+                    "QuartzCore.framework": [
+                        {
+                            "xml": false,
+                            "count": 2
+                        }
+                    ],
+                    "OpenGLES.framework": [
+                        {
+                            "xml": false,
+                            "count": 1
+                        }
+                    ],
+                    "CoreVideo.framework": [
+                        {
+                            "xml": false,
+                            "count": 1
+                        }
+                    ],
+                    "Security.framework": [
+                        {
+                            "xml": false,
+                            "count": 1
+                        }
+                    ],
+                    "CoreMedia.framework": [
+                        {
+                            "xml": false,
+                            "count": 1
+                        }
+                    ],
+                    "SystemConfiguration.framework": [
+                        {
+                            "xml": false,
+                            "count": 1
+                        },
+                        {
+                            "xml": true,
+                            "count": 1
+                        }
+                    ],
+                    "CFNetwork.framework": [
+                        {
+                            "xml": false,
+                            "count": 1
+                        }
+                    ],
+                    "CoreTelephony.framework": [
+                        {
+                            "xml": false,
+                            "count": 1
+                        }
+                    ],
+                    "libc++.dylib": [
+                        {
+                            "xml": false,
+                            "count": 1
+                        }
+                    ],
+                    "libz.dylib": [
+                        {
+                            "xml": false,
+                            "count": 1
+                        }
+                    ],
+                    "libsqlite3.dylib": [
+                        {
+                            "xml": false,
+                            "count": 1
+                        }
+                    ],
+                    "libxml2.dylib": [
+                        {
+                            "xml": false,
+                            "count": 1
+                        }
+                    ],
+                    "CoreLocation.framework": [
+                        {
+                            "xml": false,
+                            "count": 2
+                        }
+                    ],
+                    "ImageIO.framework": [
+                        {
+                            "xml": true,
+                            "count": 1
+                        }
+                    ],
+                    "CoreGraphics.framework": [
+                        {
+                            "xml": false,
+                            "count": 4
+                        }
+                    ],
+                    "AssetsLibrary.framework": [
+                        {
+                            "xml": false,
+                            "count": 3
+                        }
+                    ],
+                    "MobileCoreServices.framework": [
+                        {
+                            "xml": false,
+                            "count": 2
+                        }
+                    ]
+                }
+            },
+            "config.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<feature name=\"AudioTogglePlugin\"><param name=\"ios-package\" value=\"AudioTogglePlugin\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Keyboard\"><param name=\"ios-package\" onload=\"true\" value=\"IonicKeyboard\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"PushPlugin\"><param name=\"ios-package\" value=\"PushPlugin\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"DatePicker\"><param name=\"ios-package\" value=\"DatePicker\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<access origin=\"*\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Geolocation\"><param name=\"ios-package\" value=\"CDVLocation\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"YoikScreenOrientation\"><param name=\"ios-package\" value=\"YoikScreenOrientation\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Insomnia\"><param name=\"ios-package\" value=\"Insomnia\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Toast\"><param name=\"ios-package\" value=\"Toast\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Camera\"><param name=\"ios-package\" value=\"CDVCamera\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<preference name=\"CameraUsesGeolocation\" value=\"false\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Console\"><param name=\"ios-package\" value=\"CDVLogger\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Device\"><param name=\"ios-package\" value=\"CDVDevice\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Notification\"><param name=\"ios-package\" value=\"CDVNotification\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"File\"><param name=\"ios-package\" value=\"CDVFile\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"FileTransfer\"><param name=\"ios-package\" value=\"CDVFileTransfer\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"InAppBrowser\"><param name=\"ios-package\" value=\"CDVInAppBrowser\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Media\"><param name=\"ios-package\" value=\"CDVSound\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"NetworkStatus\"><param name=\"ios-package\" value=\"CDVConnection\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"SplashScreen\"><param name=\"ios-package\" value=\"CDVSplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"StatusBar\"><param name=\"ios-package\" value=\"CDVStatusBar\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<preference name=\"StatusBarOverlaysWebView\" value=\"true\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<preference name=\"StatusBarStyle\" value=\"lightcontent\" />",
+                            "count": 1
+                        }
+                    ],
+                    "/*/plugins": [
+                        {
+                            "xml": "<feature name=\"OpenTokPlugin\"><param name=\"ios-package\" value=\"OpenTokPlugin\" /></feature>",
+                            "count": 1
+                        }
+                    ],
+                    "/widget": [
+                        {
+                            "xml": "<feature name=\"ChromePower\"><param name=\"ios-package\" value=\"ChromePower\" /></feature>",
+                            "count": 1
+                        }
+                    ]
+                }
+            },
+            "*-Info.plist": {
+                "parents": {
+                    "NSLocationWhenInUseUsageDescription": [
+                        {
+                            "xml": "<string />",
+                            "count": 2
+                        }
+                    ]
+                }
+            }
+        }
     },
-    "installed_plugins": {},
+    "installed_plugins": {
+        "com.chariotsolutions.nfc.plugin": {
+            "PACKAGE_NAME": "au.com.redimed.injury"
+        },
+        "com.dooble.audiotoggle": {
+            "PACKAGE_NAME": "au.com.redimed.injury"
+        },
+        "com.ionic.keyboard": {
+            "PACKAGE_NAME": "au.com.redimed.injury"
+        },
+        "com.phonegap.plugins.PushPlugin": {
+            "PACKAGE_NAME": "au.com.redimed.injury"
+        },
+        "com.phonegap.plugins.bluetooth": {
+            "PACKAGE_NAME": "au.com.redimed.injury"
+        },
+        "com.plugin.datepicker": {
+            "PACKAGE_NAME": "au.com.redimed.injury"
+        },
+        "com.tokbox.cordova.opentok": {
+            "PACKAGE_NAME": "au.com.redimed.injury"
+        },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "au.com.redimed.injury"
+        },
+        "net.yoik.cordova.plugins.screenorientation": {
+            "PACKAGE_NAME": "au.com.redimed.injury"
+        },
+        "nl.x-services.plugins.insomnia": {
+            "PACKAGE_NAME": "au.com.redimed.injury"
+        },
+        "nl.x-services.plugins.toast": {
+            "PACKAGE_NAME": "au.com.redimed.injury"
+        },
+        "org.apache.cordova.camera": {
+            "PACKAGE_NAME": "au.com.redimed.injury"
+        },
+        "org.apache.cordova.console": {
+            "PACKAGE_NAME": "au.com.redimed.injury"
+        },
+        "org.apache.cordova.device": {
+            "PACKAGE_NAME": "au.com.redimed.injury"
+        },
+        "org.apache.cordova.dialogs": {
+            "PACKAGE_NAME": "au.com.redimed.injury"
+        },
+        "org.apache.cordova.file": {
+            "PACKAGE_NAME": "au.com.redimed.injury"
+        },
+        "org.apache.cordova.file-transfer": {
+            "PACKAGE_NAME": "au.com.redimed.injury"
+        },
+        "org.apache.cordova.inappbrowser": {
+            "PACKAGE_NAME": "au.com.redimed.injury"
+        },
+        "org.apache.cordova.media": {
+            "PACKAGE_NAME": "au.com.redimed.injury"
+        },
+        "org.apache.cordova.network-information": {
+            "PACKAGE_NAME": "au.com.redimed.injury"
+        },
+        "org.apache.cordova.splashscreen": {
+            "PACKAGE_NAME": "au.com.redimed.injury"
+        },
+        "org.apache.cordova.statusbar": {
+            "PACKAGE_NAME": "au.com.redimed.injury"
+        },
+        "org.chromium.power": {
+            "PACKAGE_NAME": "au.com.redimed.injury"
+        },
+        "pro.moussawi7.plugins.SettingOpener": {
+            "PACKAGE_NAME": "au.com.redimed.injury"
+        }
+    },
     "dependent_plugins": {}
 }

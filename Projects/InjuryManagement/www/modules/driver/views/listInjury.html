@@ -45,11 +45,11 @@
                             </div>
 
                             <p class="lstinjury-address">
-                                <i class="icon ion-location" ng-hide="listPatient.pickup_address == null"></i>&nbsp;{{listPatient.pickup_address}}
+                                <i class="icon ion-location" ng-hide="listPatient.pickup_address == null"></i> - {{listPatient.pickup_address}}
                             </p>
 
                             <p  style="color:white">
-                                <i class="icon ion-android-call" ng-hide="listPatient.Mobile == null"></i>&nbsp;{{listPatient.Mobile}}
+                                <i class="icon ion-android-call" ng-hide="listPatient.Mobile == null"></i> - {{listPatient.Mobile}}
                             <span ng-class="{'span-new': listPatient.STATUS == 'New'}" ng-show="listPatient.STATUS == 'New'">
                                 new
                             </span>

@@ -1,11 +1,27 @@
 angular.module('starter.security.register.controller',[])
 
-    .controller('securityRegisterController', function($scope, $state, InjuryServices, SecurityService, ConfigService, $ionicPopup){
+    .controller('securityRegisterController', function($scope, $state, InjuryServices, SecurityService, ConfigService, $ionicPopup,WorkerServices){
 
         $scope.titleIndex = ConfigService.title_option();
+        console.log($scope.titleIndex)
         $scope.sexIndex = ConfigService.sex_option();
         $scope.userInfo = {};
         $scope.patientInfo = {};
+          WorkerServices.listAccType().then(function (data) {
+                if (data.status != 'success') {
+                    alert('error');
+                    return;
+                }
+                $scope.accTypeIndex = data.list;
+            });
+
+            WorkerServices.listPrvFund().then(function (data) {
+                if (data.status != 'success') {
+                    alert('error');
+                    return;
+                }
+                $scope.fundIndex = data.list;
+            });
 
         $scope.submitRegister = function() {
             console.log($scope.userInfo);
@@ -14,33 +30,33 @@ angular.module('starter.security.register.controller',[])
             fullname.push($scope.patientInfo.firstName, $scope.patientInfo.surName, $scope.patientInfo.middleName);
             $scope.userInfo.Booking_Person = fullname.join(' ');
             SecurityService.signup($scope.userInfo, $scope.patientInfo).then(function (res){
-                //if(res.status.toLowerCase() == 'success') {
-                //    $scope.popupMessage = { message:"Register success!" };
-                //    $ionicPopup.show({
-                //        templateUrl: "modules/popup/PopUpSuccess.html",
-                //        scope: $scope,
-                //        buttons: [
-                //            {
-                //                text: "Ok",
-                //                onTap: function() {
-                //                    $state.go('security.login', null, {reload: true});
-                //                }
-                //            }
-                //        ]
-                //    });
-                //} else {
-                //    $scope.popupMessage = { message:"Register failed! Please try again" };
-                //    $ionicPopup.show({
-                //        templateUrl: "modules/popup/PopUpError.html",
-                //        scope: $scope,
-                //        buttons: [
-                //            {
-                //                text: "Ok",
-                //                type: "button button-assertive"
-                //            }
-                //        ]
-                //    });
-                //}
+                if(res.status.toLowerCase() == 'success') {
+                   $scope.popupMessage = { message:"Register success!" };
+                   $ionicPopup.show({
+                       templateUrl: "modules/popup/PopUpSuccess.html",
+                       scope: $scope,
+                       buttons: [
+                           {
+                               text: "Ok",
+                               onTap: function() {
+                                   $state.go('security.login', null, {reload: true});
+                               }
+                           }
+                       ]
+                   });
+                } else {
+                   $scope.popupMessage = { message:"Register failed! Please try again" };
+                   $ionicPopup.show({
+                       templateUrl: "modules/popup/PopUpError.html",
+                       scope: $scope,
+                       buttons: [
+                           {
+                               text: "Ok",
+                               type: "button button-assertive"
+                           }
+                       ]
+                   });
+                }
             })
         }
 

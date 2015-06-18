@@ -383,57 +383,19 @@ module.exports = {
 		}
 
 		updateNewHeader();
+	},
 
+	getDoctor: function(req,res){
+		var patient_id = req.body.patient_id;
+		var cal_id = req.body.cal_id;
 
-		// knex.transaction(function(trx){
-		// 	return trx
-		// 	.table('cln_fa_df_headers')
-		// 	.update(updateHeader)
-		// 	.where({PATIENT_ID:patient_id, CAL_ID: cal_id, FA_ID:updateHeader.FA_ID})
-		// 	.then(function(res1){
-		// 		for(var i=0; i<updateSections.length; i++){
-		// 			return trx
-		// 			.table('cln_fa_df_sections')
-		// 			.update(updateSections[i])
-		// 			.where({PATIENT_ID:patient_id, CAL_ID: cal_id, SECTION_ID: updateSections.SECTION_ID})
-		// 			.then(function(res1){
-		// 				if(i===updateSections.length-1){
-		// 					for(var j=0; j<updateLines.length; j++){
-		// 						return trx
-		// 						.table('cln_fa_df_lines')
-		// 						.update(updateLines[j])
-		// 						.where({PATIENT_ID:patient_id, CAL_ID: cal_id, LINE_ID: updateLines.LINE_ID})
-		// 						.then(function(res2){
-		// 							if(j===updateLines.length-1){
-		// 								for(var k=0; k<updateDetails.length; k++){
-		// 									return trx
-		// 									.table('cln_fa_df_line_details')
-		// 									.update(updateDetails[k])
-		// 									.where({PATIENT_ID:patient_id, CAL_ID: cal_id, DETAIL_ID: updateDetails.DETAIL_ID})
-		// 									.then(function(res3){
-		// 										if(k===updateDetails.length-1){
-		// 											for(var m=0; m<updateComments.length; m++){
-		// 												return trx
-		// 												.table('cln_fa_df_comments')
-		// 												.updat e(updateComments[m])
-		// 												.where({PATIENT_ID:patient_id, CAL_ID: cal_id, FA_COMMENT_ID: updateComments.FA_COMMENT_ID})
-		// 											}
-		// 										}
-		// 									})
-		// 								};
-		// 							}
-		// 						})
-		// 					};
-		// 				}
-		// 			})
-		// 		};
-		// 	})
-		// })
-		// .then(function(result){
-		// 	res.json({status:'success'});
-		// })
-		// .error(function(err){
-		// 	res.json(500, {status:'error', error:err});
-		// })
+		knex.raw("select doctor.* from `cln_appointment_calendar` appt inner join `doctors` doctor on appt.`DOCTOR_ID` = doctor.`doctor_id` where appt.`CAL_ID` = ?",[cal_id])
+		.then(function(result){
+			if(result.length === 0) res.json({status:"no doctor"});
+			else res.json({status:'success', data:result[0]});
+		})
+		.error(function(err){
+			res.json(500,{status:'error'})
+		})
 	}
 }

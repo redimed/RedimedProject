@@ -191,7 +191,6 @@ angular.module('starter.phoneCall.controller',[])
 
         $scope.micToggle = function() {
             $scope.mic = !$scope.mic;
-
             if($scope.mic){
                 publisher.publishAudio(false);
             }
@@ -298,9 +297,7 @@ angular.module('starter.phoneCall.controller',[])
             })
             session.disconnect();
             localStorageService.remove('callUser');
-            $timeout(function() {
-                $state.go(from.fromState.name, params, {location: "replace"});
-            }, 5*1000);
+            $state.go(from.fromState.name, params, {location: "replace"});
         }
 
         $scope.$on('$destroy', function() {

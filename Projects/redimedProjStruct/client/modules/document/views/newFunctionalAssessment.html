@@ -5,6 +5,63 @@
 		</div>
 	</div>
 	<!-- this is section -->
+	<div class="portlet box blue-hoki">
+		<div class="portlet-title">
+			<div class="caption">Assessment Possibility Confirmation</div>
+		</div>
+		<div class="portlet-body">
+			<div class="row">
+				<div class="col-md-12 col-sm-12 col-xs-12">
+					<label class="control-label">
+						This assessment is designed to test your functional capacity in relation to the required physical demands to complete your proposed role. You will not be required to complete any task that you feel you are unable to perform safely and or confidently. The evaluator will cease the assessment if they are of the opinion that you are either unable or unsafe to proceed. You are expected to set your own limits and cease any task if you experience pain or fear that the task will exacerbate any preexisting injuries or conditions. You will be given a comprehensive set of instructions prior to commencing each task and you may ask for clarification at any point prior attempting the task.
+					</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6 col-sm-6 col-xs-6">
+					<label class="control-label">
+						Is there any reason that you could not perform the work fitness assessment today?
+					</label>
+				</div>
+				<div class="col-md-2 col-sm-2 col-xs-2 btn-group">
+					<label class="btn">
+						<input type="radio" ng-model="header.can_perform_today" value="1"> Yes
+					</label>
+					<label class="btn">
+						<input type="radio" ng-model="header.can_perform_today" value="0"> No
+					</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-2 col-sm-2 col-xs-2">
+					<button class="btn btn-default green" ng-click="showSignature()">Signature</button>
+				</div>
+				<div class="col-md-10 col-sm-10"
+                     ng-show="header.PATIENT_SIGN!==null && header.PATIENT_SIGN!=='' && isSignatureShow===false">
+                    <img ng-src="{{header.PATIENT_SIGN}}" alt=""
+                         style="width: 200px;height: 150px;"/>
+                </div>
+			</div>
+			<div class="row" style="text-align: center;" ng-show="isSignatureShow">
+	            <div class="col-md-12 col-sm-12">
+	                <canvas width="500" height="400" id="canvas"
+	                        signature ng-model="header.PATIENT_SIGN" style="background-color: #8eece8">
+	                </canvas>
+	            </div>
+	            <div class="col-md-12 col-sm-12">
+	                <div class="break-row"></div>
+	                <div class="btn-group">
+	                    <button type="button" ng-click="cancelClick()" class="btn btn-danger btn-sm">
+	                        Cancel
+	                    </button>
+	                    <button type="button" ng-click="clearClick()" class="btn btn-warning btn-sm">Clear
+	                    </button>
+	                    <button type="button" ng-click="okClick()" class="btn green btn-sm">Ok</button>
+	                </div>
+	            </div>
+	        </div>
+		</div>
+	</div>
 	<div class="portlet box blue-hoki" ng-repeat="section in header.sections">
 		<div class="portlet-title">
 			<div class="caption">{{section.SECTION_NAME}}</div>
@@ -576,37 +633,35 @@
 					<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="header.Att_Balance===1 || header.Att_Balance==='1'" ng-model="header.Att_Balance"/>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-md-2 col-sm-2 col-xs-2">
-					<button class="btn btn-default green" ng-click="showSignature()">Signature</button>
-				</div>
-				<div class="col-md-10 col-sm-10"
-                     ng-show="header.ASSESSED_SIGN!==null && header.ASSESSED_SIGN!=='' && isSignatureShow===false">
-                    <img ng-src="{{header.ASSESSED_SIGN}}" alt=""
-                         style="width: 200px;height: 150px;"/>
-                </div>
-			</div>
-			<div class="row" style="text-align: center;" ng-show="isSignatureShow">
-	            <div class="col-md-12 col-sm-12">
-	                <canvas width="500" height="400" id="canvas"
-	                        signature ng-model="header.ASSESSED_SIGN" style="background-color: #8eece8">
-	                </canvas>
-	            </div>
-	            <div class="col-md-12 col-sm-12">
-	                <div class="break-row"></div>
-	                <div class="btn-group">
-	                    <button type="button" ng-click="cancelClick()" class="btn btn-danger btn-sm">
-	                        Cancel
-	                    </button>
-	                    <button type="button" ng-click="clearClick()" class="btn btn-warning btn-sm">Clear
-	                    </button>
-	                    <button type="button" ng-click="okClick()" class="btn green btn-sm">Ok</button>
-	                </div>
-	            </div>
-	        </div>
-
+			
 		</div>
 		
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<label class="control-label text-info bold">Functional Assessment Info</label>
+			<div class="row">
+				<div class="col-md-2 col-sm-2 col-xs-2">
+					<label class="control-label bold">Assessed name: </label>
+				</div>
+				<div class="col-md-2 col-sm-2 col-xs-2"
+	               <label class="control-label">{{header.ASSESSED_NAME}} </label>
+	            </div>
+	            <div class="col-md-2 col-sm-2 col-xs-2">
+					<label class="control-label bold">Assessed date: </label>
+				</div>
+				<div class="col-md-2 col-sm-2 col-xs-2"
+	               <label class="control-label">{{header.ASSESSED_DATE}} </label>
+	            </div>
+				<div class="col-md-1 col-sm-1 col-xs-1">
+					<label class="control-label bold">Signature</label>
+				</div>
+				<div class="col-md-2 col-sm-2 col-xs-2">
+	                <img ng-src="{{header.ASSESSED_SIGN}}" alt=""
+	                     style="width: 100px;height: 50px;"/>
+	            </div>
+			</div>
+		</div>
 	</div>
 
 	<div class="row">
@@ -615,7 +670,7 @@
         </button>
         <button ng-click="faUpdate()" class="btn green pull-right" ng-show="editMode===true"> Update
         </button>
-        <a class="btn blue pull-right" ng-show="editMode===true" href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/FA/{{print_fa_id}}/{{print_cal_id}}/{{print_patient_id}}"> Print
+        <a class="btn blue pull-right" ng-show="editMode===true" href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/FA/{{print_fa_id}}/{{print_cal_id}}/{{print_patient_id}}" target="_blank"> Print
         </a>
         <!-- <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/FA/{{infoH.FA_ID}}/{{infoH.CAL_ID}}/{{infoH.PATIENT_ID}}"
            ng-disabled="isNew " target="_blank"

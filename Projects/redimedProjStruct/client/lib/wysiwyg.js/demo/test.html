@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>WYSIWYG</title>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="../src/wysiwyg.js"></script>
+<script type="text/javascript" src="../src/wysiwyg-editor.js"></script>
+<!-- github.io delivers wrong content-type - but you may want to include FontAwesome in 'wysiwyg-editor.css' -->
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="../src/wysiwyg-editor.css" />
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#editor').wysiwyg({
+		toolbar: 'top-selection',
+		buttons: {
+			bold: {
+				title: 'Bold (Ctrl+B)',
+				image: '\uf032', // <img src="path/to/image.png" width="16" height="16" alt="" />
+				hotkey: 'b'
+			},
+			italic: {
+				title: 'Italic (Ctrl+I)',
+				image: '\uf033', // <img src="path/to/image.png" width="16" height="16" alt="" />
+				hotkey: 'i'
+			},
+			underline: {
+				title: 'Underline (Ctrl+U)',
+				image: '\uf0cd', // <img src="path/to/image.png" width="16" height="16" alt="" />
+				hotkey: 'u'
+			},
+			insertimage: {
+				title: 'Insert image',
+				image: '\uf030',
+			},
+			insertvideo: {
+				title: 'Insert video',
+				image: '\uf03d', // <img src="path/to/image.png" width="16" height="16" alt="" />
+			}
+		},
+		// Submit-Button
+		submit: {
+			title: 'Submit',
+			image: '\uf00c' // <img src="path/to/image.png" width="16" height="16" alt="" />
+		}
+	})
+});
+</script>
+
+</head>
+<body>
+	<textarea id="editor"></textarea>
+	
+
+</body>
+</html>
