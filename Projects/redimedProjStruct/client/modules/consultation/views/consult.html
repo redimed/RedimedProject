@@ -22,14 +22,14 @@
                 <a href="index.html#tab_1_4" data-toggle="tab">Medical Devices</a>
             </li>
             <li>
-                <a href="index.html#tab_1_5" data-toggle="tab">Item Sheet</a>
+                <a href="index.html#tab_1_5" data-toggle="tab">Item</a>
             </li>
              <li>
                 <a href="index.html#tab_1_6" data-toggle="tab">E-Forms</a>
             </li>
-            <li>
+            <!-- <li>
                 <a href="index.html#tab_1_7" data-toggle="tab">Workcover</a>
-            </li> 
+            </li>  -->
             <!--<li>
                 <a href="index.html#tab_1_8" data-toggle="tab">Script</a>
             </li>-->
@@ -634,7 +634,19 @@
                 </div> -->
             </div>
             <div class="un-tab-content" id="tab_1_6">
-                <div ng-controller="DoctorPaperlessController">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs pt_margin_bottom_0" role="tablist">
+                    <li role="presentation" class="active">
+                        <a class="un_header_attach_file" href="index.html#tab_1_6_1" aria-controls="home" role="tab" data-toggle="tab">Document files</a>
+                    </li>
+                    <li role="presentation">
+                        <a class="un_header_attach_file" href="index.html#tab_1_6_2" aria-controls="profile" role="tab" data-toggle="tab">Drawings file</a>
+                    </li>
+                </ul>
+
+              <!-- Tab panes -->
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" ng-controller="DoctorPaperlessController" id="tab_1_6_1">
                     <div class="portlet box" style="background-color: rgb(102, 102, 102);" id="appt_paperless">
                         <div class="portlet-title">
                             <div class="caption">
@@ -972,46 +984,47 @@
                     </div>
                     <!-- end COE -->
                 </div>
-            </div>
-            <div class="un-tab-content" id="tab_1_7">
-                <div class="row">
-                    <div  class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                        <a  style="text-decoration: none;" ng-click="viewWorkcover(1)" class="btn btn-info un-large-button" href="javascript:;">
-                            First Assessment
-                        </a>
-                    </div>
-                    <div  class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                        <a  style="text-decoration: none;" ng-click="viewWorkcover(2)" class="btn btn-info un-large-button" href="javascript:;">
-                            Progress Assessment
-                        </a>
-                    </div>
-                    <div  class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                        <a  style="text-decoration: none;" ng-click="viewWorkcover(3)" class="btn btn-info un-large-button" href="javascript:;">
-                            Final Assessment
-                        </a>
-                    </div>
-                    <div  class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                        <a  style="text-decoration: none;" ng-click="viewWorkcover(4)" class="btn btn-info un-large-button" href="javascript:;">
-                            General Assessment
-                        </a>
-                    </div>
-                </div>
-                <div ng-if="currWorkcover" style="background-color: rgb(102, 102, 102);"  class="portlet box">
-                    <div class="portlet-title">
-                        <div class="caption ">
-                            <span class="caption-subject uppercase">{{currWorkcover}}</span>
+                <div role="tabpanel" class="tab-pane" id="tab_1_6_2">
+                    <div class="row" style="margin-top: 20px;">
+                        <div  class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <a  style="text-decoration: none;" ng-click="viewWorkcover(1)" class="btn btn-info un-large-button" href="javascript:;">
+                                First Assessment
+                            </a>
                         </div>
-                        <div class="actions">
-                            <a class="btn un-submit red" ng-click="addWorkcover()">Add New</a>
+                        <div  class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <a  style="text-decoration: none;" ng-click="viewWorkcover(2)" class="btn btn-info un-large-button" href="javascript:;">
+                                Progress Assessment
+                            </a>
+                        </div>
+                        <div  class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <a  style="text-decoration: none;" ng-click="viewWorkcover(3)" class="btn btn-info un-large-button" href="javascript:;">
+                                Final Assessment
+                            </a>
+                        </div>
+                        <div  class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <a  style="text-decoration: none;" ng-click="viewWorkcover(4)" class="btn btn-info un-large-button" href="javascript:;">
+                                General Assessment
+                            </a>
                         </div>
                     </div>
-                    <div class="portlet-body">
-                       <my-data-table ng-show="selectedOpt == 1" options="first_opt"></my-data-table>
-                       <my-data-table ng-show="selectedOpt == 2" options="progress_opt"></my-data-table>
-                       <my-data-table ng-show="selectedOpt == 3" options="final_opt"></my-data-table>
-                       <my-data-table ng-show="selectedOpt == 4" options="general_opt"></my-data-table>
+                    <div ng-if="currWorkcover" style="background-color: rgb(102, 102, 102);"  class="portlet box">
+                        <div class="portlet-title">
+                            <div class="caption ">
+                                <span class="caption-subject uppercase">{{currWorkcover}}</span>
+                            </div>
+                            <div class="actions">
+                                <a class="btn un-submit red" ng-click="addWorkcover()">Add New</a>
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                           <my-data-table ng-show="selectedOpt == 1" options="first_opt"></my-data-table>
+                           <my-data-table ng-show="selectedOpt == 2" options="progress_opt"></my-data-table>
+                           <my-data-table ng-show="selectedOpt == 3" options="final_opt"></my-data-table>
+                           <my-data-table ng-show="selectedOpt == 4" options="general_opt"></my-data-table>
+                        </div>
                     </div>
                 </div>
+             </div>
             </div>
             <!--<div class="un-tab-content" id="tab_1_8">
                 <div class="row" ng-controller="ScriptListController">

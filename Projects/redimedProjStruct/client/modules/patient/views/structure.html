@@ -67,8 +67,8 @@
 												<span class="input-group-btn ">
 												<button class="btn un-btn-black-label" type="button">Gender</button>
 												</span>
-												<label type="text" class="form-control un-input-xam-fig" ng-show="current_patient.Sex==1">Male</label>
-												<label type="text" class="form-control un-input-xam-fig" ng-show="current_patient.Sex==0">Female</label>
+												<label type="text" class="form-control un-input-xam-fig" ng-show="current_patient.Sex==0">Male</label>
+												<label type="text" class="form-control un-input-xam-fig" ng-show="current_patient.Sex==1">Female</label>
 												<label type="text" class="form-control un-input-xam-fig" ng-show="current_patient.Sex==null && current_patient.Sex==un"></label>
 											</div>
 										</div>
@@ -92,6 +92,7 @@
 												<button class="btn un-btn-black-label-60" type="button">Allergy</button>
 												</span>
 												<label type="text" class="form-control un-input-xam-fig-60">
+													<label ng-if="listAllergyinPAtient.length <= 0">No Allergy</label>
 													<label ng-repeat="item in listAllergyinPAtient">
 														<label ng-if="!$last">{{item.allergy_name}},&nbsp</label>
 														<label ng-if="$last">{{item.allergy_name}}</label>
@@ -183,8 +184,8 @@
 										<span class="input-group-btn ">
 										<button class="btn un-btn-black-label" type="button">Gender</button>
 										</span>
-										<label type="text" class="form-control un-input-xam-fig" ng-show="current_patient.Sex==1">Male</label>
-										<label type="text" class="form-control un-input-xam-fig" ng-show="current_patient.Sex==0">Female</label>
+										<label type="text" class="form-control un-input-xam-fig" ng-show="current_patient.Sex==0">Male</label>
+										<label type="text" class="form-control un-input-xam-fig" ng-show="current_patient.Sex==1">Female</label>
 										<label type="text" class="form-control un-input-xam-fig" ng-show="current_patient.Sex==null"></label>
 									</div>
 								</div>
