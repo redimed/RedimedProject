@@ -68,7 +68,12 @@ angular.module('starter', ['ionic',
                                 {
                                     $state.go('app.driver.list');
                                 } else {
-                                    $state.go('app.injury.info');
+                                    if(localStorageService.get("userInfo").UserType.user_type == "Patient"){
+                                            $state.go('app.injury.desInjury');
+                                    }else{
+                                          $state.go('app.injury.info');
+                                    }
+                                  
                                 }
                             }, 1000);
                         }
