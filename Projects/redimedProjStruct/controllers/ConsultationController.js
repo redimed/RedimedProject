@@ -228,6 +228,8 @@ module.exports = {
             history: info.history,
             examination: info.examination,
             treatment_plan: info.treatment,
+            investigation: info.investigation,
+            specialist: info.specialist,
             diagnosis: info.diagnosis
         }, {consult_id: info.consult_id}, {raw: true})
         .success(function(data){
@@ -296,6 +298,8 @@ module.exports = {
                     history: info.history,
                     examination: info.examination,
                     treatment_plan: info.treatment,
+                    investigation: info.investigation,
+                    specialist: info.specialist,
                     diagnosis: info.diagnosis
                 })
                 .success(function(data){
@@ -626,11 +630,11 @@ module.exports = {
         kiss.executeQuery(req,sql,[patientId,calId],function(rows){
             if(rows.length>0)
             {
-                res.json({status:'update',data:rows[0]});
+                res.json({status:'success',data:rows[0]});
             }
             else
             {
-                res.json({status:'insert'});
+                res.json({status:'error'});
             }
         })
    },

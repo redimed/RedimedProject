@@ -470,8 +470,8 @@ module.exports = {
         //end get string weekno+year
         
 
-        var sql_get_total_all = "SELECT COUNT(*) AS 'total_all' FROM hr_leave_owe WHERE create_id = :user_id ";
-        var sql_get_total_Dept = "SELECT COUNT(department) AS 'total_Dept',department FROM hr_leave_owe WHERE create_id = :user_id GROUP BY department ";
+        // var sql_get_total_all = "SELECT COUNT(*) AS 'total_all' FROM hr_leave_owe WHERE create_id = :user_id ";
+        // var sql_get_total_Dept = "SELECT COUNT(department) AS 'total_Dept',department FROM hr_leave_owe WHERE create_id = :user_id GROUP BY department ";
         var sql_get_data_hr_leave_owe_table = "SELECT users.id,"+//SELECT
                                               "hr_employee.FirstName,"+//SELECT
                                               " hr_employee.LastName,"+//SELECT
@@ -490,7 +490,7 @@ module.exports = {
                                               "INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id " + //INNER JOIN
                                               "WHERE time_tasks_week.task_status_id = 3 "+ //WHERE
                                                 " AND departments.departmentid IN ( " + stringDept + " ) "+ //WHERE
-                                                " AND (time_tasks_week.week_no,YEAR(time_tasks_week.start_date))  IN ( " + stringline1 + " ) "+ //WHERE
+                                                " AND (time_tasks_week.week_no,YEAR(time_tasks_week.end_date))  IN ( " + stringline1 + " ) "+ //WHERE
                                                 " AND hr_employee.Employee_ID IN ( " + stringEMP + " )"; //WHERE
 
         var delete_hr_leave_owe = "DELETE FROM hr_leave_owe WHERE create_id = :user_id ";
@@ -585,105 +585,52 @@ module.exports = {
                                                                             }
                                                                             listleave.push(data_1[a]);
                                                                         }
-                                                                        for (var q = 0; q < listleave.length; q++) {
-                                                                            db.hr_leave_owe.create({
-                                                                                    create_id: listleave[q].create_id,
-                                                                                    user_id: listleave[q].user_id,
-                                                                                    department: listleave[q].Department_id,
-                                                                                    date_leave: listleave[q].date,
-                                                                                    employee: listleave[q].Employee_id,
-                                                                                    isReject: listleave[q].isReject,
-                                                                                    from_date: listleave[q].from_date,
-                                                                                    to_date: listleave[q].to_date,
-                                                                                    created_by: info.USER_ID
-                                                                                })
-                                                                                .success(function(data_insert2) {
-                                                                                    flag2++;
-                                                                                    if (flag2 == listleave.length)
-
-                                                                                        db.sequelize.query(sql_get_total_all,null,{
-                                                                                            raw: true
-                                                                                        },{
-                                                                                            user_id : info.USER_ID
-                                                                                        })
-                                                                                        .success(function(data_total_all) {
-                                                                                            if(data_total_all!==undefined&&data_total_all!==null&&data_total_all!==""&&data_total_all.length!==0){
-
-                                                                                                db.sequelize.query(sql_get_total_Dept,null,{
-                                                                                                   raw: true 
-                                                                                                },{
-                                                                                                    user_id : info.USER_ID
-                                                                                                })
-                                                                                                    .success(function(data_total_Dept) {
-                                                                                                        if(data_total_Dept!==undefined&&data_total_Dept!==null&&data_total_Dept!==""&&data_total_Dept.length!==0){
-
-
-                                                                                                            for (var u = 0; u < data_total_Dept.length; u++) {
-                                                                                                                for (var t = 0; t < listleave.length; t++) {
-                                                                                                                    db.hr_leave_owe.update({
-                                                                                                                            total_all: data_total_all[0].total_all,
-                                                                                                                            total_Dept: data_total_Dept[u].total_Dept
-                                                                                                                        }, {
-                                                                                                                            department: data_total_Dept[u].department
-                                                                                                                        })
-                                                                                                                        .success(function(success) {
-                                                                                                                            flag4++;
-                                                                                                                            if (flag3 == data_total_Dept.length && flag4 == listleave.length) {
-                                                                                                                                res.json({
-                                                                                                                                    status: "success"
-                                                                                                                                });
-                                                                                                                                return;
-                                                                                                                            }
-                                                                                                                        })
-                                                                                                                        .error(function(err) {
-                                                                                                                            console.log("*****ERROR: " + err + " *****");
-                                                                                                                            res.json({
-                                                                                                                                status: "error"
-                                                                                                                            });
-                                                                                                                            return;
-                                                                                                                        })
-                                                                                                                }
-                                                                                                                flag3++;
-                                                                                                            }
-                                                                                                        }
-                                                                                                        else{
-                                                                                                            res.json({
-                                                                                                                status:"null"
-                                                                                                            });
-                                                                                                            return;
-                                                                                                        }
-                                                                                                    })
-                                                                                                    .error(function(err) {
-                                                                                                        console.log("*****ERROR: " + err + " *****");
-                                                                                                        res.json({
-                                                                                                            status: "error"
-                                                                                                        });
-                                                                                                        return;
-                                                                                                    })
-                                                                                            }
-                                                                                            else{
-                                                                                                res.json({
-                                                                                                    status:"null"
-                                                                                                });
-                                                                                                return;
-                                                                                            }
-                                                                                        })
-                                                                                        .error(function(err) {
-                                                                                            console.log("*****ERROR: " + err + " *****");
+                                                                        var check_isReject = 0;
+                                                                        for(var s=0;s<listleave.length;s++){
+                                                                            if(listleave[s].isReject==0){
+                                                                                check_isReject = 1;
+                                                                            }
+                                                                            else{
+                                                                                check_isReject = 0;
+                                                                            }
+                                                                        }
+                                                                        if(check_isReject==1){
+                                                                            for (var q = 0; q < listleave.length; q++) {
+                                                                                db.hr_leave_owe.create({
+                                                                                        create_id: listleave[q].create_id,
+                                                                                        user_id: listleave[q].user_id,
+                                                                                        department: listleave[q].Department_id,
+                                                                                        date_leave: listleave[q].date,
+                                                                                        employee: listleave[q].Employee_id,
+                                                                                        isReject: listleave[q].isReject,
+                                                                                        from_date: listleave[q].from_date,
+                                                                                        to_date: listleave[q].to_date,
+                                                                                        created_by: info.USER_ID
+                                                                                    })
+                                                                                    .success(function(data_insert2) {
+                                                                                        flag2++;
+                                                                                        if (flag2 == listleave.length){
                                                                                             res.json({
-                                                                                                status: "error"
+                                                                                                status:"success"
                                                                                             });
                                                                                             return;
-                                                                                        })
+                                                                                        }
 
-                                                                                })
-                                                                                .error(function(err) {
-                                                                                    console.log("*****ERROR: " + err + " *****");
-                                                                                    res.json({
-                                                                                        status: "error"
-                                                                                    });
-                                                                                    return;
-                                                                                })
+                                                                                    })
+                                                                                    .error(function(err) {
+                                                                                        console.log("*****ERROR: " + err + " *****");
+                                                                                        res.json({
+                                                                                            status: "error"
+                                                                                        });
+                                                                                        return;
+                                                                                    })
+                                                                            }
+                                                                        }
+                                                                        else{
+                                                                            res.json({
+                                                                                status:"null"
+                                                                            });
+                                                                            return;
                                                                         }
                                                                         //console.log(listleave)
                                                                     }
@@ -808,7 +755,7 @@ module.exports = {
                                     "INNER JOIN departments ON hr_employee.Dept_ID = departments.departmentid  "+//INNER JOIN
                                     "INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id "+//INNER JOIN
                                     "WHERE time_tasks_week.task_status_id = 3 AND "+//WHERE
-                                    "YEAR(time_tasks_week.start_date)=:years AND "+
+                                    "YEAR(time_tasks_week.end_date)=:years AND "+
                                     "departments.departmentid IN ("+stringDept+") AND "+//WHERE
                                     // "time_tasks_week.week_no<"+info.weekNoFrom+" AND "+
                                     "hr_employee.Employee_ID IN ("+stringEMP+")";//WHERE
@@ -873,7 +820,7 @@ module.exports = {
                                                 "INNER JOIN time_tasks ON time_tasks.tasks_week_id = time_tasks_week.task_week_id "+//INNER JOIN
                                                 "INNER JOIN time_item_task ON time_item_task.task_id = time_tasks.tasks_id "+//INNER JOIN
                                                 "WHERE time_tasks_week.task_status_id = 3 AND "+//WHERE
-                                                "YEAR(time_tasks_week.start_date)=:years AND "+
+                                                "YEAR(time_tasks_week.end_date)=:years AND "+
                                                 "departments.departmentid IN ("+stringDept+") AND "+//WHERE
                                                 // "(time_tasks_week.week_no <"+info.weekNoFrom+") AND "+
                                                 "hr_employee.Employee_ID IN ("+stringEMP+") AND "+//WHERE
@@ -1040,7 +987,7 @@ module.exports = {
                                     "WHERE time_tasks_week.task_status_id = 3 AND "+//WHERE
                                     "departments.departmentid IN ("+stringDept+") AND "+//WHERE
                                     "(time_tasks_week.week_no BETWEEN "+week2+" AND "+weeks+" ) AND "+//WHERE
-                                    "YEAR(time_tasks_week.start_date)=:years AND "+
+                                    "YEAR(time_tasks_week.end_date)=:years AND "+
                                     "hr_employee.Employee_ID IN ("+stringEMP+")";//WHERE
                             db.sequelize.query(sql_get_data3,null,{
                                 raw:true
@@ -1357,7 +1304,7 @@ module.exports = {
                                                                        " INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id " + //INNER JOIN
                                                                        " WHERE time_tasks_week.task_status_id = 3 "+//WHERE
                                                                             " AND departments.departmentid IN ( " + stringDept + " ) "+//WHERE
-                                                                            " AND (time_tasks_week.week_no,YEAR(time_tasks_week.start_date)) IN (" + stringline2 + ")  "+//WHERE
+                                                                            " AND (time_tasks_week.week_no,YEAR(time_tasks_week.end_date)) IN (" + stringline2 + ")  "+//WHERE
                                                                             " AND hr_employee.Employee_ID IN ( " + stringEMP + " )";//WHERE
                                 db.sequelize.query(sql_get_data_time_activity_table)
                                     .success(function(data_time_activity_table) {
@@ -1873,7 +1820,7 @@ module.exports = {
                                                                                " INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id " +//INNER JOIN 
                                                                                " WHERE time_tasks_week.task_status_id = 3 "+//WHERE
                                                                                " AND departments.departmentid IN ( " + stringDept + " ) "+//WHERE
-                                                                               " AND (time_tasks_week.week_no,YEAR(time_tasks_week.start_date)) IN ("+stringline2+") "+//WHERE
+                                                                               " AND (time_tasks_week.week_no,YEAR(time_tasks_week.end_date)) IN ("+stringline2+") "+//WHERE
                                                                                " AND hr_employee.Employee_ID IN ( " + stringEMP + " ) ";//WHERE
                                 //GET DATA TABLE time_activity_summary_table
                                 db.sequelize.query(sql_get_data_time_activity_summary_table)

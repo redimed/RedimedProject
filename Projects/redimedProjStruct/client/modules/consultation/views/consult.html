@@ -52,7 +52,7 @@
                     
                     <div class="col-md-5 col-sm-5">
                         <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Problems</label>
-                        <select class="form-control un-input-custom un-select-p" 
+                        <select class="form-control" 
                                 ng-change="viewProblem(consultInfo.problem_id)" ng-options="p.Problem_id as p.Notes for p in problemList"
                                 ng-model="consultInfo.problem_id" float-label>
                             <option value=""selected>--Select A Problem--</option>
@@ -70,7 +70,7 @@
                     </div>
                 </div>
                 <br/>
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-md-12 col-sm-12">
                         <div class="table-dynamic">
                             <table class="responsive table table-bordered">
@@ -133,7 +133,7 @@
                             </table>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="row">
                     <div class="col-md-6 col-sm-6">
                         <div class="form-group" >
@@ -163,6 +163,23 @@
                         <div class="form-group" >
                             <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Diagnosis</label>
                             <textarea rows="6" ng-model="consultInfo.diagnosis" 
+                                class="form-control un-input-custom-1 un-select-p-5" float-label></textarea>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group" >
+                            <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Investigation</label>
+                            <textarea rows="6" ng-model="consultInfo.investigation" 
+                                class="form-control un-input-custom-1 un-select-p-5" float-label></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="form-group" >
+                            <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Specialist</label>
+                            <textarea rows="6" ng-model="consultInfo.specialist" 
                                 class="form-control un-input-custom-1 un-select-p-5" float-label></textarea>
                         </div>
                     </div>
@@ -1180,7 +1197,7 @@
                                                 <div class="col-md-12 col-sm-12">
                                                     <hr/>
                                                     <div class="col-md-4 col-sm-4 un_padding_bottom_15" ng-repeat="img in listImgDrawingHistory">
-                                                        <img class="un_img_width_100" ng-src="api/consultation/drawing/image/{{img.id}}">
+                                                        <img class="un_img_width_100 pt_boder_dotted" ng-src="api/consultation/drawing/image/{{img.id}}">
                                                     </div>
                                                 </div>
                                             </div>
