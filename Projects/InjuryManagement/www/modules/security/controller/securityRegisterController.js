@@ -52,8 +52,7 @@ angular.module('starter.security.register.controller',[])
                        scope: $scope,
                        buttons: [
                            {
-                               text: "Ok",
-                               type: "button button-assertive"
+                               text: "Ok"
                            }
                        ]
                    });

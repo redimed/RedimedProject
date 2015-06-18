@@ -88,18 +88,14 @@ angular.module('starter.injury.controller', ['ngCordova'])
         $scope.nextform = function(info) {
             $scope.isSubmit = true;
             if(info.$invalid || $scope.isFailMobile == true || $scope.isFailEmail == true) {
-                if(userInfoLS.UserType.user_type == "Patient") {
-                    $state.go('app.injury.desInjury');
-                } else {
-                    $scope.popupMessage = { message: "Please check your information!" };
-                    $ionicPopup.show({
-                        templateUrl: "modules/popup/PopUpError.html",
-                        scope: $scope,
-                        buttons: [
-                            { text: "Ok" }
-                        ]
-                    });
-                }
+                $scope.popupMessage = { message: "Please check your information!" };
+                $ionicPopup.show({
+                    templateUrl: "modules/popup/PopUpError.html",
+                    scope: $scope,
+                    buttons: [
+                        { text: "Ok" }
+                    ]
+                });
             }
             else {
                 $scope.worker.injury_date = new Date();
@@ -164,12 +160,7 @@ angular.module('starter.injury.controller', ['ngCordova'])
             $scope.isFailEmail = false;
             InjuryServices.getPatientID(id).then(function (data) {
                 $scope.worker = data;
-                //$scope.worker.DOB = new Date($scope.worker.DOB);
-                var date = new Date($scope.worker.DOB);
-                date.toString("MM-dd-yyyy");
-                $scope.worker.DOB = date;
-                console.log(typeof $scope.worker.DOB);
-                console.log(date);
+                $scope.worker.DOB = new Date($scope.worker.DOB);
                 $scope.temp1 = angular.copy($scope.worker);
                 localStorageService.set('patientID_select', $scope.worker.Patient_id);
             })
@@ -200,7 +191,6 @@ angular.module('starter.injury.controller', ['ngCordova'])
                 $scope.temp1 = angular.copy($scope.worker);
                 $scope.isShow = !$scope.isShow;
             }
-            console.log(userInfoLS.UserType.user_type)
             if(userInfoLS.UserType.user_type == "Patient"){
                 $scope.user_type = "Patient";
                 // console.log(userInfoLS)
@@ -582,13 +572,6 @@ angular.module('starter.injury.controller', ['ngCordova'])
                     $state.go('app.chooseAppointmentCalendar',{Patient_id: $scope.worker.Patient_id});
                 }
             }
-
-
-
-
-
-
-
         }
 
         initForm();
