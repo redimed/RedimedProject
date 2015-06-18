@@ -160,7 +160,12 @@ angular.module('starter.injury.controller', ['ngCordova'])
             $scope.isFailEmail = false;
             InjuryServices.getPatientID(id).then(function (data) {
                 $scope.worker = data;
-                $scope.worker.DOB = $filter(new Date($scope.worker.DOB));
+                //$scope.worker.DOB = new Date($scope.worker.DOB);
+                var date = new Date($scope.worker.DOB);
+                date.toISOString("MMMM dd, yyyy");
+                $scope.worker.DOB = date;
+                console.log(typeof $scope.worker.DOB);
+                console.log(date);
                 $scope.temp1 = angular.copy($scope.worker);
                 localStorageService.set('patientID_select', $scope.worker.Patient_id);
             })

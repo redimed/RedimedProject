@@ -18,7 +18,7 @@
                     <div class="actionBar">
                         <a menu-toggle="left" style="color: #fff; float: left" class="button button-icon icon ion-navicon-round" ng-click="toogleMenu()"></a>
                     </div>
-                    <div> <!--style="z-index: 1; position:relative; width: 100%; top: 20px;"-->
+                    <div>
                         <label class="item-input label-custom-field" >
                             <span class="input-label span-input-color">Title</span>
                             <select ng-required="true" ng-model="worker.Title" name="Title" class="select-custom"
@@ -92,25 +92,6 @@
                             Your Middle Name is required to be at $#%#
                         </small>
                         <div class="bd-bottom"></div>
-                        <!--<ion-scroll direction="y" class=" item list searchform" ng-hide="!worker.Middle_name || !isShow || result_row == ''" style="background-color: #0169ff;box-shadow: 2px 2px 11px -1px rgba(0,0,0,0.66);border: none;margin-top: 10px;">-->
-                        <!--<div style="border-bottom: 1px solid;padding: 10px;"-->
-                        <!--ng-repeat="result in result_row" ng-click="selectWorker(result.Patient_id)">-->
-                        <!--<h3 style="text-decoration: underline;color:#f3c90a">-->
-                        <!--{{ (result.Title == null ? '' : result.Title + " . ") +-->
-                        <!--(result.First_name == null ? '' : result.First_name) + " " +-->
-                        <!--(result.Middle_name == null ? '' : result.Middle_name) + " " +-->
-                        <!--(result.Sur_name == null ? '' : result.Sur_name) }}-->
-                        <!--</h3>-->
-                        <!--<h4 ng-hide="result.DOB == null" style="color:white">-->
-                        <!--<i class="fa fa-calendar"></i>-->
-                        <!--{{result.DOB | date:"dd/MM/yyyy"}}-->
-                        <!--</h4>-->
-                        <!--<h4 ng-hide="result.Mobile == null" style="color:white">-->
-                        <!--<i class="fa fa-phone"></i>-->
-                        <!--{{result.Mobile}}-->
-                        <!--</h4>-->
-                        <!--</div>-->
-                        <!--</ion-scroll>-->
 
                         <label class="item-input label-custom-field" >
                             <span class="input-label span-input-color">Sur Name</span>
@@ -147,7 +128,7 @@
                                 </h4>
                                 <h4 ng-hide="result.Mobile == null">
                                     <i class="icon ion-android-call"></i>
-                                    {{result.Mobile}}
+                                    <span>{{result.Mobile}}</span>
                                 </h4>
                             </div>
                         </ion-scroll>
@@ -187,7 +168,11 @@
                         <div class="bd-bottom"></div>
                         <label class="item-input label-custom-field" >
                             <span class="input-label span-input-color">Birthday</span>
-                            <input ng-required="true" type="date" ng-model="worker.DOB" name="DOB" ng-disabled="worker.Patient_id != -1 && temp1.DOB" ng-click="clickDate()" min="1865-01-01" max="1995-01-01" ng-class="{'has-error':isSubmit && info.DOB.$invalid}" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
+                            <input ng-required="true" type="date" ng-model="worker.DOB" name="DOB"
+                                   ng-disabled="worker.Patient_id != -1 && temp1.DOB" ng-click="clickDate()"
+                                   ng-class="{'has-error':isSubmit && info.DOB.$invalid}"
+                                   class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"
+                                   style="color:white"/>
                         </label>
                         <div class="bd-bottom"></div>
                         <label class="item-input label-custom-field"  style="border-bottom-color:white">

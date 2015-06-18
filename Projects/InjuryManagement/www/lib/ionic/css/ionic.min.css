@@ -3021,7 +3021,9 @@ html {
 
 a {
     -webkit-user-drag: none;
-    -webkit-tap-highlight-color: transparent
+    -webkit-tap-highlight-color: transparent;
+    color: #fff;
+    text-decoration: none
 }
 
 a[href]:hover {

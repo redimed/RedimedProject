@@ -2350,7 +2350,7 @@ input[disabled], input[readonly]:not(.cloned-text-input), select[disabled], sele
 }
 @media (max-height: 780px) {
     .btn-forgotpassword {
-        padding: 3% 25px 10% 25px;
+        padding: 1% 25px 1% 25px;
     }
 }
 /*end*/
