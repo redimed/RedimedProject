@@ -392,7 +392,10 @@ angular.module('app.loggedIn.document.services', [])
             var updateNewFA = api.all("document/updateNewFA");
             return updateNewFA.post({updateData: updateData, patient_id: patient_id, cal_id:cal_id});
          }
-
+         documentService.getDoctor = function(appt_info){
+            var getDoctor = api.all("document/getDoctorFA");
+            return getDoctor.post(appt_info);
+         }
          
          // end new Functional Assessment
 

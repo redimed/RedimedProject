@@ -148,6 +148,21 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 		})
 	}
 
+	var getDoctorInfo = function(cal_id, patient_id){
+		var apptInfo = {
+			cal_id: cal_id,
+			patient_id: patient_id
+		}
+		DocumentService.getDoctor(apptInfo).then(function(result){
+			if(result.status === "no doctor") toastr.error("This functional assessment have no assessed doctor.", "Critical Error!");
+			else {
+				var docInfo = result.data[0];
+				$scope.header.ASSESSED_NAME = docInfo.NAME;
+				$scope.header.ASSESSED_SIGN = docInfo.Signature;
+			}
+		})
+	}
+
 	var getPatientAge = function(dateString){
 		var now = new Date();
         var birthDate = new Date(dateString);
@@ -165,6 +180,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 			if(result.status==='error') toastr.error('Unexpected error!','Error!');
 			else if(result.status==='not existed') {
 				getNewFA(fa_id);
+				getDoctorInfo(cal_id, patient_id);
 				$scope.editMode=false;
 			}
 			else {
@@ -547,7 +563,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
         $scope.isSignatureShow = false;
     }
     $scope.clearClick = function () {
-        $scope.header.ASSESSED_SIGN = '';
+        $scope.header.PATIENT_SIGN = '';
     }
     $scope.newFASubmit = function(){
     	$scope.clickedValidation = true;
