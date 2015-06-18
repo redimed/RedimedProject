@@ -230,6 +230,9 @@ module.exports = {
             treatment_plan: info.treatment,
             investigation: info.investigation,
             specialist: info.specialist,
+            progress_note: info.progress_note,
+            attendance_record: info.attendance_record,
+            communication_record: info.communication_record,
             diagnosis: info.diagnosis
         }, {consult_id: info.consult_id}, {raw: true})
         .success(function(data){
@@ -300,6 +303,9 @@ module.exports = {
                     treatment_plan: info.treatment,
                     investigation: info.investigation,
                     specialist: info.specialist,
+                    progress_note: info.progress_note,
+                    attendance_record: info.attendance_record,
+                    communication_record: info.communication_record,
                     diagnosis: info.diagnosis
                 })
                 .success(function(data){
@@ -388,8 +394,9 @@ module.exports = {
 
             db.sequelize.query("SELECT u.id, u.`user_name`, u.`Booking_Person`, u.`socket` "+
                                 "FROM  users u "+
-                                "WHERE u.`socket` IS NOT NULL AND u.`company_id` = (SELECT p.`company_id` FROM cln_patients p WHERE p.`Patient_id` = ?)",
-                                null,{raw:true},[patient_id])
+                                "WHERE u.`socket` IS NOT NULL "+
+                                "AND (u.`company_id` = (SELECT p.`company_id` FROM cln_patients p WHERE p.`Patient_id` = ?) "+
+                                "OR u.id = (SELECT p.user_id FROM cln_patients p WHERE p.`Patient_id` = ?))", null,{raw:true},[patient_id,patient_id])
             .success(function(rs)
             {
                 info.users = rs;

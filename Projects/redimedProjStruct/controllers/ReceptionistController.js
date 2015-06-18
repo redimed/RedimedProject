@@ -81,6 +81,7 @@ module.exports = {
 							null,{raw:true},[date,date,site,site]) 
 			.success(function(data){
 				var result = [];
+				var doctorResult = [];
 				var doctor = [];
 				var arr1 = [];
 				var arr2 = [];
@@ -107,12 +108,25 @@ module.exports = {
 					})
 					.value();
 
+				for(var i=0; i<result.length; i++)
+				{
+					var d = result[i];
+					if(d.appointment[0].numsOfRoom != 0)
+					{
+						while(d.appointment.length < d.appointment[0].numsOfRoom)
+						{	
+							d.appointment.push({doctor_id: d.appointment[0].actual_doctor_id, isEmpty: true});
+						}
+					}
+				}
+
 				db.Doctor.findAll({where:{isOnline: 1, currentSite: site}},{raw:true})
 					.success(function(doctors){
 						if(doctors.length > 0)
 						{
 							for(var i=0; i<doctors.length; i++)
 							{
+								delete doctors[i].Signature;
 								arr2.push(doctors[i].doctor_id);
 							}
 							
@@ -125,10 +139,34 @@ module.exports = {
 									doctor.push(doctors[index]);
 								}
 							}
+
+							doctorResult = _.chain(doctor)
+								.groupBy("NAME")
+								.pairs()
+								.map(function(currentItem){
+									return _.object(_.zip(["doctor","appointment"], currentItem));
+								})
+								.value();
+
+							for(var i=0; i<doctorResult.length; i++)
+							{
+								var d = doctorResult[i];
+								if(d.appointment[0].numsOfRoom == 0)
+									d.isRender = false;
+								else
+								{
+									d.isRender = true;
+									while(d.appointment.length < d.appointment[0].numsOfRoom)
+									{
+										d.appointment.push(d.appointment[0])
+									}
+								}
+							}
 						}
+
 						res.json({status:'success',
 								  data: result,
-								  doctorData: doctor});
+								  doctorData: doctorResult});
 					})
 					.error(function(err){
 						res.json({status:'error'});

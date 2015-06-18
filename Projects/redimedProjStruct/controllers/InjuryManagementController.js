@@ -184,7 +184,7 @@ module.exports = {
                               var sqlCompany = "SELECT p.*,c.Company_name FROM cln_patients p INNER JOIN companies c ON p.company_id = c.id WHERE p.Patient_id = ?";
                               var sqlPatient = "SELECT p.* FROM cln_patients p WHERE p.Patient_id = ?";
 
-                              db.sequelize.query(imInfo.user_type == 'Patient' ? sqlPatient : sqlCompany,null,{raw:true},[pId])
+                              db.sequelize.query((typeof imInfo != 'undefined' && imInfo.user_type == 'Patient') ? sqlPatient : sqlCompany,null,{raw:true},[pId])
                                   .success(function(pData){
                                       if(pData)
                                       {
@@ -666,6 +666,22 @@ module.exports = {
             .error(function(err){
                 res.json({status:'error',error:err})
             })
+    },
+    loadSideMenu: function(req,res)
+    {
+      db.sequelize.query("SELECT m.Menu_Id, m.Type AS MenuIcon,m.Description,IFNULL(m.Definition,' ') AS MenuDefinition,IFNULL(f.Definition,' ') AS Definition,IFNULL(m.Parent_Id,-1) AS Parent_Id,f.Type,m.isEnable,m.`isMobile` "+
+                          "FROM redi_menus m LEFT OUTER JOIN redi_functions f ON m.function_id = f.function_id "+
+                          "WHERE m.isEnable = 1 "+
+                          "AND m.`isMobile` = 1 "+
+                          "AND (m.`description` LIKE 'Injury Management' "+
+                          "OR m.`parent_id` = (SELECT Menu_Id FROM redi_menus WHERE `description` LIKE 'Injury Management' AND isEnable = 1 AND isMobile = 1))",null,{raw:true})
+          .success(function(data){
+              res.json(data);
+          })
+          .error(function(err){
+              res.json({status:'fail',
+                  error:err});
+          })
     }
 };
 

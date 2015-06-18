@@ -23,7 +23,8 @@
 	</parameter>
 	<queryString>
 		<![CDATA[select DISTINCT 	header.*,patient.`First_name`,patient.`Sur_name`,patient.`Middle_name`,	patient.`DOB`,
-YEAR(CURDATE())- YEAR(patient.DOB) AS PATIENT_AGE, SUBSTRING_INDEX(header.`ASSESSED_SIGN`, ',', -1) AS  'ASSESSED_SIGN_1'
+YEAR(CURDATE())- YEAR(patient.DOB) AS PATIENT_AGE, SUBSTRING_INDEX(header.`ASSESSED_SIGN`, ',', -1) AS  'ASSESSED_SIGN_1',
+SUBSTRING_INDEX(header.`PATIENT_SIGN`, ',', -1) AS  'PATIENT_SIGN_1'
 from 	`cln_fa_df_headers` header left join `cln_patients` patient on header.`PATIENT_ID`=patient.`Patient_id`
 where 	header.`ISENABLE`=1
 	and
@@ -108,6 +109,12 @@ where 	header.`ISENABLE`=1
 	<field name="ASSESSED_NAME" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="PATIENT_SIGN" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="can_perform_today" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="First_name" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -122,6 +129,7 @@ where 	header.`ISENABLE`=1
 	</field>
 	<field name="PATIENT_AGE" class="java.lang.Long"/>
 	<field name="ASSESSED_SIGN_1" class="java.lang.String"/>
+	<field name="PATIENT_SIGN_1" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -233,24 +241,12 @@ where 	header.`ISENABLE`=1
 				</reportElement>
 				<text><![CDATA[Is there any reason that you could not perform the work fitness assessment today?]]></text>
 			</staticText>
-			<rectangle>
-				<reportElement x="430" y="92" width="10" height="10" uuid="560fdac0-bbb3-4721-9c11-9e60ebc2e1ab">
-					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-				</reportElement>
-			</rectangle>
 			<staticText>
 				<reportElement x="443" y="90" width="25" height="15" uuid="306d98fe-b828-4f5c-9610-83d301f5e987">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<text><![CDATA[Yes]]></text>
 			</staticText>
-			<rectangle>
-				<reportElement x="477" y="92" width="10" height="10" uuid="5b8f32fb-5225-4469-b9bb-0fc62ae9690f">
-					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-				</reportElement>
-			</rectangle>
 			<staticText>
 				<reportElement x="490" y="90" width="25" height="15" uuid="37bfea51-1f37-43aa-93fc-9505253f8109">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
@@ -284,7 +280,19 @@ where 	header.`ISENABLE`=1
 			</textField>
 			<image>
 				<reportElement x="90" y="105" width="100" height="24" uuid="93081fe2-4b65-4028-bd32-0622b93007ef"/>
-				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{ASSESSED_SIGN_1}.getBytes("UTF-8"))))]]></imageExpression>
+				<imageExpression><![CDATA[ImageIO.read(new ByteArrayInputStream(new Base64().decodeBase64($F{PATIENT_SIGN_1}.getBytes("UTF-8"))))]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="471" y="90" width="15" height="15" uuid="63a8c8e7-db65-4dd7-b718-a5993951815f">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<imageExpression><![CDATA[$F{can_perform_today}!= null && $F{can_perform_today}== 0?$P{real_path}+"checked.png":$P{real_path}+"uncheck.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="426" y="90" width="15" height="15" uuid="92eb55e9-f545-4ee0-bbfb-20e937d0ae25">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<imageExpression><![CDATA[$F{can_perform_today}!= null && $F{can_perform_today}== 1?$P{real_path}+"checked.png":$P{real_path}+"uncheck.png"]]></imageExpression>
 			</image>
 		</band>
 		<band height="41">

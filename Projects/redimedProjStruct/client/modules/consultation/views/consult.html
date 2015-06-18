@@ -49,167 +49,249 @@
         <div class="un-tabs-content"> 
             <div class="un-tab-content active" id="tab_1_1">
                 <div class="row">
-                    <div class="col-md-6 col-sm-6">
-                        <div class="row un_padding_right_5">
-                            <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Existing problems</label>
-                            <select class="form-control pt_width_100" 
-                                    ng-change="viewProblem(consultInfo.problem_id)" ng-options="p.Problem_id as p.Notes for p in problemList"
-                                    ng-model="consultInfo.problem_id" float-label>
-                                <option value=""selected>--Select A Problem--</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-                        <div class="row pull-right">
-                            <button class="un-button un-bgBlack" ng-click="problemAddForm.open()">Add New Problem</button>
-                            <button class="un-button un-bgBlack" ng-click="popupNewDrawing()">Add Drawing</button>
-                            <button class="un-button un-bgBlack" ng-click="showPopupConsultationHistory()">Consultation History</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- <div class="row">
-                    <div class="col-md-12 col-sm-12">
-                        <div class="table-dynamic">
-                            <table class="responsive table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            <div class="th">
-                                                <span style="color: white;">Problem</span>
+                    <div class="">
+                        <ul class="nav nav-tabs un_tab_concultation">
+                            <li class="active">
+                                <a class="un_tab_concultation_bottom" href="index.html#treatingDoctor" data-toggle="tab">
+                                    Treating Doctor 
+                                </a>
+                            </li>
+                            <li class="">
+                                <a class="un_tab_concultation_bottom" href="index.html#physiotherapist" data-toggle="tab">
+                                    Physiotherapist 
+                                </a>
+                            </li>
+                            <li class="">
+                                <a class="un_tab_concultation_bottom" href="index.html#exercisePhysiologist" data-toggle="tab">
+                                    Exercise Physiologist
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="treatingDoctor">
+                                <div class="col-md-12 col-sm-12">
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="row un_padding_right_5">
+                                                <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Existing problems</label>
+                                                <select class="form-control pt_width_100" 
+                                                        ng-change="viewProblem(consultInfo.problem_id)" ng-options="p.Problem_id as p.Notes for p in problemList"
+                                                        ng-model="consultInfo.problem_id" float-label>
+                                                    <option value=""selected>--Select A Problem--</option>
+                                                </select>
                                             </div>
-                                        </th>
-                                        <th>
-                                            <div class="th">
-                                                <span style="color: white;">ICD10 Code</span>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="row pull-right">
+                                                <button class="un-button un-bgBlack" ng-click="problemAddForm.open()">Add New Problem</button>
+                                                <button class="un-button un-bgBlack" ng-click="popupNewDrawing()">Add Drawing</button>
+                                                <button class="un-button un-bgBlack" ng-click="showPopupConsultationHistory()">Consultation History</button>
                                             </div>
-                                        </th>
-                                        <th>
-                                            <div class="th">
-                                                <span style="color: white;">ICPC Code</span>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="table-dynamic">
+                                                <table class="responsive table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>
+                                                                <div class="th">
+                                                                    <span style="color: white;">Problem</span>
+                                                                </div>
+                                                            </th>
+                                                            <th>
+                                                                <div class="th">
+                                                                    <span style="color: white;">ICD10 Code</span>
+                                                                </div>
+                                                            </th>
+                                                            <th>
+                                                                <div class="th">
+                                                                    <span style="color: white;">ICPC Code</span>
+                                                                </div>
+                                                            </th>
+                                                            <th>
+                                                                <div class="th">
+                                                                    <span style="color: white;">From</span>
+                                                                </div>
+                                                            </th>
+                                                            <th>
+                                                                <div class="th">
+                                                                    <span style="color: white;">To</span>
+                                                                </div>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-if="problemArr.length <= 0">
+                                                            <td colspan="5">
+                                                                <div style="text-align: center;">
+                                                                    <span style="font-size: 20px; font-style: italic; font-weight: bold;">      Empty Data
+                                                                    </span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr ng-if="problemArr.length > 0" ng-repeat="p in problemArr">
+                                                            <td>
+                                                                {{p.Notes}}
+                                                            </td>
+                                                            <td style="vertical-align: middle">
+                                                                {{p.ICD10_code}}
+                                                            </td>
+                                                            <td style="vertical-align: middle">
+                                                                {{p.ICPC_code}}
+                                                            </td>
+                                                            <td style="vertical-align: middle">
+                                                                {{p.From_date | date:'dd/MM/yyyy'}}
+                                                            </td>
+                                                            <td style="vertical-align: middle">
+                                                                {{(p.To_date == null ? 'N/A' : p.To_date)| date:'dd/MM/yyyy'}}
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
-                                        </th>
-                                        <th>
-                                            <div class="th">
-                                                <span style="color: white;">From</span>
+                                        </div>
+                                    </div> -->
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="row un_padding_right_5">
+                                                <div class="form-group pt_margin_bottom_0">
+                                                    <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">History</label>
+                                                    <textarea rows="6" ng-model="consultInfo.history" 
+                                                        class="form-control pt_width_100 un-input-custom-1 un-select-p-5" float-label></textarea>
+                                                </div>
                                             </div>
-                                        </th>
-                                        <th>
-                                            <div class="th">
-                                                <span style="color: white;">To</span>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="row un_padding_left_5">
+                                                <div class="form-group pt_margin_bottom_0">
+                                                    <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Examination</label>
+                                                    <textarea rows="6" ng-model="consultInfo.examination" 
+                                                        class="form-control pt_width_100 un-input-custom-1 un-select-p-5" float-label></textarea>
+                                                </div>
                                             </div>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-if="problemArr.length <= 0">
-                                        <td colspan="5">
-                                            <div style="text-align: center;">
-                                                <span style="font-size: 20px; font-style: italic; font-weight: bold;">      Empty Data
-                                                </span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="row un_padding_right_5">
+                                                <div class="form-group pt_margin_bottom_0">
+                                                    <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Treatment/Plan</label>
+                                                    <textarea rows="6" ng-model="consultInfo.treatment" 
+                                                        class="form-control pt_width_100 un-input-custom-1 un-select-p-5" float-label></textarea>
+                                                </div>
                                             </div>
-                                        </td>
-                                    </tr>
-                                    <tr ng-if="problemArr.length > 0" ng-repeat="p in problemArr">
-                                        <td>
-                                            {{p.Notes}}
-                                        </td>
-                                        <td style="vertical-align: middle">
-                                            {{p.ICD10_code}}
-                                        </td>
-                                        <td style="vertical-align: middle">
-                                            {{p.ICPC_code}}
-                                        </td>
-                                        <td style="vertical-align: middle">
-                                            {{p.From_date | date:'dd/MM/yyyy'}}
-                                        </td>
-                                        <td style="vertical-align: middle">
-                                            {{(p.To_date == null ? 'N/A' : p.To_date)| date:'dd/MM/yyyy'}}
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div> -->
-                <div class="row">
-                    <div class="col-md-6 col-sm-6">
-                        <div class="row un_padding_right_5">
-                            <div class="form-group pt_margin_bottom_0">
-                                <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">History</label>
-                                <textarea rows="6" ng-model="consultInfo.history" 
-                                    class="form-control pt_width_100 un-input-custom-1 un-select-p-5" float-label></textarea>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="row un_padding_left_5">
+                                                <div class="form-group pt_margin_bottom_0">
+                                                    <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Diagnosis</label>
+                                                    <textarea rows="6" ng-model="consultInfo.diagnosis" 
+                                                        class="form-control pt_width_100 un-input-custom-1 un-select-p-5" float-label></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="row un_padding_right_5">
+                                                <div class="form-group pt_margin_bottom_0">
+                                                    <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Investigation</label>
+                                                    <textarea rows="6" ng-model="consultInfo.investigation" 
+                                                        class="form-control pt_width_100 un-input-custom-1 un-select-p-5" float-label></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="row un_padding_left_5">
+                                                <div class="form-group pt_margin_bottom_0">
+                                                    <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Specialist</label>
+                                                    <textarea rows="6" ng-model="consultInfo.specialist" 
+                                                        class="form-control pt_width_100 un-input-custom-1 un-select-p-5" float-label></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="row">
+                                                <button class="un-button un-bgBlack" ng-click="addTemplate()">Add Template</button>
+                                                <button class="un-button un-bgBlack" ng-click="referralAddForm.open()">Add Referral</button>
+                                                <button class="un-button un-bgBlack" ng-click="scriptAction('new',null)">Add Medication</button>
+                                                <button class="un-button un-bgBlack" ng-click="measureAction('new',null)">Add New Measure</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" ng-if="templates.length > 0">
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="row">
+                                                <h3>List of Templates</h3>
+                                                <ul>
+                                                    <li ng-repeat="template in templates">
+                                                        {{template.template_temp_name}}
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-                        <div class="row un_padding_left_5">
-                            <div class="form-group pt_margin_bottom_0">
-                                <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Examination</label>
-                                <textarea rows="6" ng-model="consultInfo.examination" 
-                                    class="form-control pt_width_100 un-input-custom-1 un-select-p-5" float-label></textarea>
+                            <div class="tab-pane" id="physiotherapist">
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="row un_padding_right_5">
+                                                <div class="form-group pt_margin_bottom_0 show-label">
+                                                    <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Progress Notes</label>
+                                                    <textarea rows="6" ng-model="consultInfo.progress_note" class="form-control pt_width_100 un-input-custom-1 un-select-p-5 ng-isolate-scope ng-pristine ng-valid" float-label=""></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                            aaaa
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="row">
+                                                <button class="un-button un-bgBlack" ng-click="addTemplate()">Add Template</button>
+                                                <button class="un-button un-bgBlack" ng-click="showPopupConsultationHistory()">Consultation History</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 col-sm-6">
-                        <div class="row un_padding_right_5">
-                            <div class="form-group pt_margin_bottom_0">
-                                <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Treatment/Plan</label>
-                                <textarea rows="6" ng-model="consultInfo.treatment" 
-                                    class="form-control pt_width_100 un-input-custom-1 un-select-p-5" float-label></textarea>
+                            <div class="tab-pane" id="exercisePhysiologist">
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="row un_padding_right_5">
+                                                <div class="form-group pt_margin_bottom_0 show-label">
+                                                    <label class="un-label-form" style="font-size: 15px;">Attendance Record</label>
+                                                    <textarea rows="6" ng-model="consultInfo.attendance_record" class="form-control pt_width_100 un-input-custom-1 un-select-p-5 ng-isolate-scope ng-pristine ng-valid" float-label=""></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="row un_padding_left_5">
+                                                <div class="form-group pt_margin_bottom_0 show-label">
+                                                    <label class="un-label-form" style="font-size: 15px;">Communication Record</label>
+                                                    <textarea rows="6" ng-model="consultInfo.communication_record" class="form-control pt_width_100 un-input-custom-1 un-select-p-5 ng-isolate-scope ng-pristine ng-valid" float-label=""></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="row">
+                                                <button class="un-button un-bgBlack" ng-click="addTemplate()">Add Template</button>
+                                                <button class="un-button un-bgBlack" ng-click="showPopupConsultationHistory()">Consultation History</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-                        <div class="row un_padding_left_5">
-                            <div class="form-group pt_margin_bottom_0">
-                                <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Diagnosis</label>
-                                <textarea rows="6" ng-model="consultInfo.diagnosis" 
-                                    class="form-control pt_width_100 un-input-custom-1 un-select-p-5" float-label></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 col-sm-6">
-                        <div class="row un_padding_right_5">
-                            <div class="form-group pt_margin_bottom_0">
-                                <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Investigation</label>
-                                <textarea rows="6" ng-model="consultInfo.investigation" 
-                                    class="form-control pt_width_100 un-input-custom-1 un-select-p-5" float-label></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-                        <div class="row un_padding_left_5">
-                            <div class="form-group pt_margin_bottom_0">
-                                <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Specialist</label>
-                                <textarea rows="6" ng-model="consultInfo.specialist" 
-                                    class="form-control pt_width_100 un-input-custom-1 un-select-p-5" float-label></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 col-sm-12">
-                        <div class="row">
-                            <button class="un-button un-bgBlack" ng-click="addTemplate()">Add Template</button>
-                            <button class="un-button un-bgBlack" ng-click="referralAddForm.open()">Add Referral</button>
-                            <button class="un-button un-bgBlack" ng-click="scriptAction('new',null)">Add Medication</button>
-                            <button class="un-button un-bgBlack" ng-click="measureAction('new',null)">Add New Measure</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="row" ng-if="templates.length > 0">
-                    <div class="col-md-12 col-sm-12">
-                        <div class="row">
-                            <h3>List of Templates</h3>
-                            <ul>
-                                <li ng-repeat="template in templates">
-                                    {{template.template_temp_name}}
-                                </li>
-                            </ul>
                         </div>
                     </div>
                 </div>
@@ -1308,7 +1390,8 @@
                             <label class="un-label-form-3 un-label-whidth-130">Online Users</label>
                             <br/>
                             <button style="margin-right: 0px !important;" ng-repeat="u in companyInfo.users" ng-click="makeCall(u)" class="btn btn-sm" style="color: white;" ng-class="(companyInfo.users.length % $index) == 0 ? 'red' : 'blue'">
-                                <i class="fa fa-phone"></i> &nbsp; {{u.Booking_Person}}
+                                <i class="fa fa-phone"></i> 
+                                &nbsp; {{(u.Booking_Person == null || u.Booking_Person == '') ? u.user_name : u.Booking_Person}}
                             </button>
                         </div>
                     </div>

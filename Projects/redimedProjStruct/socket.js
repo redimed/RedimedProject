@@ -14,8 +14,8 @@ var apns = require('apn');
 var sender = new gcm.Sender('AIzaSyDsSoqkX45rZt7woK_wLS-E34cOc0nat9Y');
 
 var options = {
-        cert: './key/APN/PushCert.pem',                                                    
-        key:  './key/APN/PushKey.pem',                                                     
+        cert: 'key/APN/PushCert.pem',                                                    
+        key:  'key/APN/PushKey.pem',                                                     
         passphrase: '123456',                              
         production: false,                                 
         port: 2195,                                    
@@ -25,6 +25,22 @@ var options = {
     }
 
 var apnsConnection = new apns.Connection(options);
+
+function log(type) {
+    return function() {
+        console.log(type, arguments);
+    }
+}
+
+apnsConnection.on('error', log('error'));
+apnsConnection.on('transmitted', log('transmitted'));
+apnsConnection.on('timeout', log('timeout'));
+apnsConnection.on('connected', log('connected'));
+apnsConnection.on('disconnected', log('disconnected'));
+apnsConnection.on('socketError', log('socketError'));
+apnsConnection.on('transmissionError', log('transmissionError'));
+apnsConnection.on('cacheTooSmall', log('cacheTooSmall')); 
+apnsConnection.on('completed',log('completed'));
 
 module.exports = function(io,cookie,cookieParser) {
     var userList = [];
@@ -59,17 +75,21 @@ module.exports = function(io,cookie,cookieParser) {
         socket.on('notifyDoctor',function(doctorId){
             db.Doctor.find({where:{doctor_id: doctorId}},{raw:true})
                 .success(function(doctor){
-                    if(doctor.User_id)
+                    if(doctor)
                     {
-                        db.User.find({where:{id: doctor.User_id}},{raw:true})
-                            .success(function(user){
-                                if(user.socket)
-                                    io.to(user.socket).emit('receiveNotifyDoctor');
-                            })
-                            .error(function(err){
-                                console.log(err);
-                            })
+                        if(doctor.User_id)
+                        {
+                            db.User.find({where:{id: doctor.User_id}},{raw:true})
+                                .success(function(user){
+                                    if(user.socket)
+                                        io.to(user.socket).emit('receiveNotifyDoctor');
+                                })
+                                .error(function(err){
+                                    console.log(err);
+                                })
+                        }
                     }
+                    
                 })
                 .error(function(err){
                     console.log(err);

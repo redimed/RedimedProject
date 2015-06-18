@@ -3810,6 +3810,41 @@ label{
 .un_padding_left_5{
     padding-left: 5px;
 }
+.un_tab_concultation{
+    border-bottom: none;
+}
+.un_tab_concultation_bottom{
+    color: white !important;
+    padding: 5px 20px !important;
+    border-radius: 20px !important;
+    border-radius: 20px !important;
+    border: 3px solid white !important;
+    background: black;
+    font-weight: bold;
+}
+.un_tab_concultation_bottom:hover{
+    color: white !important;
+    padding: 5px 20px !important;
+    border-radius: 20px !important;
+    border-radius: 20px !important;
+    border: 3px solid white !important;
+    background: black !important;
+    font-weight: bold;
+}
+.un_tab_concultation_bottom:focus{
+    color: white !important;
+    padding: 5px 20px !important;
+    border-radius: 20px !important;
+    border-radius: 20px !important;
+    border: 3px solid white !important;
+    background: black !important;
+    font-weight: bold;
+}
+.un_tab_concultation>li.active>.un_tab_concultation_bottom{
+    color: white !important;
+    background: rgb(102, 102, 102) !important;
+    font-weight: bold;
+}
 /*phanquocchien patient end*/
 
 .ql-container{
