@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.document.newFA.controllers",[])
-.controller('newFAController', function($scope, $stateParams, DocumentService, PatientService, toastr, moment){
+.controller('newFAController', function($scope, $stateParams, $cookieStore, DocumentService, PatientService, toastr, moment){
 	//Init params
 	$scope.editMode = null;
 	// var fa_id=11;
@@ -149,14 +149,13 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 	}
 
 	var getDoctorInfo = function(cal_id, patient_id){
-		var apptInfo = {
-			cal_id: cal_id,
-			patient_id: patient_id
-		}
+		var userInfo = $cookieStore.get('userInfo');
+		var apptInfo = {user_id: userInfo.id};
 		DocumentService.getDoctor(apptInfo).then(function(result){
-			if(result.status === "no doctor") toastr.error("This functional assessment have no assessed doctor.", "Critical Error!");
+			if(result.status === "error") toastr.error("Unexpected error!","Error");
+			else if(result.status === "no doctor") toastr.error("The account treating this assessment have no doctor link with it", "Error!");
 			else {
-				$scope.header.ASSESSED_NAME = result.data[0].NAME;
+				$scope.header.ASSESSED_NAME = result.data[0].Booking_Person;
 				$scope.header.ASSESSED_SIGN = result.data[0].Signature;
 			}
 		})
