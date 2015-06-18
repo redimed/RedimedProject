@@ -7,6 +7,7 @@ var nodemailer = require("nodemailer");
 var smtpTransport = require('nodemailer-smtp-transport');
 var smtpPool = require('nodemailer-smtp-pool');
 var gcm = require('node-gcm');
+var apns = require('apn');
 var mkdirp = require('mkdirp');
 
 var _ = require('lodash-node');
@@ -33,6 +34,8 @@ module.exports = {
 
         db.UserType.find({where:{user_type:'Patient'}},{raw:true})
           .success(function(type){
+              info.user_type = type.ID;
+              info.isEnable = 1;
                db.User.create(info)
                   .success(function(){
                       db.Patient.create(patient)
@@ -538,54 +541,66 @@ module.exports = {
                 console.log(err);
             })
     },
-    testPushGCM: function(req,res)
+    testPushAPN: function(req,res)
     {
         var date = new Date();
         var dateString =  date.getUTCDate()+ "/" + (date.getUTCMonth()+1) + "/" + date.getUTCFullYear() + " - " + date.getUTCHours() + ":" + date.getUTCMinutes() + ":" + date.getUTCSeconds();
 
-        var sender = new gcm.Sender('AIzaSyDsSoqkX45rZt7woK_wLS-E34cOc0nat9Y');
-        var message = new gcm.Message();
-        message.addData('title','EMERGENCY');
-        message.addData('message','You have an emergency case!');
-        message.addData('message','You have an emergency case! - Time: '+dateString);
-        message.addData('soundname','beep.wav');
-        message.collapseKey = 'EMERGENCY';
-        message.delayWhileIdle = true;
-        message.timeToLive = 3;
-        var registrationIds = [];
+        var options = {
+            cert: './key/APN/PushCert.pem',                                                    
+            key:  './key/APN/PushKey.pem',                                                     
+            passphrase: 'hnguyenhuyH1012',                              
+            production: false,                                 
+            port: 2195,                                    
+            rejectUnauthorized: true,                                                                    
+            cacheLength: 1000,                              
+            autoAdjustCache: true,                         
+        }
 
-        db.UserType.find({where:{user_type:'Driver'}},{raw:true})
-            .success(function(type){
-                db.UserToken.findAll({where: {user_type: type.ID}}, {raw: true})
-                    .success(function (data) {
-                        for (var i = 0; i < data.length; i++) {
-                            if (data[i].android_token != null)
-                                registrationIds.push(data[i].android_token);
+        var apnsConnection = new apns.Connection(options);
+
+         db.UserToken.findAll({raw: true})
+            .success(function (data) {
+                if(data.length > 0)
+                {
+                    var tokens = [];
+                    for(var i=0; i<data.length; i++)
+                    {
+                        if(data[i].ios_token != null)
+                          tokens.push(data[i].ios_token)
+                    }
+
+                    var notify = new apns.Notification();
+
+                    notify.expiry = Math.floor(Date.now() / 1000) + 3600; 
+                    notify.badge = 3;
+                    notify.sound = 'ping.aiff';
+                    notify.alert = "\uD83D\uDCE7 \u2709 You have a new message";
+                    notify.payload = {'messageFrom': 'Redimed'}; 
+
+                    apnsConnection.pushNotification(notify, tokens);
+
+                    function log(type) {
+                        return function() {
+                            console.log(type, arguments);
                         }
+                    }
 
-                        sender.send(message, registrationIds, 4, function (err,result) {
-                            if(err)
-                            {
-                                console.log("ERROR:",err);
-                                res.json({status:'error'});
-                            }
-                            else
-                            {
-                                console.log("SUCCESS:",result);
-                                res.json({status:'success'});
-                            }
+                    apnsConnection.on('error', log('error'));
+                    apnsConnection.on('transmitted', log('transmitted'));
+                    apnsConnection.on('timeout', log('timeout'));
+                    apnsConnection.on('connected', log('connected'));
+                    apnsConnection.on('disconnected', log('disconnected'));
+                    apnsConnection.on('socketError', log('socketError'));
+                    apnsConnection.on('transmissionError', log('transmissionError'));
+                    apnsConnection.on('cacheTooSmall', log('cacheTooSmall')); 
+                    apnsConnection.on('completed',log('completed'));
+                }
 
-                        });
-                    })
-                    .error(function (err) {
-                        console.log(err);
-                    })
             })
             .error(function (err) {
                 console.log(err);
             })
-
-
     },
     getOnlineUsers: function(req,res){
         var userList = [];

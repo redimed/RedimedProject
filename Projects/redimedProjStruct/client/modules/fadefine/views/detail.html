@@ -170,9 +170,11 @@
 														
 																</select>
 															</label> 
-															<input type="text" value="Untitled val 1" class="form-control input-small inline" ng-model="detail.VAL1_NAME" ng-disabled="val1_type===-1" placeholder="Value 1 name"/>
+															<input type="text" value="Untitled val 1" class="form-control input-small inline" ng-model="detail.VAL1_NAME" ng-disabled="val1_type===-1 || val1_type===7 || val1_type===8" placeholder="Value 1 name"/>
+															<input type="text" value="Untitled val 1" class="form-control input-small inline" ng-model="detail.VAL1_VALUE" ng-disabled="val1_type===-1" ng-show="val1_type===7" placeholder="Weight in kgs"/>
+															<input type="text" value="Untitled val 1" class="form-control input-small inline" ng-model="detail.VAL1_VALUE" ng-disabled="val1_type===-1" ng-show="val1_type===8" placeholder="Distance in m"/>
 															&nbsp;
-															<label ng-show="detail.VAL1_ISVALUE===1">
+															<label ng-show="detail.VAL1_ISVALUE===1 && val1_type!==7 && val1_type!==8">
 																<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL1_VALUE_IS_NUMBER===1" ng-model="detail.VAL1_VALUE_IS_NUMBER"></span> Is numeric?
 															</label>
 														</div>
@@ -182,9 +184,11 @@
 														
 																</select>
 															</label> 
-															<input type="text" value="Untitled val 2" class="form-control input-small inline" ng-model="detail.VAL2_NAME" ng-disabled="val2_type===-1" placeholder="Value 2 name"/>
+															<input type="text" value="Untitled val 2" class="form-control input-small inline" ng-model="detail.VAL2_NAME" ng-disabled="val2_type===-1 || val2_type===7 || val2_type===8" placeholder="Value 2 name"/>
+															<input type="text" value="Untitled val 2" class="form-control input-small inline" ng-model="detail.VAL2_VALUE" ng-disabled="val2_type===-1" ng-show="val2_type===7" placeholder="Weight in kgs"/>
+															<input type="text" value="Untitled val 2" class="form-control input-small inline" ng-model="detail.VAL2_VALUE" ng-disabled="val2_type===-1" ng-show="val2_type===8" placeholder="Distance in m"/>
 															&nbsp;
-															<label ng-show="detail.VAL2_ISVALUE===1">
+															<label ng-show="detail.VAL2_ISVALUE===1 && val2_type!==7 && val2_type!==8">
 																<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL2_VALUE_IS_NUMBER===1" ng-model="detail.VAL2_VALUE_IS_NUMBER"></span> Is numeric?
 															</label>
 														</div>

@@ -10,6 +10,8 @@ module.exports = {
         var platform = req.body.platform != null || typeof req.body.platform != 'undefined' ? req.body.platform : null;
         var token = req.body.token != null || typeof req.body.token != 'undefined' ? req.body.token : null;
 
+        console.log("==========Token==========: ",req.body.token);
+
         if (typeof username !== 'undefined' && username &&
             typeof password !== 'undefined' && password) {
             db.User.belongsTo(db.UserType,{foreignKey:'user_type'});

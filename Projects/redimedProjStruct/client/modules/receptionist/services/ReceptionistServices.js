@@ -2,30 +2,6 @@ angular.module("app.loggedIn.receptionist.services", [])
 //phanquocchien.c1109g@gmail.com
 .service('receptionStileService', function(){
     var receptionStile=null;
-    var progressApptList=[];
-    var upcomingApptList=[];
-    var completeApptList=[];
-    this.getprogressApptList=function(){
-        return progressApptList;
-    }
-    this.setprogressApptList=function(list)
-    {
-        progressApptList=angular.copy(list);
-    }
-    this.getupcomingApptList=function(){
-        return upcomingApptList;
-    }
-    this.setupcomingApptList=function(list)
-    {
-        upcomingApptList=angular.copy(list);
-    }
-    this.getcompleteApptList=function(){
-        return completeApptList;
-    }
-    this.setcompleteApptList=function(list)
-    {
-        completeApptList=angular.copy(list);
-    }
 	this.getreceptionStile=function(){
         return receptionStile;
     }

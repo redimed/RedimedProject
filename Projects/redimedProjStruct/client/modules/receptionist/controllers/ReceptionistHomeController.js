@@ -5,9 +5,9 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 	//phanquocchien.c1109g@gmail.com
 	//lay thong tin su server
 	$scope.apptSite = receptionStileService.getreceptionStile();
-	$scope.upcomingAppt = receptionStileService.getupcomingApptList();
-	$scope.progressAppt = receptionStileService.getprogressApptList();
-	$scope.completeAppt = receptionStileService.getcompleteApptList();
+	$scope.upcomingAppt = [];
+	$scope.progressAppt = [];
+	$scope.completeAppt = [];
 	$scope.doctors = [];
 
 	$scope.undoArr= [];
@@ -22,11 +22,7 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 	})
 	$scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){ 
 	    receptionStileService.setreceptionStile($scope.apptSite);
-		receptionStileService.setupcomingApptList($scope.upcomingAppt);
-		receptionStileService.setprogressApptList($scope.progressAppt);
-		receptionStileService.setcompleteApptList($scope.completeAppt);
 	})
-	
 	$scope.getAppointment = function()
 	{
 		if($scope.apptSite == null)
@@ -63,6 +59,9 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 			}
 		})
 	}
+	//phanquocchien.c1109g@gmail.com
+	//load data change state
+	getAppt($scope.apptDate,$scope.apptSite);
 
 	$scope.changeAppt = function(appt,status){
 		swal({

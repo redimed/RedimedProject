@@ -2399,6 +2399,9 @@ label{
     position: relative;
     padding: 15px;
 }
+.un_padding_bottom_15{
+    padding-bottom: 15px;
+}
 /**
  * body content right css end
  */
@@ -3086,10 +3089,30 @@ label{
     float:right;
     outline: none;
 }
-.edit_sub_menu:hover {
-   width: 122.5%;
+.edit_sub_menu:hover{
+   width: 122.5% ;
 }
-
+.edit_sub_menu{
+   width: 122.5% ;
+}
+.edit_sub_menu2_change {
+    width:250px !important;
+    margin-top: -0.5% !important;
+}
+.edit_sub_menu2_not_change {
+    width:250px !important; 
+    position: absolute; 
+    margin-top: -28.1% !important;
+}
+.change_menus {
+    width: 80%;
+}
+.span_menus {
+    margin-top:-5px !important;
+    margin-left:38px;
+    font-size:10px; 
+    float:left;
+}
 /*giang css end*/
 /* END VUONG */
 /*TAN NAV ITEM DROPDOWN END*/
@@ -3739,6 +3762,47 @@ label{
 .re_bg_white{
     background-color: white;
 }
+.un_bg_attach_files{
+    border-left: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    padding: 20px;
+}
+.un_header_attach_file{
+    color: black;
+    background-color: white;
+}
+.un_header_attach_file:hover{
+    border-left: 1px solid #ddd !important;
+    border-right: 1px solid #ddd !important;
+}
+.un_header_attach_file:focus{
+    border-left: 1px solid #ddd !important;
+    border-right: 1px solid #ddd !important;
+    border-top: 3px solid #f3565d !important;
+    color: black !important;
+    font-weight: bold !important;
+}
+.nav-tabs>li.active>.un_header_attach_file{
+    border-left: 1px solid #ddd !important;
+    border-right: 1px solid #ddd !important;
+    border-top: 3px solid #f3565d !important;
+    color: black !important;
+    font-weight: bold !important;
+}
+.un_header_attach_file:active{
+    border-left: 1px solid #ddd !important;
+    border-right: 1px solid #ddd !important;
+    border-top: 3px solid #f3565d !important;
+    color: black !important;
+    font-weight: bold !important;
+}
+.un_boder_bottom_none{
+    border-bottom: none !important;
+}
+.un_img_width_100{
+    width: 100%;
+}
 /*phanquocchien patient end*/
 
 .ql-container{
@@ -3750,3 +3814,8 @@ label{
     outline: 0;
     background-color: transparent;
 }
+
+
+
+
+

@@ -203,7 +203,7 @@
 	        },
 	        templateUrl: "modules/consultation/directives/templates/consultation-history.html",
 	        controller: function ($scope,ConsultationService) {
-	        	//get list consultation of patient
+	        	/*//get list consultation of patient
 				$scope.setListConsultationOfPatient = function(){
 					ConsultationService.getListConsultOfPatient($scope.actionCenter.patient_id).then(function(data){
 						if (data.status == 'success') {
@@ -216,7 +216,7 @@
 					$scope.setListConsultationOfPatient();
 				}
 				$scope.actionCenter.load();
-				//
+				//*/
 	        }
 		}
 	})

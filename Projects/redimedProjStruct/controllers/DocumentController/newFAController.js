@@ -98,7 +98,7 @@ module.exports = {
 		var valueToRate = req.body.valueToRate;
 		var rating_id = req.body.rating_id;
 		if(rating_id === 16 || rating_id === 17){
-			knex.raw("select `RATE`, `VALUE` from `sys_rankings` where `HEADER_ID` = ? and ? between `FROM_AGE` and `TO_AGE` and `GENDER` like ?",[rating_id, patient_age, patient_gender])
+			knex.raw("select `RATE`, `VALUE`, `FROM_VALUE`, `TO_VALUE` from `sys_rankings` where `HEADER_ID` = ? and ? between `FROM_AGE` and `TO_AGE` and `GENDER` like ?",[rating_id, patient_age, patient_gender])
 			.then(function(result){
 				console.log('this is result.length', result);
 				if(result[0].length===0){

@@ -228,6 +228,8 @@ module.exports = {
             history: info.history,
             examination: info.examination,
             treatment_plan: info.treatment,
+            investigation: info.investigation,
+            specialist: info.specialist,
             diagnosis: info.diagnosis
         }, {consult_id: info.consult_id}, {raw: true})
         .success(function(data){
@@ -245,7 +247,7 @@ module.exports = {
                     chainer.add(
                         db.ClnPatientMedication.create({
                             patient_id: info.patient_id,
-                            consult_id: consultId,
+                            consult_id: info.consult_id,
                             medication_name: s.medication_name,
                             unit: s.unit,
                             qty: s.qty,
@@ -296,6 +298,8 @@ module.exports = {
                     history: info.history,
                     examination: info.examination,
                     treatment_plan: info.treatment,
+                    investigation: info.investigation,
+                    specialist: info.specialist,
                     diagnosis: info.diagnosis
                 })
                 .success(function(data){
@@ -593,9 +597,10 @@ module.exports = {
             return;
         }
         var sql=
-            " SELECT consult.*,problem.`Notes` FROM `cln_patient_consults` consult               "+
-            " LEFT JOIN `cln_problems` problem ON consult.`problem_id` = problem.`Problem_id`    "+
-            " WHERE consult.`patient_id` = ?                                                     ";
+            " SELECT consult.*,problem.`Notes`, DATE_FORMAT(app.`FROM_TIME`, '%d/%m/%Y - %h:%i') AS a FROM `cln_patient_consults` consult       "+ 
+            " LEFT JOIN `cln_problems` problem ON consult.`problem_id` = problem.`Problem_id`                                                   "+ 
+            " inner join `cln_appointment_calendar` app on consult.`cal_id` = app.`CAL_ID`                                                      "+ 
+            " WHERE consult.`patient_id` = ?                                                                                                    "; 
         kiss.executeQuery(req,sql,patientId,function(rows){
             if(rows.length>0)
             {
@@ -625,14 +630,70 @@ module.exports = {
         kiss.executeQuery(req,sql,[patientId,calId],function(rows){
             if(rows.length>0)
             {
-                res.json({status:'update',data:rows[0]});
+                res.json({status:'success',data:rows[0]});
             }
             else
             {
-                res.json({status:'insert'});
+                res.json({status:'error'});
             }
         })
-   }
+   },
+    /*
+    * phanquocchien.c1109g@gmail.com
+    * get Img Drawing History
+    */
+   getImgDrawingHistory:function(req,res){
+        var patientId=kiss.checkData(req.body.patient_id)?req.body.patient_id:'';
+        var calId=kiss.checkData(req.body.cal_id)?req.body.cal_id:'';
+        if(!kiss.checkListData(patientId,calId))
+        {
+            kiss.exlog("getImgDrawingHistory Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
+        var sql=
+            " SELECT d.*, p.`cal_id`  FROM `cln_patient_drawings` d                      "+
+            " INNER JOIN `cln_patient_consults` p ON d.`consult_id` = p.`consult_id`     "+
+            " WHERE d.`patient_id` = ?                                                   "+
+            " AND p.`cal_id` = ?                                                         ";
+        kiss.executeQuery(req,sql,[patientId,calId],function(rows){
+            if(rows.length>0)
+            {
+                res.json({status:'success',data:rows});
+            }
+            else
+            {
+                res.json({status:'fail'});
+            }
+        })
+    },
+    drawingImageById: function(req,res) {
+        var imageId = req.param('imageId');
+        if(!kiss.checkListData(imageId))
+        {
+            kiss.exlog("drawingImageById Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
+        var sql=" SELECT `url` FROM `cln_patient_drawings` WHERE `id` = ?";
+        kiss.executeQuery(req,sql,[imageId],function(data){
+            if(data)
+            {
+                if(data[0].url!=null || data[0].url!='')
+                {
+                    fs.exists(data[0].url,function(exists){
+                        if (exists) {
+                            res.sendfile(data[0].url);
+                        } else {
+                            res.sendfile("./uploadFile/no-image.png");
+                        }
+                    })
+                }
+            }
+        },function(erro){
+            res.json({status:'error',error:err})
+        })
+    }
 }
 
 function base64Image(src) {

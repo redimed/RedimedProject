@@ -13,6 +13,8 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 
 	$scope.patient_age = null;
 	$scope.header = {};
+	$scope.header.Comments = "Meet all manual handling requirements with good technique."
+	$scope.header.ASSESSED_DATE = moment().format("YYYY-MM-DD hh:mm:ss");
 	$scope.patient_info = {};
 	$scope.isSignatureShow = false;
 	$scope.clickedValidation = false;
@@ -30,6 +32,8 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 				$scope.header.PATIENT_ID = patient_id;
 				$scope.header.CAL_ID = cal_id;
 				$scope.header.ASSESSED_SIGN = '';
+				$scope.header.ASSESSED_DATE = moment().format("YYYY-MM-DD hh:mm:ss");
+				$scope.header.Comments = "Meet all manual handling requirements with good technique."
 				//get lines of section
 				$scope.header.sections.forEach(function(section){
 					section.PATIENT_ID = patient_id;
@@ -66,6 +70,9 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 												var fileName = strarr[strarr.length-1];
 												detail.previewPath = "https://"+location.host+"/document/fa/images/"+fileName;
 											}
+											if(line.SCORE_TYPE1===7 || line.SCORE_TYPE1===9){
+												$scope.autoCalculationVal1(line, detail);
+											}
 										})
 										line.comments.forEach(function(comment){
 											comment.PATIENT_ID = patient_id;
@@ -88,6 +95,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 			if(headerAndSectionRes.status === 'error') toastr.error('Unexpected error', 'Error!');
 			else{
 				$scope.header = headerAndSectionRes.data;
+				$scope.header.ASSESSED_DATE = moment($scope.header.ASSESSED_DATE).format("YYYY-MM-DD hh:mm:ss");
 				//get lines of section
 				$scope.header.sections.forEach(function(section){
 					DocumentService.loadExistLines(section.SECTION_ID, getHeaderId, patient_id, cal_id).then(function(lineRes){
@@ -216,7 +224,6 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 	}
 
 	$scope.autoCalculationVal1 = function(line,detail){
-		console.log(detail);
 		if(detail!==undefined){
 			if(detail.VAL1_ISCHECKBOX === 4 || detail.VAL1_ISCHECKBOX === 5){
 				line.RATING_VALUE1 = 0;
@@ -377,10 +384,26 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 						}
 					}
 					else{
-						line.RATE1 = result.data[0].RATE;
-						if(totalMode!==1){ 
-							line.RATING_VALUE1 = result.data[0].VALUE;
-							autoSummary(line);
+						if(line.SCORE_TYPE1 === 3){
+							console.log('rating result', result);
+							line.RATE1 = result.data[0].RATE;
+							if(line.details[0].VAL1_VALUE==="L"){
+								if(line.SCORE1<result.data[0].FROM_VALUE) line.comments[0].VALUE = 1;
+								else if(line.SCORE1>result.data[0].TO_VALUE) line.comments[0].VALUE = 3;
+								else line.comments[0].VALUE = 2;
+							}
+							else {
+								if(line.SCORE2<result.data[0].FROM_VALUE) line.comments[0].VALUE = 1;
+								else if(line.SCORE2>result.data[0].TO_VALUE) line.comments[0].VALUE = 3;
+								else line.comments[0].VALUE = 2;
+							}
+						}
+						else{
+							line.RATE1 = result.data[0].RATE;
+							if(totalMode!==1){ 
+								line.RATING_VALUE1 = result.data[0].VALUE;
+								autoSummary(line);
+							}
 						}
 					}
 				}
@@ -426,8 +449,25 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 						line.RATING_VALUE2 = null;
 					}
 					else{
-						line.RATE2 = result.data[0].RATE;
-						line.RATING_VALUE2 = result.data[0].VALUE;
+						if(line.SCORE_TYPE1 === 3){
+							console.log('rating result', result);
+							line.RATE2 = result.data[0].RATE;
+							if(line.details[0].VAL1_VALUE==="L"){
+								if(line.SCORE1<result.data[0].FROM_VALUE) line.comments[0].VALUE = 1;
+								else if(line.SCORE1>result.data[0].TO_VALUE) line.comments[0].VALUE = 3;
+								else line.comments[0].VALUE = 2;
+							}
+							else {
+								if(line.SCORE2<result.data[0].FROM_VALUE) line.comments[0].VALUE = 1;
+								else if(line.SCORE2>result.data[0].TO_VALUE) line.comments[0].VALUE = 3;
+								else line.comments[0].VALUE = 2;
+							}
+						}
+						else{
+							line.RATE2 = result.data[0].RATE;
+							line.RATING_VALUE2 = result.data[0].VALUE;
+						}
+						
 					}
 				}
 			});

@@ -8,6 +8,8 @@ module.exports = function(sequelize,DataTypes){
 	  examination: DataTypes.TEXT,
 	  treatment_plan: DataTypes.TEXT,
 	  diagnosis: DataTypes.TEXT,
+	  investigation: DataTypes.TEXT,
+	  specialist: DataTypes.TEXT,
 	  Created_by : DataTypes.INTEGER(11) ,
 	  Creation_date : DataTypes.DATE ,
 	  Last_updated_by : DataTypes.INTEGER(11) ,
