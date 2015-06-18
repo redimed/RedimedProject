@@ -1495,7 +1495,7 @@ table.timetable-table td:last-child {
 .un-background{
     background-color: rgb(37, 33, 34)!important;
     position: relative;
-    margin-top: 30px;
+    margin-top: 54px;
 
 }
 .un-bg-black{
@@ -2938,7 +2938,7 @@ label{
   position: relative;
   background: #ddd;
   background-image: linear-gradient(to bottom, #fff, #ddd);  
-  padding: .7em 3.5em;
+  padding: .7em 0.6em;
   float: left;
   text-decoration: none;
   color: #444;

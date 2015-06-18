@@ -36,9 +36,9 @@
             <li>
                 <a href="index.html#tab_1_9" data-toggle="tab">Make Referral</a>
             </li>
-            <li>
+           <!--  <li>
                 <a href="index.html#tab_1_10" data-toggle="tab">Drawing</a>
-            </li>
+            </li> -->
             <li>
                 <a href="index.html#tab_1_11" data-toggle="tab">Attach File</a>
             </li>
@@ -51,21 +51,22 @@
                 <div class="row">
                     
                     <div class="col-md-5 col-sm-5">
-                        <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Problems</label>
+                        <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Existing problems</label>
                         <select class="form-control" 
                                 ng-change="viewProblem(consultInfo.problem_id)" ng-options="p.Problem_id as p.Notes for p in problemList"
                                 ng-model="consultInfo.problem_id" float-label>
                             <option value=""selected>--Select A Problem--</option>
                         </select>
                     </div>
-                    <div class="col-md-4 col-sm-4">
+                    <div class="col-md-7 col-sm-7">
                         <a href="javascript:;" ng-click="problemAddForm.open()" class="un-button un-bgBlack">
-                             Add New Problem
+                            Add New Problem
                         </a>
-                    </div>
-                    <div class="col-md-3 col-sm-3">
                         <a href="javascript:;" ng-click="showPopupConsultationHistory()" class="un-button un-bgBlack">
-                             Consultation History
+                            Consultation History
+                        </a>
+                        <a href="javascript:;" ng-click="popupNewDrawing()" class="un-button un-bgBlack">
+                            Add Drawing
                         </a>
                     </div>
                 </div>
@@ -189,6 +190,7 @@
                         <button class="un-button un-bgBlack" ng-click="addTemplate()">Add Template</button>
                         <button class="un-button un-bgBlack" ng-click="referralAddForm.open()">Add Referral</button>
                          <button class="un-button un-bgBlack" ng-click="scriptAction('new',null)">Add Medication</button>
+                         <button class="un-button un-bgBlack" ng-click="measureAction('new',null)">Add New Measure</button>
                     </div>
                 </div>
                 <div class="row" ng-if="templates.length > 0">
@@ -1069,15 +1071,16 @@
                     <!--END REFERRAL EDIT FORM-->
                 </div>
             </div>
-            <div class="un-tab-content" id="tab_1_10">
-                <consult-drawing
+
+           <!-- <div class="un-tab-content" id="tab_1_10">
+                 <consult-drawing
                     images="consultInfo.images"
                     patient="patient_id"
                     width="700"
                     height="600"
                     lineWidth="5"
                 ></consult-drawing>
-            </div>
+            </div> -->
             <div class="un-tab-content" id="tab_1_11">
                 <div class="row">
 
@@ -1394,13 +1397,34 @@
 </script>
 
 <!-- phan quoc chien -->
-<!-- Modal -->
+<!-- Modal consultation history -->
 <div class="modal fade" id="popupConsultationHistory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div style="z-index: 10;margin-top: 60px;" class="modal-dialog modal-lg">
         <div class="modal-content">
             <h4 class="modal-title un-label-popup-header-m un-bg-label-B41E46-m" id="myModalLabel">Consultation History</h4>
             <div class="modal-body">
                 <consultation-history action-center="actionCenter"></consultation-history>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="un-button un-bgXam-colBlack" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- phan quoc chien -->
+<!-- Modal drawing -->
+<div class="modal fade" id="popupNewDrawing" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div style="z-index: 10;margin-top: 60px;" class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <h4 class="modal-title un-label-popup-header-m un-bg-label-B41E46-m" id="myModalLabel">Drawing</h4>
+            <div class="modal-body">
+                <consult-drawing
+                    images="consultInfo.images"
+                    patient="patient_id"
+                    width="700"
+                    height="600"
+                    lineWidth="5"
+                ></consult-drawing>
             </div>
             <div class="modal-footer">
                 <button type="button" class="un-button un-bgXam-colBlack" data-dismiss="modal">Close</button>

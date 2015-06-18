@@ -130,6 +130,9 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		$scope.showPopupConsultationHistory = function(){
 			angular.element('#popupConsultationHistory').modal('show');
 		}
+		$scope.popupNewDrawing = function(){
+			angular.element('#popupNewDrawing').modal('show');
+		}
 
 		//chien show patien bar
         $scope.patientBarVer.version='zip';
