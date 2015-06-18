@@ -74,7 +74,8 @@ module.exports = function(sequelize, DataTypes){
         "Last_updated_by" : DataTypes.INTEGER(11),
         "Last_update_date": DataTypes.DATE,
         "company_id": DataTypes.INTEGER(11),
-        "avatar": DataTypes.STRING(200)
+        "avatar": DataTypes.STRING(200),
+        "user_id": DataTypes.INTEGER(11)
     },{
         tableName: 'cln_patients', // đặt tên bảng
         createdAt: 'Creation_date',

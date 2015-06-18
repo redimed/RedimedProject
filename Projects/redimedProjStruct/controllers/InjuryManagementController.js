@@ -25,7 +25,50 @@ var transport = nodemailer.createTransport(smtpTransport({
     debug:true
 }));
 
+var sender = new gcm.Sender('AIzaSyDsSoqkX45rZt7woK_wLS-E34cOc0nat9Y');
+
+var options = {
+        cert: './key/APN/PushCert.pem',                                                    
+        key:  './key/APN/PushKey.pem',                                                     
+        passphrase: '123456',                              
+        production: false,                                 
+        port: 2195,                                    
+        rejectUnauthorized: true,                                                                    
+        cacheLength: 1000,                              
+        autoAdjustCache: true,                         
+    }
+
+var apnsConnection = new apns.Connection(options);
+
+function log(type) {
+    return function() {
+        console.log(type, arguments);
+    }
+}
+
+apnsConnection.on('error', log('error'));
+apnsConnection.on('transmitted', log('transmitted'));
+apnsConnection.on('timeout', log('timeout'));
+apnsConnection.on('connected', log('connected'));
+apnsConnection.on('disconnected', log('disconnected'));
+apnsConnection.on('socketError', log('socketError'));
+apnsConnection.on('transmissionError', log('transmissionError'));
+apnsConnection.on('cacheTooSmall', log('cacheTooSmall')); 
+apnsConnection.on('completed',log('completed'));
+
 module.exports = {
+      patientByUser: function(req,res){
+        var userId = req.body.user;
+
+        db.Patient.find({where:{user_id:userId}},{raw:true})
+          .success(function(rs){
+              res.json({status:'success',data:rs})
+          })
+          .error(function(err){
+              res.json({status:'error'});
+              console.log(err);
+          })
+      },
       register: function(req,res){
         var info = req.body.user;
         var patient = req.body.patient;
@@ -36,22 +79,31 @@ module.exports = {
           .success(function(type){
               info.user_type = type.ID;
               info.isEnable = 1;
-               db.User.create(info)
-                  .success(function(){
-                      db.Patient.create(patient)
+
+              db.User.max('id')
+                .success(function(max){
+                    info.id = max + 1;
+                    db.User.create(info)
                       .success(function(){
-                        res.json({status:'success'});
+                          patient.user_id = info.id;
+                          db.Patient.create(patient)
+                            .success(function(){
+                              res.json({status:'success'});
+                            })
+                            .error(function(err){
+                                res.json({status:'error'});
+                                console.log(err);
+                            })
                       })
                       .error(function(err){
                           res.json({status:'error'});
                           console.log(err);
                       })
-                      
-                  })
-                  .error(function(err){
-                      res.json({status:'error'});
-                      console.log(err);
-                  })
+                })
+                .error(function(err){
+                    res.json({status:'error'});
+                    console.log(err);
+                })
           })
           .error(function(err){
               res.json({status:'error'});
@@ -129,9 +181,14 @@ module.exports = {
                               var pId = imInfo.Patient_id;
                               var aId = imInfo.cal_id;
 
-                              db.sequelize.query("SELECT p.*,c.Company_name FROM cln_patients p INNER JOIN companies c ON p.company_id = c.id WHERE p.Patient_id = ?",null,{raw:true},[pId])
+                              var sqlCompany = "SELECT p.*,c.Company_name FROM cln_patients p INNER JOIN companies c ON p.company_id = c.id WHERE p.Patient_id = ?";
+                              var sqlPatient = "SELECT p.* FROM cln_patients p WHERE p.Patient_id = ?";
+
+                              db.sequelize.query(imInfo.user_type == 'Patient' ? sqlPatient : sqlCompany,null,{raw:true},[pId])
                                   .success(function(pData){
-                                      db.sequelize.query("SELECT c.*,r.Site_name,r.Site_addr FROM cln_appointment_calendar c LEFT JOIN redimedsites r ON c.SITE_ID = r.id WHERE CAL_ID = ?",null,{raw:true},[aId])
+                                      if(pData)
+                                      {
+                                          db.sequelize.query("SELECT c.*,r.Site_name,r.Site_addr FROM cln_appointment_calendar c LEFT JOIN redimedsites r ON c.SITE_ID = r.id WHERE CAL_ID = ?",null,{raw:true},[aId])
                                           .success(function(aData){
                                               var date = new Date(aData[0].FROM_TIME);
                                               var dateString =  date.getUTCDate()+ "/" + (date.getUTCMonth()+1) + "/" + date.getUTCFullYear() + " - " + date.getUTCHours() + ":" + date.getUTCMinutes() + ":" + date.getUTCSeconds();
@@ -168,6 +225,8 @@ module.exports = {
                                           .error(function(err){
                                               console.log(err);
                                           })
+                                      }
+                                      
                                   })
                                   .error(function(err){
                                       console.log(err);
@@ -345,14 +404,6 @@ module.exports = {
                     
                 }
               }
-
-                // var arr = [];
-                // console.log(data[0].image);
-                // for(var i=0; i<data.length; i++)
-                // {
-                    // res.json({status:'success',data:arr});
-                    // arr.push({imgId:data[i].injury_image_id,image:data[i].image!=null || data[i].image!='' ? base64Image(data[i].image):'',description:data[i].description});
-                // }
             })
             .error(function(err){
                 res.json({status:'error',error:err})
@@ -394,7 +445,7 @@ module.exports = {
                                 {
                                    var time = (geolocation.duration / 60);
 
-                                    var sender = new gcm.Sender('AIzaSyDsSoqkX45rZt7woK_wLS-E34cOc0nat9Y');
+                                    // ==============GCM PUSH==============
                                     var message = new gcm.Message();
                                     message.addData('title','REDiMED');
                                     message.addData('message',data[0].FullName+" will be picked up in "+ time +" minutes.");
@@ -404,28 +455,40 @@ module.exports = {
                                     message.collapseKey = 'REDiMED';
                                     message.delayWhileIdle = true;
                                     message.timeToLive = 3;
-                                    var registrationIds = [];
+
+                                    // =============APN PUSH=============
+                                    var notify = new apns.Notification();
+                                    notify.expiry = Math.floor(Date.now() / 1000) + 3600; 
+                                    notify.badge = 1;
+                                    notify.sound = 'beep.wav';
+                                    notify.alert = data[0].FullName+" will be picked up in "+ time +" minutes.";
+                                    notify.payload = {'messageFrom': 'REDiMED'}; 
+
+                                    var androidToken = [];
+                                    var iosToken = [];
 
                                     db.UserToken.find({where: {user_id:im.user_submit}}, {raw: true})
                                         .success(function (data) {
                                             if(data)
                                             {
                                                 if (data.android_token != null)
-                                                    registrationIds.push(data.android_token);
+                                                    androidToken.push(data.android_token);
+                                                if (data.ios_token != null)
+                                                    iosToken.push(data.ios_token);
 
-                                                sender.send(message, registrationIds, 4, function (err,result) {
-                                                    if(err)
-                                                    {
-                                                        console.log("ERROR:",err);
-                                                    }
-                                                    else
-                                                    {
-                                                        console.log("SUCCESS:",result);
-                                                    }
+                                                if(androidToken.length > 0)
+                                                {
+                                                  sender.send(message, androidToken, 4, function (err,result) {
+                                                      if(err)
+                                                          console.log("ERROR:",err);
+                                                      else
+                                                          console.log("SUCCESS:",result);
+                                                  });
+                                                }
 
-                                                });
+                                                if(iosToken.length > 0)
+                                                  apnsConnection.pushNotification(notify, iosToken);
                                             }
-
                                         })
                                         .error(function (err) {
                                             console.log(err);
@@ -487,7 +550,7 @@ module.exports = {
         db.IMInjury.find({where:{injury_id: injuryId}},{raw:true})
             .success(function(injury){
 
-                var sender = new gcm.Sender('AIzaSyDsSoqkX45rZt7woK_wLS-E34cOc0nat9Y');
+                //=====GCM Push=======
                 var message = new gcm.Message();
                 message.addData('title','EMERGENCY');
                 message.addData('message','You have new patient to pickup!');
@@ -502,8 +565,17 @@ module.exports = {
                 message.collapseKey = 'EMERGENCY';
                 message.delayWhileIdle = true;
                 message.timeToLive = 3;
-                var registrationIds = [];
 
+                // =============APN PUSH=============
+                var notify = new apns.Notification();
+                notify.expiry = Math.floor(Date.now() / 1000) + 3600; 
+                notify.badge = 1;
+                notify.sound = 'beep.wav';
+                notify.alert = "You have new patient to pickup!";
+                notify.payload = {'messageFrom': 'REDiMED'}; 
+
+                var androidToken = [];
+                var iosToken = [];
                 db.UserType.find({where:{user_type:'Driver'}},{raw:true})
                     .success(function(type){
                         db.UserToken.find({where: {user_type: type.ID,user_id:driverId}}, {raw: true})
@@ -511,23 +583,23 @@ module.exports = {
                                 if(data)
                                 {
                                     if (data.android_token != null)
-                                        registrationIds.push(data.android_token);
+                                        androidToken.push(data.android_token);
+                                    if (data.ios_token != null)
+                                        iosToken.push(data.ios_token);
 
-                                    sender.send(message, registrationIds, 4, function (err,result) {
-                                        if(err)
-                                        {
-                                            res.json({status:'error'});
-                                            console.log("ERROR:",err);
-                                        }
-                                        else
-                                        {
-                                            res.json({status:'success'});
-                                            console.log("SUCCESS:",result);
-                                        }
-
-                                    });
+                                    if(androidToken.length > 0)
+                                    {
+                                      sender.send(message, androidToken, 4, function (err,result) {
+                                          if(err)
+                                              console.log("ERROR:",err);
+                                          else
+                                              console.log("SUCCESS:",result);
+                                      });
+                                    }
+                                    
+                                    if(iosToken.length > 0)
+                                       apnsConnection.pushNotification(notify, iosToken);
                                 }
-
                             })
                             .error(function (err) {
                                 console.log(err);
@@ -536,67 +608,6 @@ module.exports = {
                     .error(function (err) {
                         console.log(err);
                     })
-            })
-            .error(function (err) {
-                console.log(err);
-            })
-    },
-    testPushAPN: function(req,res)
-    {
-        var date = new Date();
-        var dateString =  date.getUTCDate()+ "/" + (date.getUTCMonth()+1) + "/" + date.getUTCFullYear() + " - " + date.getUTCHours() + ":" + date.getUTCMinutes() + ":" + date.getUTCSeconds();
-
-        var options = {
-            cert: './key/APN/PushCert.pem',                                                    
-            key:  './key/APN/PushKey.pem',                                                     
-            passphrase: 'hnguyenhuyH1012',                              
-            production: false,                                 
-            port: 2195,                                    
-            rejectUnauthorized: true,                                                                    
-            cacheLength: 1000,                              
-            autoAdjustCache: true,                         
-        }
-
-        var apnsConnection = new apns.Connection(options);
-
-         db.UserToken.findAll({raw: true})
-            .success(function (data) {
-                if(data.length > 0)
-                {
-                    var tokens = [];
-                    for(var i=0; i<data.length; i++)
-                    {
-                        if(data[i].ios_token != null)
-                          tokens.push(data[i].ios_token)
-                    }
-
-                    var notify = new apns.Notification();
-
-                    notify.expiry = Math.floor(Date.now() / 1000) + 3600; 
-                    notify.badge = 3;
-                    notify.sound = 'ping.aiff';
-                    notify.alert = "\uD83D\uDCE7 \u2709 You have a new message";
-                    notify.payload = {'messageFrom': 'Redimed'}; 
-
-                    apnsConnection.pushNotification(notify, tokens);
-
-                    function log(type) {
-                        return function() {
-                            console.log(type, arguments);
-                        }
-                    }
-
-                    apnsConnection.on('error', log('error'));
-                    apnsConnection.on('transmitted', log('transmitted'));
-                    apnsConnection.on('timeout', log('timeout'));
-                    apnsConnection.on('connected', log('connected'));
-                    apnsConnection.on('disconnected', log('disconnected'));
-                    apnsConnection.on('socketError', log('socketError'));
-                    apnsConnection.on('transmissionError', log('transmissionError'));
-                    apnsConnection.on('cacheTooSmall', log('cacheTooSmall')); 
-                    apnsConnection.on('completed',log('completed'));
-                }
-
             })
             .error(function (err) {
                 console.log(err);

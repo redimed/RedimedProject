@@ -68,7 +68,7 @@ module.exports = {
 
 		db.sequelize.query("SELECT d.NAME AS doctor_name,a.id AS appt_id,a.`appt_status`,a.`CAL_ID`,a.`actual_doctor_id`,c.`SITE_ID`, "+
 							"p.`Patient_id`,c.`FROM_TIME`,c.`TO_TIME`,a.checkedin_start_time,p.`Title`,p.`First_name`, "+
-							"p.`Sur_name`,p.`Middle_name`,p.`DOB`,co.`Company_name`,p.avatar  "+
+							"p.`Sur_name`,p.`Middle_name`,p.`DOB`,co.`Company_name`,p.avatar, d.`numsOfRoom`  "+
 							"FROM cln_appt_patients a "+
 							"INNER JOIN cln_appointment_calendar c ON a.`CAL_ID` = c.`CAL_ID` "+
 							"INNER JOIN doctors d ON a.`actual_doctor_id` = d.`doctor_id` "+

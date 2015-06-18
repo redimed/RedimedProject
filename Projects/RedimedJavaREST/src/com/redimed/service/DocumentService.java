@@ -16,6 +16,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.codehaus.jettison.json.JSONObject;
+import org.xhtmlrenderer.layout.SharedContext;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import java.util.HashMap;
@@ -25,6 +26,7 @@ import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.type.WhenNoDataTypeEnum;
 import net.sf.jasperreports.engine.util.JRLoader;
 
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -64,6 +66,7 @@ public class DocumentService {
         try {
         	HashMap params = new HashMap();
         	
+        	
         	//Template Document
         	if(report.equalsIgnoreCase("template")){
         		Connection connection = Database.getConnection();
@@ -78,8 +81,9 @@ public class DocumentService {
         			{
         				String name = rs.getString("name");
        				 	String content = rs.getString("content");
+       				 	content = content.replaceAll("<div><br></div>","");
    				 		content = content.replaceAll("<br>", "</br>");
-
+   
        				 	StringBuffer sf = new StringBuffer();
        				 	sf.append("<html>");
        				 	sf.append(content);
@@ -96,6 +100,13 @@ public class DocumentService {
 	       		        OutputStream os = new FileOutputStream(outputFile);
 	
 	       		        ITextRenderer renderer = new ITextRenderer();
+	       		        
+	       		        SharedContext sharedContext = renderer.getSharedContext();
+	       		        sharedContext.setPrint(true);
+	       		        sharedContext.setInteractive(false);
+	       		        sharedContext.setReplacedElementFactory(new B64ImgReplacedElementFactory());
+	       		        sharedContext.getTextRenderer().setSmoothingThreshold(0);
+	       		        
 	       		        renderer.setDocumentFromString(sf.toString());
 	       		        renderer.layout();
 	       		        renderer.createPDF(os);
