@@ -1406,13 +1406,14 @@ module.exports = {
                                                                                                                     user_id : info.USER_ID
                                                                                                                 })
                                                                                                                     .success(function(data_length_line) {
-                                                                                                                        
+                                                                                                                            var getnewdate= new Date();
+                                                                                                                            getnewdate.setHours(0, 0, 0);
                                                                                                                             for (var x = 0; x < data_length_line.length; x++) {
                                                                                                                                 stringline1 += "(";
                                                                                                                                 for (var y = 0; y < data_time_charge_new.length; y++) {
 
                                                                                                                                     if (data_length_line[x].Department_id == data_time_charge_new[y].Department_id && data_length_line[x].Employee_id == data_time_charge_new[y].Employee_id) {
-                                                                                                                                        stringline1 += data_time_charge_new[y].time_charge + "," + ((data_time_charge_new[y].time_charge / data_length_line[x].time_charge_week) * 100).toFixed(2) + ",";
+                                                                                                                                        stringline1 += data_time_charge_new[y].time_charge + ",";
                                                                                                                                     }
                                                                                                                                 }
                                                                                                                                 if (stringline1 !== "(") {
@@ -1421,23 +1422,23 @@ module.exports = {
                                                                                                                                         data_length_line[x].user_id + "," +
                                                                                                                                         data_length_line[x].time_charge_week + ",'" +
                                                                                                                                         moment(data_length_line[x].from_date).format("YYYY-MM-DD") + "','" +
-                                                                                                                                        moment(data_length_line[x].to_date).format("YYYY-MM-DD") + "'),";
-
+                                                                                                                                        moment(data_length_line[x].to_date).format("YYYY-MM-DD") + "','"+
+                                                                                                                                        moment(getnewdate).format("YYYY-MM-DD")+ "'),";
                                                                                                                                 }
 
                                                                                                                             }
                                                                                                                             stringline1 = stringline1.substring(0, stringline1.length - 1);
-                                                                                                                            console.log(stringline1);
                                                                                                                             var sql_insert_time_activity_report = "INSERT INTO "+//INSERT
                                                                                                                                                                   " time_activity_report "+//INSERT
-                                                                                                                                                                  " (time_charge_1,per_1, "+//INSERT
-                                                                                                                                                                  " time_charge_2,per_2, "+//INSERT
-                                                                                                                                                                  " time_charge_3,per_3, "+//INSERT
-                                                                                                                                                                  " time_charge_4,per_4, "+//INSERT
-                                                                                                                                                                  " time_charge_5,per_5, "+//INSERT
+                                                                                                                                                                  " (time_charge_1, "+//INSERT
+                                                                                                                                                                  " time_charge_2, "+//INSERT
+                                                                                                                                                                  " time_charge_3, "+//INSERT
+                                                                                                                                                                  " time_charge_4, "+//INSERT
+                                                                                                                                                                  " time_charge_5, "+//INSERT
                                                                                                                                                                   " Department_id,Employee_id,user_id, "+//INSERT
                                                                                                                                                                   " time_charge_week, "+//INSERT
-                                                                                                                                                                  " from_date,to_date) VALUE " + stringline1;//VALUE
+                                                                                                                                                                  " from_date,to_date, "+
+                                                                                                                                                                  " Creation_date ) VALUE " + stringline1;//VALUE
                                                                                                                             db.sequelize.query(sql_insert_time_activity_report)
                                                                                                                                 .success(function(data_insert_success) {
                                                                                                                                    
@@ -1482,15 +1483,15 @@ module.exports = {
                                                                                                                                                             for (var v = 0; v < data_time_charge_Dept_all.length; v++) {
                                                                                                                                                                 chainer.add(db.time_activity_report.update({
                                                                                                                                                                     time_charge_1_Dept: data_time_charge_Dept_all[v].time_charge_1_Dept,
-                                                                                                                                                                    per_1_Dept: ((data_time_charge_Dept_all[v].time_charge_1_Dept / data_time_charge_Dept_all[v].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                    
                                                                                                                                                                     time_charge_2_Dept: data_time_charge_Dept_all[v].time_charge_2_Dept,
-                                                                                                                                                                    per_2_Dept: ((data_time_charge_Dept_all[v].time_charge_2_Dept / data_time_charge_Dept_all[v].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                   
                                                                                                                                                                     time_charge_3_Dept: data_time_charge_Dept_all[v].time_charge_3_Dept,
-                                                                                                                                                                    per_3_Dept: ((data_time_charge_Dept_all[v].time_charge_3_Dept / data_time_charge_Dept_all[v].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                    
                                                                                                                                                                     time_charge_4_Dept: data_time_charge_Dept_all[v].time_charge_4_Dept,
-                                                                                                                                                                    per_4_Dept: ((data_time_charge_Dept_all[v].time_charge_4_Dept / data_time_charge_Dept_all[v].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                    
                                                                                                                                                                     time_charge_5_Dept: data_time_charge_Dept_all[v].time_charge_5_Dept,
-                                                                                                                                                                    per_5_Dept: ((data_time_charge_Dept_all[v].time_charge_5_Dept / data_time_charge_Dept_all[v].time_charge_week_Dept) * 100).toFixed(2),
+                                                                                                                                                                    
                                                                                                                                                                     time_charge_week_Dept: data_time_charge_Dept_all[v].time_charge_week_Dept
                                                                                                                                                                 }, {
                                                                                                                                                                     Department_id: data_time_charge_Dept_all[v].Department_id
@@ -1511,15 +1512,15 @@ module.exports = {
                                                                                                                                                                         for (var f = 0; f < data_count[0].count; f++) {
                                                                                                                                                                             chainer.add(db.time_activity_report.update({
                                                                                                                                                                                 time_charge_1_all: data_time_charge_all[0].time_charge_1_all,
-                                                                                                                                                                                per_1_all: ((data_time_charge_all[0].time_charge_1_all / data_time_charge_all[0].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                
                                                                                                                                                                                 time_charge_2_all: data_time_charge_all[0].time_charge_2_all,
-                                                                                                                                                                                per_2_all: ((data_time_charge_all[0].time_charge_2_all / data_time_charge_all[0].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                
                                                                                                                                                                                 time_charge_3_all: data_time_charge_all[0].time_charge_3_all,
-                                                                                                                                                                                per_3_all: ((data_time_charge_all[0].time_charge_3_all / data_time_charge_all[0].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                
                                                                                                                                                                                 time_charge_4_all: data_time_charge_all[0].time_charge_4_all,
-                                                                                                                                                                                per_4_all: ((data_time_charge_all[0].time_charge_4_all / data_time_charge_all[0].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                
                                                                                                                                                                                 time_charge_5_all: data_time_charge_all[0].time_charge_5_all,
-                                                                                                                                                                                per_5_all: ((data_time_charge_all[0].time_charge_5_all / data_time_charge_all[0].time_charge_all) * 100).toFixed(2),
+                                                                                                                                                                                
                                                                                                                                                                                 time_charge_all: data_time_charge_all[0].time_charge_all
                                                                                                                                                                             }, {
                                                                                                                                                                                 user_id: data_time_charge_all[0].user_id
@@ -1993,53 +1994,10 @@ module.exports = {
                                                                                                                                                         }
                                                                                                                                                         chainer.runSerially()
                                                                                                                                                             .success(function(data_success) {
-                                                                                                                                                                var sql_get_data = "SELECT * " + //SELECT
-                                                                                                                                                                    "FROM time_activity_summary_report " + //FROM
-                                                                                                                                                                    "WHERE user_id= :user_id " + //WHERE
-                                                                                                                                                                    "GROUP BY Department_id,activity_id "+
-                                                                                                                                                                    "ORDER BY Department_id,activity_id"; //GROUP BY
-                                                                                                                                                                db.sequelize.query(sql_get_data,null,{
-                                                                                                                                                                    raw : true
-                                                                                                                                                                },{
-                                                                                                                                                                    user_id : info.USER_ID
-                                                                                                                                                                })
-                                                                                                                                                                    .success(function(data) {
-                                                                                                                                                                        if(data!==undefined&&data!==null&&data!==""&&data.length!==0){
-                                                                                                                                                                            
-                                                                                                                                                                            for (var k = 0; k < data.length; k++) {
-                                                                                                                                                                                chainer.add(db.time_activity_summary_report.update({
-                                                                                                                                                                                    time_charge_Dept_per: ((data[k].time_charge_Dept / data[k].time_charge_Dept_all) * 100).toFixed(2)
-                                                                                                                                                                                }, {
-                                                                                                                                                                                    user_id: data[k].user_id,
-                                                                                                                                                                                    Department_id: data[k].Department_id,
-                                                                                                                                                                                    activity_id: data[k].activity_id
-                                                                                                                                                                                }))
-                                                                                                                                                                            }
-                                                                                                                                                                            chainer.runSerially()
-                                                                                                                                                                                .success(function(data_success_final) {
-                                                                                                                                                                                    res.json({
-                                                                                                                                                                                        status: "success"
-                                                                                                                                                                                    });
-                                                                                                                                                                                })
-                                                                                                                                                                                .error(function(err) {
-                                                                                                                                                                                    console.log("*****ERROR: " + err + " *****");
-                                                                                                                                                                                });
-                                                                                                                                                                            return;
-                                                                                                                                                                        }
-                                                                                                                                                                        else{
-                                                                                                                                                                            res.json({
-                                                                                                                                                                                status:"null"
-                                                                                                                                                                            });
-                                                                                                                                                                            return;
-                                                                                                                                                                        }
-                                                                                                                                                                    })
-                                                                                                                                                                    .error(function(err) {
-                                                                                                                                                                        console.log("*****ERROR: " + err + " *****");
-                                                                                                                                                                        res.json({
-                                                                                                                                                                            status: "error"
-                                                                                                                                                                        });
-                                                                                                                                                                        return;
-                                                                                                                                                                    })
+                                                                                                                                                                res.json({
+                                                                                                                                                                    status: "success"
+                                                                                                                                                                });
+                                                                                                                                                                return;
                                                                                                                                                             })
                                                                                                                                                             .error(function(err) {
                                                                                                                                                                 console.log("*****ERROR: " + err + " *****");
