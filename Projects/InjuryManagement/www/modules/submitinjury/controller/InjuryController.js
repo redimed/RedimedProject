@@ -88,14 +88,18 @@ angular.module('starter.injury.controller', ['ngCordova'])
         $scope.nextform = function(info) {
             $scope.isSubmit = true;
             if(info.$invalid || $scope.isFailMobile == true || $scope.isFailEmail == true) {
-                $scope.popupMessage = { message: "Please check your information!" };
-                $ionicPopup.show({
-                    templateUrl: "modules/popup/PopUpError.html",
-                    scope: $scope,
-                    buttons: [
-                        { text: "Ok" }
-                    ]
-                });
+                if(userInfoLS.UserType.user_type == "Patient") {
+                    $state.go('app.injury.desInjury');
+                } else {
+                    $scope.popupMessage = { message: "Please check your information!" };
+                    $ionicPopup.show({
+                        templateUrl: "modules/popup/PopUpError.html",
+                        scope: $scope,
+                        buttons: [
+                            { text: "Ok" }
+                        ]
+                    });
+                }
             }
             else {
                 $scope.worker.injury_date = new Date();
@@ -162,7 +166,7 @@ angular.module('starter.injury.controller', ['ngCordova'])
                 $scope.worker = data;
                 //$scope.worker.DOB = new Date($scope.worker.DOB);
                 var date = new Date($scope.worker.DOB);
-                date.toISOString("MMMM dd, yyyy");
+                date.toString("MM-dd-yyyy");
                 $scope.worker.DOB = date;
                 console.log(typeof $scope.worker.DOB);
                 console.log(date);
@@ -201,7 +205,7 @@ angular.module('starter.injury.controller', ['ngCordova'])
                 $scope.user_type = "Patient";
                 // console.log(userInfoLS)
                 InjuryServices.getPatientByUser(userInfoLS.id).then(function(results){
-                   if(results.status == "success"){
+                    if(results.status == "success"){
                         console.log(results.data);
                         $scope.worker.Title = results.data.Title;
                         $scope.worker.First_name = results.data.First_name;
@@ -214,11 +218,11 @@ angular.module('starter.injury.controller', ['ngCordova'])
                         $scope.worker.Patient_id = results.data.Patient_id;
                         $scope.worker.Email = results.data.Email;
                         $scope.worker.user_type= "Patient"
-                       
-                   }
+
+                    }
                 })
             }
-            
+
         };
 
         //SHOW MODAL IMAGE DETAIL
@@ -524,12 +528,12 @@ angular.module('starter.injury.controller', ['ngCordova'])
                                     onTap: function(e) {
                                         $scope.imgURI = [];
                                         resetField();
-                                         if(userInfoLS.UserType.user_type == "Patient"){
-                                             $state.go('app.injury.desInjury');
+                                        if(userInfoLS.UserType.user_type == "Patient"){
+                                            $state.go('app.injury.desInjury');
                                         }else{
                                             $state.go('app.injury.info', {reload: true});
                                         }
-                                        
+
                                     }
                                 }
                             ]
@@ -558,33 +562,33 @@ angular.module('starter.injury.controller', ['ngCordova'])
 
         //CHECK NON-EMERGENCY CHANGE FORM
         function NonEmergency() {
-           
-                 $scope.infoInjury = {
-                    info: $scope.worker,
-                    dataImage: $scope.imgURI
-                    };
-                localStorageService.set("injuryInfo", $scope.infoInjury);
-                if(userInfoLS.UserType.user_type == "Patient"){
+
+            $scope.infoInjury = {
+                info: $scope.worker,
+                dataImage: $scope.imgURI
+            };
+            localStorageService.set("injuryInfo", $scope.infoInjury);
+            if(userInfoLS.UserType.user_type == "Patient"){
+                $state.go('app.chooseAppointmentCalendar',{Patient_id: $scope.worker.Patient_id});
+            }
+            else{
+                if($scope.worker.Patient_id == -1)
+                {
+                    localStorageService.set("checkNonemer", $scope.goAddworker);
+                    $state.go('app.worker.add');
+                }
+                else
+                {
                     $state.go('app.chooseAppointmentCalendar',{Patient_id: $scope.worker.Patient_id});
                 }
-                else{
-                     if($scope.worker.Patient_id == -1)
-                    {
-                        localStorageService.set("checkNonemer", $scope.goAddworker);
-                        $state.go('app.worker.add');
-                    }
-                    else
-                    {
-                        $state.go('app.chooseAppointmentCalendar',{Patient_id: $scope.worker.Patient_id});
-                    }
-                }
+            }
 
-           
 
-            
 
-           
-           
+
+
+
+
         }
 
         initForm();
