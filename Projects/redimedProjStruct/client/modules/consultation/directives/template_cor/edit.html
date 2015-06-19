@@ -1,0 +1,53 @@
+<style type="text/css" class="ng-scope">
+    .modal.in .modal-dialog {
+        margin-top:50px;
+    }
+    .has-error .form-control {
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        border: 1px solid red;
+    }
+    .has-error .form-control:focus {
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        border: 1px solid red;
+    }
+</style>
+<div class="modal-body">
+    <div class="active">
+		<label class="un-label-popup-header-m un-bg-label-B41E46-m" style="left:-15px; top: -52px;">Add Medication</label>
+	</div>
+	<form name="medicationForm" novalidate>
+		<div class="row">
+			<div class="col-md-6 col-sm-6">
+				<label class="un-label-group" style="margin-left: 1px;">Mode</label>
+				<input type="text" class="form-control input-sm un-input-group" ng-model="scor.form.Mode" placeholder="Mode" id="Mode" name="Mode" required />
+			</div>
+			<div class="col-md-6 col-sm-6">
+				<label class="un-label-group" style="margin-left: 1px;">Duration</label>
+				<input type="text" class="form-control input-sm un-input-group" ng-model="scor.form.Duration" placeholder="Duration" id="Duration" name="Duration" required />
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6 col-sm-6">
+				<label class="un-label-group" style="margin-left: 1px;">Who</label>
+				<input type="text" class="form-control input-sm un-input-group" ng-model="scor.form.Who" placeholder="Who" id="Who" name="Who" required />
+			</div>
+			<div class="col-md-6 col-sm-6">
+				<label class="un-label-group" style="margin-left: 1px;">Therapist</label>
+				<input type="text" class="form-control input-sm un-input-group" ng-model="scor.form.Therapist" placeholder="Therapist" id="Therapist" name="Therapist" required />
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<label class="un-label-group" style="margin-left: 1px;">Details</label>
+				<textarea class="form-control input-sm un-input-group" ng-model="scor.form.Details" placeholder="Details" id="Details" name="Details" required></textarea>
+			</div>
+		</div>
+		<div class="row" style="margin-top: 15px;">
+			<div class="col-md-12 col-sm-12">
+				<input type="submit" class="un-button-custom" value="Submit" ng-click="scor.save()" />
+			</div>
+		</div>
+	</form>
+</div>

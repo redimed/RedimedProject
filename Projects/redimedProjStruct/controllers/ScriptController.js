@@ -125,7 +125,6 @@ module.exports = {
 		.then(function(response){
 			res.json({data: response[0]});
 		})
-
 	},//end postAdd
 
 	postById: function(req, res){

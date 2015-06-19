@@ -867,6 +867,188 @@ module.exports = {
         .error(function(error){
             res.json(500, {error: error});
         })
+    },
+        // Correspondence
+    postListCor: function(req, res){
+
+        var postData = req.body.data;
+
+        var sql = knex('cln_patient_correspondence')
+        .where({
+            'PATIENT_ID': postData.PATIENT_ID
+        })
+        .limit(postData.limit)
+        .offset(postData.offset)
+        .toString();
+
+        var sql_count = knex('cln_patient_correspondence')
+        .where({
+            'CAL_ID': postData.CAL_ID,
+            'PATIENT_ID': postData.PATIENT_ID
+        })
+        .count('ID as a')
+        .toString();
+
+        db.sequelize.query(sql)
+        .success(function(data){
+            db.sequelize.query(sql_count)
+            .success(function(count){
+                res.json({data: data, count: count[0].a});
+            })
+            .error(function(error){
+                res.json(500, {'status': 'error', 'message': error});
+            })
+        })
+        .error(function(error){
+            res.json(500, {'status': 'error', 'message': error});
+        })
+
+    },
+    postAddCor: function(req, res){
+        var errors = [];
+        var postData = req.body.data;
+        console.log('$$$$$$$$$$ ',postData);
+        var required = [
+            {field: 'Mode', message: 'Mode is required'},
+            {field: 'Duration', message: 'Duration is required'},
+            {field: 'Who', message: 'who is required'},
+            {field: 'Therapist', message: 'Therapist is required'},
+            {field: 'Details', message: 'Details is required'}
+        ]
+
+        _.forIn(postData, function(value, field){
+            _.forEach(required, function(field_error){
+                if(field_error.field === field && S(value).isEmpty()){
+                    errors.push(field_error);
+                    return;
+                }
+            })
+        })
+
+        if(errors.length>0){
+            res.status(500).json({errors: errors});
+            return;
+        }   
+
+        var unique_sql = knex('cln_patient_correspondence')
+        .where({
+            'CAL_ID': postData.CAL_ID,
+            'PATIENT_ID': postData.PATIENT_ID
+        })
+        .toString();
+
+        var sql = knex('cln_patient_correspondence')
+        .insert(postData)
+        .toString();
+
+        var sql_update = knex('cln_patient_correspondence')
+        .where({
+            ID: postData.ID
+        })
+        .update(postData)
+        .toString();
+
+        var sql_ud = knex('cln_patient_correspondence')
+        .where({
+            'CAL_ID': postData.CAL_ID,
+            'PATIENT_ID': postData.PATIENT_ID
+        })
+        .update(postData)
+        .toString();
+
+        db.sequelize.query(unique_sql)
+        .success(function(rows){
+            console.log('ID log: ',rows[0].ID);
+            if(rows.length > 0){
+                if(rows[0].ID){
+                    db.sequelize.query(sql_ud)
+                    .success(function(crt){
+                        res.json({data: crt});  
+                    })
+                    .error(function(error){
+                        res.json(500, {error: error});
+                    })
+                }else{
+                    db.sequelize.query(sql_update)
+                    .success(function(cr){
+                        res.json({data: cr});  
+                    })
+                    .error(function(error){
+                        res.json(500, {error: error});
+                    })
+                }
+            }else{
+                db.sequelize.query(sql)
+                .success(function(created){
+                    res.json({data: created});  
+                })
+                .error(function(error){
+                    res.json(500, {error: error});
+                })
+            }
+        })
+        .error(function(error){
+            res.json(500, {error: error});
+        })
+
+    },
+    /*postEditCor: function(req, res){
+        
+        var postData = req.body.data;
+
+        var errors = [];
+        var required = [
+            {field: 'Mode', message: 'Mode is required'},
+            {field: 'Duration', message: 'Duration is required'},
+            {field: 'who', message: 'who is required'},
+            {field: 'Therapist', message: 'Therapist is required'},
+            {field: 'Details', message: 'Details is required'}
+        ]
+
+        _.forIn(postData, function(value, field){
+            _.forEach(required, function(field_error){
+                if(field_error.field === field && S(value).isEmpty()){
+                    errors.push(field_error);
+                    return;
+                }
+            })
+        })
+
+        if(errors.length>0){
+            res.status(500).json({errors: errors});
+            return;
+        }
+
+        var sql = knex('cln_patient_correspondence')
+        .where({
+            ID: postData.ID
+        })
+        .update(postData)
+        .toString();
+        db.sequelize.query(sql)
+        .success(function(data){
+            res.json({data: data});
+        })
+        .error(function(error){
+            res.json(500, {'status': 'error', 'message': error});
+        })
+    }*/
+    postById: function(req, res){
+
+        var postData = req.body.data;
+        var sql = knex('cln_patient_correspondence')
+        .where({
+            ID: postData
+        })
+        .toString();
+        db.sequelize.query(sql)
+        .success(function(data){
+            res.json({data: data[0]});
+        })
+        .error(function(error){
+            res.json(500, {'status': 'error', 'message': error});
+        })
+
     }
 }
 

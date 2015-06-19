@@ -48,15 +48,15 @@ angular.module('app.loggedIn.script.directive.add', [])
 				postData.Creation_date = moment().format('YYYY-MM-DD');
 				postData.Last_update_date =  moment().format('YYYY-MM-DD');
 				postData.Created_by = postData.Last_updated_by = user_id; 
-				//postData.doctordate = ConfigService.convertToDB(postData.doctordate);
-				//postData.patientDate = ConfigService.convertToDB(postData.patientDate);
+				postData.doctordate = ConfigService.convertToDB(postData.doctordate.toString());
+				postData.patientDate = ConfigService.convertToDB(postData.patientDate.toString());
 				ScriptModel.add(postData)
 				.then(function(response){
 						toastr.success('Added Successfully');
 						scope.success =  true;
 						angular.forEach(postDatar, function(value_post, index_post){
-							postDatar[index_post].start_date = ConfigService.convertToDB(postDatar[index_post].start_date);
-							postDatar[index_post].end_date = ConfigService.convertToDB(postDatar[index_post].end_date);
+							postDatar[index_post].start_date = ConfigService.convertToDB(postDatar[index_post].start_date.toString());
+							postDatar[index_post].end_date = ConfigService.convertToDB(postDatar[index_post].end_date.toString());
 							postDatar[index_post].ID_SCRIPT = response.data;
 							postDatar[index_post].CAL_ID = $stateParams.cal_id;
 						});
@@ -88,7 +88,10 @@ angular.module('app.loggedIn.script.directive.add', [])
 
 
 			var scriptLoad = function(){
-				
+				scope.postData = {
+					CAL_ID: $stateParams.cal_id,
+					DOCTOR_ID: null
+				}
 				//scope.script.list_medicare.Checked = 0;
 				scope.script_s = angular.copy(scope.medicare);
 				angular.forEach(scope.script_s, function(value_script, index_script){
@@ -99,23 +102,20 @@ angular.module('app.loggedIn.script.directive.add', [])
 					scope.script_s[index_script].Last_update_date = moment().format('YYYY-MM-DD');
 				});
 				//console.log('^^^^^^^^^: ', scope.script.list_medicare);
-				ScriptModel.postSing(user_id)
+				ScriptModel.postSing(scope.postData.DOCTOR_ID)
 				.then(function(response){
-					//console.log('+++++++++++++++++: ',response.data);
+					console.log('+++++++++++++++++: ',response.data);
 					scope.script.form.doctorSign = response.data.Signature;
-					scope.script.form.patientDate = new Date();
-					scope.script.form.doctordate = new Date();
+					scope.script.form.patientDate = moment().format('DD/MM/YYYY');
+					scope.script.form.doctordate = moment().format('DD/MM/YYYY');
 				}, function(error){});
 
-			}
-			scope.postData = {
-				CAL_ID: $stateParams.cal_id,
-				DOCTOR_ID: null
 			}
 
 			var getUsername = function() {
 			AppointmentModel.one(scope.postData).then(function(response){
 				scope.postData.DOCTOR_ID = response.data.DOCTOR_ID;
+				console.log('SSSSSSSSSSS ', scope.postData.DOCTOR_ID);
 				OutreferralModel.DotorFromUserId(scope.postData.DOCTOR_ID)
 					.then(function(response){
 						//console.log(response);

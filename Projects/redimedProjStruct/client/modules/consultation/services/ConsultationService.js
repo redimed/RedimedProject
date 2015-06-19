@@ -118,5 +118,14 @@ angular.module("app.loggedIn.patient.consult.services",[])
 		services.getImgDrawingHistory = function(patient_id,cal_id){
 			return api.all('consultation/get-img-drawing-history').post({patient_id:patient_id,cal_id:cal_id});
 		}
+		services.getListCor = function(data){
+			return api.all('consultation/listCor').post({data: data});
+		}
+		services.postAddCor = function(data){
+			return api.all('consultation/addCor').post({data: data});
+		}
+		services.postByIdCor = function(data){
+			return api.all('consultation/byidCor').post({data: data});
+		}
 		return services;
 	})
