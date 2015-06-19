@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ScriptReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c2b6103d-271a-46dc-b501-29c4a01f4289">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="336"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<style name="table">
@@ -130,6 +130,7 @@
 	<subDataset name="Table Dataset 3" uuid="5c7e494b-2973-42ee-b9e4-48c6de1b236d"/>
 	<subDataset name="Table Dataset 4" uuid="9a29a8d8-83fd-4881-b0d8-c7230fbc5ca0"/>
 	<subDataset name="New Dataset 1" uuid="6db086f5-d8a1-4b03-bdb7-b7c317df43b0">
+		<parameter name="id" class="java.lang.String"/>
 		<queryString language="SQL">
 			<![CDATA[SELECT
      script_head.`ID` AS script_head_ID,
@@ -207,7 +208,6 @@ WHERE
      cln_scripts.`isPBS` AS cln_scripts_isPBS,
      cln_scripts.`isRPBS` AS cln_scripts_isRPBS,
      cln_scripts.`isBrand` AS cln_scripts_isBrand,
-     cln_scripts.`MedicareNo` AS cln_scripts_MedicareNo,
      cln_scripts.`doctorSign` AS cln_scripts_doctorSign,
      cln_scripts.`doctordate` AS cln_scripts_doctordate,
      cln_scripts.`patientSign` AS cln_scripts_patientSign,
