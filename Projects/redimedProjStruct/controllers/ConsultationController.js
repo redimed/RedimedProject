@@ -756,7 +756,12 @@ module.exports = {
         var required = [
             {field: 'exercise', message: 'Exercise exists required'}
         ]
-
+        if(postData.sets % 1 !== 0){
+                errors.push({field: 'sets', message: 'sets must be number'});
+            }
+        if(postData.lastest_weight % 1 !== 0){
+            errors.push({field: 'lastest_weight', message: 'Lastest Weight must be number'});
+        }
         _.forIn(postData, function(value, field){
             _.forEach(required, function(field_error){
                 if(field_error.field === field && S(value).isEmpty()){
@@ -771,37 +776,17 @@ module.exports = {
             return;
         }
 
-        var unique_sql = knex('cln_exercise_program')
-             .where({
-                    'exercise': postData.exercise,
-                    'cal_id':postData.cal_id,
-                    'patient_id':postData.patient_id
-                  })
-            .toString();
-
         var sql = knex('cln_exercise_program')
             .where('Exercise_id', postData.Exercise_id)
             .update(postData)
             .toString();
-        db.sequelize.query(unique_sql)
-        .success(function(rows){
-            if(rows.length > 0){
-                errors.push({field: 'exercise', message: 'Exercise exists'});
-                res.status(500).json({errors: errors});
-                return;
-            }else{
-                db.sequelize.query(sql)
-                .success(function(created){
-                    res.json({data: created});  
-                })
-                .error(function(error){
-                    res.json(500, {error: error});
-                })
-            }
-        })
-        .error(function(error){
-            res.json(500, {error: error});
-        })
+         db.sequelize.query(sql)
+            .success(function(created){
+                res.json({data: created});  
+            })
+            .error(function(error){
+                res.json(500, {error: error});
+            })
     },
     deleteExercise:function(req,res){
         var postData = req.body.data;
@@ -824,7 +809,12 @@ module.exports = {
         var required = [
             {field: 'exercise', message: 'Exercise exists required'}
         ]
-
+        if(postData.sets % 1 !== 0){
+                errors.push({field: 'sets', message: 'sets must be number'});
+            }
+        if(postData.lastest_weight % 1 !== 0){
+            errors.push({field: 'lastest_weight', message: 'Lastest Weight must be number'});
+        }
         _.forIn(postData, function(value, field){
             _.forEach(required, function(field_error){
                 if(field_error.field === field && S(value).isEmpty()){
@@ -852,7 +842,6 @@ module.exports = {
             .toString();
         db.sequelize.query(unique_sql)
         .success(function(rows){
-            console.log('----------------',rows);
             if(rows.length > 0){
                 var sql1 = knex('cln_exercise_program')
                     .where('Exercise_id', rows[0].Exercise_id)
@@ -860,7 +849,6 @@ module.exports = {
                     .toString();
                 db.sequelize.query(sql1)
                 .success(function(created){
-                     console.log('----------------');
                     res.json({data: created});  
                 })
                 .error(function(error){
