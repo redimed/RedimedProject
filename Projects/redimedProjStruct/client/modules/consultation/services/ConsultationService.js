@@ -14,6 +14,21 @@ angular.module("app.loggedIn.patient.consult.services",[])
 		var api = Restangular.all("api");
 		var info = {};
 
+		services.listExercise = function(data){
+			return api.all('consultation/listExercise').post({'data': data});
+		}
+		services.addExercise = function(data){
+			return api.all('consultation/addExercise').post({'data': data});
+		}
+		services.getOneExercise = function(data){
+			return api.all('consultation/getOneExercise').post({'data': data});
+		}
+		services.updateExercise = function(data){
+			return api.all('consultation/updateExercise').post({'data': data});
+		}
+		services.deleteExercise = function(data){
+			return api.all('consultation/deleteExercise').post({'data': data});
+		}
 		services.getPatientProblem = function(patientId){
 			return api.all('consultation/getPatientProblem').post({'patient_id': patientId});
 		}

@@ -31,3 +31,12 @@ app.get('/api/consultation/drawing/image/:imageId',ConsultationController.drawin
 //11-06-2015
 app.post('/api/consultation/listconsultofpatient',ConsultationController.getListConsultOfPatient);
 
+// manh
+app.post('/api/consultation/listExercise',ConsultationController.listExercise);
+app.post('/api/consultation/getOneExercise',ConsultationController.getOneExercise);
+app.post('/api/consultation/updateExercise',ConsultationController.updateExercise);
+app.post('/api/consultation/deleteExercise',ConsultationController.deleteExercise);
+app.post('/api/consultation/addExercise',ConsultationController.addExercise);
+
+
+
