@@ -447,7 +447,7 @@ module.exports = {
             " INNER JOIN `cln_patients` patient ON `apptPatient`.`Patient_id`=patient.`Patient_id`       "+
             " WHERE calendar.`DOCTOR_ID`=? AND `apptPatient`.`appt_status`=?                             ";
 
-        kiss.executeQuery(req,sql,[doctorId,invoiceUtil.apptStatus.workInProgress.value],function(rows){
+        kiss.executeQuery(req,sql,[doctorId,invoiceUtil.apptStatus.inConsult.value],function(rows){
             res.json({status:'success',data:rows});
         },function(err){
             kiss.exlog(fHeader,"Loi truy van select du lieu",err);
@@ -471,7 +471,7 @@ module.exports = {
         }
 
         var sql="UPDATE `cln_appt_patients` SET appt_status=?,SESSION_START_TIME=? WHERE `Patient_id`=? AND `CAL_ID`=? AND appt_status<>?";
-        var params=[invoiceUtil.apptStatus.workInProgress.value,startSessionTime,patientId,calId,invoiceUtil.apptStatus.cancelled.value];
+        var params=[invoiceUtil.apptStatus.inConsult.value,startSessionTime,patientId,calId,invoiceUtil.apptStatus.cancelled.value];
         kiss.executeQuery(req,sql,params,function(result){
             if(result.affectedRows>0)
             {
@@ -536,7 +536,7 @@ module.exports = {
         }
 
         var sql="UPDATE `cln_appt_patients` SET appt_status=?,SESSION_END_TIME=? WHERE `Patient_id`=? AND `CAL_ID`=? AND appt_status=?";
-        var params=[invoiceUtil.apptStatus.completed.value,endSessionTime,patientId,calId,invoiceUtil.apptStatus.workInProgress.value];
+        var params=[invoiceUtil.apptStatus.completed.value,endSessionTime,patientId,calId,invoiceUtil.apptStatus.inConsult.value];
         kiss.executeQuery(req,sql,params,function(result){
             if(result.affectedRows>0)
             {
