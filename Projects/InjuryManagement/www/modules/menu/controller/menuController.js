@@ -201,26 +201,33 @@ angular.module("starter.menu.controller",[])
             console.log(event, '----', notification);
             switch (notification.type) {
                 case 'call':
+                    UserService.getUserInfo(localStorageService.get('fromId')).then( function(data) {
+                        if(data.img == null) {
+                            $scope.avatarCaller = 'img/avatar.png';
+                        } else {
+                            $scope.avatarCaller = data.img;
+                        }
+                        $scope.fromUsername = fromUsername;
+                    });
                     $scope.modalreceivePhone.show();
-                    snd = new Media("https://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port + "/api/sound/notification");
+                    snd = new Media("https://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port + "/api/sound/receive");
                     snd.play();
                     $scope.acceptCall = function() {
-                        snd.pause();
                         $scope.modalreceivePhone.hide();
+                        snd.stop();
                         $state.go('app.phoneCall', { callUser: localStorageService.get('fromId'), apiKey: localStorageService.get('message').apiKey, sessionID: localStorageService.get('message').sessionId,
                             tokenID: localStorageService.get('message').token, isCaller: false }, {reload: true});
                     }
                     $scope.ignoreCall = function() {
                         $scope.modalreceivePhone.hide();
-                        snd.pause();
+                        snd.stop();
                         signaling.emit('sendMessage', localStorageService.get('userInfo').id, localStorageService.get('fromId'), { type: 'ignore' });
                     }
                     break;
                 default :
                     $cordovaDialogs.alert(notification.alert, "Emergency").then(function (){
                         mediaSource.pause();
-                        localStorageService.set("idpatient_notice", notification.payload.injury_id)
-
+                        localStorageService.set("idpatient_notice", notification.payload.injury_id);
                         DriverServices.notifi = notification;
                         if(userInfo.UserType.user_type == "Driver") {
                             $state.go('app.driver.detailInjury', {}, {reload: true});
@@ -313,8 +320,6 @@ angular.module("starter.menu.controller",[])
             });
             switch (message.type) {
                 case 'call':
-                    console.log(src);
-                    snd.pause();
                     media = new Media(src, null, null, loop);
                     media.play();
                     $scope.modalreceivePhone.show();
@@ -335,6 +340,7 @@ angular.module("starter.menu.controller",[])
                 case 'ignore':
                     if($scope.modalreceivePhone.isShown()) {
                         media.pause();
+                        snd.stop();
                         $scope.modalreceivePhone.hide();
                     }
                     break;
