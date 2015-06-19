@@ -517,7 +517,7 @@ angular.module('app.config', [])
             {id:9,label:'Weight Test Rating (has managed weight info)'},
             {id:12,label:'Lower Limb Function'},
             {id:13,label:'Specific Functional Task Assessment'},
-            {id:14,label:'Repetitive Task'}
+            {id:14,label:'Repetitive Task'},
             {id:5,label:'Summary Rating and Score'},
         ])
     .constant("COMMENT_TYPE", [
