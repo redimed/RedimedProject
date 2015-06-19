@@ -60,7 +60,7 @@ angular.module('starter.security.register.controller',[])
                    });
                 }
             })
-        }
+        };
 
         $scope.validEmail = function() {
             InjuryServices.checkEmail($scope.userInfo.email).then(function (data) {

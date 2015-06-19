@@ -516,6 +516,8 @@ angular.module('app.config', [])
             {id:7,label:'Weight Test Rating'},
             {id:9,label:'Weight Test Rating (has managed weight info)'},
             {id:12,label:'Lower Limb Function'},
+            {id:13,label:'Specific Functional Task Assessment'},
+            {id:14,label:'Repetitive Task'},
             {id:5,label:'Summary Rating and Score'},
         ])
     .constant("COMMENT_TYPE", [
@@ -533,6 +535,7 @@ angular.module('app.config', [])
             {id:4,label:'Unable=Partial=0, Able=1'},
             {id:5,label:'Unable=0, Partial=1, Able=2'},
             {id:3,label:'Yes/No'},
+            {id:11,label:'Normal/Abnormal'},
             {id:6,label:'Dominant Hand'},
             {id:7,label:'Job Demand (weight in kg)'},
             {id:8,label:'Job Demand (distance in m)'},

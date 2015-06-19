@@ -127,7 +127,7 @@ angular.module('starter', ['ionic',
                 } else if (ionic.Platform.isIOS()) {
                     config = {
                         "badge": true,
-                        "sound": "https://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port + "/api/sound/notification",
+                        "sound": "receive_phone.mp3",
                         "alert": true,
                     };
                 }
@@ -135,6 +135,7 @@ angular.module('starter', ['ionic',
                 $cordovaPush.register(config).then(function (result) {
                     console.log("Success Push: " + result)
                     if (ionic.Platform.isIOS()){
+                        alert(result);
                         SecurityService.setIosToken(result);
                     }
                 }, function (err) {
@@ -145,9 +146,6 @@ angular.module('starter', ['ionic',
                     localStorageService.set("notificationLS", notification);
                     if (ionic.Platform.isAndroid()) {
                         handleAndroid(notification);
-                    }
-                    else if (ionic.Platform.isIOS()) {
-                        //handleIOS(event, notification);
                     }
                 });
 
