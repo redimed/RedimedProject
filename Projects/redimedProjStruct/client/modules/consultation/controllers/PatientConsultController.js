@@ -52,7 +52,15 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		$scope.companyInfo = {};
 		$scope.problemArr = [];
 		$scope.isConsult = true;
-
+		$scope.tscripts = ConsultInfoService.getConsultInfoScripts();
+		$scope.checkdata = ConsultInfoService.getCheckdata();
+		if ($scope.checkdata.cal_id == $stateParams.cal_id && $scope.checkdata.patient_id == $stateParams.patient_id) {
+			$scope.tscripts = ConsultInfoService.getConsultInfoScripts();
+			$scope.checkdata = ConsultInfoService.getCheckdata();
+		}else{
+		    $scope.tscripts = [];
+		    $scope.checkdata = [];
+		};
 		$scope.consultInfo = {
 			patient_id: $scope.patient_id,
 			cal_id: $scope.cal_id,
@@ -67,7 +75,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			attendance_record: null,
 			communication_record: null,
 			measurements: [],
-			scripts: ConsultInfoService.getConsultInfoScripts(),
+			scripts: $scope.tscripts,
 			images: []
 		}
 		/*
@@ -77,7 +85,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		$scope.loadConsultationInfo = function(){
 			ConsultationService.checkConsultation($scope.patient_id,$scope.cal_id).then(function(data){
 				if (data.status == 'success') {
-					console.log(data.data);
+					
 					$scope.consultInfo.problem_id = data.data.problem_id;					
 					$scope.consultInfo.history = data.data.history;					
 					$scope.consultInfo.examination = data.data.examination;					
@@ -170,8 +178,14 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		$scope.currDate = $filter('date')(new Date(),'dd/MM/yyyy hh:mm a');
 
 		// $scope.consultInfo.scripts = ConsultInfoService.getConsultInfoScripts();
-		$scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){ 
+		$scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
+			$scope.checkdata = {
+				cal_id:$stateParams.cal_id,
+				patient_id:$stateParams.patient_id,
+			}
+			console.log($scope.checkdata);
 		   ConsultInfoService.setConsultInfoScripts($scope.consultInfo.scripts);
+		   ConsultInfoService.setCheckdata($scope.checkdata);
 		})
 		//tannv.dts@gmail.com
 		$scope.timerDisplay=null;

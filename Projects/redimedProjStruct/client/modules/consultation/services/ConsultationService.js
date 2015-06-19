@@ -1,6 +1,14 @@
 angular.module("app.loggedIn.patient.consult.services",[])
 	.service('ConsultInfoService', function(){
 	    var consultInfoScripts=[];
+	    var checkdata=[];
+	    this.getCheckdata=function(){
+	        return checkdata;
+	    }
+	    this.setCheckdata=function(list)
+	    {
+	        checkdata=angular.copy(list);
+	    }
 	    this.getConsultInfoScripts=function(){
 	        return consultInfoScripts;
 	    }
