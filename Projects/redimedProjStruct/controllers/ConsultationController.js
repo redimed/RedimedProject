@@ -958,7 +958,7 @@ module.exports = {
 
         db.sequelize.query(unique_sql)
         .success(function(rows){
-            console.log('ID log: ',rows[0].ID);
+            //console.log('ID log: ',rows[0].ID);
             if(rows.length > 0){
                 if(rows[0].ID){
                     db.sequelize.query(sql_ud)
