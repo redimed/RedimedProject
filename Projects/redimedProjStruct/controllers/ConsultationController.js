@@ -412,8 +412,21 @@ module.exports = {
         }
         else
         {
-            kiss.exlog(fHeader,"Patient khong co thong tin company.");
-            res.json({status:'success',info:null});
+            db.sequelize.query("SELECT u.id, u.`user_name`, u.`Booking_Person`, u.`socket` "+
+                                "FROM  users u "+
+                                "WHERE u.`socket` IS NOT NULL "+
+                                "AND (u.`company_id` = (SELECT p.`company_id` FROM cln_patients p WHERE p.`Patient_id` = ?) "+
+                                "OR u.id = (SELECT p.user_id FROM cln_patients p WHERE p.`Patient_id` = ?))", null,{raw:true},[patient_id,patient_id])
+            .success(function(rs)
+            {
+                info.users = rs;
+                res.json({status:'success', info: info});
+            })
+            .error(function(err)
+            {
+                kiss.exlog(fHeader,"Loi truy van lay cac user trong cung cong ty",err);
+                res.json({status:'error',error:errorCode.get(controllerCode,functionCode,'TN003')});
+            })
         }
     })
     .error(function(err)
@@ -447,7 +460,7 @@ module.exports = {
             " INNER JOIN `cln_patients` patient ON `apptPatient`.`Patient_id`=patient.`Patient_id`       "+
             " WHERE calendar.`DOCTOR_ID`=? AND `apptPatient`.`appt_status`=?                             ";
 
-        kiss.executeQuery(req,sql,[doctorId,invoiceUtil.apptStatus.workInProgress.value],function(rows){
+        kiss.executeQuery(req,sql,[doctorId,invoiceUtil.apptStatus.inConsult.value],function(rows){
             res.json({status:'success',data:rows});
         },function(err){
             kiss.exlog(fHeader,"Loi truy van select du lieu",err);
@@ -471,7 +484,7 @@ module.exports = {
         }
 
         var sql="UPDATE `cln_appt_patients` SET appt_status=?,SESSION_START_TIME=? WHERE `Patient_id`=? AND `CAL_ID`=? AND appt_status<>?";
-        var params=[invoiceUtil.apptStatus.workInProgress.value,startSessionTime,patientId,calId,invoiceUtil.apptStatus.cancelled.value];
+        var params=[invoiceUtil.apptStatus.inConsult.value,startSessionTime,patientId,calId,invoiceUtil.apptStatus.cancelled.value];
         kiss.executeQuery(req,sql,params,function(result){
             if(result.affectedRows>0)
             {
@@ -536,7 +549,7 @@ module.exports = {
         }
 
         var sql="UPDATE `cln_appt_patients` SET appt_status=?,SESSION_END_TIME=? WHERE `Patient_id`=? AND `CAL_ID`=? AND appt_status=?";
-        var params=[invoiceUtil.apptStatus.completed.value,endSessionTime,patientId,calId,invoiceUtil.apptStatus.workInProgress.value];
+        var params=[invoiceUtil.apptStatus.completed.value,endSessionTime,patientId,calId,invoiceUtil.apptStatus.inConsult.value];
         kiss.executeQuery(req,sql,params,function(result){
             if(result.affectedRows>0)
             {
@@ -760,7 +773,11 @@ module.exports = {
         }
 
         var unique_sql = knex('cln_exercise_program')
-            .where('exercise', postData.exercise)
+             .where({
+                    'exercise': postData.exercise,
+                    'cal_id':postData.cal_id,
+                    'patient_id':postData.patient_id
+                  })
             .toString();
 
         var sql = knex('cln_exercise_program')
@@ -824,7 +841,11 @@ module.exports = {
         }
 
         var unique_sql = knex('cln_exercise_program')
-            .where('exercise', postData.exercise)
+            .where({
+                    'exercise': postData.exercise,
+                    'cal_id':postData.cal_id,
+                    'patient_id':postData.patient_id
+                  })
             .toString();
 
         var sql = knex('cln_exercise_program')

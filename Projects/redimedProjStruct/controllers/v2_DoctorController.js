@@ -97,7 +97,7 @@ module.exports = {
 			" WHERE calendar.`DOCTOR_ID`=? AND DATE(calendar.`FROM_TIME`)>=? AND DATE(calendar.`FROM_TIME`)<=?    "+
 			" AND `apptPatient`.`appt_status`=?                                                                   ";
 
-		kiss.executeQuery(req,sql,[doctor_id,fromDate,toDate,invoiceUtil.apptStatus.workInProgress.value],function(rows){
+		kiss.executeQuery(req,sql,[doctor_id,fromDate,toDate,invoiceUtil.apptStatus.inConsult.value],function(rows){
 			res.json({status:'success',data:rows});
 		},function(err){
 			kiss.exlog(fHeader,"Loi truy van lay data",err);

@@ -536,6 +536,8 @@ angular.module('app.config', [])
             {id:6,label:'Dominant Hand'},
             {id:7,label:'Job Demand (weight in kg)'},
             {id:8,label:'Job Demand (distance in m)'},
+            {id:9,label:'Job Demand (height in mm)'},
+            {id:10,label:'Job Demand (weight in g)'},
         ])
 .factory('ConfigService', function(VALUE_TYPE, SCORE_TYPE, COMMENT_TYPE, TIMETABLE_DAY_OF_WEEK, PRIORITY_OPTION, DAY_OF_WEEK, NUMBER_OF_WEEK, SEX_LIST, YES_NO_OPT, ACC_TYPE, APP_TYPE, APPT_STATUS, MONTH_IN_YEAR, INVOICE_STATUS, RECALL_PERIOD, RECALL_REMIND, MEDICINE_UNIT, Restangular) {
     var configService = {};

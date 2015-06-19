@@ -3848,6 +3848,17 @@ label{
     color: white !important;
     background: rgb(102, 102, 102) !important;
     font-weight: bold;
+}.un_table_tab_config{
+    position: initial;
+    margin-bottom: 0 ;
+    text-transform: none;
+}
+.un_table_tab_bg{
+    background-color: #808285 !important;
+}
+.un_label_popup_history{
+    background-color: #EEEEEE;
+    width: 100%;
 }
 /*phanquocchien patient end*/
 

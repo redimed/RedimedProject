@@ -117,6 +117,30 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			})
 			
 		}
+		$scope.actionCenter.showPopupHistoryPhysiotherapist = function(data){
+			var modalInstance = $modal.open({
+				templateUrl:'modules/consultation/dialogs/dialogs_consult_history_physiotherapist.html',
+				controller: 'ConsultHistoryController',
+				resolve: {
+					consults:function(){
+						return data;
+					}
+				}
+			})
+			
+		}
+		$scope.actionCenter.showPopupHistoryExercisePhysiologist = function(data){
+			var modalInstance = $modal.open({
+				templateUrl:'modules/consultation/dialogs/dialogs_consult_history_exercise_physiologist.html',
+				controller: 'ConsultHistoryController',
+				resolve: {
+					consults:function(){
+						return data;
+					}
+				}
+			})
+			
+		}
 		//end
 		$scope.getImgDrawingHistory = function(){
 			console.log($scope.cal_id)
@@ -794,7 +818,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 						$scope.timerDisplay=kiss.msToTimer(x).display;
 					}
 
-					if($scope.apptPatient.appt_status==ptnConst.apptStatus.workInProgress.value)
+					if($scope.apptPatient.appt_status==ptnConst.apptStatus.inConsult.value)
 					{
 						$scope.startSessionTime=$scope.apptPatient.SESSION_START_TIME;
 					}
@@ -867,7 +891,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 	        	.then(function(data){
 	        		if(data.status=='success')
 	        		{
-	        			$scope.apptPatient.appt_status=ptnConst.apptStatus.workInProgress.value;
+	        			$scope.apptPatient.appt_status=ptnConst.apptStatus.inConsult.value;
 	        			toastr.success("Start progress success.");
 	        			$scope.startSessionTime=startSessionTime;
 	        			$scope.apptPatient.SESSION_START_TIME=startSessionTime;
