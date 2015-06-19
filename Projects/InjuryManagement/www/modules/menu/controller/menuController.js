@@ -2,7 +2,8 @@ angular.module("starter.menu.controller",[])
     .controller("menuController",function($scope, $rootScope, localStorageService, $state, UserService,
                                           $ionicPopover, SecurityService, $ionicPopup, $cordovaDialogs,
                                           $ionicLoading, $timeout, $cordovaMedia, phoneCallService, signaling,
-                                          $cordovaGeolocation, $interval, $ionicPlatform, DriverServices, $ionicModal, $cordovaPush){
+                                          $cordovaGeolocation, $interval, $ionicPlatform,
+                                          DriverServices, $ionicModal, $cordovaPush, HOST_CONFIG){
         signaling.removeAllListeners();
 
         var userInfo= localStorageService.get("userInfo");
@@ -16,8 +17,10 @@ angular.module("starter.menu.controller",[])
         var stopInterval;
 
         var mediaSource = null;
-        var src = "/android_asset/www/receive_phone.mp3";
+
+        var src = "https://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port + "/api/sound/receive";
         var media = null;
+        var snd = null;
         var loop = function (status) {
             if (status === Media.MEDIA_STOPPED) {
                 media.play();
@@ -57,7 +60,6 @@ angular.module("starter.menu.controller",[])
             if(userInfo.UserType.user_type == "Patient"){
                 var menuPatient = [];
                 UserService.getPatientMenu().then(function(response){
-                    // console.log("response",response)
                     angular.forEach(response,function(menu){
                         if(menu.Description=="Submit Injury")
                             menu.Definition = "app.injury.desInjury";
@@ -179,7 +181,7 @@ angular.module("starter.menu.controller",[])
         //Android.
         function handleAndroid(notification) {
             if (notification.event == "message") {
-                mediaSource = new Media("https://testapp.redimed.com.au:3000/api/im/pushSound");
+                mediaSource = new Media("https://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port + "/api/im/notification");
                 mediaSource.play();
 
                 $cordovaDialogs.alert(notification.message, "Emergency").then(function (){
@@ -200,7 +202,7 @@ angular.module("starter.menu.controller",[])
             switch (notification.type) {
                 case 'call':
                     $scope.modalreceivePhone.show();
-                    var snd = new Media(event.sound);
+                    snd = new Media("https://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port + "/api/sound/notification");
                     snd.play();
                     $scope.acceptCall = function() {
                         snd.pause();
@@ -311,16 +313,14 @@ angular.module("starter.menu.controller",[])
             });
             switch (message.type) {
                 case 'call':
-                    if(!ionic.Platform.isIOS()) {
-                        media = new Media(src, null, null, loop);
-                        media.play();
-                    }
+                    console.log(src);
+                    snd.pause();
+                    media = new Media(src, null, null, loop);
+                    media.play();
                     $scope.modalreceivePhone.show();
                     $scope.acceptCall = function() {
+                        media.pause();
                         $scope.modalreceivePhone.hide();
-                        if(!ionic.Platform.isIOS()) {
-                            media.pause();
-                        }
                         $state.go('app.phoneCall', { callUser: fromId, apiKey: message.apiKey, sessionID: message.sessionId,
                             tokenID: message.token, isCaller: false }, {reload: true});
                     }
@@ -332,7 +332,7 @@ angular.module("starter.menu.controller",[])
                         signaling.emit('sendMessage', localStorageService.get('userInfo').id, fromId, { type: 'ignore' });
                     }
                     break;
-                case 'cancel':
+                case 'ignore':
                     if($scope.modalreceivePhone.isShown()) {
                         media.pause();
                         $scope.modalreceivePhone.hide();
