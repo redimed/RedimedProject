@@ -6,7 +6,8 @@ angular.module("app.loggedIn.patient.consult", [
     "app.loggedIn.patient.consult.itemsheetController",
     "app.loggedIn.patient.consult.services",
 	"app.loggedIn.patient.consult.directives",
-    "app.kiss.timer.directive"
+    "app.kiss.timer.directive",
+    "app.loggedIn.patient.exercise.directives.list"
 ]).config(function ($stateProvider) {
     $stateProvider
 

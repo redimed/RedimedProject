@@ -24,6 +24,10 @@ a:focus {
     margin-top: 15px;
 }
 /*Toom Style*/
+.bt-label{
+    margin-top: 51px;
+    margin-left: 26px;
+}
 .un-input-m-custom{
       width: 284px !important;
     height: 20px;
@@ -3110,7 +3114,7 @@ label{
 }
 .span_menus {
     margin-top:-5px !important;
-    margin-left:38px;
+    margin-left:1px;
     font-size:10px; 
     float:left;
 }
@@ -3844,6 +3848,17 @@ label{
     color: white !important;
     background: rgb(102, 102, 102) !important;
     font-weight: bold;
+}.un_table_tab_config{
+    position: initial;
+    margin-bottom: 0 ;
+    text-transform: none;
+}
+.un_table_tab_bg{
+    background-color: #808285 !important;
+}
+.un_label_popup_history{
+    background-color: #EEEEEE;
+    width: 100%;
 }
 /*phanquocchien patient end*/
 

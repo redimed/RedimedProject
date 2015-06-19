@@ -25,7 +25,8 @@ angular.module('starter', ['ionic',
     'starter.phoneCall',
     'ion-google-place',
     'ngAutocomplete',
-    'starter.bluetooth'
+    'starter.bluetooth',
+    'ngInputDate'
 ])
 
     .factory(("ionPlatform"), function( $q ){
@@ -83,7 +84,7 @@ angular.module('starter', ['ionic',
     })
 
     .run(function($state, $rootScope,localStorageService, $ionicSideMenuDelegate, $cordovaPush,
-                  ionPlatform, signaling, $ionicModal, $ionicPopup, SecurityService, $cordovaDialogs) {
+                  ionPlatform, signaling, $ionicModal, $ionicPopup, SecurityService, HOST_CONFIG) {
 
         signaling.on('reconnect',function(){
             if (localStorageService.get("userInfo") != null) {
@@ -126,7 +127,7 @@ angular.module('starter', ['ionic',
                 } else if (ionic.Platform.isIOS()) {
                     config = {
                         "badge": true,
-                        "sound": true,
+                        "sound": "https://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port + "/api/sound/notification",
                         "alert": true,
                     };
                 }
@@ -156,41 +157,6 @@ angular.module('starter', ['ionic',
                         SecurityService.setIosToken(notification.regid);
                     }
                 }
-
-                //iOS.
-                //function handleIOS(event, notification) {
-                //    console.log(notification);
-                //    switch (notification.type) {
-                //        case 'call':
-                //            var snd = new Media(event.sound);
-                //            snd.play();
-                //    }
-                //
-                //    if (notification.alert) {
-                //        $cordovaDialogs.alert(notification.alert, "Emergency").then(function (){
-                //            snd.pause();
-                //            //localStorageService.set("idpatient_notice", notification.payload.injury_id)
-                //            //
-                //            //DriverServices.notifi = notification;
-                //            //
-                //            //if(userInfo.UserType.user_type == "Driver") {
-                //            //    $state.go('app.driver.detailInjury', {}, {reload: true});
-                //            //}
-                //        });
-                //    }
-                //
-                //    if (notification.sound) {
-                //
-                //    }
-                //
-                //    if (notification.badge) {
-                //        $cordovaPush.setBadgeNumber(notification.badge).then(function(result) {
-                //            console.log(result, 'setBadgeNumber');
-                //        }, function(err) {
-                //            console.log(err, 'error ----setBadgeNumber');
-                //        });
-                //    }
-                //}
                 AudioToggle.setAudioMode(AudioToggle.SPEAKER);
             });
         });

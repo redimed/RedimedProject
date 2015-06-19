@@ -122,14 +122,14 @@ angular.module('starter.security.login.controller',[])
             }, function(error) {
                 $ionicLoading.hide();
                 console.log(error);
-                $scope.popupMessage = {message : "Please check your information."};
-                $ionicPopup.show({
-                    templateUrl: 'modules/popup/PopUpError.html',
-                    scope: $scope,
-                    buttons: [
-                        { text: "Ok" },
-                    ]
-                });
+                // $scope.popupMessage = {message : "Please check your information."};
+                // $ionicPopup.show({
+                //     templateUrl: 'modules/popup/PopUpError.html',
+                //     scope: $scope,
+                //     buttons: [
+                //         { text: "Ok" },
+                //     ]
+                // });
             });
         }
     });

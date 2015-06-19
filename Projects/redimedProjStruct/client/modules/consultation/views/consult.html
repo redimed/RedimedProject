@@ -45,6 +45,9 @@
             <li>
                 <a href="index.html#tab_1_12" data-toggle="tab">Consultation History</a>
             </li>
+            <li>
+                <a href="index.html#tab_1_7" data-toggle="tab">Exercise Program</a>
+            </li>
         </ul>
         <div class="un-tabs-content"> 
             <div class="un-tab-content active" id="tab_1_1">
@@ -248,8 +251,50 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6 col-sm-6">
-                                            aaaa
+                                        <div class="col-md-6 col-sm-6 re_padding_0">
+                                            <label class="un_table_tab_config un-title-label">  Past Entries
+                                            </label>
+                                            <div class="table-dynamic">
+                                                <table class="responsive table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="un_table_tab_bg">
+                                                                <div class="th">
+                                                                    <span style="color: white;">Date</span>
+                                                                </div>
+                                                            </th>
+                                                            <th class="un_table_tab_bg">
+                                                                <div class="th">
+                                                                    <span style="color: white;">Progress Notes</span>
+                                                                </div>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td colspan="5">
+                                                                <div style="text-align: center;">
+                                                                    <span ng-if="!actionCenter.listConsultOfPatient" style="font-size: 20px; font-style: italic; font-weight: bold;" class="ng-scope">      
+                                                                        Empty Data
+                                                                    </span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr style="background-color: white;" class="bold" ng-repeat="item in actionCenter.listConsultOfPatient" ng-if="actionCenter.listConsultOfPatient" ng-click="actionCenter.showPopupHistoryPhysiotherapist(item)">
+                                                            <td style="vertical-align: middle; padding: 5px;">
+                                                                <label style="max-width: 110px;min-width: 110px;">
+                                                                    {{item.Creation_date  | date:'dd-MM-yyyy - hh:mm'}}
+                                                                </label>
+                                                            </td>
+                                                            <td style="vertical-align: middle; padding: 5px;">
+                                                                <label style="height: 20px;overflow: hidden; max-width: 325px;">
+                                                                    {{item.progress_note}}
+                                                                </label>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -272,13 +317,66 @@
                                                     <textarea rows="6" ng-model="consultInfo.attendance_record" class="form-control pt_width_100 un-input-custom-1 un-select-p-5 ng-isolate-scope ng-pristine ng-valid" float-label=""></textarea>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-6 col-sm-6">
-                                            <div class="row un_padding_left_5">
+                                            <div class="row un_padding_right_5">
                                                 <div class="form-group pt_margin_bottom_0 show-label">
                                                     <label class="un-label-form" style="font-size: 15px;">Communication Record</label>
                                                     <textarea rows="6" ng-model="consultInfo.communication_record" class="form-control pt_width_100 un-input-custom-1 un-select-p-5 ng-isolate-scope ng-pristine ng-valid" float-label=""></textarea>
                                                 </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 re_padding_0">
+                                            <label class="un_table_tab_config un-title-label">  Past Entries
+                                            </label>
+                                            <div class="table-dynamic">
+                                                <table class="responsive table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="un_table_tab_bg">
+                                                                <div class="th">
+                                                                    <span style="color: white;">Date</span>
+                                                                </div>
+                                                            </th>
+                                                            <th class="un_table_tab_bg">
+                                                                <div class="th">
+                                                                    <span style="color: white;">Attendance Record</span>
+                                                                </div>
+                                                            </th>
+                                                            <th class="un_table_tab_bg">
+                                                                <div class="th">
+                                                                    <span style="color: white;">Communication Record</span>
+                                                                </div>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td colspan="5">
+                                                                <div style="text-align: center;">
+                                                                    <span ng-if="!actionCenter.listConsultOfPatient" style="font-size: 20px; font-style: italic; font-weight: bold;" class="ng-scope">      
+                                                                        Empty Data
+                                                                    </span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr style="background-color: white;" class="bold" ng-repeat="item in actionCenter.listConsultOfPatient" ng-if="actionCenter.listConsultOfPatient" ng-click="actionCenter.showPopupHistoryExercisePhysiologist(item)">
+                                                            <td style="vertical-align: middle; padding: 5px;">
+                                                                <label style="max-width: 110px;min-width: 110px;">
+                                                                    {{item.Creation_date  | date:'dd-MM-yyyy - hh:mm'}}
+                                                                </label>
+                                                            </td>
+                                                            <td style="vertical-align: middle; padding: 5px;">
+                                                                <label style="height: 20px;overflow: hidden; max-width: 150px;">
+                                                                    {{item.attendance_record}}
+                                                                </label>
+                                                            </td>
+                                                            <td style="vertical-align: middle; padding: 5px;">
+                                                                <label style="height: 20px;overflow: hidden; max-width: 150px;">
+                                                                    {{item.communication_record}}
+                                                                </label>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
@@ -513,7 +611,7 @@
                     </div>
                 </div>
                 <div class="row" ng-controller="ScriptListController">
-                    <script-list medicaname="consultInfo.scripts"></script-list>
+                    <script-list medicare="consultInfo.scripts"></script-list>
                 </div>
             </div>
             <div class="un-tab-content" id="tab_1_4">
@@ -731,10 +829,10 @@
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs pt_margin_bottom_0" role="tablist">
                     <li role="presentation" class="active">
-                        <a class="un_header_attach_file" href="index.html#tab_1_6_1" aria-controls="home" role="tab" data-toggle="tab">Document files</a>
+                        <a class="un_header_attach_file" href="index.html#tab_1_6_1" aria-controls="home" role="tab" data-toggle="tab">E-Forms</a>
                     </li>
                     <li role="presentation">
-                        <a class="un_header_attach_file" href="index.html#tab_1_6_2" aria-controls="profile" role="tab" data-toggle="tab">Drawings file</a>
+                        <a class="un_header_attach_file" href="index.html#tab_1_6_2" aria-controls="profile" role="tab" data-toggle="tab">Workcover</a>
                     </li>
                 </ul>
 
@@ -1323,6 +1421,22 @@
             <div class="un-tab-content" id="tab_1_12">
                <consultation-history action-center="actionCenter"></consultation-history>
             </div>
+            <div class="un-tab-content" id="tab_1_7">
+                <div ui-view="main-content" class="ng-scope" style="margin-top: 17px;">
+                    <div>
+                        <label class="un-label-popup-header un-bg-label-333333 bt-label">Exercise Program</label>
+                      <div class="un-padding-top-bottom-10 ">
+                        <div class="un-div-content un-bgWhite-boxshadow-bottom un-padding-10">
+                          <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                            <list-exercise></list-exercise>
+                            </div>    
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="col-md-2 col-sm-2">
@@ -1334,9 +1448,9 @@
 
             <kiss-timer start-session-time="startSessionTime" return-value="timerDisplay"></kiss-timer>
 
-            <button ng-show="apptPatient.appt_status==apptStatus.preProgress.value" ng-click="startSession();" class="un_tn_btn un_tn_btn_pink un_tn_btn_lg">Start Progress</button>
+            <button ng-show="apptPatient.appt_status==apptStatus.waiting.value" ng-click="startSession();" class="un_tn_btn un_tn_btn_pink un_tn_btn_lg">Start Progress</button>
          
-            <button ng-show="apptPatient.appt_status==apptStatus.workInProgress.value" ng-click="beforeFinishSession();" class="un_tn_btn un_tn_btn_pink un_tn_btn_lg">
+            <button ng-show="apptPatient.appt_status==apptStatus.inConsult.value" ng-click="beforeFinishSession();" class="un_tn_btn un_tn_btn_pink un_tn_btn_lg">
                 Complete</br>
                 <span style="color:white;font-size:15px">{{timerDisplay}}</span>
             </button>

@@ -10,6 +10,8 @@ var errorCode=require('./errorCode');
 var invoiceUtil=require('./invoiceUtilController');
 var knex = require('../knex-connect.js');
 var commonFunction =  require('../knex-function.js');
+var _ = require('lodash');
+var S = require('string');
 
 //tannv.dts@gmail.com
 var controllerCode="RED_CONSULT";
@@ -458,7 +460,7 @@ module.exports = {
             " INNER JOIN `cln_patients` patient ON `apptPatient`.`Patient_id`=patient.`Patient_id`       "+
             " WHERE calendar.`DOCTOR_ID`=? AND `apptPatient`.`appt_status`=?                             ";
 
-        kiss.executeQuery(req,sql,[doctorId,invoiceUtil.apptStatus.workInProgress.value],function(rows){
+        kiss.executeQuery(req,sql,[doctorId,invoiceUtil.apptStatus.inConsult.value],function(rows){
             res.json({status:'success',data:rows});
         },function(err){
             kiss.exlog(fHeader,"Loi truy van select du lieu",err);
@@ -482,7 +484,7 @@ module.exports = {
         }
 
         var sql="UPDATE `cln_appt_patients` SET appt_status=?,SESSION_START_TIME=? WHERE `Patient_id`=? AND `CAL_ID`=? AND appt_status<>?";
-        var params=[invoiceUtil.apptStatus.workInProgress.value,startSessionTime,patientId,calId,invoiceUtil.apptStatus.cancelled.value];
+        var params=[invoiceUtil.apptStatus.inConsult.value,startSessionTime,patientId,calId,invoiceUtil.apptStatus.cancelled.value];
         kiss.executeQuery(req,sql,params,function(result){
             if(result.affectedRows>0)
             {
@@ -547,7 +549,7 @@ module.exports = {
         }
 
         var sql="UPDATE `cln_appt_patients` SET appt_status=?,SESSION_END_TIME=? WHERE `Patient_id`=? AND `CAL_ID`=? AND appt_status=?";
-        var params=[invoiceUtil.apptStatus.completed.value,endSessionTime,patientId,calId,invoiceUtil.apptStatus.workInProgress.value];
+        var params=[invoiceUtil.apptStatus.completed.value,endSessionTime,patientId,calId,invoiceUtil.apptStatus.inConsult.value];
         kiss.executeQuery(req,sql,params,function(result){
             if(result.affectedRows>0)
             {
@@ -712,6 +714,153 @@ module.exports = {
             }
         },function(erro){
             res.json({status:'error',error:err})
+        })
+    },
+    listExercise: function(req,res){
+        var postData = req.body.data;
+        var sql = knex
+            .select('*')
+            .from('cln_exercise_program')
+            .where('patient_id',postData.patient_id)
+            .where('cal_id',postData.cal_id)
+            .toString();
+        db.sequelize.query(sql)
+        .success(function(data){
+            res.json({data: data,sql:sql});
+        })
+        .error(function(error){
+            res.json(500, {error: error,sql:sql});
+        })
+    },
+    getOneExercise:function(req,res){
+         var postData = req.body.data;
+
+        var sql = knex('cln_exercise_program')
+            .column(
+                '*'
+            )
+            .where('Exercise_id', postData.id)
+            .toString();
+
+        db.sequelize.query(sql)
+        .success(function(rows){
+            res.json({data: rows[0]});
+        })
+        .error(function(error){
+            res.json(500, {error: error});
+        })
+    },
+
+    updateExercise:function(req,res){
+       var postData = req.body.data;
+        var errors = [];
+        var required = [
+            {field: 'exercise', message: 'Exercise exists required'}
+        ]
+
+        _.forIn(postData, function(value, field){
+            _.forEach(required, function(field_error){
+                if(field_error.field === field && S(value).isEmpty()){
+                    errors.push(field_error);
+                    return;
+                }
+            })
+        })
+
+        if(errors.length > 0){
+            res.status(500).json({errors: errors});
+            return;
+        }
+
+        var unique_sql = knex('cln_exercise_program')
+            .where('exercise', postData.exercise)
+            .toString();
+
+        var sql = knex('cln_exercise_program')
+            .where('Exercise_id', postData.Exercise_id)
+            .update(postData)
+            .toString();
+        db.sequelize.query(unique_sql)
+        .success(function(rows){
+            if(rows.length > 0){
+                errors.push({field: 'exercise', message: 'Exercise exists'});
+                res.status(500).json({errors: errors});
+                return;
+            }else{
+                db.sequelize.query(sql)
+                .success(function(created){
+                    res.json({data: created});  
+                })
+                .error(function(error){
+                    res.json(500, {error: error});
+                })
+            }
+        })
+        .error(function(error){
+            res.json(500, {error: error});
+        })
+    },
+    deleteExercise:function(req,res){
+        var postData = req.body.data;
+        var sql = knex('cln_exercise_program')
+            .where('Exercise_id', postData.Exercise_id)
+            .del()
+            .toString();
+
+        db.sequelize.query(sql)
+        .success(function(del){
+            res.json({data: del});
+        })
+        .error(function(error){
+            res.json(500, {error: error});
+        })
+    },
+    addExercise:function(req,res){
+        var postData = req.body.data;
+        var errors = [];
+        var required = [
+            {field: 'exercise', message: 'Exercise exists required'}
+        ]
+
+        _.forIn(postData, function(value, field){
+            _.forEach(required, function(field_error){
+                if(field_error.field === field && S(value).isEmpty()){
+                    errors.push(field_error);
+                    return;
+                }
+            })
+        })
+
+        if(errors.length > 0){
+            res.status(500).json({errors: errors});
+            return;
+        }
+
+        var unique_sql = knex('cln_exercise_program')
+            .where('exercise', postData.exercise)
+            .toString();
+
+        var sql = knex('cln_exercise_program')
+            .insert(postData)
+            .toString();
+        db.sequelize.query(unique_sql)
+        .success(function(rows){
+            if(rows.length > 0){
+                errors.push({field: 'exercise', message: 'Exercise exists'});
+                res.status(500).json({errors: errors});
+                return;
+            }else{
+                db.sequelize.query(sql)
+                .success(function(created){
+                    res.json({data: created});  
+                })
+                .error(function(error){
+                    res.json(500, {error: error});
+                })
+            }
+        })
+        .error(function(error){
+            res.json(500, {error: error});
         })
     }
 }

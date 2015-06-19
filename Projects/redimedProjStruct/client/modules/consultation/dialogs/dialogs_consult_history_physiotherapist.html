@@ -1,0 +1,34 @@
+<style type="text/css" class="ng-scope">
+    .modal.in .modal-dialog {
+       	margin-top:50px;
+    }
+    .modal {
+		z-index: 10050 !important;
+	}
+</style>
+<!--<div class="panel panel-default">-->
+<div class="modal-body" ng-if="listConsult">
+	<div class="active">
+		<label class="un-label-popup-header-m un-bg-label-B41E46-m">Past Entries</label>
+	</div>
+	<div>
+		<div class="row">
+			<div class="col-md-12 col-sm-12">
+				<div class="un-label-forms-custom">
+					<span>Date</span>
+				</div>
+				<label class="un_label_popup_history">{{listConsult.Creation_date | date:'dd-MM-yyyy - hh:mm'}}</label>
+			</div>
+			<div class="col-md-12 col-sm-12">
+				<div class="un-label-forms-custom">
+					<span>Progress Notes</span>
+				</div>
+				<textarea rows="6" class="form-control pt_width_100" disabled="disabled" style="resize: none;">{{listConsult.progress_note}}</textarea>
+			</div>
+		</div>
+	</div>
+	<div align="right" style="margin-top: 15px; margin-right: 15px;">
+		<a href="javascript:;" class="un-button un-bgXam-colBlack" ng-click='cancelDetail()'>Cancel</a>
+	</div>
+</div>
+<!--</div>-->

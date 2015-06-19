@@ -2081,7 +2081,7 @@ ion-scroll[direction=y] {
     border: none;
     background-color: #015190;
     color: white;
-
+    margin-left: 2%;
 }
 .pl{
     color: white

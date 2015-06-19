@@ -15,8 +15,8 @@ var ptnConst={
 	apptStatus:{
 		booking:{value:'Booking',display:'Booking'},
 		checkedIn:{value:'Checked In',display:'Checked In'},
-		preProgress:{value:'Pre-progress',display:'Pre-progress'},
-		workInProgress:{value:'Work In Progress',display:'Work In Progress'},
+		waiting:{value:'Waiting',display:'Waiting'},
+		inConsult:{value:'In Consult',display:'In Consult'},
 		completed:{value:'Completed',display:'Completed'},
 		billing:{value:'Billing',display:'Billing'},
 		close:{value:'Close',display:'Close'},
@@ -25,7 +25,8 @@ var ptnConst={
 	apptStatusDisplay:{
 		'Booking':'Booking',
 		'Checked In':'Checked In',
-		'Work In Progress':'Work In Progress',
+		'Waiting':'Waiting',
+		'In Consult':'In Consult',
 		'Completed':'Completed',
 		'Billing':'Billing',
 		'Close':'Close',
