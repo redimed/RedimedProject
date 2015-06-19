@@ -28,8 +28,10 @@ angular.module('starter.security.register.controller',[])
             $scope.userInfo.DOB = $filter('date')( Date.parse($scope.patientInfo.month +'/'+  $scope.patientInfo.date +'/'+ $scope.patientInfo.year), 'dd/MM/yyyy');
             $scope.patientInfo.DOB = $filter('date')( Date.parse($scope.patientInfo.month +'/'+  $scope.patientInfo.date +'/'+ $scope.patientInfo.year), 'dd/MM/yyyy');
             var fullname = [];
-            fullname.push($scope.patientInfo.firstName, $scope.patientInfo.surName, $scope.patientInfo.middleName);
+            fullname.push($scope.patientInfo.First_name, $scope.patientInfo.Sur_name, $scope.patientInfo.Middle_name);
             $scope.userInfo.Booking_Person = fullname.join(' ');
+            $scope.userInfo.Contact_number = $scope.patientInfo.Mobile;
+            $scope.userInfo.Contact_email = $scope.patientInfo.Email;
             SecurityService.signup($scope.userInfo, $scope.patientInfo).then(function (res){
                 if(res.status.toLowerCase() == 'success') {
                    $scope.popupMessage = { message:"Register success!" };
