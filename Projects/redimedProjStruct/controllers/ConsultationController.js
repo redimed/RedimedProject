@@ -722,7 +722,6 @@ module.exports = {
             .select('*')
             .from('cln_exercise_program')
             .where('patient_id',postData.patient_id)
-            .where('cal_id',postData.cal_id)
             .toString();
         db.sequelize.query(sql)
         .success(function(data){
@@ -839,10 +838,10 @@ module.exports = {
             res.status(500).json({errors: errors});
             return;
         }
+         
 
         var unique_sql = knex('cln_exercise_program')
             .where({
-                    'exercise': postData.exercise,
                     'cal_id':postData.cal_id,
                     'patient_id':postData.patient_id
                   })
@@ -853,10 +852,20 @@ module.exports = {
             .toString();
         db.sequelize.query(unique_sql)
         .success(function(rows){
+            console.log('----------------',rows);
             if(rows.length > 0){
-                errors.push({field: 'exercise', message: 'Exercise exists'});
-                res.status(500).json({errors: errors});
-                return;
+                var sql1 = knex('cln_exercise_program')
+                    .where('Exercise_id', rows[0].Exercise_id)
+                    .update(postData)
+                    .toString();
+                db.sequelize.query(sql1)
+                .success(function(created){
+                     console.log('----------------');
+                    res.json({data: created});  
+                })
+                .error(function(error){
+                    res.json(500, {error: error});
+                })
             }else{
                 db.sequelize.query(sql)
                 .success(function(created){
