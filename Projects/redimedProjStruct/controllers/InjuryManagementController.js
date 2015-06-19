@@ -9,7 +9,7 @@ var smtpPool = require('nodemailer-smtp-pool');
 var gcm = require('node-gcm');
 var apns = require('apn');
 var mkdirp = require('mkdirp');
-
+var moment = require('moment');
 var _ = require('lodash-node');
 var bcrypt = require('bcrypt-nodejs');
 
@@ -220,6 +220,7 @@ module.exports = {
                                                   }
                                                   transport.close(); // shut down the connection pool, no more messages.  Comment this line out to continue sending emails.
                                               });
+                                              
 
                                           })
                                           .error(function(err){
@@ -231,6 +232,36 @@ module.exports = {
                                   .error(function(err){
                                       console.log(err);
                                   })
+                          }
+                          else
+                          {
+                            db.Appointment.max('CAL_ID')
+                              .success(function(max)
+                              {
+                                  var id = max + 1;
+                                  db.Appointment.create({
+                                    SITE_ID: 1,
+                                    FROM_TIME: moment.utc(),
+                                    TO_TIME: moment.utc()
+                                  })
+                                  .success(function(){
+                                      db.ApptPatient.create({
+                                        Patient_id: imInfo.Patient_id,
+                                        CAL_ID: id,
+                                        appt_status: 'Injury'
+                                      })
+                                      .success(function(){
+                                        console.log("Success");
+                                      })
+                                      .error(function(err){
+                                        console.log(err);
+                                      })
+                                  })
+                                  .error(function(err){
+                                      console.log(err);
+                                  })
+                              })
+                              
                           }
 
                           res.json({status:'success',injury_id:rs.injury_id});

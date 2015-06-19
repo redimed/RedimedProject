@@ -105,6 +105,9 @@
 			                    			<span class="re_booking label-warning" ng-if="a.appt_status == 'Booking'" >
 				                    			{{a.appt_status}}
 			                    			</span>
+			                    			<span class="re_booking label-danger" ng-if="a.appt_status == 'Injury'" >
+				                    			{{a.appt_status}}
+			                    			</span>
 			                    			<span style="margin-left: 15px;color: rgb(0, 102, 102);" class="bold">{{appt.time | moment: 'utc' | moment: 'format': 'hh:mm A'}}</span>
 				                    	</span>
 			                    	</div>
