@@ -451,7 +451,7 @@ module.exports = {
                                     message.addData('message',data[0].FullName+" will be picked up in "+ time +" minutes.");
                                     message.addData('injury_id',id);
                                     message.addData('time',time);
-                                    message.addData('soundname','beep.wav');
+                                    message.addData('soundname','notification.wav');
                                     message.collapseKey = 'REDiMED';
                                     message.delayWhileIdle = true;
                                     message.timeToLive = 3;
@@ -460,7 +460,7 @@ module.exports = {
                                     var notify = new apns.Notification();
                                     notify.expiry = Math.floor(Date.now() / 1000) + 3600; 
                                     notify.badge = 1;
-                                    notify.sound = 'beep.wav';
+                                    notify.sound = 'notification.wav';
                                     notify.alert = data[0].FullName+" will be picked up in "+ time +" minutes.";
                                     notify.payload = {'messageFrom': 'REDiMED'}; 
 

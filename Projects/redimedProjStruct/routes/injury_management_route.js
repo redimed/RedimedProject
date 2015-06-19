@@ -28,8 +28,14 @@ app.get('/api/im/getListDriver',injuryController.getListDriverOnline);
 app.post('/api/im/allocateDriver',injuryController.allocateDriver);
 
 app.get('/api/im/image/:imageId',injuryController.injuryImageById);
-app.get('/api/im/pushSound',function(req,res){
-    res.sendfile('./sound/notification.mp3');
+app.get('/api/sound/:type',function(req,res){
+	var type = req.params.type;
+	if(type == 'call')
+    	res.sendfile('./sound/phone_calling.mp3');
+    if(type == 'receive')
+    	res.sendfile('./sound/receive_phone.wav');
+    if(type == 'notification')
+    	res.sendfile('./sound/notification.mp3');
 })
 
 app.get('/api/im/menu',injuryController.loadSideMenu);

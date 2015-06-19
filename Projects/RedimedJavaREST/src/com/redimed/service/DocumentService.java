@@ -32,6 +32,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Timestamp;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -94,8 +95,8 @@ public class DocumentService {
        				 	f.mkdirs();
 
 	       				long start = System.currentTimeMillis();
-
-	       				String outputFile = workingDir+"\\tempPDF\\"+name+".pdf";
+			
+	       				String outputFile = workingDir+"\\tempPDF\\"+name+"_"+System.currentTimeMillis()+".pdf";
 	       		         
 	       		        OutputStream os = new FileOutputStream(outputFile);
 	
@@ -110,17 +111,22 @@ public class DocumentService {
 	       		        renderer.setDocumentFromString(sf.toString());
 	       		        renderer.layout();
 	       		        renderer.createPDF(os);
-	
+	       		        renderer.finishPDF();
 	       		        os.close();
 	       		        long end = System.currentTimeMillis();
 	       		        System.out.println("Generate PDF in: " + (end-start) + "ms");
 
-	       		        File file = new File(workingDir+"\\tempPDF\\"+name+".pdf");
-		       		    FileInputStream fis = new FileInputStream(file);
-		       		    
-			       	    return Response.ok(fis, "application/pdf") 
+	       		        File file = new File(outputFile);
+	       		        FileInputStream fis = null;
+	       		        if(file.exists())
+	       		        {
+	       		        	fis = new FileInputStream(file);
+	       		        	return Response.ok(fis, "application/pdf") 
 				                    .header("content-disposition","inline")
 				                    .build();
+	       		        }
+	       		        else
+	       		        	return null;
         			}
         		}
         		catch(Exception e)

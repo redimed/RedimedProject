@@ -410,8 +410,21 @@ module.exports = {
         }
         else
         {
-            kiss.exlog(fHeader,"Patient khong co thong tin company.");
-            res.json({status:'success',info:null});
+            db.sequelize.query("SELECT u.id, u.`user_name`, u.`Booking_Person`, u.`socket` "+
+                                "FROM  users u "+
+                                "WHERE u.`socket` IS NOT NULL "+
+                                "AND (u.`company_id` = (SELECT p.`company_id` FROM cln_patients p WHERE p.`Patient_id` = ?) "+
+                                "OR u.id = (SELECT p.user_id FROM cln_patients p WHERE p.`Patient_id` = ?))", null,{raw:true},[patient_id,patient_id])
+            .success(function(rs)
+            {
+                info.users = rs;
+                res.json({status:'success', info: info});
+            })
+            .error(function(err)
+            {
+                kiss.exlog(fHeader,"Loi truy van lay cac user trong cung cong ty",err);
+                res.json({status:'error',error:errorCode.get(controllerCode,functionCode,'TN003')});
+            })
         }
     })
     .error(function(err)
