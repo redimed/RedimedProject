@@ -117,6 +117,30 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			})
 			
 		}
+		$scope.actionCenter.showPopupHistoryPhysiotherapist = function(data){
+			var modalInstance = $modal.open({
+				templateUrl:'modules/consultation/dialogs/dialogs_consult_history_physiotherapist.html',
+				controller: 'ConsultHistoryController',
+				resolve: {
+					consults:function(){
+						return data;
+					}
+				}
+			})
+			
+		}
+		$scope.actionCenter.showPopupHistoryExercisePhysiologist = function(data){
+			var modalInstance = $modal.open({
+				templateUrl:'modules/consultation/dialogs/dialogs_consult_history_exercise_physiologist.html',
+				controller: 'ConsultHistoryController',
+				resolve: {
+					consults:function(){
+						return data;
+					}
+				}
+			})
+			
+		}
 		//end
 		$scope.getImgDrawingHistory = function(){
 			console.log($scope.cal_id)
