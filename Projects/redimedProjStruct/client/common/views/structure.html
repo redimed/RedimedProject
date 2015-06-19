@@ -207,12 +207,12 @@
                 </li>
                 <li ng-repeat="menu in loggedInMenus" class="m-add-hover-color" ng-class="{'change_menus': change_menu===true &&(menu.parent.menu_id===159||menu.parent.menu_id===160||menu.parent.menu_id===162)}" >
 
-                    <a href="javascript:;" ng-click="menuParentClick(menu.parent.definition)" ng-if="menu.parent.icon!==undefined&&menu.parent.icon!==null&&menu.parent.icon.length!==0" ng-class="{'edit_sub_menu': change_menu===true &&(menu.parent.menu_id===159||menu.parent.menu_id===160||menu.parent.menu_id===162) }" >
+                    <a href="javascript:;" ng-click="menuParentClick(menu.parent.definition)" ng-if="menu.parent.icon!==undefined&&menu.parent.icon!==null&&menu.parent.icon.length!==0&&menu.parent.menu_id!==163&&menu.parent.menu_id!==164" ng-class="{'edit_sub_menu': change_menu===true &&(menu.parent.menu_id===159||menu.parent.menu_id===160||menu.parent.menu_id===162) }" >
                         <i><img ng-src="{{menu.parent.icon}}" ng-if="menu.parent.icon!==undefined&&menu.parent.icon!==null&&menu.parent.icon.length!==0"></i>
                         <span class="title" style="margin-top:-25px;margin-left:38px">{{menu.parent.name}}</span>
 
                     </a>
-                    <a href="javascript:;" ng-click="menuParentClick(menu.parent.definition)" ng-if="(menu.parent.icon===undefined||menu.parent.icon===null||menu.parent.icon.length===0)&&(menu.parent.menu_id!==163&&menu.parent.menu_id!==164)" ng-class="{'edit_sub_menu': change_menu===true &&(menu.parent.menu_id===159||menu.parent.menu_id===160||menu.parent.menu_id===162) }" >
+                    <a href="javascript:;" ng-click="menuParentClick(menu.parent.definition)" ng-if="(menu.parent.icon===undefined||menu.parent.icon===null||menu.parent.icon.length===0)&&(menu.parent.menu_id!==163||menu.parent.menu_id!==164)" ng-class="{'edit_sub_menu': change_menu===true &&(menu.parent.menu_id===159||menu.parent.menu_id===160||menu.parent.menu_id===162) }" >
                         <i class="glyphicon glyphicon-star-empty"></i>
                         <span class="title">{{menu.parent.name}}</span>
                     </a>
@@ -224,7 +224,7 @@
                         <span class="title span_menus" ng-if="menu.parent.menu_id===163" >Electronic Medical Record</span>
                     </a>
 
-                    <a href="#" ng-if="(menu.parent.icon!==undefined&&menu.parent.icon!==null&&menu.parent.icon.length!==0)&& menu.parent.menu_id===163 ">
+                    <a href="#" ng-if="menu.parent.icon!==undefined && menu.parent.icon!==null &&menu.parent.icon.length!==0 && menu.parent.menu_id===163 ">
                         <i><img ng-src="{{menu.parent.icon}}" ng-if="menu.parent.icon!==undefined&&menu.parent.icon!==null&&menu.parent.icon.length!==0"></i>
                         <span class="title">{{menu.parent.name}}</span>
                         <span class="title span_menus" ng-if="menu.parent.menu_id===163" >Electronic Medical Record</span>
