@@ -24,6 +24,10 @@ a:focus {
     margin-top: 15px;
 }
 /*Toom Style*/
+.bt-label{
+    margin-top: 51px;
+    margin-left: 26px;
+}
 .un-input-m-custom{
       width: 284px !important;
     height: 20px;
