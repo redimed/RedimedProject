@@ -479,7 +479,7 @@ WHERE s.`ID`= $P{id}]]>
 			</textField>
 			<image>
 				<reportElement x="17" y="38" width="170" height="42" uuid="ae52acea-8810-4957-b0c8-4b1faad60dd6"/>
-				<imageExpression><![CDATA["Redimed.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"Redimed.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="15" y="203" width="103" height="26" uuid="c5381594-0e91-4356-b61c-9183afb07721"/>
