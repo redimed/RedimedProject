@@ -773,7 +773,11 @@ module.exports = {
         }
 
         var unique_sql = knex('cln_exercise_program')
-            .where('exercise', postData.exercise)
+             .where({
+                    'exercise': postData.exercise,
+                    'cal_id':postData.cal_id,
+                    'patient_id':postData.patient_id
+                  })
             .toString();
 
         var sql = knex('cln_exercise_program')
@@ -837,7 +841,11 @@ module.exports = {
         }
 
         var unique_sql = knex('cln_exercise_program')
-            .where('exercise', postData.exercise)
+            .where({
+                    'exercise': postData.exercise,
+                    'cal_id':postData.cal_id,
+                    'patient_id':postData.patient_id
+                  })
             .toString();
 
         var sql = knex('cln_exercise_program')
