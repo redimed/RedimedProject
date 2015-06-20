@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ScriptReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c2b6103d-271a-46dc-b501-29c4a01f4289">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="336"/>
+	<property name="ireport.y" value="240"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<style name="table">
@@ -129,72 +129,16 @@
 	<subDataset name="Table Dataset 2" uuid="93a1bb46-d5c4-49a4-b810-408606b820d6"/>
 	<subDataset name="Table Dataset 3" uuid="5c7e494b-2973-42ee-b9e4-48c6de1b236d"/>
 	<subDataset name="Table Dataset 4" uuid="9a29a8d8-83fd-4881-b0d8-c7230fbc5ca0"/>
-	<subDataset name="New Dataset 1" uuid="6db086f5-d8a1-4b03-bdb7-b7c317df43b0">
-		<parameter name="id" class="java.lang.String"/>
+	<subDataset name="Table Dataset 5" uuid="68b74d5b-9196-4d58-949b-a0a5314856f3">
 		<queryString language="SQL">
-			<![CDATA[SELECT
-     script_head.`ID` AS script_head_ID,
-     script_head.`Checked` AS script_head_Checked,
-     script_head.`Provider_no` AS script_head_Provider_no,
-     script_head.`condition_Indication` AS script_head_condition_Indication,
-     script_head.`doctor_id` AS script_head_doctor_id,
-     script_head.`dose` AS script_head_dose,
-     script_head.`end_date` AS script_head_end_date,
-     script_head.`frequency` AS script_head_frequency,
-     script_head.`medication_name` AS script_head_medication_name,
-     script_head.`qty` AS script_head_qty,
-     script_head.`route` AS script_head_route,
-     script_head.`start_date` AS script_head_start_date,
-     script_head.`user_name` AS script_head_user_name,
-     script_head.`unit` AS script_head_unit,
-     script_head.`CAL_ID` AS script_head_CAL_ID,
-     script_head.`ID_SCRIPT` AS script_head_ID_SCRIPT,
-     script_head.`Created_by` AS script_head_Created_by,
-     script_head.`Creation_date` AS script_head_Creation_date,
-     script_head.`Last_updated_by` AS script_head_Last_updated_by,
-     script_head.`Last_update_date` AS script_head_Last_update_date,
-     script_head.`isEnable` AS script_head_isEnable,
-     cln_scripts.`ID` AS cln_scripts_ID,
-     cln_scripts.`Patient_id` AS cln_scripts_Patient_id,
-     cln_scripts.`CAL_ID` AS cln_scripts_CAL_ID,
-     cln_scripts.`prescriber` AS cln_scripts_prescriber,
-     cln_scripts.`scriptNum` AS cln_scripts_scriptNum,
-     cln_scripts.`isRefNo` AS cln_scripts_isRefNo,
-     cln_scripts.`EntitlementNo` AS cln_scripts_EntitlementNo,
-     cln_scripts.`isSafety` AS cln_scripts_isSafety,
-     cln_scripts.`isConcessional` AS cln_scripts_isConcessional,
-     cln_scripts.`isPBS` AS cln_scripts_isPBS,
-     cln_scripts.`isRPBS` AS cln_scripts_isRPBS,
-     cln_scripts.`isBrand` AS cln_scripts_isBrand,
-     cln_scripts.`doctorSign` AS cln_scripts_doctorSign,
-     cln_scripts.`doctordate` AS cln_scripts_doctordate,
-     cln_scripts.`patientSign` AS cln_scripts_patientSign,
-     cln_scripts.`patientDate` AS cln_scripts_patientDate,
-     cln_scripts.`agentAddress` AS cln_scripts_agentAddress,
-     cln_scripts.`Created_by` AS cln_scripts_Created_by,
-     cln_scripts.`Creation_date` AS cln_scripts_Creation_date,
-     cln_scripts.`Last_updated_by` AS cln_scripts_Last_updated_by,
-     cln_scripts.`Last_update_date` AS cln_scripts_Last_update_date,
-     cln_scripts.`isEnable` AS cln_scripts_isEnable,
-     cln_scripts.`MedicareNo` AS cln_scripts_MedicareNo
-FROM
-     `script_head` script_head,
-     `cln_scripts` cln_scripts
-WHERE
-     cln_scripts.`ID` = script_head.`ID_SCRIPT`]]>
+			<![CDATA[]]>
 		</queryString>
-		<field name="script_head_dose" class="java.lang.Integer"/>
-		<field name="script_head_end_date" class="java.sql.Timestamp"/>
-		<field name="script_head_frequency" class="java.lang.Integer"/>
-		<field name="script_head_medication_name" class="java.lang.String"/>
-		<field name="script_head_qty" class="java.lang.Integer"/>
-		<field name="script_head_route" class="java.lang.Integer"/>
-		<field name="script_head_start_date" class="java.sql.Timestamp"/>
-		<field name="script_head_unit" class="java.lang.Integer"/>
 	</subDataset>
-	<subDataset name="Table Dataset 5" uuid="68b74d5b-9196-4d58-949b-a0a5314856f3"/>
 	<subDataset name="medicare_table" uuid="39cf9537-8b03-4294-b1fe-ec8924df4f6d">
-		<queryString language="SQL">
+		<parameter name="id" class="java.lang.String">
+			<defaultValueExpression><![CDATA[$P{id}]]></defaultValueExpression>
+		</parameter>
+		<queryString>
 			<![CDATA[SELECT
      cln_scripts.`ID` AS cln_scripts_ID,
      cln_scripts.`Patient_id` AS cln_scripts_Patient_id,
@@ -239,22 +183,56 @@ WHERE
      script_head.`Last_updated_by` AS script_head_Last_updated_by,
      script_head.`Last_update_date` AS script_head_Last_update_date,
      script_head.`isEnable` AS script_head_isEnable
-FROM
-     `cln_scripts` cln_scripts,
-     `script_head` script_head
+FROM `cln_scripts`
+INNER JOIN `script_head` ON cln_scripts.`ID` = script_head.`ID_SCRIPT`
 WHERE
-     cln_scripts.`ID` = script_head.`ID_SCRIPT`]]>
+     cln_scripts.`ID` = $P{id}]]>
 		</queryString>
-		<field name="script_head_medication_name" class="java.lang.String"/>
+		<field name="cln_scripts_ID" class="java.lang.Integer"/>
+		<field name="cln_scripts_Patient_id" class="java.lang.Integer"/>
+		<field name="cln_scripts_CAL_ID" class="java.lang.Integer"/>
+		<field name="cln_scripts_prescriber" class="java.lang.String"/>
+		<field name="cln_scripts_scriptNum" class="java.lang.Integer"/>
+		<field name="cln_scripts_isRefNo" class="java.lang.Integer"/>
+		<field name="cln_scripts_EntitlementNo" class="java.lang.String"/>
+		<field name="cln_scripts_isSafety" class="java.lang.Integer"/>
+		<field name="cln_scripts_isConcessional" class="java.lang.Integer"/>
+		<field name="cln_scripts_isPBS" class="java.lang.Integer"/>
+		<field name="cln_scripts_isRPBS" class="java.lang.Integer"/>
+		<field name="cln_scripts_isBrand" class="java.lang.Integer"/>
+		<field name="cln_scripts_doctorSign" class="java.lang.String"/>
+		<field name="cln_scripts_doctordate" class="java.sql.Timestamp"/>
+		<field name="cln_scripts_patientSign" class="java.lang.String"/>
+		<field name="cln_scripts_patientDate" class="java.sql.Timestamp"/>
+		<field name="cln_scripts_agentAddress" class="java.lang.String"/>
+		<field name="cln_scripts_Created_by" class="java.lang.Integer"/>
+		<field name="cln_scripts_Creation_date" class="java.sql.Timestamp"/>
+		<field name="cln_scripts_Last_updated_by" class="java.lang.Integer"/>
+		<field name="cln_scripts_Last_update_date" class="java.sql.Timestamp"/>
+		<field name="cln_scripts_isEnable" class="java.lang.Integer"/>
+		<field name="script_head_ID" class="java.lang.Integer"/>
+		<field name="script_head_Checked" class="java.lang.Integer"/>
+		<field name="script_head_Provider_no" class="java.lang.String"/>
+		<field name="script_head_condition_Indication" class="java.lang.Integer"/>
+		<field name="script_head_doctor_id" class="java.lang.Integer"/>
 		<field name="script_head_dose" class="java.lang.Integer"/>
-		<field name="script_head_unit" class="java.lang.Integer"/>
-		<field name="script_head_route" class="java.lang.Integer"/>
-		<field name="script_head_frequency" class="java.lang.Integer"/>
-		<field name="script_head_qty" class="java.lang.Integer"/>
-		<field name="script_head_start_date" class="java.sql.Timestamp"/>
 		<field name="script_head_end_date" class="java.sql.Timestamp"/>
+		<field name="script_head_frequency" class="java.lang.Integer"/>
+		<field name="script_head_medication_name" class="java.lang.String"/>
+		<field name="script_head_qty" class="java.lang.Integer"/>
+		<field name="script_head_route" class="java.lang.Integer"/>
+		<field name="script_head_start_date" class="java.sql.Timestamp"/>
+		<field name="script_head_user_name" class="java.lang.String"/>
+		<field name="script_head_unit" class="java.lang.Integer"/>
+		<field name="script_head_CAL_ID" class="java.lang.Integer"/>
+		<field name="script_head_ID_SCRIPT" class="java.lang.Integer"/>
+		<field name="script_head_Created_by" class="java.lang.Integer"/>
+		<field name="script_head_Creation_date" class="java.sql.Timestamp"/>
+		<field name="script_head_Last_updated_by" class="java.lang.Integer"/>
+		<field name="script_head_Last_update_date" class="java.sql.Timestamp"/>
+		<field name="script_head_isEnable" class="java.lang.Integer"/>
 	</subDataset>
-	<parameter name="id" class="java.lang.Integer">
+	<parameter name="id" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="real_path" class="java.lang.String">
@@ -565,7 +543,10 @@ copy]]></text>
 			<componentElement>
 				<reportElement key="table 5" style="table 5" x="115" y="81" width="422" height="303" uuid="c2c0f6dc-d39e-48b5-9882-8d71a3da3e7d"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<datasetRun subDataset="medicare_table" uuid="e86acc4a-273d-4184-a45d-36a03144fc86">
+					<datasetRun subDataset="medicare_table" uuid="622d7568-7492-4676-b03e-af0fa1d234d2">
+						<datasetParameter name="id">
+							<datasetParameterExpression><![CDATA[$P{id}]]></datasetParameterExpression>
+						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
 					<jr:column width="60" uuid="bb19920a-6c93-43ee-9c95-6e072b8f6f45">
