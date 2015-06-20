@@ -24,9 +24,7 @@
 					<td>{{ cr.Details }}</td>
 					<td>{{ cr.Therapist }}</td>
 					<td>
-						<a ng-click="Action('update', cr.ID)" href="javascript:;" class="btn btn-icon-only btn-circle blue">
-                            <i class="fa fa-edit"></i>
-                        </a>
+						<button class="un-button-submit-m ng-scope" ng-click="Action('update', cr.ID)">Edit</button>
 					</td>
 				</tr>
 			</tbody>

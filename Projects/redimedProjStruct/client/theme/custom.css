@@ -50,6 +50,7 @@ a:focus {
     margin-bottom: -2px;
 }
 .un-button-submit-m{
+    outline: 0;
     color: white;
     border-radius: 20px !important;
     border: 3px solid white;
