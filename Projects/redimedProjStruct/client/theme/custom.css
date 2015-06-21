@@ -1498,7 +1498,7 @@ table.timetable-table td:last-child {
 
 /*Phan Qu?c Chiên tang dong :v*/
 .un-background{
-    /*background-color: rgb(37, 33, 34)!important;*/
+    background-color: rgb(37, 33, 34);
     position: relative;
     margin-top: 54px;
 
@@ -1818,16 +1818,14 @@ table.timetable-table td:last-child {
     font-size: 16px;
     float:left;
 }
-
-.un_main_nav_item:hover{
-    background: -webkit-linear-gradient(#9F9F9F, #262626); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(#9F9F9F, #262626); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(#9F9F9F, #262626); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(#9F9F9F, #262626); /* Standard syntax */
-    color:white;
+.un_main_nav_bar>li:active>.un_main_nav_item{
+    background: -webkit-linear-gradient(#9F9F9F, #262626) !important; /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#9F9F9F, #262626) !important; /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#9F9F9F, #262626) !important; /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#9F9F9F, #262626) !important; /* Standard syntax */
+    color: white !important;
 }
-
-.un_main_nav_item:active{
+.un_main_nav_item:hover{
     background: -webkit-linear-gradient(#9F9F9F, #262626); /* For Safari 5.1 to 6.0 */
     background: -o-linear-gradient(#9F9F9F, #262626); /* For Opera 11.1 to 12.0 */
     background: -moz-linear-gradient(#9F9F9F, #262626); /* For Firefox 3.6 to 15 */
@@ -1840,13 +1838,6 @@ table.timetable-table td:last-child {
     text-decoration: none;
 }
 
-.un_main_nav_item a::active un_main_nav_item{
-    background: -webkit-linear-gradient(#9F9F9F, #262626); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(#9F9F9F, #262626); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(#9F9F9F, #262626); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(#9F9F9F, #262626); /* Standard syntax */
-    color:white;
-}
 .un_main_nav_item:hover a{
     color: white;
     text-decoration: none;
@@ -3612,6 +3603,9 @@ label{
 .pt_padding_right_0{
     padding-right: 0px !important;
 }
+.pt_padding_right_20{
+    padding-right: 20px !important;
+}
 .pt_background_image{
     background-image: url(../theme/un/bonha_21.png) !important;
 }
@@ -3659,9 +3653,6 @@ label{
 }
 .pt_width_100{
     width: 100% !important;
-}
-.pt_padding_right_0{
-    padding-right: 0px !important;
 }
 .pt_padding_left_0{
     padding-left: 0px !important;
@@ -3764,6 +3755,7 @@ label{
     width: 12%;
     margin-left: 2px;
     height: 34px;
+    outline: 0;
 }
 .re_bg_white{
     background-color: white;

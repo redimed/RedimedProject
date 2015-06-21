@@ -104,7 +104,7 @@ module.exports = {
 			attributes: ['CAL_ID', 'Patient_id', 'appt_status'],
 			include:{
 				model:db.Appointment, as: 'Appointment',
-				attributes:['FROM_TIME']
+				attributes:['FROM_TIME','DOCTOR_ID']
 			},
 			where:whereCon,
 			offset: offset,
@@ -166,21 +166,27 @@ module.exports = {
 			appt_status:appt_status,
             checkedin_start_time:start_time
 		}
-		db.ApptPatient.update(postData, {
-            CAL_ID: cal_id,
-            Patient_id: patient_id
-        })
-        .success(function (data) {
-            res.json({
-                "status": "success",
-                "data": data
+		var sql="UPDATE `cln_appt_patients` SET ? WHERE `Patient_id`=? AND `CAL_ID`=?";
+        
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[postData,patient_id,cal_id],function(err,data)
+            {
+                if(err)
+                {
+                    res.json(500, {
+		                "status": "error",
+		                "message": err
+		            });
+                }
+                else
+                {
+                    res.json({
+		                "status": "success",
+		                "data": data
+		            });    
+                }
             });
-        })
-        .error(function (error) {
-            res.json(500, {
-                "status": "error",
-                "message": error
-            });
-        })
+        });
 	},
 }
