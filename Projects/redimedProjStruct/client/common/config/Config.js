@@ -507,19 +507,23 @@ angular.module('app.config', [])
             {code:"bottle", label:"bottle"}
         ])
     .constant("SCORE_TYPE", [
-            {id:3,label:'Upper Limb Grip Strength'},
-            {id:10,label:'Auto Max score and Rating'},
-            {id:11, label:'Hamstring Flexibility'},
-            {id:4,label:'Cardiovascular Fitness'},
-            {id:6,label:'Core Strength'},
-            {id:8,label:'Functional Task Rating'},
-            {id:7,label:'Weight Test Rating'},
-            {id:9,label:'Weight Test Rating (has managed weight info)'},
-            {id:15,label:'Other Job-Specific Functional Task Assessment (No Job Demand)'},
-            {id:12,label:'Lower Limb Function'},
-            {id:13,label:'Specific Functional Task Assessment'},
-            {id:14,label:'Repetitive Task'},
-            {id:5,label:'Summary Rating and Score'},
+            {id:3,label:'Upper Limb Grip Strength',section:'Section 2: General Physical Capacity Assessment'},
+            {id:11, label:'Hamstring Flexibility',section:'Section 2: General Physical Capacity Assessment'},
+            {id:4,label:'Cardiovascular Fitness',section:'Section 2: General Physical Capacity Assessment'},
+            {id:6,label:'Core Strength',section:'Section 2: General Physical Capacity Assessment'},
+            {id:12,label:'Lower Limb Function',section:'Section 2: General Physical Capacity Assessment'},
+            {id:10,label:'Auto Max score and Rating',section:'Section 2: General Physical Capacity Assessment'},
+
+            {id:13,label:'Ability Test with description (Able/Partial/Unable)',section:'Section 3: Job-Specific Functional Task Assessment'},
+            {id:16,label:'Ability Test without description (Able/Partial/Unable)',section:'Section 3: Job-Specific Functional Task Assessment'},
+            {id:7,label:'Weight Test Rating',section:'Section 3: Job-Specific Functional Task Assessment'},
+            {id:9,label:'Weight Test Rating (has managed weight info)',section:'Section 3: Job-Specific Functional Task Assessment'},
+            {id:9,label:'Comfortable Weight Test Rating (has confortable managed weight info)',section:'Section 3: Job-Specific Functional Task Assessment'},
+            {id:17,label:'Height Test Rating (has managed height info)',section:'Section 3: Job-Specific Functional Task Assessment'},
+            {id:15,label:'Other Job-Specific Functional Task Assessment (No Job Demand)',section:'Section 3: Job-Specific Functional Task Assessment'},
+            {id:8,label:'Functional Task Rating',section:'Section 3: Job-Specific Functional Task Assessment'},
+
+            {id:5,label:'Summary Rating and Score',section:'Summary section'},
         ])
     .constant("COMMENT_TYPE", [
             {id:1,label:'Checkbox'},
