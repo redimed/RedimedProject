@@ -279,7 +279,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 				autoSummary(line);
 			}
 		}	
-		if(line.SCORE_TYPE1 === 9 && detail.QUESTION.toLowerCase() === 'job demand (kgs)'){
+		if(line.SCORE_TYPE1 === 9 && (detail.VAL1_ISVALUE===7 || detail.VAL1_ISVALUE===8 || detail.VAL1_ISVALUE===9 || detail.VAL1_ISVALUE===10)){
 			var default_details_value = line.details[0].VAL1_VALUE;
 			var start_value = 5;
 			if(line.details === 2){
@@ -292,10 +292,10 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 				}
 			}
 		}
-		else if(line.SCORE_TYPE1 === 7 && detail.QUESTION.toLowerCase() === 'job demand'){
+		else if(line.SCORE_TYPE1 === 7 && (detail.VAL1_ISVALUE===7 || detail.VAL1_ISVALUE===8 || detail.VAL1_ISVALUE===9 || detail.VAL1_ISVALUE===10)){
 			var default_details_value = line.details[0].VAL1_VALUE;
 			var start_value = 5;
-			if(line.details[0].QUESTION.toLowerCase() === "job demand" && line.details.length === 2){
+			if((line.details[0].VAL1_ISVALUE===7 || line.details[0].VAL1_ISVALUE===8 || line.details[0].VAL1_ISVALUE===9 || line.details[0].VAL1_ISVALUE===10) && line.details.length === 2){
 				line.details[1].VAL1_VALUE = angular.copy(default_details_value);
 			}
 		}
