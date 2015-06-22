@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ScriptReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c2b6103d-271a-46dc-b501-29c4a01f4289">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="240"/>
+	<property name="ireport.y" value="144"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<style name="table">
@@ -134,9 +134,9 @@
 			<![CDATA[]]>
 		</queryString>
 	</subDataset>
-	<subDataset name="medicare_table" uuid="39cf9537-8b03-4294-b1fe-ec8924df4f6d">
+	<subDataset name="Script_head" uuid="b4412129-3440-4967-8dc1-b712af725f45">
 		<parameter name="id" class="java.lang.String">
-			<defaultValueExpression><![CDATA[$P{id}]]></defaultValueExpression>
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 		</parameter>
 		<queryString>
 			<![CDATA[SELECT
@@ -213,17 +213,17 @@ WHERE
 		<field name="script_head_ID" class="java.lang.Integer"/>
 		<field name="script_head_Checked" class="java.lang.Integer"/>
 		<field name="script_head_Provider_no" class="java.lang.String"/>
-		<field name="script_head_condition_Indication" class="java.lang.Integer"/>
+		<field name="script_head_condition_Indication" class="java.lang.String"/>
 		<field name="script_head_doctor_id" class="java.lang.Integer"/>
 		<field name="script_head_dose" class="java.lang.Integer"/>
 		<field name="script_head_end_date" class="java.sql.Timestamp"/>
 		<field name="script_head_frequency" class="java.lang.Integer"/>
 		<field name="script_head_medication_name" class="java.lang.String"/>
 		<field name="script_head_qty" class="java.lang.Integer"/>
-		<field name="script_head_route" class="java.lang.Integer"/>
+		<field name="script_head_route" class="java.lang.String"/>
 		<field name="script_head_start_date" class="java.sql.Timestamp"/>
 		<field name="script_head_user_name" class="java.lang.String"/>
-		<field name="script_head_unit" class="java.lang.Integer"/>
+		<field name="script_head_unit" class="java.lang.String"/>
 		<field name="script_head_CAL_ID" class="java.lang.Integer"/>
 		<field name="script_head_ID_SCRIPT" class="java.lang.Integer"/>
 		<field name="script_head_Created_by" class="java.lang.Integer"/>
@@ -304,10 +304,10 @@ WHERE s.`ID`= $P{id}]]>
 	<field name="dose" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="unit" class="java.lang.Integer">
+	<field name="unit" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="route" class="java.lang.Integer">
+	<field name="route" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="frequency" class="java.lang.Integer">
@@ -543,7 +543,7 @@ copy]]></text>
 			<componentElement>
 				<reportElement key="table 5" style="table 5" x="115" y="81" width="422" height="303" uuid="c2c0f6dc-d39e-48b5-9882-8d71a3da3e7d"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<datasetRun subDataset="medicare_table" uuid="622d7568-7492-4676-b03e-af0fa1d234d2">
+					<datasetRun subDataset="Script_head" uuid="c95db20e-f61a-47a3-8b95-a29429b469ab">
 						<datasetParameter name="id">
 							<datasetParameterExpression><![CDATA[$P{id}]]></datasetParameterExpression>
 						</datasetParameter>
