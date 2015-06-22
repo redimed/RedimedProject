@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
-    .directive("activityDetail", function(TimeSheetService, $state, toastr, MODE_ROW, StaffService, FileUploader, $cookieStore, $timeout, $window, $modal) {
+    .directive("activityDetail", function(TimeSheetService, $state, toastr, MODE_ROW, StaffService, FileUploader, $cookieStore, $timeout, $window, $modal, $location) {
         return {
             restrict: "EA",
             required: "ngModel",
@@ -438,7 +438,11 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                 scope.clickDownloadFile = function(idFile) {
                     TimeSheetService.DownloadFile(idFile).then(function(response) {
                         if (response.status === 'success') {
-                            console.log(response);
+                            var absUrl = $location.absUrl();
+                            absUrl = encodeURIComponent(absUrl.substring(0, absUrl.search('#') + 1));
+                            // var windowDownload = $window.open('https://google.com', "window download file", "", "");
+                            // windowDownload.document.write("<p>Downloading!</p>");
+                            $window.open('/api/TimeSheet/get-download-file/1');
                         }
                     });
                 };
