@@ -1958,7 +1958,7 @@ module.exports = {
                                                                                                                                 if(data_update2!==undefined&&data_update2!==null&&data_update2!==""&&data_update2.length!==0){
                                                                                                                                     for (var m = 0; m < 5 * data_insert1.length; m++) {
                                                                                                                                         for (var n = 0; n < data_update2.length; n++) {
-                                                                                                                                            chainer.add(db.time_activity_summary_report.update({
+                                                                                                                                            chainer.add(db.time_activity_summary_report.update({                             
                                                                                                                                                 time_charge_Dept_all: data_update2[n].time_charge_Dept_all
                                                                                                                                             }, {
                                                                                                                                                 Department_id: data_update2[n].Department_id,
@@ -1986,11 +1986,17 @@ module.exports = {
                                                                                                                                                 .success(function(data_update4) {
                                                                                                                                                     if(data_update4!==undefined&&data_update4!==null&&data_update4!==""&&data_update4.length!==0){
                                                                                                                                                         for (var h = 0; h < 5 * data_insert1.length; h++) {
-                                                                                                                                                            chainer.add(db.time_activity_summary_report.update({
+                                                                                                                                                           for(var g = 0;g < data_update2.length; g++){
+                                                                                                                                                                 chainer.add(db.time_activity_summary_report.update({
+                                                                                                                                                                time_charge_Dept_per: (data_update1[h].time_charge_Dept/data_update2[g].time_charge_Dept_all)*100,
                                                                                                                                                                 time_charge_all: data_update4[0].time_charge_all
+                                                                                                                                                                
                                                                                                                                                             }, {
-                                                                                                                                                                user_id: data_update4[0].user_id
+                                                                                                                                                                user_id: data_update4[0].user_id,
+                                                                                                                                                                Department_id: data_update2[g].Department_id,
+                                                                                                                                                                activity_id: data_update1[h].activity_id
                                                                                                                                                             }))
+                                                                                                                                                           }
                                                                                                                                                         }
                                                                                                                                                         chainer.runSerially()
                                                                                                                                                             .success(function(data_success) {
