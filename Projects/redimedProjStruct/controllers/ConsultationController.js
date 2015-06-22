@@ -449,12 +449,12 @@ module.exports = {
         var postData=kiss.checkData(req.body.postData)?req.body.postData:{};
         var doctorId=kiss.checkData(postData.doctorId)?postData.doctorId:'';
         var actualDoctorId=kiss.checkData(postData.actualDoctorId)?postData.actualDoctorId:'';
-        if(!kiss.checkListData(doctorId))
-        {
-            kiss.exlog(fHeader,"Loi data truyen den");
-            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,"TN001")});
-            return;
-        }
+        // if(!kiss.checkListData(doctorId))
+        // {
+        //     kiss.exlog(fHeader,"Loi data truyen den");
+        //     res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,"TN001")});
+        //     return;
+        // }
         if(kiss.checkData(actualDoctorId))
         {
             var sql=
