@@ -106,21 +106,14 @@ public class DocumentService {
 	       			    InputSource is = new InputSource();
 	       			    is.setCharacterStream(new StringReader(sf.toString()));
 	       			    Document doc = db.parse(is);
-	       			    
+
 	       			    NodeList nodes = doc.getElementsByTagName("input");
-	       			    int count=0;
-	       			    while(count < nodes.getLength())
+
+	       			    for(int count=0; count < nodes.getLength(); count++)
 	       			    {
 	       			    	Element e = (Element)nodes.item(count);
-	       			    	Element newNode = doc.createElement("span");
-	       			    		       			    	
-       			    		newNode.setAttribute("style", e.getAttribute("style"));
-	       			    	newNode.setTextContent(e.getAttribute("value"));
-
-	       			    	e.getParentNode().replaceChild(newNode, e);
-	       			    	count++;
+	       			    	e.setTextContent(e.getAttribute("value"));
 	       			    }
-
 	       			    
        				 	String workingDir = System.getProperty("user.dir");
        				 	File f = new File(workingDir+"\\tempPDF");
