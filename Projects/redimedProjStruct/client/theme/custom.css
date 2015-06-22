@@ -1366,9 +1366,12 @@ table.timetable-table td:last-child {
 .table-div .active {
     background-color: #2BEABB;
 }
-
+.appointment_wrapper{
+    width: 100%;
+    overflow: scroll;
+}
 .appointment {
-    overflow-x: scroll;
+    width: 200%;
 }
 
 .appointment .appointment-row {
