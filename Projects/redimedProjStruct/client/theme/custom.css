@@ -1368,7 +1368,7 @@ table.timetable-table td:last-child {
 }
 
 .appointment {
-    overflow: auto;
+    overflow-x: scroll;
 }
 
 .appointment .appointment-row {

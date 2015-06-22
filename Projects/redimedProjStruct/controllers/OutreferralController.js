@@ -433,7 +433,7 @@ module.exports = {
 		var sql = knex()
 				.select('*')
 				.from('doctors')
-				.where('doctor_id',postData)
+				.where('User_id',postData)
 				.toString();
 
 		db.sequelize.query(sql)
