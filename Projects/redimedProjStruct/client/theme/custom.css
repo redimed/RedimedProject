@@ -1368,10 +1368,10 @@ table.timetable-table td:last-child {
 }
 .appointment_wrapper{
     width: 100%;
-    overflow: hidden;
 }
 .appointment {
     width: 200%;
+    overflow: hidden;
 }
 
 .appointment .appointment-row {
