@@ -3105,10 +3105,14 @@ label{
     width: 80%;
 }
 .span_menus {
-    margin-top:-5px !important;
-    margin-left:1px;
+    margin-top:-2% !important;
+    margin-left:38px;
     font-size:10px; 
     float:left;
+}
+.span_title{
+    margin-top:-15% !important; 
+    margin-left:38px;
 }
 /*giang css end*/
 /* END VUONG */
