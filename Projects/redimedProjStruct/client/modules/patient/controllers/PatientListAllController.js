@@ -56,7 +56,7 @@ angular.module('app.loggedIn.patient.listall.controller',[])
             }
         }
         $scope.rowClick = function(item){
-            $state.go("loggedIn.patient.appointment", {patient_id: item.Patient_id, cal_id: 1});
+            $state.go("loggedIn.patient.appointment", {patient_id: item.Patient_id, cal_id: -1});
         }
         $scope.patientEditForm = {
 			params: {
