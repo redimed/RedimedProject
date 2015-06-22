@@ -3105,10 +3105,14 @@ label{
     width: 80%;
 }
 .span_menus {
-    margin-top:-5px !important;
-    margin-left:1px;
+    margin-top:-2% !important;
+    margin-left:38px;
     font-size:10px; 
     float:left;
+}
+.span_title{
+    margin-top:-15% !important; 
+    margin-left:38px;
 }
 /*giang css end*/
 /* END VUONG */
@@ -3274,13 +3278,30 @@ label{
 
 .un_tn_btn_sm{
     font-size: 10px;
+    line-height: 14px;
 }
 
 .un_tn_btn_zip{
-    padding-left:3px;
-    padding-right:3px;
+    padding-left:10px;
+    padding-right:10px;
 }
 
+/**
+ * button search ke ben inputtext
+ */
+.un_tn_btn_side{
+    height: 19.5px;
+    /*width:20px;*/
+    padding:0px;
+    border:none;
+    position:relative;
+    z-index: 2;
+    left:-1;
+}
+.un_tn_btn_side_gray{
+    color: black!important;
+    background-color: rgb(197, 197, 197)!important;
+}
 
 .un_tn_txt_notify{
     /*border-radius: 20px !important;*/
@@ -3497,6 +3518,21 @@ label{
 }
 .un_tn_legend_node_blank{
     border:1px solid #333333;
+}
+
+.un_tn_asterisk{
+    color:red;
+    font-size: 15px;
+}
+
+.un_tn_table_row_border_red td{
+    border-top:1px solid #900000;
+    border-right:1px solid #900000;
+    border-bottom:1px solid #900000;
+}
+
+.un_tn_table_row_zip td{
+    padding:0px;
 }
 /*---------------------------------------------*/
 /*---------------------------------------------*/

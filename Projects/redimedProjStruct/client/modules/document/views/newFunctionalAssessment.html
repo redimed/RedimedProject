@@ -102,16 +102,16 @@
 
 							<!-- text box with detail comment-->
 							<div class="row">
-								<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL1_ISVALUE===1 || detail.VAL1_ISVALUE===7 || detail.VAL1_ISVALUE===8">
+								<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL1_ISVALUE===1 || detail.VAL1_ISVALUE===7 || detail.VAL1_ISVALUE===8 || detail.VAL1_ISVALUE===9 || detail.VAL1_ISVALUE===10">
 									<label class="control-label pull-right" style="margin-top:10px;" >{{detail.VAL1_NAME}}</label>
 								</div>
-								<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL1_ISVALUE===1 || detail.VAL1_ISVALUE===7 || detail.VAL1_ISVALUE===8">
+								<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL1_ISVALUE===1 || detail.VAL1_ISVALUE===7 || detail.VAL1_ISVALUE===8 || detail.VAL1_ISVALUE===9 || detail.VAL1_ISVALUE===10">
 									<input type="text" class="form-control" ng-model="detail.VAL1_VALUE" ng-change="autoCalculationVal1(line, detail)">
 								</div>
-								<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL2_ISVALUE===1 || detail.VAL2_ISVALUE===7 || detail.VAL2_ISVALUE===8">
+								<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL2_ISVALUE===1 || detail.VAL2_ISVALUE===7 || detail.VAL2_ISVALUE===8 || detail.VAL2_ISVALUE===9 || detail.VAL2_ISVALUE===10">
 									<label class="control-label pull-right" style="margin-top:10px;">{{detail.VAL2_NAME}}</label>
 								</div>
-								<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL2_ISVALUE===1 || detail.VAL2_ISVALUE===7 || detail.VAL2_ISVALUE===8">
+								<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL2_ISVALUE===1 || detail.VAL2_ISVALUE===7 || detail.VAL2_ISVALUE===8 || detail.VAL2_ISVALUE===9 || detail.VAL2_ISVALUE===10">
 									<input type="text" class="form-control" ng-model="detail.VAL2_VALUE" ng-change="autoCalculationVal2(line)">
 								</div>
 								
@@ -351,10 +351,10 @@
 						</div>	
 						<!-- End Excellent/Good/Fair/Por radio Rating-->
 						<!-- Unable/Partial/Able Rating -->
-						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING1 === 1 && (line.SCORE_TYPE1 === 9 || line.SCORE_TYPE1 === 7)">
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING1 === 1 && (line.SCORE_TYPE1 === 9 || line.SCORE_TYPE1 === 7 || line.SCORE_TYPE1 === 15)">
 							<label class="control-label pull-right" style="margin-top:15px;">Rating: </label>
 						</div>
-						<div class="col-md-4 col-sm-4 col-xs-4" ng-if="line.ISRATING1 === 1 && (line.SCORE_TYPE1 === 9 || line.SCORE_TYPE1 === 7)">
+						<div class="col-md-4 col-sm-4 col-xs-4" ng-if="line.ISRATING1 === 1 && (line.SCORE_TYPE1 === 9 || line.SCORE_TYPE1 === 7 || line.SCORE_TYPE1 === 15)">
 							<label class="btn">
 								<input type="radio" ng-model="line.RATING_VALUE1" value="0"> UNABLE 
 							</label>
@@ -365,10 +365,10 @@
 								<input type="radio" ng-model="line.RATING_VALUE1" value="2"> ABLE 
 							</label>
 						</div>
-						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING2 === 1 && (line.SCORE_TYPE2 === 9 || line.SCORE_TYPE2 === 7)">
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING2 === 1 && (line.SCORE_TYPE2 === 9 || line.SCORE_TYPE2 === 7 || line.SCORE_TYPE2 === 15)">
 							<label class="control-label pull-right" style="margin-top:15px;">Rating 2: </label>
 						</div>
-						<div class="col-md-4 col-sm-4 col-xs-4" ng-if="line.ISRATING2 === 1 && (line.SCORE_TYPE2 === 9 || line.SCORE_TYPE2 === 7)">
+						<div class="col-md-4 col-sm-4 col-xs-4" ng-if="line.ISRATING2 === 1 && (line.SCORE_TYPE2 === 9 || line.SCORE_TYPE2 === 7 || line.SCORE_TYPE2 === 15)">
 							<label class="btn">
 								<input type="radio" ng-model="line.RATING_VALUE2" value="0"> UNABLE 
 							</label>

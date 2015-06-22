@@ -12,5 +12,5 @@ module.exports =
 		billing:{value:'Billing',display:'Billing'},
 		close:{value:'Close',display:'Close'},
 		cancelled:{value:'Cancelled',display:'Cancelled'}
-	},
+	}
 }

@@ -30,10 +30,16 @@ angular.module('app.loggedIn.patient.listall.controller',[])
                 	Sur_name: {type: 'text'},
                 	Address1: {type: 'text'},
                 	Post_code: {type: 'text'}
-                 }
+                }
 			}
 		}
 
+        $scope.actionCenter={
+            runWhenFinish:function(){
+                $scope.patientAddForm.close();
+                $scope.patient_panel.reload();
+            }
+        }
 
 		$scope.patientAddForm = {
 			params: {
@@ -52,11 +58,12 @@ angular.module('app.loggedIn.patient.listall.controller',[])
             },
             success: function (response) {
                 if (response.status == 'success')
+                    alert('okokok');
                     $scope.patient_panel.reload();
             }
         }
         $scope.rowClick = function(item){
-            $state.go("loggedIn.patient.appointment", {patient_id: item.Patient_id, cal_id: 1});
+            $state.go("loggedIn.patient.appointment", {patient_id: item.Patient_id, cal_id: -1});
         }
         $scope.patientEditForm = {
 			params: {

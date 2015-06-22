@@ -67,7 +67,7 @@
 												<label>
 													<input type="checkbox" ng-model="line.ISSCORE1" ng-true-value="1" ng-false-value="0" ng-checked="line.ISSCORE1===1"/> Is score?
 												</label>
-												<select class="form-control" ng-options="scr.id as scr.label for scr in score_type_opt" ng-model="line.SCORE_TYPE1">
+												<select class="form-control" ng-options="scr.id as scr.label group by scr.section for scr in score_type_opt" ng-model="line.SCORE_TYPE1">
 													
 												</select>
 												
@@ -93,7 +93,7 @@
 												<label>
 													<input type="checkbox" ng-model="line.ISSCORE2" ng-true-value="1" ng-false-value="0" ng-checked="line.ISSCORE2===1"/> Is score?
 												</label>
-												<select class="form-control" ng-options="scr.id as scr.label for scr in score_type_opt" ng-model="line.SCORE_TYPE2">
+												<select class="form-control" ng-options="scr.id as scr.label group by scr.section for scr in score_type_opt" ng-model="line.SCORE_TYPE2">
 													
 												</select>
 												

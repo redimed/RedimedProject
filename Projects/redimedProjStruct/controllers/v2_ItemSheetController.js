@@ -5,7 +5,13 @@ var kiss=require('./kissUtilsController');
 
 module.exports = {
     postDeptItems: function(req,res){
-        var dept_id = req.body.id;
+        var dept_id = kiss.checkData(req.body.id)?req.body.id:'';
+        if(!kiss.checkListData(dept_id))
+        {
+            res.json({status:'error',data:'loi data truyen den'});
+            return;
+        }
+
            db.Department.find({
             where: {CLINICAL_DEPT_ID: dept_id},
             attributes: ['CLINICAL_DEPT_ID', 'CLINICAL_DEPT_NAME'],
@@ -23,7 +29,18 @@ module.exports = {
                 },
             ]
         }).success(function(data){
-            res.json({status:'success', data:data.itemLists});
+            if(data.itemLists)
+            {
+                res.json({status:'success', data:data.itemLists});
+            }
+            else
+            {
+                res.json({status:'error',data:'loi khong co du lieu'});
+            }
+            
+        })
+        .error(function(err){
+            res.json({status:'error',data:err});
         })
 	},
     

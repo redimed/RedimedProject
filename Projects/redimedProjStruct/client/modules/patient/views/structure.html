@@ -27,19 +27,23 @@
 		<div class="un_page_panel">
 	<div class="un_main_nav_panel">
 		<div class="un_main_nav_bar">
-			<div class="un_main_nav_item" ng-repeat="module in patient_detail_modules">
+			<div class="un_main_nav_item" ng-repeat="module in patient_detail_modules" ng-show="cal_id == -1 && module.wrap === 0">
 				<a ui-sref="{{module.state}}">{{module.name}}</a>
 			</div>
-			<div class="un_main_nav_item" ng-repeat="module in patient_apt_modules">
+			<div class="un_main_nav_item" ng-repeat="module in patient_detail_modules" ng-show="cal_id != -1">
 				<a ui-sref="{{module.state}}">{{module.name}}</a>
 			</div>
-
+			<div class="un_main_nav_item" ng-repeat="module in patient_apt_modules" ng-show="cal_id == -1 && module.wrap === 0">
+				<a ui-sref="{{module.state}}">{{module.name}}</a>
+			</div>
+			<div class="un_main_nav_item" ng-repeat="module in patient_apt_modules" ng-show="cal_id != -1">
+				<a ui-sref="{{module.state}}">{{module.name}}</a>
+			</div>
 			<div style="display:none" class="un_main_nav_item_0">
 				<ul class="un_main_nav_item_dropdown">
 				    <li>
 				        <a>More<i class="fa fa-chevron-down"></i></a>
 				        <ul style="list-style-type: none;" class="un-more-ul">
-
 				        </ul>
 				    </li>
 
@@ -147,7 +151,10 @@
 										<span class="input-group-btn ">
 										<button class="btn un-btn-black-label" type="button">Time</button>
 										</span>
-										<label type="text" class="form-control un-input-xam-fig">{{current_patient.FROM_TIME | moment: 'utc' | moment: 'format': 'DD/MM/YYYY hh:mm'}}</label>
+										<label type="text" class="form-control un-input-xam-fig" ng-if="cal_id !== -1">{{current_patient.FROM_TIME | moment: 'utc' | moment: 'format': 'DD/MM/YYYY hh:mm'}}
+										</label>
+										<label type="text" class="form-control un-input-xam-fig" ng-if="cal_id === -1">
+										</label>
 									</div>
 								</div>
 							</div>
