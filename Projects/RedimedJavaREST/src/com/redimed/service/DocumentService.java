@@ -15,6 +15,18 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
+import java.io.StringReader;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.CharacterData;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+
 import org.codehaus.jettison.json.JSONObject;
 import org.xhtmlrenderer.layout.SharedContext;
 import org.xhtmlrenderer.pdf.ITextRenderer;
@@ -90,6 +102,26 @@ public class DocumentService {
        				 	sf.append(content);
        				 	sf.append("</html>");
        				 	
+       				 	DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+	       			    InputSource is = new InputSource();
+	       			    is.setCharacterStream(new StringReader(sf.toString()));
+	       			    Document doc = db.parse(is);
+	       			    
+	       			    NodeList nodes = doc.getElementsByTagName("input");
+	       			    int count=0;
+	       			    while(count < nodes.getLength())
+	       			    {
+	       			    	Element e = (Element)nodes.item(count);
+	       			    	Element newNode = doc.createElement("span");
+	       			    		       			    	
+       			    		newNode.setAttribute("style", e.getAttribute("style"));
+	       			    	newNode.setTextContent(e.getAttribute("value"));
+
+	       			    	e.getParentNode().replaceChild(newNode, e);
+	       			    	count++;
+	       			    }
+
+	       			    
        				 	String workingDir = System.getProperty("user.dir");
        				 	File f = new File(workingDir+"\\tempPDF");
        				 	f.mkdirs();
@@ -107,8 +139,8 @@ public class DocumentService {
 	       		        sharedContext.setInteractive(false);
 	       		        sharedContext.setReplacedElementFactory(new B64ImgReplacedElementFactory());
 	       		        sharedContext.getTextRenderer().setSmoothingThreshold(0);
-	       		        
-	       		        renderer.setDocumentFromString(sf.toString());
+	       		    
+	       		        renderer.setDocument(doc,null);
 	       		        renderer.layout();
 	       		        renderer.createPDF(os);
 	       		        renderer.finishPDF();
