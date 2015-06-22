@@ -515,6 +515,7 @@ angular.module('app.config', [])
             {id:8,label:'Functional Task Rating'},
             {id:7,label:'Weight Test Rating'},
             {id:9,label:'Weight Test Rating (has managed weight info)'},
+            {id:15,label:'Other Job-Specific Functional Task Assessment (No Job Demand)'}
             {id:12,label:'Lower Limb Function'},
             {id:13,label:'Specific Functional Task Assessment'},
             {id:14,label:'Repetitive Task'},
