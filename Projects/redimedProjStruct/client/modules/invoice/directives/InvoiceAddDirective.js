@@ -1,6 +1,6 @@
 angular.module('app.loggedIn.invoice.add.directive', [])
 
-.directive('invoiceAdd', function(InvoiceHeaderModel, PatientService, ConfigService, InvoiceService, ReceptionistService, toastr, $filter, $state, CompanyService){
+.directive('invoiceAdd', function($stateParams,InvoiceHeaderModel, PatientService, ConfigService, InvoiceService, ReceptionistService, toastr, $filter, $state, CompanyService){
 	var arrGetBy = $filter('arrGetBy');	
 	return {
 		restrict: 'EA',
@@ -100,7 +100,8 @@ angular.module('app.loggedIn.invoice.add.directive', [])
 				},
 				click: function(item) {
 					$scope.InvoiceMap.claim = item;
-					$scope.InvoiceMap.Insurer_id = item.insurer_site;
+					// $scope.InvoiceMap.Insurer_id = item.insurer_site;//tan comment
+					$scope.InvoiceMap.Insurer_id = item.insurer_id;//tan add
 					$scope.InvoiceMap.claim_id = item.Claim_id;
 					$scope.InvoiceMap.insurer = { insurer_name: item.Insurer };
 					$scope.patientClaim.close();
@@ -114,7 +115,8 @@ angular.module('app.loggedIn.invoice.add.directive', [])
 	                	{field: 'Claim_id', is_hide: true},
 	                    {field: 'Injury_name', label: 'Injury'},
 	                    {field: 'Insurer'} ,
-	                    {field: 'insurer_site', is_hide: true}
+	                    // {field: 'insurer_site', is_hide: true}//tan comment
+	                    {field: 'insurer_id', is_hide: true}//tan add
 	                ],
 	                not_load: false,
 	                search: {Patient_id: $scope.patient}
@@ -246,14 +248,34 @@ angular.module('app.loggedIn.invoice.add.directive', [])
 				delete postData.patient;
 				delete postData.company;
 
-				console.log(postData)
-					
+				//console.log("postData.lines",postData.lines);
+				var insertArr = []; 
+            
+	           for (var i = 0; i < postData.lines.length; i++) {
+	           		var t = {
+	                    CLN_ITEM_ID: postData.lines[i].ITEM_ID,
+	                    Patient_id: $stateParams.patient_id,
+	                    cal_id:  $stateParams.cal_id,
+	                    PRICE: postData.lines[i].PRICE,
+	                    TIME_SPENT: !postData.lines[i].TIME_SPENT ? 0: postData.lines[i].TIME_SPENT,
+	                    QUANTITY: postData.lines[i].QUANTITY,
+	                    is_enable: 1
+	                }
+	                insertArr.push(t);
+	           };
 				InvoiceService.add(postData).then(function(response){
 					if(response.status == 'error') {
 						toastr.error('Cannot Insert', 'Error')
 					} else if(response.status == 'success') {
-						toastr.success('Insert Successfully !!!', 'Success');
-
+						 PatientService.saveItemSheet(insertArr).then(function(response){
+			               // console.log(response);
+			                if(response.status === 'success'){
+			                    toastr.success('Save successfully!','Success!');
+			                }
+			                else{
+			                    toastr.error('Save failed!','Error!');
+			                }
+			            });		
 						if(scope.onsuccess) {
 							scope.onsuccess();
 						}

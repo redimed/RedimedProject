@@ -92,16 +92,16 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 					this.is_show = false;
 				},
 				click: function(item) {
-					// var postData = {claim_id: item.Claim_id,Insurer_id:item.insurer_id};
 					var postData = {claim_id: item.Claim_id};
 					InvoiceService.update($scope.params.id, postData)
 					.then(function(response){
 						if(response.status == 'success') {
 							toastr.success('Save Claim Successfully !!!', 'Success');
 							$scope.InvoiceMap.claim = item;
-							$scope.InvoiceMap.Insurer_id = item.insurer_site;
+							// $scope.InvoiceMap.Insurer_id = item.insurer_site;//tan comment
+							$scope.InvoiceMap.Insurer_id = item.insurer_id;//tan add
 							$scope.InvoiceMap.claim_id = item.Claim_id;
-							$scope.InvoiceMap.insurer = {insurer_name: item.Insurer }
+							$scope.InvoiceMap.insurer = {insurer_name: item.Insurer };
 							$scope.patientClaim.close();
 						}
 					})
@@ -115,7 +115,7 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 	                    {field: 'Injury_name', label: 'Injury'},
 	                    {field: 'Insurer'} ,
 	                    {field: 'insurer_site', is_hide: true},
-	                    {field: 'insurer_id',is_hide:true}
+	                    {field: 'insurer_id', is_hide: true}
 	                ],
 	                not_load: true,
 	                search: {}
@@ -168,14 +168,13 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 					if(t_item) {
 						return;
 					}
-					item.ITEM_NAME = item.ITEM_NAME.substring(0, 50);
+					// item.ITEM_NAME = item.ITEM_NAME.substring(0, 50);// tan comment
 					item.QUANTITY = 1;
 					item.TIME_SPENT = 0;
 					item.IS_ENABLE = 1;
 
 					item.invItem = {ITEM_CODE : item.ITEM_CODE, ITEM_NAME: item.ITEM_NAME };
 
-					$scope.InvoiceMap.lines.push(item);
 					ReceptionistService.itemFeeAppt($scope.InvoiceMap.SERVICE_ID,[item.ITEM_ID]).then(function(response){
 
 	                    if(response.list.length > 0) {
@@ -185,9 +184,39 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 	                        item.PRICE = 0;
 	                        item.has_price = false;
 	                    }
+
+
+	                    var postData={
+	                    	patientId:$scope.InvoiceMap.Patient_id,
+	                    	calId:$scope.InvoiceMap.cal_id,
+	                    	invoiceHeaderId:$scope.InvoiceMap.header_id,
+	                    	invoiceLine:item
+	                    }
+	                    InvoiceService.createInvoiceLine(postData)
+	                    .then(function(data){
+	                    	if(data.status=='success')
+	                    	{
+	                    		toastr.success('Add item success.','Success');
+	                    		angular.copy(data.data,item);
+	                    		$scope.InvoiceMap.lines.push(item);
+	                    	}
+	                    	else if(data.status="exist")
+	                    	{
+	                    		toastr.warning('Duplicate item','Warning');
+	                    	}
+	                    	else
+	                    	{
+	                    		toastr.error('Add fail.','Error');
+	                    		exlog.logErr(data);
+	                    	}
+	                    },function(err){
+	                    	toastr.error('Add fail.','Error');
+	                    	exlog.logErr(err);
+	                    })
 	                });
 				}
 			}
+
 
 			$scope.itemSearchOption = {
                 api:'api/erm/v2/items/search',
@@ -216,7 +245,6 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 				scope.isSubmit = false;
 				if(scope.params.permission.edit === true){
 					InvoiceService.headerDetail(scope.params.id).then(function(response){
-						exlog.log(response);
 						if(response.status == 'error') 
 							toastr.error('Error Get Detail', 'Error')
 						angular.extend(scope.InvoiceMap, response.data);
@@ -229,9 +257,9 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 				 			return item.IS_ENABLE == 1;
 				 		});
 
-				 		scope.InvoiceMap.lines.forEach(function(line){
+				 		/*scope.InvoiceMap.lines.forEach(function(line){
 				 			line.invItem.ITEM_NAME = line.invItem.ITEM_NAME.substring(0, 50);
-				 		})
+				 		})*/ //tan comment
 
 						for(var i = 0, amount = 0, len = scope.InvoiceMap.lines.length; i < len; ++i) {
 				 			var line = scope.InvoiceMap.lines[i];
@@ -261,21 +289,19 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 			init();
 
 			scope.clickAction = function(){
-				console.log('this is edit data', scope.InvoiceMap);
-				// var postData = angular.copy(scope.InvoiceMap);
-				// for(var key in postData){
-				// 	if(postData[key] instanceof Date) postData[key] = ConfigService.getCommonDate(postData[key]);
-				// }//end for
-				if(scope.params.permission.edit === true){
+				console.log('this is edit data:', scope.InvoiceMap);
+				if(scope.params.permission.edit === true)
+				{
 					if(!scope.InvoiceMap.lines || scope.InvoiceMap.lines.length===0){
 						toastr.error("Missing header / lines","Error!");
 					}
-					else{
+					else
+					{
 						if(scope.InvoiceMap.STATUS==='done'){
 							var r = confirm("You cannot change this invoice information once you change the status to \"Done\". \n Are you sure?");
 							if(r==false) return;
 						}
-						exlog.log(scope.InvoiceMap);//tan exlog
+			
 						InvoiceService.save(scope.params.id, scope.InvoiceMap).then(function(response){
 							if(response.status == 'error') 
 								toastr.error('Cannot send to ERP', 'Error')
@@ -284,8 +310,10 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 							init();
 						})
 					}
-				}else{
-
+				}
+				//tannv : gan nhu truong hop trong doan else nay chua duoc su dung bao gio
+				else
+				{
 					InvoiceService.add(postData).then(function(data){
 						if(data.status == 'error') toastr.error('Cannot Insert', 'Error')
 						toastr.success('Insert Successfully !!!', 'Success');
@@ -296,13 +324,12 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 			
 			}//end clickAction
 
+
 			/**
 			 * tannv.dts@gmail.com
 			 * --------------------------------------------------
-			 * --------------------------------------------------
-			 * --------------------------------------------------
+			 * Xoa invoice line, xoa appt item
 			 */
-			
 			scope.removeInvoiceLine=function(item){
 				var modalInstance = $modal.open({
 					templateUrl: 'notifyToRemoveInvoiceLine',
@@ -342,9 +369,42 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 						exlog.logErr(err);
 					})
 				})
-
-				
 			}
+
+			/**
+			 * tannv.dts@gmail.com
+			 * Update invoice line
+			 */
+			
+			scope.updateInvoiceLine=function(item)
+			{
+				var postData={
+					invoiceLine:item
+				}
+				InvoiceService.updateInvoiceLine(postData)
+				.then(function(data){
+					if(data.status=='success')
+					{
+						toastr.success('Update success.','Success');
+						item.notSave=false;
+					}
+					else
+					{
+						exlog.logErr(data);
+						toastr.error('Update error.','Error');
+					}
+				},function(err){
+					exlog.logErr(err);
+					toastr.error('Update error.','Error');
+				});
+
+			}
+			scope.handleWhenLineChanged=function(item)
+			{
+				item.notSave=true;
+			}
+
+
 		}//end link
 	}//end return
 })
