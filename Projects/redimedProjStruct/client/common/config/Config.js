@@ -520,6 +520,7 @@ angular.module('app.config', [])
             {id:9,label:'Weight Test Rating (has managed weight info)',section:'Section 3: Job-Specific Functional Task Assessment'},
             {id:18,label:'Comfortable Weight Test Rating (has confortable managed weight info)',section:'Section 3: Job-Specific Functional Task Assessment'},
             {id:17,label:'Height Test Rating (has managed height info)',section:'Section 3: Job-Specific Functional Task Assessment'},
+            {id:19,label:'Comfortable Height Test Rating (has confortable managed height info)',section:'Section 3: Job-Specific Functional Task Assessment'},
             {id:15,label:'Other Job-Specific Functional Task Assessment (No Job Demand)',section:'Section 3: Job-Specific Functional Task Assessment'},
             {id:8,label:'Functional Task Rating',section:'Section 3: Job-Specific Functional Task Assessment'},
 
