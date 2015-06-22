@@ -30,10 +30,16 @@ angular.module('app.loggedIn.patient.listall.controller',[])
                 	Sur_name: {type: 'text'},
                 	Address1: {type: 'text'},
                 	Post_code: {type: 'text'}
-                 }
+                }
 			}
 		}
 
+        $scope.actionCenter={
+            runWhenFinish:function(){
+                $scope.patientAddForm.close();
+                $scope.patient_panel.reload();
+            }
+        }
 
 		$scope.patientAddForm = {
 			params: {
@@ -52,6 +58,7 @@ angular.module('app.loggedIn.patient.listall.controller',[])
             },
             success: function (response) {
                 if (response.status == 'success')
+                    alert('okokok');
                     $scope.patient_panel.reload();
             }
         }
