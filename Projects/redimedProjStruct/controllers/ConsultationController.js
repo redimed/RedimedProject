@@ -446,19 +446,34 @@ module.exports = {
     {
         var fHeader="ConsultationController->beforeStartSession";
         var functionCode="FN006";
-        var doctorId=kiss.checkData(req.body.doctorId)?req.body.doctorId:'';
+        var postData=kiss.checkData(req.body.postData)?req.body.postData:{};
+        var doctorId=kiss.checkData(postData.doctorId)?postData.doctorId:'';
+        var actualDoctorId=kiss.checkData(postData.actualDoctorId)?postData.actualDoctorId:'';
         if(!kiss.checkListData(doctorId))
         {
             kiss.exlog(fHeader,"Loi data truyen den");
             res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,"TN001")});
             return;
         }
-        var sql=
+        if(kiss.checkData(actualDoctorId))
+        {
+            var sql=
+            " SELECT patient.*,calendar.`FROM_TIME`,apptPatient.appt_status,apptPatient.CAL_ID           "+
+            " FROM `cln_appt_patients` apptPatient                                                       "+
+            " INNER JOIN `cln_appointment_calendar` calendar ON apptPatient.`CAL_ID`=calendar.`CAL_ID`   "+
+            " INNER JOIN `cln_patients` patient ON `apptPatient`.`Patient_id`=patient.`Patient_id`       "+
+            " WHERE apptPatient.`actual_doctor_id`=? AND `apptPatient`.`appt_status`=?                             ";
+        }
+        else
+        {
+            var sql=
             " SELECT patient.*,calendar.`FROM_TIME`,apptPatient.appt_status,apptPatient.CAL_ID           "+
             " FROM `cln_appt_patients` apptPatient                                                       "+
             " INNER JOIN `cln_appointment_calendar` calendar ON apptPatient.`CAL_ID`=calendar.`CAL_ID`   "+
             " INNER JOIN `cln_patients` patient ON `apptPatient`.`Patient_id`=patient.`Patient_id`       "+
             " WHERE calendar.`DOCTOR_ID`=? AND `apptPatient`.`appt_status`=?                             ";
+        }
+        
 
         kiss.executeQuery(req,sql,[doctorId,invoiceUtil.apptStatus.inConsult.value],function(rows){
             res.json({status:'success',data:rows});

@@ -854,7 +854,13 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		 */
 		$scope.startSession=function()
         {
-        	ConsultationService.beforeStartSession($scope.apptPatient.DOCTOR_ID)
+        	var doctorData={};
+        	doctorData.doctorId=$scope.apptPatient.DOCTOR_ID;
+        	if($scope.apptPatient.actual_doctor_id)
+    		{
+    			doctorData.actualDoctorId=$scope.apptPatient.actual_doctor_id;
+    		}
+        	ConsultationService.beforeStartSession(doctorData)
         	.then(function(data){
         		if(data.status=='success')
         		{
@@ -872,7 +878,13 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 									}
 									$state.go("loggedIn.patient.appointment", {patient_id: item.Patient_id, cal_id: item.CAL_ID});
 								}
-								$scope.ok = function(){
+								$scope.close = function(){
+									$modalInstance.dismiss('cancel');
+								}
+
+								$scope.continue=function()
+								{
+									executeStart();
 									$modalInstance.dismiss('cancel');
 								}
 							},

@@ -70,9 +70,9 @@ angular.module("app.loggedIn.patient.consult.services",[])
 		 * tannv.dts@gmail.com
 		 * kiem tra xem doctor co cac appointment nao dang la work in progress hay khong
 		 */
-		services.beforeStartSession=function(doctorId)
+		services.beforeStartSession=function(postData)
 		{
-			return api.all('consultation/beforeStartSession').post({doctorId:doctorId});
+			return api.all('consultation/beforeStartSession').post({postData:postData});
 		}
 
 		/**
