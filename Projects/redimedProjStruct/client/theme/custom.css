@@ -1368,7 +1368,7 @@ table.timetable-table td:last-child {
 }
 .appointment_wrapper{
     width: 100%;
-    overflow: scroll;
+    overflow: hidden;
 }
 .appointment {
     width: 200%;
