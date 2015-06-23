@@ -29,13 +29,15 @@ angular.module("app.loggedIn.patient.controller", [
     $scope.search.Patient_id = $scope.patient_id;
     //change bar
     $scope.patientBarVer={};
-    $scope.patientBarVer.version='full';
-    $scope.$on("$stateChangeStart", function(e, toState, toParams, fromState, fromParams) {
-        if(toState.name.indexOf('loggedIn.patient')>-1)
-        {
-            $scope.patientBarVer.version='full';
-        }
-    })
+    $scope.patientBarVer.version='zip';
+    // phanquocchien.c1109g@gmail.com
+    // set bar version
+    // $scope.$on("$stateChangeStart", function(e, toState, toParams, fromState, fromParams) {
+    //     if(toState.name.indexOf('loggedIn.patient')>-1)
+    //     {
+    //         $scope.patientBarVer.version='full';
+    //     }
+    // })
     $scope.patient_detail_modules = [
         {wrap:0,'name': 'Patient', 'color': 'blue-soft', 'desc': 'Info', 'icon': 'fa fa-user',
             'state': 'loggedIn.patient.detail'},

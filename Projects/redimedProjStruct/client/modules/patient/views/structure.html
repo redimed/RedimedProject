@@ -6,7 +6,7 @@
 <script type="text/javascript">
 	 $('.un_main_nav_bar').on("load resize",function(e){
         var widthBar = $('.un_main_nav_bar').width() - ($('.un_main_nav_item_0').width() + 40);
-        $(".un-more-ul .un-more-li").remove();
+        $(".un-more-ul").children().remove();
         $('.un_main_nav_item').each(function() {
         	var widthItem = $(this).width() + 40;
         	if (widthBar < widthItem) {
@@ -166,11 +166,11 @@
 				</div>
 			</div>
 			<div ng-show="patientBarVer.version=='zip'" class="row">
-				<div class="col-lg-12">
+				<div class="col-lg-12 col-md-12 col-sm-12">
 					<div class="un-bgXam-colBlack un-padding-top-10">
 						<div class="row">
-							<div class="col-lg-12">
-								<div class="col-lg-3 un-padding-right-0 un-padding-left-10">
+							<div class="col-lg-12 col-md-12 col-sm-12">
+								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 un-padding-right-0 un-padding-left-10">
 									<div class="input-group un-padding-bottom-10">
 										<span class="input-group-btn ">
 										<button class="btn un-btn-black-label" type="button">Patient Name</button>
@@ -178,7 +178,7 @@
 										<label type="text" class="form-control un-input-xam-fig">{{current_patient.First_name}}&nbsp{{current_patient.Middle_name}}&nbsp{{current_patient.Sur_name}}</label>
 									</div>
 								</div>
-								<div class="col-lg-2 un-padding-left-10 un-padding-right-0">
+								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 un-padding-left-10 un-padding-right-0">
 									<div class="input-group">
 										<span class="input-group-btn ">
 										<button class="btn un-btn-black-label" type="button">DOB</button>
@@ -186,7 +186,7 @@
 										<label type="text" class="form-control un-input-xam-fig">{{current_patient.DOB | date:'dd-MM-yyyy'}}</label>
 									</div>
 								</div>
-								<div class="col-lg-2 un-padding-left-10 un-padding-right-0">
+								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 un-padding-left-10 un-padding-right-0">
 									<div class="input-group">
 										<span class="input-group-btn ">
 										<button class="btn un-btn-black-label" type="button">Gender</button>
@@ -196,7 +196,7 @@
 										<label type="text" class="form-control un-input-xam-fig" ng-show="current_patient.Sex==null"></label>
 									</div>
 								</div>
-								<div class="col-lg-2 un-padding-left-10 un-padding-right-0">
+								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 un-padding-left-10 un-padding-right-0">
 									<div class="input-group">
 										<span class="input-group-btn ">
 										<button class="btn un-btn-black-label" type="button">Allergy</button>
@@ -210,12 +210,13 @@
 										</label>
 									</div>
 								</div>
-								<div class="col-lg-3 un-padding-left-10">
+								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 un-padding-left-10">
 									<div class="input-group">
 										<span class="input-group-btn ">
 										<button class="btn un-btn-black-label" type="button">Time</button>
 										</span>
-										<label type="text" class="form-control un-input-xam-fig">{{current_patient.FROM_TIME| moment: 'utc' | moment: 'format': 'DD/MM/YYYY hh:mm'}}</label>
+										<label type="text" class="form-control un-input-xam-fig" ng-if="cal_id != -1">{{current_patient.FROM_TIME| moment: 'utc' | moment: 'format': 'DD/MM/YYYY hh:mm'}}</label>
+										<label type="text" class="form-control un-input-xam-fig" ng-if="cal_id == -1"></label>
 									</div>
 								</div>
 							</div>
