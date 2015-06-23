@@ -226,7 +226,7 @@
                                                 <button class="un-button un-bgBlack" ng-click="referralAddForm.open()">Add Referral</button>
                                                 <button class="un-button un-bgBlack" ng-click="scriptAction('new',null)">Add Medication</button>
                                                 <button class="un-button un-bgBlack" ng-click="measureAction('new',null)">Add New Measure</button>
-                                                <button ng-if="apptPatient.appt_status == 'Urgent' && apptPatient.injury_id != null" class="un-button un-bgBlack" ng-click="viewInjury()">View Injury Details</button>
+                                                <button ng-if="(apptPatient.appt_status == 'Urgent' || apptPatient.appt_status == 'Injury') && apptPatient.injury_id != null" class="un-button un-bgBlack" ng-click="viewInjury()">View Injury Details</button>
                                             </div>
                                         </div>
                                     </div>

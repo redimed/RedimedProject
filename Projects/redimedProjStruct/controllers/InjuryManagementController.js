@@ -409,6 +409,8 @@ module.exports = {
                         res.json({status:'success',data:data})
                     })
                 }
+                else
+                  res.json({status:'error',error:err})
                 
             })
             .error(function(err){

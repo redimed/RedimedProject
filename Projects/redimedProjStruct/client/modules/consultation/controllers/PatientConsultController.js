@@ -914,50 +914,53 @@ angular.module("app.loggedIn.patient.consult.controller",[])
     		{
     			doctorData.actualDoctorId=$scope.apptPatient.actual_doctor_id;
     		}
-        	ConsultationService.beforeStartSession(doctorData)
-        	.then(function(data){
-        		if(data.status=='success')
-        		{
-        			if(data.data.length>0)
-        			{
-        				var modalInstance = $modal.open({
-							templateUrl: 'notifyApptsWorkInProgress',
-							controller: function($scope, $modalInstance)
-							{
-								$scope.listData=data.data;
-								$scope.gotoAppointment=function(item){
-									if(!item.CAL_ID || !item.Patient_id) {
-										toastr.error('Cannot goto appointment.','Error!')
-										return;
-									}
-									$state.go("loggedIn.patient.appointment", {patient_id: item.Patient_id, cal_id: item.CAL_ID});
-								}
-								$scope.close = function(){
-									$modalInstance.dismiss('cancel');
-								}
 
-								$scope.continue=function()
-								{
-									executeStart();
-									$modalInstance.dismiss('cancel');
-								}
-							},
-							// size: 'sm'
-						});
-        			}
-        			else
-        			{
-        				executeStart();
-        			}
-        		}
-        		else
-        		{
-        			toastr.error("Error when check data.");
-        		}
-        	},function(err){
-        		toastr.error("Error when check data.");
-        		exlog.logErr(err);
-        	});
+    		executeStart();
+
+      //   	ConsultationService.beforeStartSession(doctorData)
+      //   	.then(function(data){
+      //   		if(data.status=='success')
+      //   		{
+      //   			if(data.data.length>0)
+      //   			{
+      //   				var modalInstance = $modal.open({
+						// 	templateUrl: 'notifyApptsWorkInProgress',
+						// 	controller: function($scope, $modalInstance)
+						// 	{
+						// 		$scope.listData=data.data;
+						// 		$scope.gotoAppointment=function(item){
+						// 			if(!item.CAL_ID || !item.Patient_id) {
+						// 				toastr.error('Cannot goto appointment.','Error!')
+						// 				return;
+						// 			}
+						// 			$state.go("loggedIn.patient.appointment", {patient_id: item.Patient_id, cal_id: item.CAL_ID});
+						// 		}
+						// 		$scope.close = function(){
+						// 			$modalInstance.dismiss('cancel');
+						// 		}
+
+						// 		$scope.continue=function()
+						// 		{
+						// 			executeStart();
+						// 			$modalInstance.dismiss('cancel');
+						// 		}
+						// 	},
+						// 	// size: 'sm'
+						// });
+      //   			}
+      //   			else
+      //   			{
+      //   				executeStart();
+      //   			}
+      //   		}
+      //   		else
+      //   		{
+      //   			toastr.error("Error when check data.");
+      //   		}
+      //   	},function(err){
+      //   		toastr.error("Error when check data.");
+      //   		exlog.logErr(err);
+      //   	});
 
         	function executeStart()
         	{
