@@ -224,7 +224,13 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		$scope.popupNewDrawing = function(){
 			angular.element('#popupNewDrawing').modal('show');
 		}
-
+		//set actionCenterDrawing 
+		$scope.actionCenterDrawing = {
+			runWhenFinish:function(){
+				angular.element('#popupNewDrawing').modal('hide');
+			}
+		}
+		//end
 		//chien show patien bar
         // $scope.patientBarVer.version='zip';
         
