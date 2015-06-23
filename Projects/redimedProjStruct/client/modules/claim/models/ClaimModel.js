@@ -46,6 +46,10 @@ angular.module("app.loggedIn.claim.model", [])
         var detailApi = appApi.all('one');
         return detailApi.post({data: data});   
     }
+    instanceService.OClose = function(data){
+        var detailApi = appApi.all('oclose');
+        return detailApi.post({data: data});   
+    }
 
     return instanceService;
 })
