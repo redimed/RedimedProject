@@ -1366,13 +1366,10 @@ table.timetable-table td:last-child {
 .table-div .active {
     background-color: #2BEABB;
 }
-.appointment_wrapper{
-    width: 100%;
-}
+/*
 .appointment {
-    width: 200%;
-    overflow: hidden;
-}
+    
+}*/
 
 .appointment .appointment-row {
     display: block;
