@@ -4,7 +4,6 @@ angular.module('app.loggedIn.script.add.controller', [])
 	  success: false,
 	  medicare:medicare
 	}
-	console.log('_________',  medicare);
 	$scope.$watch('scriptadd.success', function(success){
 		  if(success){
 		   $modalInstance.close($scope.scriptadd);
