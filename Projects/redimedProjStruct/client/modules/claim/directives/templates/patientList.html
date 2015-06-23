@@ -31,6 +31,7 @@
 							<i class="fa fa-caret-down"></i>
 						</a>
 					</th>
+					<th>Status</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -52,12 +53,16 @@
 					<td>{{l.Injury_name}}</td>
 					<td>{{l.Injury_date | filterdate: 'DD/MM/YYYY'}}</td>
 					<td>
-						<button class="un-submit un-bgXam-colBlack" ng-click="claim.onOClose(l)" ng-if="l.Isenable">
+						<span ng-if="l.Isenable">Open</span>
+						<span ng-if="!l.Isenable">Close</span>
+					</td>
+					<td>
+						<!--<button class="un-submit un-bgXam-colBlack" ng-click="claim.onOClose(l)" ng-if="l.Isenable">
 							Open
 						</button>
 						<button class="un-submit un-bgXam-colBlack" ng-click="claim.onOClose(l)" ng-if="!l.Isenable">
 							Close
-						</button>
+						</button>-->
 						<button class="un-submit un-bgXam-colBlack" ng-click="claim.dialog.edit(l)" ng-if="action.edit">
 							Edit claim
 						</button>

@@ -24,7 +24,7 @@ angular.module('app.loggedIn.claim.directives.patientShow', [])
 				Case_manager: '',
 				isCurr: '1',
 				PO_number: '',
-				Isenable: '1',
+				Isenable: '0',
 				Created_by: user_id,
 				Last_updated_by: user_id,
 			}
@@ -71,7 +71,7 @@ angular.module('app.loggedIn.claim.directives.patientShow', [])
 					scope.claim.form.Claim_date = ConfigService.convertToDate(scope.claim.form.Claim_date);
 					scope.claim.form.Injury_date = ConfigService.convertToDate(scope.claim.form.Injury_date);
 					scope.claim.form.isCurr = scope.claim.form.isCurr.toString();
-
+					scope.claim.form.Isenable = scope.claim.form.Isenable.toString();
 					delete scope.claim.form.Creation_date;
 				}, function(error){})
 			}

@@ -212,14 +212,14 @@ angular.module('app.loggedIn.claim.directives.patientList', [])
 				})
 			}
 
-			var onOClose = function(row){
+			/*var onOClose = function(row){
 				ClaimModel.OClose(row)
 				.then(function(response){
 					console.log('ID: ', row.Claim_id);
 					scope.claim.load();
 				}, function(error){})
 
-			}
+			}*/
 
 			scope.claim = {
 				dialog: {
@@ -236,7 +236,7 @@ angular.module('app.loggedIn.claim.directives.patientList', [])
 						show(list);
 					}
 				},
-				onOClose: function(row){ onOClose(row); },
+				//onOClose: function(row){ onOClose(row); },
 				load: function(){ load(); },
 				list: [],
 				count: 0,

@@ -55,7 +55,7 @@ module.exports = {
 			.column(
 				'cln_claims.*'
 			)
-			.where('cln_claims.Isenable', 1)
+			//.where('cln_claims.Isenable', 1)
 			.where('Claim_id', postData.Claim_id)
 			.toString();
 
