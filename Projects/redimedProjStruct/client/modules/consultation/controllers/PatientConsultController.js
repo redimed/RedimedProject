@@ -23,7 +23,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 							$scope.injuryImages = [];
 							$scope.imgArr = [];
 
-							if(injuryInfo.injuryImg.length > 0)
+							if(typeof injuryInfo.injuryImg !== 'undefined' && injuryInfo.injuryImg.length > 0)
 			                {
 			                    $scope.loadedImage = true;
 			                    for(var i=0; i< injuryInfo.injuryImg.length; i++)
