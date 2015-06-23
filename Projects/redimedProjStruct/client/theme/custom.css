@@ -30,7 +30,7 @@ a:focus {
 }
 .un-input-m-custom{
       width: 284px !important;
-    height: 20px;
+    height: 26px;
     border: 2px solid rgb(196, 196, 196)!important;
 }
 .un-input-alert-m{
@@ -1548,21 +1548,21 @@ table.timetable-table td:last-child {
     color: rgb(112, 112, 111)!important;
     background: rgb(204, 204, 203)!important;
     margin-bottom: 0px;
-    padding: 0px 10px 0px 10px;
+    padding: 0px 5px 0px 5px;
     font-size: 12px;
 }
 .un-label-form-2{
     color: rgb(201, 201, 200)!important;
     background: rgb(78, 79, 78)!important;
     margin-bottom: 0px;
-    padding: 0px 10px 0px 10px;
+    padding: 0px 5px 0px 5px;
     font-size: 12px;
 }
 .un-label-form-3{
     color: rgb(252, 252, 252)!important;
     background: rgb(153, 153, 153)!important;
     margin-bottom: 0px;
-    padding: 0px 10px 0px 10px;
+    padding: 0px 5px 0px 5px;
     font-size: 12px;
 }
 .un-form-left{
@@ -1588,12 +1588,12 @@ table.timetable-table td:last-child {
     padding-bottom: 5px;
 }
 .un-input-custom{
-    height: 20px;
+    height: 26px;
     /*phan quoc chien edit firefox*/
     padding: 0px 0px 0px 5px !important;
 }
 .un-input-custom-1{
-    height: 20px;
+    height: 26px;
     border: 2px solid rgb(196, 196, 196)!important;
     /*phan quoc chien edit firefox*/
     padding: 0px 0px 0px 5px !important;
@@ -1622,7 +1622,7 @@ table.timetable-table td:last-child {
     background: rgb(11, 14, 47) !important;
     color: white !important;
     border: 1px solid white !important;
-    padding: 2px 50px 0px 16px !important;
+    padding: 2px 16px 0px 0px !important;
 }
 .un-checkbox::after{
     height: 13px !important;
@@ -1769,19 +1769,19 @@ table.timetable-table td:last-child {
     padding-right: 10px !important;
 }
 .un-label-isenable{
-    padding: 0 !important;
+    padding: 2px 0px 0px 0px !important;
     background: white !important;
 }
 .un-label-isenable::after{
     height: 13px !important;
     right: 12px !important;
-    top: 2px !important;
+    top: 5px !important;
     width: 13px !important;
 } 
 .un-label-isenable::before{
     height: 5px !important;
     right: 16px !important;
-    top: 6px !important;
+    top: 9px !important;
     width: 5px !important;
 }
 .un-label-whidth-85{
@@ -1789,6 +1789,9 @@ table.timetable-table td:last-child {
 }
 .un-label-whidth-97{
     width: 97px !important;
+}
+.un-label-whidth-119{
+    width: 119px !important;
 }
 .un-label-whidth-130{
     width: 130px !important;
@@ -1798,8 +1801,8 @@ table.timetable-table td:last-child {
     margin-top: -20px;
 }
 .un-select-sex{
-    width: 78%;
-    height: 20px;
+    width: 70%;
+    height: 26px;
     padding: 0px !important;
     color: black;
 }
@@ -2073,6 +2076,15 @@ nav bar end*/
 .un-padding-left-10{
     padding-left: 10px;
 }
+.un-padding-right-10{
+    padding-right: 10px;
+}
+.un-padding-left-0{
+    padding-left: 0px;
+}
+.un-padding-left-5{
+    padding-left: 5px !important;
+}
 .un-padding-15{
     padding: 15px 15px 15px 15px;
 }
@@ -2244,7 +2256,7 @@ label{
     margin-right: 20px;
 }
 .un-btn-black-label{
-    height: 25px !important;
+    height: 26px !important;
     padding: 0px 10px 0px 10px !important;
     background: rgb(49, 50, 50)!important;
     color: white !important;
@@ -2256,7 +2268,7 @@ label{
     color: white !important;
 }
 .un-input-xam-fig{
-    height: 25px !important;
+    height: 26px !important;
     background: rgb(102, 102, 102)!important;
     border: none !important;
     padding: 3px 5px 3px 5px !important;
@@ -3336,7 +3348,7 @@ label{
 
 /*style cho input form*/
 .un_tn_form_control{
-    height: 20px;
+    height: 26px;
     padding: 0px 0px 0px 5px !important;
 }
 .un_tn_form_control_gray{
@@ -3889,6 +3901,9 @@ label{
     background-color: #EEEEEE;
     width: 100%;
 }
+.un_overflow_auto{
+    overflow: auto;
+}  
 /*phanquocchien patient end*/
 
 .ql-container{

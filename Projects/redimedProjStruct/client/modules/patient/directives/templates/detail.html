@@ -31,11 +31,11 @@
     <!-- ACTION -->
 
         <div class="row un-div-l-r-15">
-            <div class="col-lg-12 col-md-12 un-form">
+            <div class="col-lg-12 col-md-12 col-sm-12 un-form">
                 <div class="row pt_padding_right_20">
-                    <div class="col-lg-3 col-md-3 un-div-p-r-5">
+                    <div class="col-lg-3 col-md-3 col-sm-3 un-div-p-r-5">
                         <div class="row">
-                            <div class="col-lg-12 col-md-12 un-height-img">
+                            <div class="col-lg-12 col-md-12 col-sm-12 un-height-img">
                                 <input id="patient_photo_upload" ng-hide="true" type="file" nv-file-select uploader="uploader" ng-if="!!uploader"/>
                                 <div ng-repeat="item in uploader.queue" ng-if="uploader.queue.length>0">
                                     <div class="un-canvas" ng-thumb="{ file: item._file, height:257, width:257}">{{item._file.name}}</div>
@@ -46,11 +46,11 @@
                             </div>
                         </div>
                         <div class="row un-form-bg-xam">
-                            <div class="col-lg-12 col-md-12">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
                                 <div class="row">
-                                    <div class="col-lg-12 col-md-12 un-div-p-r-0">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 un-div-p-r-0">
                                         <div ng-class="{'has-error': patientForm.ref.$invalid && isSubmit}">
-                                            <label class="un-label-form-1 un-label-whidth-130">Ref No</label>
+                                            <label class="un-label-form-1 un-label-whidth-119">Ref No</label>
                                             <input name="ref" ng-model="modelObjectMap.Ref" 
                                             ng-readonly="isMedicare===true" class="form-control un-input-custom" id="ref" float-label>
                                             <!-- ERROR -->
@@ -66,7 +66,7 @@
                                         </div> 
                                         <div ng-class="{'has-error': patientForm.medicareno.$invalid && isSubmit}">
                                             <!-- <label class="un-label-form-1">Medicare No {{isMedicare}}</label> -->
-                                            <label class="un-label-form-1 un-label-whidth-130">Medicare Number</label>
+                                            <label class="un-label-form-1 un-label-whidth-119">Medicare Number</label>
                                             <input name="medicareno" maxlength="10" 
                                                 ng-model="modelObjectMap.Medicare_no" min="0"
                                                 class="form-control un-input-custom" id="medicareno" float-label ng-readonly="isMedicare===true">
@@ -82,7 +82,7 @@
                                             <!-- ERROR -->
                                         </div> 
                                         <div>
-                                            <label class="un-label-form-1 un-label-whidth-130">Medicare Expire</label>
+                                            <label class="un-label-form-1 un-label-whidth-119">Medicare Expire</label>
                                             <input class="form-control un-input-custom"
                                             ui-date="{dateFormat: 'dd/mm/yy', defaultDate: '01/01/1990', changeMonth: true, changeYear: true}" id="mediexp" 
                                             name="mediexp" ng-disabled="isMedicare===true"
@@ -95,11 +95,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-9 col-md-9 un-div-p-r-30">
+                    <div class="col-lg-9 col-md-9 col-sm-9 un-div-p-r-30">
                         <div class="row un-bg-black">
-                            <div class="col-lg-8 col-md-8">
+                            <div class="col-lg-8 col-md-8 col-sm-8">
                                 <div class="row">
-                                    <div class="col-lg-6 col-md-6 un-form-left">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 un-form-left">
                                         <div ng-class="{'has-error': patientForm.title.$invalid && isSubmit}">
                                             <label class="un-label-form un-label-whidth-85">Title</label>
                                             <select class="form-control un-input-custom un-select-p" ng-options="title.id as title.name for title in options.titles" 
@@ -151,7 +151,7 @@
                                             
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 col-md-6 un-form-right">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 un-form-right">
                                         <div ng-class="{'has-error': patientForm.dob.$invalid && isSubmit}">
                                             <label class="un-label-form un-label-whidth-97">Date of Birth *</label>
                                             <input ui-date="{dateFormat: 'dd/mm/yy', defaultDate: '01/01/1990', changeMonth: true, changeYear: true}" 
@@ -208,8 +208,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-4 un-form-add">
-                                <div class="col-lg-12 col-md-12 un-from-add-div">
+                            <div class="col-lg-4 col-md-4 col-sm-4 un-form-add">
+                                <div class="col-lg-12 col-md-12 col-sm-12 un-from-add-div">
                                     <div ng-class="{'has-error': patientForm.address1.$invalid && isSubmit}">
                                         <label class="un-label-form-2 un-label-whidth-85">Address 1 *</label>
                                         <input type="text" name="address1" ng-model="modelObjectMap.Address1"
@@ -290,7 +290,7 @@
                             </div>
                         </div>
                         <div class="row un-bg-xanh">
-                            <div class="col-lg-5 col-md-5">
+                            <div class="col-lg-5 col-md-5 col-sm-5">
                                 <button class="btn btn-block un-select-company" ng-click="clickCompany()">
                                     {{selectedCompany.Company_name}}
                                     &nbsp
@@ -301,7 +301,7 @@
                                     <i style="font-size: 15;" class="fa fa-check-square-o"></i>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-md-3">
+                            <div class="col-lg-3 col-md-3 col-sm-3 un-padding-left-0">
                                 <span>
                                     <select class="btn un-select" ng-options="type.Account_id as type.Account_name for type in options.account_types" 
                                         name="acctype" ng-model="modelObjectMap.Account_type" id="acctype" float-label>
@@ -309,19 +309,19 @@
                                     </select>
                                 </span>
                             </div>
-                            <div class="col-lg-2 col-md-2">
+                            <div class="col-lg-2 col-md-2 col-sm-2 un-padding-left-0">
                                 <input type="checkbox" name="nosms" id="nosms" class="mdt-checkbox" ng-model="modelObjectMap.No_SMS" ng-true-value="1" ng-false-value="0">
                                 <label for="nosms" class="un-checkbox">SMS</label>
                             </div>
-                            <div class="col-lg-2 col-md-2">
+                            <div class="col-lg-2 col-md-2 col-sm-2 un-padding-right-10 un-padding-left-0">
                                 <input type="checkbox" name="islock" id="islock" class="mdt-checkbox" ng-model="modelObjectMap.isLock" ng-true-value="1" ng-false-value="0">
                                 <label class="un-checkbox" for="islock">Is Lock</label>
                             </div>
                         </div>
                         <div class="row un-bg-trang">
-                            <div class="col-lg-3 col-md-3 un-form-white-p">
+                            <div class="col-lg-3 col-md-3 col-sm-3 un-form-white-p">
                                 <div ng-class="{'has-error': patientForm.accseft.$invalid && isSubmit}">
-                                    <label class="un-label-form-3 un-label-whidth-130">Account Seft</label>
+                                    <label class="un-label-form-3 un-label-whidth-119">Account Seft</label>
                                     <input type="number" name="accseft" 
                                         ng-model="modelObjectMap.Account_Seft" min="0"
                                         class="form-control un-input-custom-1 un-select-p-5" id="accseft" float-label>
@@ -337,7 +337,7 @@
                                     <!-- ERROR -->
                                 </div>
                                 <div ng-class="{'has-error': patientForm.hccno.$invalid && isSubmit}">
-                                    <label class="un-label-form-3 un-label-whidth-130">HCC Pension Number</label>
+                                    <label class="un-label-form-3 un-label-whidth-119">HCC Pension Number</label>
                                     <input type="number" name="hccno" 
                                         ng-model="modelObjectMap.HCC_Pension_No" min="0"
                                         class="form-control un-input-custom-1  un-select-p-5" id="hccno" float-label>
@@ -353,7 +353,7 @@
                                     <!-- ERROR -->
                                 </div>
                                 <div ng-class="{'has-error': patientForm.paygaps.$invalid && isSubmit}">
-                                    <label class="un-label-form-3 un-label-whidth-130">Pays Gap Only</label>
+                                    <label class="un-label-form-3 un-label-whidth-119">Pays Gap Only</label>
                                     <input type="number" name="paygaps" 
                                         ng-model="modelObjectMap.Pays_Gap_Only" min="0"
                                         class="form-control un-input-custom-1  un-select-p-5" id="paygaps" float-label>
@@ -369,7 +369,7 @@
                                     <!-- ERROR -->
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-md-3 un-form-white-p2">
+                            <div class="col-lg-3 col-md-3 col-sm-3 un-form-white-p2">
                                 <div>
                                     <label class="un-label-form-3 un-label-whidth-97">Private Fund</label>
                                     <select class="form-control un-input-custom-1 un-select-p" ng-options="type.PF_id as type.Fund_name for type in options.private_types" 
@@ -391,9 +391,9 @@
                                     <label for="isenable" class="un-label-isenable form-control un-input-custom-1">Is Enable</label>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-md-3 un-form-white-p2">
+                            <div class="col-lg-3 col-md-3 col-sm-3 un-form-white-p2">
                                 <div ng-class="{'has-error': patientForm.memberno.$invalid && isSubmit}">
-                                    <label class="un-label-form-3 un-label-whidth-130">Membership Number</label>
+                                    <label class="un-label-form-3 un-label-whidth-119">Membership Number</label>
                                     <input type="number" name="memberno" 
                                         ng-model="modelObjectMap.MemberShip_no" min="0"
                                         class="form-control un-input-custom-1  un-select-p-5" id="memberno" float-label>
@@ -409,7 +409,7 @@
                                     <!-- ERROR -->
                                 </div>
                                 <div ng-class="{'has-error': patientForm.dvano.$invalid && isSubmit}">
-                                    <label class="un-label-form-3 un-label-whidth-130">DVA Number</label>
+                                    <label class="un-label-form-3 un-label-whidth-119">DVA Number</label>
                                     <input type="number" name="dvano" 
                                         ng-model="modelObjectMap.DVA_No" min="0"
                                         class="form-control un-input-custom-1  un-select-p-5" id="dvano" float-label>
@@ -425,11 +425,11 @@
                                     <!-- ERROR -->
                                 </div>
                                 <div>
-                                    <label class="un-label-form-3 un-label-whidth-130">Passport</label>
+                                    <label class="un-label-form-3 un-label-whidth-119">Passport</label>
                                      <input type="text" name="passport" ng-model="modelObjectMap.passport" class="form-control un-input-custom-1" id="passport" float-label>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-md-3 un-form-white-p3">
+                            <div class="col-lg-3 col-md-3 col-sm-3 un-form-white-p3">
                                 <div ng-class="{'has-error': patientForm.upi.$invalid && isSubmit}">
                                     <label class="un-label-form-3 un-label-whidth-97">UPI</label>
                                     <input type="number" name="upi" 
@@ -472,33 +472,33 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-12 col-md-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="row un-bg-trang">
                     <!-- <div class="row">
                         <label class="un-label-white">More Sub Information</label>
                     </div> -->
 
-                    <div class="col-lg-2 col-md-2 un-form-white-p">
+                    <div class="col-lg-2 col-md-2 col-sm-2 un-form-white-p">
                         <div>
-                            <label class="un-label-form-3 un-label-whidth-130">Partner Name</label>
+                            <label class="un-label-form-3 un-label-whidth-97">Partner Name</label>
                             <input type="text" name="partnername" ng-model="modelObjectMap.Partner_name"
                                 class="form-control un-input-custom-1" id="partnername" float-label>
                         </div>
                         <div>
-                            <label class="un-label-form-3 un-label-whidth-130">Alias First Name</label>
+                            <label class="un-label-form-3 un-label-whidth-97">Alias First Name</label>
                             <input type="text" name="aliasfname" 
                             ng-model="modelObjectMap.Alias_First_name"
                             class="form-control un-input-custom-1" id="aliasfname" float-label>
                         </div>
                         <div>
-                            <label class="un-label-form-3 un-label-whidth-130">Usual Provider</label>
+                            <label class="un-label-form-3 un-label-whidth-97">Usual Provider</label>
                             <select ng-options="type.Provider_types_id as type.Provider_types_name for type in options.provider_types" 
                                 name="usual_provider" ng-model="modelObjectMap.Usual_provider" id="usual_provider" float-label class="form-control un-input-custom-1 un-select-p">
                                 <option value="" disabled selected>Usual Provider</option>
                             </select>
                         </div>
                         <div ng-class="{'has-error': patientForm.urno.$invalid && isSubmit}">
-                            <label class="un-label-form-3 un-label-whidth-130">UR No</label>
+                            <label class="un-label-form-3 un-label-whidth-97">UR No</label>
                             <input type="number" name="urno" 
                                 ng-model="modelObjectMap.UR_no" min="0"
                                 class="form-control un-input-custom-1  un-select-p-5" id="urno" float-label>
@@ -514,86 +514,86 @@
                             <!-- ERROR -->
                         </div>
                     </div>
-                    <div class="col-lg-2 col-md-2 un-form-white-p2">
+                    <div class="col-lg-2 col-md-2 col-sm-2 un-form-white-p2">
                         <div>
-                            <label class="un-label-form-3 un-label-whidth-130">Partner's Date of Birth</label>
+                            <label class="un-label-form-3 un-label-whidth-119">Partner's Date of Birth</label>
                             <input type="birthday" class="form-control un-input-custom-1" ui-date="{dateFormat: 'dd/mm/yy'}" id="partnerdob" name="partnerdob"
                             ng-model="modelObjectMap.Partner_DOB" float-label>
                         </div>
                         <div>
-                            <label class="un-label-form-3 un-label-whidth-130">Alias Sur Name</label>
+                            <label class="un-label-form-3 un-label-whidth-119">Alias Sur Name</label>
                             <input type="text" name="aliassname" ng-model="modelObjectMap.Alias_Sur_name"
                                 class="form-control un-input-custom-1" id="aliassname" float-label>
                         </div>
                         <div>
-                            <label class="un-label-form-3 un-label-whidth-130">Referral Source</label>
+                            <label class="un-label-form-3 un-label-whidth-119">Referral Source</label>
                             <select class="form-control un-input-custom-1 un-select-p" ng-options="type.RS_id as type.RS_name for type in options.referral_types" 
                                 name="referral_source" ng-model="modelObjectMap.Referral_source" id="referral_source" float-label>
                                 <option value="" disabled selected>Referral Source</option>
                             </select>
                         </div>
                         <div>
-                            <label class="un-label-form-3 un-label-whidth-130">Custom</label>
+                            <label class="un-label-form-3 un-label-whidth-119">Custom</label>
                             <input type="text" name="custom" 
                                 ng-model="modelObjectMap.Custom"
                                 class="form-control un-input-custom-1" id="custom" float-label>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-md-2 un-form-white-p2">
+                    <div class="col-lg-2 col-md-2 col-sm-2 un-form-white-p2">
                         <div>
-                            <label class="un-label-form-3 un-label-whidth-130">Partner Occupation</label>
+                            <label class="un-label-form-3 un-label-whidth-119">Partner Occupation</label>
                             <input type="text" name="partnerocc" 
                                 ng-model="modelObjectMap.Partner_Occupation"
                                 class="form-control un-input-custom-1" id="partnerocc" float-label>
                         </div>
                         <div>
-                            <label class="un-label-form-3 un-label-whidth-130">Specialty</label>
+                            <label class="un-label-form-3 un-label-whidth-119">Specialty</label>
                             <input type="text" name="specialty" ng-model="modelObjectMap.Specialty"
                             class="form-control un-input-custom-1" id="specialty" float-label>
                         </div>
                         <div>
-                            <label class="un-label-form-3 un-label-whidth-130">Marial Status</label>
+                            <label class="un-label-form-3 un-label-whidth-119">Marial Status</label>
                             <select class="form-control un-input-custom-1 un-select-p" ng-options="type.Marial_status as type.Marial_status for type in options.marial_status_types" 
                             name="marial_status" ng-model="modelObjectMap.Marial_Status" id="marial_status" float-label>
                             <option value="" disabled selected>Marial Status</option>
                             </select>
                         </div>
                         <div>
-                            <label class="un-label-form-3 un-label-whidth-130">Culture</label>
+                            <label class="un-label-form-3 un-label-whidth-119">Culture</label>
                             <select class="form-control un-input-custom-1 un-select-p" ng-options="type.CULTURE_id as type.CULTURE_name for type in options.culture_types" 
                                 name="culture" ng-model="modelObjectMap.Culture_id" id="culture" float-label>
                                 <option value="" disabled selected>Culture</option>
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-md-2 un-form-white-p2">
+                    <div class="col-lg-2 col-md-2 col-sm-2 un-form-white-p2">
                         <div>
-                            <label class="un-label-form-3 un-label-whidth-130">NOK Emerge Contact</label>
+                            <label class="un-label-form-3 un-label-whidth-119">NOK Emerge Contact</label>
                             <input type="text" name="nokemecontact" 
                             ng-model="modelObjectMap.NOK_Emerg_Contact"
                             class="form-control un-input-custom-1" id="nokemecontact" float-label>
                         </div>
                         <div>
-                            <label class="un-label-form-3 un-label-whidth-130">GP First Name</label>
+                            <label class="un-label-form-3 un-label-whidth-119">GP First Name</label>
                             <input type="text" name="gpfname" 
                             ng-model="modelObjectMap.GP_First_name"
                             class="form-control un-input-custom-1" id="gpfname" float-label>
                         </div>
                         <div class="un-div-p-10">
-                            <label class="un-label-form-3 un-label-whidth-130">Diabetic</label>
+                            <label class="un-label-form-3 un-label-whidth-119">Diabetic</label>
                             <input type="checkbox" name="diabetic" id="diabetic" class="mdt-checkbox" 
                                 ng-model="modelObjectMap.Diabetic" ng-true-value="1" ng-false-value="0">
                             <label for="diabetic" class="un-label-isenable form-control un-input-custom-1">Diabetic</label>
                         </div>
                         <div>
-                            <label class="un-label-form-3 un-label-whidth-130">Language</label>
+                            <label class="un-label-form-3 un-label-whidth-119">Language</label>
                             <select class="form-control un-input-custom-1 un-select-p" ng-options="type.language_id as type.name for type in options.language_types" 
                                 name="language" ng-model="modelObjectMap.Language_id" id="language" float-label>
                                 <option value="" disabled selected>Language</option>
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-md-2 un-form-white-p2">
+                    <div class="col-lg-2 col-md-2 col-sm-2 un-form-white-p2">
                         <div>
                             <label class="un-label-form-3 un-label-whidth-85">NOK Phone</label>
                             <input type="text" name="nokphone" 
@@ -619,7 +619,7 @@
                             class="form-control un-input-custom-1" id="fee_type" float-label>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-md-2 un-form-white-p3">
+                    <div class="col-lg-2 col-md-2 col-sm-2 un-form-white-p3">
                         <div>
                             <label class="un-label-form-3 un-label-whidth-85">Clinic</label>
                             <input type="text" name="clinic" 
@@ -642,7 +642,7 @@
                             <label class="un-label-form-3 un-label-whidth-85">Graduate ?</label>
                             <input type="checkbox" name="graduate" id="graduate" class="mdt-checkbox" 
                                 ng-model="modelObjectMap.Gradudate_status" ng-true-value="1" ng-false-value="0">
-                            <label for="graduate" class="un-label-isenable form-control un-input-custom-1">Graduate ?</label>
+                            <label for="graduate" class="un-label-isenable form-control un-input-custom-1">Graduate</label>
                         </div>
                     </div>
                 </div>
@@ -652,7 +652,7 @@
     </form>
 </div>
 <div class="row">
-    <div class="col-lg-12 col-md-12">
+    <div class="col-lg-12 col-md-12 col-sm-12">
     <button class="btn pull-right un-submit" ng-if="params.permission.create !== false" ng-click="buttonclick()">&nbsp SAVE</button>
     <button class="btn pull-right un-submit" ng-if="params.permission.edit !== false" ng-click="buttonclick()"></i>&nbsp Save</button>
     <button class="btn pull-right un-submit" ng-if="isClose" ng-click="closePopup()">&nbsp CLOSE</button>
