@@ -77,7 +77,7 @@ module.exports = {
 							"WHERE c.FROM_TIME BETWEEN ? AND DATE_ADD(?, INTERVAL 1 DAY) "+
 							"AND c.`SITE_ID` = ? "+
 							"AND d.`isOnline` = 1 AND d.`currentSite` = ? "+
-							"AND (a.`appt_status` LIKE 'Waiting' OR a.`appt_status` LIKE 'In Consult')",
+							"AND (a.`appt_status` LIKE 'Waiting' OR a.`appt_status` LIKE 'In Consult' OR a.`appt_status` LIKE 'Urgent')",
 							null,{raw:true},[date,date,site,site]) 
 			.success(function(data){
 				var result = [];
@@ -210,8 +210,15 @@ module.exports = {
 		}
 		else if(state.toLowerCase() == 'progress')
 		{
+			var status = '';
+
+			if(fromAppt.appt_status.toLowerCase() == 'injury')
+				status = 'Urgent';
+			else
+				status = 'Waiting';
+
 			db.sequelize.query("UPDATE cln_appt_patients SET appt_status = ?, actual_doctor_id = ? , checkedin_end_time = ? WHERE id = ?",
-						null,{raw:true},['Waiting', toAppt , moment().format('YYYY-MM-DD HH:mm:ss'), fromAppt.appt_id])
+						null,{raw:true},[status, toAppt , moment().format('YYYY-MM-DD HH:mm:ss'), fromAppt.appt_id])
 				.success(function(){
 					res.json({status:'success'});
 				})

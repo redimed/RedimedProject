@@ -66,7 +66,6 @@ angular.module("app", [
             'force new connection': false,
             'secure': true,
 			'transports': ['websocket'
-						  , 'flashsocket'
 						  , 'htmlfile'
 						  , 'xhr-polling'
 						  , 'jsonp-polling']
