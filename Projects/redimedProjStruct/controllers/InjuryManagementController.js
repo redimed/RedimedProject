@@ -410,7 +410,7 @@ module.exports = {
                     })
                 }
                 else
-                  res.json({status:'error',error:err})
+                  res.json({status:'error'})
                 
             })
             .error(function(err){
