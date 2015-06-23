@@ -173,7 +173,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		}
 
 		//chien show patien bar
-        $scope.patientBarVer.version='zip';
+        // $scope.patientBarVer.version='zip';
         
 		$scope.currDate = $filter('date')(new Date(),'dd/MM/yyyy hh:mm a');
 
