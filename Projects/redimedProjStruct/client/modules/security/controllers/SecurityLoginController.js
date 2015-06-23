@@ -117,7 +117,7 @@ angular.module("app.security.login.controller",[
                             }
 
                             //modify by: tannv.dts@gmail.com
-                            if (response.userInfo.UserType.user_type == 'Doctor') {
+                            if (response.userInfo.UserType.user_type ==4) {
                                 DoctorService.getByUserId(response.userInfo.id)
                                 .then(function (data) {
                                     if (data) {
