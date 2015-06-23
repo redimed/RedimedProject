@@ -11,7 +11,7 @@
                 <div class="form-group" >
                     <label class="control-label bold col-md-4 col-sm-4">Injury Date</label>
                     <div class="col-md-8 col-sm-8">
-                        <label class="control-label">{{injuryInfo.injury_date | moment:'utc' | moment:'format':'DD/MM/YYYY - hh:mm:ss'}}</label>
+                        <label class="control-label">{{info.injury_date | moment:'utc' | moment:'format':'DD/MM/YYYY - hh:mm:ss'}}</label>
                     </div>
                 </div>
             </div>
@@ -19,7 +19,7 @@
                 <div class="form-group" >
                     <label class="control-label bold col-md-4 col-sm-4">Description</label>
                     <div class="col-md-8 col-sm-8">
-                        <label class="control-label">{{injuryInfo.injury_description}}</label>
+                        <label class="control-label">{{info.injury_description}}</label>
                     </div>
                 </div>
             </div>
@@ -29,7 +29,7 @@
                 <div class="form-group" >
                     <label class="control-label bold col-md-4 col-sm-4">Pickup Address</label>
                     <div class="col-md-8 col-sm-8">
-                        <label class="control-label">{{injuryInfo.pickup_address}}</label>
+                        <label class="control-label">{{info.pickup_address}}</label>
                     </div>
                 </div>
             </div>
@@ -37,9 +37,9 @@
                 <div class="form-group" >
                     <label class="control-label bold col-md-4 col-sm-4">Status</label>
                     <div class="col-md-8 col-sm-8" style="margin-top: 10px">
-                        <span ng-show="injuryInfo.STATUS == 'New'" class="label label-md label-success">New </span>
-                        <span ng-show="injuryInfo.STATUS == 'Waiting'" class="label label-md label-warning">Waiting </span>
-                        <span ng-show="injuryInfo.STATUS == 'Done'" class="label label-md label-primary">Done </span>
+                        <span ng-show="info.STATUS == 'New'" class="label label-md label-success">New </span>
+                        <span ng-show="info.STATUS == 'Waiting'" class="label label-md label-warning">Waiting </span>
+                        <span ng-show="info.STATUS == 'Done'" class="label label-md label-primary">Done </span>
                     </div>
                 </div>
             </div>

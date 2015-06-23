@@ -1,61 +1,60 @@
 angular.module("app.loggedIn.patient.consult.controller",[])
 
-	.controller("PatientConsultController",function(ConsultInfoService,DoctorService,$filter,$rootScope,$interval,$window,$document,$cookieStore,$scope,$state,$modal,InsurerService,toastr,socket,OTSession,ReceptionistService,$stateParams,ConsultationService,PatientService,UserService,$interval){
+	.controller("PatientConsultController",function(ConsultInfoService,InjuryManagementService,DoctorService,$filter,$rootScope,$interval,$window,$document,$cookieStore,$scope,$state,$modal,InsurerService,toastr,socket,OTSession,ReceptionistService,$stateParams,ConsultationService,PatientService,UserService,$interval){
 
 		$scope.templates = [];
 
 		$scope.viewInjury = function(){
-			$modal.open({
-				templateUrl: 'modules/consultation/dialogs/dialog_injury_details.html',
-				size: 'lg',
-				resolve: {
-					injuryId:function(){
-						return $scope.apptPatient.injury_id;
-					}
-				},
-				controller: function($scope,$modalInstance,$stateParams,injuryId,InjuryManagementService){
-					$scope.injuryInfo = {};
-			        $scope.injuryImages = [];
-			        $scope.loadedImage = false;
 
-			        $scope.imgArr = [];
+			InjuryManagementService.getInjuryById($scope.apptPatient.injury_id).then(function(rs){
+	            if(rs.status == 'success')
+	            {
+	                $modal.open({
+						templateUrl: 'modules/consultation/dialogs/dialog_injury_details.html',
+						size: 'lg',
+						resolve: {
+							injuryInfo:function(){
+								return  rs.data[0];
+							}
+						},
+						controller: function($scope,$modalInstance,$stateParams,injuryInfo,InjuryManagementService){
+							$scope.info = injuryInfo;
+							$scope.loadedImage = false;
+							$scope.injuryImages = [];
+							$scope.imgArr = [];
 
-			        InjuryManagementService.getInjuryById(injuryId).then(function(rs){
-			            if(rs.status == 'success')
-			            {
-			                $scope.injuryInfo = rs.data[0];
-
-			                if($scope.injuryInfo.injuryImg.length > 0)
+							if(injuryInfo.injuryImg.length > 0)
 			                {
 			                    $scope.loadedImage = true;
-			                    for(var i=0; i< $scope.injuryInfo.injuryImg.length; i++)
+			                    for(var i=0; i< injuryInfo.injuryImg.length; i++)
 			                    {
-			                        $scope.imgArr.push({url: location.origin+"/api/im/image/"+$scope.injuryInfo.injuryImg[i].id, img: $scope.injuryInfo.injuryImg[i]});
+			                        $scope.imgArr.push({url: location.origin+"/api/im/image/"+ injuryInfo.injuryImg[i].id, img: injuryInfo.injuryImg[i]});
 			                    }
 			                }
-			            }
-			        })
 
-			         $scope.viewImage = function(img){
-			            var modalInstance = $modal.open({
-			                templateUrl: "modules/injuryManagement/views/imageModal.html",
-			                size: 'md',
-			                resolve: {
-			                    imgObj: function(){
-			                        return img;
-			                    }
-			                },
-			                controller: function($scope, $state,$modalInstance, UserService,socket,toastr,imgObj){
-			                    $scope.img = {
-			                    	image: location.origin+"/api/im/image/"+imgObj.id,
-			                    	description: imgObj.desc
-			                    }
-			                }
-			            })
-			        }
+					         $scope.viewImage = function(img){
+					            var modalInstance = $modal.open({
+					                templateUrl: "modules/injuryManagement/views/imageModal.html",
+					                size: 'md',
+					                resolve: {
+					                    imgObj: function(){
+					                        return img;
+					                    }
+					                },
+					                controller: function($scope, $state,$modalInstance, UserService,socket,toastr,imgObj){
+					                    $scope.img = {
+					                    	image: location.origin+"/api/im/image/"+imgObj.id,
+					                    	description: imgObj.desc
+					                    }
+					                }
+					            })
+					        }
 
-				}
-			})
+						}
+					})
+	            }
+	        })
+			
 		}
 
 	
