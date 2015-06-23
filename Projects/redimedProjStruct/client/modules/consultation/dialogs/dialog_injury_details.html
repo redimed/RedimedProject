@@ -1,0 +1,55 @@
+<div class="portlet grey-cascade box">
+    <div class="portlet-title">
+        <div class="caption ">
+            <i class="icon-plus"></i>
+            <span class="caption-subject uppercase">Injury Information</span>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                <div class="form-group" >
+                    <label class="control-label bold col-md-4 col-sm-4">Injury Date</label>
+                    <div class="col-md-8 col-sm-8">
+                        <label class="control-label">{{injuryInfo.injury_date | moment:'utc' | moment:'format':'DD/MM/YYYY - hh:mm:ss'}}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <div class="form-group" >
+                    <label class="control-label bold col-md-4 col-sm-4">Description</label>
+                    <div class="col-md-8 col-sm-8">
+                        <label class="control-label">{{injuryInfo.injury_description}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                <div class="form-group" >
+                    <label class="control-label bold col-md-4 col-sm-4">Pickup Address</label>
+                    <div class="col-md-8 col-sm-8">
+                        <label class="control-label">{{injuryInfo.pickup_address}}</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <div class="form-group" >
+                    <label class="control-label bold col-md-4 col-sm-4">Status</label>
+                    <div class="col-md-8 col-sm-8" style="margin-top: 10px">
+                        <span ng-show="injuryInfo.STATUS == 'New'" class="label label-md label-success">New </span>
+                        <span ng-show="injuryInfo.STATUS == 'Waiting'" class="label label-md label-warning">Waiting </span>
+                        <span ng-show="injuryInfo.STATUS == 'Done'" class="label label-md label-primary">Done </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div >
+            <a ng-if="loadedImage" ng-click="viewImage(i.img)" ng-repeat="i in imgArr">
+                <img width="200px" height="200px" ng-src="{{i.url}}" alt="">
+            </a>
+        </div>
+
+    </div>
+</div>

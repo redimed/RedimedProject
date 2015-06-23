@@ -65,10 +65,12 @@ angular.module("app", [
             'max reconnection attempts': 10000,
             'force new connection': false,
             'secure': true,
-			'transports': ['websocket'
-						  , 'htmlfile'
-						  , 'xhr-polling'
-						  , 'jsonp-polling']
+			'transports': ['websocket', 
+                          'flashsocket', 
+                          'htmlfile', 
+                          'xhr-polling', 
+                          'jsonp-polling', 
+                          'polling']
         });
 
         var socketFactory = socketFactory({

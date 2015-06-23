@@ -178,7 +178,6 @@ app.use(function(err, req, res, next){
 });
 
 var io = require('socket.io')(httpsServer);
-
 require('./socket')(io,cookie,cookieParser);
 
 db.sequelize

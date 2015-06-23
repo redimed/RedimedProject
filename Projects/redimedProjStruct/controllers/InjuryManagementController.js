@@ -248,7 +248,8 @@ module.exports = {
                                       db.ApptPatient.create({
                                         Patient_id: imInfo.Patient_id,
                                         CAL_ID: id,
-                                        appt_status: 'Injury'
+                                        appt_status: 'Injury',
+                                        injury_id: rs.injury_id
                                       })
                                       .success(function(){
                                         console.log("Success");
@@ -282,14 +283,13 @@ module.exports = {
     uploadInjuryPic: function(req,res){
 
         var injury_id = req.body.injury_id;
-        var injury_part = req.body.injury_part;
         var description = req.body.description;
 
         if(typeof injury_id !== 'undefined')
         {
               var prefix=__dirname.substring(0,__dirname.indexOf('controllers'));
-              var targetFolder=prefix+'uploadFile\\'+'InjuryManagement\\'+'injuryID_'+injury_id+'\\'+injury_part;
-              var targetFolderForSave='.\\uploadFile\\'+'InjuryManagement\\'+'injuryID_'+injury_id+'\\'+injury_part;
+              var targetFolder=prefix+'uploadFile\\'+'InjuryManagement\\'+'injuryID_'+injury_id;
+              var targetFolderForSave='.\\uploadFile\\'+'InjuryManagement\\'+'injuryID_'+injury_id;
 
               mkdirp(targetFolder, function(err) {
                   if(req.files)
@@ -309,7 +309,6 @@ module.exports = {
 
                     db.IMInjuryImage.create({
                         injury_id: injury_id,
-                        injury_part: injury_part,
                         img_url: target_path_for_save,
                         description: description
                     })
@@ -401,8 +400,8 @@ module.exports = {
                             var imgArr = [];
                             for(var i=0; i<rs.length ; i++)
                             {
-                              if(rs[i].image!=null || rs[i].image!='')
-                                  imgArr.push(rs[i].injury_image_id);
+                              if(rs[i].img_url!=null || rs[i].img_url!='')
+                                  imgArr.push({id:rs[i].id, desc: rs[i].description});
                             }
                             if(imgArr.length > 0)
                               data[0].injuryImg = imgArr;
@@ -419,15 +418,15 @@ module.exports = {
     injuryImageById: function(req,res) {
         var imageId = req.param('imageId');
 
-        db.IMInjuryImage.find({where: {injury_image_id: imageId}}, {raw: true})
+        db.IMInjuryImage.find({where: {id: imageId}}, {raw: true})
             .success(function(data){
               if(data)
               {
-                if(data.image!=null || data.image!='')
+                if(data.img_url!=null || data.img_url!='')
                 {
-                    fs.exists(data.image,function(exists){
+                    fs.exists(data.img_url,function(exists){
                       if (exists) {
-                        res.sendfile(data.image);
+                        res.sendfile(data.img_url);
                       } else {
                         res.sendfile("./uploadFile/no-image.png");
                       }
