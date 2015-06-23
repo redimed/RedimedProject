@@ -7,6 +7,7 @@ angular.module('app.loggedIn.company.directives.add', [])
 		scope: {
 			options: '=',
 			onRowClick: '&',
+			//success:'=',
 			actionCenter:'='//tannv.dts@gmail.com add
 		},
 		link: function(scope, elem, attrs)
@@ -47,6 +48,8 @@ angular.module('app.loggedIn.company.directives.add', [])
 		        isExtra:null,
 		        parent_id :null,
 		        listInsurerid :[],
+		        from_date:null,
+		        to_date:null,
 		        // patient_id :$stateParams.patientId//tannv.dts@gmail.com comment
 		        patient_id :$stateParams.patient_id//tannv.dts add
 			}
@@ -138,12 +141,17 @@ angular.module('app.loggedIn.company.directives.add', [])
 		    	var postData = angular.copy(scope.company.form);
 		    	postData.Insurer = scope.company.InsurerTemp === '' ? null : scope.company.InsurerTemp;
 		    	postData.listInsurerid = scope.company.listTemp;
+		    	if(postData.from_date)
+					postData.from_date = ConfigService.convertToDB(postData.from_date);
+				if(postData.to_date)
+					postData.to_date = ConfigService.convertToDB(postData.to_date);
 		  		CompanyModel.add(postData)
 		  			.then(function(response){
 		  				toastr.success('Add Company Successfully');
 		  				// $state.go('loggedIn.company');//tan comment
-		  				$state.go('loggedIn.patient.company');//tan add
+		  				//$state.go('loggedIn.patient.company');//tan add
 		  				scope.actionCenter.closeModal();
+		  				//scope.success = true;
 		  			}, function(error){
 		  				scope.company.errors = angular.copy(error.data.errors);
 					   ConfigService.beforeError(scope.company.errors);

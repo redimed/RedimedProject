@@ -28,7 +28,8 @@
 									<th>Company Name</th>
 									<th>Industry</th>
 									<th>Address</th>
-									<th>Country</th>
+									<th>From date</th>
+									<th>To date</th>
 									<th>Actions</th>
 								</tr>
 							</thead>
@@ -37,7 +38,13 @@
 									<td >{{row.Company_name}}</td>
 									<td>{{row.Industry}}</td>
 									<td>{{row.Addr}}</td>
-									<td>{{row.country}}</td>
+									<td ng-if='row.from_date'>{{row.from_date | filterdate: 'DD/MM/YYYY'}}</td>
+									<td ng-if='!row.from_date'>{{row.from_date}}</td>
+
+									<td ng-if='row.to_date && row.id !== company.company_idActive'>{{row.to_date | filterdate: 'DD/MM/YYYY'}}</td>
+									<td ng-if='!row.to_date && row.id !== company.company_idActive'>{{row.to_date}}</td>
+									<td ng-if='row.to_date && row.id == company.company_idActive'></td>
+									<td ng-if='!row.to_date && row.id == company.company_idActive'></td>
 									<td align="center">
 										<a>
 										   	<button class="un_tn_btn un-bgBlack"  ng-if="row.id === company.company_idActive"  ng-click="onRowClick(row)">Active</button>
