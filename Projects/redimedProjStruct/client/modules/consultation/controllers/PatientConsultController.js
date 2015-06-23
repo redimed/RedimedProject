@@ -14,7 +14,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 						size: 'lg',
 						resolve: {
 							injuryInfo:function(){
-								return  rs.data[0];
+								return  rs.data;
 							}
 						},
 						controller: function($scope,$modalInstance,$stateParams,injuryInfo,InjuryManagementService){

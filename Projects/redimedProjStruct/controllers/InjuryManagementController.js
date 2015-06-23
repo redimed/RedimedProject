@@ -389,9 +389,9 @@ module.exports = {
     injuryById: function(req,res){
         var injury_id = req.body.injury_id;
 
-        db.sequelize.query("SELECT i.*,p.*,CONCAT(IFNULL(p.Title,''), ' . ', IFNULL(p.`First_name`,''),' ',IFNULL(p.`Sur_name`,''),' ',IFNULL(p.`Middle_name`,'')) as FullName,c.Company_name as CompanyName,c.Addr as CompanyAddr, c.Industry FROM `im_injury` i INNER JOIN `cln_patients` p ON i.`patient_id` = p.`Patient_id` INNER JOIN companies c ON c.id = p.company_id WHERE i.`injury_id` = ?",null,{raw:true},[injury_id])
+          db.IMInjury.find({where:{injury_id: injury_id}},{raw:true})
             .success(function(data){
-                if(data.length > 0)
+                if(data)
                 {
                   db.IMInjuryImage.findAll({where:{injury_id: injury_id}},{raw:true})
                     .success(function(rs){
@@ -404,7 +404,7 @@ module.exports = {
                                   imgArr.push({id:rs[i].id, desc: rs[i].description});
                             }
                             if(imgArr.length > 0)
-                              data[0].injuryImg = imgArr;
+                              data.injuryImg = imgArr;
                         }
                         res.json({status:'success',data:data})
                     })
