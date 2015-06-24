@@ -134,9 +134,9 @@ and line.SCORE_TYPE1=6]]>
 	</field>
 	<group name="lines_type_6_group">
 		<groupHeader>
-			<band height="50">
+			<band height="33">
 				<textField>
-					<reportElement x="0" y="28" width="555" height="22" uuid="9bfc335b-5647-4d0a-84f0-b879c92cecd3"/>
+					<reportElement x="0" y="11" width="555" height="22" uuid="9bfc335b-5647-4d0a-84f0-b879c92cecd3"/>
 					<textElement verticalAlignment="Middle">
 						<font isBold="true" isUnderline="false"/>
 					</textElement>
@@ -146,7 +146,7 @@ and line.SCORE_TYPE1=6]]>
 		</groupHeader>
 	</group>
 	<detail>
-		<band height="188">
+		<band height="163">
 			<staticText>
 				<reportElement x="0" y="0" width="210" height="20" uuid="a23d7468-03a3-4bc8-89eb-5f9216aa3768"/>
 				<box>
@@ -294,19 +294,19 @@ and line.SCORE_TYPE1=6]]>
 				<text><![CDATA[Poor (1)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="20" y="149" width="50" height="20" uuid="ac534f9c-ebbc-47e5-aa26-e4c5644fce36"/>
+				<reportElement x="313" y="116" width="50" height="20" uuid="ac534f9c-ebbc-47e5-aa26-e4c5644fce36"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Achieved :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="110" y="149" width="60" height="20" uuid="789e4fa6-545f-46c8-9ca6-37878409c873"/>
+				<reportElement x="403" y="116" width="60" height="20" uuid="789e4fa6-545f-46c8-9ca6-37878409c873"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[seconds]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="70" y="149" width="40" height="20" uuid="44e0a613-9018-4d7a-a10d-9bf7d55a41df"/>
+				<reportElement x="363" y="116" width="40" height="20" uuid="44e0a613-9018-4d7a-a10d-9bf7d55a41df"/>
 				<box>
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="0.0" lineColor="#F0F0F0"/>
@@ -326,7 +326,7 @@ and line.SCORE_TYPE1=6]]>
 					<rightPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<subreport>
-					<reportElement x="0" y="0" width="245" height="119" uuid="b5c4bbaf-4e85-4e8e-a993-9430daddc595"/>
+					<reportElement x="0" y="0" width="245" height="79" uuid="b5c4bbaf-4e85-4e8e-a993-9430daddc595"/>
 					<subreportParameter name="patient_id">
 						<subreportParameterExpression><![CDATA[$P{patient_id}]]></subreportParameterExpression>
 					</subreportParameter>

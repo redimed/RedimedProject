@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-06-16T09:47:00 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cln_rankings" pageWidth="575" pageHeight="842" columnWidth="555" leftMargin="0" rightMargin="20" topMargin="20" bottomMargin="0" uuid="74beb74d-ae66-4679-9a94-333d1638554f">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<style name="Crosstab_CH" mode="Opaque" backcolor="#FFFFFF">
 		<box>
 			<pen lineWidth="0.5" lineColor="#000000"/>
@@ -293,17 +294,22 @@
 		</box>
 	</style>
 	<parameter name="ranking_header_id_1" class="java.lang.String"/>
+	<parameter name="patient_age" class="java.lang.String"/>
+	<parameter name="score_1" class="java.lang.Integer"/>
+	<parameter name="patient_gender" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select
 case
-when ranking.TO_AGE=220 or ranking.TO_AGE=null then concat(ranking.FROM_AGE,'+')
+when ranking.TO_AGE=220 or ranking.TO_AGE=null then concat(ranking.FROM_AGE,'+ ')
 else concat(ranking.FROM_AGE,'-',ranking.TO_AGE) end
 as AGE_RANGE,
 ranking.RATE, concat(ranking.FROM_VALUE,'-',ranking.TO_VALUE) as VALUE_RANGE,
 ranking.GENDER,
-rankingheader.DESCRIPTION
+rankingheader.DESCRIPTION,
+rankingheader.RANK_SOURCE
 from sys_rankings ranking inner join sys_ranking_headers rankingheader on ranking.HEADER_ID = rankingheader.RATING_ID
-where ranking.HEADER_ID =  $P{ranking_header_id_1}]]>
+where ranking.HEADER_ID =$P{ranking_header_id_1}
+order by ranking.`VALUE` desc, AGE_RANGE asc, ranking.GENDER asc]]>
 	</queryString>
 	<field name="AGE_RANGE" class="java.lang.String"/>
 	<field name="RATE" class="java.lang.String">
@@ -316,10 +322,13 @@ where ranking.HEADER_ID =  $P{ranking_header_id_1}]]>
 	<field name="DESCRIPTION" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="RANK_SOURCE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<title>
-		<band height="22">
+		<band height="49">
 			<textField>
-				<reportElement x="0" y="-1" width="555" height="23" uuid="a01af737-9bfd-4edf-b8c6-241b0265149e"/>
+				<reportElement x="0" y="-1" width="555" height="16" uuid="a01af737-9bfd-4edf-b8c6-241b0265149e"/>
 				<box>
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -328,10 +337,37 @@ where ranking.HEADER_ID =  $P{ranking_header_id_1}]]>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font isBold="true"/>
-					<paragraph leftIndent="10"/>
+					<font isBold="true" isUnderline="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{DESCRIPTION}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="15" width="555" height="16" uuid="f4560dff-1762-438a-a07c-5a5de35ded17"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="false" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["(From: "+$F{RANK_SOURCE}+")"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="258" y="31" width="297" height="16" uuid="d91e8629-fe08-44de-8e99-b77e50e83d0d"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Age: "+$P{patient_age}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -342,6 +378,16 @@ where ranking.HEADER_ID =  $P{ranking_header_id_1}]]>
 				<reportElement x="0" y="0" width="555" height="66" uuid="03e9c542-8951-4a26-94e7-26cf2f582aca">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
+				<crosstabParameter name="crosstab_score" class="java.lang.Integer">
+					<parameterValueExpression><![CDATA[$P{score_1}]]></parameterValueExpression>
+				</crosstabParameter>
+				<crosstabParameter name="crosstab_age" class="java.lang.Integer">
+					<parameterValueExpression><![CDATA[Integer.parseInt($P{patient_age})]]></parameterValueExpression>
+				</crosstabParameter>
+				<crosstabParameter name="patient_gender">
+					<parameterValueExpression><![CDATA[$P{patient_gender}]]></parameterValueExpression>
+				</crosstabParameter>
+				<crosstabDataset isDataPreSorted="true"/>
 				<rowGroup name="RATE1" width="50">
 					<bucket class="java.lang.String">
 						<bucketExpression><![CDATA[$F{RATE}]]></bucketExpression>
@@ -442,6 +488,18 @@ where ranking.HEADER_ID =  $P{ranking_header_id_1}]]>
 							</textElement>
 							<textFieldExpression><![CDATA[$V{VALUE_RANGE_MEASURE1}]]></textFieldExpression>
 						</textField>
+						<ellipse>
+							<reportElement mode="Transparent" x="0" y="0" width="42" height="22" backcolor="#FFFFFF" uuid="94901fa2-8f45-4193-99e6-90941580c12f">
+								<printWhenExpression><![CDATA[$P{crosstab_score}>=Integer.parseInt(($V{VALUE_RANGE_MEASURE1}.split("-"))[0])
+&& $P{crosstab_score}<=Integer.parseInt(($V{VALUE_RANGE_MEASURE1}.split("-"))[1])
+&& $P{crosstab_age}>=($V{AGE_RANGE1}.indexOf("+")!=-1?65:Integer.parseInt(($V{AGE_RANGE1}.split("-"))[0]))
+&& $P{crosstab_age}<=($V{AGE_RANGE1}.indexOf("+")!=-1?220:Integer.parseInt(($V{AGE_RANGE1}.split("-"))[1]))
+&& $P{patient_gender}.equals($V{GENDER1})]]></printWhenExpression>
+							</reportElement>
+							<graphicElement>
+								<pen lineWidth="2.0"/>
+							</graphicElement>
+						</ellipse>
 					</cellContents>
 				</crosstabCell>
 				<crosstabCell width="60" height="20" columnTotalGroup="AGE_RANGE1">
