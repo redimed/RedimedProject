@@ -218,13 +218,13 @@
                     </a>
 
                     <!-- EMR -->
-                    <a href="#" ng-if="(menu.parent.icon===undefined||menu.parent.icon===null||menu.parent.icon.length===0)&& menu.parent.menu_id===163 ">
+                    <a ui-sref="#" ng-if="(menu.parent.icon===undefined||menu.parent.icon===null||menu.parent.icon.length===0)&& menu.parent.menu_id===163 ">
                         <i class="glyphicon glyphicon-star-empty"></i>
                         <span class="title span_title">{{menu.parent.name}}</span>
                         <span class="title span_menus" ng-if="menu.parent.menu_id===163" >Electronic Medical Record</span>
                     </a>
 
-                    <a href="#" ng-if="menu.parent.icon!==undefined && menu.parent.icon!==null &&menu.parent.icon.length!==0 && menu.parent.menu_id===163 ">
+                    <a ui-sref="#" ng-if="menu.parent.icon!==undefined && menu.parent.icon!==null &&menu.parent.icon.length!==0 && menu.parent.menu_id===163 ">
                         <i><img ng-src="{{menu.parent.icon}}" ng-if="menu.parent.icon!==undefined&&menu.parent.icon!==null&&menu.parent.icon.length!==0"></i>
                         <span class="title span_title">{{menu.parent.name}}</span>
                         <span class="title span_menus" ng-if="menu.parent.menu_id===163" >Electronic Medical Record</span>
@@ -232,13 +232,13 @@
                     <!-- END EMR -->
 
                     <!-- ERP -->
-                    <a href="#" ng-if="(menu.parent.icon===undefined||menu.parent.icon===null||menu.parent.icon.length===0)&& menu.parent.menu_id===164 ">
+                    <a ui-sref="#" ng-if="(menu.parent.icon===undefined||menu.parent.icon===null||menu.parent.icon.length===0)&& menu.parent.menu_id===164 ">
                         <i class="glyphicon glyphicon-star-empty"></i>
                         <span class="title span_title" >{{menu.parent.name}}</span>
                         <span class="title span_menus" ng-if="menu.parent.menu_id===164">Enterprise Resource Planning</span>
                     </a>
 
-                    <a href="#" ng-if="(menu.parent.icon!==undefined&&menu.parent.icon!==null&&menu.parent.icon.length!==0)&& menu.parent.menu_id===164 ">
+                    <a ui-sref="#" ng-if="(menu.parent.icon!==undefined&&menu.parent.icon!==null&&menu.parent.icon.length!==0)&& menu.parent.menu_id===164 ">
                         <i><img ng-src="{{menu.parent.icon}}" ng-if="menu.parent.icon!==undefined&&menu.parent.icon!==null&&menu.parent.icon.length!==0"></i>
                         <span class="title span_title">{{menu.parent.name}}</span>
                         <span class="title span_menus" ng-if="menu.parent.menu_id===164">Enterprise Resource Planning</span>

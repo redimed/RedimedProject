@@ -1182,61 +1182,61 @@ module.exports = {
         }
         stringDept += 0;
 
-        //get year from
-        info.weekFrom = new Date(info.weekFrom);
-        info.weekFrom.setHours(0, 0, 0);
-        var yearsFrom = info.weekFrom.getFullYear();
+        // //get year from
+        // info.weekFrom = new Date(info.weekFrom);
+        // info.weekFrom.setHours(0, 0, 0);
+        // var yearsFrom = info.weekFrom.getFullYear();
         
-        //end get year from
+        // //end get year from
 
-        //get year to
-        info.weekTo = new Date(info.weekTo);
-        info.weekTo.setHours(0, 0, 0);
-        var yearsTo = info.weekTo.getFullYear();
+        // //get year to
+        // info.weekTo = new Date(info.weekTo);
+        // info.weekTo.setHours(0, 0, 0);
+        // var yearsTo = info.weekTo.getFullYear();
         
-        //end get year to
+        // //end get year to
 
-        //get string weekno+year
-            //if yearfrom = yearto
-        if(yearsFrom==yearsTo){
-            for(var a = info.weekNoFrom; a <= info.weekNoTo; a++){
-                stringline2+="("+a+","+yearsFrom+"),";
-            }
-            stringline2 = stringline2.substring(0, stringline2.length - 1);
-            //console.log(stringline1);
-        }//end if
-        //else
-        else{
+        // //get string weekno+year
+        //     //if yearfrom = yearto
+        // if(yearsFrom==yearsTo){
+        //     for(var a = info.weekNoFrom; a <= info.weekNoTo; a++){
+        //         stringline2+="("+a+","+yearsFrom+"),";
+        //     }
+        //     stringline2 = stringline2.substring(0, stringline2.length - 1);
+        //     //console.log(stringline1);
+        // }//end if
+        // //else
+        // else{
 
-            if(info.weekFrom.getMonth()===11){  // if month=12 ->>> lay tuan 53 cua nam do vi neu k set truong hop nay khi tra ve weekno=1 
-                stringline2+="(53,"+yearsFrom+"),";
-            }
-            else{
-                for(var a = info.weekNoFrom; a < 54; a++){
-                    stringline2+="("+a+","+yearsFrom+"),";
-                }
-            }
+        //     if(info.weekFrom.getMonth()===11){  // if month=12 ->>> lay tuan 53 cua nam do vi neu k set truong hop nay khi tra ve weekno=1 
+        //         stringline2+="(53,"+yearsFrom+"),";
+        //     }
+        //     else{
+        //         for(var a = info.weekNoFrom; a < 54; a++){
+        //             stringline2+="("+a+","+yearsFrom+"),";
+        //         }
+        //     }
 
-            if(info.weekTo.getMonth()===0){ // if month=1 ->> lay tuan dau tien cua nam do vi neu k set truong hop nay khi tra ve weekno=53
-                stringline2+="(1,"+yearsTo+"),";
-            }
-            else{
-                for(var b = info.weekNoTo+1; b > 0;b--){
-                    stringline2+="("+b+","+yearsTo+"),";
-                }
-            }
-            var hieu_cua_2_nam = yearsTo - yearsFrom;
-            for(var c = 0; c < hieu_cua_2_nam-1; c++){
-                var years = yearsFrom+1;
-                for(var d = 1;d <54; d++){
-                    stringline2+="("+d+","+years+"),";
-                }
-            }
+        //     if(info.weekTo.getMonth()===0){ // if month=1 ->> lay tuan dau tien cua nam do vi neu k set truong hop nay khi tra ve weekno=53
+        //         stringline2+="(1,"+yearsTo+"),";
+        //     }
+        //     else{
+        //         for(var b = info.weekNoTo+1; b > 0;b--){
+        //             stringline2+="("+b+","+yearsTo+"),";
+        //         }
+        //     }
+        //     var hieu_cua_2_nam = yearsTo - yearsFrom;
+        //     for(var c = 0; c < hieu_cua_2_nam-1; c++){
+        //         var years = yearsFrom+1;
+        //         for(var d = 1;d <54; d++){
+        //             stringline2+="("+d+","+years+"),";
+        //         }
+        //     }
 
-            stringline2 = stringline2.substring(0, stringline2.length - 1);
-            //console.log(stringline1);
-        }//end else
-        //end get string weekno+year
+        //     stringline2 = stringline2.substring(0, stringline2.length - 1);
+        //     //console.log(stringline1);
+        // }//end else
+        // //end get string weekno+year
 
         var sql_get_data_time_activity_report = "SELECT user_id, "+//SELECT
         " task_week_id, "+//SELECT
@@ -1304,9 +1304,15 @@ module.exports = {
                                                                        " INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id " + //INNER JOIN
                                                                        " WHERE time_tasks_week.task_status_id = 3 "+//WHERE
                                                                             " AND departments.departmentid IN ( " + stringDept + " ) "+//WHERE
-                                                                            " AND (time_tasks_week.week_no,YEAR(time_tasks_week.end_date)) IN (" + stringline2 + ")  "+//WHERE
+                                                                            " AND (time_tasks_week.start_date BETWEEN :start_date AND :end_date)"+//WHERE
+                                                                            " AND (time_tasks_week.end_date BETWEEN :start_date AND :end_date)"+//WHERE
                                                                             " AND hr_employee.Employee_ID IN ( " + stringEMP + " )";//WHERE
-                                db.sequelize.query(sql_get_data_time_activity_table)
+                                db.sequelize.query(sql_get_data_time_activity_table,null,{
+                                        raw : true
+                                    },{
+                                        start_date : info.weekFrom,
+                                        end_date   : info.weekTo
+                                })
                                     .success(function(data_time_activity_table) {
                                         if(data_time_activity_table!==undefined&&data_time_activity_table!==null&&data_time_activity_table!==""&&data_time_activity_table.length!==0){
                                             for (var i = 0; i < data_time_activity_table.length; i++) {
@@ -1723,62 +1729,6 @@ module.exports = {
         var flag9 = 0;
         var sum   = 0;
 
-         //get year from
-        info.weekFrom = new Date(info.weekFrom);
-        info.weekFrom.setHours(0, 0, 0);
-        var yearsFrom = info.weekFrom.getFullYear();
-        
-        //end get year from
-
-        //get year to
-        info.weekTo = new Date(info.weekTo);
-        info.weekTo.setHours(0, 0, 0);
-        var yearsTo = info.weekTo.getFullYear();
-        
-        //end get year to
-
-        //get string weekno+year
-            //if yearfrom = yearto
-        if(yearsFrom==yearsTo){
-            for(var a = info.weekNoFrom; a <= info.weekNoTo; a++){
-                stringline2+="("+a+","+yearsFrom+"),";
-            }
-            stringline2 = stringline2.substring(0, stringline2.length - 1);
-            //console.log(stringline1);
-        }//end if
-        //else
-        else{
-
-            if(info.weekFrom.getMonth()===11){  // if month=12 ->>> lay tuan 53 cua nam do vi neu k set truong hop nay khi tra ve weekno=1 
-                stringline2+="(53,"+yearsFrom+"),";
-            }
-            else{
-                for(var a = info.weekNoFrom; a < 54; a++){
-                    stringline2+="("+a+","+yearsFrom+"),";
-                }
-            }
-
-            if(info.weekTo.getMonth()===0){ // if month=1 ->> lay tuan dau tien cua nam do vi neu k set truong hop nay khi tra ve weekno=53
-                stringline2+="(1,"+yearsTo+"),";
-            }
-            else{
-                for(var b = info.weekNoTo+1; b > 0;b--){
-                    stringline2+="("+b+","+yearsTo+"),";
-                }
-            }
-            var hieu_cua_2_nam = yearsTo - yearsFrom;
-            for(var c = 0; c < hieu_cua_2_nam-1; c++){
-                var years = yearsFrom+1;
-                for(var d = 1;d <54; d++){
-                    stringline2+="("+d+","+years+"),";
-                }
-            }
-
-            stringline2 = stringline2.substring(0, stringline2.length - 1);
-            //console.log(stringline1);
-        }//end else
-        //end get string weekno+year
-
         //DELETE ALL TABLE
         var sql_delete_time_activity_summary_table = " DELETE FROM time_activity_summary_table WHERE user_id= :user_id ";
         var sql_delete_time_activity_summary_detail_table = " DELETE FROM time_activity_summary_detail_table WHERE user_id= :user_id ";
@@ -1821,7 +1771,8 @@ module.exports = {
                                                                                " INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id " +//INNER JOIN 
                                                                                " WHERE time_tasks_week.task_status_id = 3 "+//WHERE
                                                                                " AND departments.departmentid IN ( " + stringDept + " ) "+//WHERE
-                                                                               " AND (time_tasks_week.week_no,YEAR(time_tasks_week.end_date)) IN ("+stringline2+") "+//WHERE
+                                                                               " AND (time_tasks_week.start_date BETWEEN :start_date AND :end_date)"+//WHERE
+                                                                               " AND (time_tasks_week.end_date BETWEEN :start_date AND :end_date)"+//WHERE
                                                                                " AND hr_employee.Employee_ID IN ( " + stringEMP + " ) ";//WHERE
                                 //GET DATA TABLE time_activity_summary_table
                                 db.sequelize.query(sql_get_data_time_activity_summary_table)
