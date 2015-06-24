@@ -9,7 +9,7 @@ module.exports = {
 
 		db.sequelize.query("SELECT d.NAME AS doctor_name,a.id AS appt_id, a.`appt_status` , "+
 							"c.`CAL_ID`, c.`DOCTOR_ID`,c.`SITE_ID`,p.`Patient_id`,c.`FROM_TIME`,c.`TO_TIME`, "+
-							"a.checkedin_start_time, p.`Title`,p.`First_name`,p.`Sur_name`,p.`Middle_name`, p.`DOB`,co.`Company_name`,p.avatar "+
+							"a.checkedin_start_time, p.`Title`,p.`First_name`,p.`Sur_name`,p.`Middle_name`, p.`DOB`,co.`Company_name`,p.avatar,a.`Creation_date` "+
 							"FROM cln_appt_patients a "+
 							"INNER JOIN cln_appointment_calendar c ON c.`CAL_ID` = a.`cal_id` "+
 							"LEFT JOIN doctors d ON c.`DOCTOR_ID` = d.`doctor_id` "+
@@ -19,6 +19,7 @@ module.exports = {
 			.success(function(data){
 				var apptUpcoming = [];
 				var apptComplete = [];
+				var apptInjury = [];
 				var resultUpcoming = [];
 
 				if(data.length > 0)
@@ -36,11 +37,14 @@ module.exports = {
 							status = item.appt_status.toLowerCase();
 
 						if(item.appt_id != null 
-						   && (status == 'checked in' || status == 'booking' || status == 'cancelled' || status == 'injury' || item.appt_status == null))
+						   && (status == 'checked in' || status == 'booking' || status == 'cancelled' || item.appt_status == null))
 							apptUpcoming.push(item);
 					
 						if(item.appt_id != null && status == 'completed')
 							apptComplete.push(item);
+
+						if(item.appt_id != null && status == 'injury')
+							apptInjury.push(item);
 					};
 
 					resultUpcoming = _.chain(apptUpcoming)
@@ -53,6 +57,7 @@ module.exports = {
 				}
 
 				res.json({status:'success',
+						  injury: apptInjury,
 						  upcoming: resultUpcoming,
 						  completed: apptComplete});
 			})

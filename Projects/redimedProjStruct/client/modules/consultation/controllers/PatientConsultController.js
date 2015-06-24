@@ -322,12 +322,17 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			});
 	    }
 
+	    function cancelListenerHandler(){
+			console.log("Remove Success");
+		}
+
 	    refresh($scope.patient_id);
 
-		$interval(function(){
-			refresh($scope.patient_id);
-		},20 * 1000);
+		socket.removeListener('online', cancelListenerHandler());
 
+		socket.on('online',function(userList){
+			refresh($scope.patient_id);
+		})
 
 		PatientService.get($scope.patient_id).then(function(rs){
 			if(rs.status.toLowerCase() == 'success' && rs.data)
@@ -345,9 +350,6 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			}
 		})
 
-		
-
-		
 		ConsultationService.getPatientProblem($scope.patient_id).then(function(rs){
 			if(rs.status.toLowerCase() == 'success' && rs.data)
 				$scope.problemList = rs.data;
@@ -512,9 +514,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		};
 
 		//==================================MAKE CALL============================
-		function cancelListenerHandler(){
-			console.log("Remove Success");
-		}
+		
 		$scope.makeCall = function(user){
 
 		 	socket.removeListener('generateSessionSuccess', cancelListenerHandler());

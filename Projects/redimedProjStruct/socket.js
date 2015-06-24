@@ -50,13 +50,6 @@ module.exports = function(io,cookie,cookieParser) {
 
     io.on('connection', function (socket) {
 
-        // io.set('transports', ['websocket', 
-        //                       'flashsocket', 
-        //                       'htmlfile', 
-        //                       'xhr-polling', 
-        //                       'jsonp-polling', 
-        //                       'polling']);
-
         var header = socket.request.headers;
         var source = header['user-agent'];
         ua = useragent.parse(source);

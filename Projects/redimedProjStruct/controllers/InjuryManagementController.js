@@ -86,6 +86,7 @@ module.exports = {
         var patient = req.body.patient;
         
         info.password = bcrypt.hashSync(info.password);
+        patient.DOB = moment.utc(patient.DOB).format('YYYY-MM-DD');
 
         db.UserType.find({where:{user_type:'Patient'}},{raw:true})
           .success(function(type){
@@ -178,7 +179,7 @@ module.exports = {
               user_submit: userId,
               doctor_id: imInfo.doctor_id,
               cal_id: imInfo.cal_id,
-              injury_date: imInfo.injury_date,
+              injury_date: moment.utc(imInfo.injury_date).format('YYYY-MM-DD hh:mm:ss'),
               injury_description: imInfo.injury_description,
               STATUS: imInfo.cal_id == null || typeof imInfo.cal_id === 'undefined' ?"New":null,
               pickup_address: imInfo.cal_id == null || typeof imInfo.cal_id === 'undefined' ? (imInfo.infoMaps.format_address == null || typeof imInfo.infoMaps.format_address === 'undefined' ? null : imInfo.infoMaps.format_address) : null,
@@ -232,12 +233,13 @@ module.exports = {
                                                   }
                                                   transport.close(); // shut down the connection pool, no more messages.  Comment this line out to continue sending emails.
                                               });
-                                              
 
                                           })
                                           .error(function(err){
                                               console.log(err);
                                           })
+
+                                          res.json({status:'success',injury_id:rs.injury_id});
                                       }
                                       
                                   })
@@ -264,21 +266,20 @@ module.exports = {
                                         injury_id: rs.injury_id
                                       })
                                       .success(function(){
-                                        console.log("Success");
+                                        res.json({status:'success',injury_id:rs.injury_id});
                                       })
                                       .error(function(err){
+                                        res.json({status:'error'});
                                         console.log(err);
                                       })
                                   })
                                   .error(function(err){
+                                      res.json({status:'error'});
                                       console.log(err);
                                   })
                               })
                               
                           }
-
-                          res.json({status:'success',injury_id:rs.injury_id});
-
                       })
                       .error(function(err){
                           res.json({status:'error'});
