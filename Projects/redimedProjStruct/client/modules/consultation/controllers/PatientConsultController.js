@@ -230,7 +230,13 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		$scope.popupNewDrawing = function(){
 			angular.element('#popupNewDrawing').modal('show');
 		}
-
+		//set actionCenterDrawing 
+		$scope.actionCenterDrawing = {
+			runWhenFinish:function(){
+				angular.element('#popupNewDrawing').modal('hide');
+			}
+		}
+		//end
 		//chien show patien bar
         // $scope.patientBarVer.version='zip';
         
@@ -797,7 +803,11 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 				if(res.status == 'success')
 				{
 				 	toastr.success('Submit Consultation Success!');
+				 	/*phanquocchien.c1109g@gmail.com
+					*load list history and history info
+				 	*/
 					$scope.loadConsultationInfo();
+		            $scope.setListConsultationOfPatient();
 					var insertArr = []; 
             
 		            var fnInsertArr = function(item) {
@@ -831,10 +841,10 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		                   	toastr.success('Save Item Success!');
 		                    PatientService.endInvoice($scope.appointment.Patient_id, $scope.appointment.CAL_ID);
 		                    /*phanquocchien.c1109g@gmail.com
-							* load data consultation history
+							* load img drawing
 		                    */
-		                    $scope.setListConsultationOfPatient();
 							$scope.getImgDrawingHistory();
+		                   
 		                }
 		                else{
 		                    toastr.error('Save Item Failed!');

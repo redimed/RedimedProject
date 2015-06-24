@@ -32,12 +32,13 @@ angular.module("app.loggedIn.patient.controller", [
     $scope.patientBarVer.version='zip';
     // phanquocchien.c1109g@gmail.com
     // set bar version
-    // $scope.$on("$stateChangeStart", function(e, toState, toParams, fromState, fromParams) {
-    //     if(toState.name.indexOf('loggedIn.patient')>-1)
-    //     {
-    //         $scope.patientBarVer.version='full';
-    //     }
-    // })
+    $scope.$on("$stateChangeStart", function(e, toState, toParams, fromState, fromParams) {
+        if(toState.name.indexOf('loggedIn.patient')>-1)
+        {
+            $scope.patientBarVer.version='zip';
+            // $scope.patientBarVer.version='full';
+        }
+    })
     $scope.patient_detail_modules = [
         {wrap:0,'name': 'Patient', 'color': 'blue-soft', 'desc': 'Info', 'icon': 'fa fa-user',
             'state': 'loggedIn.patient.detail'},

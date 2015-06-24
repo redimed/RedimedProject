@@ -4,9 +4,10 @@
 	}
 </style>
 <script type="text/javascript">
-	 $('.un_main_nav_bar').on("load resize",function(e){
+    $(".un-more-ul").children().remove();
+	$('.un_main_nav_bar').on("load resize",function(e){
+    	$(".un-more-ul").children().remove();
         var widthBar = $('.un_main_nav_bar').width() - ($('.un_main_nav_item_0').width() + 40);
-        $(".un-more-ul").children().remove();
         $('.un_main_nav_item').each(function() {
         	var widthItem = $(this).width() + 40;
         	if (widthBar < widthItem) {
