@@ -494,7 +494,7 @@ order by ranking.`VALUE` desc, AGE_RANGE asc, ranking.GENDER asc]]>
 && $P{crosstab_score}<=Integer.parseInt(($V{VALUE_RANGE_MEASURE1}.split("-"))[1])
 && $P{crosstab_age}>=($V{AGE_RANGE1}.indexOf("+")!=-1?65:Integer.parseInt(($V{AGE_RANGE1}.split("-"))[0]))
 && $P{crosstab_age}<=($V{AGE_RANGE1}.indexOf("+")!=-1?220:Integer.parseInt(($V{AGE_RANGE1}.split("-"))[1]))
-&& $P{patient_gender}.equals($V{GENDER1})]]></printWhenExpression>
+&& $P{patient_gender}.equals($V{GENDER1}.equals("Male")?"0":"1")]]></printWhenExpression>
 							</reportElement>
 							<graphicElement>
 								<pen lineWidth="2.0"/>
