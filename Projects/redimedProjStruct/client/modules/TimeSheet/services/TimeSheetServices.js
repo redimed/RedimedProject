@@ -84,9 +84,9 @@ angular.module("app.loggedIn.TimeSheet.Service", [])
                 listDept: listDeptPost
             });
         };
-        TimeSheetService.LoadReports1 = function(infoPost) {
-            var LoadReports1 = api.all("TimeSheet/post-list-reports1");
-            return LoadReports1.post({
+        TimeSheetService.LoadReportOnActualWorking = function(infoPost) {
+            var LoadReportOnActualWorking = api.all("TimeSheet/post-actual-working");
+            return LoadReportOnActualWorking.post({
                 info: infoPost
             });
         };
@@ -222,13 +222,6 @@ angular.module("app.loggedIn.TimeSheet.Service", [])
             var DeleteFile = api.all("TimeSheet/post-del-file");
             return DeleteFile.post({
                 fileId: fileIdPost
-            });
-        };
-
-        TimeSheetService.DownloadFile = function(idFilePost) {
-            var DownloadFile = api.all("TimeSheet/get-download-file");
-            return DownloadFile.post({
-                idFile: idFilePost
             });
         };
 

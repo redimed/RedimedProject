@@ -71,15 +71,12 @@ angular.module("app.loggedIn.TimeSheet.Report5.Controller", [])
                 var info = {};
                 var weekNoFrom = $scope.dateWeekFrom;
                 var weekNoTo = $scope.dateWeekTo;
-                info.weekNoFrom = $scope.getWeekNumber(weekNoFrom);
-                info.weekNoTo = $scope.getWeekNumber(weekNoTo);
                 info.listEMP = angular.copy($scope.listEmployeeChoose);
                 info.USER_ID = $cookieStore.get('userInfo').id;
-                info.weekFrom = $scope.dateWeekFrom;
-                info.weekTo = $scope.dateWeekTo;
+                info.dateWeekFrom = $scope.dateWeekFrom;
+                info.dateWeekTo = $scope.dateWeekTo;
                 info.listDept = $scope.listDepartmentChoose;
-                info.weekNoFrom = $scope.getWeekNumber(weekNoFrom);
-                TimeSheetService.LoadReports1(info).then(function(response) {
+                TimeSheetService.LoadReportOnActualWorking(info).then(function(response) {
                     if (response.status === "success") {
                         // PROCESSING PDF
                         $scope.USER_ID = $cookieStore.get('userInfo').id;

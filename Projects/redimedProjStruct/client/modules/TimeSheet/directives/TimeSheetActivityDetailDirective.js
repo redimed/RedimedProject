@@ -407,16 +407,16 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                         });
                         if (check === true) {
                             return {
-                                width: "100px"
+                                width: "5%"
                             };
                         } else {
                             return {
-                                width: "15px"
+                                width: "2%"
                             };
                         }
                     } else {
                         return {
-                            width: '15px'
+                            width: '2%'
                         };
                     }
                 };
@@ -433,20 +433,6 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                     }, 0);
                 };
                 //END SHOW FILE
-
-                //FUNCTION DOWNLOAD FILE
-                scope.clickDownloadFile = function(idFile) {
-                    TimeSheetService.DownloadFile(idFile).then(function(response) {
-                        if (response.status === 'success') {
-                            var absUrl = $location.absUrl();
-                            absUrl = encodeURIComponent(absUrl.substring(0, absUrl.search('#') + 1));
-                            // var windowDownload = $window.open('https://google.com', "window download file", "", "");
-                            // windowDownload.document.write("<p>Downloading!</p>");
-                            $window.open('/api/TimeSheet/get-download-file/1');
-                        }
-                    });
-                };
-                //END
             },
             templateUrl: "modules/TimeSheet/directives/templates/ActivityDetail.html"
         };

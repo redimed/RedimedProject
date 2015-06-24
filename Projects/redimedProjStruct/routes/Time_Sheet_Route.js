@@ -55,7 +55,7 @@ app.post("/api/TimeSheet/post-del-file", uploadController.DeleteFile);
 //END UPLOAD FILE TIMESHEET
 
 //DOWNLOAD FILE TIMESHEET
-app.post("/api/TimeSheet/get-download-file", downloadController.DownloadFile);
+app.get("/api/TimeSheet/get-download-file/:idFile", downloadController.DownloadFile);
 //END DOWNLOAD FILE
 
 
@@ -98,7 +98,7 @@ app.post("/api/TimeSheet/post-reject-leave", manageLeaveController.RejectLeave);
 //REPORT TIMESHEET-LEAVE FORM
 app.post("/api/TimeSheet/post-list-deptRP", reportController.LoadDeptReport);
 app.post("/api/TimeSheet/post-list-empRP", reportController.LoadEmpReport);
-app.post("/api/TimeSheet/post-list-reports1", reportController.LoadReports1);
+app.post("/api/TimeSheet/post-actual-working", reportController.LoadReportOnActualWorking);
 app.post("/api/TimeSheet/post-owe-leave", reportController.LoadReportOweLeave);
 app.post("/api/TimeSheet/post-utilization-detail", reportController.LoadReportUtilizationRatioDetail);
 app.post("/api/TimeSheet/post-utilization-sumary", reportController.LoadReportUtilizationRatioSumary);

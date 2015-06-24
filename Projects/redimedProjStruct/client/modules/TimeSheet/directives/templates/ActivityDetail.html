@@ -47,36 +47,36 @@
                     <table class="responsive table table-bordered" ng-show="!list.loading">
                         <thead ng-show="list.result!==null">
                             <tr>
-                                <th style="background-color:#26a69a;width:100px;">
+                                <th style="background-color:#26a69a;width:10%;">
                                     <div class="th">
                                         Tasks / Items
                                     </div>
                                 </th>
-                                <th style="background-color:#26a69a; width:300px;">
+                                <th style="background-color:#26a69a; width:30%;">
                                     <div class="th">
                                         Description
                                     </div>
                                 </th>
-                                <th style="background-color:#26a69a;width:100px;">
+                                <th style="background-color:#26a69a;width:8%;">
                                     <div class="th">
                                         Time Charge
                                     </div>
                                 </th>
-                                <th style="background-color:#26a69a;width:120px;">
+                                <th style="background-color:#26a69a;width:8%;">
                                     <div class="th">
                                         Actual Unit
                                     </div>
                                 </th>
-                                <th style="background-color:#26a69a;width:300px;">
+                                <th style="background-color:#26a69a;width:auto;">
                                     <div class="th">
                                         Comments
                                     </div>
                                 </th>
-                                <th style="background-color:#26a69a; width:15px;">
+                                <th style="background-color:#26a69a; width:2%;">
                                     <div class="th">
                                     </div>
                                 </th>
-                                <th style="background-color:#26a69a;width:15px;">
+                                <th style="background-color:#26a69a;width:2%;">
                                     <div class="th">
                                     </div>
                                 </th>
@@ -84,9 +84,10 @@
                         </thead>
                         <tbody>
                             <tr ng-class-odd="'odd'" style="cursor: pointer; font-size:13px;" ng-repeat="(indexItem,item) in items">
-                                <td ng-show="item.show===true" style="width:100px; text-align:center;">{{($index>8)?$index+1:"0"+($index+1)}}</td>
+                                <td ng-show="item.show===true" style="width:10%; text-align:center;">{{($index>8)?$index+1:"0"+($index+1)}}
+                                </td>
                                 <!-- MORE -->
-                                <td ng-show="item.show===true" style="border:1px solid #ccc; text-align:left; width:300px;" ng-if="(item.ITEM_NAME | readMoreSelected).check===true">
+                                <td ng-show="item.show===true" style="border:1px solid #ccc; text-align:left; width:30%;" ng-if="(item.ITEM_NAME | readMoreSelected).check===true">
                                     <div ng-show="item.show===true" ng-if="item.status===false">
                                         {{(item.ITEM_NAME | readMoreSelected).value}}<a ng-click="clickShowSelected($index)">&nbsp;&nbsp;More...</a>
                                     </div>
@@ -94,21 +95,21 @@
                                         {{item.ITEM_NAME}}<a ng-click="clickShowSelected($index)">&nbsp;Close</a>
                                     </div>
                                 </td>
-                                <td ng-show="item.show===true" style="border:1px solid #ccc; text-align:left;" ng-if="(item.ITEM_NAME | readMoreSelected).check===false">
+                                <td ng-show="item.show===true" style="border:1px solid #ccc; text-align:left; width:30%;" ng-if="(item.ITEM_NAME | readMoreSelected).check===false">
                                     {{(item.ITEM_NAME | readMoreSelected).value}}
                                 </td>
                                 <!-- END MORE -->
-                                <td ng-show="item.show===true" style="text-align:center;width:100px;">
+                                <td ng-show="item.show===true" style="text-align:center;width:8%;">
                                     <div ng-class="{'error-input':items[$index].time_charge==='' || items[$index].time_charge ===null || items[$index].time_charge===undefined}">
                                         <!-- TIME CHARGE NORMAL -->
                                         <input type="text" tabindex="4" class="input-sm" ng-model="items[$index].time_charge" ui-mask="99:99" name="time_charge" ng-required="item.show===true" style="font-size:13px;border:1px solid #ccc;text-align:center;height:25px;" id="time_chargeID" time-charge ng-disabled="item.ITEM_ID===18">
                                         <!-- END -->
                                     </div>
                                 </td>
-                                <td ng-show="item.show===true" style="text-align:center;width:120px;">
+                                <td ng-show="item.show===true" style="text-align:center;width:8%;">
                                         <input type="text" tabindex="4" class="input-sm" name="ratio" ng-model="items[$index].ratio" style="font-size:13px;border:1px solid #ccc;text-align:center;height:25px;" id="ratioID" only-digits ng-disabled="true" ng-disabled="item.ITEM_ID===18">
                                 </td>
-                                <td ng-show="item.show===true" style="text-align:center; width:300px;">
+                                <td ng-show="item.show===true" style="text-align:center; width:auto;">
                                     <input type="text" tabindex="3" class="input-sm" name="comment" ng-model="items[$index].comment" style="font-size:13px;border:1px solid #ccc;height:25px;" id="commentID">
                                 </td>
                                 <td ng-show="item.show===true" ng-style="getStyleUpload()" style="text-align:center;">
@@ -130,37 +131,38 @@
                                             <!-- SHOW FILE NAME -->
                                             <div class="col-md-3">
                                             </div>
-                                            <div class="col-md-4" style="width:auto;">
-                                                <!-- <a href="/api/TimeSheet/get-download-file/{{itemFile.file_id}}" target="_blank" title="{{itemFile.file_name}}"> -->
-                                                <a ng-click="clickDownloadFile(itemFile.file_id)" title="{{itemFile.file_name}}">
+                                            <div class="col-md-4" style="width:60px;">
+                                                <a href="/api/TimeSheet/get-download-file/{{itemFile.file_id}}" title="{{itemFile.file_name}}" target="_blank">
                                                 <!-- WHEN FILE NAME TOO LONG -->
                                                 <i class="glyphicon glyphicon-file" style="font-size:12px;"></i>
                                                 </a>
                                    <!-- BUTTON DELETE FILE -->
-                                        <a style="color:black;text-align:right;"><i class="glyphicon glyphicon-remove" ng-click="removeItem(indexItem,indexItemFile, itemFile.file_id)" style="margin-top:2px; font-size:12px;"></i>
+                                        <a style="color:black;text-align:right;">
+                                            <i class="glyphicon glyphicon-remove" ng-click="removeItem(indexItem,indexItemFile, itemFile.file_id)" style="margin-top:2px; font-size:12px;">
+                                            </i>
                                         </a>
                                     <!-- END BUTTON DELETE FILE -->
                                     </div>
                                     <!-- END FILE NAME MORMAL -->
                                     <!-- END SHOW FILE NAME -->
-</div>
-<!-- END SHOW -->
-</div>
+                                        </div>
+                                    <!-- END SHOW -->
+                                    </div>
 
-<!-- PROGRESS BAR -->
-<div class="col-md-12" ng-hide="progress===100 || progress ===undefined || progress===null || progress===''" style="margin-top:3px;" title="{{fileNameProgress}}">
-            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-                <div class="progress-bar progress-bar-success" ng-style="{width:progress+'%'}">
-                    {{progress+ '%'}}
-                </div>
-            </div>
-</div>
-<!-- EN PROGRESS BAR -->
+                                <!-- PROGRESS BAR -->
+                                <div class="col-md-12" ng-hide="progress===100 || progress ===undefined || progress===null || progress===''" style="margin-top:3px;" title="{{fileNameProgress}}">
+                                            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                                                <div class="progress-bar progress-bar-success" ng-style="{width:progress+'%'}">
+                                                    {{progress+ '%'}}
+                                                </div>
+                                            </div>
+                                </div>
+                                <!-- EN PROGRESS BAR -->
 
 <!-- END FOR  -->
 <!-- END CUSTOM PROGRESS UPLOAD FILE -->
 </td>
-<td ng-show="item.show===true" style="text-align:center;width:15px;">
+<td ng-show="item.show===true" style="text-align:center;width:2%;">
     <a ng-click="deleteItem($index)">
         <i class="fa fa-trash pointer"></i>
     </a>
@@ -193,16 +195,16 @@
                     <table class="responsive table table-bordered" ng-show="!list.loading">
                 <tbody>
                     <tr style="background-color:#67809f;height:32px;">
-                        <td style="text-align:left; width:80px;">
+                        <td style="text-align:left; width:10%;">
                     <input type="text" class="input-sm" ng-disabled="true" style="text-align:center; font-size:13px; font-weight:bold;width:80px;" value="Tasks / Items">
                     </td>
-                    <td style="text-align:left;">
+                    <td style="text-align:left; width:auto;">
                         <input type="text" class="input-sm" style="border:1px solid #ccc; font-size:13px; height:20px;background-color:white;margin-top:3px;" placeholder="Description" ng-model="searchObjectMap.data['time_item_code.ITEM_NAME']" ng-change="loadList()" tabindex="2" id="itemNameID">
                     </td>
                     </tr>
                     <tr ng-repeat="l in list.result" ng-class-odd="'odd'" style="cursor: pointer; font-size:13px;" ng-dblclick="addItem(l.ITEM_ID, l.ITEM_NAME, l.ITEM_UNITS)">
-                        <td style="font-size:13px;width:80px; text-align:center;">{{($index>8)?$index+1:"0"+($index+1)}}</td>
-                        <td style="border:1px solid #ccc; text-align:left;font-size:13px;" ng-if="(l.ITEM_NAME | readMore).check===true">
+                        <td style="font-size:13px;width:10%; text-align:center;">{{($index>8)?$index+1:"0"+($index+1)}}</td>
+                        <td style="border:1px solid #ccc; text-align:left;font-size:13px; width: auto;" ng-if="(l.ITEM_NAME | readMore).check===true">
                             <div ng-if="l.status===false">
                                 {{(l.ITEM_NAME | readMore).value}}<a ng-click="clickShow($index)">&nbsp;&nbsp;More...</a>
                             </div>
