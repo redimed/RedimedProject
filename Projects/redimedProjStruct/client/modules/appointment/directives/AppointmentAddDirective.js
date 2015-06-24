@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.appointment.directives.add', [])
+angular.module('app.loggedIn.appointment')
 
 .directive('appointmentAdd', function(ConfigService, sysServiceService, AppointmentModel, WaitingListModel, $modal, $state, toastr){
 	return {

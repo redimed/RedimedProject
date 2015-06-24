@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.appointment.directives.calendar', [])
+angular.module('app.loggedIn.appointment')
 
 .directive('appointmentCalendar', function($modal, $timeout, $state, $cookieStore, $modal, toastr, AppointmentModel, mdtRedimedsitesService, mdtDeptService, ConfigService){
 	return {

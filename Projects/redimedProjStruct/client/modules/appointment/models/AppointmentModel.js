@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.appointment.models', [])
+angular.module('app.loggedIn.appointment')
 
 .factory('AppointmentModel', function(Restangular){
 	var mainModel = {};

@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.appointment.controllers.doctor', [])
+angular.module('app.loggedIn.appointment')
 
 .controller('AppointmentDoctorController', function($scope, $state, $timeout, $stateParams, $modal, toastr, $cookieStore, OutreferralModel, AppointmentModel, mdtRedimedsitesService, mdtDeptService, ConfigService){
 	var loadSite = function(){

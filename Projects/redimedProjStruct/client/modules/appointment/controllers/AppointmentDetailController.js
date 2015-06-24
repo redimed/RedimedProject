@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.appointment.controllers.detail', [])
+angular.module('app.loggedIn.appointment')
 
 .controller('AppointmentDetailController', function($scope, $state, $stateParams, PatientModel){
 	var load = function(){

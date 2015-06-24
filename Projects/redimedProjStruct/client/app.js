@@ -1,4 +1,5 @@
 angular.module("app", [
+		"oc.lazyLoad",
         "ui.router", // ANGULAR UI ROUTER
         "angularFileUpload", // ANGULAR FILE UPLOAD
         "ui.date", // ANGULAR DATE

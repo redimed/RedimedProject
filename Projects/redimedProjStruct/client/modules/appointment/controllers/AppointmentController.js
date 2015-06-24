@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.appointment.controllers.index', [])
+angular.module('app.loggedIn.appointment')
 
 .controller('AppointmentController', function($scope, $state){
 	
