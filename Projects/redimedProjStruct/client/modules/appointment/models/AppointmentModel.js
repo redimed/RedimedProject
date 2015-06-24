@@ -34,5 +34,10 @@ angular.module('app.loggedIn.appointment.models', [])
 		return instanceApi.post({data: data});	
 	}
 
+	mainModel.getServiceColor = function(data){
+		var instanceApi = mainApi.all('getServiceColor');
+		return instanceApi.post({data:data});
+	}
+
 	return mainModel;
 })

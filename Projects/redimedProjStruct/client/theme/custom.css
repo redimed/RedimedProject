@@ -1449,7 +1449,7 @@ table.timetable-table td:last-child {
     position: absolute;
     /*padding: 10px;*/
     right: 0;
-    top: 102px;
+    top: 132px;
     min-height: 92%;
     width: 225px;
     color: #000000;
@@ -1472,7 +1472,7 @@ table.timetable-table td:last-child {
     z-index: 888;
     border-right:17px solid #333332;
     position: absolute;
-    top: 102px;
+    top: 132px;
     right: 225px;
 }
 
