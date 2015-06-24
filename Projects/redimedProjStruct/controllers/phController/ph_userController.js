@@ -543,4 +543,33 @@ module.exports = {
 				console.log("errorDistance", err);
 			})
 	},
+
+	insertTokenId: function(req, res){
+		var tokenID = req.body.tokenID;
+		var userID = req.body.userID;
+		console.log(tokenID);
+		var sql = "UPDATE `ph_users` u SET u.tokenID = ? WHERE u.`user_id` = ?"
+		db.sequelize.query(sql, null, {raw:true}, [tokenID, userID])
+			.success(function(rows){
+				console.log("---------------success");
+				// res.json({status:'success', data:rows});
+			})
+			.error(function(err){
+				console.log("errorinsertTokenId", err);
+			})
+	},
+
+	delTokenId: function(req, res){
+		// var tokenID = req.body.tokenID;
+		var userID = req.body.userID;
+		console.log(tokenID);
+		var sql = "UPDATE `ph_users` u SET u.tokenID = ? WHERE u.`user_id` = ?"
+		db.sequelize.query(sql, null, {raw:true}, [null, userID])
+			.success(function(rows){
+				console.log("---------------success");
+			})
+			.error(function(err){
+				console.log("errordelTokenId", err);
+			})
+	},
 }

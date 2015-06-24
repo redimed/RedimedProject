@@ -9,11 +9,10 @@ app.post('/api/phUser/checkUserName',ph_userController.checkUserName);
 app.post('/api/phUser/forgotpass',ph_userController.forgotpass);
 app.post('/api/phUser/updateUser',ph_userController.updateUser);
 app.post('/api/phUser/changePass',ph_userController.changePass);
-// app.post('/api/phUser/getPostCadidates',ph_userController.getPostCadidates);
 app.post('/api/phUser/uploadAvatar',multipartMiddleware, ph_userController.uploadAvatarPic);
 app.get('/api/phUser/getAvatar/:user_id', ph_userController.getAvatar);
-
-
+app.post('/api/phUser/insertTokenID', ph_userController.insertTokenId);
+app.post('/api/phUser/delTokenID', ph_userController.delTokenId);
 //company controller
 app.post('/api/phCompany/getCompany',ph_companyController.getCompany);
 app.post('/api/phCompany/updateCompanyInfo',ph_companyController.updateCompanyInfo);
@@ -31,6 +30,15 @@ app.post('/api/phCompany/deletePostShop',ph_companyController.deletePostShop);
 app.post('/api/phCompany/deleteUserInCompany',ph_companyController.deleteUserInCompany);
 app.post('/api/phCompany/getCompanyId',ph_companyController.getCompanyId);
 app.post('/api/phCompany/getPostCompany',ph_companyController.getPostCompany);
+app.post('/api/phCompany/getPharmacistId',ph_companyController.getPharmacistId);
+app.post('/api/phCompany/getPharmacistInfo',ph_companyController.getPharmacistInfo);
+app.post('/api/phCompany/getDetailInfoPhar',ph_companyController.getDetailInfoPhar);
+app.post('/api/phCompany/acceptPharmacist',ph_companyController.acceptPharmacist);
+app.post('/api/phCompany/checkIsSelect',ph_companyController.checkIsSelect);
+app.post('/api/phCompany/getExpPhar',ph_companyController.getExpPhar);
+app.post('/api/phCompany/getQuaPhar',ph_companyController.getQuaPhar);
+app.post('/api/phCompany/selTokenIdPhar',ph_companyController.selTokenIdPhar);
+app.post('/api/phCompany/selTokenIdCo',ph_companyController.selTokenIdCo);
 
 //pharmacis controller
 app.post('/api/phPharmacist/getPharmacist',ph_companyController.getPharmacist);
