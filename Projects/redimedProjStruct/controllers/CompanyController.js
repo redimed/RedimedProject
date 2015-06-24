@@ -7,6 +7,24 @@ var kiss=require('./kissUtilsController');
 var moment=require('moment');
 
 module.exports = {
+    postgetFromTime:function(req,res){
+         var postData = req.body.data;
+        var sql = knex
+                .select('cln_appt_patients.*','cln_appointment_calendar.FROM_TIME','cln_appointment_calendar.TO_TIME')
+                .from('cln_appt_patients')
+                .innerJoin('cln_appointment_calendar', 'cln_appt_patients.CAL_ID', 'cln_appointment_calendar.CAL_ID')
+                .where('cln_appt_patients.Patient_id', postData.patient_id)
+                .where('cln_appointment_calendar.FROM_TIME','<', postData.datetime)
+                .orderBy('cln_appointment_calendar.FROM_TIME', 'desc')
+                .toString();
+        db.sequelize.query(sql)
+        .success(function(data){
+            res.json({data: data[0]});
+        })
+        .error(function(error){
+            res.json(500, {error: error,sql:sql});
+        })
+    },
     postselectInsurer:function(req,res){
         var postData = req.body.data;
         var sql = knex
