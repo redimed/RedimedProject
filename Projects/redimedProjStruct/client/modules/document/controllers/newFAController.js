@@ -403,16 +403,9 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 						if(line.SCORE_TYPE1 === 3){
 							console.log('rating result', result);
 							line.RATE1 = result.data[0].RATE;
-							if(line.details[0].VAL1_VALUE==="L"){
-								if(line.SCORE1<result.data[0].FROM_VALUE) line.comments[0].VALUE = 1;
-								else if(line.SCORE1>result.data[0].TO_VALUE) line.comments[0].VALUE = 3;
-								else line.comments[0].VALUE = 2;
-							}
-							else {
-								if(line.SCORE2<result.data[0].FROM_VALUE) line.comments[0].VALUE = 1;
-								else if(line.SCORE2>result.data[0].TO_VALUE) line.comments[0].VALUE = 3;
-								else line.comments[0].VALUE = 2;
-							}
+							if(line.SCORE1<result.data[0].FROM_VALUE) line.RATING_VALUE1=1;
+							else if(line.SCORE1>result.data[0].TO_VALUE) line.RATING_VALUE1=3;
+							else line.RATING_VALUE1 = 2;
 						}
 						else{
 							line.RATE1 = result.data[0].RATE;
@@ -468,16 +461,9 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 						if(line.SCORE_TYPE1 === 3){
 							console.log('rating result', result);
 							line.RATE2 = result.data[0].RATE;
-							if(line.details[0].VAL1_VALUE==="L"){
-								if(line.SCORE1<result.data[0].FROM_VALUE) line.comments[0].VALUE = 1;
-								else if(line.SCORE1>result.data[0].TO_VALUE) line.comments[0].VALUE = 3;
-								else line.comments[0].VALUE = 2;
-							}
-							else {
-								if(line.SCORE2<result.data[0].FROM_VALUE) line.comments[0].VALUE = 1;
-								else if(line.SCORE2>result.data[0].TO_VALUE) line.comments[0].VALUE = 3;
-								else line.comments[0].VALUE = 2;
-							}
+							if(line.SCORE2<result.data[0].FROM_VALUE) line.RATING_VALUE2 = 1;
+							else if(line.SCORE2>result.data[0].TO_VALUE) line.RATING_VALUE2 = 3;
+							else line.RATING_VALUE2 = 2;
 						}
 						else{
 							line.RATE2 = result.data[0].RATE;
