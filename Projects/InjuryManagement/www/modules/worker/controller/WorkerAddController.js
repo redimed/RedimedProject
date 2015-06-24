@@ -288,7 +288,7 @@ angular.module('starter.worker.add.controller',[])
                                     },
                                     {
                                         text: "Yes, I do",
-                                        type: "button button-assertive",
+                                        type: "btn-black",
                                         onTap: function(e) {
                                             $scope.nfcInfo = data;
                                             $state.go('app.worker.writeNFC');

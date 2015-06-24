@@ -23,10 +23,10 @@ angular.module("app.loggedIn.patient.detail.directive", [
 		restrict: "EA",
 		scope: {
 			options: "=",
-			isClose: "@",
-			patient: "=",
+			// isClose: "@",
+			// patient: "=",
 			params: "=",
-			onsuccess: '=',
+			// onsuccess: '=',
 			actionCenter:'='// chua ham runWhenFinish();
 		},
 		templateUrl: "modules/patient/directives/templates/detail-register.html",

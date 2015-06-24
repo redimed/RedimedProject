@@ -9,8 +9,8 @@
                     <span class="span-header">Injury Management</span>
 
                 </div>
-                <div style="height: 49px;float: left;position: absolute;">
-                    <span style="float: right;padding-right: 2%;padding-top: 30px;font-weight: 600;color: white;">Online Booking</span>
+                <div style="height: 49px;float: left;position: absolute;width: 100%;">
+                    <span style="float: right;padding-right: 10%;padding-top: 30px;font-weight: 600;color: white;">Online Booking</span>
                 </div>
             </div>
             <div style="margin-top:50px">
@@ -22,18 +22,19 @@
                         <span class="input-label span-input-color">Day</span>
                         <input ng-required="true" type="date"  style="color: white;"
                                ng-model="selectedFilter.date" name="Date"/>
+                        <i class="icon ion-android-arrow-dropdown" style="font-size: 20px;margin-right: 52px;"></i>
                     </label>
                     <div class="bd-bottom"></div>
                     <label  class="item-input label-custom-field" ng-class="{'has-error':isSubmit && infor.Title.$invalid}">
                         <span class="input-label span-input-color">Location</span>
-                        <select  ng-model="selectedFilter.locationSelected" ng-options="location.Site_name for location in locationsFilter" ng-change="updateAppoinmentsList()"  class="select-custom">
+                        <select  ng-model="selectedFilter.locationSelected" ng-options="location.Site_name for location in locationsFilter" ng-change="updateAppoinmentsList()"  class="ion-input-select ">
                             <option  value=""  ></option>
                         </select>
                     </label>
                     <div class="bd-bottom"></div>
                     <label class="item-input label-custom-field" ng-class="{'has-error':isSubmit && infor.Title.$invalid}">
                         <span class="input-label span-input-color">Doctors</span>
-                        <select   ng-model="selectedFilter.doctorSelected" ng-options="doctor.NAME for doctor in doctorsFilter" ng-change="updateAppoinmentsList();"  class="select-custom">
+                        <select   ng-model="selectedFilter.doctorSelected" ng-options="doctor.NAME for doctor in doctorsFilter" ng-change="updateAppoinmentsList();"  class="ion-input-select ">
                             <option  value="" ></option>
                         </select>
                     </label>

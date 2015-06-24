@@ -7,18 +7,19 @@ module.exports = {
 		var date = req.body.date;
 		var site = req.body.siteId;
 
-		db.sequelize.query("SELECT d.NAME AS doctor_name,a.id AS appt_id, a.`appt_status` ,c.`CAL_ID`, c.`DOCTOR_ID`,c.`SITE_ID`,p.`Patient_id`,c.`FROM_TIME`,c.`TO_TIME`,a.checkedin_start_time, "+
-							"p.`Title`,p.`First_name`,p.`Sur_name`,p.`Middle_name`, p.`DOB`,co.`Company_name`,p.avatar "+
-							"FROM `cln_appointment_calendar` c "+
-							"INNER JOIN doctors d ON c.`DOCTOR_ID` = d.`doctor_id` "+
-							"LEFT JOIN cln_appt_patients a ON c.`CAL_ID` = a.`cal_id` "+
-							"LEFT JOIN `cln_patients` p ON a.`Patient_id` = p.`Patient_id` "+
-							"LEFT JOIN companies co ON p.`company_id` = co.id "+
-							"WHERE c.FROM_TIME BETWEEN ? AND DATE_ADD(?, INTERVAL 1 DAY) "+
-							"AND c.`SITE_ID` = ? ORDER BY c.`FROM_TIME`;", null, {raw:true}, [date,date,site])
+		db.sequelize.query("SELECT d.NAME AS doctor_name,a.id AS appt_id, a.`appt_status` , "+
+							"c.`CAL_ID`, c.`DOCTOR_ID`,c.`SITE_ID`,p.`Patient_id`,c.`FROM_TIME`,c.`TO_TIME`, "+
+							"a.checkedin_start_time, p.`Title`,p.`First_name`,p.`Sur_name`,p.`Middle_name`, p.`DOB`,co.`Company_name`,p.avatar,a.`Creation_date` "+
+							"FROM cln_appt_patients a "+
+							"INNER JOIN cln_appointment_calendar c ON c.`CAL_ID` = a.`cal_id` "+
+							"LEFT JOIN doctors d ON c.`DOCTOR_ID` = d.`doctor_id` "+
+							"LEFT JOIN `cln_patients` p ON a.`Patient_id` = p.`Patient_id` LEFT JOIN companies co ON p.`company_id` = co.id "+
+							"WHERE c.FROM_TIME BETWEEN ? AND DATE_ADD(?, INTERVAL 1 DAY) AND c.`SITE_ID` = ? "+
+							"ORDER BY c.`FROM_TIME`;", null, {raw:true}, [date,date,site])
 			.success(function(data){
 				var apptUpcoming = [];
 				var apptComplete = [];
+				var apptInjury = [];
 				var resultUpcoming = [];
 
 				if(data.length > 0)
@@ -41,6 +42,9 @@ module.exports = {
 					
 						if(item.appt_id != null && status == 'completed')
 							apptComplete.push(item);
+
+						if(item.appt_id != null && status == 'injury')
+							apptInjury.push(item);
 					};
 
 					resultUpcoming = _.chain(apptUpcoming)
@@ -53,6 +57,7 @@ module.exports = {
 				}
 
 				res.json({status:'success',
+						  injury: apptInjury,
 						  upcoming: resultUpcoming,
 						  completed: apptComplete});
 			})
@@ -68,7 +73,7 @@ module.exports = {
 
 		db.sequelize.query("SELECT d.NAME AS doctor_name,a.id AS appt_id,a.`appt_status`,a.`CAL_ID`,a.`actual_doctor_id`,c.`SITE_ID`, "+
 							"p.`Patient_id`,c.`FROM_TIME`,c.`TO_TIME`,a.checkedin_start_time,p.`Title`,p.`First_name`, "+
-							"p.`Sur_name`,p.`Middle_name`,p.`DOB`,co.`Company_name`,p.avatar  "+
+							"p.`Sur_name`,p.`Middle_name`,p.`DOB`,co.`Company_name`,p.avatar, d.`numsOfRoom`  "+
 							"FROM cln_appt_patients a "+
 							"INNER JOIN cln_appointment_calendar c ON a.`CAL_ID` = c.`CAL_ID` "+
 							"INNER JOIN doctors d ON a.`actual_doctor_id` = d.`doctor_id` "+
@@ -77,10 +82,11 @@ module.exports = {
 							"WHERE c.FROM_TIME BETWEEN ? AND DATE_ADD(?, INTERVAL 1 DAY) "+
 							"AND c.`SITE_ID` = ? "+
 							"AND d.`isOnline` = 1 AND d.`currentSite` = ? "+
-							"AND (a.`appt_status` LIKE 'Pre-progress' OR a.`appt_status` LIKE 'Work In Progress')",
+							"AND (a.`appt_status` LIKE 'Waiting' OR a.`appt_status` LIKE 'In Consult' OR a.`appt_status` LIKE 'Urgent')",
 							null,{raw:true},[date,date,site,site]) 
 			.success(function(data){
 				var result = [];
+				var doctorResult = [];
 				var doctor = [];
 				var arr1 = [];
 				var arr2 = [];
@@ -107,12 +113,25 @@ module.exports = {
 					})
 					.value();
 
+				for(var i=0; i<result.length; i++)
+				{
+					var d = result[i];
+					if(d.appointment[0].numsOfRoom != 0)
+					{
+						while(d.appointment.length < d.appointment[0].numsOfRoom)
+						{	
+							d.appointment.push({doctor_id: d.appointment[0].actual_doctor_id, isEmpty: true});
+						}
+					}
+				}
+
 				db.Doctor.findAll({where:{isOnline: 1, currentSite: site}},{raw:true})
 					.success(function(doctors){
 						if(doctors.length > 0)
 						{
 							for(var i=0; i<doctors.length; i++)
 							{
+								delete doctors[i].Signature;
 								arr2.push(doctors[i].doctor_id);
 							}
 							
@@ -125,10 +144,34 @@ module.exports = {
 									doctor.push(doctors[index]);
 								}
 							}
+
+							doctorResult = _.chain(doctor)
+								.groupBy("NAME")
+								.pairs()
+								.map(function(currentItem){
+									return _.object(_.zip(["doctor","appointment"], currentItem));
+								})
+								.value();
+
+							for(var i=0; i<doctorResult.length; i++)
+							{
+								var d = doctorResult[i];
+								if(d.appointment[0].numsOfRoom == 0)
+									d.isRender = false;
+								else
+								{
+									d.isRender = true;
+									while(d.appointment.length < d.appointment[0].numsOfRoom)
+									{
+										d.appointment.push(d.appointment[0])
+									}
+								}
+							}
 						}
+
 						res.json({status:'success',
 								  data: result,
-								  doctorData: doctor});
+								  doctorData: doctorResult});
 					})
 					.error(function(err){
 						res.json({status:'error'});
@@ -172,8 +215,15 @@ module.exports = {
 		}
 		else if(state.toLowerCase() == 'progress')
 		{
+			var status = '';
+
+			if(fromAppt.appt_status.toLowerCase() == 'injury')
+				status = 'Urgent';
+			else
+				status = 'Waiting';
+
 			db.sequelize.query("UPDATE cln_appt_patients SET appt_status = ?, actual_doctor_id = ? , checkedin_end_time = ? WHERE id = ?",
-						null,{raw:true},['Pre-progress', toAppt , moment().format('YYYY-MM-DD HH:mm:ss'), fromAppt.appt_id])
+						null,{raw:true},[status, toAppt , moment().format('YYYY-MM-DD HH:mm:ss'), fromAppt.appt_id])
 				.success(function(){
 					res.json({status:'success'});
 				})

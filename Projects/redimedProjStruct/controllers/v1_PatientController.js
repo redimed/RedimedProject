@@ -78,8 +78,10 @@ module.exports = {
         var sql = model_sql.sql_get_by_id(patient_id);
 
         k_sql.exec_row(sql, function (data) {
+            console.log('this is patient result data', data);
             res.json(data);
         }, function (err) {
+            console.log("this is patient error", error);
             res.json(err);
         });
 

@@ -86,12 +86,14 @@ angular.module('app.loggedIn.claim.directives.patientList', [])
 					.then(function(response){
 						scope.claim.list = response.data;
 						scope.claim.count = response.count;
+						//console.log('^^^^^^^^^^^^^^^^^^^Claim: ', response.data);
 					}, function(error){})
 				}else{
 					ClaimModel.listFollowPatient(postData)
 					.then(function(response){
 						scope.claim.list = response.data;
 						scope.claim.count = response.count;
+						//console.log('^^^^^^^^^^^^^^^^^^^Claim: ', response.data);
 					}, function(error){})
 				}
 			}
@@ -210,6 +212,15 @@ angular.module('app.loggedIn.claim.directives.patientList', [])
 				})
 			}
 
+			/*var onOClose = function(row){
+				ClaimModel.OClose(row)
+				.then(function(response){
+					console.log('ID: ', row.Claim_id);
+					scope.claim.load();
+				}, function(error){})
+
+			}*/
+
 			scope.claim = {
 				dialog: {
 					add: function(){
@@ -225,6 +236,7 @@ angular.module('app.loggedIn.claim.directives.patientList', [])
 						show(list);
 					}
 				},
+				//onOClose: function(row){ onOClose(row); },
 				load: function(){ load(); },
 				list: [],
 				count: 0,

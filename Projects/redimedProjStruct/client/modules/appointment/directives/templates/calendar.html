@@ -1,3 +1,10 @@
+<div>
+	<p ng-repeat="service in servicedata" ng-if="servicedata.length > 0" class="inline">
+		<button ng-style="{'background-color': '{{service.SERVICE_COLOR}}'}" style="height: 20px;width: 20px;"></button>
+		<span> {{service.SERVICE_NAME}}  </span>
+
+	<p>
+</div>
 <div id="alert-center" class="bv-right-list">
     <div class="m-background">
         <label style="font-weight: bold;font-size: 19px;">Notification List</label>
@@ -38,8 +45,7 @@
 	</span>
 </div> -->
 <div class="bv-arrow" ng-click="clickArrow()"></div>
-
-<div id="appointment">
+<div id="appointment" style="overflow-x: scroll;">
 	<div class="row">
 		<!-- DATEPICKER -->
 		<div class="col-md-4">
@@ -86,8 +92,7 @@
 		</div>
 		<!-- END CLINICAL DEPT -->
 	</div>
-
-	<div class="appointment">
+	<div class="appointment" style="width: 140%;">
 		<div class="appointment-row">
 			<div class="appointment-block-times" style="background: rgb(96, 99, 94)">
 				<label style="color: #ffffff; font-weight: bold;">Times</label>

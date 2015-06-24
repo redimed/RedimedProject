@@ -1,6 +1,6 @@
 angular.module("app.security.login.controller",[
 ])
-    .controller("SecurityLoginController", function ($scope, $state,$modal, $cookieStore,localStorageService ,SecurityService, toastr, UserService, ConfigService, DoctorService,socket) {
+    .controller("SecurityLoginController", function ($http,$scope, $state,$modal, $cookieStore,localStorageService ,SecurityService, toastr, UserService, ConfigService, DoctorService,socket) {
         $scope.showClickedValidation = false;
 
         $scope.isLogging = false;
@@ -84,8 +84,42 @@ angular.module("app.security.login.controller",[
                                 $cookieStore.put("companyInfo", response.companyInfo);
 
 
+                            //tannv.dts create
+                            var gotoFunction=function()
+                            {
+                                if (response.userInfo['function_id'] != null) {
+                                    UserService.getFunction(response.userInfo['function_id']).then(function (data) {
+                                        if(typeof data.definition !== 'undefined')
+                                        {
+                                            var rs = data.definition.split('(');
+                                            if (rs[0] != null) {
+                                                if (rs[1] != null) {
+                                                    var r = rs[1].split(')');
+                                                    var params = eval("(" + r[0] + ")");
+
+
+                                                    $state.go(rs[0], params, {location: "replace", reload: true});
+                                                }
+                                                else {
+                                                    $state.go(rs[0], {location: "replace", reload: true});
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                             $state.go('loggedIn.home',null,{location: "replace", reload: true});
+                                        }
+                                    })
+                                }
+                                else {
+                                    $state.go('loggedIn.home',null,{location: "replace", reload: true});
+                                }
+                            }
+
+                            //modify by: tannv.dts@gmail.com
                             if (response.userInfo.UserType.user_type == 'Doctor') {
-                                DoctorService.getByUserId(response.userInfo.id).then(function (data) {
+                                DoctorService.getByUserId(response.userInfo.id)
+                                .then(function (data) {
                                     if (data) {
                                         $cookieStore.put('doctorInfo', {
                                             doctor_id: data.doctor_id,
@@ -94,39 +128,16 @@ angular.module("app.security.login.controller",[
                                             CLINICAL_DEPT_ID: data.CLINICAL_DEPT_ID
                                         });
                                     }
+                                    gotoFunction();
+
+                                },function(err){
+                                    gotoFunction();
                                 });
                             }
-
-                            if (response.userInfo['function_id'] != null) {
-                                UserService.getFunction(response.userInfo['function_id']).then(function (data) {
-                                    if(typeof data.definition !== 'undefined')
-                                    {
-                                        var rs = data.definition.split('(');
-                                        if (rs[0] != null) {
-                                            if (rs[1] != null) {
-                                                var r = rs[1].split(')');
-                                                var params = eval("(" + r[0] + ")");
-
-
-                                                $state.go(rs[0], params, {location: "replace", reload: true});
-                                            }
-                                            else {
-                                                $state.go(rs[0], {location: "replace", reload: true});
-                                            }
-                                        }
-                                    }
-                                    else
-                                    {
-                                         $state.go('loggedIn.home',null,{location: "replace", reload: true});
-                                    }
-                                })
+                            else
+                            {
+                                gotoFunction();
                             }
-                            else {
-                                $state.go('loggedIn.home',null,{location: "replace", reload: true});
-                            }
-                        
-
-
                     }
                     
                 });

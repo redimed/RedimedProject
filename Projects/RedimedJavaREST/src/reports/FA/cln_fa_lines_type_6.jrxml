@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cln_fa_lines_type_6" pageWidth="575" pageHeight="842" columnWidth="555" leftMargin="0" rightMargin="20" topMargin="0" bottomMargin="0" uuid="7d052af1-01a5-4943-b8d7-212412a47908">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="patient_id" class="java.lang.String"/>
+	<parameter name="cal_id" class="java.lang.String"/>
+	<parameter name="real_path" class="java.lang.String"/>
+	<parameter name="sub_report_dir" class="java.lang.String"/>
+	<parameter name="line_id" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select line.*
+from `cln_fa_df_lines` line
+where line.PATIENT_ID = $P{patient_id}
+and line.CAL_ID = $P{cal_id}
+and line.LINE_ID =  $P{line_id}
+and line.LineType != 1
+and line.SCORE_TYPE1=6]]>
+	</queryString>
+	<field name="PATIENT_ID" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CAL_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LINE_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SECTION_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FA_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="QUESTION" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PICTURE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ISSCORE1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SCORE_TYPE1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SCORE1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ISRATING1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="RATING_ID1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="RATING_VALUE1" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="COMMENTS" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ORD" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ISSCORE2" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SCORE_TYPE2" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SCORE2" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ISRATING2" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="RATING_ID2" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="RATING_VALUE2" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ISENABLE" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Created_by" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Creation_date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Last_updated_by" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Last_update_date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="IsCommentsText" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LineType" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="RATE1" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="RATE2" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VAL1_NAME_HEADER" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VAL1_VALUE_HEADER" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VAL2_NAME_HEADER" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VAL2_VALUE_HEADER" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="IS_SHOW_RANKING_TABLE" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="lines_type_6_group">
+		<groupHeader>
+			<band height="50">
+				<textField>
+					<reportElement x="0" y="28" width="555" height="22" uuid="9bfc335b-5647-4d0a-84f0-b879c92cecd3"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true" isUnderline="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{QUESTION}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<detail>
+		<band height="188">
+			<staticText>
+				<reportElement x="0" y="0" width="210" height="20" uuid="a23d7468-03a3-4bc8-89eb-5f9216aa3768"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0" lineColor="#F0F0F0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PERFORMANCE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="210" y="0" width="100" height="20" uuid="1567ece4-e0d8-4641-b889-e2a1956b5f2d"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0" lineColor="#F0F0F0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[SCORE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="0" width="245" height="20" uuid="d26cb0a2-4f8a-4bf9-b6e4-e67d611a9603"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[COMMENTS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="210" height="40" uuid="335e4239-e96a-40d5-9223-41beeafd22c3"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Ability to hold position for 120 seconds.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="59" width="210" height="20" uuid="f9377301-7b57-497b-b002-f86c76d63f8e"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0" lineColor="#F0F0F0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0" lineColor="#F0F0F0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Ability to hold position for 90 - 119 seconds.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="79" width="210" height="20" uuid="cc973c2c-a620-4620-8f0c-638fb18d0eff"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0" lineColor="#F0F0F0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Ability to hold position for 60 - 89 seconds.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="99" width="210" height="40" uuid="f99bd5f8-67d2-4ff4-97a1-fda4a40a68bf"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Ability to hold position for less than 60 seconds.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="210" y="20" width="100" height="40" uuid="d106cc1c-6e7b-4e3b-b9c6-5f5e7069bf47"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Excellent (4)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="210" y="59" width="100" height="20" uuid="ef6f7984-8270-4454-bfa1-308f0b6d68c2"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0" lineColor="#F0F0F0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0" lineColor="#F0F0F0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Good (3)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="210" y="79" width="100" height="20" uuid="f35cd9d1-81a9-4b3f-86aa-48dc632f79fa"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0" lineColor="#F0F0F0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Fair (2)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="210" y="99" width="100" height="40" uuid="4c4ee0db-8d79-4aea-9be9-4722f98e0487"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Poor (1)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="149" width="50" height="20" uuid="ac534f9c-ebbc-47e5-aa26-e4c5644fce36"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Achieved :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="149" width="60" height="20" uuid="789e4fa6-545f-46c8-9ca6-37878409c873"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[seconds]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="70" y="149" width="40" height="20" uuid="44e0a613-9018-4d7a-a10d-9bf7d55a41df"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0" lineColor="#F0F0F0"/>
+					<leftPen lineWidth="0.0" lineColor="#F0F0F0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.0" lineColor="#F0F0F0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{SCORE1}]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement stretchType="RelativeToTallestObject" x="310" y="20" width="245" height="119" uuid="cdc61bb4-a274-46e8-a481-e0e4a07b1cc2"/>
+				<box>
+					<topPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<subreport>
+					<reportElement x="0" y="0" width="245" height="119" uuid="b5c4bbaf-4e85-4e8e-a993-9430daddc595"/>
+					<subreportParameter name="patient_id">
+						<subreportParameterExpression><![CDATA[$P{patient_id}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="cal_id">
+						<subreportParameterExpression><![CDATA[$P{cal_id}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="real_path">
+						<subreportParameterExpression><![CDATA[$P{real_path}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="sub_report_dir">
+						<subreportParameterExpression><![CDATA[$P{sub_report_dir}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="line_id">
+						<subreportParameterExpression><![CDATA[$F{LINE_ID}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA[$P{real_path}+"cln_fa_comments.jasper"]]></subreportExpression>
+				</subreport>
+			</frame>
+			<ellipse>
+				<reportElement mode="Transparent" x="214" y="28" width="90" height="22" uuid="b943ecf3-a77f-4635-9701-cf2b1433cb05">
+					<printWhenExpression><![CDATA[$F{RATING_VALUE1}==4]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="2.0" lineStyle="Solid"/>
+				</graphicElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="214" y="58" width="90" height="22" uuid="200b451b-f313-4377-9720-bbcd5797f436">
+					<printWhenExpression><![CDATA[$F{RATING_VALUE1}==3]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="2.0" lineStyle="Solid"/>
+				</graphicElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="214" y="78" width="90" height="22" uuid="1d11cc0c-5bb1-4e80-a320-01329cd9cc4e">
+					<printWhenExpression><![CDATA[$F{RATING_VALUE1}==2]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="2.0" lineStyle="Solid"/>
+				</graphicElement>
+			</ellipse>
+			<ellipse>
+				<reportElement mode="Transparent" x="214" y="107" width="90" height="22" uuid="71ac9cc1-5765-4399-b934-0407105966a3">
+					<printWhenExpression><![CDATA[$F{RATING_VALUE1}==1]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="2.0" lineStyle="Solid"/>
+				</graphicElement>
+			</ellipse>
+		</band>
+	</detail>
+</jasperReport>

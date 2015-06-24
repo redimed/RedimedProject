@@ -1,6 +1,6 @@
 var db = require('../models');
 var mdt_functions = require('../mdt-functions.js');
-
+var moment=require('moment');
 var InvoiceLineModel = require('../v1_models/Cln_invoice_lines.js');
 
 module.exports = {
@@ -104,7 +104,7 @@ module.exports = {
 			attributes: ['CAL_ID', 'Patient_id', 'appt_status'],
 			include:{
 				model:db.Appointment, as: 'Appointment',
-				attributes:['FROM_TIME']
+				attributes:['FROM_TIME','DOCTOR_ID']
 			},
 			where:whereCon,
 			offset: offset,
@@ -160,23 +160,33 @@ module.exports = {
 	postCheckIn: function(req, res) {
 		var cal_id = req.body.CAL_ID;
 		var patient_id = req.body.Patient_id;
-		var postData = req.body.data;
-
-		 db.ApptPatient.update(postData, {
-            CAL_ID: cal_id,
-            Patient_id: patient_id
-        })
-        .success(function (data) {
-            res.json({
-                "status": "success",
-                "data": data
+		var start_time = moment().format("YYYY/MM/DD HH:mm:ss");
+		var appt_status = req.body.data.appt_status;
+		var postData = {
+			appt_status:appt_status,
+            checkedin_start_time:start_time
+		}
+		var sql="UPDATE `cln_appt_patients` SET ? WHERE `Patient_id`=? AND `CAL_ID`=?";
+        
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[postData,patient_id,cal_id],function(err,data)
+            {
+                if(err)
+                {
+                    res.json(500, {
+		                "status": "error",
+		                "message": err
+		            });
+                }
+                else
+                {
+                    res.json({
+		                "status": "success",
+		                "data": data
+		            });    
+                }
             });
-        })
-        .error(function (error) {
-            res.json(500, {
-                "status": "error",
-                "message": error
-            });
-        })
+        });
 	},
 }

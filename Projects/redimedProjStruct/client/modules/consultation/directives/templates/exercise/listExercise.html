@@ -1,0 +1,66 @@
+<button ng-click="add()" class="un-button un-bgBlack pull-right" style="margin-bottom: 5px;">Add Exercise Program</button>
+<div id="listexercise">
+	<table class="mdt-table">
+		<thead>
+			<tr>
+				<th>Exercise</th>
+				<th>Lastest Weight</th>
+				<th>Sets</th>
+				<th>Reps</th>
+				<th>Other</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="l in exercise.list">
+				<td>{{l.exercise}}</td>
+				<td>{{l.lastest_weight}}</td>
+				<td>{{l.sets}}</td>
+				<td>{{l.reps}}</td>
+				<td>{{l.other}}</td>
+				<td align="center">
+					<button class="un-button-submit-m ng-scope" ng-click="edit(l)">Edit</button>
+					<!-- <button class="un-button-submit-m ng-scope" ng-click="delete(l)">Delete</button> -->
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div align="right">
+		<pagination boundary-links="true" total-items="exercise.count" ng-model="exercise.search.page" 
+	    class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+	    items-per-page="exercise.search.limit" max-size="exercise.search.max_size" ng-change="exercise.onPage(exercise.search.page)">
+		</pagination>
+	</div>
+<div>
+
+ <script type="text/ng-template" id="dialogExerciseAdd">
+ 	<style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+     </style>
+    <div class="modal-body">
+        <add-exercise success="exercise.success"></add-exercise>
+    </div>
+ </script>
+
+ <script type="text/ng-template" id="dialogExerciseEdit">
+ 	<style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+     </style>
+    <div class="modal-body">
+        <edit-exercise exercise-id="exercise.id" success="exercise.success"></edit-exercise>
+    </div>
+ </script>
+
+ <script type="text/ng-template" id="dialogExerciseRemove">
+    <div class="modal-body">
+        <p>Do you want to remove this Exercise ?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary btn-xs" ng-click="ok()">OK</button>
+        <button class="btn btn-warning btn-xs" ng-click="cancel()">Cancel</button>
+    </div>
+ </script>

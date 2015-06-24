@@ -16,6 +16,7 @@ angular.module('app.loggedIn.template.directives.patient_write', [])
 				var content = $('#writeTemplate').html();
 
 				content = content.replace(/&nbsp;&nbsp;/g, '</input>');
+				content = content.replace(/test/g, '</img>');
 
 				content = content.replace(/<br>/g, '<br/>');
 

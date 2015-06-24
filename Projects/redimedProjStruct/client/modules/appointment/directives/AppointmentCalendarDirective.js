@@ -8,6 +8,17 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 			options: '='
 		},
 		link: function(scope, elem, attrs){
+
+			scope.servicedata ={};
+			scope.getServiceColor = function(){
+				AppointmentModel.getServiceColor('data')
+				.then(function(response){
+					scope.servicedata = response.data;
+				},function(error){
+
+				})
+			}
+			scope.getServiceColor();
 			scope.goToCalendarDetail = function(doctor){
 				$cookieStore.put('appointment', scope.appointment.search);
 

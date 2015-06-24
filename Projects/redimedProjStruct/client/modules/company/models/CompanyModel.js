@@ -80,6 +80,11 @@ angular.module("app.loggedIn.company.models", [])
         var instanceApi = mainApi.all('selectInsurer');
         return instanceApi.post({data: data});
     }
+    //Appointment Controller
+     instanceService.getFromTime = function(data){
+        var instanceApi = mainApi.all('getFromTime');
+        return instanceApi.post({data: data});
+    }
     return instanceService;
 })
 

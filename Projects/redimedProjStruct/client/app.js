@@ -54,13 +54,6 @@ angular.module("app", [
     	'app.sponsor1.nonemergency.controller'
         // 'angular-underscore'
     ])
-    .factory('callModal', function (btfModal) {
-      return btfModal({
-        controller: 'callController',
-        controllerAs: 'modal',
-        templateUrl: 'common/views/call.html'
-      });
-    })
     .factory('socket', function(socketFactory) {
         var host = location.hostname;
         var port = location.port;
@@ -72,11 +65,12 @@ angular.module("app", [
             'max reconnection attempts': 10000,
             'force new connection': false,
             'secure': true,
-			'transports': ['websocket'
-						  , 'flashsocket'
-						  , 'htmlfile'
-						  , 'xhr-polling'
-						  , 'jsonp-polling']
+			'transports': ['websocket', 
+                          'flashsocket', 
+                          'htmlfile', 
+                          'xhr-polling', 
+                          'jsonp-polling', 
+                          'polling']
         });
 
         var socketFactory = socketFactory({
@@ -228,7 +222,8 @@ angular.module("app", [
 //When update any route
 .run(function(beforeUnload, $window, $modalStack, $cookieStore, $interval, $state, $rootScope, $idle, $log, $keepalive, editableOptions, socket, toastr, localStorageService,rlobService, TimeSheetService) {
 
-
+    window.loading_screen.finish();
+    
     socket.on('reconnect', function() {
         if ($cookieStore.get("userInfo")) {
             socket.emit("reconnected", $cookieStore.get("userInfo").id);
@@ -288,7 +283,7 @@ angular.module("app", [
 
 
     $rootScope.$on("$stateChangeSuccess", function(e, toState, toParams, fromState, fromParams) {
-
+        
         $modalStack.dismissAll();
 
         var locationHref = location.href;

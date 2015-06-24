@@ -40,11 +40,17 @@ angular.module('starter.user.controller',[])
         }
 
         UserService.getUserInfo(userInfo.id).then(function(data){
-            $scope.detail.img = data.img;
+            if(data.status=="success"){
+                 $scope.detail.img = data.img;
+            }
+           
         })
 
         UserService.getCompany().then(function(data){
-            $scope.companyList = data;
+            if(data.status=="success"){
+                 $scope.companyList = data;
+            }
+           
         })
 
 

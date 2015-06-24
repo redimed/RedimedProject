@@ -191,7 +191,6 @@ angular.module('starter.phoneCall.controller',[])
 
         $scope.micToggle = function() {
             $scope.mic = !$scope.mic;
-
             if($scope.mic){
                 publisher.publishAudio(false);
             }
@@ -236,9 +235,7 @@ angular.module('starter.phoneCall.controller',[])
         }
 
         $scope.medicalDeviceToggle = function() {
-            if(ionic.Platform.isIOS()) {
-                $cordovaToast.showShortTop("Sorry platform not support");
-            } else {
+            if(ionic.Platform.isAndroid()) {
                 document.addEventListener("deviceready", function() {
                     bluetooth.enable();
                 })
@@ -262,6 +259,8 @@ angular.module('starter.phoneCall.controller',[])
                         TB.updateViews();
                     }, 0.5 * 1000);
                 }
+            } else {
+                $cordovaToast.showShortTop("Sorry platform not support");
             }
         }
 
@@ -298,9 +297,7 @@ angular.module('starter.phoneCall.controller',[])
             })
             session.disconnect();
             localStorageService.remove('callUser');
-            $timeout(function() {
-                $state.go(from.fromState.name, params, {location: "replace"});
-            }, 5*1000);
+            $state.go(from.fromState.name, params, {location: "replace"});
         }
 
         $scope.$on('$destroy', function() {

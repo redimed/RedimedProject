@@ -3,7 +3,8 @@ angular.module('starter.injury.controller', ['ngCordova'])
     .controller('InjuryController', function($scope, $state, $filter, $stateParams,
                                              InjuryServices, $cordovaCamera, $ionicPopup, localStorageService,
                                              $cordovaFile, $ionicModal, ConfigService, $ionicSlideBoxDelegate,
-                                             $ionicLoading, $compile, $timeout, $rootScope, HOST_CONFIG, $ionicSideMenuDelegate, $ionicPopover){
+                                             $ionicLoading, $compile, $timeout, $rootScope, HOST_CONFIG,
+                                             $ionicSideMenuDelegate, $ionicPopover, $cordovaFileTransfer){
 
         $scope.isSubmit = false;
         $scope.isShow = true;
@@ -26,6 +27,7 @@ angular.module('starter.injury.controller', ['ngCordova'])
         var serverUpload = "https://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port + "/api/im/upload";
         var checkNonemerg = localStorageService.get("checkNonemer");
         var userInfoLS = localStorageService.get("userInfo");
+
 
         $scope.toogleMenu = function() {
             $ionicSideMenuDelegate.toggleLeft();
@@ -189,6 +191,28 @@ angular.module('starter.injury.controller', ['ngCordova'])
                 $scope.temp1 = angular.copy($scope.worker);
                 $scope.isShow = !$scope.isShow;
             }
+            if(userInfoLS.UserType.user_type == "Patient"){
+                $scope.user_type = "Patient";
+                // console.log(userInfoLS)
+                InjuryServices.getPatientByUser(userInfoLS.id).then(function(results){
+                    if(results.status == "success"){
+                        console.log(results.data);
+                        $scope.worker.Title = results.data.Title;
+                        $scope.worker.First_name = results.data.First_name;
+                        $scope.worker.Middle_name = results.data.Middle_name;
+                        $scope.worker.Sur_name = results.data.Sur_name;
+                        $scope.worker.Mobile = results.data.Mobile;
+                        $scope.worker.Sex = results.data.Sex;
+                        $scope.worker.DOB = results.data.DOB;
+                        $scope.worker.Address1 = results.data.Address1;
+                        $scope.worker.Patient_id = results.data.Patient_id;
+                        $scope.worker.Email = results.data.Email;
+                        $scope.worker.user_type= "Patient"
+
+                    }
+                })
+            }
+
         };
 
         //SHOW MODAL IMAGE DETAIL
@@ -272,31 +296,24 @@ angular.module('starter.injury.controller', ['ngCordova'])
         };
 
         //UPLOAD IMAGE FUNCTION
-        // function uploadFile(server, img, params) {
-        //     var trustHosts = true;
-        //     var filePath = img.split(/[?]/)[0];
+        function uploadFile(img, server, params) {
+            var options =  new FileUploadOptions();
+            options.fileKey = "file";
+            options.fileName = img.substr(img.lastIndexOf('/') + 1);
+            options.mimeType = "image/jpeg";
+            options.chunkedMode = false;
+            options.params = params;
 
-        //     var options =  new FileUploadOptions();
-        //     options.fileKey = "file";
-        //     options.fileName = Number(new Date()) + ".jpg";
-        //     options.mimeType = "image/jpeg";
-        //     options.chunkedMode = false;
-        //     options.params = params;
-        //     console.log(img.substr(img.lastIndexOf('/')+1));
-
-        //     $cordovaFileTransfer.upload(server, filePath, options, true)
-        //         .then(function(result) {
-        //             if (typeof params !== 'undefined') {
-        //                 InjuryServices.uploadImg(params.injury_id, params.injury_part, params.description);
-        //                 console.log("Upload success " + result);
-        //             }
-        //         }, function(err) {
-        //             console.log(err);
-        //             console.log("Upload Failed " + err);
-        //             return;
-        //         }, function (progress) {
-        //         });
-        // }
+            $cordovaFileTransfer.upload(server, filePath, options, true)
+                .then(function(result) {
+                    if (typeof params !== 'undefined') {
+                        InjuryServices.uploadImg(params.injury_id, params.injury_part, params.description);
+                    }
+                }, function(err) {
+                    console.log("Upload Failed " + err);
+                    return;
+                }, function (progress) {});
+        }
 
 
         //CHECK VALID MOBILE AND EMAIL
@@ -467,18 +484,6 @@ angular.module('starter.injury.controller', ['ngCordova'])
             }
         };
 
-        // function getInforImg(){
-        //     $scope.items = InjuryServices.getInjuryInfo.Model;
-        //     for(var part in $scope.items) {
-        //         if ($scope.items[part].length !== 0) {
-        //             for(var i = 0; i < $scope.items[part].length; i++){
-        //                 console.log("Inside: " + part);
-        //                 console.log($scope.items[part][i]);
-        //             }
-        //         };
-        //     }
-        // }
-
         //SUBMIT END INSERT INJURY LAST
         $scope.submitInjuryAll = function () {
             $scope.messageLoading = {message: "Waiting..."};
@@ -493,7 +498,16 @@ angular.module('starter.injury.controller', ['ngCordova'])
                 $timeout(function () {
                     if(data.status == 'success')
                     {
-
+                        for(var part in $scope.items) {
+                            for(var i = 0 ; i < $scope.imgURI.length; i++)
+                            {
+                                var params = {
+                                    injury_id: data.injury_id,
+                                    description: $scope.imgURI[i].des
+                                };
+                                uploadFile(serverUpload, $scope.imgURI[i].image, params);
+                            }
+                        }
                         $scope.popupMessage = { message: "Success insert injury!" };
                         $ionicPopup.show({
                             templateUrl: "modules/popup/PopUpSuccess.html",
@@ -504,11 +518,17 @@ angular.module('starter.injury.controller', ['ngCordova'])
                                     onTap: function(e) {
                                         $scope.imgURI = [];
                                         resetField();
-                                        $state.go('app.injury.info', {reload: true});
+                                        if(userInfoLS.UserType.user_type == "Patient"){
+                                            $state.go('app.injury.desInjury');
+                                        }else{
+                                            $state.go('app.injury.info', {reload: true});
+                                        }
+
                                     }
                                 }
                             ]
                         });
+                        $ionicLoading.hide();
                     }
                     else {
                         $ionicLoading.hide();
@@ -532,19 +552,25 @@ angular.module('starter.injury.controller', ['ngCordova'])
 
         //CHECK NON-EMERGENCY CHANGE FORM
         function NonEmergency() {
+
             $scope.infoInjury = {
                 info: $scope.worker,
                 dataImage: $scope.imgURI
             };
             localStorageService.set("injuryInfo", $scope.infoInjury);
-            if($scope.worker.Patient_id == -1)
-            {
-                localStorageService.set("checkNonemer", $scope.goAddworker);
-                $state.go('app.worker.add');
-            }
-            else
-            {
+            if(userInfoLS.UserType.user_type == "Patient"){
                 $state.go('app.chooseAppointmentCalendar',{Patient_id: $scope.worker.Patient_id});
+            }
+            else{
+                if($scope.worker.Patient_id == -1)
+                {
+                    localStorageService.set("checkNonemer", $scope.goAddworker);
+                    $state.go('app.worker.add');
+                }
+                else
+                {
+                    $state.go('app.chooseAppointmentCalendar',{Patient_id: $scope.worker.Patient_id});
+                }
             }
         }
 
@@ -568,11 +594,22 @@ angular.module('starter.injury.controller', ['ngCordova'])
         $scope.location =  $scope.ad;
 
         $scope.goBluetoothState = function() {
-            if($scope.worker.Patient_id > -1) {
-                $state.go('app.mainBluetooth', null, {reload: true});
-            }
-            else {
-                $scope.popupMessage = { message: "Please select patient, before using Bluetooth." };
+            if(ionic.Platform.isAndroid()) {
+                if($scope.worker.Patient_id > -1) {
+                    $state.go('app.mainBluetooth', null, {reload: true});
+                }
+                else {
+                    $scope.popupMessage = { message: "Please select patient, before using Bluetooth." };
+                    $ionicPopup.show({
+                        templateUrl: "modules/popup/PopUpError.html",
+                        scope: $scope,
+                        buttons: [
+                            { text: "Ok" }
+                        ]
+                    });
+                }
+            } else {
+                $scope.popupMessage = { message: "Sorry application not support platform" };
                 $ionicPopup.show({
                     templateUrl: "modules/popup/PopUpError.html",
                     scope: $scope,
@@ -722,7 +759,7 @@ angular.module('starter.injury.controller', ['ngCordova'])
                 //call againt location reload map
                 map.addControl({
                     position:'right_center',
-                    content:'<i class="fa fa-crosshairs fa-3x" style="color:black;"></i>',
+                    content:'<i class="icon ion-android-locate"></i>',
 
                     events:{
                         click: function(){

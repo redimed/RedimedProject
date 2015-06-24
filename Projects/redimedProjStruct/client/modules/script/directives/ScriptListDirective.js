@@ -8,17 +8,17 @@ angular.module('app.loggedIn.script.directive.list', [])
 		scope:{
 			options: '=',
 			limit: '@',
-			medicaname :'='
+			medicare: '='
 		},
 		link: function(scope, ele, attrs){
-			
+
 			var search = {
 				page: 1,
 				limit: 20,
 				offset: 0,
 				max_size: 5,
 				scriptNum: '',
-				Medicare: '',
+				medication_name: '',
 				isEnable: '',
 				Patient_id: $stateParams.patient_id,
 				CAL_ID: $stateParams.cal_id,
@@ -26,6 +26,7 @@ angular.module('app.loggedIn.script.directive.list', [])
 			}
 
 			var load = function(){
+				console.log('fdsfds: ',scope.medicare);
 				ScriptModel.list(search).then(function(response){
 
 					scope.script.list = response.data;
@@ -42,8 +43,8 @@ angular.module('app.loggedIn.script.directive.list', [])
 						scope.script.search.scriptNum = option.value;
 						break;
 					}
-					case 'Medicare':{
-						scope.script.search.Medicare = option.value;
+					case 'medication_name':{
+						scope.script.search.medication_name = option.value;
 						break;
 					}
 				}
@@ -82,10 +83,10 @@ angular.module('app.loggedIn.script.directive.list', [])
 			}
 
 			scope.Scripts = function(type, index){
-				scope.script.medication_name = [];
-				 for (var i = 0; i < scope.medicaname.length; i++) {
-					scope.script.medication_name.push({'medication_name':scope.medicaname[i].medication_name});
-				};
+				//scope.script.medication_name = [];
+				// for (var i = 0; i < scope.medicaname.length; i++) {
+					//scope.script.medication_name.push({'medication_name':scope.medicaname[i].medication_name});
+				//};
 				if(type == 'new')
 				{
 					var modalInstance = $modal.open({
@@ -93,18 +94,20 @@ angular.module('app.loggedIn.script.directive.list', [])
 			         controller: 'ScriptAddController',
 			         size :'lg',
 			         resolve :{
-			         	medicaname :function(){
-			         		return scope.medicaname;
+			         	medicare :function(){
+			         		return scope.medicare;
+			         		//console.log('++++++++', scope.medicare);
 			         	}
 			         }
 			       })
 			       .result.then(function(response){
 			        	scope.script.load();
 			       })
+			       //console.log('333333333333333333', scope.medicare);
 			   }
 
 			   if(type == 'edit'){
-			   		console.log('chien',index);
+			   		//console.log('chien',index);
 			   		var modalInstance = $modal.open({
 			         	templateUrl: 'notifyToEdit',
 			         	controller: 'ScriptEditController',
@@ -113,8 +116,8 @@ angular.module('app.loggedIn.script.directive.list', [])
 				         	ID: function(){
 				         		return index;
 				         	},
-				         	medicaname :function(){
-			         			return scope.script.medication_name;
+				         	medicare :function(){
+			         			return scope.medicare;
 			         		}
 			         	}
 			       	})
@@ -153,7 +156,7 @@ angular.module('app.loggedIn.script.directive.list', [])
 			}
 
 			scope.script = {
-				medication_name :[],
+				//medicare :[],
 				search: search,
 				dialog: {
 					remove: function(id){ remove(id); }

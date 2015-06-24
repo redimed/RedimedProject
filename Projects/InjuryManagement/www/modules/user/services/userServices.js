@@ -32,6 +32,11 @@ angular.module('starter.user.services',[])
             var info = userApi.all('users/id');
             return info.post({id:id});
         }
+         userService.getPatientMenu = function(id){
+            var info = userApi.one('im/menu');
+            return info.get();
+        }
+      
 
         return userService;
     })

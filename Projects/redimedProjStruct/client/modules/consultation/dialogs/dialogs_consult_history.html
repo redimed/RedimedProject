@@ -2,6 +2,9 @@
     .modal.in .modal-dialog {
        	margin-top:50px;
     }
+    .modal {
+		z-index: 10050 !important;
+	}
 </style>
 <!--<div class="panel panel-default">-->
 <div class="modal-body" ng-if="listConsult">
@@ -14,42 +17,43 @@
 				<div class="un-label-forms-custom">
 					<span>Date</span>
 				</div>
-				<label>{{listConsult.Creation_date | date:'dd-MM-yyyy'}}</label>
+				<label class="un_label_popup_history">{{listConsult.Creation_date | date:'dd-MM-yyyy - hh:mm'}}</label>
 			</div>
 			<div class="col-xs-6">
 				<div class="un-label-forms-custom">
 					<span>Problem</span>
 				</div>
-				<label>{{listConsult.Notes}}</label>
+				<label class="un_label_popup_history">{{listConsult.Notes}}</label>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-xs-6">
 				<div class="un-label-forms-custom">
-					<span>History</span>
+					<span>Investigation</span>
 				</div>
-				<textarea rows="6" class="form-control" disabled="disabled" style="resize: none;">{{listConsult.history}}</textarea>
-			</div>
-			<div class="col-xs-6">
-				<div class="un-label-forms-custom">
-					<span>Examination</span>
-				</div>
-				<textarea rows="6" class="form-control" disabled="disabled" style="resize: none;">{{listConsult.examination}}</textarea>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-6">
-				<div class="un-label-forms-custom">
-					<span>Treatment/Plan</span>
-				</div>
-				<textarea rows="6" class="form-control" disabled="disabled" style="resize: none;">{{listConsult.treatment_plan}}</textarea>
+				<textarea rows="6" class="form-control pt_width_100" disabled="disabled" style="resize: none;">{{listConsult.investigation}}</textarea>
 			</div>
 			<div class="col-xs-6">
 				<div class="un-label-forms-custom">
 					<span>Diagnosis</span>
 				</div>
-				<textarea rows="6" class="form-control" disabled="disabled" style="resize: none;">{{listConsult.diagnosis}}</textarea>
+				<textarea rows="6" class="form-control pt_width_100" disabled="disabled" style="resize: none;">{{listConsult.diagnosis}}</textarea>
 			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-6">
+				<div class="un-label-forms-custom">
+					<span>Specialist</span>
+				</div>
+				<textarea rows="6" class="form-control pt_width_100" disabled="disabled" style="resize: none;">{{listConsult.specialist}}</textarea>
+			</div>
+			<div class="col-xs-6">
+				<div class="un-label-forms-custom">
+					<span>Treatment/Plan</span>
+				</div>
+				<textarea rows="6" class="form-control pt_width_100" disabled="disabled" style="resize: none;">{{listConsult.treatment_plan}}</textarea>
+			</div>
+			
 		</div>
 	</div>
 	<div align="right" style="margin-top: 15px; margin-right: 15px;">

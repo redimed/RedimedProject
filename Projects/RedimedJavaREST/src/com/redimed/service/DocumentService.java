@@ -15,7 +15,20 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
+import java.io.StringReader;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.CharacterData;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+
 import org.codehaus.jettison.json.JSONObject;
+import org.xhtmlrenderer.layout.SharedContext;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import java.util.HashMap;
@@ -25,11 +38,13 @@ import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.type.WhenNoDataTypeEnum;
 import net.sf.jasperreports.engine.util.JRLoader;
 
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Timestamp;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -64,6 +79,7 @@ public class DocumentService {
         try {
         	HashMap params = new HashMap();
         	
+        	
         	//Template Document
         	if(report.equalsIgnoreCase("template")){
         		Connection connection = Database.getConnection();
@@ -78,38 +94,64 @@ public class DocumentService {
         			{
         				String name = rs.getString("name");
        				 	String content = rs.getString("content");
+       				 	content = content.replaceAll("<div><br></div>","");
    				 		content = content.replaceAll("<br>", "</br>");
-
+   
        				 	StringBuffer sf = new StringBuffer();
        				 	sf.append("<html>");
        				 	sf.append(content);
        				 	sf.append("</html>");
        				 	
+       				 	DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+	       			    InputSource is = new InputSource();
+	       			    is.setCharacterStream(new StringReader(sf.toString()));
+	       			    Document doc = db.parse(is);
+
+	       			    NodeList nodes = doc.getElementsByTagName("input");
+
+	       			    for(int count=0; count < nodes.getLength(); count++)
+	       			    {
+	       			    	Element e = (Element)nodes.item(count);
+	       			    	e.setTextContent(e.getAttribute("value"));
+	       			    }
+	       			    
        				 	String workingDir = System.getProperty("user.dir");
        				 	File f = new File(workingDir+"\\tempPDF");
        				 	f.mkdirs();
 
 	       				long start = System.currentTimeMillis();
-
-	       				String outputFile = workingDir+"\\tempPDF\\"+name+".pdf";
+			
+	       				String outputFile = workingDir+"\\tempPDF\\"+name+"_"+System.currentTimeMillis()+".pdf";
 	       		         
 	       		        OutputStream os = new FileOutputStream(outputFile);
 	
 	       		        ITextRenderer renderer = new ITextRenderer();
-	       		        renderer.setDocumentFromString(sf.toString());
+	       		        
+	       		        SharedContext sharedContext = renderer.getSharedContext();
+	       		        sharedContext.setPrint(true);
+	       		        sharedContext.setInteractive(false);
+	       		        sharedContext.setReplacedElementFactory(new B64ImgReplacedElementFactory());
+	       		        sharedContext.getTextRenderer().setSmoothingThreshold(0);
+	       		    
+	       		        renderer.setDocument(doc,null);
 	       		        renderer.layout();
 	       		        renderer.createPDF(os);
-	
+	       		        renderer.finishPDF();
 	       		        os.close();
 	       		        long end = System.currentTimeMillis();
 	       		        System.out.println("Generate PDF in: " + (end-start) + "ms");
 
-	       		        File file = new File(workingDir+"\\tempPDF\\"+name+".pdf");
-		       		    FileInputStream fis = new FileInputStream(file);
-		       		    
-			       	    return Response.ok(fis, "application/pdf") 
+	       		        File file = new File(outputFile);
+	       		        FileInputStream fis = null;
+	       		        if(file.exists())
+	       		        {
+	       		        	fis = new FileInputStream(file);
+	       		        	return Response.ok(fis, "application/pdf") 
 				                    .header("content-disposition","inline")
 				                    .build();
+	       		        }
+	       		        else
+	       		        	return null;
         			}
         		}
         		catch(Exception e)

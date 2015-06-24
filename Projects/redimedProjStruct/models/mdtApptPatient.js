@@ -14,7 +14,16 @@ module.exports = function(sequelize, DataTypes){
         },
         'appt_status': {
             type:DataTypes.STRING(20)
-        }
+        },
+        'checkedin_start_time': {
+            type:DataTypes.DATE
+        },
+        'actual_doctor_id': {
+            type:DataTypes.INTEGER(11)
+        },
+        'injury_id': {
+            type:DataTypes.INTEGER(11)
+        },
         
     }, {
         tableName: "cln_appt_patients",

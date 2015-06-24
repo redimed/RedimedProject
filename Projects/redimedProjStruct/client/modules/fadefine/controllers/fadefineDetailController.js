@@ -288,6 +288,34 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 			detail.VAL1_ISCOMMENT_WHEN_NO = null;
 			detail.VAL1_VALUE_IS_NUMBER = null;
 		}
+		else if(val1_type===7){
+			detail.VAL1_ISVALUE = val1_type;
+			detail.VAL1_ISCHECKBOX = null;
+			detail.VAL1_CHECKBOX = null;
+			detail.VAL1_NAME = 'Weight';
+			detail.VAL1_VALUE_IS_NUMBER = 1;
+		}
+		else if(val1_type===8){
+			detail.VAL1_ISVALUE = val1_type;
+			detail.VAL1_ISCHECKBOX = null;
+			detail.VAL1_CHECKBOX = null;
+			detail.VAL1_NAME = 'Distance';
+			detail.VAL1_VALUE_IS_NUMBER = 1;
+		}
+		else if(val1_type===9){
+			detail.VAL1_ISVALUE = val1_type;
+			detail.VAL1_ISCHECKBOX = null;
+			detail.VAL1_CHECKBOX = null;
+			detail.VAL1_NAME = 'Height';
+			detail.VAL1_VALUE_IS_NUMBER = 1;
+		}
+		else if(val1_type===10){
+			detail.VAL1_ISVALUE = val1_type;
+			detail.VAL1_ISCHECKBOX = null;
+			detail.VAL1_CHECKBOX = null;
+			detail.VAL1_NAME = 'Weight';
+			detail.VAL1_VALUE_IS_NUMBER = 1;
+		}
 		else{
 			detail.VAL1_ISVALUE = null;
 			detail.VAL1_VALUE_IS_NUMBER = null;
@@ -317,6 +345,34 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 			detail.VAL2_ISCOMMENT_WHEN_NO = null;
 			detail.VAL2_VALUE_IS_NUMBER = null;
 		}
+		else if(val2_type===7){
+			detail.VAL2_ISVALUE = val2_type;
+			detail.VAL2_ISCHECKBOX = null;
+			detail.VAL2_CHECKBOX = null;
+			detail.VAL2_NAME = 'Weight';
+			detail.VAL2_VALUE_IS_NUMBER = 1;
+		}
+		else if(val2_type===8){
+			detail.VAL2_ISVALUE = val2_type;
+			detail.VAL2_ISCHECKBOX = null;
+			detail.VAL2_CHECKBOX = null;
+			detail.VAL2_NAME = 'Distance';
+			detail.VAL2_VALUE_IS_NUMBER = 1;
+		}
+		else if(val2_type===9){
+			detail.VAL2_ISVALUE = val2_type;
+			detail.VAL2_ISCHECKBOX = null;
+			detail.VAL2_CHECKBOX = null;
+			detail.VAL2_NAME = 'Height';
+			detail.VAL2_VALUE_IS_NUMBER = 1;
+		}
+		else if(val2_type===10){
+			detail.VAL2_ISVALUE = val2_type;
+			detail.VAL2_ISCHECKBOX = null;
+			detail.VAL2_CHECKBOX = null;
+			detail.VAL2_NAME = 'Weight';
+			detail.VAL2_VALUE_IS_NUMBER = 1;
+		}
 		else{
 			detail.VAL2_ISVALUE = null;
 			detail.VAL2_VALUE_IS_NUMBER = null;
@@ -330,9 +386,15 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 	}
 
 	$scope.value1TypeInit = function(detail){
-		if($stateParams.action!=='add'){
+		if($stateParams.action!=='add' || ($stateParams.action==='add' && $stateParams.headerId!==0)){
 			if((detail.VAL1_ISVALUE===0 ||detail.VAL1_ISVALUE===null) && (detail.VAL1_ISCHECKBOX===0 || detail.VAL1_ISCHECKBOX===null)){
 				return -1;
+			}
+			else if(detail.VAL1_ISVALUE===7){
+				return 7;
+			}
+			else if(detail.VAL1_ISVALUE===8){
+				return 8;
 			}
 			else{
 				if(detail.VAL1_ISVALUE===1) return 0;
@@ -343,9 +405,15 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 	}
 
 	$scope.value2TypeInit = function(detail){
-		if($stateParams.action!=='add'){
+		if($stateParams.action!=='add' || ($stateParams.action==='add' && $stateParams.headerId!==0)){
 			if((detail.VAL2_ISVALUE===0 ||detail.VAL2_ISVALUE===null) && (detail.VAL2_ISCHECKBOX===0 || detail.VAL2_ISCHECKBOX===null)){
 				return -1;
+			}
+			else if(detail.VAL2_ISVALUE===7){
+				return 7;
+			}
+			else if(detail.VAL2_ISVALUE===8){
+				return 8;
 			}
 			else{
 				if(detail.VAL2_ISVALUE===1) return 0;

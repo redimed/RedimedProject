@@ -1,0 +1,196 @@
+.selection
+{
+	width:200px;
+}
+
+.batch-version-schedule-show-all-button
+{
+	height:30px;
+    margin-bottom: 10px;
+    float:left;
+}
+
+.batch-version-schedule-add-button
+{
+	height:30px;
+    margin-bottom: 10px;
+    float:left;
+}
+
+.batch-version-schedule-cellinfo
+{
+	padding: 0 10px;
+	color: #6b4b4b;
+	border: 1px;
+	border-radius: 2px;
+	-webkit-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.06);
+	box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.06);
+	float:left;
+	height:25px;
+	font-size: 14px;
+}
+.batch-version-schedule-cellinfo:first-child
+{
+
+}
+
+.batch-version-schedule-container-header .batch-version-schedule-cellinfo
+{
+	padding: 0 10px;
+	color: #000000;
+	border: 1px;
+	border-radius: 2px;
+	-webkit-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.06);
+	box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.06);
+	float:left;
+	height:25px;
+	font-size: 11px;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+.row:hover
+{
+	font-style: italic;
+}
+
+
+.insert-batch-version-schedule-dialog table tr td span
+{
+	float:left;
+	width:200px;
+	font-weight: bold;
+	font-size: 11px;
+}
+
+.insert-batch-version-schedule-dialogClone
+{
+	color:#6b4b4b;
+}
+
+
+.insert-batch-version-schedule-dialog table tr td input
+{
+	float:left;
+	width:300px;
+}
+
+.insert-batch-version-schedule-dialog table tr td select
+{
+	float:left;
+	width:300px;
+}
+
+.insert-batch-version-schedule-dialog table tr td textarea
+{
+	float:left;
+	width:300px;
+}
+
+
+/*Edit Batch Version CSS*/
+
+.edit-batch-version-schedule-dialog table tr td span
+{
+	float:left;
+	width:120px;
+	font-weight: bold;
+	font-size: 11px;
+}
+
+.edit-batch-version-schedule-dialogClone
+{
+	color:#6b4b4b;
+}
+
+.edit-batch-version-schedule-dialog table tr td input
+{
+	float:left;
+	width:400px;
+}
+
+.edit-batch-version-schedule-dialog table tr td select
+{
+	float:left;
+	width:400px;
+}
+
+.edit-batch-version-schedule-dialog table tr td textarea
+{
+	float:left;
+	width:400px;
+}
+
+/*View Batch Version CSS*/
+
+.view-batch-version-schedule-dialog
+{
+	text-align: left;
+}
+.view-batch-version-schedule-dialog table tr td span:first-child
+{
+	float:left;
+	width:120px;
+	font-weight: bold;
+	font-size: 11px;
+}
+
+.view-batch-version-schedule-dialogClone
+{
+	color:#6b4b4b;
+}
+
+.view-batch-version-schedule-dialog table tr td span
+{
+	width:400px;
+	text-align: left;
+}
+
+.view-batch-version-schedule-dialog table tr td textarea
+{
+	float:left;
+	width:500px;
+}
+
+.edit-batch-version-schedule-dialog table tr td select
+{
+	float:left;
+	width:400px;
+}
+
+.edit-batch-version-schedule-dialog table tr td textarea
+{
+	float:left;
+	width:400px;
+}
+
+/*Delete Batch Version CSS*/
+
+.delete-batch-version-schedule-dialog
+{
+	text-align: left;
+}
+.delete-batch-version-schedule-dialog table tr td span:first-child
+{
+	float:left;
+	width:120px;
+	font-weight: bold;
+	font-size: 11px;
+}
+
+.delete-batch-version-schedule-dialogClone
+{
+	color:#6b4b4b;
+}
+
+.delete-batch-version-schedule-dialog table tr td span
+{
+	width:400px;
+	text-align: left;
+}
+
+.delete-batch-version-schedule-dialog table tr td textarea
+{
+	float:left;
+	width:500px;
+}

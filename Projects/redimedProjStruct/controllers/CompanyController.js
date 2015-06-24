@@ -7,6 +7,24 @@ var kiss=require('./kissUtilsController');
 var moment=require('moment');
 
 module.exports = {
+    postgetFromTime:function(req,res){
+         var postData = req.body.data;
+        var sql = knex
+                .select('cln_appt_patients.*','cln_appointment_calendar.FROM_TIME','cln_appointment_calendar.TO_TIME')
+                .from('cln_appt_patients')
+                .innerJoin('cln_appointment_calendar', 'cln_appt_patients.CAL_ID', 'cln_appointment_calendar.CAL_ID')
+                .where('cln_appt_patients.Patient_id', postData.patient_id)
+                .where('cln_appointment_calendar.FROM_TIME','<', postData.datetime)
+                .orderBy('cln_appointment_calendar.FROM_TIME', 'desc')
+                .toString();
+        db.sequelize.query(sql)
+        .success(function(data){
+            res.json({data: data[0]});
+        })
+        .error(function(error){
+            res.json(500, {error: error,sql:sql});
+        })
+    },
     postselectInsurer:function(req,res){
         var postData = req.body.data;
         var sql = knex
@@ -25,7 +43,7 @@ module.exports = {
     },
     postDetail: function(req, res){
         var postData = req.body.data;
-
+        console.log('------------------------------',postData);
         var sql = knex
                 .select(
                     'companies.Company_name',
@@ -45,7 +63,6 @@ module.exports = {
             res.json(500, {error: error,sql:sql});
         })
     },
-
     postDisableCompany : function(req,res){
        var postData = req.body.data;
         if (postData.isEnable == 1) {
@@ -279,6 +296,22 @@ module.exports = {
                                                             res.json(500, {error: error, sql: sql2});
                                                         })
                                                 }
+                                                var sql3 =
+                                                 knex('patient_companies')
+                                                .where('patient_id','=',postData.patient_id)
+                                                .where('company_id','=',postData.id)
+                                                .update({
+                                                        from_date:postData.from_date,
+                                                        to_date:postData.to_date,
+                                                     })
+                                                .toString()
+                                                db.sequelize.query(sql3)
+                                                .success(function(data){ 
+                                                    res.json({'status': 'success', 'data': data});
+                                                })
+                                                 .error(function(error){
+                                                    res.json(500, {error: error});
+                                                })
                                           })
                                          .error(function(error){
                                             res.json(500, {error: error, sql: sql2});
@@ -301,9 +334,13 @@ module.exports = {
      */
     postList: function(req, res){
         var postData = req.body.data;
+        //console.log('----------------------------',postData);
         var pagination = req.body.pagination;
         var sql = knex
-        .select('companies.*','patient_companies.isEnable As checkisEnable')
+        .select('companies.*',
+            'patient_companies.isEnable As checkisEnable',
+            'patient_companies.from_date',
+            'patient_companies.to_date')
         .from('companies')
         .limit(postData.limit)
         .offset(postData.offset)
@@ -343,6 +380,7 @@ module.exports = {
 
     postAdd : function(req,res){
             var postData = req.body.data;
+           // console.log('--------------------------------',postData);
            var errors = [];
             var required = [
                 {field: 'Company_name', message: 'Company Name required'}
@@ -477,7 +515,9 @@ module.exports = {
                                                  knex('patient_companies')
                                                 .insert({
                                                         patient_id:postData.patient_id,
-                                                        company_id:data[0].id
+                                                        company_id:data[0].id,
+                                                        from_date:postData.from_date,
+                                                        to_date:postData.to_date,
                                                      })
                                                 .toString()
                                                 db.sequelize.query(sql3)
@@ -777,8 +817,11 @@ module.exports = {
         var postData = req.body.data;
             var sql 
                     = knex
-                    .select('*')
+                    .select('companies.*',
+                            'patient_companies.from_date',
+                            'patient_companies.to_date')
                     .from('companies')
+                    .innerJoin('patient_companies', 'companies.id', '=', 'patient_companies.company_id')
                     .where({id:postData.id})
                     .toString()
                     db.sequelize.query(sql)

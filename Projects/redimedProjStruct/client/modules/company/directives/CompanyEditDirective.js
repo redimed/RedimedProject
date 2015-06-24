@@ -44,6 +44,8 @@ angular.module('app.loggedIn.company.directives.edit', [])
 		        isExtra:null,
 		        parent_id :null,
 		        listInsurerid :[],
+		        from_date:null,
+		        to_date:null
 			}
 			var load = function(row){
 				scope.company.loading = true;
@@ -58,7 +60,8 @@ angular.module('app.loggedIn.company.directives.edit', [])
                         scope.company.listTemp.push(id.id);
                     })
 					scope.company.Company_name_Parent = response.data2[0].Company_name;
-					
+					scope.company.form.from_date = ConfigService.convertToDate(scope.company.form.from_date);
+					scope.company.form.to_date = ConfigService.convertToDate(scope.company.form.to_date);
 
 				}, function(error){
 					scope.company.loading = false;
@@ -125,8 +128,15 @@ angular.module('app.loggedIn.company.directives.edit', [])
 			}
 			var save = function(){
 				ConfigService.beforeSave(scope.company.errors);
+				scope.company.form.patient_id = $stateParams.patient_id;
 				var postData = angular.copy(scope.company.form);
+				if(postData.from_date)
+					postData.from_date = ConfigService.convertToDB(postData.from_date);
+				if(postData.to_date)
+					postData.to_date = ConfigService.convertToDB(postData.to_date);
+
 				postData.listInsurerid = scope.company.listInsurer;
+				
 				CompanyModel.edit(postData)
 				.then(function(response){
 					toastr.success('Edit Company Successfully');
