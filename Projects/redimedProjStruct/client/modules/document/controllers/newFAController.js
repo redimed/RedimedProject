@@ -140,9 +140,11 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 	var getPatientInfo = function(patient_id){
 		PatientService.getById(patient_id).then(function(result){
 			if(result!== null) {
+				console.log("this is patient info", result);
 				//tmp fix for patient gender
 				if(result.Sex !=="Female" && result.Sex !=="Male") result.Sex="Male";
 				$scope.patient_info= result;
+
 				getPatientAge($scope.patient_info.DOB);
 			}
 		})
@@ -170,6 +172,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
         {
             age--;
         }
+        console.log('this is patient age', age);
         $scope.patient_age = age;
 	}
 
