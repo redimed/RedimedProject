@@ -11,7 +11,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 	            {
 	                $modal.open({
 						templateUrl: 'modules/consultation/dialogs/dialog_injury_details.html',
-						size: 'lg',
+						size: 'md',
 						resolve: {
 							injuryInfo:function(){
 								return  rs.data;
@@ -23,6 +23,8 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 							$scope.injuryImages = [];
 							$scope.imgArr = [];
 
+							$scope.info.injury_date = moment.utc($scope.info.injury_date).format('DD/MM/YYYY - hh:mm:ss');
+
 							if(typeof injuryInfo.injuryImg !== 'undefined' && injuryInfo.injuryImg.length > 0)
 			                {
 			                    $scope.loadedImage = true;
@@ -30,6 +32,10 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			                    {
 			                        $scope.imgArr.push({url: location.origin+"/api/im/image/"+ injuryInfo.injuryImg[i].id, img: injuryInfo.injuryImg[i]});
 			                    }
+			                }
+
+			                $scope.cancelClick = function(){
+			                	$modalInstance.close();
 			                }
 
 					         $scope.viewImage = function(img){

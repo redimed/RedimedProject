@@ -69,6 +69,18 @@ module.exports = {
               console.log(err);
           })
       },
+      updatePatient: function(req,res){
+          var info = req.body.patient;
+
+          db.Patient.update(info,{Patient_id: info.Patient_id})
+            .success(function(){
+              res.json({status:'success'});
+            })
+            .error(function(err){
+              res.json({status:'error'});
+              console.log(err);
+            })
+      },
       register: function(req,res){
         var info = req.body.user;
         var patient = req.body.patient;
