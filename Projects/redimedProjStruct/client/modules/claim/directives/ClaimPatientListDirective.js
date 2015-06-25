@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.claim.directives.patientList', [])
+angular.module('app.loggedIn.claim')
 
 .controller('ClaimPatientRemoveDialog', function($scope, $modalInstance, list){
 	$scope.cancel = function(){

@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.claim.model", [])
+angular.module('app.loggedIn.claim')
     
 .factory("ClaimModel", function (Restangular) {
     var instanceService = {};

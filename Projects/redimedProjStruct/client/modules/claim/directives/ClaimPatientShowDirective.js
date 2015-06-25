@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.claim.directives.patientShow', [])
+angular.module('app.loggedIn.claim')
 
 .directive('claimPatientShow', function($cookieStore, $stateParams, ClaimModel, ConfigService, InsurerService){
 	return {

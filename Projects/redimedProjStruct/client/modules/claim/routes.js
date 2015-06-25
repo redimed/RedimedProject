@@ -1,24 +1,24 @@
-angular.module('app.loggedIn.claim', [
-	'app.loggedIn.claim.include'
-])
+angular.module('app.loggedIn.claim', [])
 
 .config(function($stateProvider){
-
 	$stateProvider
 
-	.state('loggedIn.patient.claim', {
-		abstract: true,
-		url: '/claim'
-	})
-
-	.state('loggedIn.patient.claim.list', {
-		url: '/list',
-		views: {
-			'main-content@loggedIn.patient': {
-				templateUrl: 'modules/claim/views/patient/list.html',
-				controller: 'ClaimPatientListController'
+		.state('loggedIn.claim', {
+			url: '/claimload',
+			resolve: {
+				init: function($q, $rootScope, $state, $timeout, $ocLazyLoad){
+					$ocLazyLoad.load("modules/claim/extend_routes.js");
+					$ocLazyLoad.load("modules/claim/controllers/ClaimPatientListController.js");
+					$ocLazyLoad.load("modules/claim/directives/ClaimPatientAddDirective.js");
+					$ocLazyLoad.load("modules/claim/directives/ClaimPatientEditDirective.js");
+					$ocLazyLoad.load("modules/claim/directives/ClaimPatientListDirective.js");
+					$ocLazyLoad.load("modules/claim/directives/ClaimPatientShowDirective.js")
+					.then(function(){
+						$state.go('loggedIn.claim_list');
+					})
+				}
 			}
-		}
-	})
+		})
+
 
 })
