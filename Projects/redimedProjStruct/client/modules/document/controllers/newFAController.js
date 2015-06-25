@@ -142,7 +142,8 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 			if(result!== null) {
 				console.log("this is patient info", result);
 				//tmp fix for patient gender
-				if(result.Sex !=="Female" && result.Sex !=="Male") result.Sex="Male";
+				if(result.Sex==="0") result.Sex = "Male";
+				else result.Sex = "Female";
 				$scope.patient_info= result;
 
 				getPatientAge($scope.patient_info.DOB);
