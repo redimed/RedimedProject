@@ -401,7 +401,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 
 				modalInstance.result.then(function(data){
 					if(data.type == 'ok')
-						$scope.consultInfo.measurements[index] = data.value;;
+						$scope.consultInfo.measurements[index] = data.value;
 				})
 			}
 

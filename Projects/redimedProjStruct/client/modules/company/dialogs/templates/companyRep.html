@@ -1,0 +1,14 @@
+<label class="un_tn_panel_modal_label un_tn_panel_label_color_black" ng-show="formAdd===true">add Company Rep</label>
+<label class="un_tn_panel_modal_label un_tn_panel_label_color_black" ng-show="formAdd===false">edit Company Rep</label>
+<div class="row un-padding-10">
+	<div class="col-md-12 col-sm-12">
+		<div class="form-group">
+		    <label class="un_tn_form_label un_tn_form_label_gray" style="width:115px">Company Rep &nbsp; *</label>
+		    <input type="text" class="form-control un_tn_form_control un_tn_form_control_gray pt_width_100" ng-model="listInfo.name" name="name" id="name">
+		 </div>
+	</div>
+	<div class="col-md-12 col-sm-12">
+		<button class="pull-right un-button un-bgBlack" ng-show="formAdd===true" ng-click="submitItem()">Submit</button>
+		<button class="pull-right un-button un-bgBlack" ng-show="formAdd===false" ng-click="saveItem()">Save</button>
+	</div> 
+</div>

@@ -1,0 +1,33 @@
+<label class="un_tn_panel_modal_label un_tn_panel_label_color_black">Select Company Rep</label>
+<div class="row un-padding-10">
+	<div class="col-md-12 col-sm-12 un-margin-bottom-6px">
+		<button class="pull-right un-button un-bgBlack" ng-click="addlist()">Add Company Rep</button>
+	</div>
+	<div class="col-md-12">
+		<table class="mdt-table table-hover ">
+			<thead>
+				<tr>
+					<th>Company Rep</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<td colspan="2">
+	                <div style="text-align: center;">
+	                    <span ng-if="list.length <= 0" style="font-size: 20px; font-style: italic; font-weight: bold;">
+	                        Empty Data
+	                    </span>
+	                </div>
+	            </td>
+				<tr ng-repeat="row in list">
+					<td>{{row.name}}</td>
+					<td>
+						<button ng-click="onRowClick($index)">Remove</button>
+						<button ng-click="editItem(row.name,$index)">Edit</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
