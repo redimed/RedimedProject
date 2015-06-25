@@ -1,6 +1,4 @@
-angular.module('app.loggedIn.allergy.controller',[
-	'app.loggedIn.allergy.list.controller'
-])
+angular.module('app.loggedIn.allergy')
 
 .controller('AllergyController',function(){
 

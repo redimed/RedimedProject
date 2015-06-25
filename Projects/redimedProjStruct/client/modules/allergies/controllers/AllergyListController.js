@@ -1,6 +1,4 @@
-angular.module('app.loggedIn.allergy.list.controller',[
-
-])
+angular.module('app.loggedIn.allergy')
 
 .controller('AllergyListController', function($scope,$stateParams, AllergyService, toastr){
 	$scope.allergy_panel={};

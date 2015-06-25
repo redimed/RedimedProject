@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.allergy.service',[])
+angular.module('app.loggedIn.allergy')
 
 .factory("AllergyService", function(Restangular, ConfigService, $state){
 	var instanceService = {};

@@ -1,6 +1,4 @@
-angular.module('app.loggedIn.allergy.detail.directive',[
-	
-])
+angular.module('app.loggedIn.allergy')
 .directive('allergyDetail',function(AllergyModel, AllergyService, ConfigService, toastr, $stateParams){
 	return {
 		restrict:'EA',
