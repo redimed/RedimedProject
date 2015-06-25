@@ -146,7 +146,7 @@
                                     </div>
 
                                 <!-- PROGRESS BAR -->
-                                <div class="col-md-12" ng-hide="progress===100 || progress ===undefined || progress===null || progress===''" style="margin-top:3px;" title="{{fileNameProgress}}">
+                                <div class="col-md-12" ng-hide="progress===100 || progress ===undefined || progress===null || progress==='' ||progressItemId!==item.ITEM_ID" style="margin-top:3px;" title="{{fileNameProgress}}">
                                             <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
                                                 <div class="progress-bar progress-bar-success" ng-style="{width:progress+'%'}">
                                                     {{progress+ '%'}}
