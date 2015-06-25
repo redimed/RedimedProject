@@ -812,6 +812,7 @@ angular.module("app.model", [])
 	DETAIL_ID: null,
 	LINE_ID: null,
 	QUESTION: '',
+	DESCRIPTION: '',
 	VAL1_NAME: '',
 	VAL1_ISVALUE: null,
 	VAL1_VALUE: '',

@@ -21,3 +21,4 @@ app.post(url + 'detail',CompanyController.postDetail);
 app.post(url + 'addCompanyNotFollow',CompanyController.postaddCompanyNotFollow);
 app.post(url + 'insertPatientCompanies',CompanyController.insertPatientCompanies);
 app.post(url + 'selectInsurer',CompanyController.postselectInsurer);
+app.post(url + 'getFromTime',CompanyController.postgetFromTime);

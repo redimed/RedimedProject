@@ -23,12 +23,16 @@ angular.module('app.loggedIn.fadefine.list.controller', [])
                     isEnable: function(item){
                         return item.ISENABLE;
                     },
-                    disableFn: function(item){
+                    disableFn: function($event, item){
+                        $event.stopPropagation();
+                        console.log('run here 1');
                         FaDefineService.changeFaStt(0,item.FA_ID).then(function(res){
                             if(res.status==='success') $scope.fa_panel.reload();
                         })
                     },
-                    enableFn: function(item){
+                    enableFn: function($event, item){
+                        $event.stopPropagation();
+                        console.log('run here 2');
                         FaDefineService.changeFaStt(1,item.FA_ID).then(function(res){
                             if(res.status==='success') $scope.fa_panel.reload();
                         })
@@ -36,7 +40,7 @@ angular.module('app.loggedIn.fadefine.list.controller', [])
                 },
                 {type:'button', btnlabel:'Clone to new definition', btnclass:'fa fa-files-o',
                     btnfn:function(item){
-                         $state.go('loggedIn.fadefine.detail',{action:'add', headerId: item.FA_ID});
+                        $state.go('loggedIn.fadefine.detail',{action:'add', headerId: item.FA_ID});
                     }
                 }
             ],

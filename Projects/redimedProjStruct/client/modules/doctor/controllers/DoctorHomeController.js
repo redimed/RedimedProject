@@ -60,7 +60,7 @@ angular.module("app.loggedIn.doctor.home.controller",[])
 		.then(function(data){
 			if(data.status=='success')
 			{
-				if(data.data.length>0 && item.appt_status!=ptnConst.apptStatus.workInProgress.value)
+				if(data.data.length>0 && item.appt_status!=ptnConst.apptStatus.inConsult.value)
 				{
 					var modalInstance = $modal.open({
 						templateUrl: 'notifyCompleteSession',

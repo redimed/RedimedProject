@@ -6,7 +6,7 @@
 <!-- dsfasdf -->
 
 <div class="row">
-    <div class="col-md-10 col-sm-10">
+    <div class="col-md-10 col-sm-10 un-padding-right-0">
         
         <ul class="un-tabs">
             <li class="active">
@@ -36,257 +36,457 @@
             <li>
                 <a href="index.html#tab_1_9" data-toggle="tab">Make Referral</a>
             </li>
-            <li>
+           <!--  <li>
                 <a href="index.html#tab_1_10" data-toggle="tab">Drawing</a>
-            </li>
+            </li> -->
             <li>
                 <a href="index.html#tab_1_11" data-toggle="tab">Attach File</a>
             </li>
             <li>
                 <a href="index.html#tab_1_12" data-toggle="tab">Consultation History</a>
             </li>
+            <li>
+                <a href="index.html#tab_1_7" data-toggle="tab">Exercise Program</a>
+            </li>
+			 <li>
+                <a href="index.html#tab_1_13" data-toggle="tab">Correspondence</a>
+            </li>
         </ul>
         <div class="un-tabs-content"> 
             <div class="un-tab-content active" id="tab_1_1">
                 <div class="row">
-                    
-                    <div class="col-md-5 col-sm-5">
-                        <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Problems</label>
-                        <select class="form-control" 
-                                ng-change="viewProblem(consultInfo.problem_id)" ng-options="p.Problem_id as p.Notes for p in problemList"
-                                ng-model="consultInfo.problem_id" float-label>
-                            <option value=""selected>--Select A Problem--</option>
-                        </select>
-                    </div>
-                    <div class="col-md-4 col-sm-4">
-                        <a href="javascript:;" ng-click="problemAddForm.open()" class="un-button un-bgBlack">
-                             Add New Problem
-                        </a>
-                    </div>
-                    <div class="col-md-3 col-sm-3">
-                        <a href="javascript:;" ng-click="showPopupConsultationHistory()" class="un-button un-bgBlack">
-                             Consultation History
-                        </a>
+                    <div class="">
+                        <ul class="nav nav-tabs un_tab_concultation">
+                            <li class="active">
+                                <a class="un_tab_concultation_bottom" href="index.html#treatingDoctor" data-toggle="tab">
+                                    Treating Doctor 
+                                </a>
+                            </li>
+                            <li class="">
+                                <a class="un_tab_concultation_bottom" href="index.html#physiotherapist" data-toggle="tab">
+                                    Physiotherapist 
+                                </a>
+                            </li>
+                            <li class="">
+                                <a class="un_tab_concultation_bottom" href="index.html#exercisePhysiologist" data-toggle="tab">
+                                    Exercise Physiologist
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="treatingDoctor">
+                                <div class="col-md-12 col-sm-12">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="row pull-right">
+                                                <button class="un-button un-bgBlack" ng-click="problemAddForm.open()">Add New Problem</button>
+                                                <button class="un-button un-bgBlack" ng-click="popupNewDrawing()">Add Drawing</button>
+                                                <button class="un-button un-bgBlack" ng-click="showPopupConsultationHistory()">Consultation History</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="row un_padding_right_5">
+                                                <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Existing problems</label>
+                                                <select class="form-control pt_width_100" 
+                                                        ng-change="viewProblem(consultInfo.problem_id)" ng-options="p.Problem_id as p.Notes for p in problemList"
+                                                        ng-model="consultInfo.problem_id" float-label>
+                                                    <option value=""selected>--Select A Problem--</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="table-dynamic">
+                                                <table class="responsive table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>
+                                                                <div class="th">
+                                                                    <span style="color: white;">Problem</span>
+                                                                </div>
+                                                            </th>
+                                                            <th>
+                                                                <div class="th">
+                                                                    <span style="color: white;">ICD10 Code</span>
+                                                                </div>
+                                                            </th>
+                                                            <th>
+                                                                <div class="th">
+                                                                    <span style="color: white;">ICPC Code</span>
+                                                                </div>
+                                                            </th>
+                                                            <th>
+                                                                <div class="th">
+                                                                    <span style="color: white;">From</span>
+                                                                </div>
+                                                            </th>
+                                                            <th>
+                                                                <div class="th">
+                                                                    <span style="color: white;">To</span>
+                                                                </div>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-if="problemArr.length <= 0">
+                                                            <td colspan="5">
+                                                                <div style="text-align: center;">
+                                                                    <span style="font-size: 20px; font-style: italic; font-weight: bold;">      Empty Data
+                                                                    </span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr ng-if="problemArr.length > 0" ng-repeat="p in problemArr">
+                                                            <td>
+                                                                {{p.Notes}}
+                                                            </td>
+                                                            <td style="vertical-align: middle">
+                                                                {{p.ICD10_code}}
+                                                            </td>
+                                                            <td style="vertical-align: middle">
+                                                                {{p.ICPC_code}}
+                                                            </td>
+                                                            <td style="vertical-align: middle">
+                                                                {{p.From_date | date:'dd/MM/yyyy'}}
+                                                            </td>
+                                                            <td style="vertical-align: middle">
+                                                                {{(p.To_date == null ? 'N/A' : p.To_date)| date:'dd/MM/yyyy'}}
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="row un_padding_right_5">
+                                                <div class="form-group pt_margin_bottom_0">
+                                                    <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">History</label>
+                                                    <textarea rows="6" ng-model="consultInfo.history" 
+                                                        class="form-control pt_width_100 un-input-custom-1 un-select-p-5" float-label></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="row un_padding_left_5">
+                                                <div class="form-group pt_margin_bottom_0">
+                                                    <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Examination</label>
+                                                    <textarea rows="6" ng-model="consultInfo.examination" 
+                                                        class="form-control pt_width_100 un-input-custom-1 un-select-p-5" float-label></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="row un_padding_right_5">
+                                                <div class="form-group pt_margin_bottom_0">
+                                                    <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Treatment/Plan</label>
+                                                    <textarea rows="6" ng-model="consultInfo.treatment" 
+                                                        class="form-control pt_width_100 un-input-custom-1 un-select-p-5" float-label></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="row un_padding_left_5">
+                                                <div class="form-group pt_margin_bottom_0">
+                                                    <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Diagnosis</label>
+                                                    <textarea rows="6" ng-model="consultInfo.diagnosis" 
+                                                        class="form-control pt_width_100 un-input-custom-1 un-select-p-5" float-label></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="row un_padding_right_5">
+                                                <div class="form-group pt_margin_bottom_0">
+                                                    <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Investigation</label>
+                                                    <textarea rows="6" ng-model="consultInfo.investigation" 
+                                                        class="form-control pt_width_100 un-input-custom-1 un-select-p-5" float-label></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="row un_padding_left_5">
+                                                <div class="form-group pt_margin_bottom_0">
+                                                    <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Specialist</label>
+                                                    <textarea rows="6" ng-model="consultInfo.specialist" 
+                                                        class="form-control pt_width_100 un-input-custom-1 un-select-p-5" float-label></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="row">
+                                                <button class="un-button un-bgBlack" ng-click="addTemplate()">Add Template</button>
+                                                <button class="un-button un-bgBlack" ng-click="referralAddForm.open()">Add Referral</button>
+                                                <button class="un-button un-bgBlack" ng-click="scriptAction('new',null)">Add Medication</button>
+                                                <button class="un-button un-bgBlack" ng-click="measureAction('new',null)">Add New Measure</button>
+                                                <button ng-if="(apptPatient.appt_status == 'Urgent' || apptPatient.appt_status == 'Injury') && apptPatient.injury_id != null" class="un-button un-bgBlack" ng-click="viewInjury()">View Injury Details</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" ng-if="templates.length > 0">
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="row">
+                                                <h3>List of Templates</h3>
+                                                <ul>
+                                                    <li ng-repeat="template in templates">
+                                                        {{template.template_temp_name}}
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="physiotherapist">
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="row un_padding_right_5">
+                                                <div class="form-group pt_margin_bottom_0 show-label">
+                                                    <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Progress Notes</label>
+                                                    <textarea rows="6" ng-model="consultInfo.progress_note" class="form-control pt_width_100 un-input-custom-1 un-select-p-5 ng-isolate-scope ng-pristine ng-valid" float-label=""></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 re_padding_0">
+                                            <label class="un_table_tab_config un-title-label">  Past Entries
+                                            </label>
+                                            <div class="table-dynamic un_overflow_auto">
+                                                <table class="responsive table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="un_table_tab_bg">
+                                                                <div class="th">
+                                                                    <span style="color: white;">Date</span>
+                                                                </div>
+                                                            </th>
+                                                            <th class="un_table_tab_bg">
+                                                                <div class="th">
+                                                                    <span style="color: white;">Progress Notes</span>
+                                                                </div>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td colspan="5">
+                                                                <div style="text-align: center;">
+                                                                    <span ng-if="!actionCenter.listConsultOfPatient" style="font-size: 20px; font-style: italic; font-weight: bold;" class="ng-scope">      
+                                                                        Empty Data
+                                                                    </span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr style="background-color: white;" class="bold" ng-repeat="item in actionCenter.listConsultOfPatient" ng-if="actionCenter.listConsultOfPatient" ng-click="actionCenter.showPopupHistoryPhysiotherapist(item)">
+                                                            <td style="vertical-align: middle; padding: 5px;">
+                                                                <label style="max-width: 110px;min-width: 110px;">
+                                                                    {{item.Creation_date   | moment: 'utc' | moment: 'format': 'DD/MM/YYYY hh:mm'}}
+                                                                </label>
+                                                            </td>
+                                                            <td style="vertical-align: middle; padding: 5px;">
+                                                                <label style="height: 20px;overflow: hidden; max-width: 325px;">
+                                                                    {{item.progress_note}}
+                                                                </label>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="row">
+                                                <button class="un-button un-bgBlack" ng-click="addTemplate()">Add Template</button>
+                                                <button class="un-button un-bgBlack" ng-click="showPopupConsultationHistory()">Consultation History</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="exercisePhysiologist">
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="row un_padding_right_5">
+                                                <div class="form-group pt_margin_bottom_0 show-label">
+                                                    <label class="un-label-form" style="font-size: 15px;">Attendance Record</label>
+                                                    <textarea rows="6" ng-model="consultInfo.attendance_record" class="form-control pt_width_100 un-input-custom-1 un-select-p-5 ng-isolate-scope ng-pristine ng-valid" float-label=""></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="row un_padding_right_5">
+                                                <div class="form-group pt_margin_bottom_0 show-label">
+                                                    <label class="un-label-form" style="font-size: 15px;">Communication Record</label>
+                                                    <textarea rows="6" ng-model="consultInfo.communication_record" class="form-control pt_width_100 un-input-custom-1 un-select-p-5 ng-isolate-scope ng-pristine ng-valid" float-label=""></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 re_padding_0">
+                                            <label class="un_table_tab_config un-title-label">  Past Entries
+                                            </label>
+                                            <div class="table-dynamic un_overflow_auto">
+                                                <table class="responsive table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="un_table_tab_bg">
+                                                                <div class="th">
+                                                                    <span style="color: white;">Date</span>
+                                                                </div>
+                                                            </th>
+                                                            <th class="un_table_tab_bg">
+                                                                <div class="th">
+                                                                    <span style="color: white;">Attendance Record</span>
+                                                                </div>
+                                                            </th>
+                                                            <th class="un_table_tab_bg">
+                                                                <div class="th">
+                                                                    <span style="color: white;">Communication Record</span>
+                                                                </div>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td colspan="5">
+                                                                <div style="text-align: center;">
+                                                                    <span ng-if="!actionCenter.listConsultOfPatient" style="font-size: 20px; font-style: italic; font-weight: bold;" class="ng-scope">      
+                                                                        Empty Data
+                                                                    </span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr style="background-color: white;" class="bold" ng-repeat="item in actionCenter.listConsultOfPatient" ng-if="actionCenter.listConsultOfPatient" ng-click="actionCenter.showPopupHistoryExercisePhysiologist(item)">
+                                                            <td style="vertical-align: middle; padding: 5px;">
+                                                                <label style="max-width: 110px;min-width: 110px;">
+                                                                    {{item.Creation_date  | moment: 'utc' | moment: 'format': 'DD/MM/YYYY hh:mm'}}
+                                                                </label>
+                                                            </td>
+                                                            <td style="vertical-align: middle; padding: 5px;">
+                                                                <label style="height: 20px;overflow: hidden; max-width: 150px;">
+                                                                    {{item.attendance_record}}
+                                                                </label>
+                                                            </td>
+                                                            <td style="vertical-align: middle; padding: 5px;">
+                                                                <label style="height: 20px;overflow: hidden; max-width: 150px;">
+                                                                    {{item.communication_record}}
+                                                                </label>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="row">
+                                                <button class="un-button un-bgBlack" ng-click="addTemplate()">Add Template</button>
+                                                <button class="un-button un-bgBlack" ng-click="showPopupConsultationHistory()">Consultation History</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <br/>
-                <!-- <div class="row">
-                    <div class="col-md-12 col-sm-12">
-                        <div class="table-dynamic">
+            </div>
+            <div class="un-tab-content" id="tab_1_2">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 re_padding_0">
+                        <div class="table-dynamic un_overflow_auto">
                             <table class="responsive table table-bordered">
                                 <thead>
                                     <tr>
                                         <th>
                                             <div class="th">
-                                                <span style="color: white;">Problem</span>
+                                                <span style="color: white;">Date</span>
                                             </div>
                                         </th>
                                         <th>
                                             <div class="th">
-                                                <span style="color: white;">ICD10 Code</span>
+                                                <span style="color: white;">Height (cms)</span>
                                             </div>
                                         </th>
                                         <th>
                                             <div class="th">
-                                                <span style="color: white;">ICPC Code</span>
+                                                <span style="color: white;">Weight (kgs)</span>
                                             </div>
                                         </th>
                                         <th>
                                             <div class="th">
-                                                <span style="color: white;">From</span>
+                                                <span style="color: white;">Waist (cms)</span>
                                             </div>
                                         </th>
                                         <th>
                                             <div class="th">
-                                                <span style="color: white;">To</span>
+                                                <span style="color: white;">Hips (cms)</span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                <span style="color: white;">Neck (cms)</span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="th">
+                                                <span style="color: white;">Action</span>
                                             </div>
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-if="problemArr.length <= 0">
-                                        <td colspan="5">
+                                    <tr>
+                                        <td colspan="7">
                                             <div style="text-align: center;">
-                                                <span style="font-size: 20px; font-style: italic; font-weight: bold;">      Empty Data
+                                                <span ng-if="consultInfo.measurements.length <= 0" style="font-size: 20px; font-style: italic; font-weight: bold;">      
+                                                    Empty Data
                                                 </span>
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr ng-if="problemArr.length > 0" ng-repeat="p in problemArr">
+                                    <tr style="background-color: white;" class="bold" align="center" ng-if="consultInfo.measurements.length > 0" ng-repeat="m in consultInfo.measurements">
+                                        <td style="vertical-align: middle">
+                                            {{m.measure_date | date:'dd/MM/yyyy'}}
+                                        </td>
+                                        <td style="vertical-align: middle">
+                                            {{m.height}}
+                                        </td>
+                                        <td style="vertical-align: middle">
+                                            {{m.weight}}
+                                        </td>
+                                        <td style="vertical-align: middle">
+                                            {{m.waist}}
+                                        </td>
+                                        <td style="vertical-align: middle">
+                                            {{m.hips}}
+                                        </td>
+                                        <td style="vertical-align: middle">
+                                            {{m.neck}}
+                                        </td>
                                         <td>
-                                            {{p.Notes}}
-                                        </td>
-                                        <td style="vertical-align: middle">
-                                            {{p.ICD10_code}}
-                                        </td>
-                                        <td style="vertical-align: middle">
-                                            {{p.ICPC_code}}
-                                        </td>
-                                        <td style="vertical-align: middle">
-                                            {{p.From_date | date:'dd/MM/yyyy'}}
-                                        </td>
-                                        <td style="vertical-align: middle">
-                                            {{(p.To_date == null ? 'N/A' : p.To_date)| date:'dd/MM/yyyy'}}
+                                            <a ng-click="measureAction('edit',$index)" href="javascript:;" class="btn btn-icon-only btn-circle blue">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                            <a ng-click="measureAction('delete',$index)" href="javascript:;" class="btn btn-icon-only btn-circle red">
+                                                <i class="fa fa-times"></i>
+                                            </a>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                </div> -->
-                <div class="row">
-                    <div class="col-md-6 col-sm-6">
-                        <div class="form-group" >
-                            <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">History</label>
-                            <textarea rows="6" ng-model="consultInfo.history" 
-                                class="form-control un-input-custom-1 un-select-p-5" float-label></textarea>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-                        <div class="form-group" >
-                            <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Examination</label>
-                            <textarea rows="6" ng-model="consultInfo.examination" 
-                                class="form-control un-input-custom-1 un-select-p-5" float-label></textarea>
-                        </div>
-                    </div>
-                </div>
-                <br/>
-                <div class="row">
-                    <div class="col-md-6 col-sm-6">
-                        <div class="form-group" >
-                            <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Treatment/Plan</label>
-                            <textarea rows="6" ng-model="consultInfo.treatment" 
-                                class="form-control un-input-custom-1 un-select-p-5" float-label></textarea>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-                        <div class="form-group" >
-                            <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Diagnosis</label>
-                            <textarea rows="6" ng-model="consultInfo.diagnosis" 
-                                class="form-control un-input-custom-1 un-select-p-5" float-label></textarea>
-                        </div>
-                    </div>
-                </div>
-                <br/>
-                <div class="row">
-                    <div class="col-md-6 col-sm-6">
-                        <div class="form-group" >
-                            <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Investigation</label>
-                            <textarea rows="6" ng-model="consultInfo.investigation" 
-                                class="form-control un-input-custom-1 un-select-p-5" float-label></textarea>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-                        <div class="form-group" >
-                            <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Specialist</label>
-                            <textarea rows="6" ng-model="consultInfo.specialist" 
-                                class="form-control un-input-custom-1 un-select-p-5" float-label></textarea>
-                        </div>
-                    </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12 col-sm-12">
-                        <button class="un-button un-bgBlack" ng-click="addTemplate()">Add Template</button>
-                        <button class="un-button un-bgBlack" ng-click="referralAddForm.open()">Add Referral</button>
-                         <button class="un-button un-bgBlack" ng-click="scriptAction('new',null)">Add Medication</button>
-                    </div>
-                </div>
-                <div class="row" ng-if="templates.length > 0">
-                    <div class="col-md-12 col-sm-12">
-                        <h3>List of Templates</h3>
-                        <ul>
-                            <li ng-repeat="template in templates">
-                                {{template.template_temp_name}}
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="un-tab-content" id="tab_1_2">
-                <div class="table-dynamic">
-                    <table class="responsive table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>
-                                    <div class="th">
-                                        <span style="color: white;">Date</span>
-                                    </div>
-                                </th>
-                                <th>
-                                    <div class="th">
-                                        <span style="color: white;">Height (cms)</span>
-                                    </div>
-                                </th>
-                                <th>
-                                    <div class="th">
-                                        <span style="color: white;">Weight (kgs)</span>
-                                    </div>
-                                </th>
-                                <th>
-                                    <div class="th">
-                                        <span style="color: white;">Waist (cms)</span>
-                                    </div>
-                                </th>
-                                <th>
-                                    <div class="th">
-                                        <span style="color: white;">Hips (cms)</span>
-                                    </div>
-                                </th>
-                                <th>
-                                    <div class="th">
-                                        <span style="color: white;">Neck (cms)</span>
-                                    </div>
-                                </th>
-                                <th>
-                                    <div class="th">
-                                        <span style="color: white;">Action</span>
-                                    </div>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td colspan="7">
-                                    <div style="text-align: center;">
-                                        <span ng-if="consultInfo.measurements.length <= 0" style="font-size: 20px; font-style: italic; font-weight: bold;">      
-                                            Empty Data
-                                        </span>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr style="background-color: white;" class="bold" align="center" ng-if="consultInfo.measurements.length > 0" ng-repeat="m in consultInfo.measurements">
-                                <td style="vertical-align: middle">
-                                    {{m.measure_date | date:'dd/MM/yyyy'}}
-                                </td>
-                                <td style="vertical-align: middle">
-                                    {{m.height}}
-                                </td>
-                                <td style="vertical-align: middle">
-                                    {{m.weight}}
-                                </td>
-                                <td style="vertical-align: middle">
-                                    {{m.waist}}
-                                </td>
-                                <td style="vertical-align: middle">
-                                    {{m.hips}}
-                                </td>
-                                <td style="vertical-align: middle">
-                                    {{m.neck}}
-                                </td>
-                                <td>
-                                    <a ng-click="measureAction('edit',$index)" href="javascript:;" class="btn btn-icon-only btn-circle blue">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                    <a ng-click="measureAction('delete',$index)" href="javascript:;" class="btn btn-icon-only btn-circle red">
-                                        <i class="fa fa-times"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="row">
-                    <div class="col-md-3 col-sm-3">
+                    <div class="col-md-3 col-sm-3 re_padding_0">
                         <a href="javascript:;" ng-click="measureAction('new',null)" class="un-button un-bgBlack">
                              Add New Measure
                         </a>
@@ -294,188 +494,195 @@
                 </div>
             </div>
             <div class="un-tab-content" id="tab_1_3">
-                <div class="table-dynamic">
-                    <table class="responsive table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>
-                                    <div class="th">
-                                        <span style="color: white;">Name</span>
-                                    </div>
-                                </th>
-                                <th>
-                                    <div class="th">
-                                        <span style="color: white;">Dose</span>
-                                    </div>
-                                </th>
-                                <th>
-                                    <div class="th">
-                                        <span style="color: white;">Unit</span>
-                                    </div>
-                                </th>
-                                <th>
-                                    <div class="th">
-                                        <span style="color: white;">Route</span>
-                                    </div>
-                                </th>
-                                <th>
-                                    <div class="th">
-                                        <span style="color: white;">Frequency</span>
-                                    </div>
-                                </th>
-                                <th>
-                                    <div class="th">
-                                        <span style="color: white;">Start Date</span>
-                                    </div>
-                                </th>
-                                <th>
-                                    <div class="th">
-                                        <span style="color: white;">End Date</span>
-                                    </div>
-                                </th>
-                                <th>
-                                    <div class="th">
-                                        <span style="color: white;">Quanlity</span>
-                                    </div>
-                                </th>
-                                <th>
-                                    <div class="th">
-                                        <span style="color: white;">Doctor</span>
-                                    </div>
-                                </th>
-                                 <th>
-                                    <div class="th">
-                                        <span style="color: white;">Condition/Indication</span>
-                                    </div>
-                                </th>
-                                 <th>
-                                    <div class="th">
-                                        <span style="color: white;">Action</span>
-                                    </div>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td colspan="11">
-                                    <div style="text-align: center;">
-                                        <span ng-if="consultInfo.scripts.length <= 0" style="font-size: 20px; font-style: italic; font-weight: bold;">      
-                                            Empty Data
-                                        </span>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr style="background-color: white;" class="bold" ng-if="consultInfo.scripts.length > 0" ng-repeat="m in consultInfo.scripts">
-                                <td style="vertical-align: middle">
-                                    {{m.medication_name}}
-                                </td>
-                                <td style="vertical-align: middle">
-                                    {{m.dose}}
-                                </td>
-                                <td style="vertical-align: middle">
-                                    {{m.unit}}
-                                </td>
-                                <td style="vertical-align: middle">
-                                    {{m.route}}
-                                </td>
-                                <td style="vertical-align: middle">
-                                    {{m.frequency}}
-                                </td>
-                                <td style="vertical-align: middle">
-                                    {{m.start_date}}
-                                </td>
-                                 <td style="vertical-align: middle">
-                                    {{m.end_date}}
-                                </td>
-                                 <td style="vertical-align: middle">
-                                    {{m.qty}}
-                                </td>
-                                 <td style="vertical-align: middle" ng-if="!m.Provider_no">
-                                    {{m.user_name}}
-                                </td>
-                                <td style="vertical-align: middle" ng-if="m.Provider_no">
-                                    {{m.user_name}} , {{m.Provider_no}}
-                                </td>
-                                <td style="vertical-align: middle">
-                                    {{m.condition_Indication}}
-                                </td>
-                                <td align="center">
-                                    <a ng-click="scriptAction('edit',$index)" href="javascript:;" class="btn btn-icon-only btn-circle blue">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                    <a ng-click="scriptAction('delete',$index)"href="javascript:;" class="btn btn-icon-only btn-circle red">
-                                        <i class="fa fa-times"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <div class="row un-padding-bottom-20">
+                <div class="col-md-12 col-sm-12 re_padding_0">
+                    <div class="table-dynamic un_overflow_auto">
+                        <table class="responsive table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <div class="th">
+                                            <span style="color: white;">Name</span>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th">
+                                            <span style="color: white;">Dose</span>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th">
+                                            <span style="color: white;">Unit</span>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th">
+                                            <span style="color: white;">Route</span>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th">
+                                            <span style="color: white;">Frequency</span>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th">
+                                            <span style="color: white;">Start Date</span>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th">
+                                            <span style="color: white;">End Date</span>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th">
+                                            <span style="color: white;">Quanlity</span>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th">
+                                            <span style="color: white;">Doctor</span>
+                                        </div>
+                                    </th>
+                                     <th>
+                                        <div class="th">
+                                            <span style="color: white;">Condition/Indication</span>
+                                        </div>
+                                    </th>
+                                     <th>
+                                        <div class="th">
+                                            <span style="color: white;">Action</span>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="11">
+                                        <div style="text-align: center;">
+                                            <span ng-if="consultInfo.scripts.length <= 0" style="font-size: 20px; font-style: italic; font-weight: bold;">      
+                                                Empty Data
+                                            </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr style="background-color: white;" class="bold" ng-if="consultInfo.scripts.length > 0" ng-repeat="m in consultInfo.scripts">
+                                    <td style="vertical-align: middle">
+                                        {{m.medication_name}}
+                                    </td>
+                                    <td style="vertical-align: middle">
+                                        {{m.dose}}
+                                    </td>
+                                    <td style="vertical-align: middle">
+                                        {{m.unit}}
+                                    </td>
+                                    <td style="vertical-align: middle">
+                                        {{m.route}}
+                                    </td>
+                                    <td style="vertical-align: middle">
+                                        {{m.frequency}}
+                                    </td>
+                                    <td style="vertical-align: middle">
+                                        {{m.start_date}}
+                                    </td>
+                                     <td style="vertical-align: middle">
+                                        {{m.end_date}}
+                                    </td>
+                                     <td style="vertical-align: middle">
+                                        {{m.qty}}
+                                    </td>
+                                     <td style="vertical-align: middle" ng-if="!m.Provider_no">
+                                        {{m.user_name}}
+                                    </td>
+                                    <td style="vertical-align: middle" ng-if="m.Provider_no">
+                                        {{m.user_name}} , {{m.Provider_no}}
+                                    </td>
+                                    <td style="vertical-align: middle">
+                                        {{m.condition_Indication}}
+                                    </td>
+                                    <td align="center">
+                                        <a ng-click="scriptAction('edit',$index)" href="javascript:;" class="btn btn-icon-only btn-circle blue">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <a ng-click="scriptAction('delete',$index)"href="javascript:;" class="btn btn-icon-only btn-circle red">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+            </div>
+                
                 <div class="row">
-                    <div class="col-md-3 col-sm-3">
+                    <div class="col-md-3 col-sm-3 re_padding_0">
                         <a href="javascript:;" ng-click="scriptAction('new',null)" class="un-button un-bgBlack">
                              Add Medication
                         </a>
                     </div>
                 </div>
                 <div class="row" ng-controller="ScriptListController">
-                    <script-list medicaname="consultInfo.scripts"></script-list>
+                    <script-list medicare="consultInfo.scripts"></script-list>
                 </div>
             </div>
             <div class="un-tab-content" id="tab_1_4">
-                <div ng-controller="BluetoothController">
-                    <div class="row">
-                        <div  class="col-lg-3 col-md-3 col-sm-6 col-xs-12" ng-repeat="device in deviceList">
-                            <a  style="text-decoration: none;" ng-click="showHistory(device)" class="btn btn-info un-large-button" href="javascript:;">
-                                {{device.device_name}}
-                            </a>
-                        </div>
-                    </div>
-                    <div ng-if="currDevice"  class="portlet blue-chambray box">
-                        <div class="portlet-title">
-                            <div class="caption ">
-                                <span class="caption-subject uppercase">Device: {{currDevice}}</span>
+                <div class="row">
+                    <div ng-controller="BluetoothController">
+                        <div class="row">
+                            <div  class="col-lg-3 col-md-4 col-sm-4 col-xs-12" ng-repeat="device in deviceList">
+                                <a  style="text-decoration: none;" ng-click="showHistory(device)" class="btn btn-info un-large-button" href="javascript:;">
+                                    {{device.device_name}}
+                                </a>
                             </div>
                         </div>
-                        <div class="portlet-body">
-                            <div ng-if="haveData" class="row" style="text-align: center;">
-                                <span>
-                                    <label style="font-weight: bold;">Measure data from</label>
-                                    &nbsp;&nbsp;
-                                    <input style="cursor: pointer;" type="text" callback="changeHistory(historyDates)" date-range-picker ng-model="historyDates"/>
-                                </span>
+                        <div ng-if="currDevice"  class="portlet blue-chambray box">
+                            <div class="portlet-title">
+                                <div class="caption ">
+                                    <span class="caption-subject uppercase">Device: {{currDevice}}</span>
+                                </div>
                             </div>
-                            <flot ng-if="haveData" dataset="chartData" options="chartOptions" width="100%" height="300px"></flot>
-                            <br ng-if="haveData"/>
-                            <div ng-if="!haveData" class="row" style="text-align: center;">
-                                <span style="font-size: 20px; font-style: italic; font-weight: bold;"> 
-                                    Empty Data
-                                </span>
-                            </div>
-                            <div ng-if="haveData" class="table-scrollable" id="content">
-                                <table ng-table="tableParams" show-filter="true" class="table table-striped table-hover table-bordered table-responsive">
-                                    <tr ng-repeat="f in $data track by $index ">
-                                        <td style="text-align:center" width="30%;" data-title="'Patient Name'">
-                                            <label>{{f.FullName}}</label>
-                                        </td>
-                                        <td style="text-align:center" width="20%;" data-title="'Measure Date'" sortable="'measure_date'" >
-                                            <label>{{f.measure_date | date:'dd/MM/yyyy - hh:mm a'}}</label>
-                                        </td>
-                                        <td style="text-align:center" width="30%" data-title="'Measure Data'" >
-                                            <label ng-repeat="(key,val) in f.jsonData">
-                                                {{key | uppercase}}:{{val}} 
-                                                &nbsp;&nbsp;
-                                            </label>
-                                        </td>
-                                        <td style="text-align:center" width="20%" data-title="'Notes'" >
-                                            <label></label>
-                                            <a onaftersave="updateMeasure(f)" href="#" editable-text="f.notes">
-                                                {{ f.notes || 'Empty' }}
-                                            </a>
-                                        </td>
-                                    </tr>
+                            <div class="portlet-body">
+                                <div ng-if="haveData" class="row" style="text-align: center;">
+                                    <span>
+                                        <label style="font-weight: bold;">Measure data from</label>
+                                        &nbsp;&nbsp;
+                                        <input style="cursor: pointer;" type="text" callback="changeHistory(historyDates)" date-range-picker ng-model="historyDates"/>
+                                    </span>
+                                </div>
+                                <flot ng-if="haveData" dataset="chartData" options="chartOptions" width="100%" height="300px"></flot>
+                                <br ng-if="haveData"/>
+                                <div ng-if="!haveData" class="row" style="text-align: center;">
+                                    <span style="font-size: 20px; font-style: italic; font-weight: bold;"> 
+                                        Empty Data
+                                    </span>
+                                </div>
+                                <div ng-if="haveData" class="table-scrollable" id="content">
+                                    <table ng-table="tableParams" show-filter="true" class="table table-striped table-hover table-bordered table-responsive">
+                                        <tr ng-repeat="f in $data track by $index ">
+                                            <td style="text-align:center" width="30%;" data-title="'Patient Name'">
+                                                <label>{{f.FullName}}</label>
+                                            </td>
+                                            <td style="text-align:center" width="20%;" data-title="'Measure Date'" sortable="'measure_date'" >
+                                                <label>{{f.measure_date | date:'dd/MM/yyyy - hh:mm a'}}</label>
+                                            </td>
+                                            <td style="text-align:center" width="30%" data-title="'Measure Data'" >
+                                                <label ng-repeat="(key,val) in f.jsonData">
+                                                    {{key | uppercase}}:{{val}} 
+                                                    &nbsp;&nbsp;
+                                                </label>
+                                            </td>
+                                            <td style="text-align:center" width="20%" data-title="'Notes'" >
+                                                <label></label>
+                                                <a onaftersave="updateMeasure(f)" href="#" editable-text="f.notes">
+                                                    {{ f.notes || 'Empty' }}
+                                                </a>
+                                            </td>
+                                        </tr>
 
-                                </table>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -483,7 +690,7 @@
             </div>
             <div class="un-tab-content" id="tab_1_5">
                 <div class="row" style="background-color: rgb(39, 36, 37); color: white;">
-                    <label class="pull-left" style="font-size: 15px;">Item Sheet</label>
+                    <label class="pull-left" style="font-size: 15px;margin-top: 7px;margin-left: 10px;">Item Sheet</label>
                     <div class="btn-group pull-right" dropdown>
                       <button style="margin-right: 0;" type="button" class="btn btn-default dropdown-toggle" ng-disabled="disabled">
                             More <span class="caret"></span>
@@ -634,397 +841,401 @@
                 </div> -->
             </div>
             <div class="un-tab-content" id="tab_1_6">
-                <!-- Nav tabs -->
-                <ul class="nav nav-tabs pt_margin_bottom_0" role="tablist">
-                    <li role="presentation" class="active">
-                        <a class="un_header_attach_file" href="index.html#tab_1_6_1" aria-controls="home" role="tab" data-toggle="tab">Document files</a>
-                    </li>
-                    <li role="presentation">
-                        <a class="un_header_attach_file" href="index.html#tab_1_6_2" aria-controls="profile" role="tab" data-toggle="tab">Drawings file</a>
-                    </li>
-                </ul>
+                <div class="row">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs pt_margin_bottom_0" role="tablist">
+                        <li role="presentation" class="active">
+                            <a class="un_header_attach_file" href="index.html#tab_1_6_1" aria-controls="home" role="tab" data-toggle="tab">E-Forms
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a class="un_header_attach_file" href="index.html#tab_1_6_2" aria-controls="profile" role="tab" data-toggle="tab">Workcover
+                            </a>
+                        </li>
+                    </ul>
 
-              <!-- Tab panes -->
-              <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" ng-controller="DoctorPaperlessController" id="tab_1_6_1">
-                    <div class="portlet box" style="background-color: rgb(102, 102, 102);" id="appt_paperless">
-                        <div class="portlet-title">
-                            <div class="caption">
-                                Paperless
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" ng-controller="DoctorPaperlessController" id="tab_1_6_1">
+                            <div class="portlet box" style="background-color: rgb(102, 102, 102);" id="appt_paperless">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        Paperless
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                        <a ng-click="tab = 'gorgonMA'">Gorgon Medical Assessment</a>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                        <a ng-click="tab = 'gorgonFA'">Gorgon Functional Assessment</a>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                        <a ng-click="tab = 'gorgonUQ'">Respiratory User Questionnaire</a>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                        <a ng-click="tab = 'gorgonMH'">Gorgon Medical History</a>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                        <a ng-click="tab = 'MRS'">Medical Result Summary</a>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                        <a ng-click="tab = 'FA'">Functional Assessment</a>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                        <a ng-click="tab = 'MA'">Medical Assessment</a>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                        <a ng-click="tab = 'category2'">Rail Category 2</a>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                        <a ng-click="tab = 'category3'">Rail Category 3</a>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                        <a ng-click="tab = 'IDS'">Instant Drug Screen</a>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                        <a ng-click="tab = 'Form18'">Form 18</a>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                        <a ng-click="tab = 'SA1'">Workcover Audiogram</a>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                        <a ng-click="tab = 'SA2'">Standard Audiogram</a>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                        <a ng-click="tab = 'MH'">Medical History</a>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                        <a ng-click="tab = 'COE'">COE</a>
+                                    </div>
+
+
+                                    <!-- <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                        <a ui-sref="loggedIn.MRS({CalID : apptInfo.CAL_ID,PatientID: patient.Patient_id})" >Medical Result Summary</a>
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                        <a ui-sref="loggedIn.FA({CalID : apptInfo.CAL_ID,PatientID: patient.Patient_id})"  >Functional Assessment</a>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                        <a ui-sref="loggedIn.MA({CalID : apptInfo.CAL_ID,PatientID: patient.Patient_id})" > Medical Assessment</a>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                        <a ui-sref="loggedIn.category2({CalID : apptInfo.CAL_ID,PatientID: patient.Patient_id})" >Category 2</a>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                        <a ui-sref="loggedIn.category3({CalID : apptInfo.CAL_ID,PatientID: patient.Patient_id})" >Category 3</a>
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                        <a  ui-sref="loggedIn.IDS({CalID : apptInfo.CAL_ID,PatientID: patient.Patient_id})" >Instant Drug Screen</a>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                        <a ui-sref="loggedIn.Form18({CalID : apptInfo.CAL_ID,PatientID: patient.Patient_id})" >Form 18</a>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                        <a ui-sref="loggedIn.SA1({CalID : apptInfo.CAL_ID,PatientID: patient.Patient_id})"  >Audiogram 1</a>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                        <a ui-sref="loggedIn.SA2({CalID : apptInfo.CAL_ID,PatientID: patient.Patient_id})" >Audiogram 2</a>
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                        <a ui-sref="loggedIn.MH({CalID : apptInfo.CAL_ID,PatientID: patient.Patient_id})"  >Medical History</a>
+                                    </div>
+                                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
+                                        <a ui-sref="loggedIn.COE({CalID : apptInfo.CAL_ID,PatientID: patient.Patient_id})"  >COE</a>
+                                    </div> -->
+
+                                    <div class="clearfix"></div>
+                                </div> <!-- END BODY -->
+                            </div> <!-- END HEAD -->
+
+                            <!-- gorgonMA -->
+                            <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'gorgonMA'">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        Gorgon Medical Assessment
+                                    </div>
+                                     <div class="actions">
+                                        <a class="btn un-submit red" ng-click="navigator.add_general()">Add New</a>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <my-data-table options="OptionGorgonMA"></my-data-table>
+                                </div>
                             </div>
+                            <!-- end gorgonMA -->
+
+
+                            <!-- gorgonFA -->
+                            <div class="portlet box" style="background-color: rgb(102, 102, 102);"  ng-show="tab == 'gorgonFA'">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        Gorgon Functional Assessment
+                                    </div>
+                                     <div class="actions">
+                                        <a class="btn un-submit red" ng-click="navigator.add_general()">Add New</a>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <my-data-table options="OptionGorgonFA"></my-data-table>
+                                </div>
+                            </div>
+                            <!-- end gorgonFA -->
+
+                            <!-- gorgonUQ -->
+                            <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'gorgonUQ'">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        Gorgon User Questionnaire
+                                    </div>
+                                     <div class="actions">
+                                        <a class="btn un-submit red" ng-click="navigator.add_general()"> Add New</a>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <my-data-table options="OptionGorgonUQ"></my-data-table>
+                                </div>
+                            </div>
+                            <!-- end gorgonUQ -->
+
+                            <!-- gorgonMH -->
+                            <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'gorgonMH'">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        Gorgon Medical History
+                                    </div>
+                                     <div class="actions">
+                                        <a class="btn un-submit red" ng-click="navigator.add_general()"> Add New</a>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <my-data-table options="OptionGorgonMH"></my-data-table>
+                                </div>
+                            </div>
+                            <!-- end gorgonMH -->
+
+                            <!-- MRS -->
+                            <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'MRS'">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        Medical Result Summary
+                                    </div>
+                                     <div class="actions">
+                                        <a class="btn un-submit red" ng-click="navigator.add_general()"> Add New</a>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <my-data-table options="OptionMRS"></my-data-table>
+                                </div>
+                            </div>
+                            <!-- end MRS -->
+
+                            <!-- FA -->
+                            <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'FA'">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        Functional Assessment
+                                    </div>
+                                     <div class="actions">
+                                        <!-- <a class="btn un-submit red" ng-click="navigator.add_general()"> Add New</a> -->
+                                        <a class="btn un-submit red" ng-click="faNewClick()"> Add New</a>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <my-data-table options="OptionFA"></my-data-table>
+                                </div>
+                            </div>
+                            <!-- end FA -->
+
+                            <!-- MA -->
+                            <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'MA'">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        Medical Assessment
+                                    </div>
+                                     <div class="actions">
+                                        <a class="btn un-submit red" ng-click="navigator.add_general()"> Add New</a>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <my-data-table options="OptionMA"></my-data-table>
+                                </div>
+                            </div>
+                            <!-- end MA -->
+
+                            <!-- category2 -->
+                            <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'category2'">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        Category 2
+                                    </div>
+                                     <div class="actions">
+                                        <a class="btn un-submit red" ng-click="navigator.add_general()"> Add New</a>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <my-data-table options="OptionCategory2"></my-data-table>
+                                </div>
+                            </div>
+                            <!-- end category2 -->
+
+                            <!-- category3 -->
+                            <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'category3'">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        Category 3
+                                    </div>
+                                     <div class="actions">
+                                        <a class="btn un-submit red" ng-click="navigator.add_general()"> Add New</a>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <my-data-table options="OptionCategory3"></my-data-table>
+                                </div>
+                            </div>
+                            <!-- end category3 -->
+
+                            <!-- IDS -->
+                            <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'IDS'">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        Instant Drug Screen
+                                    </div>
+                                     <div class="actions">
+                                        <a class="btn un-submit red" ng-click="navigator.add_general()"> Add New</a>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <my-data-table options="OptionIDS"></my-data-table>
+                                </div>
+                            </div>
+                            <!-- end IDS -->
+
+                            <!-- Form18 -->
+                            <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'Form18'">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        Form 18
+                                    </div>
+                                     <div class="actions">
+                                        <a class="btn un-submit red" ng-click="navigator.add_general()"> Add New</a>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <my-data-table options="Optionform18"></my-data-table>
+                                </div>
+                            </div>
+                            <!-- end Form18 -->
+
+                            <!-- Audiogram1 -->
+                            <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'SA1'">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        Audiogram 1
+                                    </div>
+                                     <div class="actions">
+                                        <a class="btn un-submit red" ng-click="navigator.add_general()"> Add New</a>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <my-data-table options="OptionSA1"></my-data-table>
+                                </div>
+                            </div>
+                            <!-- end Audiogram1 -->
+
+                            <!-- Audiogram2 -->
+                            <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'SA2'">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        Audiogram 2
+                                    </div>
+                                     <div class="actions">
+                                        <a class="btn un-submit red" ng-click="navigator.add_general()"> Add New</a>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <my-data-table options="OptionSA2"></my-data-table>
+                                </div>
+                            </div>
+                            <!-- end Audiogram2 -->
+
+                            <!-- MH -->
+                            <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'MH'">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        Medical History
+                                    </div>
+                                     <div class="actions">
+                                        <a class="btn un-submit red" ng-click="navigator.add_general()"> Add New</a>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <my-data-table options="OptionMH"></my-data-table>
+                                </div>
+                            </div>
+                            <!-- end MH -->
+
+                            <!-- COE -->
+                            <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'COE'">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        COE
+                                    </div>
+                                     <div class="actions">
+                                        <a class="btn un-submit red" ng-click="navigator.add_general()"> Add New</a>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <my-data-table options="OptionCOE"></my-data-table>
+                                </div>
+                            </div>
+                            <!-- end COE -->
                         </div>
-                        <div class="portlet-body">
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
-                                <a ng-click="tab = 'gorgonMA'">Gorgon Medical Assessment</a>
+                        <div role="tabpanel" class="tab-pane" id="tab_1_6_2">
+                            <div class="row" style="margin-top: 20px;">
+                                <div  class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                                    <a  style="text-decoration: none;" ng-click="viewWorkcover(1)" class="btn btn-info un-large-button" href="javascript:;">
+                                        First Assessment
+                                    </a>
+                                </div>
+                                <div  class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                                    <a  style="text-decoration: none;" ng-click="viewWorkcover(2)" class="btn btn-info un-large-button" href="javascript:;">
+                                        Progress Assessment
+                                    </a>
+                                </div>
+                                <div  class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                                    <a  style="text-decoration: none;" ng-click="viewWorkcover(3)" class="btn btn-info un-large-button" href="javascript:;">
+                                        Final Assessment
+                                    </a>
+                                </div>
+                                <div  class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                                    <a  style="text-decoration: none;" ng-click="viewWorkcover(4)" class="btn btn-info un-large-button" href="javascript:;">
+                                        General Assessment
+                                    </a>
+                                </div>
                             </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
-                                <a ng-click="tab = 'gorgonFA'">Gorgon Functional Assessment</a>
+                            <div ng-if="currWorkcover" style="background-color: rgb(102, 102, 102);"  class="portlet box">
+                                <div class="portlet-title">
+                                    <div class="caption ">
+                                        <span class="caption-subject uppercase">{{currWorkcover}}</span>
+                                    </div>
+                                    <div class="actions">
+                                        <a class="btn un-submit red" ng-click="addWorkcover()">Add New</a>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                   <my-data-table ng-show="selectedOpt == 1" options="first_opt"></my-data-table>
+                                   <my-data-table ng-show="selectedOpt == 2" options="progress_opt"></my-data-table>
+                                   <my-data-table ng-show="selectedOpt == 3" options="final_opt"></my-data-table>
+                                   <my-data-table ng-show="selectedOpt == 4" options="general_opt"></my-data-table>
+                                </div>
                             </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
-                                <a ng-click="tab = 'gorgonUQ'">Respiratory User Questionnaire</a>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
-                                <a ng-click="tab = 'gorgonMH'">Gorgon Medical History</a>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
-                                <a ng-click="tab = 'MRS'">Medical Result Summary</a>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
-                                <a ng-click="tab = 'FA'">Functional Assessment</a>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
-                                <a ng-click="tab = 'MA'">Medical Assessment</a>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
-                                <a ng-click="tab = 'category2'">Rail Category 2</a>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
-                                <a ng-click="tab = 'category3'">Rail Category 3</a>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
-                                <a ng-click="tab = 'IDS'">Instant Drug Screen</a>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
-                                <a ng-click="tab = 'Form18'">Form 18</a>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
-                                <a ng-click="tab = 'SA1'">Workcover Audiogram</a>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
-                                <a ng-click="tab = 'SA2'">Standard Audiogram</a>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
-                                <a ng-click="tab = 'MH'">Medical History</a>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
-                                <a ng-click="tab = 'COE'">COE</a>
-                            </div>
-
-
-                            <!-- <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
-                                <a ui-sref="loggedIn.MRS({CalID : apptInfo.CAL_ID,PatientID: patient.Patient_id})" >Medical Result Summary</a>
-                            </div>
-
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
-                                <a ui-sref="loggedIn.FA({CalID : apptInfo.CAL_ID,PatientID: patient.Patient_id})"  >Functional Assessment</a>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
-                                <a ui-sref="loggedIn.MA({CalID : apptInfo.CAL_ID,PatientID: patient.Patient_id})" > Medical Assessment</a>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
-                                <a ui-sref="loggedIn.category2({CalID : apptInfo.CAL_ID,PatientID: patient.Patient_id})" >Category 2</a>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
-                                <a ui-sref="loggedIn.category3({CalID : apptInfo.CAL_ID,PatientID: patient.Patient_id})" >Category 3</a>
-                            </div>
-
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
-                                <a  ui-sref="loggedIn.IDS({CalID : apptInfo.CAL_ID,PatientID: patient.Patient_id})" >Instant Drug Screen</a>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
-                                <a ui-sref="loggedIn.Form18({CalID : apptInfo.CAL_ID,PatientID: patient.Patient_id})" >Form 18</a>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
-                                <a ui-sref="loggedIn.SA1({CalID : apptInfo.CAL_ID,PatientID: patient.Patient_id})"  >Audiogram 1</a>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
-                                <a ui-sref="loggedIn.SA2({CalID : apptInfo.CAL_ID,PatientID: patient.Patient_id})" >Audiogram 2</a>
-                            </div>
-
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
-                                <a ui-sref="loggedIn.MH({CalID : apptInfo.CAL_ID,PatientID: patient.Patient_id})"  >Medical History</a>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 paperless">
-                                <a ui-sref="loggedIn.COE({CalID : apptInfo.CAL_ID,PatientID: patient.Patient_id})"  >COE</a>
-                            </div> -->
-
-                            <div class="clearfix"></div>
-                        </div> <!-- END BODY -->
-                    </div> <!-- END HEAD -->
-
-                    <!-- gorgonMA -->
-                    <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'gorgonMA'">
-                        <div class="portlet-title">
-                            <div class="caption">
-                                Gorgon Medical Assessment
-                            </div>
-                             <div class="actions">
-                                <a class="btn un-submit red" ng-click="navigator.add_general()">Add New</a>
-                            </div>
-                        </div>
-                        <div class="portlet-body">
-                            <my-data-table options="OptionGorgonMA"></my-data-table>
                         </div>
                     </div>
-                    <!-- end gorgonMA -->
-
-
-                    <!-- gorgonFA -->
-                    <div class="portlet box" style="background-color: rgb(102, 102, 102);"  ng-show="tab == 'gorgonFA'">
-                        <div class="portlet-title">
-                            <div class="caption">
-                                Gorgon Functional Assessment
-                            </div>
-                             <div class="actions">
-                                <a class="btn un-submit red" ng-click="navigator.add_general()">Add New</a>
-                            </div>
-                        </div>
-                        <div class="portlet-body">
-                            <my-data-table options="OptionGorgonFA"></my-data-table>
-                        </div>
-                    </div>
-                    <!-- end gorgonFA -->
-
-                    <!-- gorgonUQ -->
-                    <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'gorgonUQ'">
-                        <div class="portlet-title">
-                            <div class="caption">
-                                Gorgon User Questionnaire
-                            </div>
-                             <div class="actions">
-                                <a class="btn un-submit red" ng-click="navigator.add_general()"> Add New</a>
-                            </div>
-                        </div>
-                        <div class="portlet-body">
-                            <my-data-table options="OptionGorgonUQ"></my-data-table>
-                        </div>
-                    </div>
-                    <!-- end gorgonUQ -->
-
-                    <!-- gorgonMH -->
-                    <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'gorgonMH'">
-                        <div class="portlet-title">
-                            <div class="caption">
-                                Gorgon Medical History
-                            </div>
-                             <div class="actions">
-                                <a class="btn un-submit red" ng-click="navigator.add_general()"> Add New</a>
-                            </div>
-                        </div>
-                        <div class="portlet-body">
-                            <my-data-table options="OptionGorgonMH"></my-data-table>
-                        </div>
-                    </div>
-                    <!-- end gorgonMH -->
-
-                    <!-- MRS -->
-                    <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'MRS'">
-                        <div class="portlet-title">
-                            <div class="caption">
-                                Medical Result Summary
-                            </div>
-                             <div class="actions">
-                                <a class="btn un-submit red" ng-click="navigator.add_general()"> Add New</a>
-                            </div>
-                        </div>
-                        <div class="portlet-body">
-                            <my-data-table options="OptionMRS"></my-data-table>
-                        </div>
-                    </div>
-                    <!-- end MRS -->
-
-                    <!-- FA -->
-                    <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'FA'">
-                        <div class="portlet-title">
-                            <div class="caption">
-                                Functional Assessment
-                            </div>
-                             <div class="actions">
-                                <!-- <a class="btn un-submit red" ng-click="navigator.add_general()"> Add New</a> -->
-                                <a class="btn un-submit red" ng-click="faNewClick()"> Add New</a>
-                            </div>
-                        </div>
-                        <div class="portlet-body">
-                            <my-data-table options="OptionFA"></my-data-table>
-                        </div>
-                    </div>
-                    <!-- end FA -->
-
-                    <!-- MA -->
-                    <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'MA'">
-                        <div class="portlet-title">
-                            <div class="caption">
-                                Medical Assessment
-                            </div>
-                             <div class="actions">
-                                <a class="btn un-submit red" ng-click="navigator.add_general()"> Add New</a>
-                            </div>
-                        </div>
-                        <div class="portlet-body">
-                            <my-data-table options="OptionMA"></my-data-table>
-                        </div>
-                    </div>
-                    <!-- end MA -->
-
-                    <!-- category2 -->
-                    <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'category2'">
-                        <div class="portlet-title">
-                            <div class="caption">
-                                Category 2
-                            </div>
-                             <div class="actions">
-                                <a class="btn un-submit red" ng-click="navigator.add_general()"> Add New</a>
-                            </div>
-                        </div>
-                        <div class="portlet-body">
-                            <my-data-table options="OptionCategory2"></my-data-table>
-                        </div>
-                    </div>
-                    <!-- end category2 -->
-
-                    <!-- category3 -->
-                    <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'category3'">
-                        <div class="portlet-title">
-                            <div class="caption">
-                                Category 3
-                            </div>
-                             <div class="actions">
-                                <a class="btn un-submit red" ng-click="navigator.add_general()"> Add New</a>
-                            </div>
-                        </div>
-                        <div class="portlet-body">
-                            <my-data-table options="OptionCategory3"></my-data-table>
-                        </div>
-                    </div>
-                    <!-- end category3 -->
-
-                    <!-- IDS -->
-                    <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'IDS'">
-                        <div class="portlet-title">
-                            <div class="caption">
-                                Instant Drug Screen
-                            </div>
-                             <div class="actions">
-                                <a class="btn un-submit red" ng-click="navigator.add_general()"> Add New</a>
-                            </div>
-                        </div>
-                        <div class="portlet-body">
-                            <my-data-table options="OptionIDS"></my-data-table>
-                        </div>
-                    </div>
-                    <!-- end IDS -->
-
-                    <!-- Form18 -->
-                    <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'Form18'">
-                        <div class="portlet-title">
-                            <div class="caption">
-                                Form 18
-                            </div>
-                             <div class="actions">
-                                <a class="btn un-submit red" ng-click="navigator.add_general()"> Add New</a>
-                            </div>
-                        </div>
-                        <div class="portlet-body">
-                            <my-data-table options="Optionform18"></my-data-table>
-                        </div>
-                    </div>
-                    <!-- end Form18 -->
-
-                    <!-- Audiogram1 -->
-                    <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'SA1'">
-                        <div class="portlet-title">
-                            <div class="caption">
-                                Audiogram 1
-                            </div>
-                             <div class="actions">
-                                <a class="btn un-submit red" ng-click="navigator.add_general()"> Add New</a>
-                            </div>
-                        </div>
-                        <div class="portlet-body">
-                            <my-data-table options="OptionSA1"></my-data-table>
-                        </div>
-                    </div>
-                    <!-- end Audiogram1 -->
-
-                    <!-- Audiogram2 -->
-                    <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'SA2'">
-                        <div class="portlet-title">
-                            <div class="caption">
-                                Audiogram 2
-                            </div>
-                             <div class="actions">
-                                <a class="btn un-submit red" ng-click="navigator.add_general()"> Add New</a>
-                            </div>
-                        </div>
-                        <div class="portlet-body">
-                            <my-data-table options="OptionSA2"></my-data-table>
-                        </div>
-                    </div>
-                    <!-- end Audiogram2 -->
-
-                    <!-- MH -->
-                    <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'MH'">
-                        <div class="portlet-title">
-                            <div class="caption">
-                                Medical History
-                            </div>
-                             <div class="actions">
-                                <a class="btn un-submit red" ng-click="navigator.add_general()"> Add New</a>
-                            </div>
-                        </div>
-                        <div class="portlet-body">
-                            <my-data-table options="OptionMH"></my-data-table>
-                        </div>
-                    </div>
-                    <!-- end MH -->
-
-                    <!-- COE -->
-                    <div class="portlet box" style="background-color: rgb(102, 102, 102);" ng-show="tab == 'COE'">
-                        <div class="portlet-title">
-                            <div class="caption">
-                                COE
-                            </div>
-                             <div class="actions">
-                                <a class="btn un-submit red" ng-click="navigator.add_general()"> Add New</a>
-                            </div>
-                        </div>
-                        <div class="portlet-body">
-                            <my-data-table options="OptionCOE"></my-data-table>
-                        </div>
-                    </div>
-                    <!-- end COE -->
                 </div>
-                <div role="tabpanel" class="tab-pane" id="tab_1_6_2">
-                    <div class="row" style="margin-top: 20px;">
-                        <div  class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                            <a  style="text-decoration: none;" ng-click="viewWorkcover(1)" class="btn btn-info un-large-button" href="javascript:;">
-                                First Assessment
-                            </a>
-                        </div>
-                        <div  class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                            <a  style="text-decoration: none;" ng-click="viewWorkcover(2)" class="btn btn-info un-large-button" href="javascript:;">
-                                Progress Assessment
-                            </a>
-                        </div>
-                        <div  class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                            <a  style="text-decoration: none;" ng-click="viewWorkcover(3)" class="btn btn-info un-large-button" href="javascript:;">
-                                Final Assessment
-                            </a>
-                        </div>
-                        <div  class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                            <a  style="text-decoration: none;" ng-click="viewWorkcover(4)" class="btn btn-info un-large-button" href="javascript:;">
-                                General Assessment
-                            </a>
-                        </div>
-                    </div>
-                    <div ng-if="currWorkcover" style="background-color: rgb(102, 102, 102);"  class="portlet box">
-                        <div class="portlet-title">
-                            <div class="caption ">
-                                <span class="caption-subject uppercase">{{currWorkcover}}</span>
-                            </div>
-                            <div class="actions">
-                                <a class="btn un-submit red" ng-click="addWorkcover()">Add New</a>
-                            </div>
-                        </div>
-                        <div class="portlet-body">
-                           <my-data-table ng-show="selectedOpt == 1" options="first_opt"></my-data-table>
-                           <my-data-table ng-show="selectedOpt == 2" options="progress_opt"></my-data-table>
-                           <my-data-table ng-show="selectedOpt == 3" options="final_opt"></my-data-table>
-                           <my-data-table ng-show="selectedOpt == 4" options="general_opt"></my-data-table>
-                        </div>
-                    </div>
-                </div>
-             </div>
             </div>
             <!--<div class="un-tab-content" id="tab_1_8">
                 <div class="row" ng-controller="ScriptListController">
@@ -1069,15 +1280,16 @@
                     <!--END REFERRAL EDIT FORM-->
                 </div>
             </div>
-            <div class="un-tab-content" id="tab_1_10">
-                <consult-drawing
+
+           <!-- <div class="un-tab-content" id="tab_1_10">
+                 <consult-drawing
                     images="consultInfo.images"
                     patient="patient_id"
                     width="700"
                     height="600"
                     lineWidth="5"
                 ></consult-drawing>
-            </div>
+            </div> -->
             <div class="un-tab-content" id="tab_1_11">
                 <div class="row">
 
@@ -1134,7 +1346,7 @@
                                                             </tr>
                                                             <tr ng-repeat="item in uploader.queue" class="ng-scope">
                                                                 <td width="30%">
-                                                                    <div class="un-padding-right-top-bottom-10-left-15-bgWhite-margin-right-bot" style="background-color: #B0C4DE;height: 35px">
+                                                                    <div class="un_overflow_auto un-padding-right-top-bottom-10-left-15-bgWhite-margin-right-bot" style="background-color: #B0C4DE;height: 35px">
                                                                         {{item.file.name}}
                                                                     </div>
                                                                 </td>
@@ -1210,7 +1422,7 @@
                                                 <div class="col-md-12 col-sm-12">
                                                     <hr/>
                                                     <div class="col-md-4 col-sm-4 un_padding_bottom_15" ng-repeat="img in listImgDrawingHistory">
-                                                        <img class="un_img_width_100 pt_boder_dotted" ng-src="api/consultation/drawing/image/{{img.id}}">
+                                                        <img style="height:35%" class="un_img_width_100 pt_boder_dotted" ng-src="api/consultation/drawing/image/{{img.id}}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -1225,8 +1437,144 @@
                     
                 </div>
             </div>
+			<div class="un-tab-content" id="tab_1_13">
+                <div class="row">
+                    <div ui-view="main-content" class="ng-scope" style="margin-top: 17px;">
+                            <label style="left: -15px;" class="un-label-popup-header un-bg-label-333333 bt-label">Correspondence</label>
+                            <div class="un-padding-top-bottom-10 ">
+                                <div class="un-div-content un-bgWhite-boxshadow-bottom un-padding-10">
+                                    <div class="row un-padding-15">
+                                        <div class="col-lg-9 col-md-12 re_padding_0" style="padding-left: 5px !important">
+                                            <list-cor></list-cor>
+                                        </div>
+                                        <div class="col-lg-3 col-md-12 re_padding_0" style="margin-top: 10px;padding-left: 5px !important">
+                                            <label class="un_table_tab_config un-title-label">  Past Entries
+                                            </label>
+                                            <div class="table-dynamic un_overflow_auto">
+                                                <table class="responsive table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="un_table_tab_bg">
+                                                                <div class="th">
+                                                                    <span style="color: white;">Date</span>
+                                                                </div>
+                                                            </th>
+                                                            <th class="un_table_tab_bg">
+                                                                <div class="th">
+                                                                    <span style="color: white;">Progress Notes</span>
+                                                                </div>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td colspan="5">
+                                                                <div style="text-align: center;">
+                                                                    <span ng-if="!actionCenter.listConsultOfPatient" style="font-size: 20px; font-style: italic; font-weight: bold;" class="ng-scope">      
+                                                                        Empty Data
+                                                                    </span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr style="background-color: white;" class="bold" ng-repeat="item in actionCenter.listConsultOfPatient" ng-if="actionCenter.listConsultOfPatient" ng-click="actionCenter.showPopupHistoryPhysiotherapist(item)">
+                                                            <td style="vertical-align: middle; padding: 5px;">
+                                                                <label style="max-width: 110px;min-width: 110px;">
+                                                                    {{item.Creation_date  | date:'dd-MM-yyyy - hh:mm'}}
+                                                                    </label>
+                                                            </td>
+                                                            <td style="vertical-align: middle; padding: 5px;">
+                                                                <label style="height: 20px;overflow: hidden; max-width: 325px;">
+                                                                    {{item.progress_note}}
+                                                                </label>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
             <div class="un-tab-content" id="tab_1_12">
-               <consultation-history action-center="actionCenter"></consultation-history>
+                <div class="row">
+                   <consultation-history action-center="actionCenter"></consultation-history>
+                </div>
+            </div>
+            <div class=" un-tab-content" id="tab_1_7">
+                <div class="row">
+                    <div ui-view="main-content" class="ng-scope" style="margin-top: 17px;">
+                        <div>
+                            <label style="left: -15px;" class="un-label-popup-header un-bg-label-333333 bt-label">Exercise Program</label>
+                          <div class="un-padding-top-bottom-10 ">
+                            <div class="un-div-content un-bgWhite-boxshadow-bottom un-padding-10">
+                              <div class="row un-padding-15 ">
+                                <div class="col-lg-7 col-md-12 re_padding_0" style="padding-left: 5px !important">
+                                    <list-exercise></list-exercise>
+                                </div>  
+                                <div class="col-lg-5 col-md-12 re_padding_0" style="margin-top: 10px;padding-left: 5px !important">
+                                    <label class="un_table_tab_config un-title-label">  Past Entries
+                                    </label>
+                                    <div class="table-dynamic un_overflow_auto">
+                                        <table class="responsive table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th class="un_table_tab_bg">
+                                                        <div class="th">
+                                                            <span style="color: white;">Date</span>
+                                                        </div>
+                                                    </th>
+                                                    <th class="un_table_tab_bg">
+                                                        <div class="th">
+                                                            <span style="color: white;">Attendance Record</span>
+                                                        </div>
+                                                    </th>
+                                                    <th class="un_table_tab_bg">
+                                                        <div class="th">
+                                                            <span style="color: white;">Communication Record</span>
+                                                        </div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="5">
+                                                        <div style="text-align: center;">
+                                                            <span ng-if="!actionCenter.listConsultOfPatient" style="font-size: 20px; font-style: italic; font-weight: bold;" class="ng-scope">      
+                                                                Empty Data
+                                                            </span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr style="background-color: white;" class="bold" ng-repeat="item in actionCenter.listConsultOfPatient" ng-if="actionCenter.listConsultOfPatient" ng-click="actionCenter.showPopupHistoryExercisePhysiologist(item)">
+                                                    <td style="vertical-align: middle; padding: 5px;">
+                                                        <label style="max-width: 110px;min-width: 110px;">
+                                                            {{item.Creation_date  | moment: 'utc' | moment: 'format': 'DD/MM/YYYY hh:mm'}}
+                                                        </label>
+                                                    </td>
+                                                    <td style="vertical-align: middle; padding: 5px;">
+                                                        <label style="height: 20px;overflow: hidden; max-width: 150px;">
+                                                            {{item.attendance_record}}
+                                                        </label>
+                                                    </td>
+                                                    <td style="vertical-align: middle; padding: 5px;">
+                                                        <label style="height: 20px;overflow: hidden; max-width: 150px;">
+                                                            {{item.communication_record}}
+                                                        </label>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>  
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -1239,9 +1587,9 @@
 
             <kiss-timer start-session-time="startSessionTime" return-value="timerDisplay"></kiss-timer>
 
-            <button ng-show="apptPatient.appt_status==apptStatus.preProgress.value" ng-click="startSession();" class="un_tn_btn un_tn_btn_pink un_tn_btn_lg">Start Progress</button>
+            <button ng-show="apptPatient.appt_status==apptStatus.waiting.value" ng-click="startSession();" class="un_tn_btn un_tn_btn_pink un_tn_btn_lg">Start Progress</button>
          
-            <button ng-show="apptPatient.appt_status==apptStatus.workInProgress.value" ng-click="beforeFinishSession();" class="un_tn_btn un_tn_btn_pink un_tn_btn_lg">
+            <button ng-show="apptPatient.appt_status==apptStatus.inConsult.value" ng-click="beforeFinishSession();" class="un_tn_btn un_tn_btn_pink un_tn_btn_lg">
                 Complete</br>
                 <span style="color:white;font-size:15px">{{timerDisplay}}</span>
             </button>
@@ -1263,31 +1611,31 @@
                         <br/>
                         <div class="row ">
                             <label class="un-label-form-3 un-label-whidth-130">Company Name</label>
-                            <label style="height: 30px; line-height: 2" class="form-control un-input-custom-1 un-select-p-5">
+                            <label style="height: 30px; line-height: 2" class="form-control pt_width_100 un-input-custom-1 un-select-p-5">
                                 {{(companyInfo.Company_name == '' || companyInfo.Company_name == null) ? 'N/A' : companyInfo.Company_name}}
                             </label>
                         </div>
                         <div class="row ">
                             <label class="un-label-form-3 un-label-whidth-130">NOK Contact</label>
-                            <label style="height: 30px; line-height: 2" class="form-control un-input-custom-1 un-select-p-5">
+                            <label style="height: 30px; line-height: 2" class="form-control pt_width_100 un-input-custom-1 un-select-p-5">
                                 {{(patientInfo.NOK_Emerg_Contact == '' || patientInfo.NOK_Emerg_Contact == null) ? 'N/A' : patientInfo.NOK_Emerg_Contact}}
                             </label>
                         </div>
                          <div class="row ">
                             <label class="un-label-form-3 un-label-whidth-130">NOK Phone</label>
-                            <label style="height: 30px; line-height: 2" class="form-control un-input-custom-1 un-select-p-5">
+                            <label style="height: 30px; line-height: 2" class="form-control pt_width_100 un-input-custom-1 un-select-p-5">
                                 {{(patientInfo.NOK_Phone == '' || patientInfo.NOK_Phone == null) ? 'N/A' : patientInfo.NOK_Phone}}
                             </label>
                         </div>
                          <div class="row ">
                             <label class="un-label-form-3 un-label-whidth-130">Insurer</label>
-                            <label style="height: 30px; line-height: 2" class="form-control un-input-custom-1 un-select-p-5">
+                            <label style="height: 30px; line-height: 2" class="form-control pt_width_100 un-input-custom-1 un-select-p-5">
                                 {{(patientInfo.insurer == '' || patientInfo.insurer == null) ? 'N/A' : patientInfo.insurer}}
                             </label>
                         </div>
                          <div class="row ">
                             <label class="un-label-form-3 un-label-whidth-130">Treating Doctor</label>
-                            <label style="height: 30px; line-height: 2" class="form-control un-input-custom-1 un-select-p-5">
+                            <label style="height: 30px; line-height: 2" class="form-control pt_width_100 un-input-custom-1 un-select-p-5">
                                 {{(userInfo.Booking_Person == '' || userInfo.Booking_Person == null) ? userInfo.user_name : userInfo.Booking_Person}}
                             </label>
                         </div>
@@ -1295,7 +1643,8 @@
                             <label class="un-label-form-3 un-label-whidth-130">Online Users</label>
                             <br/>
                             <button style="margin-right: 0px !important;" ng-repeat="u in companyInfo.users" ng-click="makeCall(u)" class="btn btn-sm" style="color: white;" ng-class="(companyInfo.users.length % $index) == 0 ? 'red' : 'blue'">
-                                <i class="fa fa-phone"></i> &nbsp; {{u.Booking_Person}}
+                                <i class="fa fa-phone"></i> 
+                                &nbsp; {{(u.Booking_Person == null || u.Booking_Person == '') ? u.user_name : u.Booking_Person}}
                             </button>
                         </div>
                     </div>
@@ -1394,13 +1743,35 @@
 </script>
 
 <!-- phan quoc chien -->
-<!-- Modal -->
+<!-- Modal consultation history -->
 <div class="modal fade" id="popupConsultationHistory" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div style="z-index: 10;margin-top: 60px;" class="modal-dialog modal-lg">
         <div class="modal-content">
             <h4 class="modal-title un-label-popup-header-m un-bg-label-B41E46-m" id="myModalLabel">Consultation History</h4>
             <div class="modal-body">
                 <consultation-history action-center="actionCenter"></consultation-history>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="un-button un-bgXam-colBlack" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- phan quoc chien -->
+<!-- Modal drawing -->
+<div class="modal fade" id="popupNewDrawing" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div style="z-index: 10;margin-top: 60px;" class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <h4 class="modal-title un-label-popup-header-m un-bg-label-B41E46-m" id="myModalLabel">Drawing</h4>
+            <div class="modal-body">
+                <consult-drawing
+                    images="consultInfo.images"
+                    patient="patient_id"
+                    width="650"
+                    height="600"
+                    lineWidth="5"
+                    action-center-drawing="actionCenterDrawing"
+                ></consult-drawing>
             </div>
             <div class="modal-footer">
                 <button type="button" class="un-button un-bgXam-colBlack" data-dismiss="modal">Close</button>

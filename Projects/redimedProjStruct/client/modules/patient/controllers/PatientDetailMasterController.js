@@ -285,49 +285,61 @@ angular.module("app.loggedIn.patient.detail.master.controller", [])
                     }
 				})
 			}else{
-				if(uploader.queue.length > 0){
-					var upload_file_name = (new Date()).getTime() + "-" +uploader.queue[0].file.name;
-					postData.avatar = "img/patient/avt/" + upload_file_name;
-				}
-				if(typeof $scope.params.permission.calendar !== 'undefined' && $scope.params.permission.calendar === true){
-					postData.CAL_ID = $scope.params.CAL_ID;
-				}
-
-				PatientService.mdtAdd(postData).then(function (data) {
-                    if (data.status != 'success') {
-                        toastr.error("Cannot Insert!", "Error");
-                        return;
-                    }else{
-                    	toastr.success('Insert Patient Successfully !!!', "Success");
-                    	//phanquocchien check add success
-	                    if($scope.actionCenter && $scope.actionCenter.runWhenFinish)
-						{
-							$scope.actionCenter.runWhenFinish(data.data);
-						}
-						//end
-                        if(uploader.queue.length > 0){
-                        	uploader.queue[0].formData[0] = {patient_id: data.data.Patient_id, file_name:upload_file_name, editMode:false};
-							uploader.uploadItem(uploader.queue[0]);
-						}
-                        if($scope.params.isAtAllPatient!== true){
-                        	//return
-	                        $scope.patient = {};
-	                        $scope.patient.Patient_name = $scope.modelObjectMap.First_name+" "+$scope.modelObjectMap.Sur_name;
-	                        $scope.patient.Patient_id = data.data.Patient_id;
-	                        //end return
-                        }
-                        
-                        initObject();
-                        CompanyModel.insertPatientCompanies(postData.company_id,data.data.Patient_id);
-                        if($scope.isClose){
-                        	$scope.closePopup();
-                        }
-                        $scope.onsuccess = data.data;
-                        $scope.patient = data.data;
-                    }
-
-                    
-                })
+				console.log('postData',postData);
+				PatientService.checkPatietnInfo(postData.First_name,postData.Sur_name,postData.Middle_name,postData.DOB).then(function(data){
+					if (data.status == 'success') {
+						console.log('aaaaaaaaaaaaaaaa',data.data);
+                        toastr.error("Patient already exists", "Error");
+					}
+					else
+					{
+						if (data.status == 'fail') {
+							console.log('aaaaaaaaa',data);
+							if(uploader.queue.length > 0){
+								var upload_file_name = (new Date()).getTime() + "-" +uploader.queue[0].file.name;
+								postData.avatar = "img/patient/avt/" + upload_file_name;
+							}
+							if(typeof $scope.params.permission.calendar !== 'undefined' && $scope.params.permission.calendar === true){
+								postData.CAL_ID = $scope.params.CAL_ID;
+							}
+							PatientService.mdtAdd(postData).then(function (data) {
+			                    if (data.status != 'success') {
+			                        toastr.error("Cannot Insert!", "Error");
+			                        return;
+			                    }else{
+			                    	toastr.success('Insert Patient Successfully !!!', "Success");
+			                    	//phanquocchien check add success
+				                    if($scope.actionCenter && $scope.actionCenter.runWhenFinish)
+									{
+										$scope.actionCenter.runWhenFinish(data.data);
+									}
+									//end
+			                        if(uploader.queue.length > 0){
+			                        	uploader.queue[0].formData[0] = {patient_id: data.data.Patient_id, file_name:upload_file_name, editMode:false};
+										uploader.uploadItem(uploader.queue[0]);
+									}
+			                        if($scope.params.isAtAllPatient!== true){
+			                        	//return
+				                        $scope.patient = {};
+				                        $scope.patient.Patient_name = $scope.modelObjectMap.First_name+" "+$scope.modelObjectMap.Sur_name;
+				                        $scope.patient.Patient_id = data.data.Patient_id;
+				                        //end return
+			                        }
+			                        
+			                        initObject();
+			                        CompanyModel.insertPatientCompanies(postData.company_id,data.data.Patient_id);
+			                        if($scope.isClose){
+			                        	$scope.closePopup();
+			                        }
+			                        $scope.onsuccess = data.data;
+			                        $scope.patient = data.data;
+			                    }
+			                })
+						}else{
+                        	toastr.error("Patient already exists", "Error");
+						};
+					};
+				});
 			}
 		}else{
 			//toastr.error('You got some fields left', "Error");

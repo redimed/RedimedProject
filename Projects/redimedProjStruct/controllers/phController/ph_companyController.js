@@ -5,7 +5,7 @@ var smtpTransport = require('nodemailer-smtp-transport');
 var smtpPool = require('nodemailer-smtp-pool');
 var moment=require('moment');
 var db = require("../../models");
-
+var gcm = require('node-gcm');
 
 module.exports = {
 	//get data ph_company
@@ -478,20 +478,36 @@ module.exports = {
 	insertPostCadidates: function(req, res){
 		var data = req.body;
 		console.log("------------------", data);
-
 		var sqlPharmacistId = "SELECT `phamacist_id` FROM `ph_phamacists` ph WHERE ph.`user_id` = ? ";
 		db.sequelize.query(sqlPharmacistId, null, {raw:true}, [data.user_id])
 			.success(function(rows){
-				console.log("---------------success", rows[0]);
-				var sql = "INSERT INTO `ph_post_cadidates`(post_id, shop_id, phamacist_id) " +
-						  "VALUES (?,?,?)"
-				db.sequelize.query(sql, null, {raw:true}, [data.post_id, data.shop_id, rows[0].phamacist_id])
+				var phamacist_id = rows[0].phamacist_id;
+				console.log(data);
+				var sqlCheckExist = "SELECT * FROM `ph_post_cadidates` pc " + 
+				"WHERE pc.`post_id` = ? " + 
+				"AND pc.`shop_id`= ? " + 
+				"AND pc.`phamacist_id` = ?";
+				db.sequelize.query(sqlCheckExist, null, {raw:true}, [data.post_id, data.shop_id, rows[0].phamacist_id])
 					.success(function(rows){
-						console.log("---------------success", rows);
-						res.json({status:'success', data:rows});
+						console.log(rows[0]);
+						if(typeof rows[0] === 'undefined'){
+							console.log("---------------success", rows[0]);
+							var sql = "INSERT INTO `ph_post_cadidates`(post_id, shop_id, phamacist_id, CREATION_DATE) " +
+							"VALUES (?,?,?,?)"
+							db.sequelize.query(sql, null, {raw:true}, [data.post_id, data.shop_id, phamacist_id, data.currentDate])
+								.success(function(rows){
+									console.log("---------------success", rows);
+									res.json({status:'success', data:rows});
+								})
+								.error(function(err){
+									res.json({status:'error', err:err});
+								})
+						}else{
+							res.json({status:'exist'});
+						}
 					})
 					.error(function(err){
-						res.json({status:'error', err:err});
+						console.log("--------Exist", err);
 					})
 			})
 			.error(function(err){
@@ -517,8 +533,9 @@ module.exports = {
 
 	countMember: function(req, res){
 		var post_id = req.body.post_id;
-		var sql = "SELECT COUNT(post_id) AS Member FROM `ph_post_cadidates` pc WHERE pc.`post_id` = ?";
-		db.sequelize.query(sql, null, {raw:true}, [post_id])
+		var	shop_id = req.body.shop_id;
+		var sql = "SELECT COUNT(post_id) AS Member FROM `ph_post_cadidates` pc WHERE pc.`post_id` = ? AND pc.`shop_id` = ?";
+		db.sequelize.query(sql, null, {raw:true}, [post_id, shop_id])
 			.success(function(rows){
 				console.log("-------------", rows[0].Member);
 				res.json({status:'success', data:rows[0].Member});
@@ -559,20 +576,215 @@ module.exports = {
 
 	getPostCompany: function(req,res){
 		var company_id = req.body.company_id;
+		var records = req.body.currentRecord;
+		console.log(records);
 		var sql =	"SELECT * FROM `ph_shops_post` sp " + 
 					"INNER JOIN `ph_posts` p ON sp.`post_id` = p.`post_id` " +
 					"INNER JOIN `ph_company_shops` cs ON sp.`shop_id` = cs.`shop_id` " +
 					"WHERE cs.`company_id` = ? " + 
-					"ORDER BY p.`post_id` DESC"; 
-					// "LIMIT ?,? ";
-		// db.sequelize.query(sql, null, {raw:true}, [records,5])
-		db.sequelize.query(sql, null, {raw:true}, [company_id])
+					"ORDER BY p.`post_id` DESC " + 
+					"LIMIT ?,? ";
+		db.sequelize.query(sql, null, {raw:true}, [company_id, records, 5])
+		// db.sequelize.query(sql, null, {raw:true}, [company_id])
 			.success(function(rows){
 				console.log(rows);
 				res.json({status:'success', data:rows});
 			})
 			.error(function(err){
 				res.json({status:'error', err:err});
+			})
+	},
+
+	getPharmacistId: function(req, res){
+		var post_id = req.body.post_id;
+		var shop_id = req.body.shop_id;
+		var sql = "SELECT pc.`phamacist_id` FROM `ph_post_cadidates` pc WHERE pc.`post_id` = ? AND pc.`shop_id` = ?";
+		db.sequelize.query(sql, null, {raw:true}, [post_id, shop_id])
+			.success(function(rows){
+				res.json({status:'success', data:rows});
+				console.log("----------------phamacist_id", rows);
+			})
+			.error(function(err){
+				res.json({status:'error', err:err});
+			})
+	},
+
+	getPharmacistInfo: function(req, res){
+		var pharmacist_id = req.body.pharmacist_id;
+		var sql = "SELECT * FROM `ph_phamacists` ph WHERE ph.`phamacist_id` IN (?)";
+		db.sequelize.query(sql, null, {raw:true}, [pharmacist_id])
+			.success(function(rows){
+				res.json({status:'success', data:rows});
+				console.log("-------------------info", rows);
+			})
+			.error(function(err){
+				res.json({status:'error', err:err});
+			})
+	},
+
+	getDetailInfoPhar: function(req, res){
+		var pharmacist_id = req.body.pharmacist_id;
+		// var sql = "SELECT ph.`phamacist_id`, ph.`surburb`, ph.`firstname`, ph.`DOB`, ph.`email`, ph.`phone`, ph.`mobile`, ph.`address`, ph.`surburb`, ph.`postcode`, ph.`state`, ph.`country`, ph.`gender`, ph.`preferred_name`, ph.`APHRA`, ph.`Proficient`, ph.`isHMR`, ph.`isCPOP`, ph.`isCompounding`, " +
+		// "pe.`from_date`, pe.`to_date`, pe.`company`, pe.`POSITION`, pe.`reference_name`, pe.`reference_contact`, pe.`duty`, pq.`qualification` " + 
+		// "FROM `ph_phamacists` ph " +
+		// "LEFT JOIN `ph_phamacist_experiences` pe ON ph.`phamacist_id` = pe.`phamacist_id` " +
+		// "LEFT JOIN `ph_phamacist_qualifications` pq ON ph.`phamacist_id` = pq.`phamacist_id` " +
+		// "WHERE ph.`phamacist_id` = ?";
+		var sql = "SELECT * FROM `ph_phamacists` ph WHERE ph.`phamacist_id` = ?";
+		db.sequelize.query(sql, null, {raw:true}, [pharmacist_id])
+			.success(function(rows){
+				res.json({status:'success', data:rows[0]});
+				console.log("-------------------detail", rows[0].phamacist_id);
+			})
+			.error(function(err){
+				res.json({status:'error', err:err});
+			})
+	},
+
+	getExpPhar: function(req, res){
+		var pharmacist_id = req.body.pharmacist_id;
+		var sqlPharExp = "SELECT * FROM `ph_phamacist_experiences` pe WHERE pe.`phamacist_id` = ?";
+		db.sequelize.query(sqlPharExp, null, {raw:true}, [pharmacist_id])
+			.success(function(rows){
+				res.json({status:'success', data_exp:rows});
+				console.log("-------------------exp", rows);
+			})
+			.error(function(err){
+				res.json({status:'error', err:err});
+			})		
+	},
+
+	getQuaPhar: function(req, res){
+		var pharmacist_id = req.body.pharmacist_id;
+		var sqlPharQua = "SELECT * FROM `ph_phamacist_qualifications` pq WHERE pq.`phamacist_id` = ?";
+		db.sequelize.query(sqlPharQua, null, {raw:true}, [pharmacist_id])
+		.success(function(rows){
+			res.json({status:'success', data_qua:rows});
+			console.log("-------------------qua", rows);
+		})
+		.error(function(err){
+			res.json({status:'error', err:err});
+		})
+	},
+	
+	acceptPharmacist: function(req, res){
+		var data = req.body;
+		var sql = "UPDATE `ph_post_cadidates` pc SET pc.`isSelect` = 1, pc.`LAST_UPDATE_DATE` = ? " +
+		"WHERE pc.`post_id` = ? " +
+		"AND pc.`shop_id` = ? " +
+		"AND pc.`phamacist_id` = ?";
+		db.sequelize.query(sql, null, {raw:true}, [data.currentDate, data.post_id, data.shop_id, data.pharmacist_id])
+			.success(function(rows){
+				console.log(rows);
+				res.json({status:'success'});
+			})
+			.error(function(err){
+				res.json({status:'error', err:err});
+			})
+	},
+
+	checkIsSelect:function(req, res){
+		var data = req.body;
+		console.log(data);
+		var sql = "SELECT pc.`isSelect`, pc.`CREATION_DATE`, pc.`LAST_UPDATE_DATE` FROM `ph_post_cadidates` pc " +
+		"WHERE pc.`post_id` = ? " +
+		"AND pc.`shop_id` = ? " +
+		"AND pc.`phamacist_id` = ?";
+		db.sequelize.query(sql, null, {raw:true}, [data.post_id, data.shop_id, data.pharmacist_id])
+			.success(function(rows){
+				console.log("-----------select", rows);
+				res.json({status:'success', data:rows[0]});
+			})
+			.error(function(err){
+				res.json({status:'error', err:err});
+			})
+	},
+
+	selTokenIdPhar:function(req, res){
+		var pharmacist_id = req.body.pharmacist_id;
+		var sql = "SELECT u.`tokenID` FROM `ph_phamacists` ph " +
+		"INNER JOIN `ph_users` u ON ph.`user_id` = u.`user_id` " +
+		"WHERE ph.`phamacist_id` =  ?"
+		db.sequelize.query(sql, null, {raw:true}, [pharmacist_id])
+			.success(function(rows){
+				var sender = new gcm.Sender('AIzaSyDmMU7x6zOoevYja42SSIZ84fFm_PlastY');
+        		var message = new gcm.Message();
+        		message.addData('title','Notification');
+		        message.addData('message','You have a new message!');
+		        // message.addData('soundname','beep.wav');
+		        message.collapseKey = 'NOTIFICATION';
+		        message.delayWhileIdle = true;
+		        message.timeToLive = 3;
+
+		        if (rows[0].tokenID !== null) {
+		        	sender.send(message, rows[0].tokenID, 4, function (err,result) {
+                        if(err){
+                            console.log("ERROR:",err);
+                            res.json({status:'error'});
+                        }else{
+                            console.log("SUCCESS:",result);
+                            res.json({status:'success'});
+                        }
+                    });
+		        };
+			})
+			.error(function(err){
+				console.log("---------selTokenIdPhar", err);
+			})
+	},
+
+	selTokenIdCo:function(req, res){
+		var post_id = req.body.post_id;
+		var shop_id = req.body.shop_id;
+		var sqlCoId = "SELECT cs.`company_id` FROM `ph_shops_post` sp " +
+		"INNER JOIN `ph_company_shops` cs ON sp.`shop_id` = cs.`shop_id` " +
+		"INNER JOIN `ph_posts` p ON sp.`post_id` = p.`post_id` " +
+		"WHERE p.`post_id` = ? AND cs.`shop_id` = ? ";
+		db.sequelize.query(sqlCoId, null, {raw:true}, [post_id, shop_id])
+			.success(function(rows){
+				if(rows){
+					var sqlUserId = "SELECT u.`user_id` FROM `ph_company_users` cu " +
+					"INNER JOIN `ph_companies` c ON cu.`company_id` = c.`company_id` " +
+					"INNER JOIN `ph_users` u ON cu.`user_id` = u.`user_id` " +
+					"WHERE c.`company_id` = ? ";
+					db.sequelize.query(sqlUserId, null, {raw:true}, [rows[0].company_id])
+						.success(function(rows){
+							var sql = "SELECT u.`tokenID` FROM `ph_users` u " +
+							"WHERE u.`user_id` =  ?"
+							db.sequelize.query(sql, null, {raw:true}, [rows[0].user_id])
+								.success(function(rows){
+									var sender = new gcm.Sender('AIzaSyDmMU7x6zOoevYja42SSIZ84fFm_PlastY');
+					        		var message = new gcm.Message();
+					        		message.addData('title','Notification');
+							        message.addData('message','You have a new message!');
+							        // message.addData('soundname','beep.wav');
+							        message.collapseKey = 'NOTIFICATION';
+							        message.delayWhileIdle = true;
+							        message.timeToLive = 3;
+
+							        if (rows[0].tokenID !== null) {
+							        	sender.send(message, rows[0].tokenID, 4, function (err,result) {
+					                        if(err){
+					                            console.log("ERROR:",err);
+					                            res.json({status:'error'});
+					                        }else{
+					                            console.log("SUCCESS:",result);
+					                            res.json({status:'success'});
+					                        }
+					                    });
+							        };
+								})
+								.error(function(err){
+									console.log("-------sqlTokenId", err);
+								})
+						})
+						.error(function(err){
+							console.log("---------sqlUserId", err);
+						})
+				}
+			})
+			.error(function(err){
+				console.log("------------selTokenIdCo", err);
 			})
 	},
 }

@@ -9,7 +9,7 @@ var smtpPool = require('nodemailer-smtp-pool');
 var gcm = require('node-gcm');
 var apns = require('apn');
 var mkdirp = require('mkdirp');
-
+var moment = require('moment');
 var _ = require('lodash-node');
 var bcrypt = require('bcrypt-nodejs');
 
@@ -25,33 +25,98 @@ var transport = nodemailer.createTransport(smtpTransport({
     debug:true
 }));
 
+var sender = new gcm.Sender('AIzaSyDsSoqkX45rZt7woK_wLS-E34cOc0nat9Y');
+
+var options = {
+        cert: './key/APN/PushCert.pem',                                                    
+        key:  './key/APN/PushKey.pem',                                                     
+        passphrase: '123456',                              
+        production: false,                                 
+        port: 2195,                                    
+        rejectUnauthorized: true,                                                                    
+        cacheLength: 1000,                              
+        autoAdjustCache: true,                         
+    }
+
+var apnsConnection = new apns.Connection(options);
+
+function log(type) {
+    return function() {
+        console.log(type, arguments);
+    }
+}
+
+apnsConnection.on('error', log('error'));
+apnsConnection.on('transmitted', log('transmitted'));
+apnsConnection.on('timeout', log('timeout'));
+apnsConnection.on('connected', log('connected'));
+apnsConnection.on('disconnected', log('disconnected'));
+apnsConnection.on('socketError', log('socketError'));
+apnsConnection.on('transmissionError', log('transmissionError'));
+apnsConnection.on('cacheTooSmall', log('cacheTooSmall')); 
+apnsConnection.on('completed',log('completed'));
+
 module.exports = {
+      patientByUser: function(req,res){
+        var userId = req.body.user;
+
+        db.Patient.find({where:{user_id:userId}},{raw:true})
+          .success(function(rs){
+              res.json({status:'success',data:rs})
+          })
+          .error(function(err){
+              res.json({status:'error'});
+              console.log(err);
+          })
+      },
+      updatePatient: function(req,res){
+          var info = req.body.patient;
+
+          db.Patient.update(info,{Patient_id: info.Patient_id})
+            .success(function(){
+              res.json({status:'success'});
+            })
+            .error(function(err){
+              res.json({status:'error'});
+              console.log(err);
+            })
+      },
       register: function(req,res){
         var info = req.body.user;
         var patient = req.body.patient;
         
         info.password = bcrypt.hashSync(info.password);
+        patient.DOB = moment.utc(patient.DOB).format('YYYY-MM-DD');
 
         db.UserType.find({where:{user_type:'Patient'}},{raw:true})
           .success(function(type){
               info.user_type = type.ID;
               info.isEnable = 1;
-               db.User.create(info)
-                  .success(function(){
-                      db.Patient.create(patient)
+
+              db.User.max('id')
+                .success(function(max){
+                    info.id = max + 1;
+                    db.User.create(info)
                       .success(function(){
-                        res.json({status:'success'});
+                          patient.user_id = info.id;
+                          db.Patient.create(patient)
+                            .success(function(){
+                              res.json({status:'success'});
+                            })
+                            .error(function(err){
+                                res.json({status:'error'});
+                                console.log(err);
+                            })
                       })
                       .error(function(err){
                           res.json({status:'error'});
                           console.log(err);
                       })
-                      
-                  })
-                  .error(function(err){
-                      res.json({status:'error'});
-                      console.log(err);
-                  })
+                })
+                .error(function(err){
+                    res.json({status:'error'});
+                    console.log(err);
+                })
           })
           .error(function(err){
               res.json({status:'error'});
@@ -114,7 +179,7 @@ module.exports = {
               user_submit: userId,
               doctor_id: imInfo.doctor_id,
               cal_id: imInfo.cal_id,
-              injury_date: imInfo.injury_date,
+              injury_date: moment.utc(imInfo.injury_date).format('YYYY-MM-DD hh:mm:ss'),
               injury_description: imInfo.injury_description,
               STATUS: imInfo.cal_id == null || typeof imInfo.cal_id === 'undefined' ?"New":null,
               pickup_address: imInfo.cal_id == null || typeof imInfo.cal_id === 'undefined' ? (imInfo.infoMaps.format_address == null || typeof imInfo.infoMaps.format_address === 'undefined' ? null : imInfo.infoMaps.format_address) : null,
@@ -129,9 +194,14 @@ module.exports = {
                               var pId = imInfo.Patient_id;
                               var aId = imInfo.cal_id;
 
-                              db.sequelize.query("SELECT p.*,c.Company_name FROM cln_patients p INNER JOIN companies c ON p.company_id = c.id WHERE p.Patient_id = ?",null,{raw:true},[pId])
+                              var sqlCompany = "SELECT p.*,c.Company_name FROM cln_patients p INNER JOIN companies c ON p.company_id = c.id WHERE p.Patient_id = ?";
+                              var sqlPatient = "SELECT p.* FROM cln_patients p WHERE p.Patient_id = ?";
+
+                              db.sequelize.query((typeof imInfo != 'undefined' && imInfo.user_type == 'Patient') ? sqlPatient : sqlCompany,null,{raw:true},[pId])
                                   .success(function(pData){
-                                      db.sequelize.query("SELECT c.*,r.Site_name,r.Site_addr FROM cln_appointment_calendar c LEFT JOIN redimedsites r ON c.SITE_ID = r.id WHERE CAL_ID = ?",null,{raw:true},[aId])
+                                      if(pData)
+                                      {
+                                          db.sequelize.query("SELECT c.*,r.Site_name,r.Site_addr FROM cln_appointment_calendar c LEFT JOIN redimedsites r ON c.SITE_ID = r.id WHERE CAL_ID = ?",null,{raw:true},[aId])
                                           .success(function(aData){
                                               var date = new Date(aData[0].FROM_TIME);
                                               var dateString =  date.getUTCDate()+ "/" + (date.getUTCMonth()+1) + "/" + date.getUTCFullYear() + " - " + date.getUTCHours() + ":" + date.getUTCMinutes() + ":" + date.getUTCSeconds();
@@ -168,14 +238,48 @@ module.exports = {
                                           .error(function(err){
                                               console.log(err);
                                           })
+
+                                          res.json({status:'success',injury_id:rs.injury_id});
+                                      }
+                                      
                                   })
                                   .error(function(err){
                                       console.log(err);
                                   })
                           }
-
-                          res.json({status:'success',injury_id:rs.injury_id});
-
+                          else
+                          {
+                            db.Appointment.max('CAL_ID')
+                              .success(function(max)
+                              {
+                                  var id = max + 1;
+                                  db.Appointment.create({
+                                    SITE_ID: 1,
+                                    FROM_TIME: moment.utc(),
+                                    TO_TIME: moment.utc()
+                                  })
+                                  .success(function(){
+                                      db.ApptPatient.create({
+                                        Patient_id: imInfo.Patient_id,
+                                        CAL_ID: id,
+                                        appt_status: 'Injury',
+                                        injury_id: rs.injury_id
+                                      })
+                                      .success(function(){
+                                        res.json({status:'success',injury_id:rs.injury_id});
+                                      })
+                                      .error(function(err){
+                                        res.json({status:'error'});
+                                        console.log(err);
+                                      })
+                                  })
+                                  .error(function(err){
+                                      res.json({status:'error'});
+                                      console.log(err);
+                                  })
+                              })
+                              
+                          }
                       })
                       .error(function(err){
                           res.json({status:'error'});
@@ -192,14 +296,13 @@ module.exports = {
     uploadInjuryPic: function(req,res){
 
         var injury_id = req.body.injury_id;
-        var injury_part = req.body.injury_part;
         var description = req.body.description;
 
         if(typeof injury_id !== 'undefined')
         {
               var prefix=__dirname.substring(0,__dirname.indexOf('controllers'));
-              var targetFolder=prefix+'uploadFile\\'+'InjuryManagement\\'+'injuryID_'+injury_id+'\\'+injury_part;
-              var targetFolderForSave='.\\uploadFile\\'+'InjuryManagement\\'+'injuryID_'+injury_id+'\\'+injury_part;
+              var targetFolder=prefix+'uploadFile\\'+'InjuryManagement\\'+'injuryID_'+injury_id;
+              var targetFolderForSave='.\\uploadFile\\'+'InjuryManagement\\'+'injuryID_'+injury_id;
 
               mkdirp(targetFolder, function(err) {
                   if(req.files)
@@ -219,7 +322,6 @@ module.exports = {
 
                     db.IMInjuryImage.create({
                         injury_id: injury_id,
-                        injury_part: injury_part,
                         img_url: target_path_for_save,
                         description: description
                     })
@@ -233,6 +335,8 @@ module.exports = {
                   }
               });
         }
+        else
+          res.json({status:'error'});
 
         
     },
@@ -300,9 +404,9 @@ module.exports = {
     injuryById: function(req,res){
         var injury_id = req.body.injury_id;
 
-        db.sequelize.query("SELECT i.*,p.*,CONCAT(IFNULL(p.Title,''), ' . ', IFNULL(p.`First_name`,''),' ',IFNULL(p.`Sur_name`,''),' ',IFNULL(p.`Middle_name`,'')) as FullName,c.Company_name as CompanyName,c.Addr as CompanyAddr, c.Industry FROM `im_injury` i INNER JOIN `cln_patients` p ON i.`patient_id` = p.`Patient_id` INNER JOIN companies c ON c.id = p.company_id WHERE i.`injury_id` = ?",null,{raw:true},[injury_id])
+          db.IMInjury.find({where:{injury_id: injury_id}},{raw:true})
             .success(function(data){
-                if(data.length > 0)
+                if(data)
                 {
                   db.IMInjuryImage.findAll({where:{injury_id: injury_id}},{raw:true})
                     .success(function(rs){
@@ -311,15 +415,17 @@ module.exports = {
                             var imgArr = [];
                             for(var i=0; i<rs.length ; i++)
                             {
-                              if(rs[i].image!=null || rs[i].image!='')
-                                  imgArr.push(rs[i].injury_image_id);
+                              if(rs[i].img_url!=null || rs[i].img_url!='')
+                                  imgArr.push({id:rs[i].id, desc: rs[i].description});
                             }
                             if(imgArr.length > 0)
-                              data[0].injuryImg = imgArr;
+                              data.injuryImg = imgArr;
                         }
                         res.json({status:'success',data:data})
                     })
                 }
+                else
+                  res.json({status:'error'})
                 
             })
             .error(function(err){
@@ -329,30 +435,23 @@ module.exports = {
     injuryImageById: function(req,res) {
         var imageId = req.param('imageId');
 
-        db.IMInjuryImage.find({where: {injury_image_id: imageId}}, {raw: true})
+        db.IMInjuryImage.find({where: {id: imageId}}, {raw: true})
             .success(function(data){
               if(data)
               {
-                if(data.image!=null || data.image!='')
+                if(data.img_url !== null || data.img_url !== '')
                 {
-                    fs.exists(data.image,function(exists){
+                    fs.exists(String(data.img_url),function(exists){
                       if (exists) {
-                        res.sendfile(data.image);
+                        res.sendfile(data.img_url);
                       } else {
                         res.sendfile("./uploadFile/no-image.png");
                       }
                     })
-                    
                 }
+                else
+                  res.sendfile("./uploadFile/no-image.png");
               }
-
-                // var arr = [];
-                // console.log(data[0].image);
-                // for(var i=0; i<data.length; i++)
-                // {
-                    // res.json({status:'success',data:arr});
-                    // arr.push({imgId:data[i].injury_image_id,image:data[i].image!=null || data[i].image!='' ? base64Image(data[i].image):'',description:data[i].description});
-                // }
             })
             .error(function(err){
                 res.json({status:'error',error:err})
@@ -394,38 +493,50 @@ module.exports = {
                                 {
                                    var time = (geolocation.duration / 60);
 
-                                    var sender = new gcm.Sender('AIzaSyDsSoqkX45rZt7woK_wLS-E34cOc0nat9Y');
+                                    // ==============GCM PUSH==============
                                     var message = new gcm.Message();
                                     message.addData('title','REDiMED');
                                     message.addData('message',data[0].FullName+" will be picked up in "+ time +" minutes.");
                                     message.addData('injury_id',id);
                                     message.addData('time',time);
-                                    message.addData('soundname','beep.wav');
+                                    message.addData('soundname','notification.wav');
                                     message.collapseKey = 'REDiMED';
                                     message.delayWhileIdle = true;
                                     message.timeToLive = 3;
-                                    var registrationIds = [];
+
+                                    // =============APN PUSH=============
+                                    var notify = new apns.Notification();
+                                    notify.expiry = Math.floor(Date.now() / 1000) + 3600; 
+                                    notify.badge = 1;
+                                    notify.sound = 'notification.wav';
+                                    notify.alert = data[0].FullName+" will be picked up in "+ time +" minutes.";
+                                    notify.payload = {'messageFrom': 'REDiMED'}; 
+
+                                    var androidToken = [];
+                                    var iosToken = [];
 
                                     db.UserToken.find({where: {user_id:im.user_submit}}, {raw: true})
                                         .success(function (data) {
                                             if(data)
                                             {
                                                 if (data.android_token != null)
-                                                    registrationIds.push(data.android_token);
+                                                    androidToken.push(data.android_token);
+                                                if (data.ios_token != null)
+                                                    iosToken.push(data.ios_token);
 
-                                                sender.send(message, registrationIds, 4, function (err,result) {
-                                                    if(err)
-                                                    {
-                                                        console.log("ERROR:",err);
-                                                    }
-                                                    else
-                                                    {
-                                                        console.log("SUCCESS:",result);
-                                                    }
+                                                if(androidToken.length > 0)
+                                                {
+                                                  sender.send(message, androidToken, 4, function (err,result) {
+                                                      if(err)
+                                                          console.log("ERROR:",err);
+                                                      else
+                                                          console.log("SUCCESS:",result);
+                                                  });
+                                                }
 
-                                                });
+                                                if(iosToken.length > 0)
+                                                  apnsConnection.pushNotification(notify, iosToken);
                                             }
-
                                         })
                                         .error(function (err) {
                                             console.log(err);
@@ -487,7 +598,7 @@ module.exports = {
         db.IMInjury.find({where:{injury_id: injuryId}},{raw:true})
             .success(function(injury){
 
-                var sender = new gcm.Sender('AIzaSyDsSoqkX45rZt7woK_wLS-E34cOc0nat9Y');
+                //=====GCM Push=======
                 var message = new gcm.Message();
                 message.addData('title','EMERGENCY');
                 message.addData('message','You have new patient to pickup!');
@@ -502,8 +613,17 @@ module.exports = {
                 message.collapseKey = 'EMERGENCY';
                 message.delayWhileIdle = true;
                 message.timeToLive = 3;
-                var registrationIds = [];
 
+                // =============APN PUSH=============
+                var notify = new apns.Notification();
+                notify.expiry = Math.floor(Date.now() / 1000) + 3600; 
+                notify.badge = 1;
+                notify.sound = 'beep.wav';
+                notify.alert = "You have new patient to pickup!";
+                notify.payload = {'messageFrom': 'REDiMED'}; 
+
+                var androidToken = [];
+                var iosToken = [];
                 db.UserType.find({where:{user_type:'Driver'}},{raw:true})
                     .success(function(type){
                         db.UserToken.find({where: {user_type: type.ID,user_id:driverId}}, {raw: true})
@@ -511,23 +631,23 @@ module.exports = {
                                 if(data)
                                 {
                                     if (data.android_token != null)
-                                        registrationIds.push(data.android_token);
+                                        androidToken.push(data.android_token);
+                                    if (data.ios_token != null)
+                                        iosToken.push(data.ios_token);
 
-                                    sender.send(message, registrationIds, 4, function (err,result) {
-                                        if(err)
-                                        {
-                                            res.json({status:'error'});
-                                            console.log("ERROR:",err);
-                                        }
-                                        else
-                                        {
-                                            res.json({status:'success'});
-                                            console.log("SUCCESS:",result);
-                                        }
-
-                                    });
+                                    if(androidToken.length > 0)
+                                    {
+                                      sender.send(message, androidToken, 4, function (err,result) {
+                                          if(err)
+                                              console.log("ERROR:",err);
+                                          else
+                                              console.log("SUCCESS:",result);
+                                      });
+                                    }
+                                    
+                                    if(iosToken.length > 0)
+                                       apnsConnection.pushNotification(notify, iosToken);
                                 }
-
                             })
                             .error(function (err) {
                                 console.log(err);
@@ -536,67 +656,6 @@ module.exports = {
                     .error(function (err) {
                         console.log(err);
                     })
-            })
-            .error(function (err) {
-                console.log(err);
-            })
-    },
-    testPushAPN: function(req,res)
-    {
-        var date = new Date();
-        var dateString =  date.getUTCDate()+ "/" + (date.getUTCMonth()+1) + "/" + date.getUTCFullYear() + " - " + date.getUTCHours() + ":" + date.getUTCMinutes() + ":" + date.getUTCSeconds();
-
-        var options = {
-            cert: './key/APN/PushCert.pem',                                                    
-            key:  './key/APN/PushKey.pem',                                                     
-            passphrase: 'hnguyenhuyH1012',                              
-            production: false,                                 
-            port: 2195,                                    
-            rejectUnauthorized: true,                                                                    
-            cacheLength: 1000,                              
-            autoAdjustCache: true,                         
-        }
-
-        var apnsConnection = new apns.Connection(options);
-
-         db.UserToken.findAll({raw: true})
-            .success(function (data) {
-                if(data.length > 0)
-                {
-                    var tokens = [];
-                    for(var i=0; i<data.length; i++)
-                    {
-                        if(data[i].ios_token != null)
-                          tokens.push(data[i].ios_token)
-                    }
-
-                    var notify = new apns.Notification();
-
-                    notify.expiry = Math.floor(Date.now() / 1000) + 3600; 
-                    notify.badge = 3;
-                    notify.sound = 'ping.aiff';
-                    notify.alert = "\uD83D\uDCE7 \u2709 You have a new message";
-                    notify.payload = {'messageFrom': 'Redimed'}; 
-
-                    apnsConnection.pushNotification(notify, tokens);
-
-                    function log(type) {
-                        return function() {
-                            console.log(type, arguments);
-                        }
-                    }
-
-                    apnsConnection.on('error', log('error'));
-                    apnsConnection.on('transmitted', log('transmitted'));
-                    apnsConnection.on('timeout', log('timeout'));
-                    apnsConnection.on('connected', log('connected'));
-                    apnsConnection.on('disconnected', log('disconnected'));
-                    apnsConnection.on('socketError', log('socketError'));
-                    apnsConnection.on('transmissionError', log('transmissionError'));
-                    apnsConnection.on('cacheTooSmall', log('cacheTooSmall')); 
-                    apnsConnection.on('completed',log('completed'));
-                }
-
             })
             .error(function (err) {
                 console.log(err);
@@ -655,6 +714,22 @@ module.exports = {
             .error(function(err){
                 res.json({status:'error',error:err})
             })
+    },
+    loadSideMenu: function(req,res)
+    {
+      db.sequelize.query("SELECT m.Menu_Id, m.Type AS MenuIcon,m.Description,IFNULL(m.Definition,' ') AS MenuDefinition,IFNULL(f.Definition,' ') AS Definition,IFNULL(m.Parent_Id,-1) AS Parent_Id,f.Type,m.isEnable,m.`isMobile` "+
+                          "FROM redi_menus m LEFT OUTER JOIN redi_functions f ON m.function_id = f.function_id "+
+                          "WHERE m.isEnable = 1 "+
+                          "AND m.`isMobile` = 1 "+
+                          "AND (m.`description` LIKE 'Injury Management' "+
+                          "OR m.`parent_id` = (SELECT Menu_Id FROM redi_menus WHERE `description` LIKE 'Injury Management' AND isEnable = 1 AND isMobile = 1))",null,{raw:true})
+          .success(function(data){
+              res.json(data);
+          })
+          .error(function(err){
+              res.json({status:'fail',
+                  error:err});
+          })
     }
 };
 

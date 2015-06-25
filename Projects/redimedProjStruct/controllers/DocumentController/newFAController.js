@@ -272,8 +272,8 @@ module.exports = {
 		.then(function(result){
 			res.json({status:'success'});
 		})
-		.error(function(err){
-			res.json(500, {status:'error', error:err});
+		.error(function(err,sqldata){
+			res.json(500, {status:'error', error:err, sql:sqldata});
 		})
 	},
 
@@ -386,10 +386,9 @@ module.exports = {
 	},
 
 	getDoctor: function(req,res){
-		var patient_id = req.body.patient_id;
-		var cal_id = req.body.cal_id;
+		var user_id = req.body.user_id;
 
-		knex.raw("select doctor.* from `cln_appointment_calendar` appt inner join `doctors` doctor on appt.`DOCTOR_ID` = doctor.`doctor_id` where appt.`CAL_ID` = ?",[cal_id])
+		knex.raw("select user.`Booking_Person`, doc.`Signature` from `users` user inner join `doctors` doc on doc.`User_id` = user.`id` where user.`id` = ?",[user_id])
 		.then(function(result){
 			if(result.length === 0) res.json({status:"no doctor"});
 			else res.json({status:'success', data:result[0]});

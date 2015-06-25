@@ -8,7 +8,19 @@ var kiss=require('./kissUtilsController');
 var timeTableUtil=require('./timeTableUtilController');
 
 module.exports = {
+	getServiceColor:function(req,res){
+		var postData = req.body.data;
+		var sql = knex('sys_services')
+			.toString();
 
+		db.sequelize.query(sql)
+		.success(function(data){
+			res.json({data: data});
+		})
+		.error(function(error){
+			res.status(500).json({error: error, sql: sql});
+		})
+	},
 	postOne: function(req, res){
 		var postData = req.body.data;
 

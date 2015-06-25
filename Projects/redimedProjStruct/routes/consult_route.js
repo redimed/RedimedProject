@@ -26,8 +26,20 @@ app.post('/api/consultation/getApptPatient',ConsultationController.getApptPatien
 app.post('/api/consultation/check-consultation-patientID-calID',ConsultationController.checkConsultation);
 app.post('/api/consultation/get-img-drawing-history',ConsultationController.getImgDrawingHistory);
 app.get('/api/consultation/drawing/image/:imageId',ConsultationController.drawingImageById);
+app.post('/api/consultation/listCor',ConsultationController.postListCor);
+app.post('/api/consultation/addCor',ConsultationController.postAddCor);
+app.post('/api/consultation/byidCor',ConsultationController.postById);
 //
 //phanquocchien.c1109g@gmail.com
 //11-06-2015
 app.post('/api/consultation/listconsultofpatient',ConsultationController.getListConsultOfPatient);
+
+// manh
+app.post('/api/consultation/listExercise',ConsultationController.listExercise);
+app.post('/api/consultation/getOneExercise',ConsultationController.getOneExercise);
+app.post('/api/consultation/updateExercise',ConsultationController.updateExercise);
+app.post('/api/consultation/deleteExercise',ConsultationController.deleteExercise);
+app.post('/api/consultation/addExercise',ConsultationController.addExercise);
+
+
 

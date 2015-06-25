@@ -1,9 +1,9 @@
 angular.module('app.loggedIn.script.edit.controller', [])
-.controller('ScriptEditController', function($scope, $state, $modalInstance, ID,medicaname){
+.controller('ScriptEditController', function($scope, $state, $modalInstance, ID, medicare){
 	$scope.scriptedit = {
 	  success: false,
 	  ID: ID,
-	  medicaname:medicaname
+	  medicare:medicare
 	 }
 	 $scope.$watch('scriptedit.success', function(success){
 		  if(success){

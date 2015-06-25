@@ -36,6 +36,11 @@ var inc_common_model =  [
 
 module.exports = {
 
+	/**
+	 * created by: unknown
+	 * tannv.dts mark
+	 * khoi tao cln_invoice_header
+	 */
 	postInit: function(req, res) {
 		var patient_id = req.body.patient_id;
 		var cal_id = req.body.cal_id;
@@ -298,7 +303,300 @@ module.exports = {
         })
 	},
 
-	postSave : function(req, res) {
+	/**
+	 * tannv.dts@gmail.com
+	 * Luu thong tin invoice line
+	 */
+	postCreateInvoiceLine:function(req,res)
+	{	
+		var fHeader="v2_InvoiceController->postSaveInvoiceLine";
+		var functionCode='FN002';
+		var postData=kiss.checkData(req.body.postData)?req.body.postData:{};
+		
+		var invoiceHeaderId=kiss.checkData(postData.invoiceHeaderId)?postData.invoiceHeaderId:'';
+		var calId=kiss.checkData(postData.calId)?postData.calId:'';
+		var patientId=kiss.checkData(postData.patientId)?postData.patientId:'';
+		var invoiceLine=kiss.checkData(postData.invoiceLine)?postData.invoiceLine:{};
+		var itemId=kiss.checkData(invoiceLine.ITEM_ID)?invoiceLine.ITEM_ID:'';
+		var quantity=kiss.checkData(invoiceLine.QUANTITY)?invoiceLine.QUANTITY:1;
+		var price=kiss.checkData(invoiceLine.PRICE)?invoiceLine.PRICE:0;
+		var timeSpent=kiss.checkData(invoiceLine.TIME_SPENT)?invoiceLine.TIME_SPENT:0;
+
+		if(!kiss.checkListData(invoiceHeaderId,calId,patientId,invoiceLine,itemId))
+		{
+			kiss.exlog(fHeader,"Loi data truyen den",[invoiceHeaderId,invoiceLineId]);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
+			return;
+		}
+
+		var sql=
+			" SELECT apptItem.*  FROM `cln_appt_items` apptItem          "+
+			" WHERE apptItem.`cal_id`=? AND apptItem.`Patient_id`=?      "+
+			" AND apptItem.`CLN_ITEM_ID`=? AND apptItem.`is_enable`=1    ";
+		kiss.executeQuery(req,sql,[calId,patientId,itemId],function(rows){
+			if(rows.length>0)
+			{
+				//item da ton tai
+				res.json({status:'exist'});
+			}
+			else
+			{
+				kiss.beginTransaction(req,function(){
+					var sql="DELETE FROM `cln_appt_items` WHERE cal_id=? AND Patient_id=? AND CLN_ITEM_ID=?";
+					kiss.executeQuery(req,sql,[calId,patientId,itemId],function(result){
+						var sql="INSERT INTO `cln_appt_items` SET ?";
+						var apptItem={
+							CLN_ITEM_ID:itemId,
+							Patient_id:patientId,
+							cal_id:calId,
+							PRICE:price,
+							TIME_SPENT:timeSpent,
+							QUANTITY:quantity,
+							AMOUNT:price*quantity,
+							is_enable:1
+						}
+
+						kiss.executeQuery(req,sql,[apptItem],function(result){
+							var invoiceLineInsert={
+								HEADER_ID:invoiceHeaderId,
+								appt_item_id:result.insertId,
+								ITEM_ID:itemId,
+								PRICE:price,
+								QUANTITY:quantity,
+								TIME_SPENT:timeSpent,
+								AMOUNT:price*quantity,
+								is_enable:1
+							}
+							var sql="insert into cln_invoice_lines set ?";
+							kiss.executeQuery(req,sql,[invoiceLineInsert],function(result){
+								kiss.commit(req,function(){
+									//tra ve data dong bo hoa
+									invoiceLine.HEADER_ID=invoiceHeaderId;
+									invoiceLine.appt_item_id=invoiceLineInsert.appt_item_id;
+									invoiceLine.line_id=result.insertId;
+									invoiceLine.AMOUNT=invoiceLineInsert.AMOUNT;
+									invoiceLine.is_enable=invoiceLineInsert.is_enable;
+	                                res.json({status:'success',data:invoiceLine});
+	                            },function(err){
+	                                kiss.exlog(fHeader,"Loi commit",err);
+	                                res.json({status:'fail',error:errorCode(controllerCode,functionCode,'TN007')});
+	                            })
+							},function(err){
+								kiss.exlog(fHeader,"Loi insert invoice line",err);
+								kiss.rollback(req,function(){
+									res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN006')});
+								});
+							});
+						},function(err){
+							kiss.exlog(fHeader,"Loi insert appt item",err);
+							kiss.rollback(req,function(){
+								res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN005')});
+							});
+						});
+					},function(err){
+						kiss.exlog(fHeader,"Loi delete du lieu app item cu",err);
+						res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN004')});
+					});
+				},function(err){
+					kiss.exlog(fHeader,"Khong the mo transaction",err);
+					res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN003')});
+				})
+			}
+		},function(err){
+			kiss.exlog(fHeader,'Loi truy van kiem tra xem appt item co ton tai chua',err);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN002')});
+		});
+
+	},
+
+	postUpdateInvoiceLine:function(req,res)
+	{
+		var fHeader="v2_InvoiceController->postUpdateInvoiceLine";
+		var functionCode='FN003';
+		var postData=kiss.checkData(req.body.postData)?req.body.postData:{};
+		
+		var invoiceLine=kiss.checkData(postData.invoiceLine)?postData.invoiceLine:{};
+		var itemId=kiss.checkData(invoiceLine.ITEM_ID)?invoiceLine.ITEM_ID:'';
+		var quantity=kiss.checkData(invoiceLine.QUANTITY)?invoiceLine.QUANTITY:1;
+		var price=kiss.checkData(invoiceLine.PRICE)?invoiceLine.PRICE:0;
+		var timeSpent=kiss.checkData(invoiceLine.TIME_SPENT)?invoiceLine.TIME_SPENT:0;
+
+		var invoiceLineId=invoiceLine.line_id;
+		var apptItemId=kiss.checkData(invoiceLine.appt_item_id)?invoiceLine.appt_item_id:'';
+
+		if(!kiss.checkListData(invoiceLineId,apptItemId))
+		{
+			kiss.exlog(fHeader,'Loi data truyen den');
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN008')});
+			return;
+		}
+		kiss.beginTransaction(req,function(){
+			var sql="UPDATE `cln_invoice_lines` SET ? WHERE line_id=?";
+			var invoiceLineUpdateInfo={
+				TIME_SPENT:timeSpent,
+				QUANTITY:quantity,
+				PRICE:price,
+				AMOUNT:price*quantity,
+				is_enable:1
+			}
+			kiss.executeQuery(req,sql,[invoiceLineUpdateInfo,invoiceLineId],function(result){
+				if(result.affectedRows>0)
+				{
+					var sql="UPDATE `cln_appt_items` SET ? WHERE `appt_item_id`=?";
+					var apptItemUpdateInfo={
+						TIME_SPENT:timeSpent,
+						QUANTITY:quantity,
+						PRICE:price,
+						AMOUNT:price*quantity,
+						is_enable:1
+					}
+					kiss.executeQuery(req,sql,[apptItemUpdateInfo,apptItemId],function(result){
+						if(result.affectedRows>0)
+						{
+							kiss.commit(req,function(){
+								res.json({status:'success'});
+							},function(err){
+								kiss.exlog(fHeader,'Loi commit update',err);
+								res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN014')});
+							})
+						}
+						else
+						{
+							kiss.exlog(fHeader,'khong co app item nao tuong ung voi id duoc cap nhat');
+							kiss.rollback(req,function(){
+								res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN013')});
+							});
+						}
+					},function(err){
+						kiss.exlog(fHeader,'loi truy van cap nhat appt item',err);
+						kiss.rollback(req,function(){
+							res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN012')});
+						});
+					});
+				}
+				else
+				{
+					kiss.exlog(fHeader,'Khong co invoice line tuong ung voi id duoc cap nhat');
+					kiss.rollback(req,function(){
+						res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN011')});
+					});
+				}
+			},function(err){
+				kiss.exlog(fHeader,'Loi cap nhat cln_invoice_lines',err);
+				kiss.rollback(req,function(){
+					res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN010')});
+				});
+			},true);
+		},function(err){
+			kiss.exlog(fHeader,'Khong the mo transaction update',err);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN009')});
+		});
+	},
+
+	/**
+	 * tannv.dts@gmail.com
+	 * update invoice header
+	 */
+	postSave:function(req,res)
+	{
+		var fHeader="v2_InvoiceController->postSave";
+		var functionCode="FN004";
+		var postData=kiss.checkData(req.body.postData)?req.body.postData:{};
+		var invoiceHeaderId=kiss.checkData(postData.header_id)?postData.header_id:'';
+		var calId=kiss.checkData(postData.cal_id)?postData.cal_id:'';
+		var patientId=kiss.checkData(postData.Patient_id)?postData.Patient_id:'';
+		var claimId=kiss.checkData(postData.claim_id)?postData.claim_id:null;
+		var companyId=kiss.checkData(postData.Company_id)?postData.Company_id:null;
+		var insurerId=kiss.checkData(postData.Insurer_id)?postData.Insurer_id:null;
+		var doctorId=kiss.checkData(postData.DOCTOR_ID)?postData.DOCTOR_ID:'';
+		var siteId=kiss.checkData(postData.SITE_ID)?postData.SITE_ID:'';
+		var deptId=kiss.checkData(postData.DEPT_ID)?postData.DEPT_ID:'';
+		var serviceId=kiss.checkData(postData.SERVICE_ID)?postData.SERVICE_ID:'';
+		var status=kiss.checkData(postData.STATUS)?postData.STATUS:'';
+
+		kiss.beginTransaction(req,function(){
+		var sql=
+			" SELECT line.`HEADER_ID`, COUNT(line.`line_id`) AS TOTAL_LINES,   "+
+			" SUM (line.`AMOUNT`) AS TOTAL_AMOUNT                              "+
+			" FROM `cln_invoice_lines` line                                    "+
+			" WHERE line.`HEADER_ID`=? AND line.`IS_ENABLE`=1                  "+
+			" GROUP BY line.`HEADER_ID`                                        ";
+			kiss.executeQuery(req,sql,[invoiceHeaderId],function(rows){
+				if(rows.length>0)
+				{
+					var totalLine=rows[0].TOTAL_LINES;
+					var totalAmount=rows[0].TOTAL_AMOUNT;
+					if(totalLine>0)
+					{
+						var sql="UPDATE `cln_invoice_header` SET ? WHERE header_id= ?";
+						var invoiceHeaderUpdateInfo={
+							claim_id:claimId,
+							Company_id:companyId,
+							Insurer_id:insurerId,
+							DOCTOR_ID:doctorId,
+							SITE_ID:siteId,
+							DEPT_ID:deptId,
+							SERVICE_ID:serviceId,
+							STATUS: status, 
+							AMOUNT: totalAmount
+						};
+						kiss.exlog(invoiceHeaderUpdateInfo);
+						kiss.executeQuery(req,sql,[invoiceHeaderUpdateInfo,invoiceHeaderId],function(result){
+							if(result.affectedRows>0)
+							{
+								kiss.commit(req,function(){
+									res.json({status:'success'});
+								},function(err){
+									kiss.exlog(fHeader,'Loi commit',err);
+									res.json({status:'fail'});
+								})
+								
+							}
+							else
+							{
+								kiss.exlog(fHeader,'Khong co invoice header nao duoc cap nhat');
+								kiss.rollback(req,function(){
+									res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN004')});
+								})
+							}
+
+						},function(err){
+							kiss.exlog(fHeader,'Loi truy van cap nhat cln_invoice_header',err);
+							kiss.rollback(req,function(){
+								res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN003')});
+							});
+						},true)
+					}
+					else
+					{
+						kiss.exlog(fHeader,"Invoice chua co item");
+						res.json({status:'no-lines'});
+					}
+				}
+				else
+				{
+					kiss.exlog(fHeader,'Khong co data tuong ung voi header');
+					res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN002')});
+				}
+			},function(err){
+
+			});
+		},function(err){
+			kiss.exlog(fHeader,"Khong the mo transaction",err);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
+		});
+
+
+	},
+
+
+	/**
+	 * create by: unknown
+	 * tan mark
+	 * tan modify
+	 * tan rem postSave->postSave2
+	 */
+	postSave2 : function(req, res) {
 		var header_id = req.body.header_id;	
 		var inv_status = req.body.status;
 		var service_id = req.body.service_id;
@@ -439,20 +737,20 @@ module.exports = {
                                 res.json({status:'success'});
                             },function(err){
                                 kiss.exlog(fHeader,"Loi commit",err);
-                                res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'FN006')});
+                                res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN006')});
                             })
 						}
 						else
 						{
 							kiss.exlog(fHeader,'Khong co appt item nao duoc xoa');
 							kiss.rollback(req,function(){
-			                    res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'FN005')});
+			                    res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN005')});
 			                })
 						}
 					},function(err){
 						kiss.exlog(fHeader,'Loi truy van xoa cln_appt_patients',err);
 						kiss.rollback(req,function(){
-		                    res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'FN004')});
+		                    res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN004')});
 		                })
 					});
 				}

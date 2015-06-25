@@ -67,7 +67,7 @@
 												<label>
 													<input type="checkbox" ng-model="line.ISSCORE1" ng-true-value="1" ng-false-value="0" ng-checked="line.ISSCORE1===1"/> Is score?
 												</label>
-												<select class="form-control" ng-options="scr.id as scr.label for scr in score_type_opt" ng-model="line.SCORE_TYPE1">
+												<select class="form-control" ng-options="scr.id as scr.label group by scr.section for scr in score_type_opt" ng-model="line.SCORE_TYPE1">
 													
 												</select>
 												
@@ -93,7 +93,7 @@
 												<label>
 													<input type="checkbox" ng-model="line.ISSCORE2" ng-true-value="1" ng-false-value="0" ng-checked="line.ISSCORE2===1"/> Is score?
 												</label>
-												<select class="form-control" ng-options="scr.id as scr.label for scr in score_type_opt" ng-model="line.SCORE_TYPE2">
+												<select class="form-control" ng-options="scr.id as scr.label group by scr.section for scr in score_type_opt" ng-model="line.SCORE_TYPE2">
 													
 												</select>
 												
@@ -158,21 +158,26 @@
 														<input type="text" class="form-control" value="Question 1" ng-model="detail.QUESTION"/>
 													</div>
 													<div>
+														<input type="text" class="form-control" value="Question 1" ng-model="detail.DESCRIPTION" placeholder="Description"/>
+													</div>
+													<div>
 														<button class="btn btn-default" ng-click="openModal(detail)"><i class="fa fa-file-image-o"></i> Select detail image</button><br/>
 														<img ng-src="{{detail.previewPath}}" style="width: 50%; heigth: 50%;" ng-show="detail.PICTURE !== null"/>
 													</div>
 												</td>
 												<td>
-													<div class="col-md-7 col-xs-7 col-sm-7">
+													<div class="col-md-7 col-xs-7 col-sm-7" ng-show="(line.LineType!==1 && line.LineType!=='1') || ((line.LineType===1 || line.LineType==='1') && line.SCORE_TYPE1!==5)">
 														<div>
 															<label>
 																<select class="form-control" ng-options="vl.id as vl.label for vl in value_type_opt" ng-model="val1_type" ng-change="value1TypeWatch(detail, val1_type)" ng-init="val1_type=value1TypeInit(detail)">
 														
 																</select>
 															</label> 
-															<input type="text" value="Untitled val 1" class="form-control input-small inline" ng-model="detail.VAL1_NAME" ng-disabled="val1_type===-1 || val1_type===7 || val1_type===8" placeholder="Value 1 name"/>
+															<input type="text" value="Untitled val 1" class="form-control input-small inline" ng-model="detail.VAL1_NAME" ng-disabled="val1_type===-1 || val1_type===7 || val1_type===8 || val1_type===9 || val1_type===10" placeholder="Value 1 name"/>
 															<input type="text" value="Untitled val 1" class="form-control input-small inline" ng-model="detail.VAL1_VALUE" ng-disabled="val1_type===-1" ng-show="val1_type===7" placeholder="Weight in kgs"/>
 															<input type="text" value="Untitled val 1" class="form-control input-small inline" ng-model="detail.VAL1_VALUE" ng-disabled="val1_type===-1" ng-show="val1_type===8" placeholder="Distance in m"/>
+															<input type="text" value="Untitled val 1" class="form-control input-small inline" ng-model="detail.VAL1_VALUE" ng-disabled="val1_type===-1" ng-show="val1_type===9" placeholder="Height in mm"/>
+															<input type="text" value="Untitled val 1" class="form-control input-small inline" ng-model="detail.VAL1_VALUE" ng-disabled="val1_type===-1" ng-show="val1_type===10" placeholder="Weight in g"/>
 															&nbsp;
 															<label ng-show="detail.VAL1_ISVALUE===1 && val1_type!==7 && val1_type!==8">
 																<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL1_VALUE_IS_NUMBER===1" ng-model="detail.VAL1_VALUE_IS_NUMBER"></span> Is numeric?
@@ -184,16 +189,18 @@
 														
 																</select>
 															</label> 
-															<input type="text" value="Untitled val 2" class="form-control input-small inline" ng-model="detail.VAL2_NAME" ng-disabled="val2_type===-1 || val2_type===7 || val2_type===8" placeholder="Value 2 name"/>
+															<input type="text" value="Untitled val 2" class="form-control input-small inline" ng-model="detail.VAL2_NAME" ng-disabled="val2_type===-1 || val2_type===7 || val2_type===8 || val2_type===9 || val2_type===10" placeholder="Value 2 name"/>
 															<input type="text" value="Untitled val 2" class="form-control input-small inline" ng-model="detail.VAL2_VALUE" ng-disabled="val2_type===-1" ng-show="val2_type===7" placeholder="Weight in kgs"/>
 															<input type="text" value="Untitled val 2" class="form-control input-small inline" ng-model="detail.VAL2_VALUE" ng-disabled="val2_type===-1" ng-show="val2_type===8" placeholder="Distance in m"/>
+															<input type="text" value="Untitled val 2" class="form-control input-small inline" ng-model="detail.VAL2_VALUE" ng-disabled="val2_type===-1" ng-show="val2_type===9" placeholder="Height in mm"/>
+															<input type="text" value="Untitled val 2" class="form-control input-small inline" ng-model="detail.VAL2_VALUE" ng-disabled="val2_type===-1" ng-show="val2_type===10" placeholder="Weight in g"/>
 															&nbsp;
 															<label ng-show="detail.VAL2_ISVALUE===1 && val2_type!==7 && val2_type!==8">
 																<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL2_VALUE_IS_NUMBER===1" ng-model="detail.VAL2_VALUE_IS_NUMBER"></span> Is numeric?
 															</label>
 														</div>
 													</div>
-													<div class="col-md-5 col-xs-5 col-sm-5">
+													<div class="col-md-5 col-xs-5 col-sm-5" ng-show="(line.LineType!==1 && line.LineType!=='1') || ((line.LineType===1 || line.LineType==='1') && line.SCORE_TYPE1!==5)">
 														<div>
 															<label>
 																<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.IsCommentText===1 || detail.IsCommentText==='1'" ng-model="detail.IsCommentText" ng-change="IsCommentTextWatch(detail, detail.IsCommentText)"></span> Comment
@@ -216,6 +223,14 @@
 																<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.VAL2_ISCOMMENT_WHEN_NO === 1" ng-model="detail.VAL2_ISCOMMENT_WHEN_NO"></span> Value 2 unchecked
 															</label>
 														</div>
+													</div>
+													<div class="col-md-2 col-xs-2 col-sm-2" ng-show="(line.LineType===1 || line.LineType==='1') && line.SCORE_TYPE1===5 && isEdit ">
+														<label class="control-label">Summary for</label>
+													</div>
+													<div class="col-md-5 col-xs-5 col-sm-5" ng-show="(line.LineType===1 || line.LineType==='1') && line.SCORE_TYPE1===5 && isEdit ">
+														<select class="form-control" ng-options="lineOpt.LINE_ID as lineOpt.QUESTION for lineOpt in section.lines" ng-model="detail.LineTestRefer">
+														
+														</select>
 													</div>
 													
 												</td>

@@ -8,6 +8,7 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 	$scope.upcomingAppt = [];
 	$scope.progressAppt = [];
 	$scope.completeAppt = [];
+	$scope.injuryAppt = [];
 	$scope.doctors = [];
 
 	$scope.undoArr= [];
@@ -31,6 +32,7 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 			$scope.upcomingAppt = [];
 			$scope.progressAppt = [];
 			$scope.completeAppt = [];
+			$scope.injuryAppt = [];
 			$scope.doctors = [];
 		}
 		else
@@ -42,6 +44,7 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 		$scope.upcomingAppt = [];
 		$scope.progressAppt = [];
 		$scope.completeAppt = [];
+		$scope.injuryAppt = [];
 		$scope.doctors = [];
 
 		ReceptionistService.getAppointmentByDate(d,site).then(function(rs){
@@ -49,6 +52,7 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 			{	
 				$scope.upcomingAppt = rs.upcoming;
 				$scope.completeAppt = rs.completed;
+				$scope.injuryAppt = rs.injury;
 				ReceptionistService.getProgressAppt(d,site).then(function(rs){
 					if(rs.status.toLowerCase() == 'success')
 					{
@@ -100,11 +104,12 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 	        }, function(isConfirm) {
 	        	if(isConfirm)
 	        	{
-	        		ReceptionistService.updateAppointment($scope.fromAppt, doctor.doctor_id, 'progress').then(function(rs){
+	        		var doctorId = (typeof doctor.appointment != 'undefined' && doctor.appointment.length > 0) ? doctor.appointment[0].doctor_id : doctor.doctor_id;
+	        		ReceptionistService.updateAppointment($scope.fromAppt,doctorId, 'progress').then(function(rs){
 			        	if(rs.status == 'success')
 			        	{
 			        		toastr.success("Update Appointment Success!");
-			        		socket.emit('notifyDoctor',doctor.doctor_id);
+			        		socket.emit('notifyDoctor',doctorId);
 			        		socket.emit('notifyPatient',$scope.fromAppt.appt_id);
 			        		$scope.undoArr = [];
 			        		$scope.undoArr.push($scope.fromAppt);
@@ -113,9 +118,7 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 			        })
 	        	}
 	        	else
-	        	{
 	        		getAppt($scope.apptDate,$scope.apptSite);
-	        	}
 	        });
 		}
 	};

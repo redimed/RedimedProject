@@ -10,6 +10,8 @@ var errorCode=require('./errorCode');
 var invoiceUtil=require('./invoiceUtilController');
 var knex = require('../knex-connect.js');
 var commonFunction =  require('../knex-function.js');
+var _ = require('lodash');
+var S = require('string');
 
 //tannv.dts@gmail.com
 var controllerCode="RED_CONSULT";
@@ -230,6 +232,9 @@ module.exports = {
             treatment_plan: info.treatment,
             investigation: info.investigation,
             specialist: info.specialist,
+            progress_note: info.progress_note,
+            attendance_record: info.attendance_record,
+            communication_record: info.communication_record,
             diagnosis: info.diagnosis
         }, {consult_id: info.consult_id}, {raw: true})
         .success(function(data){
@@ -300,6 +305,9 @@ module.exports = {
                     treatment_plan: info.treatment,
                     investigation: info.investigation,
                     specialist: info.specialist,
+                    progress_note: info.progress_note,
+                    attendance_record: info.attendance_record,
+                    communication_record: info.communication_record,
                     diagnosis: info.diagnosis
                 })
                 .success(function(data){
@@ -388,8 +396,9 @@ module.exports = {
 
             db.sequelize.query("SELECT u.id, u.`user_name`, u.`Booking_Person`, u.`socket` "+
                                 "FROM  users u "+
-                                "WHERE u.`socket` IS NOT NULL AND u.`company_id` = (SELECT p.`company_id` FROM cln_patients p WHERE p.`Patient_id` = ?)",
-                                null,{raw:true},[patient_id])
+                                "WHERE u.`socket` IS NOT NULL "+
+                                "AND (u.`company_id` = (SELECT p.`company_id` FROM cln_patients p WHERE p.`Patient_id` = ?) "+
+                                "OR u.id = (SELECT p.user_id FROM cln_patients p WHERE p.`Patient_id` = ?))", null,{raw:true},[patient_id,patient_id])
             .success(function(rs)
             {
                 info.users = rs;
@@ -403,8 +412,21 @@ module.exports = {
         }
         else
         {
-            kiss.exlog(fHeader,"Patient khong co thong tin company.");
-            res.json({status:'success',info:null});
+            db.sequelize.query("SELECT u.id, u.`user_name`, u.`Booking_Person`, u.`socket` "+
+                                "FROM  users u "+
+                                "WHERE u.`socket` IS NOT NULL "+
+                                "AND (u.`company_id` = (SELECT p.`company_id` FROM cln_patients p WHERE p.`Patient_id` = ?) "+
+                                "OR u.id = (SELECT p.user_id FROM cln_patients p WHERE p.`Patient_id` = ?))", null,{raw:true},[patient_id,patient_id])
+            .success(function(rs)
+            {
+                info.users = rs;
+                res.json({status:'success', info: info});
+            })
+            .error(function(err)
+            {
+                kiss.exlog(fHeader,"Loi truy van lay cac user trong cung cong ty",err);
+                res.json({status:'error',error:errorCode.get(controllerCode,functionCode,'TN003')});
+            })
         }
     })
     .error(function(err)
@@ -424,21 +446,36 @@ module.exports = {
     {
         var fHeader="ConsultationController->beforeStartSession";
         var functionCode="FN006";
-        var doctorId=kiss.checkData(req.body.doctorId)?req.body.doctorId:'';
-        if(!kiss.checkListData(doctorId))
+        var postData=kiss.checkData(req.body.postData)?req.body.postData:{};
+        var doctorId=kiss.checkData(postData.doctorId)?postData.doctorId:'';
+        var actualDoctorId=kiss.checkData(postData.actualDoctorId)?postData.actualDoctorId:'';
+        // if(!kiss.checkListData(doctorId))
+        // {
+        //     kiss.exlog(fHeader,"Loi data truyen den");
+        //     res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,"TN001")});
+        //     return;
+        // }
+        if(kiss.checkData(actualDoctorId))
         {
-            kiss.exlog(fHeader,"Loi data truyen den");
-            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,"TN001")});
-            return;
+            var sql=
+            " SELECT patient.*,calendar.`FROM_TIME`,apptPatient.appt_status,apptPatient.CAL_ID           "+
+            " FROM `cln_appt_patients` apptPatient                                                       "+
+            " INNER JOIN `cln_appointment_calendar` calendar ON apptPatient.`CAL_ID`=calendar.`CAL_ID`   "+
+            " INNER JOIN `cln_patients` patient ON `apptPatient`.`Patient_id`=patient.`Patient_id`       "+
+            " WHERE apptPatient.`actual_doctor_id`=? AND `apptPatient`.`appt_status`=?                             ";
         }
-        var sql=
+        else
+        {
+            var sql=
             " SELECT patient.*,calendar.`FROM_TIME`,apptPatient.appt_status,apptPatient.CAL_ID           "+
             " FROM `cln_appt_patients` apptPatient                                                       "+
             " INNER JOIN `cln_appointment_calendar` calendar ON apptPatient.`CAL_ID`=calendar.`CAL_ID`   "+
             " INNER JOIN `cln_patients` patient ON `apptPatient`.`Patient_id`=patient.`Patient_id`       "+
             " WHERE calendar.`DOCTOR_ID`=? AND `apptPatient`.`appt_status`=?                             ";
+        }
+        
 
-        kiss.executeQuery(req,sql,[doctorId,invoiceUtil.apptStatus.workInProgress.value],function(rows){
+        kiss.executeQuery(req,sql,[doctorId,invoiceUtil.apptStatus.inConsult.value],function(rows){
             res.json({status:'success',data:rows});
         },function(err){
             kiss.exlog(fHeader,"Loi truy van select du lieu",err);
@@ -462,7 +499,7 @@ module.exports = {
         }
 
         var sql="UPDATE `cln_appt_patients` SET appt_status=?,SESSION_START_TIME=? WHERE `Patient_id`=? AND `CAL_ID`=? AND appt_status<>?";
-        var params=[invoiceUtil.apptStatus.workInProgress.value,startSessionTime,patientId,calId,invoiceUtil.apptStatus.cancelled.value];
+        var params=[invoiceUtil.apptStatus.inConsult.value,startSessionTime,patientId,calId,invoiceUtil.apptStatus.cancelled.value];
         kiss.executeQuery(req,sql,params,function(result){
             if(result.affectedRows>0)
             {
@@ -527,7 +564,7 @@ module.exports = {
         }
 
         var sql="UPDATE `cln_appt_patients` SET appt_status=?,SESSION_END_TIME=? WHERE `Patient_id`=? AND `CAL_ID`=? AND appt_status=?";
-        var params=[invoiceUtil.apptStatus.completed.value,endSessionTime,patientId,calId,invoiceUtil.apptStatus.workInProgress.value];
+        var params=[invoiceUtil.apptStatus.completed.value,endSessionTime,patientId,calId,invoiceUtil.apptStatus.inConsult.value];
         kiss.executeQuery(req,sql,params,function(result){
             if(result.affectedRows>0)
             {
@@ -693,6 +730,340 @@ module.exports = {
         },function(erro){
             res.json({status:'error',error:err})
         })
+    },
+    listExercise: function(req,res){
+        var postData = req.body.data;
+        var sql = knex
+            .select('*')
+            .from('cln_exercise_program')
+            .where('patient_id',postData.patient_id)
+            .toString();
+        db.sequelize.query(sql)
+        .success(function(data){
+            res.json({data: data,sql:sql});
+        })
+        .error(function(error){
+            res.json(500, {error: error,sql:sql});
+        })
+    },
+    getOneExercise:function(req,res){
+         var postData = req.body.data;
+
+        var sql = knex('cln_exercise_program')
+            .column(
+                '*'
+            )
+            .where('Exercise_id', postData.id)
+            .toString();
+
+        db.sequelize.query(sql)
+        .success(function(rows){
+            res.json({data: rows[0]});
+        })
+        .error(function(error){
+            res.json(500, {error: error});
+        })
+    },
+
+    updateExercise:function(req,res){
+       var postData = req.body.data;
+        var errors = [];
+        var required = [
+            {field: 'exercise', message: 'Exercise exists required'}
+        ]
+        if(postData.sets % 1 !== 0){
+                errors.push({field: 'sets', message: 'sets must be number'});
+            }
+        if(postData.lastest_weight % 1 !== 0){
+            errors.push({field: 'lastest_weight', message: 'Lastest Weight must be number'});
+        }
+        _.forIn(postData, function(value, field){
+            _.forEach(required, function(field_error){
+                if(field_error.field === field && S(value).isEmpty()){
+                    errors.push(field_error);
+                    return;
+                }
+            })
+        })
+
+        if(errors.length > 0){
+            res.status(500).json({errors: errors});
+            return;
+        }
+
+        var sql = knex('cln_exercise_program')
+            .where('Exercise_id', postData.Exercise_id)
+            .update(postData)
+            .toString();
+         db.sequelize.query(sql)
+            .success(function(created){
+                res.json({data: created});  
+            })
+            .error(function(error){
+                res.json(500, {error: error});
+            })
+    },
+    deleteExercise:function(req,res){
+        var postData = req.body.data;
+        var sql = knex('cln_exercise_program')
+            .where('Exercise_id', postData.Exercise_id)
+            .del()
+            .toString();
+
+        db.sequelize.query(sql)
+        .success(function(del){
+            res.json({data: del});
+        })
+        .error(function(error){
+            res.json(500, {error: error});
+        })
+    },
+    addExercise:function(req,res){
+        var postData = req.body.data;
+        var errors = [];
+        var required = [
+            {field: 'exercise', message: 'Exercise exists required'}
+        ]
+        if(postData.sets % 1 !== 0){
+                errors.push({field: 'sets', message: 'sets must be number'});
+            }
+        if(postData.lastest_weight % 1 !== 0){
+            errors.push({field: 'lastest_weight', message: 'Lastest Weight must be number'});
+        }
+        _.forIn(postData, function(value, field){
+            _.forEach(required, function(field_error){
+                if(field_error.field === field && S(value).isEmpty()){
+                    errors.push(field_error);
+                    return;
+                }
+            })
+        })
+
+        if(errors.length > 0){
+            res.status(500).json({errors: errors});
+            return;
+        }
+         
+
+        var unique_sql = knex('cln_exercise_program')
+            .where({
+                    'cal_id':postData.cal_id,
+                    'patient_id':postData.patient_id
+                  })
+            .toString();
+
+        var sql = knex('cln_exercise_program')
+            .insert(postData)
+            .toString();
+        db.sequelize.query(unique_sql)
+        .success(function(rows){
+            if(rows.length > 0){
+                var sql1 = knex('cln_exercise_program')
+                    .where('Exercise_id', rows[0].Exercise_id)
+                    .update(postData)
+                    .toString();
+                db.sequelize.query(sql1)
+                .success(function(created){
+                    res.json({data: created});  
+                })
+                .error(function(error){
+                    res.json(500, {error: error});
+                })
+            }else{
+                db.sequelize.query(sql)
+                .success(function(created){
+                    res.json({data: created});  
+                })
+                .error(function(error){
+                    res.json(500, {error: error});
+                })
+            }
+        })
+        .error(function(error){
+            res.json(500, {error: error});
+        })
+    },
+        // Correspondence
+    postListCor: function(req, res){
+
+        var postData = req.body.data;
+
+        var sql = knex('cln_patient_correspondence')
+        .where({
+            'PATIENT_ID': postData.PATIENT_ID
+        })
+        .limit(postData.limit)
+        .offset(postData.offset)
+        .toString();
+
+        var sql_count = knex('cln_patient_correspondence')
+        .where({
+            'CAL_ID': postData.CAL_ID,
+            'PATIENT_ID': postData.PATIENT_ID
+        })
+        .count('ID as a')
+        .toString();
+
+        db.sequelize.query(sql)
+        .success(function(data){
+            db.sequelize.query(sql_count)
+            .success(function(count){
+                res.json({data: data, count: count[0].a});
+            })
+            .error(function(error){
+                res.json(500, {'status': 'error', 'message': error});
+            })
+        })
+        .error(function(error){
+            res.json(500, {'status': 'error', 'message': error});
+        })
+
+    },
+    postAddCor: function(req, res){
+        var errors = [];
+        var postData = req.body.data;
+        console.log('$$$$$$$$$$ ',postData);
+        var required = [
+            {field: 'Mode', message: 'Mode is required'},
+            {field: 'Duration', message: 'Duration is required'},
+            {field: 'Who', message: 'who is required'},
+            {field: 'Therapist', message: 'Therapist is required'},
+            {field: 'Details', message: 'Details is required'}
+        ]
+
+        _.forIn(postData, function(value, field){
+            _.forEach(required, function(field_error){
+                if(field_error.field === field && S(value).isEmpty()){
+                    errors.push(field_error);
+                    return;
+                }
+            })
+        })
+
+        if(errors.length>0){
+            res.status(500).json({errors: errors});
+            return;
+        }   
+
+        var unique_sql = knex('cln_patient_correspondence')
+        .where({
+            'CAL_ID': postData.CAL_ID,
+            'PATIENT_ID': postData.PATIENT_ID
+        })
+        .toString();
+
+        var sql = knex('cln_patient_correspondence')
+        .insert(postData)
+        .toString();
+
+        var sql_update = knex('cln_patient_correspondence')
+        .where({
+            ID: postData.ID
+        })
+        .update(postData)
+        .toString();
+
+        var sql_ud = knex('cln_patient_correspondence')
+        .where({
+            'CAL_ID': postData.CAL_ID,
+            'PATIENT_ID': postData.PATIENT_ID
+        })
+        .update(postData)
+        .toString();
+
+        db.sequelize.query(unique_sql)
+        .success(function(rows){
+            //console.log('ID log: ',rows[0].ID);
+            if(rows.length > 0){
+                if(rows[0].ID){
+                    db.sequelize.query(sql_ud)
+                    .success(function(crt){
+                        res.json({data: crt});  
+                    })
+                    .error(function(error){
+                        res.json(500, {error: error});
+                    })
+                }else{
+                    db.sequelize.query(sql_update)
+                    .success(function(cr){
+                        res.json({data: cr});  
+                    })
+                    .error(function(error){
+                        res.json(500, {error: error});
+                    })
+                }
+            }else{
+                db.sequelize.query(sql)
+                .success(function(created){
+                    res.json({data: created});  
+                })
+                .error(function(error){
+                    res.json(500, {error: error});
+                })
+            }
+        })
+        .error(function(error){
+            res.json(500, {error: error});
+        })
+
+    },
+    /*postEditCor: function(req, res){
+        
+        var postData = req.body.data;
+
+        var errors = [];
+        var required = [
+            {field: 'Mode', message: 'Mode is required'},
+            {field: 'Duration', message: 'Duration is required'},
+            {field: 'who', message: 'who is required'},
+            {field: 'Therapist', message: 'Therapist is required'},
+            {field: 'Details', message: 'Details is required'}
+        ]
+
+        _.forIn(postData, function(value, field){
+            _.forEach(required, function(field_error){
+                if(field_error.field === field && S(value).isEmpty()){
+                    errors.push(field_error);
+                    return;
+                }
+            })
+        })
+
+        if(errors.length>0){
+            res.status(500).json({errors: errors});
+            return;
+        }
+
+        var sql = knex('cln_patient_correspondence')
+        .where({
+            ID: postData.ID
+        })
+        .update(postData)
+        .toString();
+        db.sequelize.query(sql)
+        .success(function(data){
+            res.json({data: data});
+        })
+        .error(function(error){
+            res.json(500, {'status': 'error', 'message': error});
+        })
+    }*/
+    postById: function(req, res){
+
+        var postData = req.body.data;
+        var sql = knex('cln_patient_correspondence')
+        .where({
+            ID: postData
+        })
+        .toString();
+        db.sequelize.query(sql)
+        .success(function(data){
+            res.json({data: data[0]});
+        })
+        .error(function(error){
+            res.json(500, {'status': 'error', 'message': error});
+        })
+
     }
 }
 

@@ -4,7 +4,8 @@
 	        restrict: 'E',
 	        scope: {
 	        	images: '=',
-	        	patient: '='
+	        	patient: '=',
+	        	actionCenterDrawing:'='
 	        },
 	        templateUrl: "modules/consultation/directives/templates/drawingConsult.html",
 	        link: function (scope, element, attrs) {
@@ -109,6 +110,12 @@
 	                	{
 	                		scope.images.push(rs.id);
 	                		toastr.success("Image Saved!");
+	                		 //phanquocchien save img success
+		                    if(scope.actionCenterDrawing && scope.actionCenterDrawing.runWhenFinish)
+							{
+								scope.actionCenterDrawing.runWhenFinish();
+							}
+							//end
 	                	}
 	                	else
 	                		toastr.error("Error!");

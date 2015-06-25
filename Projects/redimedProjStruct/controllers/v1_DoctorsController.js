@@ -1,6 +1,10 @@
 var squel = require("squel");
 squel.useFlavour('mysql');
 var k_time = require('../helper/k_time');
+var kiss=require('./kissUtilsController');
+var errorCode=require('./errorCode');
+
+var controllerCode='RED_V1DOCTOR';
 
 var model_sql = {
     sql_list_patient: function (doctor_id, current) {
@@ -30,6 +34,13 @@ var model_sql = {
                     .from('doctors')
                     .where("user_id = ?", user_id)
 
+        console.log("_------------------------------------------")
+        console.log("_------------------------------------------")
+        console.log("_------------------------------------------")
+        console.log("_------------------------------------------")
+        console.log("_------------------------------------------")
+        console.log("_------------------------------------------")
+        console.log(querybuilder.toString());
         return querybuilder.toString();
     },
     sql_by_id: function (doctor_id) {
@@ -53,15 +64,38 @@ module.exports = {
             res.json(err);
         });
     },
-    postByUserId: function(req, res){
-        var user_id = req.body.user_id;
 
-        var k_sql = res.locals.k_sql;
+    /**
+     * created by: unknown
+     * modify by: tannv.dts@gmail.com 25/06/2015
+     */
+    postByUserId: function(req, res){
+        var fHeader='v1_DoctorsController -> postByUserId';
+        var functionCode='FN001'
+        var user_id = req.body.user_id;
+        var sql="SELECT * FROM `doctors` doctor WHERE doctor.`User_id`=?";
+        kiss.executeQuery(req,sql,[user_id],function(rows){
+            if(rows.length>0)
+            {
+                res.json(rows[0]);
+            }
+            else
+            {
+                kiss.exlog(fHeader,'Khong co thong tin doctor nao tuong ung voi user id');
+                res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN002')});
+            }
+        },function(err){
+            kiss.exlog(fHeader,'Loi truy van lay thong tin doctor thong qua user id',err);
+            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
+        });
+
+        //tan frame:
+        /*var k_sql = res.locals.k_sql;
         k_sql.exec(model_sql.sql_by_user_id(user_id), function (data) {
             res.json(data[0]);
         }, function (err) {
             res.json(err);
-        });
+        });*/
     },
     getById: function (req, res) {
         var doctor_id = req.query.doctor_id;

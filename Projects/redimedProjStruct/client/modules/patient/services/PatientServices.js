@@ -68,9 +68,15 @@ angular.module("app.loggedIn.patient.services", [])
     }
     
     
-     instanceService.numRecalls = function(patient_id){
+    instanceService.numRecalls = function(patient_id){
         var funcApi = khankAPI.one('patients/num_recalls');
         return funcApi.get({id: patient_id});
+    }
+    /*phanquochien.c1109g@gmail.com*/
+    /*check patient*/
+    instanceService.checkPatietnInfo = function(First_name,Sur_name,Middle_name,DOB){
+        var funcApi = khankAPI.all('patients/check_patient_info');
+        return funcApi.post({First_name:First_name,Sur_name:Sur_name,Middle_name:Middle_name,DOB:DOB});
     }
     
 

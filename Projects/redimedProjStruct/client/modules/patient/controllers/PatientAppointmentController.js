@@ -104,7 +104,6 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
 
     //CHECK OUTSIDE REFERRAL
     var outPostData = {patient_id: $scope.patient_id, CAL_ID: $scope.cal_id};
-
     OutreferralModel.checkPatientCalendar(outPostData)
     .then(function(response){
         if(response.data === 0){
@@ -112,6 +111,7 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
                 $scope.warning_refferal = true;
         }
     }, function(error){})
+    
 
     $scope.changeAppt = function(item) {
         $state.go('loggedIn.patient.appointment', {patient_id: patient_id, cal_id: item.CAL_ID});

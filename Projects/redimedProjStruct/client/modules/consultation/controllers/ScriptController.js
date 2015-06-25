@@ -6,6 +6,7 @@ angular.module("app.loggedIn.patient.consult.scriptController",[])
 		// 	};
 		// };
 		// $scope.user_name = $cookieStore.get("userInfo").user_name;
+		var user_id = $cookieStore.get('userInfo').id;
 		$scope.postData = {
 			CAL_ID:$stateParams.cal_id,
 			DOCTOR_ID:null,
@@ -27,15 +28,17 @@ angular.module("app.loggedIn.patient.consult.scriptController",[])
 			        condition_Indication:null
 		};
 		var getUsername = function(){
-			AppointmentModel.one($scope.postData).then(function(response){
-				$scope.postData.DOCTOR_ID = response.data.DOCTOR_ID;
-				$scope.scriptInfo.doctor_id = $scope.postData.DOCTOR_ID;
-				OutreferralModel.DotorFromUserId($scope.postData.DOCTOR_ID)
-					.then(function(response){
-						$scope.scriptInfo.user_name = response.data[0].NAME;
-						$scope.scriptInfo.Provider_no = response.data[0].Provider_no;
-					}, function(error){})
-			}, function(error){})
+			//AppointmentModel.one(user_id).then(function(response){
+				//$scope.postData.DOCTOR_ID = response.data.DOCTOR_ID;
+				//$scope.scriptInfo.doctor_id = $scope.postData.DOCTOR_ID;
+				//OutreferralModel.DotorFromUserId($scope.postData.DOCTOR_ID)
+				OutreferralModel.DotorFromUserId(user_id)
+				.then(function(response){
+					$scope.scriptInfo.doctor_id = user_id;
+					$scope.scriptInfo.user_name = response.data[0].NAME;
+					$scope.scriptInfo.Provider_no = response.data[0].Provider_no;
+				}, function(error){})
+			//}, function(error){})
 		}
 		getUsername(); 
 		//phan quoc chien set list 

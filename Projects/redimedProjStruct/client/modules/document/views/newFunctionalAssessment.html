@@ -87,6 +87,9 @@
 								<div class="col-md-12 col-sm-12 col-xs-12">
 									<label class="control-label"><b>{{detail.QUESTION}}</b></label>
 								</div>
+								<div class="col-md-12 col-sm-12 col-xs-12">
+									<label class="control-label"><i>{{detail.DESCRIPTION}}</i></label>
+								</div>
 							</div>
 							<!-- this is end detail title -->
 							<!-- this is detail image if that detail has image  -->
@@ -99,16 +102,16 @@
 
 							<!-- text box with detail comment-->
 							<div class="row">
-								<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL1_ISVALUE===1 || detail.VAL1_ISVALUE===7 || detail.VAL1_ISVALUE===8">
+								<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL1_ISVALUE===1 || detail.VAL1_ISVALUE===7 || detail.VAL1_ISVALUE===8 || detail.VAL1_ISVALUE===9 || detail.VAL1_ISVALUE===10">
 									<label class="control-label pull-right" style="margin-top:10px;" >{{detail.VAL1_NAME}}</label>
 								</div>
-								<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL1_ISVALUE===1 || detail.VAL1_ISVALUE===7 || detail.VAL1_ISVALUE===8">
+								<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL1_ISVALUE===1 || detail.VAL1_ISVALUE===7 || detail.VAL1_ISVALUE===8 || detail.VAL1_ISVALUE===9 || detail.VAL1_ISVALUE===10">
 									<input type="text" class="form-control" ng-model="detail.VAL1_VALUE" ng-change="autoCalculationVal1(line, detail)">
 								</div>
-								<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL2_ISVALUE===1 || detail.VAL2_ISVALUE===7 || detail.VAL2_ISVALUE===8">
+								<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL2_ISVALUE===1 || detail.VAL2_ISVALUE===7 || detail.VAL2_ISVALUE===8 || detail.VAL2_ISVALUE===9 || detail.VAL2_ISVALUE===10">
 									<label class="control-label pull-right" style="margin-top:10px;">{{detail.VAL2_NAME}}</label>
 								</div>
-								<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL2_ISVALUE===1 || detail.VAL2_ISVALUE===7 || detail.VAL2_ISVALUE===8">
+								<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL2_ISVALUE===1 || detail.VAL2_ISVALUE===7 || detail.VAL2_ISVALUE===8 || detail.VAL2_ISVALUE===9 || detail.VAL2_ISVALUE===10">
 									<input type="text" class="form-control" ng-model="detail.VAL2_VALUE" ng-change="autoCalculationVal2(line)">
 								</div>
 								
@@ -154,6 +157,31 @@
 									</label>
 								</div>
 							<!-- end yes/no checkbox with detail comment -->
+
+							<!-- Normal/Abnormal checkbox with detail comment -->
+								<div class="col-md-1 col-sm-1 col-xs-1" ng-if="detail.VAL1_ISCHECKBOX===3">
+									<label class="control-label pull-right" style="margin-top:10px;">{{detail.VAL1_NAME}}</label>
+								</div>
+								<div class="col-md-2 col-sm-2 col-xs-2 btn-group" ng-if="detail.VAL1_ISCHECKBOX===3">
+									<label class="btn">
+										<input type="radio" ng-model="detail.VAL1.CHECKBOX" value="0"> Normal
+									</label>
+									<label class="btn">
+										<input type="radio" ng-model="detail.VAL1.CHECKBOX" value="1"> Abnormal
+									</label>
+								</div>
+								<div class="col-md-1 col-sm-1 col-xs-1" ng-if="detail.VAL2_ISCHECKBOX===3">
+									<label class="control-label pull-right" style="margin-top:10px;">{{detail.VAL2_NAME}}</label>
+								</div>
+								<div class="col-md-2 col-sm-2 col-xs-2 btn-group" ng-if="detail.VAL2_ISCHECKBOX===3">
+									<label class="btn">
+										<input type="radio" ng-model="detail.VAL2.CHECKBOX" value="0"> Normal
+									</label>
+									<label class="btn">
+										<input type="radio" ng-model="detail.VAL2.CHECKBOX" value="1"> Abnormal
+									</label>
+								</div>
+							<!-- end Normal/Abnormal checkbox with detail comment -->
 
 							<!-- Unable/Partial/Able checkbox with detail comment-->
 								<div class="col-md-1 col-sm-1 col-xs-1" ng-if="detail.VAL1_ISCHECKBOX===2">
@@ -259,17 +287,37 @@
 					<!-- End Detail Score -->
 					<div class="row" ng-if="line.ISRATING1 === 1 || line.ISRATING2 === 1">
 						<!-- Normal Rate -->
-						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING1 === 1 && line.SCORE_TYPE1 === 3">
-							<label class="control-label pull-right" style="margin-top:15px;">Normal Range: </label>
+						<div class="row">
+							<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING1 === 1 && line.SCORE_TYPE1 === 3">
+								<label class="control-label pull-right" style="margin-top:15px;">Normal Range (NR): </label>
+							</div>
+							<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING1 === 1 && line.SCORE_TYPE1 === 3">
+								<label class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">{{line.RATE1}}</b></label>
+							</div>
+							<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING2 === 1 && line.SCORE_TYPE2 === 3">
+								<label class="control-label pull-right" style="margin-top:15px;">Normal Range (NR): </label>
+							</div>
+							<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING2 === 1 && line.SCORE_TYPE2 === 3">
+								<label class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">{{line.RATE2}}</b></label>
+							</div>
 						</div>
-						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING1 === 1 && line.SCORE_TYPE1 === 3">
-							<label class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">{{line.RATE1}}</b></label>
-						</div>
-						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING2 === 1 && line.SCORE_TYPE2 === 3">
-							<label class="control-label pull-right" style="margin-top:15px;">Normal Range: </label>
-						</div>
-						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING2 === 1 && line.SCORE_TYPE2 === 3">
-							<label class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">{{line.RATE2}}</b></label>
+						<div class="row">
+							<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING1 === 1 && line.SCORE_TYPE1 === 3">
+								<label class="control-label pull-right" style="margin-top:15px;">Result: </label>
+							</div>
+							<div ng-switch on="line.RATING_VALUE1" class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING1 === 1 && line.SCORE_TYPE1 === 3">
+								<label ng-switch-when="1" class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">Below NR</b></label>
+								<label ng-switch-when="2" class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">Within NR</b></label>
+								<label ng-switch-when="3" class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">Above NR</b></label>
+							</div>
+							<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING2 === 1 && line.SCORE_TYPE2 === 3">
+								<label class="control-label pull-right" style="margin-top:15px;">Result: </label>
+							</div>
+							<div ng-switch on="line.RATING_VALUE2" class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING2 === 1 && line.SCORE_TYPE2 === 3">
+								<label ng-switch-when="1" class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">Below NR</b></label>
+								<label ng-switch-when="2" class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">Within NR</b></label>
+								<label ng-switch-when="3" class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">Above NR</b></label>
+							</div>
 						</div>
 						<!-- End Normal Rate -->
 						<!-- MAX Score, MIN Score, Recovery and Simple Rating-->
@@ -323,10 +371,10 @@
 						</div>	
 						<!-- End Excellent/Good/Fair/Por radio Rating-->
 						<!-- Unable/Partial/Able Rating -->
-						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING1 === 1 && (line.SCORE_TYPE1 === 9 || line.SCORE_TYPE1 === 7)">
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING1 === 1 && (line.SCORE_TYPE1 === 9 || line.SCORE_TYPE1 === 7 || line.SCORE_TYPE1 === 15 || line.SCORE_TYPE1 === 17 || line.SCORE_TYPE1 === 18 || line.SCORE_TYPE1 === 19)">
 							<label class="control-label pull-right" style="margin-top:15px;">Rating: </label>
 						</div>
-						<div class="col-md-4 col-sm-4 col-xs-4" ng-if="line.ISRATING1 === 1 && (line.SCORE_TYPE1 === 9 || line.SCORE_TYPE1 === 7)">
+						<div class="col-md-4 col-sm-4 col-xs-4" ng-if="line.ISRATING1 === 1 && (line.SCORE_TYPE1 === 9 || line.SCORE_TYPE1 === 7 || line.SCORE_TYPE1 === 15 || line.SCORE_TYPE1 === 17 || line.SCORE_TYPE1 === 18 || line.SCORE_TYPE1 === 19)">
 							<label class="btn">
 								<input type="radio" ng-model="line.RATING_VALUE1" value="0"> UNABLE 
 							</label>
@@ -337,10 +385,10 @@
 								<input type="radio" ng-model="line.RATING_VALUE1" value="2"> ABLE 
 							</label>
 						</div>
-						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING2 === 1 && (line.SCORE_TYPE2 === 9 || line.SCORE_TYPE2 === 7)">
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING2 === 1 && (line.SCORE_TYPE2 === 9 || line.SCORE_TYPE2 === 7 || line.SCORE_TYPE2 === 15 || line.SCORE_TYPE2 === 17 || line.SCORE_TYPE2 === 18 || line.SCORE_TYPE2 === 19)">
 							<label class="control-label pull-right" style="margin-top:15px;">Rating 2: </label>
 						</div>
-						<div class="col-md-4 col-sm-4 col-xs-4" ng-if="line.ISRATING2 === 1 && (line.SCORE_TYPE2 === 9 || line.SCORE_TYPE2 === 7)">
+						<div class="col-md-4 col-sm-4 col-xs-4" ng-if="line.ISRATING2 === 1 && (line.SCORE_TYPE2 === 9 || line.SCORE_TYPE2 === 7 || line.SCORE_TYPE2 === 15 || line.SCORE_TYPE2 === 17 || line.SCORE_TYPE2 === 18 || line.SCORE_TYPE2 === 19)">
 							<label class="btn">
 								<input type="radio" ng-model="line.RATING_VALUE2" value="0"> UNABLE 
 							</label>
@@ -670,7 +718,7 @@
         </button>
         <button ng-click="faUpdate()" class="btn green pull-right" ng-show="editMode===true"> Update
         </button>
-        <a class="btn blue pull-right" ng-show="editMode===true" href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/FA/{{print_fa_id}}/{{print_cal_id}}/{{print_patient_id}}"> Print
+        <a class="btn blue pull-right" ng-show="editMode===true" href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/FA/{{print_fa_id}}/{{print_cal_id}}/{{print_patient_id}}" target="_blank"> Print
         </a>
         <!-- <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/FA/{{infoH.FA_ID}}/{{infoH.CAL_ID}}/{{infoH.PATIENT_ID}}"
            ng-disabled="isNew " target="_blank"

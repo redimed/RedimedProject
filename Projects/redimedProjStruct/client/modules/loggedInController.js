@@ -2,7 +2,7 @@ angular.module("app.loggedIn.controller",[
 ])
 
 
-.controller("callDialogController",function($scope,callModal, $state,$modalInstance,$modal, UserService,socket,toastr ,userInfo,$cookieStore,notify, opentokRoom,patientId){
+.controller("callDialogController",function($scope, $state,$modalInstance,$modal, UserService,socket,toastr ,userInfo,$cookieStore,notify, opentokRoom,patientId){
 
         var audio = new Audio('theme/assets/notification.mp3');
         audio.loop = true;

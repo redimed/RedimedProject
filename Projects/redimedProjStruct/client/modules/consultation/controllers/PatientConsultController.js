@@ -1,8 +1,67 @@
 angular.module("app.loggedIn.patient.consult.controller",[])
 
-	.controller("PatientConsultController",function(ConsultInfoService,DoctorService,$filter,$rootScope,$interval,$window,$document,$cookieStore,$scope,$state,$modal,InsurerService,toastr,socket,OTSession,ReceptionistService,$stateParams,ConsultationService,PatientService,UserService,$interval){
+	.controller("PatientConsultController",function(ConsultInfoService,InjuryManagementService,DoctorService,$filter,$rootScope,$interval,$window,$document,$cookieStore,$scope,$state,$modal,InsurerService,toastr,socket,OTSession,ReceptionistService,$stateParams,ConsultationService,PatientService,UserService,$interval){
 
 		$scope.templates = [];
+
+		$scope.viewInjury = function(){
+
+			InjuryManagementService.getInjuryById($scope.apptPatient.injury_id).then(function(rs){
+	            if(rs.status == 'success')
+	            {
+	                $modal.open({
+						templateUrl: 'modules/consultation/dialogs/dialog_injury_details.html',
+						size: 'md',
+						resolve: {
+							injuryInfo:function(){
+								return  rs.data;
+							}
+						},
+						controller: function($scope,$modalInstance,$stateParams,injuryInfo,InjuryManagementService){
+							$scope.info = injuryInfo;
+							$scope.loadedImage = false;
+							$scope.injuryImages = [];
+							$scope.imgArr = [];
+
+							$scope.info.injury_date = moment.utc($scope.info.injury_date).format('DD/MM/YYYY - hh:mm:ss');
+
+							if(typeof injuryInfo.injuryImg !== 'undefined' && injuryInfo.injuryImg.length > 0)
+			                {
+			                    $scope.loadedImage = true;
+			                    for(var i=0; i< injuryInfo.injuryImg.length; i++)
+			                    {
+			                        $scope.imgArr.push({url: location.origin+"/api/im/image/"+ injuryInfo.injuryImg[i].id, img: injuryInfo.injuryImg[i]});
+			                    }
+			                }
+
+			                $scope.cancelClick = function(){
+			                	$modalInstance.close();
+			                }
+
+					         $scope.viewImage = function(img){
+					            var modalInstance = $modal.open({
+					                templateUrl: "modules/injuryManagement/views/imageModal.html",
+					                size: 'md',
+					                resolve: {
+					                    imgObj: function(){
+					                        return img;
+					                    }
+					                },
+					                controller: function($scope, $state,$modalInstance, UserService,socket,toastr,imgObj){
+					                    $scope.img = {
+					                    	image: location.origin+"/api/im/image/"+imgObj.id,
+					                    	description: imgObj.desc
+					                    }
+					                }
+					            })
+					        }
+
+						}
+					})
+	            }
+	        })
+			
+		}
 
 	
 		/* VUONG */
@@ -52,7 +111,15 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		$scope.companyInfo = {};
 		$scope.problemArr = [];
 		$scope.isConsult = true;
-
+		$scope.tscripts = ConsultInfoService.getConsultInfoScripts();
+		$scope.checkdata = ConsultInfoService.getCheckdata();
+		if ($scope.checkdata.cal_id == $stateParams.cal_id && $scope.checkdata.patient_id == $stateParams.patient_id) {
+			$scope.tscripts = ConsultInfoService.getConsultInfoScripts();
+			$scope.checkdata = ConsultInfoService.getCheckdata();
+		}else{
+		    $scope.tscripts = [];
+		    $scope.checkdata = [];
+		};
 		$scope.consultInfo = {
 			patient_id: $scope.patient_id,
 			cal_id: $scope.cal_id,
@@ -63,8 +130,11 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			diagnosis: null,
 			investigation: null,
 			specialist: null,
+			progress_note: null,
+			attendance_record: null,
+			communication_record: null,
 			measurements: [],
-			scripts: ConsultInfoService.getConsultInfoScripts(),
+			scripts: $scope.tscripts,
 			images: []
 		}
 		/*
@@ -74,7 +144,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		$scope.loadConsultationInfo = function(){
 			ConsultationService.checkConsultation($scope.patient_id,$scope.cal_id).then(function(data){
 				if (data.status == 'success') {
-					console.log(data.data);
+					
 					$scope.consultInfo.problem_id = data.data.problem_id;					
 					$scope.consultInfo.history = data.data.history;					
 					$scope.consultInfo.examination = data.data.examination;					
@@ -82,6 +152,9 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 					$scope.consultInfo.diagnosis = data.data.diagnosis;		
 					$scope.consultInfo.investigation = data.data.investigation;		
 					$scope.consultInfo.specialist = data.data.specialist;		
+					$scope.consultInfo.progress_note = data.data.progress_note;		
+					$scope.consultInfo.attendance_record = data.data.attendance_record;		
+					$scope.consultInfo.communication_record = data.data.communication_record;		
 					$scope.consultInfo.consult_id = data.data.consult_id;		
 				}
 			});
@@ -111,6 +184,30 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			})
 			
 		}
+		$scope.actionCenter.showPopupHistoryPhysiotherapist = function(data){
+			var modalInstance = $modal.open({
+				templateUrl:'modules/consultation/dialogs/dialogs_consult_history_physiotherapist.html',
+				controller: 'ConsultHistoryController',
+				resolve: {
+					consults:function(){
+						return data;
+					}
+				}
+			})
+			
+		}
+		$scope.actionCenter.showPopupHistoryExercisePhysiologist = function(data){
+			var modalInstance = $modal.open({
+				templateUrl:'modules/consultation/dialogs/dialogs_consult_history_exercise_physiologist.html',
+				controller: 'ConsultHistoryController',
+				resolve: {
+					consults:function(){
+						return data;
+					}
+				}
+			})
+			
+		}
 		//end
 		$scope.getImgDrawingHistory = function(){
 			console.log($scope.cal_id)
@@ -130,15 +227,30 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		$scope.showPopupConsultationHistory = function(){
 			angular.element('#popupConsultationHistory').modal('show');
 		}
-
+		$scope.popupNewDrawing = function(){
+			angular.element('#popupNewDrawing').modal('show');
+		}
+		//set actionCenterDrawing 
+		$scope.actionCenterDrawing = {
+			runWhenFinish:function(){
+				angular.element('#popupNewDrawing').modal('hide');
+			}
+		}
+		//end
 		//chien show patien bar
-        $scope.patientBarVer.version='zip';
+        // $scope.patientBarVer.version='zip';
         
 		$scope.currDate = $filter('date')(new Date(),'dd/MM/yyyy hh:mm a');
 
 		// $scope.consultInfo.scripts = ConsultInfoService.getConsultInfoScripts();
-		$scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){ 
+		$scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
+			$scope.checkdata = {
+				cal_id:$stateParams.cal_id,
+				patient_id:$stateParams.patient_id,
+			}
+			console.log($scope.checkdata);
 		   ConsultInfoService.setConsultInfoScripts($scope.consultInfo.scripts);
+		   ConsultInfoService.setCheckdata($scope.checkdata);
 		})
 		//tannv.dts@gmail.com
 		$scope.timerDisplay=null;
@@ -210,12 +322,17 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			});
 	    }
 
+	    function cancelListenerHandler(){
+			console.log("Remove Success");
+		}
+
 	    refresh($scope.patient_id);
 
-		$interval(function(){
-			refresh($scope.patient_id);
-		},40 * 1000);
+		socket.removeListener('online', cancelListenerHandler());
 
+		socket.on('online',function(userList){
+			refresh($scope.patient_id);
+		})
 
 		PatientService.get($scope.patient_id).then(function(rs){
 			if(rs.status.toLowerCase() == 'success' && rs.data)
@@ -233,9 +350,6 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			}
 		})
 
-		
-
-		
 		ConsultationService.getPatientProblem($scope.patient_id).then(function(rs){
 			if(rs.status.toLowerCase() == 'success' && rs.data)
 				$scope.problemList = rs.data;
@@ -400,9 +514,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		};
 
 		//==================================MAKE CALL============================
-		function cancelListenerHandler(){
-			console.log("Remove Success");
-		}
+		
 		$scope.makeCall = function(user){
 
 		 	socket.removeListener('generateSessionSuccess', cancelListenerHandler());
@@ -691,7 +803,11 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 				if(res.status == 'success')
 				{
 				 	toastr.success('Submit Consultation Success!');
+				 	/*phanquocchien.c1109g@gmail.com
+					*load list history and history info
+				 	*/
 					$scope.loadConsultationInfo();
+		            $scope.setListConsultationOfPatient();
 					var insertArr = []; 
             
 		            var fnInsertArr = function(item) {
@@ -725,10 +841,10 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		                   	toastr.success('Save Item Success!');
 		                    PatientService.endInvoice($scope.appointment.Patient_id, $scope.appointment.CAL_ID);
 		                    /*phanquocchien.c1109g@gmail.com
-							* load data consultation history
+							* load img drawing
 		                    */
-		                    $scope.setListConsultationOfPatient();
 							$scope.getImgDrawingHistory();
+		                   
 		                }
 		                else{
 		                    toastr.error('Save Item Failed!');
@@ -785,7 +901,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 						$scope.timerDisplay=kiss.msToTimer(x).display;
 					}
 
-					if($scope.apptPatient.appt_status==ptnConst.apptStatus.workInProgress.value)
+					if($scope.apptPatient.appt_status==ptnConst.apptStatus.inConsult.value)
 					{
 						$scope.startSessionTime=$scope.apptPatient.SESSION_START_TIME;
 					}
@@ -807,44 +923,59 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		 */
 		$scope.startSession=function()
         {
-        	ConsultationService.beforeStartSession($scope.apptPatient.DOCTOR_ID)
-        	.then(function(data){
-        		if(data.status=='success')
-        		{
-        			if(data.data.length>0)
-        			{
-        				var modalInstance = $modal.open({
-							templateUrl: 'notifyApptsWorkInProgress',
-							controller: function($scope, $modalInstance)
-							{
-								$scope.listData=data.data;
-								$scope.gotoAppointment=function(item){
-									if(!item.CAL_ID || !item.Patient_id) {
-										toastr.error('Cannot goto appointment.','Error!')
-										return;
-									}
-									$state.go("loggedIn.patient.appointment", {patient_id: item.Patient_id, cal_id: item.CAL_ID});
-								}
-								$scope.ok = function(){
-									$modalInstance.dismiss('cancel');
-								}
-							},
-							// size: 'sm'
-						});
-        			}
-        			else
-        			{
-        				executeStart();
-        			}
-        		}
-        		else
-        		{
-        			toastr.error("Error when check data.");
-        		}
-        	},function(err){
-        		toastr.error("Error when check data.");
-        		exlog.logErr(err);
-        	});
+        	var doctorData={};
+        	doctorData.doctorId=$scope.apptPatient.DOCTOR_ID;
+        	if($scope.apptPatient.actual_doctor_id)
+    		{
+    			doctorData.actualDoctorId=$scope.apptPatient.actual_doctor_id;
+    		}
+
+    		executeStart();
+
+      //   	ConsultationService.beforeStartSession(doctorData)
+      //   	.then(function(data){
+      //   		if(data.status=='success')
+      //   		{
+      //   			if(data.data.length>0)
+      //   			{
+      //   				var modalInstance = $modal.open({
+						// 	templateUrl: 'notifyApptsWorkInProgress',
+						// 	controller: function($scope, $modalInstance)
+						// 	{
+						// 		$scope.listData=data.data;
+						// 		$scope.gotoAppointment=function(item){
+						// 			if(!item.CAL_ID || !item.Patient_id) {
+						// 				toastr.error('Cannot goto appointment.','Error!')
+						// 				return;
+						// 			}
+						// 			$state.go("loggedIn.patient.appointment", {patient_id: item.Patient_id, cal_id: item.CAL_ID});
+						// 		}
+						// 		$scope.close = function(){
+						// 			$modalInstance.dismiss('cancel');
+						// 		}
+
+						// 		$scope.continue=function()
+						// 		{
+						// 			executeStart();
+						// 			$modalInstance.dismiss('cancel');
+						// 		}
+						// 	},
+						// 	// size: 'sm'
+						// });
+      //   			}
+      //   			else
+      //   			{
+      //   				executeStart();
+      //   			}
+      //   		}
+      //   		else
+      //   		{
+      //   			toastr.error("Error when check data.");
+      //   		}
+      //   	},function(err){
+      //   		toastr.error("Error when check data.");
+      //   		exlog.logErr(err);
+      //   	});
 
         	function executeStart()
         	{
@@ -858,7 +989,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 	        	.then(function(data){
 	        		if(data.status=='success')
 	        		{
-	        			$scope.apptPatient.appt_status=ptnConst.apptStatus.workInProgress.value;
+	        			$scope.apptPatient.appt_status=ptnConst.apptStatus.inConsult.value;
 	        			toastr.success("Start progress success.");
 	        			$scope.startSessionTime=startSessionTime;
 	        			$scope.apptPatient.SESSION_START_TIME=startSessionTime;
