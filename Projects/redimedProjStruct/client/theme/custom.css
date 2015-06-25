@@ -3253,6 +3253,7 @@ label{
     margin-right:5px;
     font-size: 15px;
     font-weight: bold;
+    outline: 0;
 }
 
 .un_tn_btn_rect{
@@ -3265,19 +3266,23 @@ label{
 .un_tn_btn_gray{
     color: white;
     background: rgb(102, 102, 102) !important;
+    outline: 0;
 }
 /*mau cho button*/
 .un_tn_btn_pink{
     color: white;
     background: #B41E46 !important;
+    outline: 0;
 }
 .un_tn_btn_black{
     color: white;
     background: #525252 !important;
+    outline: 0;
 }
 .un_tn_btn_orange{
     color: white;
     background: #F37A21 !important;
+    outline: 0;
 }
 
 .un_tn_btn_lg{/*tannv.dts@gmail.com add*/

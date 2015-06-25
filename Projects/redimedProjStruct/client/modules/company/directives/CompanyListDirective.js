@@ -143,10 +143,10 @@ angular.module('app.loggedIn.company.directives.list', [])
 			}
 			scope.Select = function(){
 				var modalInstance = $modal.open({
-			      templateUrl: 'modules/company/dialogs/templates/listNotFollowPatient.html',
-			      controller: 'CompanyListNoFollowDialog',
-			      size :'',
-			      resolve: {
+			      	templateUrl: 'modules/company/dialogs/templates/listNotFollowPatient.html',
+			      	controller: 'CompanyListNoFollowDialog',
+			      	size :'',
+			      	resolve: {
 						listId: function(){
 							return scope.company.list;
 						}

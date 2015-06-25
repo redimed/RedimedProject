@@ -176,7 +176,9 @@ module.exports = {
         var postData = req.body.data;
             var errors = [];
             var required = [
-                {field: 'Company_name', message: 'Company Name required'}
+                {field: 'Company_name', message: 'Company Name is required'},
+                {field: 'Addr', message: 'Address is required'},
+                {field: 'Medic_contact_no', message: 'Medic Contact No is required'},
             ]
              function validateEmail(email) {
                 var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
@@ -270,7 +272,8 @@ module.exports = {
                             Site_medic : postData.Site_medic,
                             User_id : postData.User_id,
                             isPO:  postData.isPO == '1' ? 1 : 0,
-                            isExtra:  postData.isExtra == '1' ? 1 : 0,        
+                            isExtra:  postData.isExtra == '1' ? 1 : 0,      
+                            suburb:postData.suburb,  
                         })
                         .where({'id':postData.id})
                         .toString()
@@ -388,7 +391,9 @@ module.exports = {
            // console.log('--------------------------------',postData);
            var errors = [];
             var required = [
-                {field: 'Company_name', message: 'Company Name required'}
+                {field: 'Company_name', message: 'Company Name is required'},
+                {field: 'Addr', message: 'Address is required'},
+                {field: 'Medic_contact_no', message: 'Medic Contact No is required'},
             ]
             function validateEmail(email) {
                 var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
@@ -485,7 +490,8 @@ module.exports = {
                         User_id : postData.User_id,
                         isPO:  postData.isPO == '1' ? 1 : 0,
                         isExtra:  postData.isExtra == '1' ? 1 : 0,
-                        parent_id:postData.parent_id
+                        parent_id:postData.parent_id,
+                        suburb:postData.suburb
                         
                     })
                     .toString()

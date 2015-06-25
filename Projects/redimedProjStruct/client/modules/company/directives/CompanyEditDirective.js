@@ -45,7 +45,8 @@ angular.module('app.loggedIn.company.directives.edit', [])
 		        parent_id :null,
 		        listInsurerid :[],
 		        from_date:null,
-		        to_date:null
+		        to_date:null,
+		        suburb:null
 			}
 			var load = function(row){
 				scope.company.loading = true;

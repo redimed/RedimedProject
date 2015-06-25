@@ -51,7 +51,8 @@ angular.module('app.loggedIn.company.directives.add', [])
 		        from_date:null,
 		        to_date:null,
 		        // patient_id :$stateParams.patientId//tannv.dts@gmail.com comment
-		        patient_id :$stateParams.patient_id//tannv.dts add
+		        patient_id :$stateParams.patient_id,//tannv.dts add
+		        suburb:null //phanquocchien.c1109g@gmail.com add
 			}
 			scope.onRowClick = function(row){
 				 var postData = { 

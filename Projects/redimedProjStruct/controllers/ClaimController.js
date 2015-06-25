@@ -14,7 +14,6 @@ module.exports = {
 
 		var errors = [];
 		var required = [
-			{field: 'Claim_no', message: 'Claim No required'},
 			{field: 'Claim_date', message: 'Claim Date required'},
 			{field: 'Injury_name', message: 'Injury Name required'},
 			{field: 'Injury_date', message: 'Injury Date required'},
@@ -197,7 +196,6 @@ module.exports = {
 
 		var errors = [];
 		var required = [
-			{field: 'Claim_no', message: 'Claim No required'},
 			{field: 'Claim_date', message: 'Claim Date required'},
 			{field: 'Injury_name', message: 'Injury Name required'},
 			{field: 'Injury_date', message: 'Injury Date required'},
