@@ -401,11 +401,11 @@ module.exports = {
 		var sql = "SELECT pu.`user_img` FROM `ph_users` pu WHERE pu.`user_id` = ? ";
 		db.sequelize.query(sql, null, {raw:true}, [patientId])
 			.success(function(data){
-				console.log("__________",data[0]);
-                if(typeof data[0] == 'undefined' || data[0].user_img == null){
-            		console.log("------not data avatar");
-                }
-                else{
+				// console.log("__________",data[0]);
+    //             if(typeof data[0] == 'undefined' || data[0].user_img == null){
+    //         		console.log("------not data avatar");
+    //             }
+    //             else{
                     fs.exists(data[0].user_img,function(exists){
             		console.log("------avatar", exists);
 	                      if (exists) {
@@ -414,7 +414,7 @@ module.exports = {
 	                        res.sendfile("./uploadFile/Pharmacist/default-avatar.png");
 	                      }
                    		})
-            		}
+            		// }
         		})
             .error(function(err){
                 res.json({status:'error',error:err})
