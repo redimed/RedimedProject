@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.alert.directives.edit', [])
+angular.module('app.loggedIn.alert')
 
 .directive('alertEdit', function($cookieStore, AlertModel, ConfigService){
 	return {

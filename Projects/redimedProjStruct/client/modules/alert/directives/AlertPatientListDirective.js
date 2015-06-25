@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.alert.directives.patientList', [])
+angular.module('app.loggedIn.alert')
 
 .directive('alertPatientList', function($modal, $stateParams, AlertModel, toastr){
 	return {

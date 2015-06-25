@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.alert.controllers.patientList', [])
+angular.module('app.loggedIn.alert')
 
 .controller('AlertPatientSelectDialog', function($scope, $modalInstance, Patient_id, CAL_ID, AlertModel, toastr){
 	var onSaveCheck = function(data){

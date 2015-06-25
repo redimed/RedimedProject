@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.alert.model", [])
+angular.module('app.loggedIn.alert')
     
 .factory("AlertModel", function (Restangular) {
     var instanceService = {};

@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.alert.controllers.list', [])
+angular.module('app.loggedIn.alert')
 
 .controller('AlertAddDialog', function($scope, $modalInstance){
 	$scope.alert = {

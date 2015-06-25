@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.alert.directives.list', [])
+angular.module('app.loggedIn.alert')
 
 .controller('AlertRemoveDialog', function($scope, $modalInstance, list){
 	$scope.cancel = function(){

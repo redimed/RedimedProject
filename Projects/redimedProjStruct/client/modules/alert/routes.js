@@ -1,30 +1,25 @@
-angular.module('app.loggedIn.alert', [
-	'app.loggedIn.alert.include'
-])
+angular.module('app.loggedIn.alert', [])
 
 .config(function($stateProvider){
-
 	$stateProvider
 
-	.state('loggedIn.alert', {
-		url: '/alert',
-		templateUrl: 'modules/alert/views/list.html',
-		controller: 'AlertListController'
-	})
-
-	.state('loggedIn.patient.alert', {
-		abstract: true,
-		url: '/patientalert'
-	})
-
-	.state('loggedIn.patient.alert.list', {
-		url: '/list',
-		views: {
-			'main-content@loggedIn.patient': {
-				templateUrl: 'modules/alert/views/patient/list.html',
-				controller: 'AlertPatientListController'
+		.state('loggedIn.alert', {
+			url: '/alertload',
+			resolve: {
+				init: function($q, $rootScope, $state, $timeout, $ocLazyLoad){
+					$ocLazyLoad.load("modules/alert/extend_routes.js");
+					$ocLazyLoad.load("modules/alert/controllers/AlertListController.js");
+					$ocLazyLoad.load("modules/alert/controllers/AlertPatientListController.js");
+					$ocLazyLoad.load("modules/alert/directives/AlertAddDirective.js");
+					$ocLazyLoad.load("modules/alert/directives/AlertEditDirective.js");
+					$ocLazyLoad.load("modules/alert/directives/AlertListDirective.js");
+					$ocLazyLoad.load("modules/alert/directives/AlertPatientListDirective.js")
+					.then(function(){
+						$state.go('loggedIn.alert_list');
+					})
+				}
 			}
-		}
-	})
+		})
+
 
 })
