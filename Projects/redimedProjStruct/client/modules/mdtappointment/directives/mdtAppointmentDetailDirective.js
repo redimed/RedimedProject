@@ -11,7 +11,6 @@ angular.module('app.loggedIn.mdtappointment.detail.directive', [])
 		link: function(scope, element, attrs){
 			var init = function(){
 				scope.isSubmit = false;
-				console.log('chien',scope.params);
 				if(scope.params.permission.edit === true && scope.params.id !== '-1'){
 					mdtAppointmentService.byId(scope.params.id).then(function(response){
 						if(response.status == 'error') 
