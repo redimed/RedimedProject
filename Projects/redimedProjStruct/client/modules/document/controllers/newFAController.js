@@ -145,13 +145,13 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 				if(result.Sex==="0") result.Sex = "Male";
 				else result.Sex = "Female";
 				$scope.patient_info= result;
-
+				
 				getPatientAge($scope.patient_info.DOB);
 			}
 		})
 	}
 
-	var getDoctorInfo = function(cal_id, patient_id){
+	var getDoctorInfo = function(cal_id, patient_id){1
 		var userInfo = $cookieStore.get('userInfo');
 		var apptInfo = {user_id: userInfo.id};
 		DocumentService.getDoctor(apptInfo).then(function(result){
