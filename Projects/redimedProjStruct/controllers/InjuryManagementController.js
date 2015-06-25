@@ -335,6 +335,8 @@ module.exports = {
                   }
               });
         }
+        else
+          res.json({status:'error'});
 
         
     },
@@ -437,17 +439,18 @@ module.exports = {
             .success(function(data){
               if(data)
               {
-                if(data.img_url!=null || data.img_url!='')
+                if(data.img_url !== null || data.img_url !== '')
                 {
-                    fs.exists(data.img_url,function(exists){
+                    fs.exists(String(data.img_url),function(exists){
                       if (exists) {
                         res.sendfile(data.img_url);
                       } else {
                         res.sendfile("./uploadFile/no-image.png");
                       }
                     })
-                    
                 }
+                else
+                  res.sendfile("./uploadFile/no-image.png");
               }
             })
             .error(function(err){

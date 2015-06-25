@@ -2,6 +2,8 @@
  * Created by meditech on 06/10/2014.
  */
 var UserController = require('./controllers/UserController');
+var multipart = require('connect-multiparty');
+var multipartMiddleware = multipart();
 
 app.post('/api/users/company',UserController.userByCompany);
 app.post('/api/users/id',UserController.getUserById);
@@ -27,3 +29,6 @@ app.post('/api/users/type/menu',UserController.getUserTypeMenuById);
 app.post('/api/users/type/menu/edit',UserController.editUserTypeMenu);
 app.post('/api/users/type/menu/delete',UserController.deleteUserTypeMenu);
 app.post('/api/users/type/menu/insert',UserController.insertUserTypeMenu);
+
+app.post('/api/users/uploadAvatar',multipartMiddleware,UserController.uploadUserImage);
+app.get('/api/users/image/:id',UserController.getUserImg);
