@@ -9,7 +9,6 @@ angular.module('app.loggedIn.appointment', [])
 				init: function($q, $rootScope, $state, $timeout, $ocLazyLoad){
 					$ocLazyLoad.load("modules/appointment/extend_routes.js");
 					$ocLazyLoad.load("modules/appointment/controllers/AppointmentController.js");
-					$ocLazyLoad.load("modules/appointment/models/AppointmentModel.js");
 					$ocLazyLoad.load("modules/appointment/controllers/AppointmentDetailController.js");
 					$ocLazyLoad.load("modules/appointment/controllers/AppointmentDoctorController.js");
 					$ocLazyLoad.load("modules/appointment/directives/AppointmentCalendarDirective.js");
