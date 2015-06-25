@@ -11,7 +11,7 @@ angular.module('app.loggedIn.mdtappointment.detail.directive', [])
 		link: function(scope, element, attrs){
 			var init = function(){
 				scope.isSubmit = false;
-				if(scope.params.permission.edit === true && scope.params.id !== '-1'){
+				if(scope.params.permission.edit === true && scope.params.id != -1){
 					mdtAppointmentService.byId(scope.params.id).then(function(response){
 						if(response.status == 'error') 
 							toastr.error('Error Get Detail', 'Error');

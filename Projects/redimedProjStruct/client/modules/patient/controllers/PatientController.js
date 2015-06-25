@@ -99,7 +99,7 @@ angular.module("app.loggedIn.patient.controller", [
             }
 
             $scope.current_patient.Title = parseInt($scope.current_patient.Title);
-            if ($scope.cal_id != -1) {
+            if ($stateParams.cal_id != -1) {
                 mdtAppointmentService.byId($scope.cal_id).then(function(response){
                     if(response.status == 'error'){
                         toastr.error('Error Get Detail', 'Error');
