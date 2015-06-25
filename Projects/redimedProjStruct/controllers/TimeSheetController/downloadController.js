@@ -26,11 +26,19 @@ module.exports = {
                     res.setHeader('Content-disposition', 'filename=' + fileName);
                     var readStream = fs.createReadStream(result.path_file);
                     //SEND FILE TO CLIENT
-                    readStream.pipe(res);
+                    readStream.on('open', function() {
+                        readStream.pipe(res);
+                    });
                     readStream.on('finish', function() {
                         file.close();
                     });
                     //END
+                    readStream.on('error', function(err) {
+                        console.log("*****ERROR:" + err + "*****");
+                        res.json({
+                            status: "error"
+                        });
+                    });
                     return;
                 } else {
                     res.json({

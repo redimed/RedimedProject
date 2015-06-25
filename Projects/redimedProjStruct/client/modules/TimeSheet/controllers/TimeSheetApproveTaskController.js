@@ -1,9 +1,9 @@
 angular.module("app.loggedIn.TimeSheet.ApproveTask.Controller", [])
     .controller("ApproveTask", function($scope, $modal, TimeSheetService, toastr, $state, MODE_ROW, $cookieStore) {
-        //close siderba
+        //close siderbar
         $('body').addClass("page-sidebar-closed");
         $('body').find('ul').addClass("page-sidebar-menu-closed");
-        //end close siderba
+        //end close siderbar
         //STATUS
         $scope.listStatus = [{
             code: 2,

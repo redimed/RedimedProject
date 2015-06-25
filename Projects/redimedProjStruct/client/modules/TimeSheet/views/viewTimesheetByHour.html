@@ -22,42 +22,42 @@
                     <table class="responsive table table-bordered" ng-show="!list.loading">
                         <thead ng-show="list.result!==null">
                             <tr>
-                                <th>
+                                <th style="width:10%;">
                                     <div class="th">
                                         Date
                                     </div>
                                 </th>
-                                <th>
+                                <th style="width:10%;">
                                     <div class="th">
                                         Billable Time
                                     </div>
                                 </th>
-                                <th>
+                                <th style="width:10%">
                                     <div class="th">
                                         Administration Time
                                     </div>
                                 </th>
-                                <th>
+                                <th style="width:10%;">
                                     <div class="th">
                                         Training Time
                                     </div>
                                 </th>
-                                <th>
+                                <th style="width:10%;">
                                     <div class="th">
                                         Development Time
                                     </div>
                                 </th>
-                                <th>
+                                <th style="width:10%;">
                                     <div class="th">
                                         Non-charged
                                     </div>
                                 </th>
-                                <th>
+                                <th style="width:10%;">
                                     <div class="th">
                                         Total Worked Hours
                                     </div>
                                 </th>
-                                <th>
+                                <th style="width:10%;">
                                     <div class="th">
                                     </div>
                                 </th>
@@ -65,12 +65,12 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="task in tasks track by $index" ng-class-odd="'odd'">
-                                <td style="text-align:left;font-size:13px;">{{task.date | date: 'EEE, dd MMM yyyy'}}</td>
-                                <td style="font-size:13px; text-align:center;" ng-repeat="act in task.timeActivity track by $index">
+                                <td style="text-align:left;font-size:13px; width:10%;">{{task.date | date: 'EEE, dd MMM yyyy'}}</td>
+                                <td style="font-size:13px; text-align:center; width:10%;" ng-repeat="act in task.timeActivity track by $index">
                                     {{act.time_charge|customHours}}
                                 </td>
-                                <td class="bold" style="font-size:13px; text-align:center;">{{task.time_charge_date | customHours}}</td>
-                                <td style="text-align:center;">
+                                <td class="bold" style="font-size:13px; text-align:center; width:10%;">{{task.time_charge_date | customHours}}</td>
+                                <td style="text-align:center; width:10%;">
                                     <a ng-click="viewDetailDate(week,task.date)" class="btn btn-xs" style="font-size:13px;">View Detail</a>
                                 </td>
                             </tr>

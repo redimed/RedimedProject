@@ -340,7 +340,7 @@ module.exports = {
                                                                     });
                                                             } else {
                                                                 res.json({
-                                                                    status: "not data"
+                                                                    status: "dataNull"
                                                                 });
                                                                 return;
                                                             }
@@ -353,6 +353,11 @@ module.exports = {
                                                             });
                                                             return;
                                                         });
+                                                } else {
+                                                    res.json({
+                                                        status: "dataNull"
+                                                    });
+                                                    return;
                                                 }
                                             })
                                             .error(function(err) {

@@ -34,12 +34,12 @@
                 <table class="responsive table table-bordered" ng-show="!list.loading">
                     <thead ng-show="list.result!==null">
                         <tr>
-                            <th style="width:200px;">
+                            <th style="width:20%;">
                                 <div class="th">
                                     Employee
                                 </div>
                             </th>
-                            <th style="width:200px;">
+                            <th style="width:15%;">
                                 <div class="th">
                                     <span class="glyphicon glyphicon-chevron-up" ng-click="clickAsc()" ng-class="{'active': searchObjectMap.order[0]==='ASC'}">
                             </span>
@@ -47,22 +47,22 @@
                             </span> Time Leave
                                 </div>
                             </th>
-                            <th style="width:150px;">
+                            <th style="width:13%;">
                                 <div class="th">
-                                    Total Hours Leave
+                                    Total Leave Hours
                                 </div>
                             </th>
-                            <th style="width:200px;">
+                            <th style="width:16%;">
                                 <div class="th">
                                     Status
                                 </div>
                             </th>
-                            <th style="width:150px;">
+                            <th style="width:16%;">
                                 <div class="th">
                                     Person-In-Charge
                                 </div>
                             </th>
-                            <th>
+                            <th style="width:auto;">
                                 <div class="th">
                                     Reason for Leave
                                 </div>
@@ -71,18 +71,18 @@
                     </thead>
                     <tbody>
                         <tr ng-show="list.result!==null || (list.result.length!==0 && list.result!==null)">
-                            <td style="width:200px;">
+                            <td style="width:20%;">
                                 <input type="text" class="input-sm form-control" ng-model="searchObjectMap.search[0]" ng-change="loadList()" />
                             </td>
-                            <td style="width:200px;">
+                            <td style="width:15%;">
                             </td>
-                            <td style="width:150px;">
+                            <td style="width:13%;">
                             </td>
-                            <td style="width:200px;">
+                            <td style="width:16%;">
                                 <select class="form-control input-sm" ng-options="stt.code as stt.name for stt in listStatus" ng-model="searchObjectMap.select[0]" ng-change="loadList()"></select>
                             </td>
-                            <td style="width:150px;"></td>
-                            <td></td>
+                            <td style="width:16%;"></td>
+                            <td style="width:auto;"></td>
                         </tr>
                         <tr ng-show="list.result===null">
                             <td colspan="5">
@@ -90,19 +90,19 @@
                             </td>
                         </tr>
                         <tr ng-repeat="l in list.result" style="cursor: pointer;" ng-dblclick="view(l.leave_id)">
-                            <td style="text-align:left;width:200px;">
+                            <td style="text-align:left;width:20%;">
                                 <span>{{((l.FirstName!==undefined && l.FirstName!==null)?l.FirstName:"") +" "+((l.LastName!==undefined && l.LastName!==null)?l.LastName:"")}}</span>
                             </td>
-                            <td style="text-align:left; width:200px;"><span class="text-info">{{l.start_date | date: "dd/MM/yyyy"}}</span> to <span class="text-info">{{l.finish_date | date: "dd-MM-yyyy"}}</span></td>
-                            <td style="text-align:right; width:150px;">
+                            <td style="text-align:left; width:15%;"><span class="text-info">{{l.start_date | date: "dd/MM/yyyy"}}</span> to <span class="text-info">{{l.finish_date | date: "dd-MM-yyyy"}}</span></td>
+                            <td style="text-align:right; width:13%;">
                                 <span style="margin-right:60px;">{{l.time_leave|customHours}}</span>
                             </td>
-                            <td style="text-align:left;width:200px;">
+                            <td style="text-align:left;width:16%;">
                                 <span ng-class="{'reject':l.name==='Rejected','submited':l.name==='Submitted', 'approved':l.name==='Approved', 'pending':l.name==='Awaiting for Submit',
                             're-submitted':l.name==='Re-submitted'}">{{(l.name==="Submitted")?"Awaiting for Approve": l.name}}</span>
                             </td>
-                            <td style="width:150px;">{{l.person_charge}}</td>
-                            <td style="text-align:left;">{{(l.reason_leave===null||l.reason_leave==="")?"":l.reason_leave}}</span>
+                            <td style="width:16%;">{{l.person_charge}}</td>
+                            <td style="text-align:left; width:auto;">{{(l.reason_leave===null||l.reason_leave==="")?"":l.reason_leave}}</span>
                             </td>
                         </tr>
                     </tbody>

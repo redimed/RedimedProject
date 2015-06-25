@@ -1,6 +1,9 @@
 angular.module("app.loggedIn.TimeSheet.Report4.Controller", [])
     .controller("Report4Controller", function($scope, localStorageService, StaffService, TimeSheetService, $cookieStore, toastr, $state, $filter) {
-
+        //close siderbar
+        $('body').addClass("page-sidebar-closed");
+        $('body').find('ul').addClass("page-sidebar-menu-closed");
+        //end close siderbar
         // POPUP Date
         $scope.dateOptions = {
             formatYear: 'yy',
@@ -46,6 +49,8 @@ angular.module("app.loggedIn.TimeSheet.Report4.Controller", [])
                         toastr.error("Server not response!", "Error");
                     }
                 });
+            } else {
+                $scope.listEmployeeChoose = [];
             }
         };
         //FUNCTION GET WEEK NUMBER
@@ -82,11 +87,15 @@ angular.module("app.loggedIn.TimeSheet.Report4.Controller", [])
                         // PROCESSING PDF
                         $scope.USER_ID = $cookieStore.get('userInfo').id;
                         //END PDF
+                        $scope.disabledPrint = false;
                     } else if (response.status === "error") {
                         $state.go("loggedIn.home", null, {
                             "reload": true
                         });
                         toastr.error("Loading reports fail!", 'Error');
+                    } else if (response.status === "dataNull") {
+                        toastr.error("Not data!", "Error");
+                        $scope.disabledPrint = true;
                     } else {
                         //catch exception
                         $state.go("loggedIn.home", null, {

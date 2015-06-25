@@ -1,5 +1,9 @@
 angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
     .controller("CreateLeaveController", function($scope, TimeSheetService, $cookieStore, $state, toastr, moment, $modal, StaffService, $stateParams) {
+        //close siderbar
+        $('body').addClass("page-sidebar-closed");
+        $('body').find('ul').addClass("page-sidebar-menu-closed");
+        //end close siderbar
         $scope.info = {};
 
         // POPUP DATE

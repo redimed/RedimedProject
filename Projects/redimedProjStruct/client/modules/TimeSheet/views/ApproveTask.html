@@ -43,7 +43,7 @@
                                 Total Worked Hours
                             </div>
                         </th>
-                        <th style="width:15%;">
+                        <th style="width:16%;">
                             <div class="th">
                                 Status
                             </div>
@@ -62,7 +62,7 @@
                         </td>
                         <td style="width:15%;"></td>
                         <td style="width:13%;"></td>
-                        <td style="width:15%;">
+                        <td style="width:16%;">
                             <select class="form-control input-sm" ng-model="searchObjectMap.select['time_tasks_week.task_status_id']" ng-options="itemStatus.code as itemStatus.name for itemStatus in listStatus " ng-change="loadList()">
                             </select>
                         </td>
@@ -83,7 +83,7 @@
                         <td style="width:13%; text-align:center;">
                             {{l.time_charge | customHours}}
                         </td>
-                        <td style="text-align:left;width:15%;">
+                        <td style="text-align:left;width:16%;">
                             <span ng-class="{'reject':l.name==='Rejected','submited':l.name==='Submitted', 'approved':l.name==='Approved', 'pending':l.name==='Awaiting for Submit',
                             're-submitted':l.name==='Re-submitted'}">{{(l.name===null || l.name===" ")?" ":(l.name==='Submitted'?"Awaiting for Approve":l.name)}}</span>
                         </td>

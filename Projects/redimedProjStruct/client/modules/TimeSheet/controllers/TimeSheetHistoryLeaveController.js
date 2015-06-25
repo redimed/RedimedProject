@@ -1,5 +1,9 @@
 angular.module("app.loggedIn.TimeSheet.HistoryLeave.Controller", [])
     .controller("HistoryLeaveController", function($scope, TimeSheetService, $cookieStore, toastr, $state, MODE_ROW, $modal, $stateParams) {
+            //close siderbar
+        $('body').addClass("page-sidebar-closed");
+        $('body').find('ul').addClass("page-sidebar-menu-closed");
+        //end close siderbar
         // FUNCTION RESET
         $scope.reset = function() {
             $scope.searchObjectMap = angular.copy($scope.searchObject);
