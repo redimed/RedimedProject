@@ -103,16 +103,14 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
     });*/
 
     //CHECK OUTSIDE REFERRAL
-    if ($scope.cal_id != -1) {
-        var outPostData = {patient_id: $scope.patient_id, CAL_ID: $scope.cal_id};
-        OutreferralModel.checkPatientCalendar(outPostData)
-        .then(function(response){
-            if(response.data === 0){
-                if(response.service.IS_REFERRAL === 1)
-                    $scope.warning_refferal = true;
-            }
-        }, function(error){})
-    };
+    var outPostData = {patient_id: $scope.patient_id, CAL_ID: $scope.cal_id};
+    OutreferralModel.checkPatientCalendar(outPostData)
+    .then(function(response){
+        if(response.data === 0){
+            if(response.service.IS_REFERRAL === 1)
+                $scope.warning_refferal = true;
+        }
+    }, function(error){})
     
 
     $scope.changeAppt = function(item) {

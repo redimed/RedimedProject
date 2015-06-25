@@ -14,7 +14,7 @@ module.exports = {
                 .from('cln_appt_patients')
                 .innerJoin('cln_appointment_calendar', 'cln_appt_patients.CAL_ID', 'cln_appointment_calendar.CAL_ID')
                 .where('cln_appt_patients.Patient_id', postData.patient_id)
-                .where('cln_appointment_calendar.FROM_TIME','<', postData.datetime)
+                .where('cln_appointment_calendar.FROM_TIME','<=', postData.datetime)
                 .orderBy('cln_appointment_calendar.FROM_TIME', 'desc')
                 .toString();
         db.sequelize.query(sql)

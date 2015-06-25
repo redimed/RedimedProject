@@ -142,6 +142,7 @@
                                         </div>  
                                         <div class="form-group">
                                             <label class="un-label-form un-label-whidth-85 un-padding-top-0">Gender</label>
+                                            <div class="clearfix"></div>
                                             <select class="un-select-sex" ng-model="modelObjectMap.Sex">
                                                 <option value="0" selected>Male</option>
                                                 <option value="1">Female</option>
@@ -188,10 +189,10 @@
                                             <label class="un-label-form un-label-whidth-97">Home Phone</label>
                                             <input type="text" name="hphone" ng-model="modelObjectMap.Home_phone" class="form-control un-input-custom" id="hphone" float-label>
                                         </div>
-                                        <div ng-class="{'has-error': patientForm.mobile.$invalid && isSubmit}">
-                                            <label class="un-label-form un-label-whidth-97">Mobile Phone *</label>
+                                        <div>
+                                            <label class="un-label-form un-label-whidth-97">Mobile Phone</label>
                                             <input type="text" name="mobile" ng-model="modelObjectMap.Mobile"
-                                                class="form-control un-input-custom" id="mobile" required float-label>
+                                                class="form-control un-input-custom" id="mobile" float-label>
                                             <!-- ERROR -->
                                             <!-- <span ng-show="patientForm.mobile.$invalid && isSubmit">
                                                 <span class="mdt-popover above" ng-show="patientForm.mobile.$error.required">

@@ -2058,7 +2058,7 @@ nav bar end*/
     padding-top: 0px !important;
 }
 .un-padding-bottom-10{
-    padding-bottom: 10px;
+    padding-bottom: 10px !important;
 }
  /*chien edit*/
 .un-padding-left-right-20-top-15-bottom-10{
@@ -3712,7 +3712,7 @@ label{
 .pt_submit{
     margin: auto;
     float: none;
-    padding-top: 19px;
+    padding-top: 18px;
 }
 .pt_font_size_13{
     font-size: 13px;

@@ -99,15 +99,17 @@ angular.module("app.loggedIn.patient.controller", [
             }
 
             $scope.current_patient.Title = parseInt($scope.current_patient.Title);
-            mdtAppointmentService.byId($scope.cal_id).then(function(response){
-                if(response.status == 'error'){
-                    toastr.error('Error Get Detail', 'Error');
-                }else{
+            if ($scope.cal_id != -1) {
+                mdtAppointmentService.byId($scope.cal_id).then(function(response){
+                    if(response.status == 'error'){
+                        toastr.error('Error Get Detail', 'Error');
+                    }else{
 
-                    $scope.current_patient.Site_name=response.data.site.Site_name;
-                    $scope.current_patient.FROM_TIME=response.data.FROM_TIME;
-                }
-            })
+                        $scope.current_patient.Site_name=response.data.site.Site_name;
+                        $scope.current_patient.FROM_TIME=response.data.FROM_TIME;
+                    }
+                })
+            };
         });
     }
     $scope.getPatientInfo();
