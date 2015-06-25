@@ -120,9 +120,9 @@ and detail.LINE_ID = $P{line_id}]]>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<detail>
-		<band height="100">
+		<band height="50">
 			<textField>
-				<reportElement x="0" y="0" width="150" height="100" uuid="8023e9d4-8fa5-4c6c-8dfd-8bddd01f4fdf"/>
+				<reportElement x="0" y="0" width="150" height="50" uuid="8023e9d4-8fa5-4c6c-8dfd-8bddd01f4fdf"/>
 				<box>
 					<topPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
@@ -135,7 +135,7 @@ and detail.LINE_ID = $P{line_id}]]>
 				<textFieldExpression><![CDATA[$F{QUESTION}]]></textFieldExpression>
 			</textField>
 			<frame>
-				<reportElement x="150" y="0" width="190" height="100" uuid="c525c2fd-25bf-470d-b693-38233bd3ae63"/>
+				<reportElement x="150" y="0" width="190" height="50" uuid="c525c2fd-25bf-470d-b693-38233bd3ae63"/>
 				<box>
 					<topPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
@@ -143,39 +143,39 @@ and detail.LINE_ID = $P{line_id}]]>
 					<rightPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<staticText>
-					<reportElement x="11" y="7" width="50" height="22" uuid="0fdea192-08a9-41f7-b57e-33d8c120eb4a"/>
+					<reportElement x="11" y="4" width="50" height="22" uuid="0fdea192-08a9-41f7-b57e-33d8c120eb4a"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
 					<text><![CDATA[UNABLE]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="68" y="7" width="50" height="22" uuid="b91b095a-f84d-446d-9da1-322e22ed8302"/>
+					<reportElement x="68" y="4" width="50" height="22" uuid="b91b095a-f84d-446d-9da1-322e22ed8302"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
 					<text><![CDATA[PARTIAL]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="125" y="7" width="50" height="22" uuid="6bc246db-76d2-4f2a-af88-f1921f51becb"/>
+					<reportElement x="125" y="4" width="50" height="22" uuid="6bc246db-76d2-4f2a-af88-f1921f51becb"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
 					<text><![CDATA[ABLE]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="62" y="41" width="105" height="22" uuid="9dc49b2c-53a9-43e6-ac72-9ac7ae9b37df"/>
+					<reportElement x="62" y="32" width="105" height="16" uuid="9dc49b2c-53a9-43e6-ac72-9ac7ae9b37df"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font isBold="false"/>
 					</textElement>
 					<text><![CDATA[No Pain/Discomfort ]]></text>
 				</staticText>
 				<image>
-					<reportElement x="42" y="45" width="15" height="15" uuid="94277c1d-395e-4d82-b7c7-8744c99a4b63"/>
+					<reportElement x="42" y="32" width="15" height="15" uuid="94277c1d-395e-4d82-b7c7-8744c99a4b63"/>
 					<imageExpression><![CDATA[$F{VAL2_CHECKBOX}.equals("0")?($P{real_path}+"uncheck.png"):($P{real_path}+"checked.png")]]></imageExpression>
 				</image>
 				<ellipse>
-					<reportElement mode="Transparent" x="7" y="6" width="56" height="22" uuid="17d45b72-0e38-48de-92dd-73378fd453c6">
+					<reportElement mode="Transparent" x="7" y="3" width="56" height="22" uuid="17d45b72-0e38-48de-92dd-73378fd453c6">
 						<printWhenExpression><![CDATA[$F{VAL1_CHECKBOX}.equals("0")]]></printWhenExpression>
 					</reportElement>
 					<graphicElement>
@@ -183,7 +183,7 @@ and detail.LINE_ID = $P{line_id}]]>
 					</graphicElement>
 				</ellipse>
 				<ellipse>
-					<reportElement mode="Transparent" x="66" y="7" width="56" height="22" uuid="00fae0bd-eb39-4a1a-a485-d3e9ff607d39">
+					<reportElement mode="Transparent" x="66" y="4" width="56" height="22" uuid="00fae0bd-eb39-4a1a-a485-d3e9ff607d39">
 						<printWhenExpression><![CDATA[$F{VAL1_CHECKBOX}.equals("1")]]></printWhenExpression>
 					</reportElement>
 					<graphicElement>
@@ -191,7 +191,7 @@ and detail.LINE_ID = $P{line_id}]]>
 					</graphicElement>
 				</ellipse>
 				<ellipse>
-					<reportElement mode="Transparent" x="123" y="7" width="56" height="22" uuid="2fffdbb6-707e-4e0a-87ae-aa1fc0ba437c">
+					<reportElement mode="Transparent" x="123" y="4" width="56" height="22" uuid="2fffdbb6-707e-4e0a-87ae-aa1fc0ba437c">
 						<printWhenExpression><![CDATA[$F{VAL1_CHECKBOX}.equals("2")]]></printWhenExpression>
 					</reportElement>
 					<graphicElement>
@@ -200,7 +200,7 @@ and detail.LINE_ID = $P{line_id}]]>
 				</ellipse>
 			</frame>
 			<textField>
-				<reportElement x="340" y="0" width="65" height="100" uuid="af893157-f5a6-4bb6-a6fe-ef2c4ab73590"/>
+				<reportElement x="340" y="0" width="65" height="50" uuid="af893157-f5a6-4bb6-a6fe-ef2c4ab73590"/>
 				<box>
 					<topPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
@@ -219,7 +219,7 @@ and detail.LINE_ID = $P{line_id}]]>
 )]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="405" y="0" width="150" height="100" uuid="74302afe-da9a-43b4-931b-237c3a62973d"/>
+				<reportElement x="405" y="0" width="150" height="50" uuid="74302afe-da9a-43b4-931b-237c3a62973d"/>
 				<box>
 					<topPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>

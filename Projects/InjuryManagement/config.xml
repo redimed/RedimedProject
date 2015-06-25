@@ -1,102 +1,64 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="au.com.redimed.injury" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Injury Management</name>
+<widget id="com.ionicframework.injurymanagement949685" version="1.1.17" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+  <name>Injury Management</name>
 
-    <author href="https://redimed.com.au">&#xD;
-        Injury Management Redimed&#xD;
-    </author>
+  <description>&#xD;
+    An Ionic Framework and Cordova project.&#xD;
+  </description>
 
-    <content src="index.html"/>
+  <author href="https://testapp.redimed.com.au">&#xD;
+    Injury Management Redimed&#xD;
+  </author>
 
-    <access origin="*"/>
+  <content src="index.html"/>
 
-    <preference name="webviewbounce" value="false"/>
-    <preference name="UIWebViewBounce" value="false"/>
-    <preference name="DisallowOverscroll" value="true"/>
-    <preference name="BackupWebStorage" value="none"/>
-    <plugin name="Bluetooth" value="org.apache.cordova.bluetooth.BluetoothPlugin" />
-    <feature name="PushPlugin">
-        <param name="ios-package" value="PushPlugin" />
-    </feature>
-    <feature name="http://api.phonegap.com/1.0/camera" />
-    <feature name="http://api.phonegap.com/1.0/file" />
-    <feature name="Media">
-        <param name="android-package" value="org.apache.cordova.media.AudioHandler" />
-    </feature>
-    <feature name="Camera">
-        <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
-    </feature>
-    <feature name="Insomnia">
-        <param name="android-package" value="nl.xservices.plugins.Insomnia" />
-    </feature>
+  <access origin="*"/>
 
-    <!--ANDROID CONFIG ICON APPLICATION-->
-    <platform name="android">
-        <icon src="www/img/app-icons/android/res/drawable-hdpi/appicon.png" density="hdpi" />
-        <icon src="www/img/app-icons/android/res/drawable-mdpi/appicon.png" density="mdpi" />
-        <icon src="www/img/app-icons/android/res/drawable-xhdpi/appicon.png" density="xhdpi" />
-        <icon src="www/img/app-icons/android/res/drawable-xxhdpi/appicon.png" density="xxhdpi" />
-        <icon src="www/img/app-icons/android/res/drawable-xxxhdpi/appicon.png" density="xxxhdpi" />
-    </platform>
+  <preference name="webviewbounce" value="false"/>
+  <preference name="UIWebViewBounce" value="false"/>
+  <preference name="DisallowOverscroll" value="true"/>
+  <preference name="BackupWebStorage" value="none"/>
+  <plugin name="Bluetooth" value="org.apache.cordova.bluetooth.BluetoothPlugin" />
+  <feature name="PushPlugin">
+    <param name="ios-package" value="PushPlugin" />
+  </feature>
+  <feature name="http://api.phonegap.com/1.0/camera" />
+  <feature name="http://api.phonegap.com/1.0/file" />
+  <feature name="Media">
+    <param name="android-package" value="org.apache.cordova.media.AudioHandler" />
+  </feature>
+  <feature name="Camera">
+    <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
+  </feature>
+  <feature name="Insomnia">
+    <param name="android-package" value="nl.xservices.plugins.Insomnia" />
+  </feature>
 
-    <!--ANDROID CONFIG SplashScreen APPLICATION-->
-    <platform name="android">
-        <splash src="www/img/screen/android/images/res-long-land-hdpi/default.png" density="land-hdpi"/>
-        <splash src="www/img/screen/android/images/res-long-land-ldpi/default.png" density="land-ldpi"/>
-        <splash src="www/img/screen/android/images/res-long-land-mdpi/default.png" density="land-mdpi"/>
-        <splash src="www/img/screen/android/images/res-long-land-xhdpi/default.png" density="land-xhdpi"/>
-        <splash src="www/img/screen/android/images/res-long-land-xxhdpi/default.png" density="land-xxhdpi"/>
-        <splash src="www/img/screen/android/images/res-long-land-xxxhdpi/default.png" density="land-xxxhdpi"/>
+  <!--ANDROID CONFIG ICON APPLICATION-->
+  <platform name="android">
+    <icon src="www/img/app-icons/android/res/drawable-hdpi/appicon.png" density="hdpi" />
+    <icon src="www/img/app-icons/android/res/drawable-mdpi/appicon.png" density="mdpi" />
+    <icon src="www/img/app-icons/android/res/drawable-xhdpi/appicon.png" density="xhdpi" />
+    <icon src="www/img/app-icons/android/res/drawable-xxhdpi/appicon.png" density="xxhdpi" />
+    <icon src="www/img/app-icons/android/res/drawable-xxxhdpi/appicon.png" density="xxxhdpi" />
+  </platform>
 
-        <splash src="www/img/screen/android/images/res-long-port-hdpi/default.png" density="port-hdpi"/>
-        <splash src="www/img/screen/android/images/res-long-port-ldpi/default.png" density="port-ldpi"/>
-        <splash src="www/img/screen/android/images/res-long-port-mdpi/default.png" density="port-mdpi"/>
-        <splash src="www/img/screen/android/images/res-long-port-xhdpi/default.png" density="port-xhdpi"/>
-        <splash src="www/img/screen/android/images/res-long-port-xxhdpi/default.png" density="port-xxhdpi"/>
-        <splash src="www/img/screen/android/images/res-long-port-xxxhdpi/default.png" density="port-xxxhdpi"/>
-    </platform>
-    <preference name="SplashScreen" value="screen" />
-    <preference name="SplashScreenDelay" value="3000" />
-    <platform name="ios">
-        <!-- iOS 8.0+ -->
-        <!-- iPhone 6 Plus  -->
-        <icon src="www/img/app-icons/ios/icon-60@3x.png" width="180" height="180" />
-        <!-- iOS 7.0+ -->
-        <!-- iPhone / iPod Touch  -->
-        <icon src="www/img/app-icons/ios/icon-60.png" width="60" height="60" />
-        <icon src="www/img/app-icons/ios/icon-60@2x.png" width="120" height="120" />
-        <!-- iPad -->
-        <icon src="www/img/app-icons/ios/icon-76.png" width="76" height="76" />
-        <icon src="www/img/app-icons/ios/icon-76@2x.png" width="152" height="152" />
-        <!-- iOS 6.1 -->
-        <!-- Spotlight Icon -->
-        <icon src="www/img/app-icons/ios/icon-40.png" width="40" height="40" />
-        <icon src="www/img/app-icons/ios/icon-40@2x.png" width="80" height="80" />
-        <!-- iPhone / iPod Touch -->
-        <icon src="www/img/app-icons/ios/icon.png" width="57" height="57" />
-        <icon src="www/img/app-icons/ios/icon@2x.png" width="114" height="114" />
-        <!-- iPad -->
-        <icon src="www/img/app-icons/ios/icon-72.png" width="72" height="72" />
-        <icon src="www/img/app-icons/ios/icon-72@2x.png" width="144" height="144" />
-        <!-- iPhone Spotlight and Settings Icon -->
-        <icon src="www/img/app-icons/ios/icon-small.png" width="29" height="29" />
-        <icon src="www/img/app-icons/ios/icon-small@2x.png" width="58" height="58" />
-        <icon src="www/img/app-icons/ios/icon-small@3x.png" width="87" height="87" />
-        <!-- iPad Spotlight and Settings Icon -->
-        <icon src="www/img/app-icons/ios/icon-50.png" width="50" height="50" />
-        <icon src="www/img/app-icons/ios/icon-50@2x.png" width="100" height="100" />
-    </platform>
-    <platform name="ios">
-        <!-- images are determined by width and height. The following are supported -->
-        <splash src="www/img/screen/ios/Default.png" width="320" height="480"/>
-        <splash src="www/img/screen/ios/Default@2x.png" width="640" height="960"/>
-        <splash src="www/img/screen/ios/Default-568h@2x.png" width="640" height="1136"/>
-        <splash src="www/img/screen/ios/Default-667h@2x.png" width="750" height="1334"/>
-        <splash src="www/img/screen/ios/Default-Landscape.png" width="1024" height="768"/>
-        <splash src="www/img/screen/ios/Default-Landscape@2x.png" width="2048" height="1536"/>
-        <splash src="www/img/screen/ios/Default-Landscape-736h@3x.png" width="2208" height="1242"/>
-        <splash src="www/img/screen/ios/Default-Portrait.png" width="768" height="1024"/>
-        <splash src="www/img/screen/ios/Default-Portrait@2x.png" width="1536" height="2048"/>
-        <splash src="www/img/screen/ios/Default-Portrait-736h@3x.png" width="1242" height="2208"/>
-    </platform>
+  <!--ANDROID CONFIG SplashScreen APPLICATION-->
+  <platform name="android">
+    <splash src="www/img/screen/android/images/res-long-land-hdpi/default.png" density="land-hdpi"/>
+    <splash src="www/img/screen/android/images/res-long-land-ldpi/default.png" density="land-ldpi"/>
+    <splash src="www/img/screen/android/images/res-long-land-mdpi/default.png" density="land-mdpi"/>
+    <splash src="www/img/screen/android/images/res-long-land-xhdpi/default.png" density="land-xhdpi"/>
+    <splash src="www/img/screen/android/images/res-long-land-xxhdpi/default.png" density="land-xxhdpi"/>
+    <splash src="www/img/screen/android/images/res-long-land-xxxhdpi/default.png" density="land-xxxhdpi"/>
+
+    <splash src="www/img/screen/android/images/res-long-port-hdpi/default.png" density="port-hdpi"/>
+    <splash src="www/img/screen/android/images/res-long-port-ldpi/default.png" density="port-ldpi"/>
+    <splash src="www/img/screen/android/images/res-long-port-mdpi/default.png" density="port-mdpi"/>
+    <splash src="www/img/screen/android/images/res-long-port-xhdpi/default.png" density="port-xhdpi"/>
+    <splash src="www/img/screen/android/images/res-long-port-xxhdpi/default.png" density="port-xxhdpi"/>
+    <splash src="www/img/screen/android/images/res-long-port-xxxhdpi/default.png" density="port-xxxhdpi"/>
+  </platform>
+  <preference name="SplashScreen" value="screen" />
+  <preference name="SplashScreenDelay" value="3000" />
 </widget>

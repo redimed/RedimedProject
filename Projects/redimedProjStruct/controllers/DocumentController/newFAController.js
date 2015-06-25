@@ -272,8 +272,8 @@ module.exports = {
 		.then(function(result){
 			res.json({status:'success'});
 		})
-		.error(function(err){
-			res.json(500, {status:'error', error:err});
+		.error(function(err,sqldata){
+			res.json(500, {status:'error', error:err, sql:sqldata});
 		})
 	},
 

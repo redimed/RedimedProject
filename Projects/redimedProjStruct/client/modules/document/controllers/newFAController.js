@@ -314,6 +314,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 							break;
 				case 8: autoRatingVal1(line, line.SCORE1*1, 0);
 							break;
+				case 12: 	break;
 				default: line.SCORE1= line.details[line.details.length-1].VAL1_VALUE;
 						autoRatingVal1(line, line.SCORE1, 0);
 							break;
@@ -558,6 +559,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
     	}
     	else{
     		var insertInfo = getInsertInformation($scope.header);
+    		console.log('this is insert info', insertInfo);
 	    	DocumentService.insertNewFA(insertInfo).then(function(result){
 	    		if(result.status==='success') {
 	    			$scope.editMode=true;

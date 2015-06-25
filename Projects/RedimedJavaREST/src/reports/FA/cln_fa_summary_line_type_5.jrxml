@@ -137,9 +137,9 @@ and line.LINE_ID =  $P{line_id}]]>
 	</field>
 	<field name="LineCount" class="java.lang.Long"/>
 	<detail>
-		<band height="45">
+		<band height="32">
 			<staticText>
-				<reportElement x="0" y="0" width="160" height="22" uuid="8cec6ddc-7f35-40d5-95c9-68f193f1983b"/>
+				<reportElement x="0" y="0" width="160" height="16" uuid="8cec6ddc-7f35-40d5-95c9-68f193f1983b"/>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
@@ -152,7 +152,7 @@ and line.LINE_ID =  $P{line_id}]]>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="160" y="0" width="60" height="22" uuid="192f349a-a080-4da2-80e9-3ce59d7cc9a8"/>
+				<reportElement x="160" y="0" width="60" height="16" uuid="192f349a-a080-4da2-80e9-3ce59d7cc9a8"/>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
@@ -165,7 +165,7 @@ and line.LINE_ID =  $P{line_id}]]>
 				<text><![CDATA[Score]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="220" y="0" width="80" height="22" uuid="d6710496-6191-4986-a37b-261cdced4c7f"/>
+				<reportElement x="220" y="0" width="80" height="16" uuid="d6710496-6191-4986-a37b-261cdced4c7f"/>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
@@ -178,7 +178,7 @@ and line.LINE_ID =  $P{line_id}]]>
 				<text><![CDATA[Rating]]></text>
 			</staticText>
 			<subreport>
-				<reportElement x="0" y="22" width="300" height="22" uuid="8b97a4dc-89f8-4006-859d-b30d24bc560d"/>
+				<reportElement x="0" y="16" width="300" height="16" uuid="8b97a4dc-89f8-4006-859d-b30d24bc560d"/>
 				<subreportParameter name="patient_id">
 					<subreportParameterExpression><![CDATA[$P{patient_id}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -198,7 +198,7 @@ and line.LINE_ID =  $P{line_id}]]>
 				<subreportExpression><![CDATA[$P{real_path}+"cln_fa_summary_line_type_5_details.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="330" y="0" width="225" height="44" uuid="f3799f57-4999-4bd1-a7b2-dec0fc452992">
+				<reportElement x="330" y="0" width="225" height="32" uuid="f3799f57-4999-4bd1-a7b2-dec0fc452992">
 					<printWhenExpression><![CDATA[$F{IS_SHOW_RANKING_TABLE} == 1]]></printWhenExpression>
 				</reportElement>
 				<subreportParameter name="ranking_summary_header_id">
@@ -208,9 +208,9 @@ and line.LINE_ID =  $P{line_id}]]>
 				<subreportExpression><![CDATA[$P{real_path}+"cln_rankings_summary.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="45">
+		<band height="16">
 			<staticText>
-				<reportElement x="0" y="0" width="160" height="22" uuid="d4984fa4-8c40-48d0-aeb4-97a4824a6639"/>
+				<reportElement x="0" y="0" width="160" height="16" uuid="d4984fa4-8c40-48d0-aeb4-97a4824a6639"/>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
@@ -224,7 +224,7 @@ and line.LINE_ID =  $P{line_id}]]>
 				<text><![CDATA[Total]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="160" y="0" width="60" height="22" uuid="df98adbe-cb86-42f7-8164-64b1fcc639f6"/>
+				<reportElement x="160" y="0" width="60" height="16" uuid="df98adbe-cb86-42f7-8164-64b1fcc639f6"/>
 				<box>
 					<topPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
@@ -237,7 +237,7 @@ and line.LINE_ID =  $P{line_id}]]>
 				<textFieldExpression><![CDATA[$F{RATING_VALUE1}+"/"+($F{LineCount}*4)]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="220" y="0" width="80" height="22" uuid="5be54e16-c1fd-45db-bdfc-e791d24d46b6"/>
+				<reportElement x="220" y="0" width="80" height="16" uuid="5be54e16-c1fd-45db-bdfc-e791d24d46b6"/>
 				<box>
 					<topPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>

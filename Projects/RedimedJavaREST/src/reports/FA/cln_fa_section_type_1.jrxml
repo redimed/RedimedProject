@@ -144,9 +144,9 @@ and section.SECTION_ID =  $P{section_id}]]>
 	<group name="section_group_1">
 		<groupExpression><![CDATA[$F{SECTION_ID}]]></groupExpression>
 		<groupHeader>
-			<band height="22">
+			<band height="16">
 				<textField>
-					<reportElement x="0" y="0" width="555" height="22" isRemoveLineWhenBlank="true" uuid="49092ab2-bebb-4cb0-b99d-b60fc8ba4803"/>
+					<reportElement x="0" y="0" width="555" height="16" isRemoveLineWhenBlank="true" uuid="49092ab2-bebb-4cb0-b99d-b60fc8ba4803"/>
 					<textElement verticalAlignment="Middle">
 						<font isBold="true" isUnderline="true"/>
 					</textElement>
@@ -156,7 +156,7 @@ and section.SECTION_ID =  $P{section_id}]]>
 		</groupHeader>
 	</group>
 	<detail>
-		<band height="34">
+		<band height="34" splitType="Prevent">
 			<printWhenExpression><![CDATA[$F{SCORE_TYPE1} == 11]]></printWhenExpression>
 			<subreport>
 				<reportElement x="0" y="0" width="555" height="34" uuid="4ac23006-0332-4e3b-8c6f-e3f7b4c6b4d5"/>
@@ -179,7 +179,7 @@ and section.SECTION_ID =  $P{section_id}]]>
 				<subreportExpression><![CDATA[$P{real_path}+"cln_fa_lines_type_11.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="34">
+		<band height="34" splitType="Prevent">
 			<printWhenExpression><![CDATA[$F{SCORE_TYPE1} == 4]]></printWhenExpression>
 			<subreport>
 				<reportElement x="0" y="0" width="555" height="34" uuid="600c3f4d-b164-42c8-9931-6a219ee404d6"/>
@@ -205,7 +205,7 @@ and section.SECTION_ID =  $P{section_id}]]>
 				<subreportExpression><![CDATA[$P{real_path}+"cln_fa_lines_type_4.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="34">
+		<band height="34" splitType="Prevent">
 			<printWhenExpression><![CDATA[$F{SCORE_TYPE1} == 3]]></printWhenExpression>
 			<subreport>
 				<reportElement x="0" y="0" width="555" height="34" isRemoveLineWhenBlank="true" uuid="e2195932-c054-4b13-b434-721670b50009">
@@ -233,7 +233,7 @@ and section.SECTION_ID =  $P{section_id}]]>
 				<subreportExpression><![CDATA[$P{real_path}+"cln_fa_lines_type_3.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="34">
+		<band height="34" splitType="Prevent">
 			<printWhenExpression><![CDATA[$F{SCORE_TYPE1} == 12]]></printWhenExpression>
 			<subreport>
 				<reportElement x="0" y="0" width="555" height="34" uuid="c7e5b1af-1359-430f-a989-d6a8690ca8da">
@@ -258,7 +258,7 @@ and section.SECTION_ID =  $P{section_id}]]>
 				<subreportExpression><![CDATA[$P{real_path}+"cln_fa_lines_type_12.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="34">
+		<band height="34" splitType="Prevent">
 			<printWhenExpression><![CDATA[$F{SCORE_TYPE1} == 7 || $F{SCORE_TYPE1} == 9]]></printWhenExpression>
 			<subreport>
 				<reportElement x="0" y="0" width="555" height="34" uuid="09c64840-d5be-49ab-a941-cb14315557ec">
@@ -283,7 +283,7 @@ and section.SECTION_ID =  $P{section_id}]]>
 				<subreportExpression><![CDATA[$P{real_path}+"cln_fa_lines_type_7_9.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="34">
+		<band height="34" splitType="Prevent">
 			<printWhenExpression><![CDATA[$F{SCORE_TYPE1} == 8]]></printWhenExpression>
 			<subreport>
 				<reportElement x="0" y="0" width="555" height="34" uuid="6fb23cf9-eadb-4f25-b059-9756ef6748a6">
@@ -308,7 +308,7 @@ and section.SECTION_ID =  $P{section_id}]]>
 				<subreportExpression><![CDATA[$P{real_path}+"cln_fa_lines_type_8.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="34">
+		<band height="34" splitType="Prevent">
 			<printWhenExpression><![CDATA[$F{SCORE_TYPE1} == 6]]></printWhenExpression>
 			<subreport>
 				<reportElement x="0" y="0" width="555" height="34" uuid="066798b7-3251-42e0-a36e-376df79825f2"/>

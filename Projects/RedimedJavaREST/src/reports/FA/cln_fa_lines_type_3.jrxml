@@ -10,7 +10,7 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="patient_id" class="java.lang.String"/>
@@ -136,16 +136,16 @@ and line.SCORE_TYPE1 = 3]]>
 	<group name="line_type_3_group">
 		<groupExpression><![CDATA[$F{QUESTION}]]></groupExpression>
 		<groupHeader>
-			<band height="85">
+			<band height="51">
 				<textField>
-					<reportElement x="0" y="33" width="555" height="22" uuid="32b03fe4-692a-430f-acbd-d04f41bb16b7"/>
+					<reportElement x="0" y="13" width="555" height="22" uuid="32b03fe4-692a-430f-acbd-d04f41bb16b7"/>
 					<textElement verticalAlignment="Middle">
 						<font isBold="true" isUnderline="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{QUESTION}]]></textFieldExpression>
 				</textField>
 				<subreport>
-					<reportElement x="220" y="55" width="335" height="29" uuid="0b3012ba-6479-45d3-9aa6-06bec1e4e57c"/>
+					<reportElement x="220" y="35" width="335" height="16" uuid="0b3012ba-6479-45d3-9aa6-06bec1e4e57c"/>
 					<subreportParameter name="patient_id">
 						<subreportParameterExpression><![CDATA[$P{patient_id}]]></subreportParameterExpression>
 					</subreportParameter>
@@ -171,9 +171,9 @@ and line.SCORE_TYPE1 = 3]]>
 		</groupHeader>
 	</group>
 	<detail>
-		<band height="22">
+		<band height="16">
 			<staticText>
-				<reportElement x="0" y="0" width="100" height="22" uuid="4b628ae6-3902-4b64-8d46-b6230d54dab5"/>
+				<reportElement x="0" y="0" width="100" height="16" uuid="4b628ae6-3902-4b64-8d46-b6230d54dab5"/>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
@@ -186,7 +186,7 @@ and line.SCORE_TYPE1 = 3]]>
 				<text><![CDATA[TRIAL]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="100" y="0" width="120" height="22" uuid="17d5fccc-e2b1-4db9-a052-f4fb8527e4bb"/>
+				<reportElement x="100" y="0" width="120" height="16" uuid="17d5fccc-e2b1-4db9-a052-f4fb8527e4bb"/>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
@@ -199,7 +199,7 @@ and line.SCORE_TYPE1 = 3]]>
 				<text><![CDATA[RIGHT HAND]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="340" y="0" width="215" height="22" uuid="e3959a6c-c35e-4a67-bbce-f7406c8baa26"/>
+				<reportElement x="340" y="0" width="215" height="16" uuid="e3959a6c-c35e-4a67-bbce-f7406c8baa26"/>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
@@ -212,7 +212,7 @@ and line.SCORE_TYPE1 = 3]]>
 				<text><![CDATA[COMMENTS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="220" y="0" width="120" height="22" uuid="3fb8f028-f9d4-44c9-a753-787d1273842b"/>
+				<reportElement x="220" y="0" width="120" height="16" uuid="3fb8f028-f9d4-44c9-a753-787d1273842b"/>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
@@ -225,9 +225,9 @@ and line.SCORE_TYPE1 = 3]]>
 				<text><![CDATA[LEFT HAND]]></text>
 			</staticText>
 		</band>
-		<band height="68">
+		<band height="50">
 			<subreport>
-				<reportElement x="0" y="0" width="340" height="24" uuid="f04dbe40-2a55-4917-9f84-29af90614042"/>
+				<reportElement x="0" y="0" width="340" height="16" uuid="f04dbe40-2a55-4917-9f84-29af90614042"/>
 				<subreportParameter name="patient_id">
 					<subreportParameterExpression><![CDATA[$P{patient_id}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -247,7 +247,7 @@ and line.SCORE_TYPE1 = 3]]>
 				<subreportExpression><![CDATA[$P{real_path}+"cln_fa_lines_type_3_details.jasper"]]></subreportExpression>
 			</subreport>
 			<staticText>
-				<reportElement positionType="Float" x="0" y="24" width="100" height="22" uuid="3b285c09-4c11-4fe7-b649-bc52d0bdb1fe"/>
+				<reportElement positionType="Float" x="0" y="16" width="100" height="16" uuid="3b285c09-4c11-4fe7-b649-bc52d0bdb1fe"/>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
@@ -260,7 +260,7 @@ and line.SCORE_TYPE1 = 3]]>
 				<text><![CDATA[AVERAGE]]></text>
 			</staticText>
 			<textField>
-				<reportElement positionType="Float" x="100" y="24" width="120" height="22" uuid="a86cecfa-1850-48d9-91d6-6b4c9d614693"/>
+				<reportElement positionType="Float" x="100" y="16" width="120" height="16" uuid="a86cecfa-1850-48d9-91d6-6b4c9d614693"/>
 				<box>
 					<topPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
@@ -273,7 +273,7 @@ and line.SCORE_TYPE1 = 3]]>
 				<textFieldExpression><![CDATA[$F{SCORE1}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement positionType="Float" x="220" y="24" width="120" height="22" uuid="4da385e4-94cb-4ec0-8c59-9ddeaf71e5c6"/>
+				<reportElement positionType="Float" x="220" y="16" width="120" height="16" uuid="4da385e4-94cb-4ec0-8c59-9ddeaf71e5c6"/>
 				<box>
 					<topPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
@@ -286,7 +286,7 @@ and line.SCORE_TYPE1 = 3]]>
 				<textFieldExpression><![CDATA[$F{SCORE2}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement positionType="Float" x="0" y="46" width="100" height="22" uuid="48effdac-73d0-451e-8ba5-dfdd7b96c8dc"/>
+				<reportElement positionType="Float" x="0" y="32" width="100" height="16" uuid="48effdac-73d0-451e-8ba5-dfdd7b96c8dc"/>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
@@ -299,7 +299,7 @@ and line.SCORE_TYPE1 = 3]]>
 				<text><![CDATA[NORMAL RANGE]]></text>
 			</staticText>
 			<textField>
-				<reportElement positionType="Float" x="100" y="46" width="120" height="22" uuid="bc7511d9-e8b1-4b0b-9849-e9fbddf40461"/>
+				<reportElement positionType="Float" x="100" y="32" width="120" height="16" uuid="bc7511d9-e8b1-4b0b-9849-e9fbddf40461"/>
 				<box>
 					<topPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
@@ -312,7 +312,7 @@ and line.SCORE_TYPE1 = 3]]>
 				<textFieldExpression><![CDATA["(" + $F{RATE1} + "kg )"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement positionType="Float" x="220" y="46" width="120" height="22" uuid="7b7d172b-e9d1-4d7a-a236-ef2d4e6a00be"/>
+				<reportElement positionType="Float" x="220" y="32" width="120" height="16" uuid="7b7d172b-e9d1-4d7a-a236-ef2d4e6a00be"/>
 				<box>
 					<topPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
@@ -325,33 +325,37 @@ and line.SCORE_TYPE1 = 3]]>
 				<textFieldExpression><![CDATA["(" + $F{RATE2} + "kg )"]]></textFieldExpression>
 			</textField>
 			<frame>
-				<reportElement stretchType="RelativeToTallestObject" x="340" y="0" width="215" height="68" uuid="4558d47c-0262-4373-9407-b32689784083"/>
+				<reportElement stretchType="RelativeToTallestObject" x="340" y="0" width="215" height="48" uuid="4558d47c-0262-4373-9407-b32689784083"/>
 				<box>
 					<topPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<subreport>
-					<reportElement x="0" y="0" width="215" height="68" uuid="a7f03306-3db7-4d36-87ce-1d7764391291"/>
-					<subreportParameter name="patient_id">
-						<subreportParameterExpression><![CDATA[$P{patient_id}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="cal_id">
-						<subreportParameterExpression><![CDATA[$P{cal_id}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="line_id">
-						<subreportParameterExpression><![CDATA[$F{LINE_ID}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="real_path">
-						<subreportParameterExpression><![CDATA[$P{real_path}]]></subreportParameterExpression>
-					</subreportParameter>
-					<subreportParameter name="sub_report_dir">
-						<subreportParameterExpression><![CDATA[$P{sub_report_dir}]]></subreportParameterExpression>
-					</subreportParameter>
-					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA[$P{real_path}+"cln_fa_comments.jasper"]]></subreportExpression>
-				</subreport>
+				<image>
+					<reportElement x="10" y="32" width="15" height="15" uuid="d3eb07fd-2f7f-4654-ae2b-0c5a9f2325d3"/>
+					<imageExpression><![CDATA[$F{RATING_VALUE1}==1 || $F{RATING_VALUE2}==1 ?($P{real_path}+"checked.png"):($P{real_path}+"uncheck.png")]]></imageExpression>
+				</image>
+				<image>
+					<reportElement x="10" y="4" width="15" height="15" uuid="cd6c4395-c016-40eb-a0f8-d9eeac34b43b"/>
+					<imageExpression><![CDATA[$F{RATING_VALUE1}==3 || $F{RATING_VALUE2}==3 ?($P{real_path}+"checked.png"):($P{real_path}+"uncheck.png")]]></imageExpression>
+				</image>
+				<staticText>
+					<reportElement x="45" y="32" width="148" height="15" uuid="88062b4e-f19f-4dee-ad26-891bbd8bbe91"/>
+					<text><![CDATA[Below Normal Rage]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="45" y="4" width="148" height="15" uuid="8d3b1556-ffa1-4808-afb5-f92040654e83"/>
+					<text><![CDATA[Above Normal Rage]]></text>
+				</staticText>
+				<image>
+					<reportElement x="10" y="18" width="15" height="15" uuid="69ff8f39-872d-4ec2-9ef5-629d0877b68b"/>
+					<imageExpression><![CDATA[$F{RATING_VALUE1}==2 || $F{RATING_VALUE2}==2 ?($P{real_path}+"checked.png"):($P{real_path}+"uncheck.png")]]></imageExpression>
+				</image>
+				<staticText>
+					<reportElement x="45" y="18" width="148" height="15" uuid="82cc3390-5eeb-4682-8400-e460b612c6b0"/>
+					<text><![CDATA[Within Normal Rage]]></text>
+				</staticText>
 			</frame>
 		</band>
 	</detail>

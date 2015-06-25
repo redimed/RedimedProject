@@ -134,9 +134,9 @@ and line.SCORE_TYPE1=12]]>
 	</field>
 	<group name="line_type_12_group">
 		<groupHeader>
-			<band height="47">
+			<band height="30">
 				<textField>
-					<reportElement x="0" y="24" width="555" height="22" uuid="110cd7e0-a30f-480e-b1bd-fd21bbc94e36"/>
+					<reportElement x="0" y="8" width="555" height="22" uuid="110cd7e0-a30f-480e-b1bd-fd21bbc94e36"/>
 					<textElement verticalAlignment="Middle">
 						<font isBold="true" isUnderline="false"/>
 					</textElement>
