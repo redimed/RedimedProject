@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.claim.controllers.patientList', [])
+angular.module('app.loggedIn.claim')
 
 .controller('ClaimPatientListController', function($scope, $modal, $stateParams, toastr){
 	var add = function(){
