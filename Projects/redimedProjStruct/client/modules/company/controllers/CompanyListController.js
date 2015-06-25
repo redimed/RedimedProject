@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.company.controllers.list', [])
+angular.module('app.loggedIn.company')
 
 .controller('CompanyListController', function($scope, $state){
 	$scope.actionCenter={

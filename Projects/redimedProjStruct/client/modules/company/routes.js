@@ -1,87 +1,45 @@
-
-angular.module('app.loggedIn.company',['app.loggedIn.company.include'])
+angular.module('app.loggedIn.company', [])
 
 .config(function($stateProvider){
 	$stateProvider
-	// .state('loggedIn.company', {
-	// 	url: '/patientid/:patient_id/company',
-	// 	templateUrl: 'modules/company/views/list.html',
-	// 	controller: 'CompanyListController'
-			
-	// })
 
-	.state('loggedIn.patient.company', {
-		url: '/company',
-		// templateUrl: 'modules/company/views/list.html',
-		// controller: 'CompanyListController'
-		views: {
-			'main-content@loggedIn.patient': {
-				templateUrl: 'modules/company/views/list.html',
-				controller: 'CompanyListController'
-			}
-		}
-	})
+		.state('loggedIn.company', {
+			url: '/companyload',
+			resolve: {
+				init: function($q, $rootScope, $state, $timeout, $ocLazyLoad){
+					$ocLazyLoad.load("modules/company/extend_routes.js");
+					$ocLazyLoad.load("modules/company/models/CompanyModel.js");
+					$ocLazyLoad.load("modules/company/services/CompanyServices.js");
+					$ocLazyLoad.load("modules/company/controllers/CompanyAddController.js");
+					$ocLazyLoad.load("modules/company/controllers/CompanyEditController.js");
+					$ocLazyLoad.load("modules/company/controllers/CompanyListController.js");
+					$ocLazyLoad.load("modules/company/controllers/CompanyListInsurerController.js");
+					$ocLazyLoad.load("modules/company/controllers/CompanyListNotFollowController.js");
+					$ocLazyLoad.load("modules/company/controllers/CompanyListParentController.js");
 
-	.state('loggedIn.patient.company.add', {
-			url: '/add',
-			views: {
-				'@loggedIn': {
-					templateUrl: 'modules/company/views/add.html',
-					controller: 'CompanyAddController'
-				}
-			}//end views
-		})
-	.state('loggedIn.patient.company.addCompanyNotFollow', {
-			url: '/addCompany',
-			views: {
-				'@loggedIn': {
-					templateUrl: 'modules/company/views/addCompanyNotFollow.html'
-				}
-			}//end views
-		})
-	.state('loggedIn.patient.company.addParent',{
-			url:'/addParent',
-			views:{
-				'@loggedIn':{
-					templateUrl : 'modules/company/dialogs/addParent.html',
-					controller : 'CompanyAddParentDialgosController'
+
+					$ocLazyLoad.load("modules/company/dialogs/CompanyAddNewInsurerDialgosController.js");
+					$ocLazyLoad.load("modules/company/dialogs/CompanyAddParentDialgosController.js");
+					$ocLazyLoad.load("modules/company/dialogs/CompanyInsurerDialgosController.js");
+					$ocLazyLoad.load("modules/company/dialogs/CompanyListNoFollowDialog.js");
+					$ocLazyLoad.load("modules/company/dialogs/CompanyRemoveDialog.js");
+
+					$ocLazyLoad.load("modules/company/directives/CompanyAddDirective.js");
+					$ocLazyLoad.load("modules/company/directives/CompanyAddNotFollowDirective.js");
+					$ocLazyLoad.load("modules/company/directives/CompanyEditDirective.js");
+					$ocLazyLoad.load("modules/company/directives/CompanyListDirective.js");
+					$ocLazyLoad.load("modules/company/directives/CompanyListInsurerDirective.js");
+					$ocLazyLoad.load("modules/company/directives/CompanyListNotFollowDirective.js");
+					$ocLazyLoad.load("modules/company/directives/CompanyListParentDirective.js");
+
+					$ocLazyLoad.load("modules/insurer/directives/InsurerDetail.js")
+		
+					.then(function(){
+						$state.go('loggedIn.company_list');
+					})
 				}
 			}
-	})
-	.state('loggedIn.patient.company.addInsurer',{
-			url:'/addParent',
-			views:{
-				'@loggedIn':{
-					templateUrl : 'modules/company/dialogs/addInsurer.html',
-					controller : 'CompanyInsurerDialgosController'
-				}
-			}
-	})
-	.state('loggedIn.patient.company.listParent', {
-			url: '/listParent',
-			views: {
-				'@loggedIn': {
-					templateUrl: 'modules/company/views/listParent.html',
-					controller: 'CompanyListParentController'
-				}
-			}//end views
 		})
-	.state('loggedIn.patient.company.listInsurer', {
-			url: '/listInsurer',
-			views: {
-				'@loggedIn': {
-					templateUrl: 'modules/company/views/listInsurer.html',
-					controller: 'CompanylistInsurerController'
-				}
-			}//end views
-		})
-	.state('loggedIn.patient.company.edit', {
-			url: '/:companyId/edit',
-			views: {
-				'@loggedIn': {
-					templateUrl: 'modules/company/views/edit.html',
-					controller: 'CompanyEditController'
-				}
-			}//end views
-		})
+
+
 })

@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.company.models", [])
+angular.module('app.loggedIn.company')
     
 .factory("CompanyModel", function (Restangular) {
 
@@ -78,11 +78,6 @@ angular.module("app.loggedIn.company.models", [])
     }
      instanceService.selectInsurer = function(data){
         var instanceApi = mainApi.all('selectInsurer');
-        return instanceApi.post({data: data});
-    }
-    //Appointment Controller
-     instanceService.getFromTime = function(data){
-        var instanceApi = mainApi.all('getFromTime');
         return instanceApi.post({data: data});
     }
     return instanceService;

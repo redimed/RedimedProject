@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.outreferral.directives.patientList', [])
+angular.module('app.loggedIn.outreferral')
 
 .controller('OutreferralPatientRemoveDialog', function($scope, $modalInstance, list){
 	$scope.cancel = function(){

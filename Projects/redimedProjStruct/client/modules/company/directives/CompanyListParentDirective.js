@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.company.directives.listParent', [])
+angular.module('app.loggedIn.company')
 
 .directive('listParent', function(CompanyModel, $filter,$state){
 	return {

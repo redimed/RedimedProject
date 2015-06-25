@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.outreferral.directives.patientEdit', [])
+angular.module('app.loggedIn.outreferral')
 
 .directive('outreferralPatientEdit', function($cookieStore, $modal, OutreferralModel, ConfigService){
 	return {

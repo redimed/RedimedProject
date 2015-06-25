@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.company.dialog.addInusrer', [])
+angular.module('app.loggedIn.company')
 
 .controller('CompanyInsurerDialgosController', function($scope, CompanyModel,$modalInstance,insurerArray){
 	$scope.insurerArray = insurerArray;

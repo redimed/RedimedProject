@@ -1,5 +1,4 @@
-angular.module('app.loggedIn.company.dialog.addParent', [])
-
+angular.module('app.loggedIn.company')
 .controller('CompanyAddParentDialgosController', function($scope, CompanyModel,$modalInstance, companyId){
 	
 	$scope.companyId = companyId;

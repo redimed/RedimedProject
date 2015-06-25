@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.company.controllers.listInsurer', [])
+angular.module('app.loggedIn.company')
 
 .controller('CompanylistInsurerController', function($scope, $state){
 	

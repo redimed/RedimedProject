@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.company.directives.listNotFollow', [])
+angular.module('app.loggedIn.company')
 
 .directive('listCompanyNotfollow', function(CompanyModel, $filter,$state,$stateParams){
 	return {

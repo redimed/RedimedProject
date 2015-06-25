@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.company.directives.addCompanyNotFollow', [])
+angular.module('app.loggedIn.company')
 
 .directive('addCompanyNotFollow', function(CompanyModel, $filter,$state,$modal,$stateParams,toastr,$cookieStore,ConfigService,$q){
 	return {
