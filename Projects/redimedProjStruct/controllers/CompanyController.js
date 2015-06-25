@@ -19,7 +19,12 @@ module.exports = {
                 .toString();
         db.sequelize.query(sql)
         .success(function(data){
-            res.json({data: data[0]});
+            if (data.length == 0) {
+                res.json({data: -1});
+            }else{
+                res.json({data: data[0]});
+            }
+            
         })
         .error(function(error){
             res.json(500, {error: error,sql:sql});
