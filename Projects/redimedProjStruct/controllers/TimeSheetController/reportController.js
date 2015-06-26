@@ -1771,11 +1771,16 @@ module.exports = {
                                                                                " INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id " +//INNER JOIN 
                                                                                " WHERE time_tasks_week.task_status_id = 3 "+//WHERE
                                                                                " AND departments.departmentid IN ( " + stringDept + " ) "+//WHERE
-                                                                               " AND (time_tasks_week.start_date BETWEEN :start_date AND :end_date)"+//WHERE
-                                                                               " AND (time_tasks_week.end_date BETWEEN :start_date AND :end_date)"+//WHERE
+                                                                               " AND (time_tasks_week.start_date BETWEEN :start_date AND :end_date )"+//WHERE
+                                                                               " AND (time_tasks_week.end_date BETWEEN :start_date AND :end_date )"+//WHERE
                                                                                " AND hr_employee.Employee_ID IN ( " + stringEMP + " ) ";//WHERE
                                 //GET DATA TABLE time_activity_summary_table
-                                db.sequelize.query(sql_get_data_time_activity_summary_table)
+                                db.sequelize.query(sql_get_data_time_activity_summary_table,null,{
+                                    raw :true
+                                },{
+                                    start_date : info.weekFrom,
+                                    end_date   : info.weekTo
+                                })
                                     .success(function(data_time_activity_summary_table) {
                                         
                                         //INSERT DATA INTO time_activity_summary_table
