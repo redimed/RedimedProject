@@ -207,7 +207,6 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
 
     //FUNCTION CHECK TASK WEEK
     $scope.checkTaskWeek = function(date) {
-        $scope.tasks = [];
         startWeek = $filter('date')(date, 'yyyy-MM-dd');
         $scope.info.startWeek = startWeek;
         StaffService.checkTaskWeek($scope.info).then(function(response) {
@@ -215,74 +214,31 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 toastr.error("Error", "Error");
             } else {
                 if (response['data'] !== 'no') {
+                    $scope.tasks = [];
                     angular.forEach(response['data'], function(data) {
                         data.isEdit = true;
                         $scope.tasks.push(data);
                     });
                 } else {
+                    $scope.orgiTask = angular.copy($scope.tasks);
+                    $scope.tasks = [];
                     $scope.viewWeek = calendarHelper.getWeekView(date, true);
-                    angular.forEach($scope.viewWeek.columns, function(data) {
+                    angular.forEach($scope.viewWeek.columns, function(data, index) {
                         $scope.task = {
-                            order: 1,
-                            task: null,
+                            order: $scope.orgiTask[index].order,
+                            task: $scope.orgiTask[index].task,
                             date: data.dateChosen,
-                            department_code_id: null,
-                            location_id: null,
-                            activity_id: null,
-                            time_charge: null,
-                            isInputItem: false,
-                            isBillable: false,
-                            isParent: 1,
-                            item: []
+                            department_code_id: $scope.orgiTask[index].department_code_id,
+                            location_id: $scope.orgiTask[index].location_id,
+                            activity_id: $scope.orgiTask[index].activity_id,
+                            time_charge: $scope.orgiTask[index].time_charge,
+                            isInputItem: $scope.orgiTask[index].isInputItem,
+                            isBillable: $scope.orgiTask[index].isBillable,
+                            isParent: $scope.orgiTask[index].isParent,
+                            item: $scope.orgiTask[index].item
                         };
                         $scope.tasks.push($scope.task);
                     });
-                    //PUSH WEEKEND LEAVE
-                    //SET DEFAULT WEEKEND
-                    if ($scope.tasks !== undefined &&
-                        $scope.tasks !== null &&
-                        $scope.tasks.length !== 0 &&
-                        $scope.tasks[$scope.tasks.length - 1] !== undefined &&
-                        $scope.tasks[$scope.tasks.length - 2] !== undefined) {
-                        $scope.tasks[$scope.tasks.length - 1].activity_id = 5; //SET ATIVITY_ID DEFAULT FOR SUN
-                        $scope.tasks[$scope.tasks.length - 2].activity_id = 5; //SET ATIVITY_ID DEFAULT FOR SAT
-
-                        //SET DEFAULT ITEM FOR SUN
-                        if ($scope.tasks[$scope.tasks.length - 1].item !== undefined && $scope.tasks[$scope.tasks.length - 1].item !== null) {
-                            var item = {};
-                            item.isAction = 'insert';
-                            item.time_temp = 0;
-                            item.totalUnits = 0;
-                            item.ratio = 0;
-                            item.time_charge = '0000';
-                            item.ITEM_ID = 18;
-                            item.ITEM_NAME = "Weekend Leave";
-                            $scope.tasks[$scope.tasks.length - 1].item.push(item);
-                            $scope.tasks[$scope.tasks.length - 1].time_charge = '0000';
-                            $scope.tasks[$scope.tasks.length - 1].time_temp = 0;
-                            $scope.tasks[$scope.tasks.length - 1].notPopup = true;
-                        }
-                        //END SUN
-
-                        //SET DEFAULT ITEM FOR SAT
-                        if ($scope.tasks[$scope.tasks.length - 2].item !== undefined && $scope.tasks[$scope.tasks.length - 2].item !== null) {
-                            var item = {};
-                            item.isAction = 'insert';
-                            item.time_temp = 0;
-                            item.totalUnits = 0;
-                            item.ratio = 0;
-                            item.time_charge = '0000';
-                            item.ITEM_ID = 18;
-                            item.ITEM_NAME = "Weekend Leave";
-                            $scope.tasks[$scope.tasks.length - 2].item.push(item);
-                            $scope.tasks[$scope.tasks.length - 2].time_charge = '0000';
-                            $scope.tasks[$scope.tasks.length - 2].time_temp = 0;
-                            $scope.tasks[$scope.tasks.length - 2].notPopup = true;
-                        }
-                        //EN SAT
-                    }
-                    //END SET
-                    //END
                 }
             }
         });
