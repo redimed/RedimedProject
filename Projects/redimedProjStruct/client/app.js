@@ -20,7 +20,6 @@ angular.module("app", [
         "app.config", // ANGULAR CONFIG
         "app.model", // ANGULAR MODEL
         "app.lockscreen.controller", //LOCKSCREEN CONTROLLER
-        "app.call.controller", //CALL CONTROLLER
         "ui.slider", // ANGULAR SLIDER
         "pragmatic-angular", // ANGULAR PRAGMATIC
         "cfp.hotkeys", // ANGULAR HOTKEYS
@@ -169,26 +168,6 @@ angular.module("app", [
                 }
             }
 
-        })
-
-        .state('call', {
-            url: '/call/:apiKey/:sessionId/:token/:callUser/:isCaller/:patientId',
-            views: {
-                "root": {
-                    templateUrl: "common/views/call.html",
-                    controller: 'callController'
-                }
-            }
-        })
-
-        .state('whiteboard',{
-            url: '/whiteboard/:apiKey/:sessionId/:token/:patientId',
-            views: {
-                "root": {
-                    templateUrl: "common/views/whiteboard.html",
-                    controller: 'whiteboardController'
-                }
-            }
         })
 
         .state('notifyScreen',{

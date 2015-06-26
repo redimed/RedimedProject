@@ -39,7 +39,7 @@ angular.module("app.loggedIn.controller",[
 
             $modalInstance.close();
 
-            popup($state.href("call",{apiKey:opentokRoom.apiKey,sessionId:opentokRoom.sessionId,token:opentokRoom.token,callUser: userInfo.id, isCaller: 0, patientId: patientId}));
+            popup($state.href("loggedIn.make_call",{apiKey:opentokRoom.apiKey,sessionId:opentokRoom.sessionId,token:opentokRoom.token,callUser: userInfo.id, isCaller: 0, patientId: patientId}));
         }
 
         var newwin = null;

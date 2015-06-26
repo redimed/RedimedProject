@@ -86,7 +86,9 @@ angular.module("app.loggedIn", [
     // 'app.loggedIn.problem',
     'app.loggedIn.fadefine',
 
-    'app.loggedIn.template'
+    'app.loggedIn.template',
+
+    'app.loggedIn.calling'
 ])
 
 .config(function($stateProvider) {

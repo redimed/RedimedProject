@@ -1,8 +1,7 @@
 /**
  * Created by Luan Nguyen on 1/26/2015.
  */
-angular.module("app.call.controller",[
-])
+angular.module("app.loggedIn.calling")
     .controller("callController", function($timeout,$scope,$document,$modalStack,$interval,$location,$rootScope, OTSession, $state,$modal, $cookieStore,toastr,$window,socket,UserService, $stateParams){
         var audio = new Audio('theme/assets/phone_calling.mp3');
         var toSt= $cookieStore.get('toState');
@@ -328,7 +327,7 @@ angular.module("app.call.controller",[
                 if($scope.streams.length < 2)
                 {
                     var modalInstance = $modal.open({
-                        templateUrl: 'common/views/dialog/invitePeople.html',
+                        templateUrl: 'modules/makeCall/views/dialogs/invitePeople.html',
                         size: 'sm',
                         backdrop: 'static',
                         keyboard: false,
@@ -504,7 +503,7 @@ angular.module("app.call.controller",[
             scope: {
                 callSession: '='
             },
-            templateUrl: 'common/views/medicalDevice.html',
+            templateUrl: 'modules/makeCall/views/medicalDevice.html',
             link: function(scope, element, attrs){
                 scope.onlineDevice = null;
                 scope.onlineData = null;
