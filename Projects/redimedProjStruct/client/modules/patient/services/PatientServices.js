@@ -453,5 +453,9 @@ angular.module("app.loggedIn.patient.services", [])
             ]
         };
     }
+    instanceService.Add_CAL = function(data){
+        var funcApi = mdtApi.all("appt_add");
+        return funcApi.post({data: data});
+    } 
     return instanceService;
 })

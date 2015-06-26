@@ -29,6 +29,8 @@ app.post("/api/meditek/v1/patient/claim/add", mdtClaimController.postAdd);
 
 //MODULE APPOINTMENT
 app.get("/api/meditek/v1/appointment/byId", mdtAppointmentController.postById);
+//phu
+app.post("/api/meditek/v1/patient/appt_add", mdtPatientController.postAddAppt);
 
 //MODULE COMPANY
 app.post("/api/meditek/v1/company/search", mdtCompanyController.postSearch);

@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.patient.appt.controller", [])
-.controller("PatientApptListController", function($scope, $state, $filter, toastr, $stateParams, DoctorService, PatientService, ReceptionistService, ConfigService){
+.controller("PatientApptListController", function($scope, $state, $modal, $filter, toastr, $stateParams, DoctorService, PatientService, ReceptionistService, ConfigService){
 	var patient_id = $stateParams.patient_id;
     var cal_id = $stateParams.cal_id;
 
@@ -84,7 +84,7 @@ angular.module("app.loggedIn.patient.appt.controller", [])
 
 		console.log($scope.appointment)
 	});
-
+	/*
 	$scope.formRecall = {
 		is_show: false,
 		open: function(){
@@ -94,10 +94,37 @@ angular.module("app.loggedIn.patient.appt.controller", [])
 			this.is_show = false;
 		}
 	}
+	*/
+	var open = function(){
 
+		var modalInstance = $modal.open({
+	        templateUrl: 'NewCall',
+	        size :'lg',
+	        controller: function($scope, $modalInstance){
+	        	$scope.refresh = false;
+
+	        	$scope.$watch('refresh', function(refresh){
+	        		if(refresh)
+	        			$modalInstance.close('success');
+	        	})
+	        }
+       	})
+       	.result.then(function(success){
+       		if(success){
+       			getRecallApptNew();
+       		}
+
+       	})
+
+	}
+
+	$scope.formRecall = {
+		open: function() { open(); }
+	}
 	/*
 	*	MAKE A RECALL 
 	*/
+	/*
 	$scope.appointment = {};
 	$scope.modelObjectMap = {site: 1, service: '' };
 	$scope.modelObjectMap.datepicker = new Date();
@@ -193,7 +220,7 @@ angular.module("app.loggedIn.patient.appt.controller", [])
 				$scope.overviewAppointment = [];
 			}
 		});
-    }
+    }*/
 
     $scope.bookingPatient = function(data, calIndex, doctorIndex) {
     	console.log(data)
