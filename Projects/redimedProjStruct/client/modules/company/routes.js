@@ -3,7 +3,7 @@ angular.module('app.loggedIn.company', [])
 .config(function($stateProvider){
 	$stateProvider
 
-		.state('loggedIn.company', {
+		.state('loggedIn.patient.company', {
 			url: '/companyload',
 			resolve: {
 				init: function($q, $rootScope, $state, $timeout, $ocLazyLoad){
@@ -35,7 +35,7 @@ angular.module('app.loggedIn.company', [])
 					$ocLazyLoad.load("modules/insurer/directives/InsurerDetail.js")
 		
 					.then(function(){
-						$state.go('loggedIn.company_list');
+						$state.go('loggedIn.patient.company_list');
 					})
 				}
 			}

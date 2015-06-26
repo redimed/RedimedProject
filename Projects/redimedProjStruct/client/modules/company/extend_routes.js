@@ -2,8 +2,6 @@ angular.module('app.loggedIn.company')
 
 .config(function($stateProvider){
 	$stateProvider
-	.state('loggedIn.company_list', {
-	})
 	.state('loggedIn.patient.company', {
 		url: '/company',
 		views: {
