@@ -1,7 +1,7 @@
 /**
  * Created by meditech on 23/09/2014.
  */
-angular.module('app.loggedIn.function.services',[])
+angular.module("app.loggedIn.function")
 .factory("FunctionService", function(Restangular){
         var functionService = {};
         var api = Restangular.all("api");

@@ -17,13 +17,6 @@ angular.module('app.loggedIn.appointment', [])
 					$ocLazyLoad.load("modules/outreferral/directives/OutreferralPatientListDirective.js");
 					$ocLazyLoad.load("modules/outreferral/directives/OutreferralPatientAddDirective.js");
 					
-					//endtest
-					$ocLazyLoad.load("modules/problem/extend_routes.js");
-                    $ocLazyLoad.load("modules/problem/controllers/ProblemController.js");
-                    $ocLazyLoad.load("modules/problem/controllers/ProblemListController.js");
-                    $ocLazyLoad.load("modules/problem/directives/ProblemDetailDirective.js");
-                    $ocLazyLoad.load("modules/problem/directives/ProblemDirective.js")
-					//endtest
 					$ocLazyLoad.load("modules/patient/directives/PatientSearch.js");
 					$ocLazyLoad.load("modules/patient/directives/PatientWaitingList.js");
 					$ocLazyLoad.load("modules/waitingList/directives/waitingListAddDirective.js");

@@ -7,7 +7,6 @@ angular.module("app.loggedIn.department",[])
 			url: '/departmentload',
 			resolve: {
 				init: function($q, $rootScope, $state, $timeout, $ocLazyLoad){
-					alert('-12');
 					$ocLazyLoad.load("modules/department/extend_routes.js");
 					$ocLazyLoad.load("modules/department/controllers/DepartmentController.js");
 					$ocLazyLoad.load("modules/department/controllers/DepartmentListController.js");

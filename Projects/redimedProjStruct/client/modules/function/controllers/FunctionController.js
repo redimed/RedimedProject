@@ -1,7 +1,7 @@
 /**
  * Created by meditech on 23/09/2014.
  */
-angular.module('app.loggedIn.function.controller',[])
+angular.module("app.loggedIn.function")
 .controller("FunctionController",function($scope,$state,$modal,$filter,ngTableParams,FunctionService,$http,toastr){
     $scope.data=[];
     $scope.rs = [];
