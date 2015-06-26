@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.mdtoutdoctor.add.dialog', [])
+angular.module('app.loggedIn.mdtoutdoctor')
 .controller('MdtoutdoctorAdddialog', function($scope,$modalInstance){
 	$scope.OutsideDoctor = {
 		success: false,

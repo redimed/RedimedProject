@@ -1,8 +1,4 @@
-angular.module('app.loggedIn.patient.problem', [
-    'app.loggedIn.patient.problem.list.controller',
-    'app.loggedIn.patient.problem.directive',
-    'app.loggedIn.patient.problem.service'
-])
+angular.module('app.loggedIn.patient.problem')
 .config(function($stateProvider){
     $stateProvider
         // .state("loggedIn.patient.problem", {

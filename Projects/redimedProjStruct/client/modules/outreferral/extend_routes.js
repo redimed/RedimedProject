@@ -3,10 +3,7 @@ angular.module('app.loggedIn.outreferral')
 .config(function($stateProvider){
 
 	$stateProvider
-	.state('loggedIn.outreferral_list', {
-		
-	})
-	.state('loggedIn.patient.outreferral', {
+	.state('loggedIn.patient.outreferral_list', {
 		abstract: true,
 		url: '/outreferral'
 		 //'/:patientId/cal/:calId/claim'

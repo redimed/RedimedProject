@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.patient.problem.list.controller',[])
+angular.module('app.loggedIn.patient.problem')
 .controller('ProblemListController',function($scope, $stateParams, ConfigService){
 	$scope.problem_panel={};
 

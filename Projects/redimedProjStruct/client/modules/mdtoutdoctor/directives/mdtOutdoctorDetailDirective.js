@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.mdtoutdoctor.detail.directive', [])
+angular.module('app.loggedIn.mdtoutdoctor')
 
 .directive('mdtoutdoctorDetail', function(mdtOutdoctorModel, ConfigService, mdtOutdoctorService, toastr){
 	return {

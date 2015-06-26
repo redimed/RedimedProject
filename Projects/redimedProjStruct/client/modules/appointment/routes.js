@@ -17,15 +17,13 @@ angular.module('app.loggedIn.appointment', [])
 					$ocLazyLoad.load("modules/outreferral/directives/OutreferralPatientListDirective.js");
 					$ocLazyLoad.load("modules/outreferral/directives/OutreferralPatientAddDirective.js");
 					
-					//endcompany
-					$ocLazyLoad.load("modules/outreferral/extend_routes.js");
-					$ocLazyLoad.load("modules/outreferral/controllers/OutreferralPatientListController.js");
-					$ocLazyLoad.load("modules/outreferral/directives/OutreferralPatientAddDirective.js");
-					$ocLazyLoad.load("modules/outreferral/directives/OutreferralPatientEditDirective.js");
-					$ocLazyLoad.load("modules/outreferral/directives/OutreferralPatientListDirective.js");
-					$ocLazyLoad.load("modules/outreferral/directives/OutreferralPatientShowDirective.js");
-					$ocLazyLoad.load("modules/outreferral/modules/OutreferralModel.js");
-					//endcompany
+					//endtest
+					$ocLazyLoad.load("modules/problem/extend_routes.js");
+                    $ocLazyLoad.load("modules/problem/controllers/ProblemController.js");
+                    $ocLazyLoad.load("modules/problem/controllers/ProblemListController.js");
+                    $ocLazyLoad.load("modules/problem/directives/ProblemDetailDirective.js");
+                    $ocLazyLoad.load("modules/problem/directives/ProblemDirective.js")
+					//endtest
 					$ocLazyLoad.load("modules/patient/directives/PatientSearch.js");
 					$ocLazyLoad.load("modules/patient/directives/PatientWaitingList.js");
 					$ocLazyLoad.load("modules/waitingList/directives/waitingListAddDirective.js");

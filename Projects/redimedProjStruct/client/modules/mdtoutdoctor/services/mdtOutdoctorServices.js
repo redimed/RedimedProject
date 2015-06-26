@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.mdtoutdoctor.services', [])
+angular.module('app.loggedIn.mdtoutdoctor')
 
 .factory('mdtOutdoctorService', function(Restangular){
 	var mdtService = {}

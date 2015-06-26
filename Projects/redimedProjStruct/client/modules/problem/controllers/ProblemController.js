@@ -1,6 +1,4 @@
-angular.module('app.loggedIn.problem.controller',[
-	'app.loggedIn.problem.list.controller'
-])
+angular.module('app.loggedIn.patient.problem')
 
 .controller("ProblemController", function(){
 	

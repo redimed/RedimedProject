@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.mdtdoctor.detail.directive', [])
+angular.module('app.loggedIn.mdtdoctor')
 
 .controller('SpecialtyRemoveDialog', function($scope, $modalInstance, list){
 	$scope.cancel = function(){

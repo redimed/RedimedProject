@@ -1,4 +1,6 @@
-angular.module('app.loggedIn.mdtdoctor.search.directive', []).directive('mdtdoctorSearch', function(mdtDoctorService, toastr,$modal){
+angular.module('app.loggedIn.mdtdoctor')
+
+.directive('mdtdoctorSearch', function(mdtDoctorService, toastr,$modal){
 	return {
 		restrict: 'EA',
 		scope: {
