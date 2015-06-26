@@ -1,5 +1,4 @@
-angular.module('app.loggedIn.company.controllers.listNotFollow', [])
-
+angular.module('app.loggedIn.company')
 .controller('CompanyListNotFollowController', function($scope, $state){
 	
 })

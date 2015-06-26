@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.company.dialog.addNewInusrer', [])
+angular.module('app.loggedIn.company')
 
 .controller('CompanyAddNewInsurerDialgosController', function($scope, CompanyModel,$modalInstance){
 	$scope.responsedata = null;

@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.outreferral.controllers.patientList', [])
+angular.module('app.loggedIn.outreferral')
 
 .controller('OutreferralPatientListController', function($scope, $modal, $stateParams, toastr){
 	var add = function(){

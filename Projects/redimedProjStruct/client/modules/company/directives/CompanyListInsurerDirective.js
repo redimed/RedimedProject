@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.company.directives.listInsurer', [])
+angular.module('app.loggedIn.company')
 
 .directive('listInsurer', function(CompanyModel, $filter,$state, $modal,toastr){
 	return {

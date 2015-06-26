@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.company.directives.list', [])
+angular.module('app.loggedIn.company')
 
 .directive('listCompany', function(CompanyModel, $filter,$state,$stateParams,$modal,toastr){
 	return {
@@ -21,12 +21,10 @@ angular.module('app.loggedIn.company.directives.list', [])
 				Company_name:'',
 				Industry:'',
 				Addr:'',
-				from_date:'',
-				to_date:''
+				country:''
 			}
 			scope.onRowClick = function(row){
 				scope.updateCompany.id = row.id;
-				scope.updateCompany.to_date = null;
 				// scope.updateCompany.patient_id =$stateParams.patientId;// tannv.dts@gmail.com comment
 				scope.updateCompany.patient_id =$stateParams.patient_id; // tannv.dts@gmail.com add
 				var postData = angular.copy(scope.updateCompany);
@@ -98,7 +96,7 @@ angular.module('app.loggedIn.company.directives.list', [])
 			      }
 			    })
 			    .result.then(function(row){
-					scope.company.load();
+					
 					
 				})
 			}
@@ -127,7 +125,6 @@ angular.module('app.loggedIn.company.directives.list', [])
 				scope.company.load();
 			}
 			scope.disableCompany = function(row){
-
 				var postData ={
 					// patient_id :$stateParams.patientId,//tannv.dts@gmail.com comment
 					patient_id :$stateParams.patient_id,// tannv.dts@gmail.com add

@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.company.dialog.listNoFollow', [])
+angular.module('app.loggedIn.company')
 
 .controller('CompanyListNoFollowDialog', function($scope, CompanyModel,$modalInstance ,listId){
 	$scope.listId = listId;

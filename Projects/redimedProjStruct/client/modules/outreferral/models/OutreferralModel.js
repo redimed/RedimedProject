@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.outreferral.model", [])
+angular.module('app.loggedIn.outreferral')
     
 .factory("OutreferralModel", function (Restangular) {
     var instanceService = {};

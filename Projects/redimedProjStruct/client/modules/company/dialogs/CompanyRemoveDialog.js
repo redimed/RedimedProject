@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.company.dialog.remove', [])
+angular.module('app.loggedIn.company')
 .controller('CompanyRemoveDialog', function($scope, $modalInstance, row){
 	$scope.cancel = function(){
 		$modalInstance.dismiss('cancel');

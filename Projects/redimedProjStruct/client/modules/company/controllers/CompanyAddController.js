@@ -1,9 +1,9 @@
-angular.module('app.loggedIn.company.controllers.add', [])
-
+angular.module('app.loggedIn.company')
 .controller('CompanyAddController', function($scope, $state,$modalInstance){
 	$scope.actionCenter={
 		closeModal:function(){
-			$modalInstance.close('success');
+			$modalInstance.dismiss('cancel');
 		}
 	}
+
 })

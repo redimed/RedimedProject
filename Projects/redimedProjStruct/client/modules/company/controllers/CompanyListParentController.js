@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.company.controllers.listParent', [])
+angular.module('app.loggedIn.company')
 
 .controller('CompanyListParentController', function($scope, $state){
 	
