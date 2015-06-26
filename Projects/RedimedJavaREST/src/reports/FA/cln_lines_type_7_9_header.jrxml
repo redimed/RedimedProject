@@ -119,7 +119,11 @@ and detail.ORD = 1]]>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Job demand: "+$F{VAL1_VALUE}+" kgs"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Job demand: "+$F{VAL1_VALUE}+
+($F{VAL1_ISVALUE}==7?" kgs":
+$F{VAL1_ISVALUE}==8?" m":
+$F{VAL1_ISVALUE}==9?" mm":
+$F{VAL1_ISVALUE}==10?" g":"")]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="115" y="0" width="139" height="22" uuid="03efd4ff-4466-419a-b971-c7f1890d4647">

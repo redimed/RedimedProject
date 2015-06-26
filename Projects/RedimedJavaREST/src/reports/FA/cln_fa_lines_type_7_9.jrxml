@@ -17,8 +17,8 @@ where line.ISENABLE = 1
 and line.PATIENT_ID =  $P{patient_id}
 and line.CAL_ID = $P{cal_id}
 and line.LINE_ID = $P{line_id}
-and line.LineType !=1
-and (line.SCORE_TYPE1=7 or line.SCORE_TYPE1=9)]]>
+and line.LineType !=18
+and (line.SCORE_TYPE1=7 or line.SCORE_TYPE1=9 or line.SCORE_TYPE1=18 or line.SCORE_TYPE1=17 or line.SCORE_TYPE1=19)]]>
 	</queryString>
 	<field name="PATIENT_ID" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -173,19 +173,13 @@ and (line.SCORE_TYPE1=7 or line.SCORE_TYPE1=9)]]>
 				</textElement>
 				<text><![CDATA[REP]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="40" y="0" width="60" height="44" uuid="2b192bea-9639-432f-a876-0c90c573ff1c"/>
-				<box>
-					<topPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+			<textField>
+				<reportElement x="40" y="0" width="60" height="44" uuid="8100ac79-2ff9-48e3-9149-97c281096a48"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[WEIGHT]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$F{SCORE_TYPE1}==7 || $F{SCORE_TYPE1}==9 || $F{SCORE_TYPE1}==18?"WEIGHT":"HEIGHT"]]></textFieldExpression>
+			</textField>
 			<staticText>
 				<reportElement x="100" y="0" width="100" height="44" uuid="20342624-5360-4d51-a6b5-1e986fc0dcc2"/>
 				<box>
@@ -356,7 +350,10 @@ and (line.SCORE_TYPE1=7 or line.SCORE_TYPE1=9)]]>
 					<font isBold="true"/>
 					<paragraph leftIndent="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Managed: "+$F{SCORE1}+" kg"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{SCORE_TYPE1}==9?("Managed: "+$F{SCORE1}+" kg"):
+$F{SCORE_TYPE1}==18?("Comfortable managed: "+$F{SCORE1}+" kg"):
+$F{SCORE_TYPE1}==17?("Managed: "+$F{SCORE1}+" mm"):
+$F{SCORE_TYPE1}==17?("Comfortable managed: "+$F{SCORE1}+" mm"):""]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
