@@ -1,5 +1,4 @@
-angular.module("app.loggedIn.insurer.add.controller",[
-])
+angular.module("app.loggedIn.insurer")
 .controller("InsurerAddController", function($scope, $state){
 	
 

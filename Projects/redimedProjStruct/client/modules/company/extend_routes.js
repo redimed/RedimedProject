@@ -2,7 +2,7 @@ angular.module('app.loggedIn.company')
 
 .config(function($stateProvider){
 	$stateProvider
-	.state('loggedIn.patient.company', {
+	.state('loggedIn.patient.company_list', {
 		url: '/company',
 		views: {
 			'main-content@loggedIn.patient': {
@@ -64,7 +64,7 @@ angular.module('app.loggedIn.company')
 				}
 			}//end views
 		})
-	.state('loggedIn.patient.company.edit', {
+	.state('loggedIn.patient.company_list.edit', {
 			url: '/:companyId/edit',
 			views: {
 				'@loggedIn': {

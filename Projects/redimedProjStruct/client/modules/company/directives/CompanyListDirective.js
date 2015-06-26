@@ -61,8 +61,7 @@ angular.module('app.loggedIn.company')
 			}
 
 			scope.clickEdit = function(row){
-					// $state.go('loggedIn.company.edit',{companyId:row.id});//tan comment
-					$state.go('loggedIn.patient.company.edit',{companyId:row.id});//tan add
+				$state.go('loggedIn.patient.company_list.edit',{companyId:row.id});//tan add
 			}
 			var load = function(){
 				scope.company.loading = true;

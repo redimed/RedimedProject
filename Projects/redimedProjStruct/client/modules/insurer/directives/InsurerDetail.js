@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.insurer.detail.directive", [])
+angular.module("app.loggedIn.insurer")
 .directive("insurerDetail", function (InsurerModel, InsurerService, ConfigService, toastr) {
     return{
         restrict: "EA",

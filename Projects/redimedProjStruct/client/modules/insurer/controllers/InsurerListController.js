@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.insurer.list.controller", [])
+angular.module("app.loggedIn.insurer")
 
         .controller("InsurerListController", function ($scope, $state, localStorageService) {
     
