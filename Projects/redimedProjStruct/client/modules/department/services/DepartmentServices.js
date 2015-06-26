@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.department.services", [])
+angular.module("app.loggedIn.department")
     .factory("DepartmentService", function (Restangular) {
         var instanceService = {};
         var appApi = Restangular.all("api/erm");

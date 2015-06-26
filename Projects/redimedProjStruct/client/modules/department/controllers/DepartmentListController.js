@@ -1,5 +1,5 @@
-angular.module("app.loggedIn.department.list.controller", [
-])
+angular.module("app.loggedIn.department")
+
     .controller("DepartmentListController", function ($scope, $state, $filter, DepartmentService, toastr) {
         var arrGetBy = $filter('arrGetBy');
         $scope.departmentInfo = {};

@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.department.detail.directive", [])
+angular.module("app.loggedIn.department")
 .directive("departmentDetail", function (ClnDepartmentModel, DepartmentService, ConfigService, toastr) {
     return{
         restrict: "EA",

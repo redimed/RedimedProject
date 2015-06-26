@@ -1,6 +1,4 @@
-angular.module("app.loggedIn.department.controller", [
-    "app.loggedIn.department.list.controller",
-])
+angular.module("app.loggedIn.department")
 .controller("DepartmentController", function ($scope, ConfigService) {
     
 })

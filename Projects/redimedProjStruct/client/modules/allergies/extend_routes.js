@@ -9,7 +9,7 @@ angular.module('app.loggedIn.allergy')
 		controller: "AllergyListController"
     })
 
-    .state("loggedIn.patient.allergy", {
+    .state("loggedIn.patient.allergy_list", {
         views: {
             "main-content@loggedIn.patient": {
                 templateUrl: "modules/allergies/views/structure.html",

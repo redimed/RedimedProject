@@ -10,7 +10,7 @@ angular.module('app.loggedIn.alert')
 		controller: 'AlertListController'
 	})
 
-	.state('loggedIn.patient.alert', {
+	.state('loggedIn.patient.alert_list', {
 		abstract: true,
 		url: '/patientalert'
 	})
