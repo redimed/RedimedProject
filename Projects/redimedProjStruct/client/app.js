@@ -15,6 +15,7 @@ angular.module("app", [
         "angular-loading-bar", // ANGULAR LOADING BAR
         "ngTable", // ANGULAR TABLE
         "ngIdle", // Ng-Idle
+        "app.calling", //MODULES CALL
         "app.loggedIn", // MODULES LOGGED IN
         "app.security", // FOR LOGIN, FOTGOT FORM, REGISTER FORM
         "app.config", // ANGULAR CONFIG

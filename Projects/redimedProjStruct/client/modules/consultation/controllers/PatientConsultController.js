@@ -521,10 +521,8 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 
 			socket.emit("generateSession",$scope.userInfo.id);
 			socket.on("generateSessionSuccess",function(opentokRoom){
-				// console.log("URL: ",$state.href('loggedIn.make_call',{apiKey:opentokRoom.apiKey,sessionId:opentokRoom.sessionId,token:opentokRoom.token,callUser: user.id, isCaller: 1, patientId:$scope.patient_id}))
-				console.log("URL: ",$state.href('loggedIn.home'));
-				// popup($state.href('loggedIn.userProfile'));
-				// popup($state.href('loggedIn.make_call',{apiKey:opentokRoom.apiKey,sessionId:opentokRoom.sessionId,token:opentokRoom.token,callUser: user.id, isCaller: 1, patientId:$scope.patient_id}));
+				if(opentokRoom)
+					popup($state.href('make_call',{apiKey:opentokRoom.apiKey,sessionId:opentokRoom.sessionId,token:opentokRoom.token,callUser: user.id, isCaller: 1, patientId:$scope.patient_id}));
 			})
 	    }
 

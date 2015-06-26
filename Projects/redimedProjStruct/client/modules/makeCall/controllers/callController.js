@@ -1,7 +1,7 @@
 /**
  * Created by Luan Nguyen on 1/26/2015.
  */
-angular.module("app.loggedIn.calling")
+angular.module("app.calling")
     .controller("callController", function($timeout,$scope,$document,$modalStack,$interval,$location,$rootScope, OTSession, $state,$modal, $cookieStore,toastr,$window,socket,UserService, $stateParams){
         var audio = new Audio('theme/assets/phone_calling.mp3');
         var toSt= $cookieStore.get('toState');
