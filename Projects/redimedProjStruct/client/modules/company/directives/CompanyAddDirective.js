@@ -190,9 +190,9 @@ angular.module('app.loggedIn.company.directives.add', [])
 									$scope.close = function(){
   										$modalInstance.dismiss('cancel');
     								}
-									$scope.submitItem = function(data){
+									$scope.submitItem = function(){
 
-										form.Site_medic.push({name:data})
+										form.Site_medic.push({name:$scope.listInfo.name})
 										console.log(form.Site_medic);
 										toastr.success('Add Company Rep Successfully');
 										$scope.close();
