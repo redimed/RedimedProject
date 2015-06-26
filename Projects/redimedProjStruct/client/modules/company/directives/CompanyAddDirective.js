@@ -139,9 +139,11 @@ angular.module('app.loggedIn.company.directives.add', [])
 			}
 			var save = function(){
 				ConfigService.beforeSave(scope.company.errors);
-				scope.company.form.Site_medic = JSON.stringify(form.Site_medic);
+				_.forEach(form.Site_medic, function(n) {
+				  	delete n.$$hashKey;
+				});
+				scope.company.form.Site_medic = form.Site_medic;
 		    	var postData = angular.copy(scope.company.form);
-		    	console.log(postData.Site_medic);
 		    	postData.Insurer = scope.company.InsurerTemp === '' ? null : scope.company.InsurerTemp;
 		    	postData.listInsurerid = scope.company.listTemp;
 		    	if(postData.from_date)
@@ -188,8 +190,9 @@ angular.module('app.loggedIn.company.directives.add', [])
 									$scope.close = function(){
   										$modalInstance.dismiss('cancel');
     								}
-									$scope.submitItem = function(){
-										form.Site_medic.push({name:$scope.listInfo.name})
+									$scope.submitItem = function(data){
+
+										form.Site_medic.push({name:data})
 										console.log(form.Site_medic);
 										toastr.success('Add Company Rep Successfully');
 										$scope.close();
@@ -221,6 +224,9 @@ angular.module('app.loggedIn.company.directives.add', [])
 								},
 								size: 'sm'
 							});
+						}
+						$scope.close = function(){
+							$modalInstance.dismiss('cancel');
 						}
 			      	},
 			      	size :'md'

@@ -131,8 +131,12 @@ angular.module('app.loggedIn.company.directives.edit', [])
 			var save = function(){
 				ConfigService.beforeSave(scope.company.errors);
 				scope.company.form.patient_id = $stateParams.patient_id;
-				scope.company.form.Site_medic = JSON.stringify(form.Site_medic);
+				_.forEach(form.Site_medic, function(n) {
+				  	delete n.$$hashKey;
+				});
+				scope.company.form.Site_medic = form.Site_medic;
 				var postData = angular.copy(scope.company.form);
+				console.log('chiennn',postData);
 				if(postData.from_date)
 					postData.from_date = ConfigService.convertToDB(postData.from_date);
 				if(postData.to_date)
@@ -256,6 +260,9 @@ angular.module('app.loggedIn.company.directives.edit', [])
 								},
 								size: 'sm'
 							});
+						}
+						$scope.close = function(){
+							$modalInstance.dismiss('cancel');
 						}
 			      	},
 			      	size :'md'

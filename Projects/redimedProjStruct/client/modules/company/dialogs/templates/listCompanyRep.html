@@ -22,12 +22,14 @@
 				<tr ng-repeat="row in list">
 					<td>{{row.name}}</td>
 					<td>
-						<button ng-click="onRowClick($index)">Remove</button>
-						<button ng-click="editItem(row.name,$index)">Edit</button>
+						<button class="un_tn_btn un-bgXam-colBlack" ng-click="editItem(row.name,$index)">Edit</button>
+						<button class="un_tn_btn un-bgBlack" ng-click="onRowClick($index)">Remove</button>
 					</td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
 </div>
-
+<div class="modal-footer">
+    <button type="button" class="un-button un-bgXam-colBlack" ng-click="close()">Close</button>
+</div>
