@@ -1,9 +1,5 @@
 angular.module("app.loggedIn.TimeSheet.Report1.Controller", [])
     .controller("Report1Controller", function($scope, localStorageService, StaffService, TimeSheetService, $cookieStore, toastr, $state, $filter) {
-        //close siderbar
-        $('body').addClass("page-sidebar-closed");
-        $('body').find('ul').addClass("page-sidebar-menu-closed");
-        //end close siderbar
         // POPUP Date
         $scope.dateOptions = {
             formatYear: 'yy',

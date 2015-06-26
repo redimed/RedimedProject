@@ -1,12 +1,6 @@
 angular.module("app.loggedIn.timesheet.view.controller", [])
 
 .controller("TimesheetViewController", function($rootScope, $scope, MODE_ROW, $filter, $cookieStore, ConfigService, $modal, calendarHelper, moment, StaffService, $state, toastr) {
-
-    //close siderba
-    $('body').addClass("page-sidebar-closed");
-    $('body').find('ul').addClass("page-sidebar-menu-closed");
-    //end close siderba
-
     //SELECT STATUS
     $scope.listStatus = [{
         code: 1,

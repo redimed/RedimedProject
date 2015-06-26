@@ -1,9 +1,5 @@
 angular.module("app.loggedIn.TimeSheet.ApproveLeave.Controller", [])
     .controller("ApproveLeaveController", function($scope, MODE_ROW, $modal, toastr, $state, TimeSheetService, $cookieStore) {
-        //close siderbar
-        $('body').addClass("page-sidebar-closed");
-        $('body').find('ul').addClass("page-sidebar-menu-closed");
-        //end close siderbar
         //STATUS
         $scope.listStatus = [{
             code: 2,
