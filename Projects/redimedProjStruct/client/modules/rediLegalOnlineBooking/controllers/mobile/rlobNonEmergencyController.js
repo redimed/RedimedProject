@@ -47,7 +47,6 @@ angular.module("app.sponsor1.nonemergency.controller",[])
                 CONTACT_NO:$scope.contactus,
                 MEDICARE_NO:$scope.medicareno,
                 MEDICARE_REF:$scope.medicareref,
-                TYPE_NAME:rlobConstant.sponsorType.nonemergency,
                 INJURY:$scope.injury,
                 LONGITUDE:$scope.Lng,
                 LATITUDE:$scope.Lat,
