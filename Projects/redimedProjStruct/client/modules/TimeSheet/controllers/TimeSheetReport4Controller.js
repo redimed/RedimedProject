@@ -1,6 +1,5 @@
 angular.module("app.loggedIn.TimeSheet.Report4.Controller", [])
     .controller("Report4Controller", function($scope, localStorageService, StaffService, TimeSheetService, $cookieStore, toastr, $state, $filter) {
-
         // POPUP Date
         $scope.dateOptions = {
             formatYear: 'yy',
@@ -14,7 +13,6 @@ angular.module("app.loggedIn.TimeSheet.Report4.Controller", [])
         $scope.listEmployeeChoose = [];
         $scope.listDept = [];
         $scope.listEmp = [];
-        $scope.isHavedata = 0;
         //SERVICE LOAD DEPT
 
         $scope.ListNew = function(listNew) {
@@ -32,6 +30,7 @@ angular.module("app.loggedIn.TimeSheet.Report4.Controller", [])
                             });
                         });
                         $scope.listEmp = angular.copy(arrayEmp);
+                        $scope.listEmployeeChoose = [];
                         //END
                     } else if (response.status === "error") {
                         $state.go("loggedIn.home", null, {
@@ -46,6 +45,8 @@ angular.module("app.loggedIn.TimeSheet.Report4.Controller", [])
                         toastr.error("Server not response!", "Error");
                     }
                 });
+            } else {
+                $scope.listEmployeeChoose = [];
             }
         };
         //FUNCTION GET WEEK NUMBER
@@ -59,39 +60,39 @@ angular.module("app.loggedIn.TimeSheet.Report4.Controller", [])
         };
         //FUNCTION GET WEEK NUMBER
 
+        //FUNCTION CHANGE DATE
+        $scope.changeDate = function() {
+            $scope.changeEmp($scope.listEmployeeChoose);
+        };
+        //END
+
         $scope.changeEmp = function(list) {
             if ($scope.dateWeekFrom !== undefined && $scope.dateWeekFrom !== null && $scope.dateWeekFrom !== "" &&
                 $scope.dateWeekTo !== undefined && $scope.dateWeekTo !== null && $scope.dateWeekTo !== "" &&
                 $scope.listEmployeeChoose.length !== 0) {
-                $scope.isHavedata = 1;
                 var info = {};
                 var weekNoFrom = $scope.dateWeekFrom;
                 var weekNoTo = $scope.dateWeekTo;
-                info.weekNoFrom = $scope.getWeekNumber(weekNoFrom);
-                info.weekNoTo = $scope.getWeekNumber(weekNoTo);
                 info.listEMP = angular.copy($scope.listEmployeeChoose);
                 info.USER_ID = $cookieStore.get('userInfo').id;
-                info.weekFrom = $scope.dateWeekFrom;
-                info.weekTo = $scope.dateWeekTo;
+                info.dateWeekFrom = $scope.dateWeekFrom;
+                info.dateWeekTo = $scope.dateWeekTo;
                 info.listDept = $scope.listDepartmentChoose;
-                info.weekNoFrom = $scope.getWeekNumber(weekNoFrom);
-                TimeSheetService.LoadReports1(info).then(function(response) {
+                TimeSheetService.LoadReportOnActualWorking(info).then(function(response) {
                     if (response.status === "success") {
                         // PROCESSING PDF
                         $scope.USER_ID = $cookieStore.get('userInfo').id;
                         //END PDF
-                    } 
-                    else if (response.status === "error") {
+                        $scope.disabledPrint = false;
+                    } else if (response.status === "error") {
                         $state.go("loggedIn.home", null, {
                             "reload": true
                         });
                         toastr.error("Loading reports fail!", 'Error');
-                    } 
-                    else if (response.status === "null") {
-                        $scope.isHavedata = 0;
-                        toastr.error("No Data!!!!",'Error');
-                    }
-                    else {
+                    } else if (response.status === "dataNull") {
+                        toastr.error("Not data!", "Error");
+                        $scope.disabledPrint = true;
+                    } else {
                         //catch exception
                         $state.go("loggedIn.home", null, {
                             "reload": true

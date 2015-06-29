@@ -195,6 +195,8 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
             if (standardID === 1) {
                 if ($scope.info.infoTypeLeave !== undefined && $scope.info.infoTypeLeave !== null &&
                     $scope.info.infoTypeLeave[0] !== undefined && $scope.info.infoTypeLeave[0] !== null &&
+                    $scope.info.infoTypeLeave[0].time_leave !== undefined &&
+                    $scope.info.infoTypeLeave[0].time_leave !== null &&
                     $scope.info.infoTypeLeave[0].time_leave.length === 5) {
                     $scope.info.infoTypeLeave[0].time_leave = $scope.info.infoTypeLeave[0].time_leave.substr(1, $scope.info.infoTypeLeave[0].time_leave.length - 1);
 
@@ -208,6 +210,7 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                     $scope.info.infoTypeLeave[0] !== undefined &&
                     $scope.info.infoTypeLeave[0] !== null &&
                     $scope.info.infoTypeLeave[0].time_leave !== undefined &&
+                    $scope.info.infoTypeLeave[0].time_leave !== null &&
                     $scope.info.infoTypeLeave[0].time_leave.length === 4) {
                     $scope.info.infoTypeLeave[0].time_leave = '0' + $scope.info.infoTypeLeave[0].time_leave;
 

@@ -14,98 +14,110 @@
     <link href="vendor/please-wait/build/please-wait.css" rel="stylesheet" type="text/css" />
     <link href="theme/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <style>
-        .loadingScreen {
-            background-color: white;
-        }
-        .loadingMessage {
-          display: inline-block;
-          min-width: 125px;
-          margin: 0 auto;
-          color: #000 !important;
-          font-size: 30px;
-          font-weight: 400;
-          text-align: center;
-          vertical-align: middle;
-          font-family: 'Raleway', serif;
-        }
-        .sk-spinner-wave.sk-spinner {
-          margin: 0 auto;
-          width: 50px;
-          height: 60px;
-          text-align: center;
-          font-size: 10px; }
-        .sk-spinner-wave div {
-          background-color: black;
-          height: 100%;
-          width: 6px;
-          margin: 0 1px;
-          display: inline-block;
-          -webkit-animation: sk-waveStretchDelay 1.2s infinite ease-in-out;
-                  animation: sk-waveStretchDelay 1.2s infinite ease-in-out; }
-        .sk-spinner-wave .sk-rect2 {
-          -webkit-animation-delay: -1.1s;
-                  animation-delay: -1.1s; }
-        .sk-spinner-wave .sk-rect3 {
-          -webkit-animation-delay: -1s;
-                  animation-delay: -1s; }
-        .sk-spinner-wave .sk-rect4 {
-          -webkit-animation-delay: -0.9s;
-                  animation-delay: -0.9s; }
-        .sk-spinner-wave .sk-rect5 {
-          -webkit-animation-delay: -0.8s;
-                  animation-delay: -0.8s; }
-
-        @-webkit-keyframes sk-waveStretchDelay {
-          0%, 40%, 100% {
+    .loadingScreen {
+        background-color: white;
+    }
+    
+    .loadingMessage {
+        display: inline-block;
+        min-width: 125px;
+        margin: 0 auto;
+        color: #000 !important;
+        font-size: 30px;
+        font-weight: 400;
+        text-align: center;
+        vertical-align: middle;
+        font-family: 'Raleway', serif;
+    }
+    
+    .sk-spinner-wave.sk-spinner {
+        margin: 0 auto;
+        width: 50px;
+        height: 60px;
+        text-align: center;
+        font-size: 10px;
+    }
+    
+    .sk-spinner-wave div {
+        background-color: black;
+        height: 100%;
+        width: 6px;
+        margin: 0 1px;
+        display: inline-block;
+        -webkit-animation: sk-waveStretchDelay 1.2s infinite ease-in-out;
+        animation: sk-waveStretchDelay 1.2s infinite ease-in-out;
+    }
+    
+    .sk-spinner-wave .sk-rect2 {
+        -webkit-animation-delay: -1.1s;
+        animation-delay: -1.1s;
+    }
+    
+    .sk-spinner-wave .sk-rect3 {
+        -webkit-animation-delay: -1s;
+        animation-delay: -1s;
+    }
+    
+    .sk-spinner-wave .sk-rect4 {
+        -webkit-animation-delay: -0.9s;
+        animation-delay: -0.9s;
+    }
+    
+    .sk-spinner-wave .sk-rect5 {
+        -webkit-animation-delay: -0.8s;
+        animation-delay: -0.8s;
+    }
+    
+    @-webkit-keyframes sk-waveStretchDelay {
+        0%, 40%, 100% {
             -webkit-transform: scaleY(0.4);
-                    transform: scaleY(0.4); }
-
-          20% {
+            transform: scaleY(0.4);
+        }
+        20% {
             -webkit-transform: scaleY(1);
-                    transform: scaleY(1); } }
-
-        @keyframes sk-waveStretchDelay {
-          0%, 40%, 100% {
+            transform: scaleY(1);
+        }
+    }
+    
+    @keyframes sk-waveStretchDelay {
+        0%, 40%, 100% {
             -webkit-transform: scaleY(0.4);
-                    transform: scaleY(0.4); }
-
-          20% {
+            transform: scaleY(0.4);
+        }
+        20% {
             -webkit-transform: scaleY(1);
-                    transform: scaleY(1); } }
+            transform: scaleY(1);
+        }
+    }
     </style>
 </head>
 
 <body>
     <script type="text/javascript" src="vendor/please-wait/build/please-wait.js"></script>
     <script type="text/javascript">
-      window.loading_screen = window.pleaseWait({
+    window.loading_screen = window.pleaseWait({
         logo: "theme/assets/logo.png",
         backgroundClass: 'loadingScreen',
         loadingHtml: "<p class='loadingMessage'>Please Wait For Loading!</p><div class='sk-spinner sk-spinner-wave'><div class='sk-rect1'></div><div class='sk-rect2'></div><div class='sk-rect3'></div><div class='sk-rect4'></div><div class='sk-rect5'></div></div>"
-      });
-
+    });
     </script>
-     <script type="text/javascript" src="vendor/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="vendor/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="vendor/jquery-ui/ui/jquery-ui.js"></script>
     <script type="text/javascript" src="lib/jquery.ui.touch-punch.js"></script>
     <script src="theme/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-
     <!-- apiRTC -->
     <script type="text/javascript" src="lib/apiRTC-latest.min.js"></script>
     <!-- apiRTC -->
-
     <!-- QUILL -->
     <link rel="stylesheet" type="text/css" href="lib/quill/quill.base.css">
     <link rel="stylesheet" type="text/css" href="lib/quill/quill.snow.css">
     <script type="text/javascript" src="lib/quill/quill.js"></script>
     <!-- END QUILL -->
-
     <!-- WYSIWIG -->
-    <link rel="stylesheet" type="text/css" href="lib/wysiwyg.js/src/wysiwyg-editor.css"/>
+    <link rel="stylesheet" type="text/css" href="lib/wysiwyg.js/src/wysiwyg-editor.css" />
     <script type="text/javascript" src="lib/wysiwyg.js/src/wysiwyg.js"></script>
     <script type="text/javascript" src="lib/wysiwyg.js/src/wysiwyg-editor.js"></script>
     <!-- END WYSIWIG -->
-
     <script src="vendor/angular/angular.js"></script>
     <script src="vendor/angular-bindonce/bindonce.js"></script>
     <script src="theme/assets/global/plugins/moment.min.js" type="text/javascript"></script>
@@ -206,11 +218,9 @@
     <script type="text/javascript" src="vendor/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js">
     </script>
     <!-- END ANGULAR TRANSLATE -->
-
     <!-- OCLAYZYLOAD -->
     <script type="text/javascript" src="lib/oclazyload/dist/ocLazyLoad.js"></script>
     <!-- END OCLAZYLOAD -->
-
     <script type="text/javascript" src="lib/desktop-notify.js"></script>
     <link rel="stylesheet" href="vendor/ionicons/css/ionicons.min.css" type="text/css" media="screen">
     <script type="text/javascript" src="lib/EasyRTC/opentok.min.js"></script>
@@ -228,7 +238,6 @@
     <script src="lib/flot/jquery.flot.categories.min.js" type="text/javascript"></script>
     <script src="vendor/angular-svg-round-progressbar/build/roundProgress.js" type="text/javascript"></script>
     <script src="vendor/angular-flot/angular-flot.js"></script>
-
     <!-- ANGULAR UI SELECT -->
     <link rel="stylesheet" type="text/css" href="vendor/angular-ui-select/dist/select.min.css">
     <script type="text/javascript" src="vendor/angular-ui-select/dist/select.min.js"></script>
@@ -324,12 +333,9 @@
     <!-- ANGULAR DRAGGABLE -->
     <script type="text/javascript" src="vendor/ng-draggable/ngDraggable.js"></script>
     <!-- END ANGULAR DRAGABLE -->
-
     <script src="vendor/angular-dragdrop/src/angular-dragdrop.min.js"></script>
-
-    <link href="vendor/ng-mfb/mfb/dist/mfb.css" rel="stylesheet"/>
+    <link href="vendor/ng-mfb/mfb/dist/mfb.css" rel="stylesheet" />
     <script src="vendor/ng-mfb/mfb/dist/mfb-directive.js"></script>
-
     <!-- ===============================================START MODULE====================================================== -->
     <!-- ANGULAR DIRECTIVES -->
     <script type="text/javascript" src="common/directives/common.js"></script>
@@ -342,7 +348,6 @@
     <script type="text/javascript" src="modules/loggedInController.js"></script>
     <script type="text/javascript" src="modules/security/controllers/lockscreenController.js"></script>
     <!-- END -->
-
     <!-- START MODULE SECURITY -->
     <script type="text/javascript" src="modules/security/Security.js"></script>
     <script type="text/javascript" src="modules/security/services/SecurityServices.js"></script>
@@ -478,7 +483,6 @@ TANNV.DTS@GMAIL.COM
 RLOB PAPERLESS STRUCTURE -->
     <script src="modules/kissModule/js/kiss.js"></script>
     <script src="modules/kissModule/directives/kissTimerDirective.js"></script>
-
     <script src="modules/rediLegalOnlineBooking/controllers/rlob_paperlessController.js"></script>
     <script src="modules/rediLegalOnlineBooking/controllers/paperless/rlob_paperless_ams6Controller.js"></script>
     <script src="modules/rediLegalOnlineBooking/controllers/paperless/rlob_paperless_ams5Controller.js"></script>
@@ -517,8 +521,6 @@ RLOB PAPERLESS STRUCTURE -->
     <script src="modules/iso/controllers/isoAdminListController.js"></script>
     <!-- ISO END MODULE -->
     <!-- -------------------------------------------------------------------------------------------------------------- -->
-
-
     <!-- -------------------------------------------------------------------------------------------------------------- -->
     <!-- TANNV.DTS@GMAIL.COM -->
     <!-- MEDIFOOD MODULE -->
@@ -532,8 +534,6 @@ RLOB PAPERLESS STRUCTURE -->
     <script src="modules/medifood/services/medifoodServices.js"></script>
     <!-- MEDIFOOD END MODULE -->
     <!-- -------------------------------------------------------------------------------------------------------------- -->
-
-
     <!-- HR_PAYROLL START MODULE -->
     <!-- -------------------------------------------------------------------------------------------------------------- -->
     <script src="vendor/ng-infinite-scroll/ng-infinite-scroll.min.js"></script>
@@ -723,10 +723,8 @@ RLOB PAPERLESS STRUCTURE -->
     <script type='text/javascript' src='modules/mdtinsurer/directives/mdtInsurerDirectives.js'></script>
     <script type='text/javascript' src='modules/mdtinsurer/directives/mdtInsurerDetailDirective.js'></script>
     <script type='text/javascript' src='modules/mdtinsurer/directives/mdtInsurerSearchDirective.js'></script>
-
     <script type='text/javascript' src='modules/mdtoutdoctor/routes.js'></script>
     <script type='text/javascript' src='modules/mdtoutdoctor/services/mdtOutdoctorServices.js'></script>
-
     <script type='text/javascript' src='modules/mdtoutreferral/mdtoutreferral.js'></script>
     <script type='text/javascript' src='modules/mdtoutreferral/services/mdtoutreferralServices.js'></script>
     <script type='text/javascript' src='modules/mdtoutreferral/directives/mdtoutreferralDirectives.js'></script>
@@ -784,11 +782,8 @@ RLOB PAPERLESS STRUCTURE -->
     <script type='text/javascript' src='modules/systitle/directives/sysTitleDirectives.js'></script>
     <script type='text/javascript' src='modules/systitle/directives/sysTitleDetailDirective.js'></script>
     <script type='text/javascript' src='modules/systitle/directives/sysTitleSearchDirective.js'></script>
-
     <script type='text/javascript' src='modules/mdtdoctor/routes.js'></script>
     <script type='text/javascript' src='modules/mdtdoctor/services/mdtDoctorServices.js'></script>
-
-   
     <script type='text/javascript' src='modules/referral/Referral.js'></script>
     <script type='text/javascript' src='modules/referral/services/ReferralServices.js'></script>
     <script type='text/javascript' src='modules/referral/directives/ReferralDirectives.js'></script>
@@ -803,23 +798,8 @@ RLOB PAPERLESS STRUCTURE -->
     <script type='text/javascript' src='modules/sysservices/controllers/SysServicesController.js'></script>
     <script type='text/javascript' src='modules/sysservices/controllers/SysServicesListController.js'></script>
     <!-- END SYS_SERVICES MODULE -->
-    <!-- STAFF -->
-    <script type="text/javascript" src="vendor/angular-bootstrap-calendar/calendar-jquery/jquery.animate.clip.js"></script>
-    <script type="text/javascript" src="vendor/angular-bootstrap-calendar/calendar-jquery/jCal.js"></script>
-    <link href="vendor/angular-bootstrap-calendar/calendar-jquery/jCal.css" type="text/css" rel="stylesheet" />
-    <script type="text/javascript" src="modules/TimeSheet/controllers/ViewTaskController.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/controllers/StaffWeekController.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/controllers/StaffMonthController.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/controllers/createTimesheetController.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/controllers/viewTimesheetController.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/services/StaffService.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/directives/StaffCalendarDirective.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/directives/StaffMonthDirective.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/directives/StaffWeekDirective.js"></script>
-    <!-- END STAFF -->
     <!--END AUTO CREATE-->
     <!--INJURY MANAGEMENT MODULE-->
-  
     <script type="text/javascript" src="modules/injuryManagement/InjuryManagement.js"></script>
     <script type="text/javascript" src="modules/injuryManagement/controllers/InjuryMapController.js"></script>
     <script type="text/javascript" src="modules/injuryManagement/controllers/InjuryListController.js"></script>
@@ -857,11 +837,9 @@ RLOB PAPERLESS STRUCTURE -->
     <!-- CUSTOM CSS -->
     <link rel="stylesheet" type="text/css" href="theme/custom.css">
     <!-- END CUSTOM CSS -->
-    <!-- CALENDAR -->
-    <script src="vendor/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js"></script>
-    <!-- END CALENDAR -->
     <link rel="stylesheet" type="text/css" href="theme/BootSideMenu.css" />
     <script type="text/javascript" src="theme/BootSideMenu.js"></script>
+    <!-- THANH TEAM -->
     <!-- MODULE TREEAPPROVE -->
     <script type="text/javascript" src="modules/treeApprove/controllers/AllControllers.js"></script>
     <script type="text/javascript" src="modules/treeApprove/controllers/TreeDetail.js"></script>
@@ -874,45 +852,12 @@ RLOB PAPERLESS STRUCTURE -->
     <script type="text/javascript" src="modules/treeApprove/directives/DirectiveTree.js"></script>
     <script type="text/javascript" src="modules/treeApprove/services/Service.js"></script>
     <!-- END MODULE TREEAPPROVE -->
-    <!-- MODULE TIME SHEET -->
-    <script type="text/javascript" src="modules/TimeSheet/controllers/TimeSheetHomeController.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/directives/TimeSheetDirectives.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/directives/TimeSheetItemCodeDirective.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/directives/TimeSheetOnlyDigits.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/directives/TimeSheetViewTaskDirective.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/directives/TimeSheetDetailDirective.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/directives/TimeSheetActivityDetailDirective.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/directives/TimeSheetFilter.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/directives/TimeSheetTimeDirective.js"></script>
+    <!-- MODULE TIMESHEET -->
+    <script type="text/javascript" src="modules/TimeSheet/routes_timesheet.js"></script>
     <script type="text/javascript" src="modules/TimeSheet/services/TimeSheetServices.js"></script>
-    <!-- REPORT -->
-    <script type="text/javascript" src="modules/TimeSheet/controllers/TimeSheetReport1Controller.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/controllers/TimeSheetReport2Controller.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/controllers/TimeSheetReport3Controller.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/controllers/TimeSheetReport4Controller.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/controllers/TimeSheetReport5Controller.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/controllers/TimeSheetReport6Controller.js"></script>
-    <!-- END REPORT -->
-    <script type="text/javascript" src="modules/TimeSheet/controllers/TimeSheetApproveTaskController.js">
-    </script>
-    <script type="text/javascript" src="modules/TimeSheet/directives/TimeSheetViewItem.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/TimeSheet.js"></script>
-    <!-- JQUERY MASK -->
-    <script type="text/javascript" src="vendor/jquery-mask/masked.js"></script>
-    <!-- END JQUERY MASK -->
-    <!-- MUTIPLE SELECT -->
-    <script type="text/javascript" src="vendor/dropdown-multiselect/src/angularjs-dropdown-multiselect.js"></script>
-    <!-- END SELECT -->
-    <!-- MODULE LEAVE FORM -->
-    <script type="text/javascript" src="modules/TimeSheet/controllers/TimeSheetCreateLeaveController.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/controllers/TimeSheetHistoryLeaveController.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/controllers/TimeSheetApproveLeaveController.js"></script>
-    <script type="text/javascript" src="vendor/datetimepicker-leave/datetimepicker.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/directives/TimeSheetViewLeaveDirective.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/directives/TimeSheetViewLeaveApproveDirective.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/controllers/TimeSheetReportOweLeaveController.js"></script>
-    <!-- END LEAVE -->
-    <!-- END MODULE TIME SHEET -->
+    <script type="text/javascript" src="modules/TimeSheet/services/StaffService.js"></script>
+    <!-- END MODULE TIMESHEET -->
+    <!-- END THANH TEAM -->
     <!--MODULE CONSULTATION-->
     <link rel="stylesheet" type="text/css" href="lib/angular-modal/modal.css">
     <script type="text/javascript" src="lib/angular-modal/modal-4.0.js"></script>
@@ -935,7 +880,6 @@ RLOB PAPERLESS STRUCTURE -->
     <script type="text/javascript" src="modules/consultation/directives/CorrespondenceAddDirectives.js"></script>
     <script type="text/javascript" src="modules/consultation/controllers/CorrespondenceEditController.js"></script>
     <script type="text/javascript" src="modules/consultation/directives/CorrespondenceEditDirectives.js"></script>
-
     <script type="text/javascript" src="modules/consultation/consultation.js"></script>
     <!--END MODULE CONSULTATION-->
     <!-- JQUERY ORGCHART -->
@@ -967,7 +911,6 @@ RLOB PAPERLESS STRUCTURE -->
     <script type="text/javascript" src="modules/alert/routes.js"></script>
     <script type="text/javascript" src="modules/alert/models/AlertModel.js"></script>
     <!-- END ALERT -->
-
     <!-- MODULE TEMPLATE -->
     <script type="text/javascript" src="modules/template/routes.js"></script>
     <script type="text/javascript" src="modules/template/include.js"></script>
@@ -1006,20 +949,17 @@ RLOB PAPERLESS STRUCTURE -->
     <script type="text/javascript" src="modules/timetable/dialogs/TimetableCalendarEditDayDialog.js"></script>
     <script type="text/javascript" src="modules/timetable/dialogs/TimetableCalendarAddSiteDialog.js"></script>
     <script type="text/javascript" src="modules/timetable/models/TimetableModel.js"></script>
-        <!-- TANNV BEGIN -->
+    <!-- TANNV BEGIN -->
     <link rel="stylesheet" type="text/css" href="modules/timetable/css/timetable.css">
-        <!-- TANNV END -->
+    <!-- TANNV END -->
     <!-- END TIMETABLE -->
-
     <!-- MODULE CALLING -->
     <script type="text/javascript" src="modules/makeCall/routes.js"></script>
     <script type="text/javascript" src="modules/makeCall/controllers/callController.js"></script>
     <!-- MODULE CALLING -->
-
     <!-- MODULE APPOINTMENT -->
     <script type="text/javascript" src="modules/appointment/routes.js"></script>
     <script type="text/javascript" src="modules/appointment/models/AppointmentModel.js"></script>
-
     <!-- MODULE WAITING LIST -->
     <script type="text/javascript" src="modules/waitingList/routes.js"></script>
     <script type="text/javascript" src="modules/waitingList/include.js"></script>

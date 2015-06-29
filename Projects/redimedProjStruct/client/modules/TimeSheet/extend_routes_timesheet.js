@@ -1,9 +1,4 @@
-angular.module("app.loggedIn.TimeSheet", [
-        "app.loggedIn.TimeSheet.Home.Controller",
-        "app.loggedIn.TimeSheet.Directives",
-        "app.loggedIn.TimeSheet.Service",
-        "app.loggedIn.staff.service"
-    ])
+angular.module("app.loggedIn.TimeSheet")
     .config(function($stateProvider) {
 
         $stateProvider
