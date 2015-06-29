@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cln_fa_lines_type_16_details" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="6db97609-e91c-4be3-9479-551fc8afcd85">
+	<property name="ireport.zoom" value="1.366026910730141"/>
+	<property name="ireport.x" value="14"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="patient_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cal_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="line_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="real_path" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="sub_report_dir" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from `cln_fa_df_line_details` detail
+where detail.PATIENT_ID =  $P{patient_id}
+and detail.CAL_ID =  $P{cal_id}
+and detail.LINE_ID =  $P{line_id}
+and detail.ISENABLE = 1]]>
+	</queryString>
+	<field name="PATIENT_ID" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CAL_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DETAIL_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LINE_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="QUESTION" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DESCRIPTION" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VAL1_NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VAL1_ISVALUE" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VAL1_VALUE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VAL1_ISCHECKBOX" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VAL1_CHECKBOX" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VAL2_NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VAL2_ISVALUE" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VAL2_VALUE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VAL2_ISCHECKBOX" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VAL2_CHECKBOX" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="COMMENTS" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PICTURE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ORD" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ISENABLE" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Created_by" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Creation_date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Last_updated_by" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Last_update_date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VAL1_ISCOMMENT_WHEN_YES" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VAL1_ISCOMMENT_WHEN_NO" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VAL2_ISCOMMENT_WHEN_YES" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VAL2_ISCOMMENT_WHEN_NO" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="IsCommentText" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LineTestRefer" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VAL1_VALUE_IS_NUMBER" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VAL2_VALUE_IS_NUMBER" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<detail>
+		<band height="50">
+			<textField>
+				<reportElement x="405" y="0" width="150" height="50" uuid="e51e11c1-8102-4a55-b506-0d9b99561904"/>
+				<box>
+					<pen lineWidth="0.3"/>
+					<topPen lineWidth="0.3"/>
+					<leftPen lineWidth="0.3"/>
+					<bottomPen lineWidth="0.3"/>
+					<rightPen lineWidth="0.3"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font isBold="false"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COMMENTS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="190" height="50" uuid="f0e95e04-ffa4-41fa-ae8a-4deb94026fd8"/>
+				<box>
+					<pen lineWidth="0.3"/>
+					<topPen lineWidth="0.3"/>
+					<leftPen lineWidth="0.3"/>
+					<bottomPen lineWidth="0.3"/>
+					<rightPen lineWidth="0.3"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font isBold="false"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{QUESTION}]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement x="190" y="0" width="215" height="50" uuid="4c78f8c6-b536-4a07-9e3e-c22ccfbbe0af"/>
+				<box>
+					<pen lineWidth="0.3"/>
+					<topPen lineWidth="0.3"/>
+					<leftPen lineWidth="0.3"/>
+					<bottomPen lineWidth="0.3"/>
+					<rightPen lineWidth="0.3"/>
+				</box>
+				<staticText>
+					<reportElement x="14" y="3" width="50" height="22" uuid="ea2f5f19-c794-43f9-99c2-cfb0b342bf83"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[UNABLE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="71" y="3" width="50" height="22" uuid="0d204e3c-5655-4fde-942d-b8f90d661769"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[PARTIAL]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="128" y="3" width="50" height="22" uuid="520e6f3b-4ecd-4522-92ee-e04fe5646181"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[ABLE]]></text>
+				</staticText>
+				<image>
+					<reportElement x="45" y="31" width="15" height="15" uuid="1695b809-8440-4e42-9938-442f5bc2f9bf"/>
+					<imageExpression><![CDATA[$F{VAL2_CHECKBOX}.equals("0")?($P{real_path}+"uncheck.png"):($P{real_path}+"checked.png")]]></imageExpression>
+				</image>
+				<staticText>
+					<reportElement x="65" y="31" width="105" height="16" uuid="d45d7780-9065-4947-b05e-e74f198d5bf9"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="false"/>
+					</textElement>
+					<text><![CDATA[No Pain/Discomfort ]]></text>
+				</staticText>
+				<ellipse>
+					<reportElement mode="Transparent" x="10" y="2" width="56" height="22" uuid="6e345be2-7bb3-4880-b657-04aea9f992af">
+						<printWhenExpression><![CDATA[$F{VAL1_CHECKBOX}.equals("0")]]></printWhenExpression>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="2.0" lineStyle="Solid"/>
+					</graphicElement>
+				</ellipse>
+				<ellipse>
+					<reportElement mode="Transparent" x="126" y="3" width="56" height="22" uuid="f795eb46-ee16-4f52-bd34-ff82c3f00139">
+						<printWhenExpression><![CDATA[$F{VAL1_CHECKBOX}.equals("2")]]></printWhenExpression>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="2.0" lineStyle="Solid"/>
+					</graphicElement>
+				</ellipse>
+				<ellipse>
+					<reportElement mode="Transparent" x="69" y="3" width="56" height="22" uuid="bbf0730c-0cd9-4642-b357-14d7f60d96ef">
+						<printWhenExpression><![CDATA[$F{VAL1_CHECKBOX}.equals("1")]]></printWhenExpression>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="2.0" lineStyle="Solid"/>
+					</graphicElement>
+				</ellipse>
+			</frame>
+		</band>
+	</detail>
+</jasperReport>
