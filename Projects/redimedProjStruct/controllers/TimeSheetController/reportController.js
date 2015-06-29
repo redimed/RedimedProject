@@ -1884,7 +1884,7 @@ module.exports = {
                                                                                                     })
                                                                                                         .success(function(data_update1) {
                                                                                                             if(data_update1!==undefined&&data_update1!==null&&data_update1!==""&&data_update1.length!==0){
-                                                                                                                for (var y = 0; y < 5 * data_insert1.length; y++) {
+                                                                                                                
                                                                                                                     for (var x = 0; x < data_update1.length; x++) {
                                                                                                                         chainer.add(db.time_activity_summary_report.update({
                                                                                                                             time_charge_Dept: data_update1[x].time_charge_Dept,
@@ -1896,7 +1896,7 @@ module.exports = {
                                                                                                                             activity_id: data_update1[x].activity_id
                                                                                                                         }));
                                                                                                                     }
-                                                                                                                }
+                                                                                                                
                                                                                                                 chainer.runSerially()
                                                                                                                     .success(function(data_insert3) {
                                                                                                                         var sql_update2 = "SELECT SUM(time_charge_Dept) AS 'time_charge_Dept_all',Department_id,user_id " + //SELECT
@@ -1941,23 +1941,31 @@ module.exports = {
                                                                                                                                             })
                                                                                                                                                 .success(function(data_update4) {
                                                                                                                                                     if(data_update4!==undefined&&data_update4!==null&&data_update4!==""&&data_update4.length!==0){
-                                                                                                                                                        for (var h = 0; h < 5 * data_insert1.length; h++) {
-                                                                                                                                                           for(var g = 0;g < data_update2.length; g++){
-                                                                                                                                                                 chainer.add(db.time_activity_summary_report.update({
-                                                                                                                                                                time_charge_Dept_per: (data_update1[h].time_charge_Dept/data_update2[g].time_charge_Dept_all)*100,
+                                                                                                                                                        var time_charge_Dept_per = [];
+                                                                                                                                                        for (var h = 0; h < data_update1.length; h++) {
+                                                                                                                                                            for(var g = 0; g < data_update2.length; g++){
+                                                                                                                                                                if(data_update1[h].Department_id==data_update2[g].Department_id){
+                                                                                                                                                                    time_charge_Dept_per[h] = (data_update1[h].time_charge_Dept/data_update2[g].time_charge_Dept_all)*100;
+                                                                                                                                                                }
+                                                                                                                                                            }
+                                                                                                                                                        }
+                                                                                                                                                        console.log(time_charge_Dept_per);    
+                                                                                                                                                            
+                                                                                                                                                        for (var h = 0; h < data_update1.length; h++) {
+                                                                                                                                                            chainer.add(db.time_activity_summary_report.update({
+                                                                                                                                                                time_charge_Dept_per: time_charge_Dept_per[h],
                                                                                                                                                                 time_charge_all: data_update4[0].time_charge_all
-                                                                                                                                                                
+                                                                                                                                                                    
                                                                                                                                                             }, {
                                                                                                                                                                 user_id: data_update4[0].user_id,
-                                                                                                                                                                Department_id: data_update2[g].Department_id,
+                                                                                                                                                                Department_id: data_update1[h].Department_id,
                                                                                                                                                                 activity_id: data_update1[h].activity_id
                                                                                                                                                             }))
-                                                                                                                                                           }
                                                                                                                                                         }
                                                                                                                                                         chainer.runSerially()
                                                                                                                                                             .success(function(data_success) {
                                                                                                                                                                 res.json({
-                                                                                                                                                                    status: "success"
+                                                                                                                                                                status: "success"
                                                                                                                                                                 });
                                                                                                                                                                 return;
                                                                                                                                                             })
