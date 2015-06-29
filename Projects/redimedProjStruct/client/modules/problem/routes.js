@@ -3,7 +3,7 @@ angular.module('app.loggedIn.patient.problem', [])
 .config(function($stateProvider){
     $stateProvider
 
-        .state('app.loggedIn.patient.problem', {
+        .state('loggedIn.patient.problem_list', {
             url: '/problemload',
             resolve: {
                 init: function($q, $rootScope, $state, $timeout, $ocLazyLoad){
@@ -14,7 +14,7 @@ angular.module('app.loggedIn.patient.problem', [])
                     $ocLazyLoad.load("modules/problem/directives/ProblemDirective.js")
                    
                     .then(function(){
-                        $state.go('loggedIn.patient.problem_list');
+                        $state.go('loggedIn.patient.problemlist');
                     })
                 }
             }

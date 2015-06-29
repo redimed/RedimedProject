@@ -1,53 +1,63 @@
-angular.module('app.loggedIn.template', [
-	'app.loggedIn.template.include'
-])
+angular.module('app.loggedIn.template', [])
 
 .config(function($stateProvider){
-
 	$stateProvider
 
-	.state('loggedIn.template', {
-		url: '/template',
-		templateUrl: 'modules/template/views/list.html',
-		controller: 'TemplateListController'
-	})
+		.state('loggedIn.template', {
+			url: '/templateload',
+			resolve: {
+				init: function($q, $rootScope, $state, $timeout, $ocLazyLoad){
+					$ocLazyLoad.load("modules/template/extend_routes.js");
+					$ocLazyLoad.load("modules/template/controllers/TemplateAddController.js");
+					$ocLazyLoad.load("modules/template/controllers/TemplateEditController.js");
+					$ocLazyLoad.load("modules/template/controllers/TemplateListController.js");
+					$ocLazyLoad.load("modules/template/controllers/TemplatePatientAddController.js");
+					$ocLazyLoad.load("modules/template/controllers/TemplatePatientListController.js");
+					$ocLazyLoad.load("modules/template/controllers/TemplatePatientWriteController.js");
+					$ocLazyLoad.load("modules/template/controllers/TemplateWriteController.js");
 
-	.state('loggedIn.template_add', {
-		url: '/template/add',
-		templateUrl: 'modules/template/views/add.html',
-		controller: 'TemplateAddController'
-	})
-
-	.state('loggedIn.template_write', {
-		url: '/template/write/:id',
-		templateUrl: 'modules/template/views/write.html',
-		controller: 'TemplateWriteController'
-	})
-
-	.state('loggedIn.template_edit', {
-		url: '/template/edit/:id',
-		templateUrl: 'modules/template/views/edit.html',
-		controller: 'TemplateEditController'
-	})
-
-	.state('loggedIn.patient.template', {
-		url: '/template',
-		views: {
-			"main-content": {
-				templateUrl: 'modules/template/views/patient_list.html',
-				controller: 'TemplatePatientListController'
+					$ocLazyLoad.load("modules/template/directives/TemplateAddDirective.js");
+					$ocLazyLoad.load("modules/template/directives/TemplateEditDirective.js");
+					$ocLazyLoad.load("modules/template/directives/TemplateListDirective.js");
+					$ocLazyLoad.load("modules/template/directives/TemplatePatientAddDirective.js");
+					$ocLazyLoad.load("modules/template/directives/TemplatePatientEditDirective.js");
+					$ocLazyLoad.load("modules/template/directives/TemplatePatientListDirective.js");
+					$ocLazyLoad.load("modules/template/directives/TemplatePatientWriteDirective.js");
+					$ocLazyLoad.load("modules/template/directives/TemplateWriteDirective.js")
+					.then(function(){
+						$state.go('loggedIn.template_load');
+					})
+				}
 			}
-		}
-	})
+		})
 
-	.state('loggedIn.patient.template_add', {
-		url: '/template/add',
-		views: {
-			"main-content": {
-				templateUrl: 'modules/template/views/patient_add.html',
-				controller: 'TemplatePatientAddController'
+		.state('loggedIn.patient.template', {
+			url: '/patienttemplateload',
+			resolve: {
+				init: function($q, $rootScope, $state, $timeout, $ocLazyLoad){
+					$ocLazyLoad.load("modules/template/extend_routes.js");
+					$ocLazyLoad.load("modules/template/controllers/TemplateAddController.js");
+					$ocLazyLoad.load("modules/template/controllers/TemplateEditController.js");
+					$ocLazyLoad.load("modules/template/controllers/TemplateListController.js");
+					$ocLazyLoad.load("modules/template/controllers/TemplatePatientAddController.js");
+					$ocLazyLoad.load("modules/template/controllers/TemplatePatientListController.js");
+					$ocLazyLoad.load("modules/template/controllers/TemplatePatientWriteController.js");
+					$ocLazyLoad.load("modules/template/controllers/TemplateWriteController.js");
+
+					$ocLazyLoad.load("modules/template/directives/TemplateAddDirective.js");
+					$ocLazyLoad.load("modules/template/directives/TemplateEditDirective.js");
+					$ocLazyLoad.load("modules/template/directives/TemplateListDirective.js");
+					$ocLazyLoad.load("modules/template/directives/TemplatePatientAddDirective.js");
+					$ocLazyLoad.load("modules/template/directives/TemplatePatientEditDirective.js");
+					$ocLazyLoad.load("modules/template/directives/TemplatePatientListDirective.js");
+					$ocLazyLoad.load("modules/template/directives/TemplatePatientWriteDirective.js");
+					$ocLazyLoad.load("modules/template/directives/TemplateWriteDirective.js")
+					.then(function(){
+						$state.go('loggedIn.patient.template_load');
+					})
+				}
 			}
-		}
-	})
+		})
+
 
 })

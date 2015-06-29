@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.template.model", [])
+angular.module("app.loggedIn.template")
     
 .factory("TemplateModel", function (Restangular, $http) {
     var instanceService = {};

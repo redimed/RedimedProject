@@ -45,11 +45,11 @@ angular.module("app.loggedIn.patient.controller", [
         {wrap:0,'name': 'Companies', 'color': 'red-soft', 'desc': 'Total: 0', 'icon': 'fa fa-building',
             'state': 'loggedIn.patient.company'},
         {wrap:0,'name': 'Claim', 'color': 'green-soft', 'desc': 'Available', 'icon': 'fa fa-newspaper-o',
-            'state': 'loggedIn.patient.claim.list'},
+            'state': 'loggedIn.patient.claim'},
         {wrap:0,'name': 'Alert', 'color': 'green-soft', 'desc': 'Available', 'icon': 'fa fa-newspaper-o',
-            'state': 'loggedIn.patient.alert.list({patientId:' + $stateParams.patient_id + ', calId:'+$stateParams.cal_id+'})'},
+            'state': 'loggedIn.patient.alert({patientId:' + $stateParams.patient_id + ', calId:'+$stateParams.cal_id+'})'},
         {wrap:0,'name': 'Referral', 'color': 'purple-soft', 'desc': 'Total: 0', 'icon': 'fa fa-envelope-o',
-            'state': 'loggedIn.patient.outreferral.list({patientId:' + $stateParams.patient_id + ', calId:'+$stateParams.cal_id+'})'},
+            'state': 'loggedIn.patient.outreferral({patientId:' + $stateParams.patient_id + ', calId:'+$stateParams.cal_id+'})'},
         // {wrap:1,'name': 'Injury Management', 'icon': 'fa fa-medkit', 'color': 'blue-soft', 'desc': '',
         //     'state': 'loggedIn.patient.im_List'},
         {wrap:1,'name': 'Consultation', 'icon': 'fa fa-user-md', 'color': 'purple-soft', 'desc': '',
@@ -57,7 +57,7 @@ angular.module("app.loggedIn.patient.controller", [
         {wrap:0,'name':'Problem List', 'color':'red-soft', 'icon':'fa fa-exclamation-triangle', 
             'state':'loggedIn.patient.problem_list'},
         {wrap:0,'name':'Allergy list', 'color':'green-soft', 'icon':'fa fa-exclamation-triangle', 
-            'state':'loggedIn.patient.allergy.list'},
+            'state':'loggedIn.patient.allergy'},
     ];
 
     $scope.patient_apt_modules = [

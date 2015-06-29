@@ -1,0 +1,9 @@
+angular.module('app.loggedIn.referral')
+.config(function($stateProvider){
+    $stateProvider
+        .state("loggedIn.patient.referral_list",{
+            url:'/referral',
+            templateUrl:"modules/referral/views/referral-list.html",
+            controller:"ReferralListController"
+        })
+})

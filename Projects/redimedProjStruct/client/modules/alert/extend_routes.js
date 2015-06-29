@@ -11,12 +11,7 @@ angular.module('app.loggedIn.alert')
 	})
 
 	.state('loggedIn.patient.alert_list', {
-		abstract: true,
-		url: '/patientalert'
-	})
-
-	.state('loggedIn.patient.alert.list', {
-		url: '/list',
+		url: '/alert/list',
 		views: {
 			'main-content@loggedIn.patient': {
 				templateUrl: 'modules/alert/views/patient/list.html',

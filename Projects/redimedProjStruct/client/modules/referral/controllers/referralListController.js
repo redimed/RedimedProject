@@ -1,6 +1,4 @@
-angular.module('app.loggedIn.referral.list.controller',[
-
-])
+angular.module('app.loggedIn.referral')
     .controller('ReferralListController',function($scope, $stateParams){
         $scope.referral_panel = {};
         $scope.referral = {};

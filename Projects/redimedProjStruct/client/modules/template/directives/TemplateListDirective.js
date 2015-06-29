@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.template.directives.list', [])
+angular.module("app.loggedIn.template")
 
 .directive('templateList', function($modal, $http, $state, $cookieStore, TemplateModel, toastr, PatientService){
 	return {
