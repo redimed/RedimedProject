@@ -1719,15 +1719,6 @@ module.exports = {
         stringDept += 0;
         var time_charge_all = 0;
         var flag1 = 0;
-        var flag2 = 0;
-        var flag3 = 0;
-        var flag4 = 0;
-        var flag5 = 0;
-        var flag6 = 0;
-        var flag7 = 0;
-        var flag8 = 0;
-        var flag9 = 0;
-        var sum   = 0;
 
         //DELETE ALL TABLE
         var sql_delete_time_activity_summary_table = " DELETE FROM time_activity_summary_table WHERE user_id= :user_id ";
@@ -1948,8 +1939,7 @@ module.exports = {
                                                                                                                                                                     time_charge_Dept_per[h] = (data_update1[h].time_charge_Dept/data_update2[g].time_charge_Dept_all)*100;
                                                                                                                                                                 }
                                                                                                                                                             }
-                                                                                                                                                        }
-                                                                                                                                                        console.log(time_charge_Dept_per);    
+                                                                                                                                                        }    
                                                                                                                                                             
                                                                                                                                                         for (var h = 0; h < data_update1.length; h++) {
                                                                                                                                                             chainer.add(db.time_activity_summary_report.update({
