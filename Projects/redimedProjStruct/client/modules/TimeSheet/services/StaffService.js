@@ -4,45 +4,44 @@ angular.module("app.loggedIn.staff.service", [])
     var service = {};
     var api = Restangular.all("api");
 
-    service.addAllTask = function(allTask, info) {
+    service.addAllTask = function(allTaskPost, infoPost) {
         var addAllTask = api.all('staff/addAllTask');
         return addAllTask.post({
-            allTask: allTask,
-            info: info
+            allTask: allTaskPost,
+            info: infoPost
         });
     };
-    service.getAllTaskAMonth = function(search) {
+    service.getAllTaskAMonth = function(searchPost) {
         var getAllTaskAMonth = api.all('staff/getAllTaskAMonth');
         return getAllTaskAMonth.post({
-            search: search
+            search: searchPost
         });
     };
-    service.SubmitOnView = function(info) {
+    service.SubmitOnView = function(infoPost) {
         var SubmitOnView = api.all('staff/SubmitOnView');
         return SubmitOnView.post({
-            info: info
+            info: infoPost
         });
     };
 
-    service.editTask = function(task, info) {
+    service.editTask = function(task, infoPost) {
         var editTask = api.all('staff/editTask');
         return editTask.post({
             allTask: task,
-            info: info
+            info: infoPost
         });
     };
-    service.checkTimeInLieu = function(weekNo, USER_ID) {
+    service.checkTimeInLieu = function(infoPost) {
         var checkTimeInLieu = api.all('staff/checktime');
         return checkTimeInLieu.post({
-            weekNo: weekNo,
-            USER_ID: USER_ID
+            info: infoPost
         });
     };
 
-    service.getTask = function(idWeek) {
+    service.getTask = function(idWeekPost) {
         var getTask = api.all('staff/getTask');
         return getTask.post({
-            idWeek: idWeek
+            idWeek: idWeekPost
         });
     };
 
@@ -51,31 +50,31 @@ angular.module("app.loggedIn.staff.service", [])
         return getDepartmentLocation.get();
     };
 
-    service.checkFirstTaskWeek = function(info) {
+    service.checkFirstTaskWeek = function(infoPost) {
         var checkFirstTaskWeek = api.all('staff/checkFirstTaskWeek');
         return checkFirstTaskWeek.post({
-            info: info
+            info: infoPost
         });
     };
 
-    service.checkTaskWeek = function(info) {
+    service.checkTaskWeek = function(infoPost) {
         var checkTaskWeek = api.all('staff/checkTaskWeek');
         return checkTaskWeek.post({
-            info: info
+            info: infoPost
         });
     };
 
-    service.showEdit = function(info) {
+    service.showEdit = function(infoPost) {
         var showEdit = api.all('staff/showEdit');
         return showEdit.post({
-            info: info
+            info: infoPost
         });
     };
 
-    service.showDetailDate = function(info) {
+    service.showDetailDate = function(infoPost) {
         var showDetailDate = api.all('staff/showDetailDate');
         return showDetailDate.post({
-            info: info
+            info: infoPost
         });
     };
 
@@ -90,32 +89,13 @@ angular.module("app.loggedIn.staff.service", [])
         });
     };
 
-    service.getFortMatTimeTemp = function(time_charge) {
-        if (time_charge) {
-            var hourInLieu = parseInt(time_charge.substring(0, 2));
-            if (time_charge.length == 4) {
-                var minuteInLieu = parseInt(time_charge.substring(2, 4));
-            } else {
-                var minuteInLieu = parseInt(time_charge.substring(3, 5));
-            }
-            return hourInLieu + (minuteInLieu / 60);
-        } else {
-            return 0;
-        }
-    };
-
     //thanh
     service.convertShowToFull = function(time_charge) {
         if (time_charge !== undefined && time_charge !== null && !(isNaN(time_charge)) && time_charge !== 0 && time_charge.length !== 0) {
             var hours = 0;
             var minutes = 0;
-            if (time_charge.length < 5) {
-                hours = parseInt(time_charge.toString().substr(0, 2));
-                minutes = parseInt(time_charge.toString().substr(2, 2));
-            } else {
-                hours = parseInt(time_charge.toString().substr(0, 3));
-                minutes = parseInt(time_charge.toString().substr(3, 2));
-            }
+            hours = parseInt(time_charge.toString().substring(0, time_charge.toString().length - 2));
+            minutes = parseInt(time_charge.toString().substring(time_charge.toString().length - 2, time_charge.toString().length));
             return (parseInt(hours * 60) + parseInt(minutes));
         } else {
             return 0;

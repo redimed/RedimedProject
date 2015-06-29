@@ -1,11 +1,15 @@
 /**
  * Created by meditech on 09/10/2014.
  */
-module.exports = function(sequelize,DataTypes){
-    var TimeItemTask = sequelize.define('TimeItemTask',{
-        task_id : {type: DataTypes.INTEGER(11), primaryKey: true} ,
+module.exports = function(sequelize, DataTypes) {
+    var TimeItemTask = sequelize.define('TimeItemTask', {
+        task_id: {
+            type: DataTypes.INTEGER(11),
+            primaryKey: true
+        },
         item_id: DataTypes.STRING(20),
-        quantity: DataTypes.INTEGER(11),
+        ratio: DataTypes.FLOAT,
+        units: DataTypes.FLOAT,
         time_charge: DataTypes.FLOAT,
         comment: DataTypes.TEXT,
         Created_by : DataTypes.INTEGER(11) ,

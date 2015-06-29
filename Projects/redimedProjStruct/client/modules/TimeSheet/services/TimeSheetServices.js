@@ -3,137 +3,10 @@ angular.module("app.loggedIn.TimeSheet.Service", [])
         var TimeSheetService = {};
         var api = Restangular.all("api");
 
-        TimeSheetService.LoadTreeTimeSheet = function(searchPost) {
-            var LoadTreeTimeSheet = api.all("TimeSheet/post-list-tree");
-            return LoadTreeTimeSheet.post({
-                searchObj: searchPost
-            });
-        };
-
-        TimeSheetService.LoadNodeTimeSheet = function(searchPost) {
-            var LoadNodeTimeSheet = api.all("TimeSheet/post-list-node");
-            return LoadNodeTimeSheet.post({
-                searchObj: searchPost
-            });
-        };
-
-        TimeSheetService.LoadUserTimeSheet = function(seachPost) {
-            var LoadUserTimeSheet = api.all("TimeSheet/post-list-user");
-            return LoadUserTimeSheet.post({
-                searchObj: seachPost
-            });
-        };
-
-        TimeSheetService.LoadSelectUser = function() {
-            var LoadSelectUser = api.one("TimeSheet/post-select-user");
-            return LoadSelectUser.get({});
-        };
-
-        TimeSheetService.DeleteUser = function(userPost) {
-            var DeleteUser = api.all("TimeSheet/post-delete-user");
-            return DeleteUser.post({
-                userPost: userPost
-            });
-        };
-
-        TimeSheetService.LoadDepartMent = function() {
-            var LoadDepartMent = api.one("TimeSheet/get-list-department");
-            return LoadDepartMent.get({});
-        };
-
-        TimeSheetService.LoadNodeSelect = function(idPost) {
-            var LoadNodeSelect = api.all("TimeSheet/post-node-select");
-            return LoadNodeSelect.post({
-                info: idPost
-            });
-        };
-
-        TimeSheetService.LoadUser = function(searchObj) {
-            var LoadUser = api.all("TimeSheet/post-user-list");
-            return LoadUser.post({
-                searchObj: searchObj
-            });
-        };
-
-        TimeSheetService.AddUser = function(info) {
-            var AddUser = api.all("TimeSheet/post-user-add");
-            return AddUser.post({
-                info: info
-            });
-        };
-
-        TimeSheetService.UpdateUser = function(info) {
-            var UpdateUser = api.all("TimeSheet/post-user-update");
-            return UpdateUser.post({
-                info: info
-            });
-        };
-
-        TimeSheetService.LoadOneUser = function(info) {
-            var LoadOneUser = api.all("TimeSheet/post-user-one");
-            return LoadOneUser.post({
-                info: info
-            });
-        };
-
-        TimeSheetService.LoadRoleWhere = function(info) {
-            var LoadRoleWhere = api.all("TimeSheet/post-role-where");
-            return LoadRoleWhere.post({
-                info: info
-            });
-        };
-
-        TimeSheetService.LoadDeptWhere = function(info) {
-            var LoadDeptWhere = api.all("TimeSheet/post-dept-where");
-            return LoadDeptWhere.post({
-                info: info
-            });
-        };
-
-        TimeSheetService.LoadDept = function(searchObj) {
-            var LoadDept = api.all("TimeSheet/post-dept-list");
-            return LoadDept.post({
-                searchObj: searchObj
-            });
-        };
-
-        TimeSheetService.DeleteDept = function(idDept) {
-            var DeleteDept = api.all("TimeSheet/post-dept-del");
-            return DeleteDept.post({
-                idDept: idDept
-            });
-        };
-
-        TimeSheetService.LoadLocation = function() {
-            var LoadLocation = api.one("TimeSheet/get-location-list");
-            return LoadLocation.get({});
-        };
-
-        TimeSheetService.LoadOneDept = function(idDept) {
-            var LoadOneDept = api.all("TimeSheet/post-dept-one");
-            return LoadOneDept.post({
-                idDept: idDept
-            });
-        };
-
-        TimeSheetService.InsertDept = function(info) {
-            var InsertDept = api.all("TimeSheet/post-dept-insert");
-            return InsertDept.post({
-                info: info
-            });
-        };
-
-        TimeSheetService.UpdateDept = function(info) {
-            var UpdateDept = api.all("TimeSheet/post-dept-update");
-            return UpdateDept.post({
-                info: info
-            });
-        };
-
-        TimeSheetService.LoadTaskApproved = function(searchObj) {
+        TimeSheetService.LoadTaskApproved = function(searchObjPost) {
             var LoadTaskApproved = api.all("TimeSheet/post-list-approved");
             return LoadTaskApproved.post({
-                searchObj: searchObj
+                searchObj: searchObjPost
             });
         };
 
@@ -144,99 +17,93 @@ angular.module("app.loggedIn.TimeSheet.Service", [])
             });
         };
 
-        TimeSheetService.LoadTimeSheetApprove = function(searchObj) {
+        TimeSheetService.LoadTimeSheetApprove = function(searchObjPost) {
             var LoadTimeSheetApprove = api.all("TimeSheet/post-list-approve");
             return LoadTimeSheetApprove.post({
-                searchObj: searchObj
+                searchObj: searchObjPost
             });
         };
 
-        TimeSheetService.RejectTaskWeek = function(info) {
+        TimeSheetService.RejectTaskWeek = function(infoPost) {
             var RejectTaskWeek = api.all("TimeSheet/post-reject-taskweek");
             return RejectTaskWeek.post({
-                info: info
+                info: infoPost
             });
         };
 
-        TimeSheetService.ApproveTaskWeek = function(info) {
+        TimeSheetService.ApproveTaskWeek = function(infoPost) {
             var ApproveTaskWeek = api.all("TimeSheet/post-approve-taskweek");
             return ApproveTaskWeek.post({
-                info: info
+                info: infoPost
             });
         };
-        TimeSheetService.LoadRole = function(USER_ID) {
+        TimeSheetService.LoadRole = function(idPost) {
             var LoadRole = api.all("TimeSheet/post-role-one");
             return LoadRole.post({
-                USER_ID: USER_ID
+                USER_ID: idPost
             });
         };
-        TimeSheetService.ViewItem = function(taskID) {
+        TimeSheetService.ViewItem = function(taskIdPost) {
             var ViewItem = api.all("TimeSheet/post-item-list");
             return ViewItem.post({
-                taskID: taskID
+                taskID: taskIdPost
             });
         };
-        TimeSheetService.ViewOnDate = function(info) {
+        TimeSheetService.ViewOnDate = function(infoPost) {
             var ViewOnDate = api.all("TimeSheet/post-detail-one");
             return ViewOnDate.post({
-                info: info
+                info: infoPost
             });
         };
 
-        TimeSheetService.ViewAllDate = function(info) {
+        TimeSheetService.ViewAllDate = function(infoPost) {
             var ViewAllDate = api.all("TimeSheet/post-detail-all");
             return ViewAllDate.post({
-                info: info
+                info: infoPost
             });
         };
 
-        TimeSheetService.LoadItemCode = function(searchObj) {
+        TimeSheetService.LoadItemCode = function(searchObjPost) {
             var LoadItemCode = api.all("TimeSheet/post-itemcode-list");
             return LoadItemCode.post({
-                searchObj: searchObj
-            });
-        };
-        TimeSheetService.StepEmployee = function(info) {
-            var StepEmployee = api.all("TimeSheet/post-list-emp");
-            return StepEmployee.post({
-                info: info
+                searchObj: searchObjPost
             });
         };
 
         //REPORTS SERVICE
-        TimeSheetService.LoadDeptReport = function(USER_ID) {
+        TimeSheetService.LoadDeptReport = function(idPost) {
             var LoadDeptReport = api.all("TimeSheet/post-list-deptRP");
             return LoadDeptReport.post({
-                USER_ID: USER_ID
+                USER_ID: idPost
             });
         };
 
-        TimeSheetService.LoadEmpReport = function(listDept) {
+        TimeSheetService.LoadEmpReport = function(listDeptPost) {
             var LoadEmpReport = api.all("TimeSheet/post-list-empRP");
             return LoadEmpReport.post({
-                listDept: listDept
+                listDept: listDeptPost
             });
         };
-        TimeSheetService.LoadReports1 = function(info) {
-            var LoadReports1 = api.all("TimeSheet/post-list-reports1");
-            return LoadReports1.post({
-                info: info
+        TimeSheetService.LoadReportOnActualWorking = function(infoPost) {
+            var LoadReportOnActualWorking = api.all("TimeSheet/post-actual-working");
+            return LoadReportOnActualWorking.post({
+                info: infoPost
             });
         };
 
-        TimeSheetService.sendMailTimeSheet = function(info) {
+        TimeSheetService.sendMailTimeSheet = function(infoPost) {
             var sendMailTimeSheet = api.all('TimeSheet/post-send-mail');
             return sendMailTimeSheet.post({
-                info: info
+                info: infoPost
             });
         };
         //END ERPORT SERVICE
 
         //LEAVE FORM SERVICE
-        TimeSheetService.LoadInfoEmployee = function(USER_ID) {
+        TimeSheetService.LoadInfoEmployee = function(idPost) {
             var LoadInfoEmployee = api.all("TimeSheet/post-info-employee");
             return LoadInfoEmployee.post({
-                USER_ID: USER_ID
+                USER_ID: idPost
             });
         };
 
@@ -245,17 +112,17 @@ angular.module("app.loggedIn.TimeSheet.Service", [])
             return LoadTypeLeave.get({});
         };
 
-        TimeSheetService.UpLeaveServer = function(info) {
+        TimeSheetService.UpLeaveServer = function(infoPost) {
             var UpLeaveServer = api.all("TimeSheet/post-leave-form");
             return UpLeaveServer.post({
-                info: info
+                info: infoPost
             });
         };
 
-        TimeSheetService.LoadHistoryLeave = function(searchObj) {
+        TimeSheetService.LoadHistoryLeave = function(searchObjPost) {
             var LoadHistoryLeave = api.all("TimeSheet/post-history-leave");
             return LoadHistoryLeave.post({
-                searchObj: searchObj
+                searchObj: searchObjPost
             });
         };
 
@@ -266,95 +133,95 @@ angular.module("app.loggedIn.TimeSheet.Service", [])
             });
         };
 
-        TimeSheetService.SubmitOnViewLeave = function(info) {
+        TimeSheetService.SubmitOnViewLeave = function(infoPost) {
             var SubmitOnViewLeave = api.all("TimeSheet/post-submit-view");
             return SubmitOnViewLeave.post({
-                info: info
+                info: infoPost
             });
         };
 
-        TimeSheetService.LoadLeaveEdit = function(leaveID) {
+        TimeSheetService.LoadLeaveEdit = function(leaveIDPost) {
             var LoadLeaveEdit = api.all("TimeSheet/post-load-edit");
             return LoadLeaveEdit.post({
-                leaveID: leaveID
+                leaveID: leaveIDPost
             });
         };
 
-        TimeSheetService.UpdateLeave = function(info) {
+        TimeSheetService.UpdateLeave = function(infoPost) {
             var UpdateLeave = api.all("TimeSheet/post-update-leave");
             return UpdateLeave.post({
-                info: info
+                info: infoPost
             });
         };
 
-        TimeSheetService.LoadLeaveApprove = function(info) {
+        TimeSheetService.LoadLeaveApprove = function(infoPost) {
             var LoadLeaveApprove = api.all("TimeSheet/post-list-leave");
             return LoadLeaveApprove.post({
-                info: info
+                info: infoPost
             });
         };
 
-        TimeSheetService.ApproveLeave = function(info) {
+        TimeSheetService.ApproveLeave = function(infoPost) {
             var ApproveLeave = api.all("TimeSheet/post-approve-leave");
             return ApproveLeave.post({
-                info: info
+                info: infoPost
             });
         };
 
-        TimeSheetService.RejectLeave = function(info) {
+        TimeSheetService.RejectLeave = function(infoPost) {
             var RejectLeave = api.all("TimeSheet/post-reject-leave");
             return RejectLeave.post({
-                info: info
+                info: infoPost
             });
         };
 
-        TimeSheetService.CheckLeave = function(USER_ID) {
+        TimeSheetService.CheckLeave = function(idPost) {
             var CheckLeave = api.all("TimeSheet/post-check-leave");
             return CheckLeave.post({
-                USER_ID: USER_ID
+                USER_ID: idPost
             });
         };
 
-        TimeSheetService.LoadReportOweLeave = function(info) {
+        TimeSheetService.LoadReportOweLeave = function(infoPost) {
             var LoadReportOweLeave = api.all("TimeSheet/post-owe-leave");
             return LoadReportOweLeave.post({
-                info: info
+                info: infoPost
             });
         };
 
-        TimeSheetService.LoadReportTimeInLieu = function(info) {
+        TimeSheetService.LoadReportTimeInLieu = function(infoPost) {
             var LoadReportTimeInLieu = api.all("TimeSheet/post-time-inlieu");
             return LoadReportTimeInLieu.post({
-                info: info
+                info: infoPost
             });
         };
 
-        TimeSheetService.LoadReportItemNumber = function(info) {
+        TimeSheetService.LoadReportItemNumber = function(infoPost) {
             var LoadReportItemNumber = api.all("TimeSheet/post-item-number");
             return LoadReportItemNumber.post({
-                info: info
+                info: infoPost
             });
         };
 
-        TimeSheetService.LoadReportUtilizationRatioSumary = function(info) {
+        TimeSheetService.LoadReportUtilizationRatioSumary = function(infoPost) {
             var LoadReportUtilizationRatioSumary = api.all("TimeSheet/post-utilization-sumary");
             return LoadReportUtilizationRatioSumary.post({
-                info: info
+                info: infoPost
             });
         };
 
-        TimeSheetService.LoadReportUtilizationRatioDetail = function(info) {
+        TimeSheetService.LoadReportUtilizationRatioDetail = function(infoPost) {
             var LoadReportUtilizationRatioDetail = api.all("TimeSheet/post-utilization-detail");
             return LoadReportUtilizationRatioDetail.post({
-                info: info
+                info: infoPost
             });
         };
         //END LEAVE FORM
 
-        TimeSheetService.DeleteFile = function(fileId) {
+        TimeSheetService.DeleteFile = function(fileIdPost) {
             var DeleteFile = api.all("TimeSheet/post-del-file");
             return DeleteFile.post({
-                fileId: fileId
+                fileId: fileIdPost
             });
         };
 
