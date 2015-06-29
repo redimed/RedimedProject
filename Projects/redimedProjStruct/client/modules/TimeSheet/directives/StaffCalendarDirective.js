@@ -9,7 +9,7 @@
 angular.module('app.loggedIn.staff.calendar.directive',[])
   .directive('mwlCalendar', function (moment, calendarHelper) {
     return {
-      templateUrl: 'modules/staff/directives/templates/main.html',
+      templateUrl: 'modules/TimeSheet/directives/templates/main.html',
       restrict: 'EA',
       scope: {
         events: '=calendarEvents',
