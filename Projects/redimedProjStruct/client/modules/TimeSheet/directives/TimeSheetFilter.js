@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.TimeSheet.Filter", [])
-    .filter('customHours', function(MIN_TO_DEC) {
+    .filter('customHours', function() {
         return function(time_charge) {
             if (time_charge !== undefined && time_charge !== null && time_charge !== 0) {
                 var hours = parseInt(time_charge / 60);
@@ -51,5 +51,31 @@ angular.module("app.loggedIn.TimeSheet.Filter", [])
                     value: input.substring(0, 10) + "..." + input.substr(input.length - 5, input.length - 1)
                 });
             } else return "";
+        };
+    })
+    .filter('customTotalHours', function() {
+        return function(input) {
+            if (input !== undefined &&
+                input !== null &&
+                input !== "" &&
+                input !== 0 &&
+                input.length !== 0) {
+                return (input.toString().substring(0, input.toString().length - 2)).concat(':', input.toString().substring(input.toString().length - 2, input.toString()));
+            } else {
+                return "__:__";
+            }
+        };
+    })
+    .filter('customTotalHoursAll', function() {
+        return function(input) {
+            if (input !== undefined &&
+                input !== null &&
+                input !== "" &&
+                input !== 0 &&
+                input.length !== 0) {
+                return (input.toString().substring(0, input.toString().length - 2)).concat(':', input.toString().substring(input.toString().length - 2, input.toString()));
+            } else {
+                return "00:00";
+            }
         };
     });

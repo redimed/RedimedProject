@@ -1,10 +1,5 @@
 angular.module("app.loggedIn.TimeSheet.ViewApproved.Controller", [])
     .controller("ViewApprovedTimeSheet", function($scope, $modal, $timeout, MODE_ROW, MODE_WEEK, toastr, $state, TimeSheetService, $cookieStore, ConfigService) {
-        //close siderba
-        $('body').addClass("page-sidebar-closed");
-        $('body').find('ul').addClass("page-sidebar-menu-closed");
-        //end close siderba
-        
         //setPage
         $scope.setPage = function() {
             $scope.searchObjectMap.offset = ($scope.searchObjectMap.currentPage - 1) * $scope.searchObjectMap.limit;

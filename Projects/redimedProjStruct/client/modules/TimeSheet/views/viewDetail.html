@@ -25,42 +25,42 @@
                     <table class="responsive table table-bordered" ng-show="!tasks.loading">
                         <thead ng-show="tasks!==null">
                             <tr>
-                                <th>
+                                <th style="width:10%;">
                                     <div class="th">
                                         Date
                                     </div>
                                 </th>
-                                <th>
+                                <th style="width:10%;">
                                     <div class="th">
                                         Activity
                                     </div>
                                 </th>
-                                <th>
+                                <th style="width:12%;">
                                     <div class="th">
                                         Location
                                     </div>
                                 </th>
-                                <th>
+                                <th style="width:12%;">
                                     <div class="th">
                                         Department
                                     </div>
                                 </th>
-                                <th>
+                                <th style="width:7%;">
                                     <div class="th">
                                         Time Charge
                                     </div>
                                 </th>
-                                <th>
+                                <th style="width:15%;">
                                     <div class="th">
                                         Tasks / Items
                                     </div>
                                 </th>
-                                <th>
+                                <th style="width:7%;">
                                     <div class="th">
                                         Actual Unit
                                     </div>
                                 </th>
-                                <th>
+                                <th style="width:8%;">
                                     <div class="th">
                                         Standard Unit
                                     </div>
@@ -70,7 +70,7 @@
                                         Comments
                                     </div>
                                 </th>
-                                <th style="width: 15px;text-align:center;">
+                                <th style="width: 2%;text-align:center;">
                                     <div class="th">
                                         <i class="glyphicon glyphicon-paperclip"></i>
                                     </div>
@@ -79,16 +79,16 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="(key,task) in tasks track by $index" ng-class="{'same': one == false ? getDay(task.date)%2==0 : false}">
-                                <td style="text-align:left;font-size:13px;">{{task.date | date : 'EEE, dd MMM yyyy'}}</td>
-                                <td style="text-align:left;font-size:13px;">{{(task.activity===null ||task.activity==="" ||task.activity===undefined)?"N/A":task.activity}}</td>
-                                <td style="text-align:left;font-size:13px;">{{(task.location===null ||task.location==="" || task.location===undefined)?"N/A":task.location}}</td>
-                                <td style="text-align:left;font-size:13px;">{{(task.department===null||task.department==="" || task.department===undefined)?"N/A":task.department}}</td>
-                                <td style="font-size:13px;text-align:center;">{{(task.time_item === null || task.time_item===""||task.time_item===undefined) ? getFortMatTimeCharge(task.time_charge) : getFortMatTimeCharge(task.time_item)}}</td>
-                                <td style="text-align:left;font-size:13px;">{{task.IS_BILLABLE===1?(task.ITEM_ID):(task.ITEM_NAME)}}</td>
-                                <td style="font-size:13px;text-align:center;">{{(task.ratio===null||task.ratio==="" ||task.ratio===undefined)?"N/A":task.ratio}}</td>
-                                <td style="font-size:13px;text-align:center;">{{(task.units===null||task.units==="" ||task.units===undefined)?"N/A":task.units}}</td>
+                                <td style="text-align:left;font-size:13px; width:10%;">{{task.date | date : 'EEE, dd MMM yyyy'}}</td>
+                                <td style="text-align:left;font-size:13px;width:10%;">{{(task.activity===null ||task.activity==="" ||task.activity===undefined)?"N/A":task.activity}}</td>
+                                <td style="text-align:left;font-size:13px;width:12%;">{{(task.location===null ||task.location==="" || task.location===undefined)?"N/A":task.location}}</td>
+                                <td style="text-align:left;font-size:13px;width:12%;">{{(task.department===null||task.department==="" || task.department===undefined)?"N/A":task.department}}</td>
+                                <td style="font-size:13px;text-align:center;width:7%;">{{(task.time_item === null || task.time_item===""||task.time_item===undefined) ? getFortMatTimeCharge(task.time_charge) : getFortMatTimeCharge(task.time_item)}}</td>
+                                <td style="text-align:left;font-size:13px;width:15%;">{{task.IS_BILLABLE===1?(task.ITEM_ID):(task.ITEM_NAME)}}</td>
+                                <td style="font-size:13px;text-align:center;width:7%;">{{(task.ratio===null||task.ratio==="" ||task.ratio===undefined)?"N/A":task.ratio}}</td>
+                                <td style="font-size:13px;text-align:center;width:8%;">{{(task.units===null||task.units==="" ||task.units===undefined)?"N/A":task.units}}</td>
                                 <td style="text-align:left;font-size:13px;">{{(task.units===null||task.units==="")?((task.task===undefined||task.task===null || task.task==="")?"":task.task):((task.comment==undefined||task.comment===null||task.comment==="")?"":task.comment)}}</td>
-                                <td style="text-align:center;">
+                                <td style="text-align:center; width:2%;">
                                     <div ng-repeat="file in task.files">
                                         <a href="/api/TimeSheet/get-download-file/{{file.file_id}}" title="{{file.file_name}}" target="_blank">
                                             <i class="glyphicon glyphicon-file" style="font-size:12px;"></i>

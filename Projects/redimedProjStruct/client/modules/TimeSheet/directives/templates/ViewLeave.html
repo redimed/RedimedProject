@@ -47,7 +47,7 @@
                         <tbody>
                             <tr ng-repeat="l in list.result " ng-class-odd="'odd'" ng-hide="(l.sumDATE===0 && l.activity_id !==18)">
                                 <td style="text-align:left;font-size:13px; width:40%;"><span>{{((l.leave_name!==undefined && l.leave_name!==null && l.leave_name!=="")?l.leave_name:"")}}</span>&nbsp;<span class="text-info">{{(l.type_other!==undefined && l.type_other!==null && l.type_other!=="")?l.type_other:""}}</span></td>
-                                <td ng-if="(l.time_leave!==undefined && l.time_leave!==0)" style="font-size:13px; text-align:center; width:10%;"><span style="margin-left: 1px">{{(l.time_leave!==undefined && l.time_leave!==0)?(l.time_leave | customHours):"-"}}</span></td>
+                                <td ng-if="(l.time_leave!==undefined && l.time_leave!==0)" style="font-size:13px; text-align:right; width:10%;"><span style="margin-right:43px;">{{(l.time_leave!==undefined && l.time_leave!==0)?(l.time_leave | customHours):"-"}}</span></td>
                                 <td ng-if="!(l.time_leave!==undefined && l.time_leave!==0)" style="font-size:13px; text-align:center; width:10%;">{{(l.time_leave!==undefined && l.time_leave!==0)?(l.time_leave | customHours):"-"}}</td>
                                 <td style="font-size:13px; width:50%;">{{(l.reason_leave!==undefined && l.reason_leave!==null && l.reason_leave!=='')?(l.reason_leave):""}}</td>
                             </tr>

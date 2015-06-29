@@ -1,6 +1,5 @@
 angular.module("app.loggedIn.TimeSheet.ApproveLeave.Controller", [])
     .controller("ApproveLeaveController", function($scope, MODE_ROW, $modal, toastr, $state, TimeSheetService, $cookieStore) {
-
         //STATUS
         $scope.listStatus = [{
             code: 2,
