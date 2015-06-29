@@ -1,144 +1,138 @@
-angular.module("app.loggedIn.TimeSheet", [])
+angular.module("app.loggedIn.TimeSheet", [
+        "app.loggedIn.TimeSheet.Service",
+        "app.loggedIn.staff.service"
+    ])
     .config(function($stateProvider) {
 
         $stateProvider
-            .state("loggedIn.timesheetStaffLoad", {
-                url: "/timesheet-staff-load",
+            .state("loggedIn.leaveLoadHistory", {
+                url: "/leave-load-history",
                 resolve: {
                     init: function($q, $rootScope, $state, $timeout, $ocLazyLoad) {
-                        //LOAD ROUTE
-                        $ocLazyLoad.load("modules/TimeSheet/extend_routes_timesheet.js");
-                        //END LOAD ROUTE
-
-                        //LOAD CONTROLLER
-                        $ocLazyLoad.load("modules/TimeSheet/controllers/ViewTaskController.js");
-                        $ocLazyLoad.load("modules/TimeSheet/controllers/StaffWeekController.js");
-                        $ocLazyLoad.load("modules/TimeSheet/controllers/StaffMonthController.js");
-                        $ocLazyLoad.load("modules/TimeSheet/controllers/createTimesheetController.js");
-                        $ocLazyLoad.load("modules/TimeSheet/controllers/viewTimesheetController.js");
-                        $ocLazyLoad.load("modules/TimeSheet/controllers/TimeSheetCreateLeaveController.js");
-                        $ocLazyLoad.load("modules/TimeSheet/controllers/TimeSheetHistoryLeaveController.js");
-                        $ocLazyLoad.load("modules/TimeSheet/controllers/TimeSheetReport2Controller.js");
-                        $ocLazyLoad.load("modules/TimeSheet/controllers/TimeSheetReport3Controller.js");
-                        $ocLazyLoad.load("modules/TimeSheet/controllers/TimeSheetReport6Controller.js");
-                        //END LOAD CONTROLLER
-
-                        //LOAD DIRECTIVE
-                        $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetItemCodeDirective.js");
-                        $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetOnlyDigits.js");
-                        $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetActivityDetailDirective.js");
-                        $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetFilter.js");
-                        $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetTimeDirective.js");
-                        $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetViewLeaveDirective.js");
-                        $ocLazyLoad.load("modules/TimeSheet/directives/StaffCalendarDirective.js");
-                        $ocLazyLoad.load("modules/TimeSheet/directives/StaffMonthDirective.js");
-                        $ocLazyLoad.load("modules/TimeSheet/directives/StaffWeekDirective.js");
-                        //END LOAD DIRECTIVE
-
-                        //LOAD LIBRARY
-                        $ocLazyLoad.load("vendor/jquery-mask/masked.js");
-                        $ocLazyLoad.load("vendor/dropdown-multiselect/src/angularjs-dropdown-multiselect.js");
-                        $ocLazyLoad.load("vendor/angular-bootstrap-calendar/calendar-jquery/jquery.animate.clip.js");
-                        $ocLazyLoad.load("vendor/angular-bootstrap-calendar/calendar-jquery/jCal.js");
-                        $ocLazyLoad.load("vendor/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js")
-                            //END LOAD LIBRARY
-                            .then(function() {
-                                // $state.go("loggedIn.TimeSheetHome");
-                                console.log("LOAD FINISH");
-                            });
+                        .then(function() {
+                            $state.go("loggedIn.TimeSheetHome");
+                        });
                     }
                 }
             })
-            .state("loggedIn.timesheetHODLoad", {
-                url: "/timesheet-hod-load",
+            .state("loggedIn.leaveLoadApply", {
+                url: "/leave-load-apply",
                 resolve: {
                     init: function($q, $rootScope, $state, $timeout, $ocLazyLoad) {
-                        //LOAD ROUTE
-                        $ocLazyLoad.load("modules/TimeSheet/extend_routes_timesheet.js");
-                        //END LOAD ROUTE
-
-                        //LOAD CONTROLLER
-                        $ocLazyLoad.load("modules/TimeSheet/controllers/ViewTaskController.js");
-                        $ocLazyLoad.load("modules/TimeSheet/controllers/StaffWeekController.js");
-                        $ocLazyLoad.load("modules/TimeSheet/controllers/StaffMonthController.js");
-                        $ocLazyLoad.load("modules/TimeSheet/controllers/createTimesheetController.js");
-                        $ocLazyLoad.load("modules/TimeSheet/controllers/viewTimesheetController.js");
-                        $ocLazyLoad.load("modules/TimeSheet/controllers/TimeSheetCreateLeaveController.js");
-                        $ocLazyLoad.load("modules/TimeSheet/controllers/TimeSheetHistoryLeaveController.js");
-                        $ocLazyLoad.load("modules/TimeSheet/controllers/TimeSheetReport2Controller.js");
-                        $ocLazyLoad.load("modules/TimeSheet/controllers/TimeSheetReport3Controller.js");
-                        $ocLazyLoad.load("modules/TimeSheet/controllers/TimeSheetReport6Controller.js");
-                        //END LOAD CONTROLLER
-
-                        //LOAD DIRECTIVE
-                        $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetItemCodeDirective.js");
-                        $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetOnlyDigits.js");
-                        $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetActivityDetailDirective.js");
-                        $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetFilter.js");
-                        $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetTimeDirective.js");
-                        $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetViewLeaveDirective.js");
-                        $ocLazyLoad.load("modules/TimeSheet/directives/StaffCalendarDirective.js");
-                        $ocLazyLoad.load("modules/TimeSheet/directives/StaffMonthDirective.js");
-                        $ocLazyLoad.load("modules/TimeSheet/directives/StaffWeekDirective.js");
-                        //END LOAD DIRECTIVE
-
-                        //LOAD LIBRARY
-                        $ocLazyLoad.load("vendor/jquery-mask/masked.js");
-                        $ocLazyLoad.load("vendor/dropdown-multiselect/src/angularjs-dropdown-multiselect.js");
-                        $ocLazyLoad.load("vendor/angular-bootstrap-calendar/calendar-jquery/jquery.animate.clip.js");
-                        $ocLazyLoad.load("vendor/angular-bootstrap-calendar/calendar-jquery/jCal.js");
-                        $ocLazyLoad.load("vendor/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js")
-                            //END LOAD LIBRARY
-                            .then(function() {
-                                $state.go("loggedIn.TimeSheetHome");
-                            });
+                        .then(function() {
+                            $state.go("loggedIn.TimeSheetHome");
+                        });
                     }
                 }
             })
-            .state("loggedIn.timesheetDir", {
-                url: "/timesheet-dir-load",
+            .state("loggedIn.leaveLoadApprove", {
+                url: "/timesheet-load-approve",
                 resolve: {
                     init: function($q, $rootScope, $state, $timeout, $ocLazyLoad) {
-                        //LOAD ROUTE
-                        $ocLazyLoad.load("modules/TimeSheet/extend_routes_timesheet.js");
-                        //END LOAD ROUTE
-
-                        //LOAD CONTROLLER
-                        $ocLazyLoad.load("vendor/jquery-mask/masked.js");
-                        $ocLazyLoad.load("vendor/dropdown-multiselect/src/angularjs-dropdown-multiselect.js");
-                        $ocLazyLoad.load("vendor/angular-bootstrap-calendar/calendar-jquery/jquery.animate.clip.js");
-                        $ocLazyLoad.load("vendor/angular-bootstrap-calendar/calendar-jquery/jCal.js");
-                        $ocLazyLoad.load("modules/TimeSheet/controllers/ViewTaskController.js");
-                        $ocLazyLoad.load("modules/TimeSheet/controllers/StaffWeekController.js");
-                        $ocLazyLoad.load("modules/TimeSheet/controllers/StaffMonthController.js");
-                        $ocLazyLoad.load("modules/TimeSheet/controllers/createTimesheetController.js");
-                        $ocLazyLoad.load("modules/TimeSheet/controllers/viewTimesheetController.js");
-                        $ocLazyLoad.load("modules/TimeSheet/controllers/TimeSheetCreateLeaveController.js");
-                        $ocLazyLoad.load("modules/TimeSheet/controllers/TimeSheetHistoryLeaveController.js");
-                        $ocLazyLoad.load("modules/TimeSheet/controllers/TimeSheetReport2Controller.js");
-                        $ocLazyLoad.load("modules/TimeSheet/controllers/TimeSheetReport3Controller.js");
-                        $ocLazyLoad.load("modules/TimeSheet/controllers/TimeSheetReport6Controller.js");
-                        //END LOAD CONTROLLER
-
-                        //LOAD DIRECTIVE
-                        $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetItemCodeDirective.js");
-                        $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetOnlyDigits.js");
-                        $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetActivityDetailDirective.js");
-                        $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetFilter.js");
-                        $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetTimeDirective.js");
-                        $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetViewLeaveDirective.js");
-                        $ocLazyLoad.load("modules/TimeSheet/directives/StaffCalendarDirective.js");
-                        $ocLazyLoad.load("modules/TimeSheet/directives/StaffMonthDirective.js");
-                        $ocLazyLoad.load("modules/TimeSheet/directives/StaffWeekDirective.js");
-                        //END LOAD DIRECTIVE
-
-                        //LOAD LIBRARY
-                        $ocLazyLoad.load("vendor/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js")
-                            //END LOAD LIBRARY
-                            .then(function() {
-                                $state.go("loggedIn.TimeSheetHome");
-                            });
+                        .then(function() {
+                            $state.go("loggedIn.TimeSheetHome");
+                        });
                     }
                 }
-            });
+            })
+            .state("loggedIn.timesheetLoadHistory", {
+                url: "/timesheet-load-history",
+                resolve: {
+                    init: function($q, $rootScope, $state, $timeout, $ocLazyLoad) {
+                        .then(function() {
+                            $state.go("loggedIn.TimeSheetHome");
+                        });
+                    }
+                }
+            })
+            .state("loggedIn.timesheetLoadCreate", {
+                url: "/timesheet-load-create",
+                resolve: {
+                    init: function($q, $rootScope, $state, $timeout, $ocLazyLoad) {
+                        .then(function() {
+                            $state.go("loggedIn.TimeSheetHome");
+                        });
+                    }
+                }
+            })
+            .state("loggedIn.timesheetLoadApprove", {
+                url: "/timesheet-load-approve",
+                resolve: {
+                    init: function($q, $rootScope, $state, $timeout, $ocLazyLoad) {
+                        .then(function() {
+                            $state.go("loggedIn.TimeSheetHome");
+                        });
+                    }
+                }
+            })
+            .state("loggedIn.timesheetLoadReport1", {
+                url: "/timesheet-load-report1",
+                resolve: {
+                    init: function($q, $rootScope, $state, $timeout, $ocLazyLoad) {
+                        .then(function() {
+                            $state.go("loggedIn.TimeSheetHome");
+                        });
+                    }
+                }
+            })
+            .state("loggedIn.timesheetLoadReport2", {
+                url: "/timesheet-load-report2",
+                resolve: {
+                    init: function($q, $rootScope, $state, $timeout, $ocLazyLoad) {
+                        .then(function() {
+                            $state.go("loggedIn.TimeSheetHome");
+                        });
+                    }
+                }
+            })
+            .state("loggedIn.timesheetLoadReport3", {
+                url: "/timesheet-load-report3",
+                resolve: {
+                    init: function($q, $rootScope, $state, $timeout, $ocLazyLoad) {
+                        .then(function() {
+                            $state.go("loggedIn.TimeSheetHome");
+                        });
+                    }
+                }
+            })
+            .state("loggedIn.timesheetLoadReport4", {
+                url: "/timesheet-load-report4",
+                resolve: {
+                    init: function($q, $rootScope, $state, $timeout, $ocLazyLoad) {
+                        .then(function() {
+                            $state.go("loggedIn.TimeSheetHome");
+                        });
+                    }
+                }
+            })
+            .state("loggedIn.timesheetLoadReport5", {
+                url: "/timesheet-load-report5",
+                resolve: {
+                    init: function($q, $rootScope, $state, $timeout, $ocLazyLoad) {
+                        .then(function() {
+                            $state.go("loggedIn.TimeSheetHome");
+                        });
+                    }
+                }
+            })
+            .state("loggedIn.timesheetLoadReport6", {
+                url: "/timesheet-load-report6",
+                resolve: {
+                    init: function($q, $rootScope, $state, $timeout, $ocLazyLoad) {
+                        .then(function() {
+                            $state.go("loggedIn.TimeSheetHome");
+                        });
+                    }
+                }
+            })
+            .state("loggedIn.leaveLoadReportOwe", {
+                url: "/leave-load-reportowe",
+                resolve: {
+                    init: function($q, $rootScope, $state, $timeout, $ocLazyLoad) {
+                        .then(function() {
+                            $state.go("loggedIn.TimeSheetHome");
+                        });
+                    }
+                }
+            })
     });

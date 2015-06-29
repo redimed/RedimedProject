@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.TimeSheet", [])
+angular.module("app.loggedIn.TimeSheet.Service", [])
     .factory("TimeSheetService", function(Restangular) {
         var TimeSheetService = {};
         var api = Restangular.all("api");
