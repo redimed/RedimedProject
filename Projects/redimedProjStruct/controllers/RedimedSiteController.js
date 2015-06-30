@@ -2,6 +2,8 @@
  * Created by meditech on 25/09/2014.
  */
 var db = require('../models');
+var kiss=require('./kissUtilsController');
+var moment=require('moment');
 module.exports = {
     list: function(req,res){
         db.RedimedSite.findAll({},{raw:true})
@@ -39,6 +41,45 @@ module.exports = {
             .error(function(err){
                 res.json({status:'fail'});
             })
+
+    },
+    //phanquocchien.c1109g@gmail.com
+    rlobListMobile:function(req,res)
+    {
+        console.log('localtionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn',req.body.date)
+        var date=kiss.checkData(req.body.date)?req.body.date:'';
+        if(!kiss.checkListData(date))
+        {
+            kiss.exlog("rlobListMobile","Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
+        var sql=
+            " SELECT DISTINCT `redimedsite`.`Site_name`,`redimedsite`.`id`           "+
+            " FROM      `cln_appointment_calendar` h                                 "+
+            " INNER JOIN `redimedsites` redimedsite ON h.`SITE_ID`=`redimedsite`.id  "+
+            " LEFT JOIN `cln_appt_patients` patient ON h.`CAL_ID` = patient.`CAL_ID` "+                   
+            " WHERE patient.`Patient_id` IS NULL                                     "+
+            " AND DATE(h.`FROM_TIME`)= ?                                             "+
+            " AND MINUTE(TIMEDIFF(h.`TO_TIME`,h.`FROM_TIME`)) >0                     ";
+        req.getConnection(function(err,connection)
+        {
+
+            var query = connection.query(sql,[moment(date).format("YYYY-MM-DD")],function(err,rows)
+            {
+                if(err)
+                {
+                    console.log('chiennnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn',query.sql);
+                    res.json({status:'fail'})
+                }
+                else
+                {
+                    console.log('chiennnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn',query.sql);
+                    res.json({status:'success',data:rows})
+                }
+
+            });
+        });
 
     },
 

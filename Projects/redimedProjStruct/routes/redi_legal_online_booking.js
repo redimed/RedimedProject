@@ -18,6 +18,7 @@ var rlobBookingMobileController=require('./controllers/rlobBookingMobileControll
 
 //redimedsites
 app.get('/api/rlob/redimedsites/list',RedimedSiteController.rlobList);
+app.post('/api/rlob/redimedsites/list-mobile',RedimedSiteController.rlobListMobile);//chien
 
 //rlType
 app.get('/api/rlob/rl_types/list',rlTypesController.list);
@@ -40,6 +41,7 @@ app.get('/api/rlob/doctors/get-doctors-by-speciality',doctorsController.getDocto
 app.get('/api/rlob/doctors/get-doctors-info-by-userid',doctorsController.getDoctorInfoByUserId);
 app.get('/api/rlob/doctors/get-doctors-by-id',doctorsController.getDoctorById);
 app.get('/api/rlob/doctors/get-doctors-for-source-type',doctorsController.getDoctorForSourceType);
+app.post('/api/rlob/doctors/get-doctors-for-source-type-mobile',doctorsController.getDoctorForSourceTypeMobile);//chien
 
 
 //cln_appointment-calendar

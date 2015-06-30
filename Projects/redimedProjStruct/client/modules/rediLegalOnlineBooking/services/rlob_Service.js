@@ -376,6 +376,22 @@ angular.module('app.loggedIn.rlob.services',[])
             var result=api.one('rlob/rl_bookings/admin/report/list-location-report');
             return result.get();
         }
+        //chien 
+        //phanquocchien.c1109g@gmail.com
+        //list doctor mobile
+        rlobService.ListDoctorMobile=function(date)
+        {
+            var result=api.all('rlob/doctors/get-doctors-for-source-type-mobile');
+            return result.post({date:date});
+        }
+        //chien 
+        //phanquocchien.c1109g@gmail.com
+        //list location mobile
+        rlobService.ListLocationMobile=function(date)
+        {
+            var result=api.all('rlob/redimedsites/list-mobile');
+            return result.post({date:date});
+        }
 
         rlobService.getPassBookingNotChangeStatus=function(bookingType,doctorId)
         {

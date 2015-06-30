@@ -19,6 +19,8 @@ angular.module("app.calendar.mobile.controller",[])
         onSelect: function(date) {
             $scope.selectedFilter.var1 = date;
             $scope.updateAppoinmentsList();
+            $scope.getLocationsFilter();
+            $scope.getDoctorsFilter();
         }
      });
     //---------------------------------------------------------------------------
@@ -26,50 +28,32 @@ angular.module("app.calendar.mobile.controller",[])
     //Get all location for select
     $scope.getLocationsFilter=function()
     {
-        $http({
-            method:"GET",
-            url:"/api/rlob/redimedsites/list",
-            params:{bookingType:$scope.bookingType}
+        var date = '2015-06-30';
+        console.log($scope.selectedFilter.var1);
+        console.log(date);
+        rlobService.ListLocationMobile(date).then(function(data){
+            if (data.status == 'success') {
+                console.log(data);
+                $scope.locationsFilter=data.data;
+                console.log('locstion',$scope.locationsFilter)
+            };
         })
-            .success(function(data) {
-                $scope.locationsFilter=data;
-            })
-            .error(function (data) {
-                console.log("error");
-            })
-            .finally(function() {
-            });
     }
     $scope.getLocationsFilter();
 
     //Get all Doctors of specialtity
     $scope.getDoctorsFilter=function()
     {
-
-        $http({
-            method:"GET",
-            url:"/api/rlob/doctors/get-doctors-for-source-type",
-            params:{sourceType:$scope.bookingType}
+        var date = '2015-06-30';
+        console.log(date);
+        console.log($scope.selectedFilter.var1);
+        rlobService.ListDoctorMobile(date).then(function(data){
+            if (data.status == 'success') {
+                console.log(data);
+                $scope.doctorsFilter=data.data;
+                console.log('doctor',$scope.doctorsFilterr)
+            };
         })
-            .success(function(data) {
-                if(data.status=='success')
-                    $scope.doctorsFilter=data.data;
-
-                //if Vaccination
-
-                if($scope.bookingType=='Vaccination')
-                {
-                    $scope.selectedFilter.doctorSelected=$scope.doctorsFilter[0];
-                    $scope.updateAppoinmentsList();
-
-                }
-            })
-            .error(function (data) {
-                console.log("error");
-            })
-            .finally(function() {
-
-            });
     }
     $scope.getDoctorsFilter();
 
