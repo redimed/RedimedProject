@@ -925,8 +925,7 @@ module.exports = {
                                                 time_in_lieu_used_all: data[t].time_in_lieu_used_all,
                                                 time_in_lieu_remain_all: data[t].time_in_lieu_remain_all,
                                                 time_in_lieu_gan_nhat_all: data[t].time_in_lieu_gan_nhat_all,
-                                                user_id: data[t].user_id,
-                                                create_day: moment(d).format('DD/MM/YYYY')
+                                                user_id: data[t].user_id
                                             }));
                                         }
                                         chainer.runSerially()
