@@ -1,5 +1,5 @@
 
-<link href="common/views/call.css" rel="stylesheet" type="text/css" />
+<link href="modules/makeCall/views/call.css" rel="stylesheet" type="text/css" />
 
 <div ng-class="{'mouse-move': mouseMove}">
 
@@ -49,6 +49,7 @@
             <ot-publisher id="facePublisher"
                 ng-dblclick="$emit('changeScreenSize');"
                 props="facePublisherProps"
+                username="userInfo.user_name"
                 mute-video="isVideoMuted"
                 mute-audio="isAudioMuted">
             </ot-publisher>

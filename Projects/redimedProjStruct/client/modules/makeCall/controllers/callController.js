@@ -1,8 +1,7 @@
 /**
  * Created by Luan Nguyen on 1/26/2015.
  */
-angular.module("app.call.controller",[
-])
+angular.module("app.calling")
     .controller("callController", function($timeout,$scope,$document,$modalStack,$interval,$location,$rootScope, OTSession, $state,$modal, $cookieStore,toastr,$window,socket,UserService, $stateParams){
         var audio = new Audio('theme/assets/phone_calling.mp3');
         var toSt= $cookieStore.get('toState');
@@ -99,7 +98,10 @@ angular.module("app.call.controller",[
                   if (!connected) $scope.publishing = false;
               });
             };
-            if ((session.is && session.is('connected')) || session.connected) connectDisconnect(true);
+            if ((session.is && session.is('connected')) || session.connected){
+                connectDisconnect(true);
+                $scope.publishing = true;
+            } 
             $scope.session.on('sessionConnected', connectDisconnect.bind($scope.session, true));
             $scope.session.on('sessionDisconnected', connectDisconnect.bind($scope.session, false));
             var whiteboardUpdated = function() {
@@ -129,14 +131,12 @@ angular.module("app.call.controller",[
                 socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'answer'});
             }
         });
-        
-        $scope.publishing = true;
 
         function cancelListenerHandler(){
             console.log("Remove Success");
         }
 
-        socket.removeListener('messageReceived', cancelListenerHandler());
+        socket.removeListener('messageReceived');
 
         socket.on("messageReceived",function(fromId,fromUser,message){
             if(message.type === 'answer')
@@ -274,15 +274,6 @@ angular.module("app.call.controller",[
         }
 
         $scope.toggleWhiteboard = function() {
-            // $scope.showWhiteboard = !$scope.showWhiteboard;
-            // if($scope.showWhiteboard)
-            //     $scope.isDrag = false;
-
-            // $scope.whiteboardUnread = false;
-            // setTimeout(function() {
-            //   $scope.$emit('otLayout');
-            // }, 10);
-
             popup($state.href('whiteboard',{apiKey:apiKey,sessionId:sessionId,token: token,patientId:$scope.patientId}));
         };
 
@@ -328,7 +319,7 @@ angular.module("app.call.controller",[
                 if($scope.streams.length < 2)
                 {
                     var modalInstance = $modal.open({
-                        templateUrl: 'common/views/dialog/invitePeople.html',
+                        templateUrl: 'modules/makeCall/views/dialogs/invitePeople.html',
                         size: 'sm',
                         backdrop: 'static',
                         keyboard: false,
@@ -438,12 +429,13 @@ angular.module("app.call.controller",[
         });
 
         $scope.$on('$destroy', function () {
-          if ($scope.session && $scope.connected) {
-              $scope.session.disconnect();
-              $scope.connected = false;
-          }
-          $scope.session = null;
-          disconnect();
+            socket.removeListener('messageReceived');
+            if ($scope.session && $scope.connected) {
+                $scope.session.disconnect();
+                $scope.connected = false;
+            }
+            $scope.session = null;
+            disconnect();
         });
     })
 
@@ -504,7 +496,7 @@ angular.module("app.call.controller",[
             scope: {
                 callSession: '='
             },
-            templateUrl: 'common/views/medicalDevice.html',
+            templateUrl: 'modules/makeCall/views/medicalDevice.html',
             link: function(scope, element, attrs){
                 scope.onlineDevice = null;
                 scope.onlineData = null;

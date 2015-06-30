@@ -521,7 +521,8 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 
 			socket.emit("generateSession",$scope.userInfo.id);
 			socket.on("generateSessionSuccess",function(opentokRoom){
-				popup($state.href('call',{apiKey:opentokRoom.apiKey,sessionId:opentokRoom.sessionId,token:opentokRoom.token,callUser: user.id, isCaller: 1, patientId:$scope.patient_id}));
+				if(opentokRoom)
+					popup($state.href('make_call',{apiKey:opentokRoom.apiKey,sessionId:opentokRoom.sessionId,token:opentokRoom.token,callUser: user.id, isCaller: 1, patientId:$scope.patient_id}));
 			})
 	    }
 

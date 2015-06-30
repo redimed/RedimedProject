@@ -39,7 +39,7 @@ angular.module("app.loggedIn.controller",[
 
             $modalInstance.close();
 
-            popup($state.href("call",{apiKey:opentokRoom.apiKey,sessionId:opentokRoom.sessionId,token:opentokRoom.token,callUser: userInfo.id, isCaller: 0, patientId: patientId}));
+            popup($state.href("make_call",{apiKey:opentokRoom.apiKey,sessionId:opentokRoom.sessionId,token:opentokRoom.token,callUser: userInfo.id, isCaller: 0, patientId: patientId}));
         }
 
         var newwin = null;
@@ -97,7 +97,7 @@ angular.module("app.loggedIn.controller",[
         console.log("Remove Success");
     }
 
-    socket.removeListener('messageReceived', cancelListenerHandler());
+    socket.removeListener('messageReceived');
 
     socket.on("messageReceived",function(fromId,fromUser,message){
         if(message.type == 'call')
@@ -119,7 +119,7 @@ angular.module("app.loggedIn.controller",[
                             }
 
                             var modalInstance = $modal.open({
-                            templateUrl: 'common/views/dialog/callDialog.html',
+                            templateUrl: 'modules/makeCall/views/dialogs/callDialog.html',
                             controller: 'callDialogController',
                             size: 'sm',
                             resolve:{
