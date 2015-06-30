@@ -396,6 +396,12 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 			else if(detail.VAL1_ISVALUE===8){
 				return 8;
 			}
+			else if(detail.VAL1_ISVALUE===9){
+				return 9;
+			}
+			else if(detail.VAL1_ISVALUE===10){
+				return 10;
+			}
 			else{
 				if(detail.VAL1_ISVALUE===1) return 0;
 				else return detail.VAL1_ISCHECKBOX;
@@ -414,6 +420,12 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 			}
 			else if(detail.VAL2_ISVALUE===8){
 				return 8;
+			}
+			else if(detail.VAL2_ISVALUE===9){
+				return 9;
+			}
+			else if(detail.VAL2_ISVALUE===10){
+				return 10;
 			}
 			else{
 				if(detail.VAL2_ISVALUE===1) return 0;
