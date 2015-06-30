@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
-    .controller("CreateLeaveController", function($scope, TimeSheetService, $cookieStore, $state, toastr, moment, $modal, StaffService, $stateParams) {
+    .controller("CreateLeaveController", function($scope, TimeSheetService, $cookieStore, $state, toastr, $modal, StaffService, $stateParams) {
         $scope.info = {};
 
         // POPUP DATE
