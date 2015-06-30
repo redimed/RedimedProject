@@ -98,7 +98,10 @@ angular.module("app.calling")
                   if (!connected) $scope.publishing = false;
               });
             };
-            if ((session.is && session.is('connected')) || session.connected) connectDisconnect(true);
+            if ((session.is && session.is('connected')) || session.connected){
+                connectDisconnect(true);
+                $scope.publishing = true;
+            } 
             $scope.session.on('sessionConnected', connectDisconnect.bind($scope.session, true));
             $scope.session.on('sessionDisconnected', connectDisconnect.bind($scope.session, false));
             var whiteboardUpdated = function() {
@@ -128,14 +131,12 @@ angular.module("app.calling")
                 socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'answer'});
             }
         });
-        
-        $scope.publishing = true;
 
         function cancelListenerHandler(){
             console.log("Remove Success");
         }
 
-        socket.removeListener('messageReceived', cancelListenerHandler());
+        socket.removeListener('messageReceived');
 
         socket.on("messageReceived",function(fromId,fromUser,message){
             if(message.type === 'answer')
@@ -273,15 +274,6 @@ angular.module("app.calling")
         }
 
         $scope.toggleWhiteboard = function() {
-            // $scope.showWhiteboard = !$scope.showWhiteboard;
-            // if($scope.showWhiteboard)
-            //     $scope.isDrag = false;
-
-            // $scope.whiteboardUnread = false;
-            // setTimeout(function() {
-            //   $scope.$emit('otLayout');
-            // }, 10);
-
             popup($state.href('whiteboard',{apiKey:apiKey,sessionId:sessionId,token: token,patientId:$scope.patientId}));
         };
 
@@ -437,12 +429,13 @@ angular.module("app.calling")
         });
 
         $scope.$on('$destroy', function () {
-          if ($scope.session && $scope.connected) {
-              $scope.session.disconnect();
-              $scope.connected = false;
-          }
-          $scope.session = null;
-          disconnect();
+            socket.removeListener('messageReceived');
+            if ($scope.session && $scope.connected) {
+                $scope.session.disconnect();
+                $scope.connected = false;
+            }
+            $scope.session = null;
+            disconnect();
         });
     })
 

@@ -120,22 +120,32 @@ module.exports = function(io,cookie,cookieParser) {
         })
 
         socket.on("generateSession",function(id){
-            opentok.createSession({mediaMode:"routed"},function(err, ses) {
-                if (err) 
-                    return console.log(err);
+            db.User.find({where:{id: id}},{raw:true})
+                .success(function(user){
+                    if(user)
+                    {
+                        opentok.createSession({mediaMode:"routed"},function(err, ses) {
+                            if (err) 
+                                return console.log(err);
 
-                var token = ses.generateToken({
-                    role : 'moderator'
-                });
+                            var tokenOptions = {};
+                            tokenOptions.role = "moderator";
 
-                var opentokRoom = {
-                    apiKey: apiKey,
-                    sessionId: ses.sessionId,
-                    token: token
-                }
+                            var token = opentok.generateToken(ses.sessionId,tokenOptions);
 
-                socket.emit("generateSessionSuccess",opentokRoom);
-            });
+                            var opentokRoom = {
+                                apiKey: apiKey,
+                                sessionId: ses.sessionId,
+                                token: token
+                            }
+
+                            socket.emit("generateSessionSuccess",opentokRoom);
+                        });
+                    }
+                })
+                .error(function(err){
+                    console.log(err);
+                })
         });
 
         socket.on('sendMessage', function (currUser,contactUser, message) {
@@ -151,7 +161,12 @@ module.exports = function(io,cookie,cookieParser) {
                                     {
                                         if(message.type == 'call')
                                         {
-                                           var token = opentok.generateToken(message.sessionId);
+                                            var tokenOptions = {};
+                                            tokenOptions.role = "publisher";
+                                            var jsonData = {'from': currentUser.user_name, 'to': contact.user_name};
+                                            tokenOptions.data = JSON.stringify(jsonData);
+
+                                           var token = opentok.generateToken(message.sessionId,tokenOptions);
 
                                            message.apiKey = apiKey;
                                            message.token = token;

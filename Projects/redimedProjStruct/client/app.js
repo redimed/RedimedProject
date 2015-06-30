@@ -37,7 +37,7 @@ angular.module("app", [
         'ngMap',
         'ng-mfb',
         'ngDragDrop',
-        'btford.socket-io',
+        // 'btford.socket-io',
         'btford.modal',
         'dateRangePicker',
         'angular-svg-round-progress',
@@ -55,17 +55,17 @@ angular.module("app", [
     	'app.sponsor1.nonemergency.controller'
         // 'angular-underscore'
     ])
-    .factory('socket', function(socketFactory) {
+    .factory('socket', function($rootScope) {
         var host = location.hostname;
         var port = location.port;
 
-        var socket = io.connect('https://' + host + '/', {
-            'port': port,
-            'reconnect': true,
-            'reconnection delay': 2000,
-            'max reconnection attempts': 10000,
-            'force new connection': false,
+        var socket = io.connect('https://'+host+':'+port, {
+            'reconnection': true,
+            'reconnectionDelay': 1000,
+            'reconnectionDelayMax': 5000,
+            'reconnectionAttempts': 10000,
             'secure': true,
+            'timeout': 1000,
 			'transports': ['websocket', 
                           'flashsocket', 
                           'htmlfile', 
@@ -74,11 +74,7 @@ angular.module("app", [
                           'polling']
         });
 
-        var socketFactory = socketFactory({
-            ioSocket: socket
-        })
-
-        return socketFactory;
+        return socket;
     })
     .factory('beforeUnload', function($rootScope, $window) {
 
@@ -206,9 +202,8 @@ angular.module("app", [
     window.loading_screen.finish();
     
     socket.on('reconnect', function() {
-        if ($cookieStore.get("userInfo")) {
+        if ($cookieStore.get("userInfo"))
             socket.emit("reconnected", $cookieStore.get("userInfo").id);
-        }
     })
 
     socket.on('reconnect_failed', function() {

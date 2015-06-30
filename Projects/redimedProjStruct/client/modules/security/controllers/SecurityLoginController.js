@@ -12,6 +12,91 @@ angular.module("app.security.login.controller",[
         isRemember: false
     }
 
+
+    //================================= DEMO apiRTC ====================================
+
+    var session = null;
+
+    // handler function for media errors
+    function userMediaErrorHandler(e) {
+        $("#call").attr("disabled", false).val("Call");
+        $("#hangup").attr("disabled", true).val("Hangup");
+    }
+
+    // handler function for handling the remote user hanging up
+    function remoteHangupHandler(e) {
+        console.log('remoteHangupHandler');
+        console.log(e.detail.reason);
+
+        if (e.detail.lastEstablishedCall === true) {
+            $("#call").attr("disabled", false).val("Call");
+            $("#hangup").attr("disabled", true).val("Hangup");
+        }
+    }
+
+    // handler function for when the local user hangs up
+    function hangupHandler(e) {
+        console.log('hangupHandler');
+        console.log(e.detail.reason);
+        
+        if (e.detail.lastEstablishedCall === true) {
+            $("#call").attr("disabled", false).val("Call");
+            $("#hangup").attr("disabled", true).val("Hangup");
+        }
+    }
+
+    function incomingCallHandler(e) {
+        apiRTC.addEventListener("remoteHangup", remoteHangupHandler);
+        $("#call").attr("disabled", true).val("Call ongoing");
+        $("#hangup").attr("disabled", false).val("Hangup");
+    }
+
+    function callAttemptHandler(e) {
+        alert('Id :' + e.detail.callerId + 'is trying to reach you')
+    }
+
+    // callback when ApiRTC is ready
+    function sessionReadyHandler(e) {
+        console.log('sessionReadyHandler :' + apiCC.session.apiCCId);
+
+        $("#call").attr("disabled", false).val("Call");
+
+        apiRTC.addEventListener("incomingCall", incomingCallHandler);
+        apiRTC.addEventListener("userMediaError", userMediaErrorHandler);
+        apiRTC.addEventListener("callAttempt", callAttemptHandler);
+        apiRTC.addEventListener("hangup", hangupHandler);
+
+        var webRTCClient = apiCC.session.createWebRTCClient({
+            localVideo : "myLocalVideo",
+            minilocalVideo : "myMiniVideo",
+            remoteVideo : "myRemoteVideo",
+            status : "status"
+        });
+
+        $("#call").click(function () {
+            $("#call").attr("disabled", true).val("Call ongoing");
+            $("#hangup").attr("disabled", false).val("Hangup");
+            apiRTC.addEventListener("remoteHangup", remoteHangupHandler);
+            webRTCClient.call($("#number").val());
+        });
+
+        $("#hangup").click(function () {
+            $("#call").attr("disabled", false).val("Call");
+            $("#hangup").attr("disabled", true).val("Hangup");
+            webRTCClient.hangUp();
+        });
+    }
+    
+    // initialise ApiRTC
+    apiRTC.init({
+        apiKey : "5a17b6b777548c2feb4e8af4b6b6591b",
+        onReady : sessionReadyHandler
+    });
+
+    //================================= DEMO apiRTC ====================================
+
+
+
     // SUBMIT LOGIN
     $scope.login = function(){
         $scope.showClickedValidation = true;
