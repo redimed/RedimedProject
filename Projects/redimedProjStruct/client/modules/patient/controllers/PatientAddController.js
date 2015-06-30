@@ -1,4 +1,6 @@
-angular.module("app.loggedIn.patient")
+angular.module("app.loggedIn.patient.add.controller", [
+])
+
 .controller("PatientAddController", function ($scope, $state, toastr, ConfigService, PatientService, items) {
     var parent_scope = items.scope;
 

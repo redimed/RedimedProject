@@ -1,4 +1,6 @@
-angular.module("app.loggedIn.doctor")
+angular.module("app.loggedIn.doctor.timetable.controller",[
+	"app.loggedIn.doctor.timetable.detail.controller"
+])
 
 .controller("DoctorTimetableController", function($scope, $state){
     //WATCH

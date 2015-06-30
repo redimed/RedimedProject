@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.script')
+angular.module('app.loggedIn.script.directive.list', [])
 
 .directive('scriptList', function(ScriptModel, PatientService, $modal, $filter, $stateParams, $state, toastr){
 	return {

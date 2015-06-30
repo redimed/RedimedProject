@@ -1,4 +1,5 @@
-angular.module("app.loggedIn.patient")
+angular.module("app.loggedIn.patient.search.controller", [])
+
 .controller("PatientSearchController", function ($scope, ConfigService, PatientService) {
     $scope.search_map = {
         limit: 10,

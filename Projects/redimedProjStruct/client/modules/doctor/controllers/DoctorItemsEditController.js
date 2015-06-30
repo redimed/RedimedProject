@@ -1,4 +1,5 @@
-angular.module("app.loggedIn.doctor")
+angular.module("app.loggedIn.doctor.items.edit.controller",[
+])
 .controller("DoctorItemsEditController", function($scope, $state, toastr, localStorageService, ConfigService, DoctorService){
 		var old_header_id = '';
 		var getData = function(item_id){

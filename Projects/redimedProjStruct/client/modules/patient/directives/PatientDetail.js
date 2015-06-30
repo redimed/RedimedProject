@@ -1,4 +1,6 @@
-angular.module("app.loggedIn.patient")
+angular.module("app.loggedIn.patient.detail.directive", [
+	"app.loggedIn.patient.detail.master.controller"
+])
 .directive("patientDetail", function(){
 	return{
 		restrict: "EA",

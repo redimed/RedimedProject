@@ -1,4 +1,6 @@
-angular.module("app.loggedIn.patient")
+angular.module("app.loggedIn.patient.recall.controller", [])
+
+
 .controller("PatientRecallController", function($scope, $state,  $stateParams, $cookieStore, PatientService, DoctorService, ConfigService){
 	
 	var patient_id = $stateParams.patient_id;

@@ -1,4 +1,6 @@
-angular.module("app.loggedIn.doctor")
+angular.module("app.loggedIn.doctor.patients.controller", [
+    "app.loggedIn.doctor.patients.detail.controller"
+])
         .controller("DoctorPatientsController", function ($scope, $state, $cookieStore, DoctorService, localStorageService) {
 			var userInfo = $cookieStore.get("userInfo");
 

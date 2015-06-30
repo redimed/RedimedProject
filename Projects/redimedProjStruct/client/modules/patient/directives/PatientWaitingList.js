@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.patient")
+angular.module("app.loggedIn.patient.waiting_list.directive", [])
 
 .directive("mdtWaitingList", function(WaitingListModel, PatientService, toastr, $cookieStore){
 	return {

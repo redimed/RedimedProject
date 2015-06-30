@@ -1,4 +1,26 @@
-angular.module("app.loggedIn.patient")
+angular.module("app.loggedIn.patient.controller", [
+    "app.loggedIn.patient.list.controller",
+
+    "app.loggedIn.patient.home.controller",
+    "app.loggedIn.patient.search.controller",
+    "app.loggedIn.patient.action.controller",
+
+    "app.loggedIn.patient.booking.controller",
+    "app.loggedIn.patient.detail.controller",
+    "app.loggedIn.patient.recall.controller",
+    "app.loggedIn.patient.outside_referrals.controller",
+    "app.loggedIn.patient.referrals.controller",
+    "app.loggedIn.patient.appointment.controller",
+    "app.loggedIn.patient.companies.controller",
+    "app.loggedIn.patient.workcover.controller",
+    "app.loggedIn.patient.itemsheet.controller",
+    "app.loggedIn.patient.invoices.controller",
+    "app.loggedIn.patient.invoice_detail.controller",
+    "app.loggedIn.patient.appt.controller",
+    "app.loggedIn.patient.apptdoc.controller",
+    "app.loggedIn.patient.checkin.controller",
+    "app.loggedIn.patient.detail.master.controller"
+])
 .controller("PatientController", function ($scope, $cookieStore, ConfigService, PatientService, MODE_ROW, $stateParams,mdtAppointmentService) {
     $scope.patient_id = $stateParams.patient_id;
     $scope.cal_id = $stateParams.cal_id;
@@ -49,8 +71,8 @@ angular.module("app.loggedIn.patient")
         //     'state': 'loggedIn.patient.workcover'},
         // {wrap:1,'name': 'Script', 'icon': 'fa fa-envelope-square', 'color': 'purple-soft', 'desc': 'Has: 0',
         //     'state': 'loggedIn.patient.script'},
-        //{wrap:1,'name': 'Make Referral', 'icon': 'fa fa-envelope-square', 'color': 'blue-soft', 'desc': 'Has: 0',
-             //'state': 'loggedIn.patient.referral'},
+        // {wrap:1,'name': 'Make Referral', 'icon': 'fa fa-envelope-square', 'color': 'blue-soft', 'desc': 'Has: 0',
+        //     'state': 'loggedIn.patient.referral.list'},
         {wrap:0,'name': 'Invoices', 'icon': 'fa fa-money', 'color': 'red-soft', 'desc': 'Total: 0',
             'state': 'loggedIn.patient.invoices'},    
         {wrap:1,'name': 'Appointment List', 'icon': 'fa fa-repeat', 'color': 'green-soft', 'desc': 'Total: 0',

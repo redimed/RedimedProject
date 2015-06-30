@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.doctor")
+angular.module("app.loggedIn.doctor.add.controller",[])
 
 .controller("DoctorAddController", function($scope, $state, $cookieStore, $stateParams, toastr, ConfigService, DoctorService){
 	// LOAD OPTION

@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.patient")
+angular.module('app.loggedIn.patient.checkin.controller',[])
 	.controller('PatientCheckinController',function(socket,$scope, ConfigService, PatientService, toastr,$state){
         $scope.showPatientResult = false;
         $scope.showAppointmentOfId = null;

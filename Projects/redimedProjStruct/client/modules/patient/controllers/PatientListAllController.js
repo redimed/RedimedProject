@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.patient")
+angular.module('app.loggedIn.patient.listall.controller',[])
 	.controller('PatientListAllController', function(CompanyModel,$scope, $state){
 		$scope.patient_panel={};
 

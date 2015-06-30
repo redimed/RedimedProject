@@ -1,22 +1,36 @@
-angular.module('app.loggedIn.script', [])
-
+angular.module('app.loggedIn.script', [
+	'app.loggedIn.script.include'
+])
 .config(function($stateProvider){
+
 	$stateProvider
 
 	.state('loggedIn.patient.script', {
-		url: '/scriptLoad',
-		resolve: {
-			init: function($q, $rootScope, $state, $timeout, $ocLazyLoad){
-				$ocLazyLoad.load("modules/script/extend_routes.js");
-				$ocLazyLoad.load("modules/script/controllers/ScriptListController.js");
-				$ocLazyLoad.load("modules/script/controllers/ScriptAddController.js");
-				$ocLazyLoad.load("modules/script/controllers/ScriptEditController.js");
-				$ocLazyLoad.load("modules/script/directives/ScriptListDirective.js");
-				$ocLazyLoad.load("modules/script/directives/ScriptAddDirective.js");
-				$ocLazyLoad.load("modules/script/directives/ScriptEditDirective.js")
-				.then(function(){
-					$state.go('loggedIn.patient.script_list');
-				})
+		url: '/script',
+		views: {
+			'main-content': {
+				templateUrl: 'modules/script/views/list.html',
+				controller: 'ScriptListController'
+			}
+		}
+
+	})
+	.state('loggedIn.patient.script.add', {
+		url: '/add',
+		views: {
+			'@loggedIn': {
+				templateUrl: 'modules/script/views/add.html',
+				controller: 'ScriptAddController'
+			}
+		}
+
+	})
+	.state('loggedIn.patient.script.edit', {
+		url: '/edit/:scriptId',
+		views:{
+			'@loggedIn': {
+				templateUrl: 'modules/script/views/edit.html',
+				controller: 'ScriptEditController'
 			}
 		}
 	})

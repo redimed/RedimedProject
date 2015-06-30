@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.patient")
+angular.module("app.loggedIn.patient.services", [])
 
 .factory("PatientService", function (Restangular, ConfigService, $state) {
     var instanceService = {};
@@ -453,5 +453,9 @@ angular.module("app.loggedIn.patient")
             ]
         };
     }
+    instanceService.Add_CAL = function(data){
+        var funcApi = mdtApi.all("appt_add");
+        return funcApi.post({data: data});
+    } 
     return instanceService;
 })

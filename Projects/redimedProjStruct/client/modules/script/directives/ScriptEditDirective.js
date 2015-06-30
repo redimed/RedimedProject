@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.script')
+angular.module('app.loggedIn.script.directive.edit', [])
 
 .directive('scriptEdit', function(ScriptModel, PatientService, ConfigService, $cookieStore, $filter, $state, $stateParams, toastr){
 

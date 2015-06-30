@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.patient")
+angular.module('app.loggedIn.patient.apptdoc.controller',[])
     .controller("PatientApptDocController",function($scope, $stateParams, $timeout, FileUploader, ConfigService, PatientService, toastr){
         
         var patient_id = $stateParams.patient_id, cal_id = $stateParams.cal_id; 

@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.patient")
+angular.module("app.loggedIn.patient.action.controller", [])
 
 .controller("PatientActionController", function($scope, $modalInstance, toastr, ConfigService, PatientService, ReceptionistService, DoctorService, items){
     $scope.mode = "search";

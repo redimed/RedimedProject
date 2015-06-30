@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.patient")
+angular.module("app.loggedIn.patient.invoice_detail.controller", [])
 .controller("PatientInvoiceDetailController", function($scope, $state, $stateParams, toastr, PatientService, ConfigService){
 	var header_id = $stateParams.header_id;
 

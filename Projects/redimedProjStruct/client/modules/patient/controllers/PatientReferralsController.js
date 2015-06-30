@@ -1,4 +1,5 @@
-angular.module("app.loggedIn.patient")
+angular.module("app.loggedIn.patient.referrals.controller", [
+])
 .controller("PatientReferralsController", function ($scope, $state, DoctorService) {
     var item_type_options = [
         {code: 'Service', label: 'Service'},

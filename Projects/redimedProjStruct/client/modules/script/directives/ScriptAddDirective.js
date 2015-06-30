@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.script')
+angular.module('app.loggedIn.script.directive.add', [])
 
 .directive('scriptAdd', function(ScriptModel, PatientService, OutreferralModel, AppointmentModel, ConfigService, toastr, $cookieStore, $filter, $state, $stateParams, $modal){
 	

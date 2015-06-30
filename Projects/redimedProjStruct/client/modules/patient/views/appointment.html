@@ -86,7 +86,7 @@
 	<div ng-if="warning_refferal" class="alert alert-danger" role="alert" style="font-size: 30px;">
 		<i class="fa fa-bell"></i> 
 		Need make a refferal. 
-		<a ui-sref="{{'loggedIn.patient.outreferral({patientId:' + patient_id + ', calId:' + cal_id + '})'}}"> DO IT NOW !!!</a>
+		<a ui-sref="{{'loggedIn.patient.outreferral.list({patientId:' + patient_id + ', calId:' + cal_id + '})'}}"> DO IT NOW !!!</a>
 	</div>
 	<div ng-if="dataAlert.length > 0" class="alert alert-info">
 		<div ng-repeat="list in dataAlert">

@@ -1,7 +1,18 @@
-angular.module("app.loggedIn.doctor")
+angular.module("app.loggedIn.doctor", [
+    "app.loggedIn.doctor.controller",
+    "app.loggedIn.doctor.services",
+    "app.loggedIn.doctor.directives"
+])
 
 .config(function ($stateProvider) {
     $stateProvider
+
+    // STRUCTURE
+    .state("loggedIn.doctor", {
+        abstract: true,
+        templateUrl: "modules/doctor/views/structure.html",
+        controller: "DoctorController"
+    })
 
     //PAPERLESS
     .state("loggedIn.doctor.paperless", {
@@ -36,10 +47,14 @@ angular.module("app.loggedIn.doctor")
     })
     
     //DOCTOR LIST
-    .state('loggedIn.doctor_list',{
+    .state('loggedIn.doctor.list',{
         url:"/doctor/list",
-        templateUrl:"modules/doctor/views/doclist.html",
-        controller:"DoctorListController"
+        views:{
+            "main-content":{
+                templateUrl:"modules/doctor/views/doclist.html",
+                controller:"DoctorListController"
+            }
+        }
     })
     
     // TIMETABLE

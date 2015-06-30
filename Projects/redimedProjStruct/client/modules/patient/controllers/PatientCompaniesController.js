@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.patient")
+angular.module("app.loggedIn.patient.companies.controller", [])
 
         .controller("PatientCompaniesController", function ($scope, $state, $stateParams, toastr, PatientService) {
             //init
