@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.template.controllers.add', [])
+angular.module('app.loggedIn.template')
 
 .controller('TemplateAddController', function($scope, $modal, toastr){
 	

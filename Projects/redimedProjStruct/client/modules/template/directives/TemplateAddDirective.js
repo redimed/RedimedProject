@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.template.directives.add', [])
+angular.module("app.loggedIn.template")
 
 .directive('templateAdd', function($modal, $cookieStore, $state, TemplateModel, toastr){
 	return {

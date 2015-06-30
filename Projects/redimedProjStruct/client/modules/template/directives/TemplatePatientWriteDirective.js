@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.template.directives.patient_write', [])
+angular.module("app.loggedIn.template")
 
 .directive('templatePatientWrite', function($modal, $window, $cookieStore, $state, $stateParams, $timeout, TemplateModel, toastr, PatientService){
 	return {

@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.template.directives.patient_edit', [])
+angular.module("app.loggedIn.template")
 
 .directive('templatePatientEdit', function($modal, $cookieStore, $state, $stateParams, TemplateModel, toastr, PatientService){
 	return {
