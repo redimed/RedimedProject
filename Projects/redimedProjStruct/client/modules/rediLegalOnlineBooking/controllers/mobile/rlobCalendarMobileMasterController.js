@@ -18,6 +18,7 @@ angular.module("app.calendar.mobile.controller",[])
         dateFormat: "dd/mm/yy",
         onSelect: function(date) {
             $scope.selectedFilter.var1 = date;
+            console.log($scope.selectedFilter.var1)
             $scope.updateAppoinmentsList();
             $scope.getLocationsFilter();
             $scope.getDoctorsFilter();
@@ -28,9 +29,7 @@ angular.module("app.calendar.mobile.controller",[])
     //Get all location for select
     $scope.getLocationsFilter=function()
     {
-        var date = '2015-06-30';
-        console.log($scope.selectedFilter.var1);
-        console.log(date);
+        var date = new Date(moment($scope.selectedFilter.var1, "DD-MM-YYYY HH:mm Z"));
         rlobService.ListLocationMobile(date).then(function(data){
             if (data.status == 'success') {
                 console.log(data);
@@ -44,9 +43,7 @@ angular.module("app.calendar.mobile.controller",[])
     //Get all Doctors of specialtity
     $scope.getDoctorsFilter=function()
     {
-        var date = '2015-06-30';
-        console.log(date);
-        console.log($scope.selectedFilter.var1);
+        var date = new Date(moment($scope.selectedFilter.var1, "DD-MM-YYYY HH:mm Z"));
         rlobService.ListDoctorMobile(date).then(function(data){
             if (data.status == 'success') {
                 console.log(data);
