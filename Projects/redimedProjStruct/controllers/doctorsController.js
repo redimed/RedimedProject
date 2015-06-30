@@ -782,7 +782,6 @@ module.exports =
     //phanquocchien.c1109g@gmail.com
     getDoctorForSourceTypeMobile:function(req,res)
     {
-        console.log('chiennnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn',req.body.date);
         var date=kiss.checkData(req.body.date)?req.body.date:'';
         if(!kiss.checkListData(date))
         {
@@ -805,12 +804,10 @@ module.exports =
             {
                 if(err)
                 {
-                    console.log('chiennnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn',query.sql);
                     res.json({status:'fail'})
                 }
                 else
                 {
-                    console.log('chiennnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn',query.sql);
                     res.json({status:'success',data:rows})
                 }
 

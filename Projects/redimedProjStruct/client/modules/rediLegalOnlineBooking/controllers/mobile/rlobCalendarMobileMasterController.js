@@ -32,9 +32,7 @@ angular.module("app.calendar.mobile.controller",[])
         var date = new Date(moment($scope.selectedFilter.var1, "DD-MM-YYYY HH:mm Z"));
         rlobService.ListLocationMobile(date).then(function(data){
             if (data.status == 'success') {
-                console.log(data);
                 $scope.locationsFilter=data.data;
-                console.log('locstion',$scope.locationsFilter)
             };
         })
     }
@@ -46,9 +44,7 @@ angular.module("app.calendar.mobile.controller",[])
         var date = new Date(moment($scope.selectedFilter.var1, "DD-MM-YYYY HH:mm Z"));
         rlobService.ListDoctorMobile(date).then(function(data){
             if (data.status == 'success') {
-                console.log(data);
                 $scope.doctorsFilter=data.data;
-                console.log('doctor',$scope.doctorsFilterr)
             };
         })
     }
