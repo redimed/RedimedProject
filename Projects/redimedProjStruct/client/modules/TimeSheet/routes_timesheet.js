@@ -119,11 +119,10 @@ angular.module("app.loggedIn.TimeSheet", [
                         $ocLazyLoad.load("modules/TimeSheet/directives/StaffWeekDirective.js");
                         $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetFilter.js");
                         $ocLazyLoad.load("vendor/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js")
-
-                        //END LOAD DIRECTIVE
-                        .then(function() {
-                            $state.go("loggedIn.timesheetHome.timesheetHistory");
-                        });
+                            //END LOAD DIRECTIVE
+                            .then(function() {
+                                $state.go("loggedIn.timesheetHome.timesheetHistory");
+                            });
                     }
                 }
             })
@@ -144,24 +143,29 @@ angular.module("app.loggedIn.TimeSheet", [
                     $ocLazyLoad.load("vendor/angular-bootstrap-calendar/calendar-jquery/jquery.animate.clip.js");
                     $ocLazyLoad.load("vendor/angular-bootstrap-calendar/calendar-jquery/jCal.js");
                     $ocLazyLoad.load("vendor/angular-bootstrap-calendar/calendar-jquery/jCal.css");
-                    $ocLazyLoad.load("vendor/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js");
                     //END LOAD LIBRARY
 
                     //LOAD CONTROLLER
                     $ocLazyLoad.load("modules/TimeSheet/controllers/createTimesheetController.js");
+                    $ocLazyLoad.load("modules/TimeSheet/controllers/StaffCalendarController.js");
+                    $ocLazyLoad.load("modules/TimeSheet/controllers/StaffMonthController.js");
+                    $ocLazyLoad.load("modules/TimeSheet/controllers/StaffWeekController.js");
                     //END LOAD CONTROLLER
 
                     //LOAD DIRECTIVE
+                    $ocLazyLoad.load("modules/TimeSheet/directives/StaffCalendarDirective.js");
+                    $ocLazyLoad.load("modules/TimeSheet/directives/StaffMonthDirective.js");
+                    $ocLazyLoad.load("modules/TimeSheet/directives/StaffWeekDirective.js");
                     $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetActivityDetailDirective.js");
                     $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetFilter.js");
                     $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetItemCodeDirective.js");
                     $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetOnlyDigits.js");
-                    $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetTimeDirective.js")
+                    $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetTimeDirective.js");
+                    $ocLazyLoad.load("vendor/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js")
                         //END LOAD DIRECTIVE
-
-                    .then(function() {
-                        $state.go("loggedIn.timesheetHome.timesheetCreate");
-                    });
+                        .then(function() {
+                            $state.go("loggedIn.timesheetHome.timesheetCreate");
+                        });
                 }
             }
         })

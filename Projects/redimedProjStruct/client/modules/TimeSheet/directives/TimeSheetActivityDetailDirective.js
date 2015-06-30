@@ -62,13 +62,13 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                                 });
                                 //end set isShow
                             } else if (response.status === "error") {
-                                $state.go("loggedIn.TimeSheetHome.create", null, {
+                                $state.go("loggedIn.timesheetHome.loadTimesheetCreate", null, {
                                     "reload": true
                                 });
                                 toastr.error("Loading fail!", "Error");
                             } else {
                                 //catch exception
-                                $state.go("loggedIn.TimeSheetHome.create", null, {
+                                $state.go("loggedIn.timesheetHome.loadTimesheetCreate", null, {
                                     "reload": true
                                 });
                                 toastr.error("Server not response!", "Error");
