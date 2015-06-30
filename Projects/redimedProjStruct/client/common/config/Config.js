@@ -514,8 +514,8 @@ angular.module('app.config', [])
             {id:12,label:'Lower Limb Function',section:'Section 2: General Physical Capacity Assessment'},
             {id:10,label:'Auto Max score and Rating',section:'Section 2: General Physical Capacity Assessment'},
 
-            {id:13,label:'Ability Test with description (Able/Partial/Unable)',section:'Section 3: Job-Specific Functional Task Assessment'},
-            {id:16,label:'Ability Test without description (Able/Partial/Unable)',section:'Section 3: Job-Specific Functional Task Assessment'},
+            {id:13,label:'Ability Test with description',section:'Section 3: Job-Specific Functional Task Assessment'},
+            {id:16,label:'Ability Test without description',section:'Section 3: Job-Specific Functional Task Assessment'},
             {id:7,label:'Weight Test Rating',section:'Section 3: Job-Specific Functional Task Assessment'},
             {id:9,label:'Weight Test Rating (has managed weight info)',section:'Section 3: Job-Specific Functional Task Assessment'},
             {id:18,label:'Comfortable Weight Test Rating (has comfortable managed weight info)',section:'Section 3: Job-Specific Functional Task Assessment'},
