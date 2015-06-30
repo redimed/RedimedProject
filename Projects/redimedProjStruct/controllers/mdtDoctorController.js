@@ -55,7 +55,9 @@ module.exports = {
 
 		db.mdtDoctor.find(detail_id)
 		.success(function(detail){
-			if(!detail) res.json(500, {'status': 'error', 'message': 'Cannot Get Detail'});
+			//if(!detail) {
+			//	res.json(500, {'status': 'error', 'message': 'Cannot Get Detail'});
+			//}
 			res.json({'status': 'success', 'data': detail});
 		})
 		.error(function(error){

@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.doctor.list.directive", [])
+angular.module("app.loggedIn.doctor")
 
 .directive("doctorList", function(){
 	return {

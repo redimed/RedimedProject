@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.doctor.itemsearch.directive", [])
+angular.module("app.loggedIn.doctor")
 
 .directive("itemSearch", function($filter, PatientService, OutsideReferralModel, ReceptionistService, toastr){
 	var arrGetBy = $filter('arrGetBy');
@@ -25,8 +25,8 @@ angular.module("app.loggedIn.doctor.itemsearch.directive", [])
                 filters: {
 		            ITEM_CODE: {type: 'text'},
 		            ITEM_NAME: {type: 'text'},
-		            ITEM_TYPE: {type: 'text'},
-		        },
+		            ITEM_TYPE: {type: 'text'}
+		        }
             };
 
 

@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.doctor.fachoose.controller',[])
+angular.module('app.loggedIn.doctor')
 .controller("FaChooseController",function($scope, $stateParams, $state){
 	var patient_id = $scope.patient_id = $stateParams.patient_id;
 	var cal_id = $scope.cal_id = $stateParams.cal_id;

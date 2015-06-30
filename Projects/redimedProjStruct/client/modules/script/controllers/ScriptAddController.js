@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.script.add.controller', [])
+angular.module('app.loggedIn.script')
 .controller('ScriptAddController', function($scope, $state,$modalInstance,medicare){
 	$scope.scriptadd = {
 	  success: false,

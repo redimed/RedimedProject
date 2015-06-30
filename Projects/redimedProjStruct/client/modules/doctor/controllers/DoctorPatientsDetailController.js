@@ -1,6 +1,5 @@
-angular.module("app.loggedIn.doctor.patients.detail.controller", [
-    "app.loggedIn.doctor.patients.detail.appt.controller"
-]).controller("DoctorPatientsDetailController", function ($scope, $state, $cookieStore, DoctorService, PatientService, localStorageService) {
+angular.module("app.loggedIn.doctor")
+.controller("DoctorPatientsDetailController", function ($scope, $state, $cookieStore, DoctorService, PatientService, localStorageService) {
   
     $scope.goToApptDetail = function (row) {
         var cal_id = row.CAL_ID;

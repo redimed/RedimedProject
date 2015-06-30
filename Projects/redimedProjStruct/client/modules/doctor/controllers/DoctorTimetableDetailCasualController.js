@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.doctor.timetable.detail.casual.controller",[])
+angular.module("app.loggedIn.doctor")
 
 .controller("DoctorTimetableDetailCasualController", function($scope, $stateParams, 
 	DoctorService, ConfigService, mdtDoctorService, mdtTimetableService, sysServiceService, REAL_DAY_OF_WEEK, toastr, TimetableModel,$modal){
