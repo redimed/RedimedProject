@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.patient.list.controller", [])
+angular.module("app.loggedIn.patient")
 
 .controller("PatientListController", function($scope, $state, $cookieStore, PatientService, DoctorService){
 	//SEARCH FUNCTION

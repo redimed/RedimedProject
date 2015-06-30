@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.patient.ngthumb.directive',[])
+angular.module("app.loggedIn.patient")
 
 
     // Angular File Upload module does not include this directive

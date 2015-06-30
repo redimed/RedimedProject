@@ -1,5 +1,4 @@
-angular.module("app.loggedIn.patient.home.controller",[
-])
+angular.module("app.loggedIn.patient")
 .controller("PatientHomeController", function($scope, $state){
 	
 

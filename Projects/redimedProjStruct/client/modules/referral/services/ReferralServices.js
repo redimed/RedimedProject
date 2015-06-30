@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.referral')
+angular.module('app.loggedIn.referral.services', [])
 
 .factory('ReferralService', function(Restangular){
 	var mdtService = {}

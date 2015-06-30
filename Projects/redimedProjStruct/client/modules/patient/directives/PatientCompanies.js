@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.patient.companies.directive", [])
+angular.module("app.loggedIn.patient")
 
 .directive("patientCompanies", function(PatientService, OutsideReferralModel, toastr){
 	return {

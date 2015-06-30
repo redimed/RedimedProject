@@ -53,6 +53,7 @@ angular.module('app.loggedIn.template', [])
 					$ocLazyLoad.load("modules/template/directives/TemplatePatientWriteDirective.js");
 					$ocLazyLoad.load("modules/template/directives/TemplateWriteDirective.js")
 					.then(function(){
+						alert('--');
 						$state.go('loggedIn.patient.template_load');
 					})
 				}

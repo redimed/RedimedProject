@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.patient.detail.controller", [])
+angular.module("app.loggedIn.patient")
 
 .controller("PatientDetailController", function($scope, $state, $stateParams, PatientService, FileUploader){
 	//init

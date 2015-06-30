@@ -1,5 +1,4 @@
-angular.module("app.loggedIn.patient.outside_referrals.controller", [
-])
+angular.module("app.loggedIn.patient")
 .controller("PatientOutsideReferralsController", function ($scope, $state, $stateParams) {
     //PARAMS
     $scope.params_add = {

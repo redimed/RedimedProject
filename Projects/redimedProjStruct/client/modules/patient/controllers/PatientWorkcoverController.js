@@ -1,5 +1,4 @@
-angular.module("app.loggedIn.patient.workcover.controller", [
-])
+angular.module("app.loggedIn.patient")
 .controller("PatientWorkcoverController", function ($scope,  $state, $stateParams, localStorageService, PatientService) {
 	localStorageService.set('patientTempInfo', {Patient_id:  $stateParams.patient_id }); 
 	localStorageService.set('apptTempInfo', {CAL_ID:  $stateParams.cal_id }); 

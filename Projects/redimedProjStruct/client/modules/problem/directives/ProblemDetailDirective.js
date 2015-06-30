@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.patient.problem')
+angular.module('app.loggedIn.problem')
 .directive('problemDetail',function(ProblemModel, ProblemService, ConfigService, toastr, $stateParams){
 	return {
 		restrict:'EA',

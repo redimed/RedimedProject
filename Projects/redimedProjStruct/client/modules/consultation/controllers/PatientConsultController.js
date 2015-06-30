@@ -81,7 +81,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 				}
 			})
 			.result.then(function(success){
-				console.log(success);
+				//console.log(success);
 
 				$scope.templates.push(success);
 			})
@@ -167,7 +167,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			ConsultationService.getListConsultOfPatient($stateParams.patient_id).then(function(data){
 				if (data.status == 'success') {
 					$scope.actionCenter.listConsultOfPatient = data.data;
-					console.log($scope.actionCenter.listConsultOfPatient);
+					//console.log($scope.actionCenter.listConsultOfPatient);
 				};
 			});
 		}
@@ -210,13 +210,13 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		}
 		//end
 		$scope.getImgDrawingHistory = function(){
-			console.log($scope.cal_id)
-			console.log($stateParams.patient_id)
+			//console.log($scope.cal_id)
+			//console.log($stateParams.patient_id)
 			$scope.listImgDrawingHistory = {};
 			ConsultationService.getImgDrawingHistory($stateParams.patient_id,$scope.cal_id).then(function(data){
 				if (data.status == 'success') {
 					$scope.listImgDrawingHistory = data.data;
-					console.log('aaaa',$scope.listImgDrawingHistory);
+					//console.log('aaaa',$scope.listImgDrawingHistory);
 				};
 			})
 		}
@@ -248,7 +248,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 				cal_id:$stateParams.cal_id,
 				patient_id:$stateParams.patient_id,
 			}
-			console.log($scope.checkdata);
+			//console.log($scope.checkdata);
 		   ConsultInfoService.setConsultInfoScripts($scope.consultInfo.scripts);
 		   ConsultInfoService.setCheckdata($scope.checkdata);
 		})
@@ -323,7 +323,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 	    }
 
 	    function cancelListenerHandler(){
-			console.log("Remove Success");
+			//console.log("Remove Success");
 		}
 
 	    refresh($scope.patient_id);
@@ -837,7 +837,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		            }
 		            
 		            PatientService.saveItemSheet(insertArr).then(function(response){
-		                console.log(response);
+		                //console.log(response);
 		                if(response.status === 'success'){
 		                   	toastr.success('Save Item Success!');
 		                    PatientService.endInvoice($scope.appointment.Patient_id, $scope.appointment.CAL_ID);

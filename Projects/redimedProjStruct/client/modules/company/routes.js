@@ -31,7 +31,8 @@ angular.module('app.loggedIn.company', [])
 					$ocLazyLoad.load("modules/company/directives/CompanyListInsurerDirective.js");
 					$ocLazyLoad.load("modules/company/directives/CompanyListNotFollowDirective.js");
 					$ocLazyLoad.load("modules/company/directives/CompanyListParentDirective.js");
-
+					
+					$ocLazyLoad.load("modules/invoice/directives/InvoiceDetailDirective.js");
 					$ocLazyLoad.load("modules/insurer/directives/InsurerDetail.js")
 		
 					.then(function(){

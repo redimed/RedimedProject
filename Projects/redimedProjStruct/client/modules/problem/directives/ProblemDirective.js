@@ -1,1 +1,1 @@
-angular.module('app.loggedIn.patient.problem')
+angular.module('app.loggedIn.problem')

@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.patient.booking.controller", [])
+angular.module("app.loggedIn.patient")
 
 .controller("PatientBookingController", function($scope, $state, $cookieStore, ReceptionistService, ConfigService, PatientService, toastr){
 	// INIT

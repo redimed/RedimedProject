@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.patient.detail.master.controller", [])
+angular.module("app.loggedIn.patient")
 
 .controller("PatientDetailMasterController", function($scope,$stateParams,$state, $modal, sysStateService, PatientService, ConfigService, toastr, PatientModel, FileUploader, $timeout, CompanyModel, InsurerService){
 	$scope.avt_path = '';

@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.patient.claim.directive", [])
+angular.module("app.loggedIn.patient")
 
 .directive("patientClaim", function (PatientService, ClaimService, ClaimModel, ConfigService, toastr, Restangular, InsurerService, $cookieStore,CompanyService) {
     return {

@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.patient.outside_referral.directive", [])
+angular.module("app.loggedIn.patient")
 
 .directive("patientOutsideReferral", function(PatientService, OutsideReferralModel){
 	return {

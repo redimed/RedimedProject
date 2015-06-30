@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.referral')
+angular.module('app.loggedIn.referral.detail.directive',[])
     .directive('referralDetail',function(ReferralModel, ReferralService, DoctorService, ConfigService, toastr, $stateParams){
         return{
             restrict: "EA",

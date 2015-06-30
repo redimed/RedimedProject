@@ -1,7 +1,7 @@
-angular.module('app.loggedIn.patient.problem')
+angular.module('app.loggedIn.problem')
 .config(function($stateProvider){
     $stateProvider
-        .state("loggedIn.patient.problemlist",{
+        .state("loggedIn.patient.problem_list",{
             url:'/problem',
             views:{
                 'main-content':{

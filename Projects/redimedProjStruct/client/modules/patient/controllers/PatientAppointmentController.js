@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.patient.appointment.controller", [])
+angular.module("app.loggedIn.patient")
 
 .controller("PatientAppointmentController", function($scope, $state, toastr, $stateParams, PatientService, ConfigService, ReceptionistService, OutreferralModel,AlertModel){
     
