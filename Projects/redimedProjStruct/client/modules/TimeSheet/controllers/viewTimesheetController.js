@@ -249,9 +249,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                     $modalInstance.close();
                 } else if (response.status === 'success') {
                     $modalInstance.close();
-                    $state.go("loggedIn.timesheetHome.loadTimesheetHistory", null, {
-                        "reload": true
-                    });
+                    $state.go("loggedIn.timesheetHome.loadTimesheetHistory");
                     toastr.success("Submit success", "Success");
                 }
 
@@ -402,9 +400,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                     $modalInstance.close();
                 } else if (response.status === 'success') {
                     $modalInstance.close();
-                    $state.go("loggedIn.timesheetHome.loadTimesheetHistory", null, {
-                        "reload": true
-                    });
+                    $state.go("loggedIn.timesheetHome.loadTimesheetHistory");
                     toastr.success("Submit success", "Success");
                 }
 

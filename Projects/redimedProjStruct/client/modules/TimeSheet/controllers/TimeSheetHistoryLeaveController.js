@@ -66,10 +66,7 @@ angular.module("app.loggedIn.TimeSheet.HistoryLeave.Controller", [])
                         TimeSheetService.SubmitOnViewLeave(info).then(function(response) {
                             if (response.status === "success") {
                                 modalInstance.close();
-                                $state.go("loggedIn.timesheetHome.loadLeaveHistory",
-                                    null, {
-                                        "reload": true
-                                    });
+                                $state.go("loggedIn.timesheetHome.loadLeaveHistory");
                                 toastr.success("Submit success!", "Success");
                             } else if (response.status === "error") {
                                 $state.go("loggedIn.home", null, {
@@ -91,8 +88,6 @@ angular.module("app.loggedIn.TimeSheet.HistoryLeave.Controller", [])
                         modalInstance.close();
                         $state.go("loggedIn.timesheetHome.loadLeaveCreate", {
                             id: leaveID
-                        }, {
-                            "reload": true
                         });
                     };
                 },

@@ -128,15 +128,11 @@ angular.module("app.loggedIn.TimeSheet.ApproveTask.Controller", [])
                             TimeSheetService.RejectTaskWeek(info).then(function(response) {
                                 if (response.status === "success") {
                                     modalInstance.close();
-                                    $state.go("loggedIn.timesheetHome.loadTimesheetApprove", null, {
-                                        "reload": true
-                                    });
+                                    $state.go("loggedIn.timesheetHome.loadTimesheetApprove");
                                     toastr.success("Reject success!", "Success");
                                 } else if (response.status === "error") {
                                     modalInstance.close();
-                                    $state.go("loggedIn.timesheetHome.loadTimesheetApprove", null, {
-                                        "reload": true
-                                    });
+                                    $state.go("loggedIn.timesheetHome.loadTimesheetApprove");
                                     toastr.error("Reject fail!", "Error");
                                 } else {
                                     //catch exception
@@ -171,15 +167,11 @@ angular.module("app.loggedIn.TimeSheet.ApproveTask.Controller", [])
                                         TimeSheetService.ApproveTaskWeek(info).then(function(response) {
                                             if (response.status === "success") {
                                                 modalInstance.close();
-                                                $state.go("loggedIn.timesheetHome.loadTimesheetApprove", null, {
-                                                    "reload": true
-                                                });
+                                                $state.go("loggedIn.timesheetHome.loadTimesheetApprove");
                                                 toastr.success("Approve success!", "Success");
                                             } else if (response.status === "error") {
                                                 modalInstance.close();
-                                                $state.go("loggedIn.timesheetHome.loadTimesheetApprove", null, {
-                                                    "reload": true
-                                                });
+                                                $state.go("loggedIn.timesheetHome.loadTimesheetApprove");
                                                 toastr.error("Approve fail!", "Error");
                                             } else {
                                                 //catch exception
@@ -198,15 +190,11 @@ angular.module("app.loggedIn.TimeSheet.ApproveTask.Controller", [])
                                 TimeSheetService.ApproveTaskWeek(info).then(function(response) {
                                     if (response.status === "success") {
                                         modalInstance.close();
-                                        $state.go("loggedIn.timesheetHome.loadTimesheetApprove", null, {
-                                            "reload": true
-                                        });
+                                        $state.go("loggedIn.timesheetHome.loadTimesheetApprove");
                                         toastr.success("Approve success!", "Success");
                                     } else if (response.status === "error") {
                                         modalInstance.close();
-                                        $state.go("loggedIn.timesheetHome.loadTimesheetApprove", null, {
-                                            "reload": true
-                                        });
+                                        $state.go("loggedIn.timesheetHome.loadTimesheetApprove");
                                         toastr.error("Approve fail!", "Error");
                                     } else {
                                         //catch exception

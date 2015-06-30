@@ -130,9 +130,7 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                     TimeSheetService.UpLeaveServer($scope.info).then(function(response) {
                         if (response.status === "success") {
                             toastr.success("Apply for leave success!", "Success");
-                            $state.go("loggedIn.timesheetHome.loadLeaveHistory", null, {
-                                "reload": true
-                            });
+                            $state.go("loggedIn.timesheetHome.loadLeaveHistory");
                         } else if (response.status === "error") {
                             $state.go("loggedIn.home", null, {
                                 "reload": true
@@ -152,9 +150,7 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                     //UPDATE
                     TimeSheetService.UpdateLeave($scope.info).then(function(response) {
                         if (response.status === "success") {
-                            $state.go("loggedIn.timesheetHome.loadLeaveHistory", null, {
-                                "reload": true
-                            });
+                            $state.go("loggedIn.timesheetHome.loadLeaveHistory");
                             toastr.success("Update leave success!", "Success");
                         } else if (response.status === "error") {
                             toastr.error("Update leave fail!", "Error");
@@ -252,9 +248,7 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                                     closeOnConfirm: true
                                 }, function(isConfirm) {
                                     if (isConfirm) {
-                                        $state.go("loggedIn.timesheetHome.loadLeaveHistory", null, {
-                                            "reload": true
-                                        });
+                                        $state.go("loggedIn.timesheetHome.loadLeaveHistory");
                                     } else {
                                         $scope.info.start_date = null;
                                         $scope.info.finish_date = null;

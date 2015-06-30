@@ -40,9 +40,9 @@ angular.module("app.loggedIn.TimeSheet", [
 
         //LOAD LEAVE CREATE
         .state("loggedIn.timesheetHome.loadLeaveCreate", {
-                url: "/load-leave-create",
+                url: "/load-leave-create/:id",
                 resolve: {
-                    init: function($q, $rootScope, $state, $timeout, $ocLazyLoad) {
+                    init: function($q, $rootScope, $state, $stateParams, $timeout, $ocLazyLoad) {
                         //LOAD ROUTE
                         $ocLazyLoad.load("modules/TimeSheet/extend_routes_timesheet.js");
                         //END LOAD ROUTE
@@ -52,14 +52,20 @@ angular.module("app.loggedIn.TimeSheet", [
                         //END LOAD LIBRARY
 
                         //LOAD CONTROLLER
-                        $ocLazyLoad.load("modules/TimeSheet/controllers/TimeSheetCreateLeaveController.js")
-                            //END LOAD CONTROLLER
+                        $ocLazyLoad.load("modules/TimeSheet/controllers/TimeSheetCreateLeaveController.js");
+                        //END LOAD CONTROLLER
 
                         //LOAD DIRECTIVE
-                        $ocLazyLoad.load("modules//TimeSheet/directives/TimeSheetFilter.js")
+                        $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetFilter.js")
                             //END LOAD DIRECTIVE
                             .then(function() {
-                                $state.go("loggedIn.timesheetHome.leaveCreate");
+                                if ($stateParams.id) {
+                                    $state.go("loggedIn.timesheetHome.leaveCreate", {
+                                        id: $stateParams.id
+                                    });
+                                } else {
+                                    $state.go("loggedIn.timesheetHome.leaveCreate");
+                                }
                             });
                     }
                 }
@@ -130,9 +136,9 @@ angular.module("app.loggedIn.TimeSheet", [
 
         //LOAD TIMESHEET CREATE
         .state("loggedIn.timesheetHome.loadTimesheetCreate", {
-            url: "/timesheet-load-create",
+            url: "/timesheet-load-create/:id",
             resolve: {
-                init: function($q, $rootScope, $state, $timeout, $ocLazyLoad) {
+                init: function($q, $rootScope, $state, $stateParams, $timeout, $ocLazyLoad) {
 
                     //LOAD ROUTE
                     $ocLazyLoad.load("modules/TimeSheet/extend_routes_timesheet.js");
@@ -164,7 +170,13 @@ angular.module("app.loggedIn.TimeSheet", [
                     $ocLazyLoad.load("vendor/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js")
                         //END LOAD DIRECTIVE
                         .then(function() {
-                            $state.go("loggedIn.timesheetHome.timesheetCreate");
+                            if ($stateParams.id) {
+                                $state.go("loggedIn.timesheetHome.timesheetCreate", {
+                                    id: $stateParams.id
+                                });
+                            } else {
+                                $state.go("loggedIn.timesheetHome.timesheetCreate");
+                            }
                         });
                 }
             }

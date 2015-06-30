@@ -541,9 +541,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 StaffService.addAllTask($scope.tasks, $scope.info).then(function(response) {
                     if (response['status'] == 'success') {
                         toastr.success("success", "Success");
-                        $state.go('loggedIn.timesheetHome.loadTimesheetHistory', null, {
-                            'reload': true
-                        });
+                        $state.go('loggedIn.timesheetHome.loadTimesheetHistory');
                     } else {
                         toastr.error("Error", "Error");
                     }
@@ -555,9 +553,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 StaffService.editTask($scope.tasks, $scope.info).then(function(response) {
                     if (response['status'] == 'success') {
                         toastr.success("Edit Success");
-                        $state.go('loggedIn.timesheetHome.loadTimesheetHistory', null, {
-                            'reload': true
-                        });
+                        $state.go('loggedIn.timesheetHome.loadTimesheetHistory');
                     } else {
                         toastr.error("Error", "Error");
                     }
