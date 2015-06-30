@@ -226,7 +226,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
 
     $scope.okClick = function() {
         $modalInstance.close();
-        $state.go('loggedIn.TimeSheetHome.create', {
+        $state.go('loggedIn.timesheetHome.timesheetCreate', {
             id: infoWeek.task_week_id
         });
     };
@@ -249,7 +249,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                     $modalInstance.close();
                 } else if (response.status === 'success') {
                     $modalInstance.close();
-                    $state.go("loggedIn.TimeSheetHome.view", null, {
+                    $state.go("loggedIn.timesheetHome.timesheetHistory", null, {
                         "reload": true
                     });
                     toastr.success("Submit success", "Success");
@@ -402,7 +402,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                     $modalInstance.close();
                 } else if (response.status === 'success') {
                     $modalInstance.close();
-                    $state.go("loggedIn.TimeSheetHome.view", null, {
+                    $state.go("loggedIn.timesheetHome.timesheetHistory", null, {
                         "reload": true
                     });
                     toastr.success("Submit success", "Success");
@@ -413,7 +413,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
     };
     $scope.okClick = function() {
         $modalInstance.close();
-        $state.go('loggedIn.TimeSheetHome.create', {
+        $state.go('loggedIn.timesheetHome.timesheetCreate', {
             id: infoWeek.task_week_id
         });
     };

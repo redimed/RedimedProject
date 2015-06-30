@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
-    .controller("CreateLeaveController", function($scope, TimeSheetService, $cookieStore, $state, toastr,moment, $modal, StaffService, $stateParams) {
+    .controller("CreateLeaveController", function($scope, TimeSheetService, $cookieStore, $state, toastr, $modal, StaffService, $stateParams) {
         $scope.info = {};
 
         // POPUP DATE
@@ -130,7 +130,7 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                     TimeSheetService.UpLeaveServer($scope.info).then(function(response) {
                         if (response.status === "success") {
                             toastr.success("Apply for leave success!", "Success");
-                            $state.go("loggedIn.TimeSheetHome.LeaveHistory", null, {
+                            $state.go("loggedIn.timesheetHome.leaveHistory", null, {
                                 "reload": true
                             });
                         } else if (response.status === "error") {
@@ -152,7 +152,7 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                     //UPDATE
                     TimeSheetService.UpdateLeave($scope.info).then(function(response) {
                         if (response.status === "success") {
-                            $state.go("loggedIn.TimeSheetHome.LeaveHistory", null, {
+                            $state.go("loggedIn.timesheetHome.leaveHistory", null, {
                                 "reload": true
                             });
                             toastr.success("Update leave success!", "Success");
@@ -252,7 +252,7 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                                     closeOnConfirm: true
                                 }, function(isConfirm) {
                                     if (isConfirm) {
-                                        $state.go("loggedIn.TimeSheetHome.LeaveHistory", null, {
+                                        $state.go("loggedIn.timesheetHome.leaveHistory", null, {
                                             "reload": true
                                         });
                                     } else {

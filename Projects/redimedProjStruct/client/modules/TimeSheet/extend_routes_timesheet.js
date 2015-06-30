@@ -3,7 +3,7 @@ angular.module("app.loggedIn.TimeSheet", [])
 
         $stateProvider
         // APPROVE TASK
-        .state("loggedIn.timesheetHome.timesheetApprove", {
+            .state("loggedIn.timesheetHome.timesheetApprove", {
                 position: ["Head of Dept.", "Director"],
                 url: "/approve-task",
                 views: {
@@ -14,19 +14,6 @@ angular.module("app.loggedIn.TimeSheet", [])
                 }
             })
             //END APPROVE TASK
-
-        //VIEW APPROVED 
-        .state("loggedIn.timesheetHome.viewAppovedTimeSheet", {
-                position: ["Head of Dept.", "Director"],
-                url: "/view-approved-task",
-                views: {
-                    "main-content": {
-                        templateUrl: "modules/TimeSheet/views/ViewApproved.html",
-                        controller: "ViewApprovedTimeSheet"
-                    }
-                }
-            })
-            //END VIEW APPROVED
 
         // REPORT TIME IN LIEU
         .state("loggedIn.timesheetHome.timesheetReport1", {

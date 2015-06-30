@@ -6,7 +6,7 @@
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
-            <a ui-sref="#">
+            <a ui-sref="loggedIn.timesheetHome.timesheetCreate">
                 <span ng-hide='isEdit'>Create New Timesheet</span>
                 <span ng-hide='!isEdit'>Edit Timesheet</span>
             </a>
@@ -142,7 +142,7 @@
                 <!-- BUTTON WHEN EDIT -->
                 <a class="btn btn-xs yellow pull-right" ng-show='!isEdit' ui-sref="loggedIn.home" style="width:70px;margin-right:-8px;">Cancel</a>
                 <!-- END EDIT-->
-                <a class="btn btn-xs yellow pull-right" ng-show='isEdit' ui-sref="loggedIn.TimeSheetHome.view" style="width:70px;margin-right:-8px;">Cancel</a>
+                <a class="btn btn-xs yellow pull-right" ng-show='isEdit' ui-sref="loggedIn.timesheetHome.timesheetHistory" style="width:70px;margin-right:-8px;">Cancel</a>
                 <a class="btn btn-xs green pull-right" ng-show="(!isEdit || checkStatus===1) && afterStatusID!==4" ng-click="addAllTask(2)" style="width:70px;">Submit</a>
                 <a class="btn btn-xs purple pull-right" ng-show="(isEdit && (checkStatus!==1 || (afterStatusID ===4 && checkStatus==1)))" ng-click="addAllTask(5)" style="width:70px;">Re-submit</a>
                 <a class="btn btn-xs blue pull-right" ng-show="afterStatusID ===4" ng-click="addAllTask(4)" style="width:70px;">Save</a>
