@@ -17,22 +17,23 @@ angular.module("app.loggedIn.treeApprove", [
                 url: "/load-list-function",
                 resolve: {
                     init: function($q, $rootScope, $state, $timeout, $ocLazyLoad) {
-                        //LOAD ROUTE
-                        $ocLazyLoad.load("modules/treeApprove/extend_routes_treeApprove.js");
-                        //END LOAD ROUTE
-
-                        //LOAD CONTROLLER
-                        $ocLazyLoad.load("modules/treeApprove/controllers/ListFunctionController.js");
-                        //END LOAD CONTROLLER
-
-                        //LOAD DIRECTIVE
-                        $ocLazyLoad.load("modules/treeApprove/directives/DirectiveAddFunction.js")
-                            .then(function() {
-                                $state.go("loggedIn.treeApprove.listFunction", null, {
-                                    "reload": true
-                                });
-                            });
-                        //END LOAD DIRECTIVE
+                        async.waterfall([
+                            function(callback) {
+                                $ocLazyLoad.load("modules/treeApprove/extend_routes_treeApprove.js");
+                                callback(null);
+                            },
+                            function(callback) {
+                                $ocLazyLoad.load("modules/treeApprove/controllers/ListFunctionController.js");
+                                callback(null);
+                            },
+                            function(callback) {
+                                $ocLazyLoad.load("modules/treeApprove/directives/DirectiveAddFunction.js");
+                                callback(null);
+                            },
+                            function(callback) {
+                                $state.go("loggedIn.treeApprove.listFunction");
+                            }
+                        ]);
 
                     }
                 }
@@ -44,22 +45,25 @@ angular.module("app.loggedIn.treeApprove", [
                 url: "/load-list-tree",
                 resolve: {
                     init: function($q, $rootScope, $state, $timeout, $ocLazyLoad) {
-                        //LOAD ROUTE
-                        $ocLazyLoad.load("modules/treeApprove/extend_routes_treeApprove.js");
-                        //END LOAD ROUTE
+                        async.waterfall([
+                            function(callback) {
+                                $ocLazyLoad.load("modules/treeApprove/extend_routes_treeApprove.js");
+                                callback(null);
+                            },
 
-                        //LOAD CONTROLLER
-                        $ocLazyLoad.load("modules/treeApprove/controllers/ListTreeController.js");
-                        //END LOAD CONTROLLER
+                            function(callback) {
+                                $ocLazyLoad.load("modules/treeApprove/controllers/ListTreeController.js");;
+                                callback(null);
+                            },
+                            function(callback) {
+                                $ocLazyLoad.load("modules/treeApprove/directives/DirectiveAddTree.js");
+                                callback(null);
+                            },
+                            function(callback) {
+                                $state.go("loggedIn.treeApprove.listTree");
+                            }
 
-                        //LOAD DIRECTIVE
-                        $ocLazyLoad.load("modules/treeApprove/directives/DirectiveAddTree.js")
-                            .then(function() {
-                                $state.go("loggedIn.treeApprove.listTree", null, {
-                                    "reload": true
-                                });
-                            })
-                            //END LOAD DIRECTIVE
+                        ]);
                     }
                 }
             })
@@ -70,27 +74,32 @@ angular.module("app.loggedIn.treeApprove", [
             url: "/load-detail-tree",
             resolve: {
                 init: function($q, $rootScope, $state, $timeout, $ocLazyLoad) {
-                    //LOAD ROUTE
-                    $ocLazyLoad.load("modules/treeApprove/extend_routes_treeApprove.js");
-                    //END LOAD ROUTE
-
-                    //LOAD LIBRARY
-                    $ocLazyLoad.load("vendor/jquery.orgChart-master/jquery.orgchart.js");
-                    $ocLazyLoad.load("vendor/jquery.orgchart-master/jquery.orgchart.css");
-                    //END LOAD LIBRARY
-
-                    //LOAD CONTROLLER
-                    $ocLazyLoad.load("modules/treeApprove/controllers/TreeDetail.js");
-                    //END LOAD CONTROLLER
-
-                    //LOAD DIRECTIVE
-                    $ocLazyLoad.load("modules/treeApprove/directives/DirectiveAddNode.js")
-                        .then(function() {
-                            $state.go("loggedIn.treeApprove.detailTree", null, {
-                                "reload": true
-                            });
-                        })
-                        //END LOAD DIRECTIVE
+                    async.waterfall([
+                        function(callback) {
+                            $ocLazyLoad.load("modules/treeApprove/extend_routes_treeApprove.js");
+                            callback(null);
+                        },
+                        function(callback) {
+                            $ocLazyLoad.load("vendor/jquery.orgChart-master/jquery.orgchart.js");
+                            callback(null);
+                        },
+                        function(callback) {
+                            $ocLazyLoad.load("vendor/jquery.orgchart-master/jquery.orgchart.css");
+                            callback(null);
+                        },
+                        function(callback) {
+                            $ocLazyLoad.load("modules/treeApprove/controllers/TreeDetail.js");
+                            callback(null);
+                        },
+                        function(callback) {
+                            $ocLazyLoad.load("modules/treeApprove/directives/DirectiveAddNode.js");
+                            callback(null);
+                        },
+                        function(callback) {
+                            $state.go("loggedIn.treeApprove.detailTree");
+                            callback(null);
+                        }
+                    ]);
                 }
             }
         });
