@@ -39,9 +39,9 @@ angular.module("app.loggedIn.controller",[
 
             $modalInstance.close();
 
-            // popup($state.href("make_call",{apiKey:opentokRoom.apiKey,sessionId:opentokRoom.sessionId,token:opentokRoom.token,callUser: userInfo.id, isCaller: 0, patientId: patientId}));
+            popup($state.href("make_call",{apiKey:opentokRoom.apiKey,sessionId:opentokRoom.sessionId,token:opentokRoom.token,callUser: userInfo.id, isCaller: 0, patientId: patientId}));
 
-            popup($state.href('test_call',{apiKey:opentokRoom.apiKey, clientId:opentokRoom.clientId, callUser: userInfo.id, isCaller: 0, patientId:patientId}));
+            // popup($state.href('test_call',{apiKey:opentokRoom.apiKey, clientId:opentokRoom.clientId, callUser: userInfo.id, isCaller: 0, patientId:patientId}));
         }
 
         var newwin = null;
@@ -132,16 +132,16 @@ angular.module("app.loggedIn.controller",[
                                     return notification;
                                 },
                                 opentokRoom: function(){
-                                    // var opentokRoom = {
-                                    //         apiKey: message.apiKey,
-                                    //         sessionId: message.sessionId,
-                                    //         token: message.token
-                                    //     }
-
                                     var opentokRoom = {
-                                        apiKey: message.apiKey,
-                                        clientId: message.clientId
-                                    }
+                                            apiKey: message.apiKey,
+                                            sessionId: message.sessionId,
+                                            token: message.token
+                                        }
+
+                                    // var opentokRoom = {
+                                    //     apiKey: message.apiKey,
+                                    //     clientId: message.clientId
+                                    // }
                                     return opentokRoom;
                                 },
                                 patientId: function(){
