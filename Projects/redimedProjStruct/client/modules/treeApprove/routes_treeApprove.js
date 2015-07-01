@@ -19,16 +19,22 @@ angular.module("app.loggedIn.treeApprove", [
                     init: function($q, $rootScope, $state, $timeout, $ocLazyLoad) {
                         async.waterfall([
                             function(callback) {
-                                $ocLazyLoad.load("modules/treeApprove/extend_routes_treeApprove.js");
-                                callback(null);
+                                $ocLazyLoad.load("modules/treeApprove/extend_routes_treeApprove.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
-                                $ocLazyLoad.load("modules/treeApprove/controllers/ListFunctionController.js");
-                                callback(null);
+                                $ocLazyLoad.load("modules/treeApprove/controllers/ListFunctionController.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
-                                $ocLazyLoad.load("modules/treeApprove/directives/DirectiveAddFunction.js");
-                                callback(null);
+                                $ocLazyLoad.load("modules/treeApprove/directives/DirectiveAddFunction.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
                                 $state.go("loggedIn.treeApprove.listFunction");
@@ -47,17 +53,23 @@ angular.module("app.loggedIn.treeApprove", [
                     init: function($q, $rootScope, $state, $timeout, $ocLazyLoad) {
                         async.waterfall([
                             function(callback) {
-                                $ocLazyLoad.load("modules/treeApprove/extend_routes_treeApprove.js");
-                                callback(null);
+                                $ocLazyLoad.load("modules/treeApprove/extend_routes_treeApprove.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
 
                             function(callback) {
-                                $ocLazyLoad.load("modules/treeApprove/controllers/ListTreeController.js");;
-                                callback(null);
+                                $ocLazyLoad.load("modules/treeApprove/controllers/ListTreeController.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
-                                $ocLazyLoad.load("modules/treeApprove/directives/DirectiveAddTree.js");
-                                callback(null);
+                                $ocLazyLoad.load("modules/treeApprove/directives/DirectiveAddTree.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
                                 $state.go("loggedIn.treeApprove.listTree");
@@ -76,28 +88,37 @@ angular.module("app.loggedIn.treeApprove", [
                 init: function($q, $rootScope, $state, $timeout, $ocLazyLoad) {
                     async.waterfall([
                         function(callback) {
-                            $ocLazyLoad.load("modules/treeApprove/extend_routes_treeApprove.js");
-                            callback(null);
+                            $ocLazyLoad.load("modules/treeApprove/extend_routes_treeApprove.js")
+                                .then(function() {
+                                    callback(null);
+                                });
                         },
                         function(callback) {
-                            $ocLazyLoad.load("vendor/jquery.orgChart-master/jquery.orgchart.js");
-                            callback(null);
+                            $ocLazyLoad.load("vendor/jquery.orgChart-master/jquery.orgchart.js")
+                                .then(function() {
+                                    callback(null);
+                                });
                         },
                         function(callback) {
-                            $ocLazyLoad.load("vendor/jquery.orgchart-master/jquery.orgchart.css");
-                            callback(null);
+                            $ocLazyLoad.load("vendor/jquery.orgchart-master/jquery.orgchart.css")
+                                .then(function() {
+                                    callback(null);
+                                });
                         },
                         function(callback) {
-                            $ocLazyLoad.load("modules/treeApprove/controllers/TreeDetail.js");
-                            callback(null);
+                            $ocLazyLoad.load("modules/treeApprove/controllers/TreeDetail.js")
+                                .then(function() {
+                                    callback(null);
+                                });
                         },
                         function(callback) {
-                            $ocLazyLoad.load("modules/treeApprove/directives/DirectiveAddNode.js");
-                            callback(null);
+                            $ocLazyLoad.load("modules/treeApprove/directives/DirectiveAddNode.js")
+                                .then(function() {
+                                    callback(null);
+                                });
                         },
                         function(callback) {
                             $state.go("loggedIn.treeApprove.detailTree");
-                            callback(null);
                         }
                     ]);
                 }

@@ -126,10 +126,10 @@ angular.module("app.loggedIn.TimeSheet.Service", [])
             });
         };
 
-        TimeSheetService.ViewLeave = function(idLeave) {
+        TimeSheetService.ViewLeave = function(infoPost) {
             var ViewLeave = api.all("TimeSheet/post-view-leave");
             return ViewLeave.post({
-                leave_id: idLeave
+                info: infoPost
             });
         };
 

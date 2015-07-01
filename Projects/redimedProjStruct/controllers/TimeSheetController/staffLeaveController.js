@@ -472,12 +472,14 @@ module.exports = {
 
     // VIEW LEAVE
     ViewLeave: function(req, res) {
-        var leave_id = req.body.leave_id;
+        var info = req.body.info;
+        var leave_id = info.leave_id;
         var queryView =
             "SELECT hr_employee.FirstName, hr_employee.LastName, hr_leave.leave_id, hr_leave.is_reject, " + //SELECT
             "hr_leave.time_leave as time_leave_all, hr_leave.reason_leave as reason_leave_all, " + //SELECT
             "hr_leave.application_date, hr_leave.work_date, hr_leave_detail.type_other, " + //SELECT
-            "hr_leave.start_date, hr_leave.finish_date, hr_leave_type.leave_name, " + //SELECT
+            "hr_leave.start_date, hr_leave.finish_date, hr_leave_type.leave_name, hr_leave.standard, " + //SELECT
+            "hr_leave.is_approve_first, hr_leave.is_approve_second, " + //SELECT
             "hr_leave_detail.time_leave, hr_leave_detail.reason_leave, time_task_status.name as status, " + //SELECT
             "time_task_status.task_status_id " + //SELECT
             "FROM hr_employee " + //FROM
@@ -493,11 +495,50 @@ module.exports = {
                 leave_id: leave_id
             })
             .success(function(result) {
-                res.json({
-                    status: "success",
-                    result: result
-                });
-                return;
+                //GET PERSON-IN-CHARGE
+                var queryGetTitleEmployee =
+                    "SELECT hr_employee.TITLE " +
+                    "FROM hr_employee " +
+                    "INNER JOIN users on users.employee_id = hr_employee.Employee_ID " +
+                    "WHERE users.id = :userId";
+                db.sequelize.query(queryGetTitleEmployee, null, {
+                        raw: true
+                    }, {
+                        userId: info.user_id
+                    })
+                    .success(function(resultTitle) {
+                        var isPermiss = true;
+                        if (resultTitle !== undefined &&
+                            resultTitle !== null &&
+                            resultTitle[0] !== undefined &&
+                            resultTitle[0] !== null &&
+                            resultTitle[0].TITLE === "Head of Dept." &&
+                            result !== undefined &&
+                            result !== null &&
+                            result[0] !== undefined &&
+                            result[0] !== null &&
+                            result[0].standard === 0 &&
+                            result[0].is_approve_first === 0 &&
+                            result[0].is_approve_second === 1) {
+                            isPermiss = false;
+                        }
+                        res.json({
+                            status: "success",
+                            isPermiss: isPermiss,
+                            result: result
+                        });
+                        return;
+                    })
+                    .error(function(err) {
+                        console.log("*****ERROR:" + err + "*****");
+                        res.json({
+                            status: "error",
+                            result: []
+                        });
+                        return;
+                    });
+
+                //END
             })
             .error(function(err) {
                 console.log("*****ERROR:" + err + "*****");
@@ -942,7 +983,11 @@ module.exports = {
                                                                                                     result[indexResult].status_id === 5) &&
                                                                                                 result[indexResult].standard === 0 &&
                                                                                                 result[indexResult].is_approve_first === 0 &&
-                                                                                                result[indexResult].is_approve_second === 1) {
+                                                                                                result[indexResult].is_approve_second === 1 &&
+                                                                                                resultInfoLevel2 !== undefined &&
+                                                                                                resultInfoLevel2 !== null &&
+                                                                                                resultInfoLevel2[0] !== undefined &&
+                                                                                                resultInfoLevel2[0] !== null) {
                                                                                                 result[indexResult].person_charge = resultInfoLevel2[0].FirstName + " " + resultInfoLevel2[0].LastName;
                                                                                             } else if (elemResult.status_id === 3 &&
                                                                                                 elemResult.standard === 0) {

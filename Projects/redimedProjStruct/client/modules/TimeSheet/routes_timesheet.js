@@ -20,24 +20,31 @@ angular.module("app.loggedIn.TimeSheet", [
                     init: function($q, $rootScope, $state, $timeout, $ocLazyLoad) {
                         async.waterfall([
                             function(callback) {
-                                $ocLazyLoad.load("modules/TimeSheet/extend_routes_timesheet.js");
-                                callback(null);
+                                $ocLazyLoad.load("modules/TimeSheet/extend_routes_timesheet.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
-                                $ocLazyLoad.load("modules/TimeSheet/controllers/TimeSheetHistoryLeaveController.js");
-                                callback(null);
+                                $ocLazyLoad.load("modules/TimeSheet/controllers/TimeSheetHistoryLeaveController.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
-                                $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetViewLeaveDirective.js");
-                                callback(null);
+                                $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetViewLeaveDirective.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
-                                $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetFilter.js");
-                                callback(null);
+                                $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetFilter.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
                                 $state.go("loggedIn.timesheetHome.leaveHistory");
-                                callback(null);
                             }
                         ]);
 
@@ -54,20 +61,28 @@ angular.module("app.loggedIn.TimeSheet", [
 
                         async.waterfall([
                             function(callback) {
-                                $ocLazyLoad.load("modules/TimeSheet/extend_routes_timesheet.js");
-                                callback(null);
+                                $ocLazyLoad.load("modules/TimeSheet/extend_routes_timesheet.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
-                                $ocLazyLoad.load("vendor/jquery-mask/masked.js");
-                                callback(null);
+                                $ocLazyLoad.load("vendor/jquery-mask/masked.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
-                                $ocLazyLoad.load("modules/TimeSheet/controllers/TimeSheetCreateLeaveController.js");
-                                callback(null);
+                                $ocLazyLoad.load("modules/TimeSheet/controllers/TimeSheetCreateLeaveController.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
-                                $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetFilter.js");
-                                callback(null);
+                                $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetFilter.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
                                 if ($stateParams.id) {
@@ -92,24 +107,31 @@ angular.module("app.loggedIn.TimeSheet", [
                     init: function($q, $rootScope, $state, $timeout, $ocLazyLoad) {
                         async.waterfall([
                             function(callback) {
-                                $ocLazyLoad.load("modules/TimeSheet/extend_routes_timesheet.js");
-                                callback(null);
+                                $ocLazyLoad.load("modules/TimeSheet/extend_routes_timesheet.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
-                                $ocLazyLoad.load("modules/TimeSheet/controllers/TimeSheetApproveLeaveController.js");
-                                callback(null);
+                                $ocLazyLoad.load("modules/TimeSheet/controllers/TimeSheetApproveLeaveController.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
-                                $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetViewLeaveApproveDirective.js");
-                                callback(null);
+                                $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetViewLeaveApproveDirective.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
-                                $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetFilter.js");
-                                callback(null);
+                                $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetFilter.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
                                 $state.go("loggedIn.timesheetHome.leaveApprove");
-                                callback(null);
                             }
                         ]);
                     }
@@ -124,61 +146,86 @@ angular.module("app.loggedIn.TimeSheet", [
                     init: function($q, $rootScope, $state, $timeout, $ocLazyLoad) {
                         async.waterfall([
                             function(callback) {
-                                $ocLazyLoad.load("modules/TimeSheet/extend_routes_timesheet.js");
-                                callback(null);
+                                $ocLazyLoad.load("modules/TimeSheet/extend_routes_timesheet.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
-                                $ocLazyLoad.load("vendor/angular-bootstrap-calendar/calendar-jquery/jquery.animate.clip.js");
-                                callback(null);
+                                $ocLazyLoad.load("vendor/angular-bootstrap-calendar/calendar-jquery/jquery.animate.clip.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
-                                $ocLazyLoad.load("vendor/angular-bootstrap-calendar/calendar-jquery/jCal.js");
-                                callback(null);
+                                $ocLazyLoad.load("vendor/angular-bootstrap-calendar/calendar-jquery/jCal.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
-                                $ocLazyLoad.load("vendor/angular-bootstrap-calendar/calendar-jquery/jCal.css");
-                                callback(null);
+                                $ocLazyLoad.load("vendor/angular-bootstrap-calendar/calendar-jquery/jCal.css")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
-                                $ocLazyLoad.load("modules/TimeSheet/controllers/viewTimesheetController.js");
-                                callback(null);
+                                $ocLazyLoad.load("modules/TimeSheet/controllers/viewTimesheetController.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
-                                $ocLazyLoad.load("modules/TimeSheet/controllers/StaffCalendarController.js");
-                                callback(null);
+                                $ocLazyLoad.load("modules/TimeSheet/controllers/StaffCalendarController.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
-                                $ocLazyLoad.load("modules/TimeSheet/controllers/StaffMonthController.js");
-                                callback(null);
+                                $ocLazyLoad.load("modules/TimeSheet/controllers/StaffMonthController.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
 
                             function(callback) {
-                                $ocLazyLoad.load("modules/TimeSheet/controllers/StaffWeekController.js");
-                                callback(null);
+                                $ocLazyLoad.load("modules/TimeSheet/controllers/StaffWeekController.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
-                                $ocLazyLoad.load("modules/TimeSheet/directives/StaffCalendarDirective.js");
-                                callback(null);
+                                $ocLazyLoad.load("modules/TimeSheet/directives/StaffCalendarDirective.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
-                                $ocLazyLoad.load("modules/TimeSheet/directives/StaffMonthDirective.js");
-                                callback(null);
+                                $ocLazyLoad.load("modules/TimeSheet/directives/StaffMonthDirective.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
-                                $ocLazyLoad.load("modules/TimeSheet/directives/StaffWeekDirective.js");
-                                callback(null);
+                                $ocLazyLoad.load("modules/TimeSheet/directives/StaffWeekDirective.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
-                                $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetFilter.js");
-                                callback(null);
+                                $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetFilter.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
-                                $ocLazyLoad.load("vendor/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js");
-                                callback(null);
+                                $ocLazyLoad.load("vendor/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
                                 $state.go("loggedIn.timesheetHome.timesheetHistory");
-                                callback(null);
                             }
                         ]);
                     }
@@ -193,72 +240,106 @@ angular.module("app.loggedIn.TimeSheet", [
                 init: function($q, $rootScope, $state, $stateParams, $timeout, $ocLazyLoad) {
                     async.waterfall([
                         function(callback) {
-                            $ocLazyLoad.load("modules/TimeSheet/extend_routes_timesheet.js");
-                            callback(null);
+                            $ocLazyLoad.load("modules/TimeSheet/extend_routes_timesheet.js")
+                                .then(function() {
+                                    callback(null);
+                                });
                         },
                         function(callback) {
-                            $ocLazyLoad.load("vendor/jquery-mask/masked.js");
-                            callback(null);
+                            $ocLazyLoad.load("vendor/jquery-mask/masked.js")
+                                .then(function() {
+                                    callback(null);
+                                });
                         },
                         function(callback) {
-                            $ocLazyLoad.load("vendor/angular-bootstrap-calendar/calendar-jquery/jquery.animate.clip.js");
-                            callback(null);
+                            $ocLazyLoad.load("vendor/angular-bootstrap-calendar/calendar-jquery/jquery.animate.clip.js")
+                                .then(function() {
+                                    callback(null);
+                                });
                         },
                         function(callback) {
-                            $ocLazyLoad.load("vendor/angular-bootstrap-calendar/calendar-jquery/jCal.js");
-                            callback(null);
+                            $ocLazyLoad.load("vendor/angular-bootstrap-calendar/calendar-jquery/jCal.js")
+                                .then(function() {
+                                    callback(null);
+                                });
                         },
                         function(callback) {
-                            $ocLazyLoad.load("vendor/angular-bootstrap-calendar/calendar-jquery/jCal.css");
-                            callback(null);
+                            $ocLazyLoad.load("vendor/angular-bootstrap-calendar/calendar-jquery/jCal.css")
+                                .then(function() {
+                                    callback(null);
+                                });
                         },
                         function(callback) {
-                            $ocLazyLoad.load("modules/TimeSheet/controllers/createTimesheetController.js");
-                            callback(null);
+                            $ocLazyLoad.load("modules/TimeSheet/controllers/createTimesheetController.js")
+                                .then(function() {
+                                    callback(null);
+                                });
                         },
                         function(callback) {
-                            $ocLazyLoad.load("modules/TimeSheet/controllers/StaffCalendarController.js");
-                            callback(null);
+                            $ocLazyLoad.load("modules/TimeSheet/controllers/StaffCalendarController.js")
+                                .then(function() {
+                                    callback(null);
+                                });
                         },
                         function(callback) {
-                            $ocLazyLoad.load("modules/TimeSheet/controllers/StaffMonthController.js");
-                            callback(null);
+                            $ocLazyLoad.load("modules/TimeSheet/controllers/StaffMonthController.js")
+                                .then(function() {
+                                    callback(null);
+                                });
                         },
                         function(callback) {
-                            $ocLazyLoad.load("modules/TimeSheet/controllers/StaffWeekController.js");
-                            callback(null);
+                            $ocLazyLoad.load("modules/TimeSheet/controllers/StaffWeekController.js")
+                                .then(function() {
+                                    callback(null);
+                                });
                         },
                         function(callback) {
-                            $ocLazyLoad.load("modules/TimeSheet/directives/StaffCalendarDirective.js");
-                            callback(0);
+                            $ocLazyLoad.load("modules/TimeSheet/directives/StaffCalendarDirective.js")
+                                .then(function() {
+                                    callback(null);
+                                });
                         },
                         function(callback) {
-                            $ocLazyLoad.load("modules/TimeSheet/directives/StaffMonthDirective.js");
-                            callback(null);
+                            $ocLazyLoad.load("modules/TimeSheet/directives/StaffMonthDirective.js")
+                                .then(function() {
+                                    callback(null);
+                                });
                         },
                         function(callback) {
-                            $ocLazyLoad.load("modules/TimeSheet/directives/StaffWeekDirective.js");
-                            callback(null);
+                            $ocLazyLoad.load("modules/TimeSheet/directives/StaffWeekDirective.js")
+                                .then(function() {
+                                    callback(null);
+                                });
                         },
                         function(callback) {
-                            $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetActivityDetailDirective.js");
-                            callback(null);
+                            $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetActivityDetailDirective.js")
+                                .then(function() {
+                                    callback(null);
+                                });
                         },
                         function(callback) {
-                            $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetFilter.js");
-                            callback(null);
+                            $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetFilter.js")
+                                .then(function() {
+                                    callback(null);
+                                });
                         },
                         function(callback) {
-                            $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetItemCodeDirective.js");
-                            callback(null);
+                            $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetItemCodeDirective.js")
+                                .then(function() {
+                                    callback(null);
+                                });
                         },
                         function(callback) {
-                            $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetOnlyDigits.js");
-                            callback(null);
+                            $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetOnlyDigits.js")
+                                .then(function() {
+                                    callback(null);
+                                });
                         },
                         function(callback) {
-                            $ocLazyLoad.load("vendor/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js");
-                            callback(null);
+                            $ocLazyLoad.load("vendor/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js")
+                                .then(function() {
+                                    callback(null);
+                                });
                         },
                         function(callback) {
                             if ($stateParams.id) {
@@ -284,32 +365,43 @@ angular.module("app.loggedIn.TimeSheet", [
                 init: function($q, $rootScope, $state, $timeout, $ocLazyLoad) {
                     async.waterfall([
                         function(callback) {
-                            $ocLazyLoad.load("modules/TimeSheet/extend_routes_timesheet.js");
-                            callback(null);
+                            $ocLazyLoad.load("modules/TimeSheet/extend_routes_timesheet.js")
+                                .then(function() {
+                                    callback(null);
+                                });
                         },
                         function(callback) {
-                            $ocLazyLoad.load("vendor/jquery-mask/masked.js");
-                            callback(null);
+                            $ocLazyLoad.load("vendor/jquery-mask/masked.js")
+                                .then(function() {
+                                    callback(null);
+                                });
                         },
                         function(callback) {
-                            $ocLazyLoad.load("modules/TimeSheet/controllers/TimeSheetApproveTaskController.js");
-                            callback(null);
+                            $ocLazyLoad.load("modules/TimeSheet/controllers/TimeSheetApproveTaskController.js")
+                                .then(function() {
+                                    callback(null);
+                                });
                         },
                         function(callback) {
-                            $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetDetailDirective.js");
-                            callback(null);
+                            $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetDetailDirective.js")
+                                .then(function() {
+                                    callback(null);
+                                });
                         },
                         function(callback) {
-                            $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetViewTaskDirective.js");
-                            callback(null);
+                            $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetViewTaskDirective.js")
+                                .then(function() {
+                                    callback(null);
+                                });
                         },
                         function(callback) {
-                            $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetFilter.js");
-                            callback(null);
+                            $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetFilter.js")
+                                .then(function() {
+                                    callback(null);
+                                });
                         },
                         function(callback) {
                             $state.go("loggedIn.timesheetHome.timesheetApprove");
-                            callback(null);
                         }
                     ]);
                 }
@@ -325,20 +417,25 @@ angular.module("app.loggedIn.TimeSheet", [
                     init: function($q, $rootScope, $state, $timeout, $ocLazyLoad) {
                         async.waterfall([
                             function(callback) {
-                                $ocLazyLoad.load("modules/TimeSheet/extend_routes_timesheet.js");
-                                callback(null);
+                                $ocLazyLoad.load("modules/TimeSheet/extend_routes_timesheet.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
-                                $ocLazyLoad.load("vendor/dropdown-multiselect/src/angularjs-dropdown-multiselect.js");
-                                callback(null);
+                                $ocLazyLoad.load("vendor/dropdown-multiselect/src/angularjs-dropdown-multiselect.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
-                                $ocLazyLoad.load("modules/TimeSheet/controllers/TimeSheetReport1Controller.js");
-                                callback(null);
+                                $ocLazyLoad.load("modules/TimeSheet/controllers/TimeSheetReport1Controller.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
                                 $state.go("loggedIn.timesheetHome.timesheetReport1");
-                                callback(null);
                             }
                         ]);
                     }
@@ -353,20 +450,25 @@ angular.module("app.loggedIn.TimeSheet", [
                     init: function($q, $rootScope, $state, $timeout, $ocLazyLoad) {
                         async.waterfall([
                             function(callback) {
-                                $ocLazyLoad.load("modules/TimeSheet/extend_routes_timesheet.js");
-                                callback(null);
+                                $ocLazyLoad.load("modules/TimeSheet/extend_routes_timesheet.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
-                                $ocLazyLoad.load("vendor/dropdown-multiselect/src/angularjs-dropdown-multiselect.js");
-                                callback(null);
+                                $ocLazyLoad.load("vendor/dropdown-multiselect/src/angularjs-dropdown-multiselect.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
-                                $ocLazyLoad.load("modules/TimeSheet/controllers/TimeSheetReport2Controller.js");
-                                callback(null);
+                                $ocLazyLoad.load("modules/TimeSheet/controllers/TimeSheetReport2Controller.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
                                 $state.go("loggedIn.timesheetHome.timesheetReport2");
-                                callback(null);
                             }
                         ]);
                     }
@@ -381,20 +483,25 @@ angular.module("app.loggedIn.TimeSheet", [
                     init: function($q, $rootScope, $state, $timeout, $ocLazyLoad) {
                         async.waterfall([
                             function(callback) {
-                                $ocLazyLoad.load("modules/TimeSheet/extend_routes_timesheet.js");
-                                callback(null);
+                                $ocLazyLoad.load("modules/TimeSheet/extend_routes_timesheet.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
-                                $ocLazyLoad.load("vendor/dropdown-multiselect/src/angularjs-dropdown-multiselect.js");
-                                callback(null);
+                                $ocLazyLoad.load("vendor/dropdown-multiselect/src/angularjs-dropdown-multiselect.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
-                                $ocLazyLoad.load("modules/TimeSheet/controllers/TimeSheetReport3Controller.js");
-                                callback(null);
+                                $ocLazyLoad.load("modules/TimeSheet/controllers/TimeSheetReport3Controller.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
                                 $state.go("loggedIn.timesheetHome.timesheetReport3");
-                                callback(null);
                             }
                         ]);
                     }
@@ -409,20 +516,25 @@ angular.module("app.loggedIn.TimeSheet", [
                     init: function($q, $rootScope, $state, $timeout, $ocLazyLoad) {
                         async.waterfall([
                             function(callback) {
-                                $ocLazyLoad.load("modules/TimeSheet/extend_routes_timesheet.js");
-                                callback(null);
+                                $ocLazyLoad.load("modules/TimeSheet/extend_routes_timesheet.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
-                                $ocLazyLoad.load("vendor/dropdown-multiselect/src/angularjs-dropdown-multiselect.js");
-                                callback(null);
+                                $ocLazyLoad.load("vendor/dropdown-multiselect/src/angularjs-dropdown-multiselect.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
-                                $ocLazyLoad.load("modules/TimeSheet/controllers/TimeSheetReport4Controller.js");
-                                callback(null);
+                                $ocLazyLoad.load("modules/TimeSheet/controllers/TimeSheetReport4Controller.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
                                 $state.go("loggedIn.timesheetHome.timesheetReport4");
-                                callback(null);
                             }
                         ]);
                     }
@@ -437,20 +549,25 @@ angular.module("app.loggedIn.TimeSheet", [
                     init: function($q, $rootScope, $state, $timeout, $ocLazyLoad) {
                         async.waterfall([
                             function(callback) {
-                                $ocLazyLoad.load("modules/TimeSheet/extend_routes_timesheet.js");
-                                callback(null);
+                                $ocLazyLoad.load("modules/TimeSheet/extend_routes_timesheet.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
-                                $ocLazyLoad.load("vendor/dropdown-multiselect/src/angularjs-dropdown-multiselect.js");
-                                callback(null);
+                                $ocLazyLoad.load("vendor/dropdown-multiselect/src/angularjs-dropdown-multiselect.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
-                                $ocLazyLoad.load("modules/TimeSheet/controllers/TimeSheetReport5Controller.js");
-                                callback(null);
+                                $ocLazyLoad.load("modules/TimeSheet/controllers/TimeSheetReport5Controller.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
                             },
                             function(callback) {
                                 $state.go("loggedIn.timesheetHome.timesheetReport5");
-                                callback(null);
                             }
                         ]);
                     }
@@ -465,20 +582,25 @@ angular.module("app.loggedIn.TimeSheet", [
                 init: function($q, $rootScope, $state, $timeout, $ocLazyLoad) {
                     async.waterfall([
                         function(callback) {
-                            $ocLazyLoad.load("modules/TimeSheet/extend_routes_timesheet.js");
-                            callback(null);
+                            $ocLazyLoad.load("modules/TimeSheet/extend_routes_timesheet.js")
+                                .then(function() {
+                                    callback(null);
+                                });
                         },
                         function(callback) {
-                            $ocLazyLoad.load("vendor/dropdown-multiselect/src/angularjs-dropdown-multiselect.js");
-                            callback(null);
+                            $ocLazyLoad.load("vendor/dropdown-multiselect/src/angularjs-dropdown-multiselect.js")
+                                .then(function() {
+                                    callback(null);
+                                });
                         },
                         function(callback) {
-                            $ocLazyLoad.load("modules/TimeSheet/controllers/TimeSheetReport6Controller.js");
-                            callback(null);
+                            $ocLazyLoad.load("modules/TimeSheet/controllers/TimeSheetReport6Controller.js")
+                                .then(function() {
+                                    callback(null);
+                                });
                         },
                         function(callback) {
                             $state.go("loggedIn.timesheetHome.timesheetReport6");
-                            callback(null);
                         }
                     ]);
                 }
@@ -494,20 +616,25 @@ angular.module("app.loggedIn.TimeSheet", [
                 init: function($q, $rootScope, $state, $timeout, $ocLazyLoad) {
                     async.waterfall([
                         function(callback) {
-                            $ocLazyLoad.load("modules/TimeSheet/extend_routes_timesheet.js");
-                            callback(null);
+                            $ocLazyLoad.load("modules/TimeSheet/extend_routes_timesheet.js")
+                                .then(function() {
+                                    callback(null);
+                                });
                         },
                         function(callback) {
-                            $ocLazyLoad.load("vendor/dropdown-multiselect/src/angularjs-dropdown-multiselect.js");
-                            callback(null);
+                            $ocLazyLoad.load("vendor/dropdown-multiselect/src/angularjs-dropdown-multiselect.js")
+                                .then(function() {
+                                    callback(null);
+                                });
                         },
                         function(callback) {
-                            $ocLazyLoad.load("modules/TimeSheet/controllers/TimeSheetReportOweLeaveController.js");
-                            callback(null);
+                            $ocLazyLoad.load("modules/TimeSheet/controllers/TimeSheetReportOweLeaveController.js")
+                                .then(function() {
+                                    callback(null);
+                                });
                         },
                         function(callback) {
                             $state.go("loggedIn.timesheetHome.leaveReportOwe");
-                            callback(null);
                         }
                     ]);
                 }
