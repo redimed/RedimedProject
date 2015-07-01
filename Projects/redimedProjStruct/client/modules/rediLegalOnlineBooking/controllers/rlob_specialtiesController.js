@@ -1,5 +1,5 @@
 
-angular.module('app.loggedIn.rlob.specialties.controller',[])
+angular.module('app.loggedIn.rlob')
 .controller("rlob_specialtiesController", function ($scope,rlobService,toastr) {
 
 	$scope.setListSpecialties = function(){

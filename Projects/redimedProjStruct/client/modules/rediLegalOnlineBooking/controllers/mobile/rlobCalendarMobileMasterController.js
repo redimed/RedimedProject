@@ -1,4 +1,4 @@
-angular.module("app.calendar.mobile.controller",[])
+angular.module("app.loggedIn.rlob")
 .controller('rlobCalendarMobileMasterController',function(socket,$modal,$scope,toastr,$http,$stateParams,Mailto,$cookieStore,$window,rlobService,$timeout,ConfigService,$state){
 	$scope.loginInfo = $cookieStore.get('userInfo');
 

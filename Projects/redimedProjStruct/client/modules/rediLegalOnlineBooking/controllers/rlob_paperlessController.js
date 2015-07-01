@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.rlob.paperless.controller',[])
+angular.module('app.loggedIn.rlob')
     .controller("rlob_paperlessController", function($scope,rlobService,$cookieStore,$state) {
     	$scope.userType=rlobConstant.userType;
     	$scope.loginInfo=$cookieStore.get('userInfo').user_type;

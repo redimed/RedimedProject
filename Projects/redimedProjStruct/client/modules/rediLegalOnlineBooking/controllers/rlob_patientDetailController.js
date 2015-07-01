@@ -2,7 +2,7 @@
  * Created by meditech on 9/15/2014.
  */
 
-angular.module('app.loggedIn.rlob.patientDetail.controller',[])
+angular.module('app.loggedIn.rlob')
     .controller("rlob_patientDetailController", function($scope,$state,$http,$cookieStore,bookingService,appointmentCalendarService,FileUploader,Mailto,$location,$window,rlobService,PatientModel,ClaimModel) {
         /**
          * Danh cho tai su dung thong tin patient

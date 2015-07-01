@@ -1,7 +1,7 @@
 /**
  * Created by meditech on 8/29/2014.
  */
-angular.module('app.loggedIn.rlob.booking.controller',[])
+angular.module('app.loggedIn.rlob')
     .controller("rlob_bookingController", function($window,$scope,$http,$state,$modal,appointmentCalendarService,$cookieStore,rlobService) {
 //    UIDatepaginator.init();
 //    Metronic.init();

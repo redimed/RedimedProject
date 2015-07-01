@@ -2,7 +2,7 @@
  * Created by Phan Quoc Chien on 01/12/2014.
  */
 
-angular.module('app.loggedIn.rlob.adminBookingMessages.controller',[])
+angular.module('app.loggedIn.rlob')
     .controller("rlob_admin_bookingMessagesController", function($scope,rlobService,toastr) {
         $scope.editMessageContent = '';
         //$scope.messageContent = '';

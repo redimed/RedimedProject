@@ -1,7 +1,7 @@
 /**
  * Created by meditech on 11/17/2014.
  */
-angular.module('app.loggedIn.rlob.bookingBehalf.controller',[])
+angular.module('app.loggedIn.rlob')
     .controller("rlob_admin_bookingBehalfController", function($scope,$state,rlobService,bookingService) {
         $scope.registerStatus=rlobConstant.registerStatus;
         //------------------------------------------------------------------------------

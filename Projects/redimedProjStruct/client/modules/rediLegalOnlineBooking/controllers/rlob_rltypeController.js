@@ -1,5 +1,5 @@
 
-angular.module('app.loggedIn.rlob.rltype.controller',[])
+angular.module('app.loggedIn.rlob')
 .controller("rlob_rltypeController", function ($scope,rlobService,toastr) {
     $scope.bookingType = rlobConstant.bookingType;
     $scope.setListRltype = function(){

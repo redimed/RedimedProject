@@ -2,7 +2,7 @@
  * Created by meditech on 9/15/2014.
  */
 
-angular.module('app.loggedIn.rlob.list.controller',[])
+angular.module('app.loggedIn.rlob')
 .controller("rlob_bookingListController", function ($scope, $http, $state,$stateParams, $cookieStore, FileUploader,rlobService,$window,Mailto,bookingService) {
         //Co cho nguoi su dung upload File hay khong, su dung bien isCanUpload
         $scope.isCanUpload=true;

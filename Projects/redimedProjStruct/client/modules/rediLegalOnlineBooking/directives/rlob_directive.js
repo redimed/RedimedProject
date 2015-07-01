@@ -2,7 +2,7 @@
  * Created by tannv.dts@gmail.com on 9/29/2014.
  */
 
-angular.module("app.loggedIn.rlob.directive", ['app.calendar.mobile.controller'])
+angular.module("app.loggedIn.rlob")
 .directive('noticeRepeatFinish', function() {
     return function(scope, element, attrs) {
 //        angular.element(element).css('color','blue');

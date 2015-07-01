@@ -1,7 +1,7 @@
 /**
  * Created by meditech on 11/17/2014.
  */
-angular.module('app.loggedIn.rlob.adminBookingReport.type2.controller',[])
+angular.module('app.loggedIn.rlob')
     .controller("rlob_admin_bookingReport_type2Controller", function($scope,$http,$cookieStore,$q,rlobService) {
         $scope.removeSelectedBooking();
         // chien status

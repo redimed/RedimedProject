@@ -1,7 +1,7 @@
 /**
  * Created by meditech on 10/28/2014.
  */
-angular.module('app.loggedIn.vaccinob.controller',[])
+angular.module('app.loggedIn.vaccinob')
     .controller("vaccinobController", function($scope, $http,$state,$window,$q,$stateParams,FileUploader,$cookieStore,$interval) {
         //alert("Vaccination")
         $scope.bookingType=rlobConstant.bookingType.Vaccination.name;

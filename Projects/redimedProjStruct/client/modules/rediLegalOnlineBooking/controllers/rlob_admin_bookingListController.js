@@ -1,5 +1,5 @@
 
-angular.module('app.loggedIn.rlob.adminBookingList.controller',[])
+angular.module('app.loggedIn.rlob')
         .controller("rlob_admin_bookingListController", function($scope, $http,$state,$window,$q,$stateParams,FileUploader,$cookieStore,$interval,rlobService,Mailto,bookingService) {
         //Internal Variable
         //Bien haveNodeFile quy dinh cac file co xuat hien trong tree hay khong

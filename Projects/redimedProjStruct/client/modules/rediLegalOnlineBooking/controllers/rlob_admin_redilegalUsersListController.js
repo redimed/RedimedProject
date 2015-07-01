@@ -2,7 +2,7 @@
  * Created by Phan Quoc Chien on 07/11/2014.
  */
 
-angular.module('app.loggedIn.rlob.redilegalUsersListController.controller',[])
+angular.module('app.loggedIn.rlob')
     .controller("rlob_admin_redilegalUsersListController", function($scope,rlobService,SecurityService,toastr) {
         //Khai bao
         $scope.registerStatus=rlobConstant.registerStatus;

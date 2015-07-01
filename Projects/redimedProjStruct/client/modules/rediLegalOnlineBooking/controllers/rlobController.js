@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.rlob.controller',[])
+angular.module('app.loggedIn.rlob')
     .controller("rlobController", function($scope, $http,$state,$window,$q,$stateParams,FileUploader,$cookieStore,$interval) {
     //alert("redilegal")
         $scope.bookingType=rlobConstant.bookingType.REDiLEGAL.name;

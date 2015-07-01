@@ -1,7 +1,7 @@
 /**
  * Created by meditech on 8/29/2014.
  */
-angular.module('app.loggedIn.rlob.services',[])
+angular.module('app.loggedIn.rlob')
 
 
 .service('appointmentCalendarService',function(){

@@ -2,7 +2,7 @@
  * Created by Phan Quoc Chien on 07/11/2014.
  */
 
-angular.module('app.loggedIn.rlob.adminDocumentStatusSummary.controller',[])
+angular.module('app.loggedIn.rlob')
     .controller("rlob_admin_documentStatusSummaryController", function($scope,$http,$cookieStore,$q,$state,rlobService) {
 
         $scope.listDaysOfWeek={};

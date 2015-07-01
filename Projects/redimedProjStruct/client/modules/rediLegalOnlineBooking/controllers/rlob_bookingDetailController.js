@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.rlob.bookingDetail.controller',[])
+angular.module('app.loggedIn.rlob')
 .controller("rlob_bookingDetailController", function ($scope, $http, $state,$stateParams, $cookieStore) {
     //
     //Khong cho nguoi su dung upload file thong qua bien isCanUpload

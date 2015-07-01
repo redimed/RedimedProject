@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.rlob.SpecialistsProfiles.controller',[])
+angular.module('app.loggedIn.rlob')
 .controller("rlob_specialists_profilesController", function() {
 	
 });
