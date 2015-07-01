@@ -282,21 +282,21 @@ module.exports = {
 		})
 	},
 	//delete shop company 
-	delelteShopCompany:function(req,res){
-		var data = req.body.shop_id;
-		var sql = " DELETE FROM ph_company_shops WHERE shop_id = ? ";
-		req.getConnection(function(err,connection){
-			var query = connection.query(sql,data,function(err,rows){
-				if(err){
-					console.log(err);
-					res.json({status:'fail'});
-				}else{
-					console.log("success");
-					res.json({status:'success'});
-				}
-			})
-		})
-	},
+	// delelteShopCompany:function(req,res){
+	// 	var data = req.body.shop_id;
+	// 	var sql = "DELETE FROM ph_company_shops WHERE shop_id = ? ";
+	// 	req.getConnection(function(err,connection){
+	// 		var query = connection.query(sql,data,function(err,rows){
+	// 			if(err){
+	// 				console.log(err);
+	// 				res.json({status:'fail'});
+	// 			}else{
+	// 				console.log("success");
+	// 				res.json({status:'success'});
+	// 			}
+	// 		})
+	// 	})
+	// },
 
 	deletePostShop:function(req,res){
 		var data = req.body.shop_id;
@@ -305,6 +305,14 @@ module.exports = {
 		db.sequelize.query(sql, null, {raw:true}, [data])
 			.success(function(rows){
 				res.json({status:'success'});
+				sql = "DELETE FROM ph_company_shops WHERE shop_id = ? ";
+				db.sequelize.query(sql, null, {raw:true}, [data])
+				.success(function(rows){
+					console.log("--------success");
+				})
+				.error(function(err){
+					console.log("--------error", err);
+				})
 			})
 			.error(function(err){
 				console.log("--------error", err);
@@ -458,15 +466,15 @@ module.exports = {
 	},
 
 	getAllShopPost:function(req, res) {
-		var records = req.body.records;
+		var records = req.body.currentRecord;
 		console.log(records);
 		var sql = 	"SELECT * FROM `ph_shops_post` sp " +
 					"INNER JOIN `ph_posts` po ON sp.`post_id` = po.`post_id` " +
 					"INNER JOIN `ph_company_shops` cs ON sp.`shop_id` = cs.`shop_id` " +
-					"ORDER BY po.`post_id` DESC ";
-					// "LIMIT ?,? ";
-		// db.sequelize.query(sql, null, {raw:true}, [records,5])
-		db.sequelize.query(sql, null, {raw:true})
+					"ORDER BY po.`post_id` DESC " +
+					"LIMIT ?,? ";
+		db.sequelize.query(sql, null, {raw:true}, [records,5])
+		// db.sequelize.query(sql, null, {raw:true})
 			.success(function(rows){
 				res.json({status:'success', data:rows});
 			})
@@ -492,9 +500,9 @@ module.exports = {
 						console.log(rows[0]);
 						if(typeof rows[0] === 'undefined'){
 							console.log("---------------success", rows[0]);
-							var sql = "INSERT INTO `ph_post_cadidates`(post_id, shop_id, phamacist_id, CREATION_DATE) " +
-							"VALUES (?,?,?,?)"
-							db.sequelize.query(sql, null, {raw:true}, [data.post_id, data.shop_id, phamacist_id, data.currentDate])
+							var sql = "INSERT INTO `ph_post_cadidates`(post_id, shop_id, phamacist_id, isSelect, CREATION_DATE) " +
+							"VALUES (?,?,?,?,?)"
+							db.sequelize.query(sql, null, {raw:true}, [data.post_id, data.shop_id, phamacist_id, 0, data.currentDate])
 								.success(function(rows){
 									console.log("---------------success", rows);
 									res.json({status:'success', data:rows});
