@@ -1082,30 +1082,30 @@ module.exports = {
         // }//end else
         // //end get string weekno+year
 
-        var sql_get_data_time_activity_report = "SELECT user_id, "+//SELECT
-        " task_week_id, "+//SELECT
-        " Employee_id, "+//SELECT
-        " Department_id, "+//SELECT
-        " activity_id, "+//SELECT
-        " SUM(time_charge) AS 'time_charge_by_activity_id', "+//SELECT
-        " time_charge_week, "+//SELECT
-        " weekno, "+//SELECT
-        " from_date, "+//SELECT
-        " to_date " +//SELECT
-            "FROM time_activity_detail_table " +//FROM
-            "WHERE Employee_id IN(" + stringEMP + ") AND Department_id in (" + stringDept + ") AND user_id= :user_id " +//WHERE
-            "GROUP BY Department_id,activity_id,Employee_id ";//GROUP BY
+        // var sql_get_data_time_activity_report = "SELECT user_id, "+//SELECT
+        // " task_week_id, "+//SELECT
+        // " Employee_id, "+//SELECT
+        // " Department_id, "+//SELECT
+        // " activity_id, "+//SELECT
+        // " SUM(time_charge) AS 'time_charge_by_activity_id', "+//SELECT
+        // " time_charge_week, "+//SELECT
+        // " weekno, "+//SELECT
+        // " from_date, "+//SELECT
+        // " to_date " +//SELECT
+        //     "FROM time_activity_detail_table " +//FROM
+        //     "WHERE Employee_id IN(" + stringEMP + ") AND Department_id in (" + stringDept + ") AND user_id= :user_id " +//WHERE
+        //     "GROUP BY Department_id,activity_id,Employee_id ";//GROUP BY
 
-        var sql_get_data_total = "SELECT Department_id,SUM(time_charge_1) AS 'time_charge_1_Dept', " +//SELECT
-            "SUM(time_charge_2) AS 'time_charge_2_Dept',SUM(time_charge_3) AS 'time_charge_3_Dept', " +//SELECT
-            "SUM(time_charge_4) AS 'time_charge_4_Dept',SUM(time_charge_5) AS 'time_charge_5_Dept', " +//SELECT
-            "SUM(time_charge_week) AS 'time_charge_week_Dept' " + "from time_activity_report " +//SELECT
-            "WHERE Department_id in (" + stringDept + ") AND Employee_id IN(" + stringEMP + ") AND user_id= :user_id " +//WHERE
-            "GROUP BY Department_id";//GROUP BY
+        // var sql_get_data_total = "SELECT Department_id,SUM(time_charge_1) AS 'time_charge_1_Dept', " +//SELECT
+        //     "SUM(time_charge_2) AS 'time_charge_2_Dept',SUM(time_charge_3) AS 'time_charge_3_Dept', " +//SELECT
+        //     "SUM(time_charge_4) AS 'time_charge_4_Dept',SUM(time_charge_5) AS 'time_charge_5_Dept', " +//SELECT
+        //     "SUM(time_charge_week) AS 'time_charge_week_Dept' " + "from time_activity_report " +//SELECT
+        //     "WHERE Department_id in (" + stringDept + ") AND Employee_id IN(" + stringEMP + ") AND user_id= :user_id " +//WHERE
+        //     "GROUP BY Department_id";//GROUP BY
 
-        var sql_get_total = "SELECT * FROM time_activity_report ";
+        // var sql_get_total = "SELECT * FROM time_activity_report ";
 
-        var sql_get_line_count = "SELECT COUNT(DISTINCT FirstName),Department_id,Employee_id,time_charge_week FROM time_activity_table GROUP BY FirstName ";
+        // var sql_get_line_count = "SELECT COUNT(DISTINCT FirstName),Department_id,Employee_id,time_charge_week FROM time_activity_table GROUP BY FirstName ";
 
         //DELETE DATA IN TABLE
         var sql_delete_time_activity_table = "DELETE from time_activity_table WHERE user_id= :user_id ";

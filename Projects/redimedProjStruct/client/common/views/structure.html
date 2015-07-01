@@ -232,13 +232,13 @@
                     <!-- END EMR -->
 
                     <!-- ERP -->
-                    <a href="http://erp.redimed.com.au:7001/forms/frmservlet" target="_blank" ng-if="(menu.parent.icon===undefined||menu.parent.icon===null||menu.parent.icon.length===0)&& menu.parent.menu_id===164 ">
+                    <a href="http://testerp01.redimed.local:7001/forms/frmservlet" target="_blank" ng-if="(menu.parent.icon===undefined||menu.parent.icon===null||menu.parent.icon.length===0)&& menu.parent.menu_id===164 ">
                         <i class="glyphicon glyphicon-star-empty"></i>
                         <span class="title span_title" >{{menu.parent.name}}</span>
                         <span class="title span_menus" ng-if="menu.parent.menu_id===164">Enterprise Resource Planning</span>
                     </a>
 
-                    <a href="http://erp.redimed.com.au:7001/forms/frmservlet" target="_blank" ng-if="(menu.parent.icon!==undefined&&menu.parent.icon!==null&&menu.parent.icon.length!==0)&& menu.parent.menu_id===164 ">
+                    <a href="http://testerp01.redimed.local:7001/forms/frmservlet" target="_blank" ng-if="(menu.parent.icon!==undefined&&menu.parent.icon!==null&&menu.parent.icon.length!==0)&& menu.parent.menu_id===164 ">
                         <i><img ng-src="{{menu.parent.icon}}" ng-if="menu.parent.icon!==undefined&&menu.parent.icon!==null&&menu.parent.icon.length!==0"></i>
                         <span class="title span_title">{{menu.parent.name}}</span>
                         <span class="title span_menus" ng-if="menu.parent.menu_id===164">Enterprise Resource Planning</span>
