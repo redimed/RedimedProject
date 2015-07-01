@@ -16,7 +16,7 @@ app.post('/api/phUser/delTokenID', ph_userController.delTokenId);
 //company controller
 app.post('/api/phCompany/getCompany',ph_companyController.getCompany);
 app.post('/api/phCompany/updateCompanyInfo',ph_companyController.updateCompanyInfo);
-app.post('/api/phCompany/delelteShopCompany',ph_companyController.delelteShopCompany);
+// app.post('/api/phCompany/delelteShopCompany',ph_companyController.delelteShopCompany);
 app.post('/api/phCompany/updateShopCompany',ph_companyController.updateShopCompany);
 app.post('/api/phCompany/insertNewPost',ph_companyController.insertNewPost);
 app.post('/api/phCompany/addNewUserInCompany',ph_companyController.addNewUserInCompany);
