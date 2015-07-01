@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.doctor")
 .controller("DoctorPatientsDetailApptController", function ($scope, $filter, $state, toastr, $cookieStore, ConfigService, DoctorService, PatientService, localStorageService) {
-
+	alert("form nay khong con su dung [tannv.dts@gmail.com]");//tannv.dts add
 	//Detail appt modules
 	$scope.patient_detail_modules = [
 		{'name': 'Patient', 'color': 'blue-soft', 'desc': 'Info', 'icon': 'fa fa-user'},

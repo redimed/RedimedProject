@@ -72,6 +72,12 @@ var model_sql = {
     /*
     * ITEMS FOR APPOINTMENT
     */
+   /**
+    * created by: unknown
+    * tannv.dts mark
+    * 26-06-2015
+    * Ham nay se khong con duoc su dung do cln_appt_items khong con duoc su dung
+    */
     sql_get_items_calendar: function (appt_id, patient_id) {
         var query_builder = squel.select()
         .from('inv_items')
@@ -89,6 +95,12 @@ var model_sql = {
                     .field('QUANTITY');
         return query_builder.toString();
     },
+
+     /**
+     * tannv.dts@gmail.com mark
+     * function nay se khong con duoc su dung do khong con su dung bang cln_appt_items
+     * 26-06-2015
+     */
     sql_insert_items_calendar: function (cal_id, patient_id, items) {
         var query_builder = squel.insert().into('cln_appt_items');
         var rows = [];
@@ -108,6 +120,12 @@ var model_sql = {
         query_builder.setFieldsRows(rows, {dontQuote: true});
         return query_builder.toString();
     },
+
+    /**
+     * tannv.dts mark
+     * 26-06-2015
+     * function nay se khogn con duoc su dung do khong con su dung bang cln_appt_items
+     */
     sql_delete_items_calendar: function (cal_id, patient_id,  items_id) {
         var query_builder = squel.delete().from('cln_appt_items');
         query_builder.where('cal_id = ?', cal_id);
@@ -116,6 +134,12 @@ var model_sql = {
 
         return query_builder.toString();
     },
+
+    /**
+     * tannv.dts mark
+     * 26-06-2015
+     * function nay se khogn con duoc su dung do khong con su dung bang cln_appt_items
+     */
     sql_update_item_calendar: function (cal_id, patient_id, item) {
         var query_builder = squel.update().table('cln_appt_items');
 
@@ -152,6 +176,13 @@ module.exports = {
     /**
     *   CRUD ITEM OF APPOINTMENT
     */
+   /**
+    * created by: unknown
+    * tannv.dts mark
+    * tannv.dts modify
+    * 26-06-2015
+    * Ham nay se khong con duoc su dung do cln_appt_items khong con duoc su dung
+    */
     postGetItems: function (req, res) {
         var appt_id = req.body.appt_id;
         var patient_id = req.body.patient_id;
@@ -166,6 +197,11 @@ module.exports = {
         });
     },
    
+    /**
+     * tannv.dts@gmail.com mark
+     * function nay se khong con duoc su dung do khong con su dung bang cln_appt_items
+     * 26-06-2015
+     */
     postInsertItems: function (req, res) {
         var cal_id = req.body.cal_id;
         var items = req.body.items;
@@ -183,6 +219,12 @@ module.exports = {
             res.json(err);
         });
     },
+
+    /**
+     * tannv.dts mark
+     * 26-06-2015
+     * function nay se khogn con duoc su dung do khong con su dung bang cln_appt_items
+     */
     postDeleteItems: function(req, res){
         var cal_id = req.body.cal_id;
         var items = req.body.items; // list item_id

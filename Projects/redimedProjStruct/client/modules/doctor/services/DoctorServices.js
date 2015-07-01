@@ -64,7 +64,11 @@ angular.module("app.loggedIn.doctor").factory("DoctorService", function (Restang
         }
         return newlist;
     }
-
+             /**
+             * tannv.dts@gmail.com mark
+             * function nay se khong con duoc su dung do khong con su dung bang cln_appt_items
+             * 26-06-2015
+             */
 	        doctorService.insertItemAppt = function (appt_id, patient_id, items) {
 	        	if(!appt_id) {console.log('MISSING INFO APPT_ID')}
 
@@ -75,6 +79,12 @@ angular.module("app.loggedIn.doctor").factory("DoctorService", function (Restang
 	        	var instanceApi = doctorApi.all("v1/appointment/update_items");
 	        	return instanceApi.post({'cal_id':appt_id, items: items});
 	        }
+
+            /**
+             * tannv.dts mark
+             * 26-06-2015
+             * function nay se khogn con duoc su dung do khong con su dung bang cln_appt_items
+             */
 	        doctorService.deleteItemAppt = function (appt_id, patient_id, items) {
 	        	var instanceApi = doctorApi.all("v1/appointment/delete_items");
 	        	return instanceApi.post({'cal_id':appt_id, patient_id: patient_id, items: items});

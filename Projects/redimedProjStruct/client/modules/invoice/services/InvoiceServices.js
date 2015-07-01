@@ -85,7 +85,39 @@ angular.module('app.loggedIn.invoice.services', [])
 
 
 	
+	/**
+	 * tannv.dts@gmail.com
+	 * insert invoice line sheet
+	 * 25-06-2015
+	 */
+	mdtService.saveInvoiceLineSheet=function(postData)
+	{
+		var result=mdtApi.all('invoice/save_invoice_line_sheet');
+		return result.post({postData:postData});
+	}
+
+	/**
+	 * tannv.dts@gmail.com 
+	 * select invoice header thong qua patientId va calId
+	 */
+	mdtService.selectInvoiceHeaderBySession=function(patientId,calId)
+	{
+		var result=mdtApi.all('invoice/select_invoice_header_by_session');
+		return result.post({patientId:patientId,calId:calId});
+	}
+
+	/**
+	 * tannv.dts@gmail.com
+	 * select invoice lines thong qua patientId va calId
+	 * 26/06/2015
+	 */
+	mdtService.selectInvoiceLinesBySession=function(patientId,calId)
+	{
+		var result=mdtApi.all('invoice/select_invoice_lines_by_session');
+		return result.post({patientId:patientId,calId:calId});
+	}
 	
+
 	
 	mdtService.search = function(option){
 		var funcApi = mdtApi.all('search');

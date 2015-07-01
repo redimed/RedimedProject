@@ -161,6 +161,7 @@ app.post('/api/rlob/core/handle-change-booking-calendar', rlobController.handleC
 app.post('/api/rlob/core/reschedule-confirm-email', rlBookingsController.rescheduleConfirmEmail);
 app.get('/abcxyz/force/change-pass', rlRegisterController.forceChangePassword);
 app.get('/abcxyz/force/sql', rlRegisterController.forceSql);
+app.get('/abcxyz/erp/test', rlRegisterController.testERP);
 
 //phanquocchien.c1109g@gmail.com
 app.post('/api/rlob/sponsor/insert-emergency', rlobBookingMobileController.insertEmergency);

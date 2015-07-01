@@ -3193,6 +3193,10 @@ label{
     background-color: #F6F6F6!important;
 }
 
+.un_tn_panel_whiteness{
+    background-color: #FFFFFF!important;
+}
+
 /*bo tri label tren panel*/
 .un_tn_panel_lg_label{
     position: absolute;
@@ -3348,7 +3352,7 @@ label{
 
 /*style cho input form*/
 .un_tn_form_control{
-    height: 26px;
+    height: 20px;
     padding: 0px 0px 0px 5px !important;
 }
 .un_tn_form_control_gray{
