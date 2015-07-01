@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.patient.consult.itemsheetController",[])
+angular.module("app.loggedIn.patient.consult")
 	.controller("PatientConsultItemsheetController",function($filter,$cookieStore,$scope,$state,$modal,toastr,$stateParams,ConsultationService,PatientService,ReceptionistService){
 		 var arrGetBy = $filter('arrGetBy');
         $scope.appointment = {CAL_ID: $stateParams.cal_id, Patient_id:  $stateParams.patient_id};

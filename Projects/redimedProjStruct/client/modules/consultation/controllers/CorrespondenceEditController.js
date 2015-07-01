@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.corres.edit.controller', [])
+angular.module("app.loggedIn.patient.consult")
 .controller('CorrespondenceEditController', function($scope, $state, $modalInstance, id){
 	$scope.editcor = {
 		success: false,

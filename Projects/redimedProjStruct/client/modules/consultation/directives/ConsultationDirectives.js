@@ -1,4 +1,4 @@
-	angular.module("app.loggedIn.patient.consult.directives",[])
+angular.module("app.loggedIn.patient.consult")
 	.directive('consultDrawing', function ($window,Restangular, ConfigService, $timeout, toastr, socket) {
 	    return {
 	        restrict: 'E',

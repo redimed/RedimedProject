@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.patient.consult.scriptController",[])
+angular.module("app.loggedIn.patient.consult")
 	.controller("ScriptController",function($timeout,OutreferralModel,AppointmentModel,ConfigService,$cookieStore,$scope,$filter,$state,$modal,toastr,$modalInstance,ConsultationService,$stateParams, actual_doctor_id,script){
 		// if (actual_doctor_id === undefined) {
 		// 	actual_doctor_id ={

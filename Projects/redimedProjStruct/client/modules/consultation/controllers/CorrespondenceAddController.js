@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.corres.add.controller', [])
+angular.module("app.loggedIn.patient.consult")
 .controller('CorrespondenceAddController', function($scope, $state, $modalInstance ){
 	$scope.addcor = {
 		success: false

@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.corres.list.directive', [])
+angular.module("app.loggedIn.patient.consult")
 .directive('listCor', function(ConsultationService, ConfigService, $modal, $filter, $stateParams, $state, toastr){
 	return {
 		restrict: 'EA',
