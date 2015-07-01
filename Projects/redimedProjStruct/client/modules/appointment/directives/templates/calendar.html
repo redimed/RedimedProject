@@ -1,9 +1,13 @@
-<div>
-	<p ng-repeat="service in servicedata" ng-if="servicedata.length > 0" class="inline">
-		<button ng-style="{'background-color': '{{service.SERVICE_COLOR}}'}" style="height: 20px;width: 20px;"></button>
-		<span> {{service.SERVICE_NAME}}  </span>
-
-	<p>
+<div class="row">
+	<div class="col-md-10">
+		<p ng-repeat="service in servicedata" ng-if="servicedata.length > 0" class="inline">
+			<button ng-style="{'background-color': '{{service.SERVICE_COLOR}}'}" style="height: 20px;width: 20px;"></button>
+			<span> {{service.SERVICE_NAME}}  </span>
+		<p>
+	</div>
+	<div class="col-md-2">
+	<button class="un-button un-bgBlack pull-right un-margin-bottom-6px" ng-click="addPatient()">Add Patient</button>
+	</div>
 </div>
 <div id="alert-center" class="bv-right-list">
     <div class="m-background">
@@ -273,5 +277,16 @@
 		<ul>
 			<li ng-repeat="l in alert.list">{{l.name}} ({{l.description}})</li>
 		</ul>
+	</div>
+</script>
+
+<script type="text/ng-template" id="addPatient">
+	<style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+    </style>
+	<div class="modal-body">
+		<patient-detail options="options" params="patientAddForm.params" onsuccess="onsuccess"/>
 	</div>
 </script>
