@@ -78,6 +78,23 @@ angular.module('app.loggedIn.appointment', [])
                     $ocLazyLoad.load("modules/problem/controllers/ProblemController.js");
                     $ocLazyLoad.load("modules/problem/controllers/ProblemListController.js");
                     $ocLazyLoad.load("modules/problem/directives/ProblemDetailDirective.js");
+
+                    $ocLazyLoad.load("modules/referral/extend_routes.js");
+                    $ocLazyLoad.load("modules/referral/controllers/referralController.js");
+                    $ocLazyLoad.load("modules/referral/controllers/referralListController.js");
+                    $ocLazyLoad.load("modules/referral/directives/ReferralDetailDirective.js");
+                    $ocLazyLoad.load("modules/referral/directives/ReferralDirectives.js");
+                    $ocLazyLoad.load("modules/referral/directives/ReferralSearchDirective.js");
+
+					$ocLazyLoad.load("modules/script/controllers/ScriptListController.js");
+					$ocLazyLoad.load("modules/script/controllers/ScriptAddController.js");
+					$ocLazyLoad.load("modules/script/controllers/ScriptEditController.js");
+					$ocLazyLoad.load("modules/script/directives/ScriptListDirective.js");
+					$ocLazyLoad.load("modules/script/directives/ScriptAddDirective.js");
+					$ocLazyLoad.load("modules/script/directives/ScriptEditDirective.js")
+
+					$ocLazyLoad.load("modules/doctor/controllers/DoctorPaperlessController.js");
+
                     $ocLazyLoad.load("modules/problem/directives/ProblemDirective.js")
                     
 					.then(function(){

@@ -1,5 +1,4 @@
-angular.module('app.loggedIn.referral.services', [])
-
+angular.module('app.loggedIn.referral')
 .factory('ReferralService', function(Restangular){
 	var mdtService = {}
 	var mdtApi = Restangular.all('api/erm/')

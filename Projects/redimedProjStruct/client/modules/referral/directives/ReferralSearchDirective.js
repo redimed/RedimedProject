@@ -1,4 +1,5 @@
-angular.module('app.loggedIn.referral.search.directive', []).directive('referralSearch', function(ReferralService, toastr){
+angular.module('app.loggedIn.referral')
+.directive('referralSearch', function(ReferralService, toastr){
 	return {
 		restrict: 'EA',
 		scope: {
