@@ -38,7 +38,7 @@ angular.module("app.calling")
         }
 
         function incomingCallHandler(e) {
-            apiRTC.addEventListener("remoteHangup", remoteHangupHandler);
+            console.log("========Incoming Call=========");
             audio.pause();
             $scope.isAccept = true;
         }
@@ -71,7 +71,7 @@ angular.module("app.calling")
             {
                 audio.loop = true;
                 audio.play();
-                socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'call',apiKey: $stateParams.apiKey ,clientId: apiCC.session.apiCCId});
+                socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'call',apiKey: $stateParams.apiKey ,clientId: webRTCClient.webRTCClient.clientId});
             }
             else
             {
