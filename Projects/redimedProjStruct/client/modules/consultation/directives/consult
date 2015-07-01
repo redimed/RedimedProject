@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.patient.consult')
+angular.module("app.loggedIn.consult")
 .controller('ExerciseDialog', function($scope, $modalInstance, list){
 	$scope.cancel = function(){
 		$modalInstance.dismiss('cancel');

@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.corres.list.controller', [])
+angular.module("app.loggedIn.patient.consult")
 .controller('CorrespondenceController', function($scope, $state){
 
 })

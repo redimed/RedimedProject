@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.corres.edit.directive', [])
+angular.module("app.loggedIn.patient.consult")
 .directive('editCor', function(ConsultationService, ConfigService, $cookieStore, $modal, $filter, $stateParams, $state, toastr){
 	return {
 		

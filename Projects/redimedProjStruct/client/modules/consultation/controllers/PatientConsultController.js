@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.patient.consult.controller",[])
+angular.module("app.loggedIn.patient.consult")
 
 	.controller("PatientConsultController",function(ConsultInfoService,InjuryManagementService,DoctorService,$filter,$rootScope,$interval,$window,$document,$cookieStore,$scope,$state,$modal,InsurerService,toastr,socket,OTSession,ReceptionistService,$stateParams,ConsultationService,PatientService,UserService,$interval,InvoiceService){
 

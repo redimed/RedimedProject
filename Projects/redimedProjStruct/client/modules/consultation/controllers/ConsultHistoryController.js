@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.patient.consult.consulthistoryController", [])
+angular.module("app.loggedIn.patient.consult")
 .controller("ConsultHistoryController", function($scope, $state, ConsultationService, consults, $modalInstance){
 	$scope.consultion = {
 		consults: consults

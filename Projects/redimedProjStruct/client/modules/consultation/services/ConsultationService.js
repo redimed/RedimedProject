@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.patient.consult.services",[])
+angular.module("app.loggedIn.patient.consult")
 	.service('ConsultInfoService', function(){
 	    var consultInfoScripts=[];
 	    var checkdata=[];
