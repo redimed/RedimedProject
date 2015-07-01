@@ -33,6 +33,7 @@ angular.module("app.loggedIn.TimeSheet.ApproveLeave.Directive", [])
                                     ((scope.list.result[0].LastName === null || scope.list.result[0].LastName === "") ? " " : scope.list.result[0].LastName) : (scope.list.result[0].FirstName +
                                         " " + ((scope.list.result[0].LastName === null || scope.list.result[0].LastName === "") ? " " : scope.list.result[0].LastName));
                                 scope.statusID = scope.list.result[0].task_status_id;
+                                scope.isPermiss = response.isPermiss;
                             }
                         });
                     } else if (newModel === "clickReject") {

@@ -578,60 +578,91 @@ module.exports = {
 
     showEdit: function(req, res) {
         var info = req.body.info;
-        var query = "SELECT * FROM time_tasks WHERE time_tasks.tasks_week_id = " +
-            info + " AND time_tasks.deleted = 0 ORDER BY time_tasks.order ASC";
-        db.sequelize.query(query)
-            .success(function(tasks) {
-                if (tasks === null || tasks.length === 0) {
-                    console.log("Not found tasks in table");
-                    res.json({
-                        status: 'fail'
-                    });
-                    return false;
-                } else {
-                    db.sequelize.query("SELECT DISTINCT time_tasks_week.task_status_id, time_tasks_week.after_status_id, " +
-                            "t.`tasks_id`, t.isParent, c.`item_id` as ITEM_ID,c.`ITEM_NAME`,i.deleted, i.`units`, i.ratio, i.`COMMENT` as comment, " +
-                            "i.`time_charge` FROM `time_tasks` t LEFT JOIN `time_item_task` i ON i.`task_id` " +
-                            "= t.`tasks_id` LEFT JOIN `time_item_code` c ON c.`ITEM_ID` = i.`item_id`" +
-                            " INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = t.tasks_week_id " +
-                            " WHERE " +
-                            "t.`tasks_week_id` = ?", null, {
-                                raw: true
-                            }, [info])
-                        .success(function(item) {
-                            db.sequelize.query("SELECT DISTINCT t.`tasks_id`, c.`item_id` as ITEM_ID, " +
-                                    "time_task_file.path_file, time_task_file.file_id, time_task_file.file_name, time_task_file.file_size " +
-                                    "FROM `time_tasks` t INNER JOIN `time_item_task` i ON i.`task_id` = t.`tasks_id` " +
-                                    "INNER JOIN `time_item_code` c ON c.`ITEM_ID` = i.`item_id`" +
-                                    "INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = t.tasks_week_id " +
-                                    "INNER JOIN time_item_file ON time_item_file.task_id = i.task_id AND time_item_file.item_id = i.item_id " +
-                                    "INNER JOIN time_task_file ON time_task_file.file_id = time_item_file.file_id " +
-                                    " WHERE " +
-                                    "t.`tasks_week_id` = ?", null, {
-                                        raw: true
-                                    }, [info])
-                                .success(function(file) {
-                                    if (item === null || item.length === 0) {
-                                        console.log("Not found item in table");
-                                        res.json({
-                                            status: 'fail'
-                                        });
-                                        return false;
-                                    } else {
-                                        res.json({
-                                            status: 'success',
-                                            data: tasks,
-                                            item: item,
-                                            file: file
-                                        });
-                                    }
-                                })
-                                .error(function(err) {
-                                    res.json({
-                                        status: 'error'
-                                    });
-                                    console.log(err);
+        //CHECK PERMISS
+        var queryGetPermiss = "SELECT time_tasks_week.task_status_id " + //SELECT
+            "FROM time_tasks_week " + //FROM
+            "WHERE task_week_id = :idWeek AND time_tasks_week.user_id = :userId";
+        db.sequelize.query(queryGetPermiss, null, {
+                raw: true
+            }, {
+                idWeek: info.idWeek,
+                userId: info.userId
+            })
+            .success(function(resultPermiss) {
+                if (resultPermiss !== undefined &&
+                    resultPermiss !== null &&
+                    resultPermiss.length !== 0 &&
+                    resultPermiss[0] !== undefined &&
+                    resultPermiss[0] !== null &&
+                    resultPermiss[0].task_status_id !== 2 &&
+                    resultPermiss[0].task_status_id !== 3 &&
+                    resultPermiss[0].task_status_id !== 5) {
+                    //LOAD EDIT
+                    var query = "SELECT * FROM time_tasks WHERE time_tasks.tasks_week_id =:idWeek AND time_tasks.deleted = 0 ORDER BY time_tasks.order ASC";
+                    db.sequelize.query(query, null, {
+                            raw: true
+                        }, {
+                            idWeek: info.idWeek
+                        })
+                        .success(function(tasks) {
+                            if (tasks === null || tasks.length === 0) {
+                                console.log("Not found tasks in table");
+                                res.json({
+                                    status: 'fail'
                                 });
+                                return false;
+                            } else {
+                                db.sequelize.query("SELECT DISTINCT time_tasks_week.task_status_id, time_tasks_week.after_status_id, " +
+                                        "t.`tasks_id`, t.isParent, c.`item_id` as ITEM_ID,c.`ITEM_NAME`,i.deleted, i.`units`, i.ratio, i.`COMMENT` as comment, " +
+                                        "i.`time_charge` FROM `time_tasks` t LEFT JOIN `time_item_task` i ON i.`task_id` " +
+                                        "= t.`tasks_id` LEFT JOIN `time_item_code` c ON c.`ITEM_ID` = i.`item_id`" +
+                                        " INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = t.tasks_week_id " +
+                                        " WHERE " +
+                                        "t.`tasks_week_id` = ?", null, {
+                                            raw: true
+                                        }, [info.idWeek])
+                                    .success(function(item) {
+                                        db.sequelize.query("SELECT DISTINCT t.`tasks_id`, c.`item_id` as ITEM_ID, " +
+                                                "time_task_file.path_file, time_task_file.file_id, time_task_file.file_name, time_task_file.file_size " +
+                                                "FROM `time_tasks` t INNER JOIN `time_item_task` i ON i.`task_id` = t.`tasks_id` " +
+                                                "INNER JOIN `time_item_code` c ON c.`ITEM_ID` = i.`item_id`" +
+                                                "INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = t.tasks_week_id " +
+                                                "INNER JOIN time_item_file ON time_item_file.task_id = i.task_id AND time_item_file.item_id = i.item_id " +
+                                                "INNER JOIN time_task_file ON time_task_file.file_id = time_item_file.file_id " +
+                                                " WHERE " +
+                                                "t.`tasks_week_id` = ?", null, {
+                                                    raw: true
+                                                }, [info.idWeek])
+                                            .success(function(file) {
+                                                if (item === null || item.length === 0) {
+                                                    console.log("Not found item in table");
+                                                    res.json({
+                                                        status: 'fail'
+                                                    });
+                                                    return false;
+                                                } else {
+                                                    res.json({
+                                                        status: 'success',
+                                                        data: tasks,
+                                                        item: item,
+                                                        file: file
+                                                    });
+                                                }
+                                            })
+                                            .error(function(err) {
+                                                res.json({
+                                                    status: 'error'
+                                                });
+                                                console.log(err);
+                                            });
+                                    })
+                                    .error(function(err) {
+                                        res.json({
+                                            status: 'error'
+                                        });
+                                        console.log(err);
+                                    });
+                            }
                         })
                         .error(function(err) {
                             res.json({
@@ -639,14 +670,23 @@ module.exports = {
                             });
                             console.log(err);
                         });
+                    //END LOAD
+                } else {
+                    res.json({
+                        status: "error"
+                    });
+                    return;
                 }
             })
             .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
                 res.json({
-                    status: 'error'
+                    status: "error"
                 });
-                console.log(err);
+                return;
             });
+
+        //END
     },
 
     checkFirstTaskWeek: function(req, res) {

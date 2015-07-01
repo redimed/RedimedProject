@@ -75,8 +75,8 @@
         </fieldset>
         <!-- BUTTON -->
         <a style="width:70px; font-size:13px;" class="btn pull-right btn-xs yellow" ng-click="onCancel({return: info})">Cancel</a>
-        <a style="width:70px; font-size:13px;" class="btn pull-right btn-xs blue" ng-click="onApprove({return: info})" ng-if="statusID===2 || statusID===5" ng-disabled="info.isReject===true">Approve</a>
-        <a style="width:70px; font-size:13px;" class="btn pull-right btn-xs red" ng-click="onReject({return: info})" ng-if="statusID===2 || statusID===5" ng-disabled="info.isReject===true && ViewLeave.comments.$error.required===true">Reject</a>
+        <a style="width:70px; font-size:13px;" class="btn pull-right btn-xs blue" ng-click="onApprove({return: info})" ng-if="(statusID===2 || statusID===5) && isPermiss" ng-disabled="info.isReject===true">Approve</a>
+        <a style="width:70px; font-size:13px;" class="btn pull-right btn-xs red" ng-click="onReject({return: info})" ng-if="(statusID===2 || statusID===5) && isPermiss" ng-disabled="info.isReject===true && ViewLeave.comments.$error.required===true">Reject</a>
         <!-- END BUTTON -->
         <!-- END MAIN INFO -->
     </form>

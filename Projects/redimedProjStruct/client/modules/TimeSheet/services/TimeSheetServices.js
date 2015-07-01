@@ -140,10 +140,10 @@ angular.module("app.loggedIn.TimeSheet.Service", [])
             });
         };
 
-        TimeSheetService.LoadLeaveEdit = function(leaveIDPost) {
+        TimeSheetService.LoadLeaveEdit = function(infoPost) {
             var LoadLeaveEdit = api.all("TimeSheet/post-load-edit");
             return LoadLeaveEdit.post({
-                leaveID: leaveIDPost
+                info: infoPost
             });
         };
 
