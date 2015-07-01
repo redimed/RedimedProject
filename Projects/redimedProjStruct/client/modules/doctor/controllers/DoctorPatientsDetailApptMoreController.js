@@ -1,5 +1,5 @@
-angular.module("app.loggedIn.doctor.patients.detail.appt.more.controller", [
-]).controller("DoctorPatientsDetailApptMoreController", function ($scope, $filter, $state, toastr, $cookieStore, ConfigService, DoctorService, localStorageService) {
+angular.module("app.loggedIn.doctor")
+.controller("DoctorPatientsDetailApptMoreController", function ($scope, $filter, $state, toastr, $cookieStore, ConfigService, DoctorService, localStorageService) {
 	
 	var arrGetBy =  $filter('arrGetBy');
 	

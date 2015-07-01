@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.doctor.home.controller",[])
+angular.module("app.loggedIn.doctor")
 
 .controller("DoctorHomeController", function($scope,socket, $state, $cookieStore, DoctorService, ConfigService, localStorageService, toastr, moment,$modal){
 	var nowtime = moment();

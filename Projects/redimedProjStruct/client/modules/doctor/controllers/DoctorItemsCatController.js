@@ -1,5 +1,4 @@
-angular.module("app.loggedIn.doctor.items.cat.controller",[
-])
+angular.module("app.loggedIn.doctor")
 .controller("DoctorItemsCatController", function($scope, $cookieStore, DoctorService, toastr){
 
 	// FUNCTION PROCESS CATEGORY

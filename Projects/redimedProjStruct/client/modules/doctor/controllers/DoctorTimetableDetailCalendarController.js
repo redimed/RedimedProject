@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.doctor.timetable.detail.calendar.controller",[])
+angular.module("app.loggedIn.doctor")
 
 .controller("DoctorTimetableDetailCalendarController", function($scope){
 	

@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.script.list.controller', [])
+angular.module('app.loggedIn.script')
 .controller('ScriptListController', function($scope, $state){
 	
 })

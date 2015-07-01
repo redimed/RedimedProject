@@ -1,13 +1,4 @@
-angular.module("app.loggedIn.doctor.controller", [
-    "app.loggedIn.doctor.home.controller",
-    "app.loggedIn.doctor.list.controller",
-    "app.loggedIn.doctor.timetable.controller",
-    "app.loggedIn.doctor.patients.controller",
-    "app.loggedIn.doctor.items.controller",
-    "app.loggedIn.doctor.add.controller",
-    "app.loggedIn.doctor.paperless.controller",
-    "app.loggedIn.doctor.fachoose.controller"
-])
+angular.module("app.loggedIn.doctor")
 
 .controller("DoctorController", function ($scope, $filter, $cookieStore, MODE_ROW, ConfigService, DoctorService) {
     // FOR VIEW LIST

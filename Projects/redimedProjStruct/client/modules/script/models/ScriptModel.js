@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.script.model', [])
+angular.module('app.loggedIn.script')
 
 .factory('ScriptModel', function (Restangular){
 

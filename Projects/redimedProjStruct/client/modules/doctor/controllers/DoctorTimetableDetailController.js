@@ -1,9 +1,4 @@
-angular.module("app.loggedIn.doctor.timetable.detail.controller",[
-	"app.loggedIn.doctor.timetable.detail.calendar.controller",
-	"app.loggedIn.doctor.timetable.detail.profile.controller",
-	"app.loggedIn.doctor.timetable.detail.casual.controller",
-	"app.loggedIn.doctor.timetable.detail.leave.controller",
-])
+angular.module("app.loggedIn.doctor")
 
 .controller("DoctorTimetableDetailController", function($scope, $state, $stateParams, DoctorService, ConfigService){
 	//LOAD DETAIL

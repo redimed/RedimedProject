@@ -1,8 +1,4 @@
-angular.module("app.loggedIn.doctor.items.controller",[
-	"app.loggedIn.doctor.items.cat.controller",
-	"app.loggedIn.doctor.items.add.controller",
-	"app.loggedIn.doctor.items.edit.controller",
-])
+angular.module("app.loggedIn.doctor")
 .controller("DoctorItemsController", function($scope, $state,  $cookieStore, DoctorService, localStorageService){
 	console.log('ITEMS PAGE ' );
 	

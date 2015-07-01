@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.doctor.timetable.detail.profile.controller",[])
+angular.module("app.loggedIn.doctor")
 
 .controller("DoctorTimetableDetailProfileController", function($scope, $stateParams, toastr, ConfigService, DoctorService, PatientService){
 	//PARAMS

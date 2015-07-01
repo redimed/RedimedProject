@@ -1,7 +1,5 @@
-angular.module("app.loggedIn.doctor.patients.detail.appt.controller", [
-	"app.loggedIn.doctor.patients.detail.appt.more.controller",
-	
-]).controller("DoctorPatientsDetailApptController", function ($scope, $filter, $state, toastr, $cookieStore, ConfigService, DoctorService, PatientService, localStorageService) {
+angular.module("app.loggedIn.doctor")
+.controller("DoctorPatientsDetailApptController", function ($scope, $filter, $state, toastr, $cookieStore, ConfigService, DoctorService, PatientService, localStorageService) {
 
 	//Detail appt modules
 	$scope.patient_detail_modules = [

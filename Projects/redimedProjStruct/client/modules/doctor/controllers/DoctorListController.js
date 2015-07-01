@@ -1,6 +1,4 @@
-angular.module('app.loggedIn.doctor.list.controller',[
-
-])
+angular.module('app.loggedIn.doctor')
     .controller('DoctorListController',function($scope){
         $scope.doctor_panel = {};
         $scope.doctor = {};

@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.doctor.paperless.controller", [])
+angular.module("app.loggedIn.doctor")
 
 .controller("DoctorPaperlessController", function($scope, $state, $modal, DocumentService, PatientService, $stateParams, localStorageService){
 	var patient_id = $scope.patient_id = $stateParams.patient_id;
