@@ -161,15 +161,15 @@ module.exports = function(io,cookie,cookieParser) {
                                     {
                                         if(message.type == 'call')
                                         {
-                                            var tokenOptions = {};
-                                            tokenOptions.role = "publisher";
-                                            var jsonData = {'from': currentUser.user_name, 'to': contact.user_name};
-                                            tokenOptions.data = JSON.stringify(jsonData);
+                                           //  var tokenOptions = {};
+                                           //  tokenOptions.role = "publisher";
+                                           //  var jsonData = {'from': currentUser.user_name, 'to': contact.user_name};
+                                           //  tokenOptions.data = JSON.stringify(jsonData);
 
-                                           var token = opentok.generateToken(message.sessionId,tokenOptions);
+                                           // var token = opentok.generateToken(message.sessionId,tokenOptions);
 
-                                           message.apiKey = apiKey;
-                                           message.token = token;
+                                           // message.apiKey = apiKey;
+                                           // message.token = token;
 
                                            io.to(contact.socket)
                                                 .emit('messageReceived',currentUser.id ,currentUser.user_name, message);

@@ -101,7 +101,7 @@ module.exports = {
                           patient.user_id = info.id;
                           db.Patient.create(patient)
                             .success(function(){
-                              res.json({status:'success'});
+                              res.json({status: 'success', userId: patient.user_id})
                             })
                             .error(function(err){
                                 res.json({status:'error'});
