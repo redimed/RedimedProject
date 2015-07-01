@@ -1032,7 +1032,7 @@ module.exports = {
     },
     getListPatient: function(req,res){
         var comId = req.body.companyId;
-        db.Patient.findAll({where:{company_id:comId}},{raw:true})
+        db.sequelize.query("SELECT * FROM cln_patients WHERE company_id = ? ORDER BY Creation_date DESC",null,{raw:true},[comId])
             .success(function(data){
                 res.json({status:'success',data:data});
             })

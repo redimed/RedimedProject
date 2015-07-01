@@ -663,7 +663,8 @@ module.exports = {
     },
     getOnlineUsers: function(req,res){
         var userList = [];
-        db.User.findAll({where: "socket IS NOT NULL"},{raw:true})
+        db.User.belongsTo(db.UserType,{foreignKey:'user_type'});
+        db.User.findAll({where: "socket IS NOT NULL",include:[db.UserType]},{raw:true})
             .success(function(data){
                 if(data)
                 {
@@ -672,7 +673,8 @@ module.exports = {
                             id: data[i].id,
                             username: data[i].user_name,
                             socket: data[i].socket,
-                            fullName: data[i].Booking_Person
+                            fullName: data[i].Booking_Person,
+                            userType: data[i].UserType.user_type
                         });
                     }
                     res.json({data:userList});
@@ -688,7 +690,7 @@ module.exports = {
         db.sequelize.query("SELECT i.*,p.*,CONCAT(IFNULL(p.Title,''), ' . ', IFNULL(p.`First_name`,''),' ',IFNULL(p.`Sur_name`,''),' ',IFNULL(p.`Middle_name`,'')) as FullName,c.Company_name as CompanyName,c.Addr as CompanyAddr, c.Industry FROM `im_injury` i " +
                             "INNER JOIN `cln_patients` p ON i.`patient_id` = p.`Patient_id` " +
                             "INNER JOIN companies c ON c.id = p.company_id " +
-                            "WHERE c.id = ?",null,{raw:true},[companyId])
+                            "WHERE c.id = ? ORDER BY i.injury_date DESC",null,{raw:true},[companyId])
             .success(function(data){
                 res.json({status:'success',data:data})
             })
@@ -704,8 +706,6 @@ module.exports = {
                 for(var i=0; i<data.length; i++)
                 {
                     arr.push({id: data[i].id,
-                              // device_id:data[i].device_id,
-                              // device_img:data[i].device_img!=null || data[i].device_img!='' ? base64Image(data[i].device_img):'',
                               device_name:data[i].device_name});
                 }
 

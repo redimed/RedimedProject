@@ -318,6 +318,11 @@ angular.module("app.calling")
             {
                 if($scope.streams.length < 2)
                 {
+                    var arrUser = [];
+                    for(var i=0 ; i<$scope.streams.length; i++)
+                    {
+                        arrUser.push($scope.streams[i].name);
+                    }
                     var modalInstance = $modal.open({
                         templateUrl: 'modules/makeCall/views/dialogs/invitePeople.html',
                         size: 'sm',
@@ -326,6 +331,9 @@ angular.module("app.calling")
                         resolve: {
                             userInfo: function(){
                                 return $scope.userInfo;
+                            },
+                            arrUser: function(){
+                                return arrUser;
                             },
                             sessionId: function(){
                                 return sessionId;
@@ -337,13 +345,30 @@ angular.module("app.calling")
                                 return $scope.patientId;
                             }
                         },
-                        controller: function($scope,UserService,$modalInstance,toastr,socket,userInfo,sessionId,OTSession,patientId){
+                        controller: function($scope,UserService,$modalInstance,toastr,socket,userInfo,sessionId,OTSession,patientId,arrUser){
 
                             $scope.isMakeCall = false;
                             $scope.callUser = null;
                             $scope.userInfo = userInfo;
+                            var usersArr = [];
                             UserService.getOnlineUsers().then(function(rs){
-                                $scope.onlineUsers = rs.data;
+                                for(var i=0; i<rs.data.length; i++)
+                                {
+                                    if(rs.data[i].userType == 'Doctor')
+                                        usersArr.push(rs.data[i]);
+                                }
+
+                                if(arrUser.length > 0)
+                                {
+                                    for(var i=0; i<arrUser.length; i++)
+                                    {
+                                        var index = _.findIndex(usersArr,{'username': arrUser[i]});
+                                        usersArr.splice(index,1);
+                                    }
+                                    $scope.onlineUsers = usersArr;
+                                }
+                                else
+                                    $scope.onlineUsers = usersArr;
                             })
 
                             $scope.cancelCall = function(){
