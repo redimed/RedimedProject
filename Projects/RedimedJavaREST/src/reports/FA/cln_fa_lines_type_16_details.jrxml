@@ -123,6 +123,17 @@ and detail.ISENABLE = 1]]>
 	</field>
 	<detail>
 		<band height="50">
+			<staticText>
+				<reportElement x="248" y="31" width="105" height="16" uuid="d45d7780-9065-4947-b05e-e74f198d5bf9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[No Pain/Discomfort ]]></text>
+			</staticText>
+			<image>
+				<reportElement x="228" y="31" width="15" height="15" uuid="1695b809-8440-4e42-9938-442f5bc2f9bf"/>
+				<imageExpression><![CDATA[$F{VAL2_CHECKBOX}.equals("0")?($P{real_path}+"uncheck.png"):($P{real_path}+"checked.png")]]></imageExpression>
+			</image>
 			<textField>
 				<reportElement x="405" y="0" width="150" height="50" uuid="e51e11c1-8102-4a55-b506-0d9b99561904"/>
 				<box>
@@ -154,12 +165,56 @@ and detail.ISENABLE = 1]]>
 				<textFieldExpression><![CDATA[$F{QUESTION}]]></textFieldExpression>
 			</textField>
 			<frame>
-				<reportElement x="190" y="0" width="215" height="50" uuid="4c78f8c6-b536-4a07-9e3e-c22ccfbbe0af"/>
+				<reportElement x="190" y="0" width="215" height="27" uuid="d7a47c31-55af-4b2b-94ad-22b28bfa38fe">
+					<printWhenExpression><![CDATA[$F{VAL1_ISCHECKBOX}==3]]></printWhenExpression>
+				</reportElement>
 				<box>
 					<pen lineWidth="0.3"/>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
-					<bottomPen lineWidth="0.3"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.3"/>
+				</box>
+				<staticText>
+					<reportElement x="14" y="3" width="50" height="22" uuid="3a3cbb32-9389-452b-88ec-5d0eb01d8bfe"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[NORMAL]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="71" y="3" width="83" height="22" uuid="1e141fde-26f1-442b-b1bb-c56e41fe6508"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[ABNORMAL]]></text>
+				</staticText>
+				<ellipse>
+					<reportElement mode="Transparent" x="10" y="2" width="56" height="22" uuid="96205801-d827-4707-be93-906a33841cb2">
+						<printWhenExpression><![CDATA[$F{VAL1_CHECKBOX}.equals("0")]]></printWhenExpression>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="2.0" lineStyle="Solid"/>
+					</graphicElement>
+				</ellipse>
+				<ellipse>
+					<reportElement mode="Transparent" x="71" y="2" width="83" height="22" uuid="57e81493-0a3d-416a-8f78-50b52b58797d">
+						<printWhenExpression><![CDATA[$F{VAL1_CHECKBOX}.equals("1")]]></printWhenExpression>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="2.0" lineStyle="Solid"/>
+					</graphicElement>
+				</ellipse>
+			</frame>
+			<frame>
+				<reportElement x="190" y="0" width="215" height="27" uuid="4c78f8c6-b536-4a07-9e3e-c22ccfbbe0af">
+					<printWhenExpression><![CDATA[$F{VAL1_ISCHECKBOX}==2]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.3"/>
+					<topPen lineWidth="0.3"/>
+					<leftPen lineWidth="0.3"/>
+					<bottomPen lineWidth="0.0"/>
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<staticText>
@@ -182,17 +237,6 @@ and detail.ISENABLE = 1]]>
 						<font isBold="true"/>
 					</textElement>
 					<text><![CDATA[ABLE]]></text>
-				</staticText>
-				<image>
-					<reportElement x="45" y="31" width="15" height="15" uuid="1695b809-8440-4e42-9938-442f5bc2f9bf"/>
-					<imageExpression><![CDATA[$F{VAL2_CHECKBOX}.equals("0")?($P{real_path}+"uncheck.png"):($P{real_path}+"checked.png")]]></imageExpression>
-				</image>
-				<staticText>
-					<reportElement x="65" y="31" width="105" height="16" uuid="d45d7780-9065-4947-b05e-e74f198d5bf9"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font isBold="false"/>
-					</textElement>
-					<text><![CDATA[No Pain/Discomfort ]]></text>
 				</staticText>
 				<ellipse>
 					<reportElement mode="Transparent" x="10" y="2" width="56" height="22" uuid="6e345be2-7bb3-4880-b657-04aea9f992af">
@@ -218,6 +262,14 @@ and detail.ISENABLE = 1]]>
 						<pen lineWidth="2.0" lineStyle="Solid"/>
 					</graphicElement>
 				</ellipse>
+			</frame>
+			<frame>
+				<reportElement x="190" y="27" width="215" height="23" uuid="415d2a00-faa7-4bc0-ab8e-14277fd9d78a"/>
+				<box>
+					<leftPen lineWidth="0.3"/>
+					<bottomPen lineWidth="0.3"/>
+					<rightPen lineWidth="0.3"/>
+				</box>
 			</frame>
 		</band>
 	</detail>
