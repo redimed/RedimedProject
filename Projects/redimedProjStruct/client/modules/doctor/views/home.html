@@ -104,7 +104,7 @@
 
                         <div class="un_tn_legend_inline_item">
                             <div class="un_tn_legend_node un_tn_legend_node_red"></div>
-                            {{apptStatus.waiting.value}}
+                            {{apptStatus.waiting.value}},{{apptStatus.urgent.value}}
                         </div>
 
                         <div class="un_tn_legend_inline_item">
@@ -194,6 +194,11 @@
                                     items-per-page="searchObjectMap.limit" max-size="searchObjectMap.maxSize" ng-change="setPage()"></pagination>
                     </div>
                     <div class="pull-right" style="padding-top: 10px;">
+                        <span style="font-weight:bold">
+                            <input style="width:15px;height:15px" type="checkbox" ng-model="isFilterBelowDoctor" ng-true-value="1" ng-false-value="0" ng-checked="isFilterBelowDoctor==1" ng-change="loadList()">Filter by doctor
+                        </span>
+                        
+
                         <button class="btn btn-sm" ng-click="reset()">Reset</button>
                         <b>Total Patients:</b> {{list.count}}
                         <select ng-model="searchObjectMap.limit" ng-options="row.code as row.code for row in rows" 

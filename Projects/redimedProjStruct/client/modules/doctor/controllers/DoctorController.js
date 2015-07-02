@@ -100,6 +100,10 @@ angular.module("app.loggedIn.doctor")
         {
             return "un_tn_row_green un_tn_row_hover_green";
         }
+        else if(status==ptnConst.apptStatus.urgent.value)
+        {
+            return "un_tn_row_red un_tn_row_hover_red";
+        }
         else{
             return "un_tn_row_blank un_tn_row_hover_blank";
         }
