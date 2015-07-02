@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.timetable.dialogs.editDay', [])
+angular.module('app.loggedIn.timetable')
 
 .controller('TimetableCalendarEditDayDialog', function($scope, $cookieStore, $stateParams, $modalInstance, services, doctor, row, TimetableModel, ConfigService, toastr){
 	var user_id = $cookieStore.get('userInfo').id;

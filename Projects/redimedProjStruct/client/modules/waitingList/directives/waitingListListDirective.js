@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.waitingList.directives.list', [])
+angular.module('app.loggedIn.waitingList')
 
 .directive('waitingListList', function($modal, WaitingListModel, ConfigService, $cookieStore, OutreferralModel){
 	return {

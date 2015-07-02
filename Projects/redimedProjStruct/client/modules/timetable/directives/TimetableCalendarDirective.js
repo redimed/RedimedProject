@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.timetable.directives.calendar',[])
+angular.module('app.loggedIn.timetable')
 
 .directive('timetableCalendar', function(TimetableModel, $modal, $stateParams, mdtDoctorService, sysServiceService, toastr){
 	return {

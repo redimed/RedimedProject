@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.timetable.dialogs.addSite', [])
+angular.module('app.loggedIn.timetable')
 
 .controller('TimetableCalendarAddSiteDialog', function($scope, $cookieStore, $stateParams, $modalInstance, row, doctor, toastr, TimetableModel, ConfigService){
 	var user_id = $cookieStore.get('userInfo').id;

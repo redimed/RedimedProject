@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.template.controllers.patient_list', [])
+angular.module('app.loggedIn.template')
 
 .controller('TemplatePatientListController', function($scope, $modal, toastr){
 	

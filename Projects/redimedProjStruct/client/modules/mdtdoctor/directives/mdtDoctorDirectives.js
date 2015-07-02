@@ -1,1 +1,1 @@
-angular.module('app.loggedIn.mdtdoctor', [])
+angular.module('app.loggedIn.mdtdoctor')

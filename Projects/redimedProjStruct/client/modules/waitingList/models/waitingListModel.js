@@ -1,4 +1,4 @@
-angular.module('app.loggedIn.waitingList.models', [])
+angular.module('app.loggedIn.waitingList')
 
 .factory('WaitingListModel', function(Restangular){
 	var mainModel = {};

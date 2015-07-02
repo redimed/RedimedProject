@@ -1,4 +1,4 @@
-angular.module("app.loggedIn.timetable.model", [])
+angular.module("app.loggedIn.timetable")
     
 .factory("TimetableModel", function (Restangular) {
     var instanceService = {};

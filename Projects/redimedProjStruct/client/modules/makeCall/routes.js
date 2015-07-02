@@ -6,7 +6,14 @@ angular.module('app.calling', [])
 			url: '/makeCall/:apiKey/:sessionId/:token/:callUser/:isCaller/:patientId',
 			resolve: {
 				init: function($q, $rootScope, $state, $timeout, $ocLazyLoad){
-					$ocLazyLoad.load("modules/user/services/UserServices.js");
+					async.waterfall([
+	                    function(callback){
+	                        $ocLazyLoad.load("modules/user/services/UserServices.js")
+	                        .then(function() {
+	                            callback(null);
+	                        })
+	                    },
+	                ]);
 				}
 			},
 	        views: {
