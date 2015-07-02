@@ -7,14 +7,41 @@ angular.module('app.loggedIn.allergy', [])
             url: '/allergiesload',
             resolve: {
                 init: function($q, $rootScope, $state, $timeout, $ocLazyLoad){
-                    $ocLazyLoad.load("modules/allergies/extend_routes.js");
-                    $ocLazyLoad.load("modules/allergies/controllers/AllergyController.js");
-                    $ocLazyLoad.load("modules/allergies/controllers/AllergyListController.js");
-                    $ocLazyLoad.load("modules/allergies/directives/AllergyDetailDirective.js");
-                    $ocLazyLoad.load("modules/allergies/directives/AllergyDirective.js")
-                    .then(function(){
-                        $state.go('loggedIn.allergy_list');
-                    })
+                    async.waterfall([
+                        function(callback) {
+                            $ocLazyLoad.load("modules/allergies/extend_routes.js")
+                            .then(function() {
+                                callback(null);
+                            });
+                        },
+                        function(callback) {
+                            $ocLazyLoad.load("modules/allergies/controllers/AllergyController.js")
+                            .then(function() {
+                                callback(null);
+                            });
+                        },
+                        function(callback) {
+                            $ocLazyLoad.load("modules/allergies/controllers/AllergyListController.js")
+                            .then(function() {
+                                callback(null);
+                            });
+                        },
+                        function(callback) {
+                            $ocLazyLoad.load("modules/allergies/directives/AllergyDetailDirective.js")
+                            .then(function() {
+                                callback(null);
+                            });
+                        },
+                        function(callback) {
+                            $ocLazyLoad.load("modules/allergies/directives/AllergyDirective.js")
+                            .then(function() {
+                                callback(null);
+                            });
+                        },
+                        function(callback) {
+                            $state.go('loggedIn.allergy_list');
+                        }
+                    ]);
                 }
             }
         })
@@ -23,17 +50,42 @@ angular.module('app.loggedIn.allergy', [])
             url: '/allergiespatientload',
             resolve: {
                 init: function($q, $rootScope, $state, $timeout, $ocLazyLoad){
-                    $ocLazyLoad.load("modules/allergies/extend_routes.js");
-                    $ocLazyLoad.load("modules/allergies/controllers/AllergyController.js");
-                    $ocLazyLoad.load("modules/allergies/controllers/AllergyListController.js");
-                    $ocLazyLoad.load("modules/allergies/directives/AllergyDetailDirective.js");
-                    $ocLazyLoad.load("modules/allergies/directives/AllergyDirective.js")
-                    .then(function(){
-                        $state.go('loggedIn.patient.allergy_list');
-                    })
+                      async.waterfall([
+                        function(callback) {
+                            $ocLazyLoad.load("modules/allergies/extend_routes.js")
+                            .then(function() {
+                                callback(null);
+                            });
+                        },
+                        function(callback) {
+                            $ocLazyLoad.load("modules/allergies/controllers/AllergyController.js")
+                            .then(function() {
+                                callback(null);
+                            });
+                        },
+                        function(callback) {
+                            $ocLazyLoad.load("modules/allergies/controllers/AllergyListController.js")
+                            .then(function() {
+                                callback(null);
+                            });
+                        },
+                        function(callback) {
+                            $ocLazyLoad.load("modules/allergies/directives/AllergyDetailDirective.js")
+                            .then(function() {
+                                callback(null);
+                            });
+                        },
+                        function(callback) {
+                            $ocLazyLoad.load("modules/allergies/directives/AllergyDirective.js")
+                            .then(function() {
+                                callback(null);
+                            });
+                        },
+                        function(callback) {
+                            $state.go('loggedIn.patient.allergy_list');
+                        }
+                    ]);
                 }
             }
         })
-
-
 })

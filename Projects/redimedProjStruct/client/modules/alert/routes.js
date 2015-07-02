@@ -7,16 +7,53 @@ angular.module('app.loggedIn.alert', [])
 			url: '/alertload',
 			resolve: {
 				init: function($q, $rootScope, $state, $timeout, $ocLazyLoad){
-					$ocLazyLoad.load("modules/alert/extend_routes.js");
-					$ocLazyLoad.load("modules/alert/controllers/AlertListController.js");
-					$ocLazyLoad.load("modules/alert/controllers/AlertPatientListController.js");
-					$ocLazyLoad.load("modules/alert/directives/AlertAddDirective.js");
-					$ocLazyLoad.load("modules/alert/directives/AlertEditDirective.js");
-					$ocLazyLoad.load("modules/alert/directives/AlertListDirective.js");
-					$ocLazyLoad.load("modules/alert/directives/AlertPatientListDirective.js")
-					.then(function(){
-						$state.go('loggedIn.alert_list');
-					})
+					async.waterfall([
+						function(callback) {
+							$ocLazyLoad.load("modules/alert/extend_routes.js")
+							.then(function() {
+								callback(null);
+							});
+						},
+						function(callback) {
+							$ocLazyLoad.load("modules/alert/controllers/AlertListController.js")
+							.then(function() {
+								callback(null);
+							});
+						},
+						function(callback) {
+							$ocLazyLoad.load("modules/alert/controllers/AlertPatientListController.js")
+							.then(function() {
+								callback(null);
+							});
+						},
+						function(callback) {
+							$ocLazyLoad.load("modules/alert/directives/AlertAddDirective.js")
+							.then(function() {
+								callback(null);
+							});
+						},
+						function(callback) {
+							$ocLazyLoad.load("modules/alert/directives/AlertEditDirective.js")
+							.then(function() {
+								callback(null);
+							});
+						},
+						function(callback) {
+							$ocLazyLoad.load("modules/alert/directives/AlertListDirective.js")
+							.then(function() {
+								callback(null);
+							});
+						},
+						function(callback) {
+							$ocLazyLoad.load("modules/alert/directives/AlertPatientListDirective.js")
+							.then(function() {
+								callback(null);
+							});
+						},
+						function(callback) {
+							$state.go('loggedIn.alert_list');
+						}
+					]);
 				}
 			}
 		})
@@ -25,16 +62,53 @@ angular.module('app.loggedIn.alert', [])
 			url: '/alertpatientload',
 			resolve: {
 				init: function($q, $rootScope, $state, $timeout, $ocLazyLoad){
-					$ocLazyLoad.load("modules/alert/extend_routes.js");
-					$ocLazyLoad.load("modules/alert/controllers/AlertListController.js");
-					$ocLazyLoad.load("modules/alert/controllers/AlertPatientListController.js");
-					$ocLazyLoad.load("modules/alert/directives/AlertAddDirective.js");
-					$ocLazyLoad.load("modules/alert/directives/AlertEditDirective.js");
-					$ocLazyLoad.load("modules/alert/directives/AlertListDirective.js");
-					$ocLazyLoad.load("modules/alert/directives/AlertPatientListDirective.js")
-					.then(function(){
-						$state.go('loggedIn.patient.alert_list');
-					})
+					async.waterfall([
+						function(callback) {
+							$ocLazyLoad.load("modules/alert/extend_routes.js")
+							.then(function() {
+								callback(null);
+							});
+						},
+						function(callback) {
+							$ocLazyLoad.load("modules/alert/controllers/AlertListController.js")
+							.then(function() {
+								callback(null);
+							});
+						},
+						function(callback) {
+							$ocLazyLoad.load("modules/alert/controllers/AlertPatientListController.js")
+							.then(function() {
+								callback(null);
+							});
+						},
+						function(callback) {
+							$ocLazyLoad.load("modules/alert/directives/AlertAddDirective.js")
+							.then(function() {
+								callback(null);
+							});
+						},
+						function(callback) {
+							$ocLazyLoad.load("modules/alert/directives/AlertEditDirective.js")
+							.then(function() {
+								callback(null);
+							});
+						},
+						function(callback) {
+							$ocLazyLoad.load("modules/alert/directives/AlertListDirective.js")
+							.then(function() {
+								callback(null);
+							});
+						},
+						function(callback) {
+							$ocLazyLoad.load("modules/alert/directives/AlertPatientListDirective.js")
+							.then(function() {
+								callback(null);
+							});
+						},
+						function(callback) {
+							$state.go('loggedIn.patient.alert_list');
+						}
+					]);
 				}
 			}
 		})
