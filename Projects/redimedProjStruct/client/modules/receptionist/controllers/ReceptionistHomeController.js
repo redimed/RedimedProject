@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.receptionist.home.controller", [])
 
-.controller("ReceptionistHomeController", function ($scope,$filter, $state, $timeout, $modal,socket, $cookieStore, toastr, ConfigService, DoctorService, ReceptionistService, PatientService, localStorageService, sysServiceService, receptionStileService,AppointmentModel) {
+.controller("ReceptionistHomeController", function (AppointmentModel,$scope,$filter, $state, $timeout, $modal,socket, $cookieStore, toastr, ConfigService, DoctorService, ReceptionistService, PatientService, localStorageService, sysServiceService, receptionStileService,AppointmentModel) {
 	$scope.apptDate = new Date();
 	//phanquocchien.c1109g@gmail.com
 	//lay thong tin su server
@@ -14,6 +14,17 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 	$scope.undoArr= [];
 	$scope.fromAppt = {};
 	$scope.startCheckedTime = null;
+
+	$scope.servicedata ={};
+	$scope.getServiceColor = function(){
+		AppointmentModel.getServiceColor('data')
+		.then(function(response){
+			$scope.servicedata = response.data;
+		},function(error){
+
+		})
+	}
+	$scope.getServiceColor();
 
 	ReceptionistService.getSite().then(function(rs){
 		if(rs.status == 'success')
