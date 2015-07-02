@@ -855,11 +855,15 @@ module.exports = {
                     var NODE_ID = resultDept[0].NODE_ID;
                     var queryGetListLeave = "";
                     var queryCountListLeave = "";
+                    var queryAddListUser = "";
+                    if (NODE_CODE === "Director") {
+                        queryAddListUser = " OR sys_hierarchy_nodes.NODE_ID = 29";
+                    }
                     var queryGetUserSubordinate =
                         "SELECT DISTINCT sys_hierarchies_users.USER_ID, sys_hierarchies_users.DEPARTMENT_CODE_ID " + //SELECT
                         "FROM sys_hierarchies_users " + //FROM
                         "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " + //INNER JOIN
-                        "WHERE sys_hierarchy_nodes.TO_NODE_ID = :nodeId AND sys_hierarchies_users.DEPARTMENT_CODE_ID = :deptId"; //WHERE
+                        "WHERE (sys_hierarchy_nodes.TO_NODE_ID = :nodeId AND sys_hierarchies_users.DEPARTMENT_CODE_ID = :deptId)" + queryAddListUser; //WHERE
                     db.sequelize.query(queryGetUserSubordinate, null, {
                             raw: true
                         }, {
