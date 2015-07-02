@@ -939,6 +939,10 @@ module.exports = {
                                                     result.forEach(function(elemResult, indexResult) {
                                                         var promise_link = function() {
                                                             var deferred = Q.defer();
+                                                            var queryAdd = "";
+                                                            if (NODE_CODE === "Head of Dept.") {
+                                                                queryAdd = "AND sys_hierarchies_users.DEPARTMENT_CODE_ID = :deptId";
+                                                            }
                                                             //GET PERSON-IN-CHARGE
                                                             var queryGetNodeLevel1 =
                                                                 "SELECT DISTINCT sys_hierarchy_nodes.TO_NODE_ID " + //SELECT
@@ -947,12 +951,12 @@ module.exports = {
                                                                 "INNER JOIN users on users.id = sys_hierarchies_users.USER_ID " + //JOIN
                                                                 "INNER JOIN hr_leave ON hr_leave.user_id = users.id " + //JOIN
                                                                 "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " + //JOIN
-                                                                "WHERE sys_hierarchy_group.GROUP_TYPE = 'Time Sheet' AND hr_leave.leave_id = :leaveId AND sys_hierarchies_users.DEPARTMENT_CODE_ID = :deptId"; //WHERE
+                                                                "WHERE sys_hierarchy_group.GROUP_TYPE = 'Time Sheet' AND hr_leave.leave_id = :leaveId " + queryAdd; //WHERE
                                                             db.sequelize.query(queryGetNodeLevel1, null, {
                                                                     raw: true
                                                                 }, {
                                                                     leaveId: result[indexResult].leave_id,
-                                                                    deptId: resultDept[0].DEPARTMENT_CODE_ID
+                                                                    deptId: resultDept[0].DEPARTMENT_CODE_ID //USE WHEN Head of Dept.
                                                                 })
                                                                 .success(function(resultNodeLevel1) {
                                                                     var queryGetNodeLevel2 =
