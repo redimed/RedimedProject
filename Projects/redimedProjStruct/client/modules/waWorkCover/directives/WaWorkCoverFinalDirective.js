@@ -2,7 +2,7 @@
  * Created by Minh Hikari on 12/1/2014.
  */
 angular.module('app.loggedIn.waworkcover.final.directive', [])
-    .directive('workCoverFinal', function (DoctorService, ReceptionistService, ConfigService, PatientService, toastr, WaWorkCoverService, $state, $cookieStore,CompanyService) {
+    .directive('workCoverFinal', function (DocumentService, DoctorService, ReceptionistService, ConfigService, PatientService, toastr, WaWorkCoverService, $state, $cookieStore,CompanyService) {
         return {
             restrict: 'EA',
             scope: {
@@ -36,18 +36,28 @@ angular.module('app.loggedIn.waworkcover.final.directive', [])
                         }
                     });
                     //get appointment info
-                    ReceptionistService.apptDetail(scope.params.apptInfo).then(function (res) {
-                        if (res.data !== undefined && res.data !== null && res.data !== '') {
-                            if (res.data.DOCTOR_ID !== undefined && res.data.DOCTOR_ID !== null && res.data.DOCTOR_ID !== '') {
-                                DoctorService.getById(res.data.DOCTOR_ID).then(function (res2) {
-                                    if (res2 !== null && res2 !== undefined && res2 !== '') {
-                                        scope.doctor = res2;
-                                    }
-                                })
-                            }
+                    // ReceptionistService.apptDetail(scope.params.apptInfo).then(function (res) {
+                    //     if (res.data !== undefined && res.data !== null && res.data !== '') {
+                    //         if (res.data.DOCTOR_ID !== undefined && res.data.DOCTOR_ID !== null && res.data.DOCTOR_ID !== '') {
+                    //             DoctorService.getById(res.data.DOCTOR_ID).then(function (res2) {
+                    //                 if (res2 !== null && res2 !== undefined && res2 !== '') {
+                    //                     scope.doctor = res2;
+                    //                 }
+                    //             })
+                    //         }
+                    //     }
+                    // })
+
+                    var userInfo = $cookieStore.get('userInfo');
+                    var apptInfo = {user_id: userInfo.id};
+                    DocumentService.getDoctor(apptInfo).then(function(result){
+                        if(result.status === "error") toastr.error("Unexpected error!","Error");
+                        else if(result.status === "no doctor") toastr.error("The account treating this workcover have no doctor link with it", "Error!");
+                        else {
+                            console.log('this is doctor', result);
+                            scope.doctor = result.data[0];
                         }
                     })
-
                     //this will dceide the form to "add" or "edit" mode
                     //create search filter
 //                    WaWorkCoverService.finalsearch(searchValue).then(function (result) {
@@ -101,6 +111,7 @@ angular.module('app.loggedIn.waworkcover.final.directive', [])
                             if (postData[key] instanceof Date) postData[key] = ConfigService.getCommonDate(postData[key]);
                         } //end for
                         if (scope.params.edit === false) {
+                            postData.Created_by = $cookieStore.get('userInfo').id;
                             WaWorkCoverService.finaladd(postData).then(function (result) {
                                 console.log('this is insert result',result)
                                 if (result.status === 'success') {

@@ -388,7 +388,7 @@ module.exports = {
 	getDoctor: function(req,res){
 		var user_id = req.body.user_id;
 
-		knex.raw("select user.`Booking_Person`, doc.`Signature` from `users` user inner join `doctors` doc on doc.`User_id` = user.`id` where user.`id` = ?",[user_id])
+		knex.raw("select user.`Booking_Person`, doc.* from `users` user inner join `doctors` doc on doc.`User_id` = user.`id` where user.`id` = ?",[user_id])
 		.then(function(result){
 			if(result.length === 0) res.json({status:"no doctor"});
 			else res.json({status:'success', data:result[0]});

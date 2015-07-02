@@ -1587,7 +1587,7 @@
 
             <kiss-timer start-session-time="startSessionTime" return-value="timerDisplay"></kiss-timer>
 
-            <button ng-show="apptPatient.appt_status==apptStatus.waiting.value" ng-click="startSession();" class="un_tn_btn un_tn_btn_pink un_tn_btn_lg">Start Progress</button>
+            <button ng-show="apptPatient.appt_status==apptStatus.waiting.value || apptPatient.appt_status==apptStatus.urgent.value" ng-click="startSession();" class="un_tn_btn un_tn_btn_pink un_tn_btn_lg">Start Progress</button>
          
             <button ng-show="apptPatient.appt_status==apptStatus.inConsult.value" ng-click="beforeFinishSession();" class="un_tn_btn un_tn_btn_pink un_tn_btn_lg">
                 Complete</br>
