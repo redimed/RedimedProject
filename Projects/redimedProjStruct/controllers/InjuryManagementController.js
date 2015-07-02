@@ -184,7 +184,8 @@ module.exports = {
               STATUS: imInfo.cal_id == null || typeof imInfo.cal_id === 'undefined' ?"New":null,
               pickup_address: imInfo.cal_id == null || typeof imInfo.cal_id === 'undefined' ? (imInfo.infoMaps.format_address == null || typeof imInfo.infoMaps.format_address === 'undefined' ? null : imInfo.infoMaps.format_address) : null,
               latitude: imInfo.cal_id == null || typeof imInfo.cal_id === 'undefined' ?  (imInfo.infoMaps.lat == null || typeof imInfo.infoMaps.lat === 'undefined' ? null : imInfo.infoMaps.lat) : null,
-              longitude: imInfo.cal_id == null || typeof imInfo.cal_id === 'undefined' ? (imInfo.infoMaps.lng == null || typeof imInfo.infoMaps.lng === 'undefined' ? null : imInfo.infoMaps.lng) : null
+              longitude: imInfo.cal_id == null || typeof imInfo.cal_id === 'undefined' ? (imInfo.infoMaps.lng == null || typeof imInfo.infoMaps.lng === 'undefined' ? null : imInfo.infoMaps.lng) : null,
+              signature: imInfo.signature
           },{raw:true})
               .success(function(data){
                   db.IMInjury.find({where:data.dataValues},{raw:true})

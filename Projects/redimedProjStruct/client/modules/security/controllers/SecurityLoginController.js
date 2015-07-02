@@ -25,34 +25,35 @@ angular.module("app.security.login.controller",[
             // if($scope.modelUser.isAgree)
             // {
                 SecurityService.login($scope.modelUser).then(function (response) {
-                    $cookieStore.put('token', 'abcdefghklf');
+                    if(response.status == 'success')
+                    {
+                        $cookieStore.put('token', 'abcdefghklf');
+                        socket.emit('checkLogin', $scope.modelUser.username);
 
-                    socket.emit('checkLogin', $scope.modelUser.username);
-
-                    socket.on('isSuccess', function () {
-                        login($scope.modelUser.username);
-                    })
-
-                    socket.on('isError', function () {
-                        $scope.isLogging = false;
-                        var modalInstance = $modal.open({
-                            templateUrl: 'modules/security/views/confirmLogin.html',
-                            controller: 'ConfirmLoginController',
-                            size: 'md',
-                            backdrop: 'static',
-                            keyboard: false
+                        socket.on('isSuccess', function () {
+                            login($scope.modelUser.username);
                         })
 
-                        modalInstance.result.then(function (acceptLogin) {
-                            if (acceptLogin) {
-                                socket.emit('forceLogin', $scope.modelUser.username);
-                            }
+                        socket.on('isError', function () {
+                            $scope.isLogging = false;
+                            var modalInstance = $modal.open({
+                                templateUrl: 'modules/security/views/confirmLogin.html',
+                                controller: 'ConfirmLoginController',
+                                size: 'md',
+                                backdrop: 'static',
+                                keyboard: false
+                            })
 
-                        }, function (err) {
-                            console.log(err);
-                        });
-                    })
+                            modalInstance.result.then(function (acceptLogin) {
+                                if (acceptLogin) {
+                                    socket.emit('forceLogin', $scope.modelUser.username);
+                                }
 
+                            }, function (err) {
+                                console.log(err);
+                            });
+                        })
+                    }
                 }, function (error) {
                     toastr.error("Wrong Username Or Password!");
                     // $scope.isLogging = false;

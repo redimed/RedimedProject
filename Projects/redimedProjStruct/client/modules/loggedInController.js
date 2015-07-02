@@ -69,6 +69,8 @@ angular.module("app.loggedIn.controller",[
 
     $scope.isShow = true;
 
+    socket.removeAllListeners();
+
     $scope.$on('onBeforeUnload', function (e, confirmation) {
         confirmation.message = "Your sure want to leave this page!";
         e.preventDefault();
@@ -84,7 +86,7 @@ angular.module("app.loggedIn.controller",[
 
     socket.on("forceLogout",function(){
 
-        toastr.error("Someone Is Logged Into Your Account!");
+        toastr.error("Please Login Again!");
 
         $cookieStore.remove("userInfo");
         $cookieStore.remove("companyInfo");
@@ -99,7 +101,7 @@ angular.module("app.loggedIn.controller",[
         console.log("Remove Success");
     }
 
-    socket.removeListener('messageReceived');
+    socket.removeListener('messageReceived',cancelListenerHandler);
 
     socket.on("messageReceived",function(fromId,fromUser,message){
         if(message.type == 'call')

@@ -77,5 +77,9 @@ angular.module("app.loggedIn.user.services", [])
         return userApi.one('im/getOnlineUsers').get();
     }
 
+    userService.checkUserOnline = function(id){
+        return userApi.all('user/checkOnline').post({user_id: id});
+    }
+
     return userService;
 })

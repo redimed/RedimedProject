@@ -6,6 +6,8 @@ angular.module("app.calling")
         var audio = new Audio('theme/assets/phone_calling.mp3');
         var toSt= $cookieStore.get('toState');
 
+        socket.removeAllListeners();
+
         var params = {};
 
         var apiKey = $stateParams.apiKey;
@@ -136,7 +138,6 @@ angular.module("app.calling")
             console.log("Remove Success");
         }
 
-        socket.removeListener('messageReceived');
 
         socket.on("messageReceived",function(fromId,fromUser,message){
             if(message.type === 'answer')
@@ -437,7 +438,6 @@ angular.module("app.calling")
         });
 
         $scope.$on('$destroy', function () {
-            socket.removeListener('messageReceived');
             if ($scope.session && $scope.connected) {
                 $scope.session.disconnect();
                 $scope.connected = false;

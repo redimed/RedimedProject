@@ -5,6 +5,7 @@ var passport = require('passport'),
     passportLocal = require('passport-local');
     passportHttp = require('passport-http');
 
+
 var AuthenticationController = require('./controllers/AuthenticationController');
 
 passport.serializeUser(function(user, done) {
@@ -38,4 +39,5 @@ app.get('/api/users/loggedin', function(req, res) {
     res.send(req.isAuthenticated() ? req.user : '0');
 });
 
+app.post('/api/user/checkOnline', AuthenticationController.checkOnline);
 
