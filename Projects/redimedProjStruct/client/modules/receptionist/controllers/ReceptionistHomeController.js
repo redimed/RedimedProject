@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.receptionist.home.controller", [])
 
-.controller("ReceptionistHomeController", function ($scope,$filter, $state, $timeout, $modal,socket, $cookieStore, toastr, ConfigService, DoctorService, ReceptionistService, PatientService, localStorageService, sysServiceService, receptionStileService) {
+.controller("ReceptionistHomeController", function ($scope,$filter, $state, $timeout, $modal,socket, $cookieStore, toastr, ConfigService, DoctorService, ReceptionistService, PatientService, localStorageService, sysServiceService, receptionStileService,AppointmentModel) {
 	$scope.apptDate = new Date();
 	//phanquocchien.c1109g@gmail.com
 	//lay thong tin su server
@@ -24,6 +24,95 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 	$scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){ 
 	    receptionStileService.setreceptionStile($scope.apptSite);
 	})
+	$scope.clickArrow = function(){
+		$scope.alertCenter.arrow = !$scope.alertCenter.arrow;
+
+		if($scope.alertCenter.arrow){
+			angular.element('#alert-center').css({display: 'none'});
+			angular.element('.bv-arrow').css({right: 0});
+		}else{
+			angular.element('#alert-center').css({display: 'block'});
+			angular.element('.bv-arrow').css({right: '225px'});
+		}
+	}
+	var loadAlertCenter = function(site){
+				date = moment(new Date()).format('YYYY-MM-DD');
+				var postData = {
+					datepicker:date,
+					site_id:site
+				};
+				$scope.alertCenter.list = [];
+
+				AppointmentModel.alertSiteCenter(postData)
+				.then(function(response){
+					_.forEach(response.data, function(row){
+						var flag = -1;
+						var i = 0;
+						_.forEach($scope.alertCenter.list, function(list){
+							if(list.Patient_id === row.Patient_id){
+								flag = i;
+								return;
+							}
+							i++;
+						})
+
+						if(flag !== -1){
+							if(row.ALERT_ID){
+								var alert_flag = true;
+								_.forEach($scope.alertCenter.list[flag].alert, function(alert){
+									if(alert.id === row.ALERT_ID){
+										alert_flag = false;
+									}
+								})
+
+								if(alert_flag){
+									var object = {id: row.ALERT_ID, name: row.ALERT_NAME};
+									$scope.alertCenter.list[flag].alert.push(object);
+								}
+
+								var cal_flag = true;
+								var i = 0;
+								_.forEach($scope.alertCenter.list[flag].cal, function(cal){
+									if(cal.CAL_ID === row.CAL_ID){
+										cal_flag = false;
+									}
+								})
+
+								if(cal_flag){
+									$scope.alertCenter.list[flag].cal.push({IS_REFERRAL: row.IS_REFERRAL, CAL_ID: row.CAL_ID, FROM_TIME: row.FROM_TIME, TO_TIME: row.TO_TIME, OUTREFERRAL: 'no', DOCTOR_ID: row.DOCTOR_ID});
+									if(row.outreferral_id){
+										var cal_length = $scope.alertCenter.list[flag].cal.length;
+										$scope.alertCenter.list[flag].cal[cal_length-1].OUTREFERRAL = 'yes';
+									}
+								}
+								/**/
+							}
+						}else{
+							var object = {Patient_id: row.Patient_id, First_name: row.First_name, Sur_name: row.Sur_name, alert: [], cal: []};
+
+							if(row.ALERT_ID){
+								object.alert.push({id: row.ALERT_ID, name: row.ALERT_NAME});
+							}
+
+							if(row.CAL_ID){
+								object.cal.push({IS_REFERRAL: row.IS_REFERRAL, DOCTOR_ID: row.DOCTOR_ID, CAL_ID: row.CAL_ID, FROM_TIME: row.FROM_TIME, TO_TIME: row.TO_TIME, OUTREFERRAL: 'no'});
+								if(row.outreferral_id)
+									object.cal[0].OUTREFERRAL = 'yes';
+							}
+
+							$scope.alertCenter.list.push(object);
+						}
+
+					})
+				}, function(error){})
+	}
+
+	$scope.alertCenter = {
+		load: function(){ loadAlertCenter(); },
+		list: [],
+		arrow: false
+	}
+	loadAlertCenter(-1);
 	$scope.getAppointment = function()
 	{
 		if($scope.apptSite == null)
@@ -46,7 +135,7 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 		$scope.completeAppt = [];
 		$scope.injuryAppt = [];
 		$scope.doctors = [];
-
+		loadAlertCenter(site);
 		ReceptionistService.getAppointmentByDate(d,site).then(function(rs){
 			if(rs.status.toLowerCase() == 'success')
 			{	

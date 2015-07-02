@@ -19,6 +19,35 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 				})
 			}
 			scope.getServiceColor();
+		
+			scope.addPatient = function(){
+				var modalInstance = $modal.open({
+					templateUrl: 'addPatient',
+					controller: function($scope, $modalInstance,toastr, options)
+					{
+						$scope.patientAddForm = {
+							params: {
+					            permission:{
+					                edit:false,
+					                create:true
+					            }
+				            }
+				        };
+				        $scope.options = options;
+				        $scope.$watch('onsuccess', function(success){
+							if(success){
+								$modalInstance.close('success');								
+							}
+						})
+					},
+					size: 'lg',
+					resolve:{
+						options: function(){
+							return scope.options;
+						}
+					}
+				})
+			}
 			scope.goToCalendarDetail = function(doctor){
 				$cookieStore.put('appointment', scope.appointment.search);
 
@@ -763,7 +792,6 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 			var loadAlertCenter = function(){
 				var postData = angular.copy(scope.appointment.search);
 				postData.datepicker = ConfigService.convertToDB(postData.datepicker);
-
 				scope.alertCenter.list = [];
 
 				AppointmentModel.alertCenter(postData)

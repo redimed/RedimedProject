@@ -1444,7 +1444,30 @@ table.timetable-table td:last-child {
     border: dashed blue 20px;
     opacity: 0.5;
 }
-
+.bv-right-list-reception{
+    position: absolute;
+    /*padding: 10px;*/
+    right: 0;
+    top: 80px;
+    min-height: 92%;
+    width: 225px;
+    color: #000000;
+    /*background-color: #3D4A53;*/
+    background-color: rgb(205, 204, 203);
+    /*border: 1px solid rgb(173, 188, 86);*/
+    z-index: 888;
+}
+.bv-arrow-reception{
+    width: 0; 
+    height: 0; 
+    border-top: 14px solid transparent;
+    border-bottom: 14px solid transparent; 
+    z-index: 888;
+    border-right:17px solid #333332;
+    position: absolute;
+    top: 132px;
+    right: 225px;
+}
 .bv-right-list{
     position: absolute;
     /*padding: 10px;*/

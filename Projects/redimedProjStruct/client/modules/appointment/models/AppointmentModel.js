@@ -29,6 +29,11 @@ angular.module('app.loggedIn.appointment.models', [])
 		return instanceApi.post({data: data});	
 	}
 
+	mainModel.alertSiteCenter = function(data){
+		var instanceApi = mainApi.all('alertSiteCenter');
+		return instanceApi.post({data: data});	
+	}
+
 	mainModel.one = function(data){
 		var instanceApi = mainApi.all('one');
 		return instanceApi.post({data: data});	
