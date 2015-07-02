@@ -339,9 +339,9 @@ angular.module("app.loggedIn.patient.services", [])
             label: 'Doctor',
             type: 'custom',
             fn: function(item) {
-                if(!item.appointment || !item.appointment.doctor) 
+                if(!item.user) 
                     return;
-                return item.appointment.doctor.NAME;
+                return item.user.Booking_Person;
             }
         }
 
