@@ -350,25 +350,8 @@ angular.module("app.calling")
                             $scope.isMakeCall = false;
                             $scope.callUser = null;
                             $scope.userInfo = userInfo;
-                            var usersArr = [];
                             UserService.getOnlineUsers().then(function(rs){
-                                for(var i=0; i<rs.data.length; i++)
-                                {
-                                    if(rs.data[i].userType == 'Doctor')
-                                        usersArr.push(rs.data[i]);
-                                }
-
-                                if(arrUser.length > 0)
-                                {
-                                    for(var i=0; i<arrUser.length; i++)
-                                    {
-                                        var index = _.findIndex(usersArr,{'username': arrUser[i]});
-                                        usersArr.splice(index,1);
-                                    }
-                                    $scope.onlineUsers = usersArr;
-                                }
-                                else
-                                    $scope.onlineUsers = usersArr;
+                                $scope.onlineUsers = rs.data;
                             })
 
                             $scope.cancelCall = function(){

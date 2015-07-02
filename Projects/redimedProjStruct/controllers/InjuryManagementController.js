@@ -663,26 +663,33 @@ module.exports = {
     },
     getOnlineUsers: function(req,res){
         var userList = [];
-        db.User.belongsTo(db.UserType,{foreignKey:'user_type'});
-        db.User.findAll({where: "socket IS NOT NULL",include:[db.UserType]},{raw:true})
-            .success(function(data){
-                if(data)
-                {
-                    for (var i = 0; i < data.length; i++) {
-                        userList.push({
-                            id: data[i].id,
-                            username: data[i].user_name,
-                            socket: data[i].socket,
-                            fullName: data[i].Booking_Person,
-                            userType: data[i].UserType.user_type
-                        });
-                    }
-                    res.json({data:userList});
-                }
-            })
-            .error(function(err){
-                console.log(err);
-            })
+        db.UserType.find({where:{user_type: 'Doctor'}},{raw:true})
+          .success(function(type){
+              if(type)
+              {
+                  db.sequelize.query("SELECT `users`.*, `UserType`.`id` AS `UserType.id`, `UserType`.`user_type` AS `UserType.user_type` "+
+                                     "FROM `users` LEFT OUTER JOIN `user_type` AS `UserType` ON `UserType`.`id` = `users`.`user_type` WHERE SOCKET IS NOT NULL AND `UserType`.`id` = ?",null,{raw:true},[type.ID])
+                    .success(function(data){
+                        if(data)
+                        {
+                            for (var i = 0; i < data.length; i++) {
+                                userList.push({
+                                    id: data[i].id,
+                                    username: data[i].user_name,
+                                    socket: data[i].socket,
+                                    fullName: data[i].Booking_Person,
+                                    userType: data[i].UserType.user_type
+                                });
+                            }
+                            res.json({data:userList});
+                        }
+                    })
+                    .error(function(err){
+                        console.log(err);
+                    })
+              }
+          })
+        
     },
     getInjuryByCompany: function(req,res){
         var companyId = req.body.companyId;
