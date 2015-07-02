@@ -8,16 +8,20 @@ var functionForTimesheet = require("./functionForTimesheet");
 module.exports = {
     LoadInfoEmployee: function(req, res) {
         var USER_ID = req.body.USER_ID;
-        var queryGetInfoUser = "SELECT hr_employee.FirstName, hr_employee.LastName, hr_employee.TypeOfContruct, " +
-            "departments.departmentName FROM hr_employee " +
-            "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
-            "INNER JOIN departments ON departments.departmentid = hr_employee.Dept_ID " +
-            "WHERE users.id = ?";
+        var queryGetInfoUser =
+            "SELECT hr_employee.FirstName, hr_employee.LastName, hr_employee.TypeOfContruct, " + //SELECT
+            "departments.departmentName " + //SELECT
+            "FROM hr_employee " + //FROM
+            "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //JOIN
+            "INNER JOIN departments ON departments.departmentid = hr_employee.Dept_ID " + //JOIN
+            "WHERE users.id = ?"; //WHERE
         db.sequelize.query(queryGetInfoUser, null, {
                 raw: true
             }, [USER_ID])
             .success(function(resultEmployee) {
-                var queryGetTypeLeave = "SELECT hr_leave_type.leave_name, hr_leave_type.leave_type_id FROM hr_leave_type";
+                var queryGetTypeLeave =
+                    "SELECT hr_leave_type.leave_name, hr_leave_type.leave_type_id " + //SELECT
+                    "FROM hr_leave_type"; //FROM
                 db.sequelize.query(queryGetTypeLeave)
                     .success(function(resultTypeLeave) {
                         res.json({
@@ -179,23 +183,32 @@ module.exports = {
         }
         //end select
         var queryGetAllMyLeave =
-            "SELECT hr_employee.FirstName, hr_employee.LastName, hr_leave.start_date, time_task_status.name, " +
-            "hr_leave.finish_date, hr_leave.standard, hr_leave.status_id, hr_leave.time_leave, hr_leave.is_approve_first, " +
-            "hr_leave.is_approve_second, hr_leave.comments, " +
-            "hr_leave.reason_leave, hr_leave.leave_id, hr_leave.application_date FROM hr_employee " +
-            "INNER JOIN users ON hr_employee.Employee_ID = users.employee_id " +
-            "INNER JOIN hr_leave ON hr_leave.user_id = users.id " +
-            "INNER JOIN time_task_status ON time_task_status.task_status_id = hr_leave.status_id " +
-            "WHERE hr_leave.user_id = ? " + paramSelect + " ORDER BY hr_leave.start_date DESC LIMIT ? OFFSET ?";
+            "SELECT hr_employee.FirstName, hr_employee.LastName, hr_leave.start_date, time_task_status.name, " + //SELECT
+            "hr_leave.finish_date, hr_leave.standard, hr_leave.status_id, hr_leave.time_leave, hr_leave.is_approve_first, " + //SELECT
+            "hr_leave.is_approve_second, hr_leave.comments, " + //SELECT
+            "hr_leave.reason_leave, hr_leave.leave_id, hr_leave.application_date " + //SELECT
+            "FROM hr_employee " + //FROM
+            "INNER JOIN users ON hr_employee.Employee_ID = users.employee_id " + //JOIN
+            "INNER JOIN hr_leave ON hr_leave.user_id = users.id " + //JOIN
+            "INNER JOIN time_task_status ON time_task_status.task_status_id = hr_leave.status_id " + //JOIN
+            "WHERE hr_leave.user_id = ? " + paramSelect + //WHERE
+            " ORDER BY hr_leave.start_date DESC " + //ORDER
+            "LIMIT ? " + //LIMIT
+            "OFFSET ?"; //OFFSET
 
         var queryCountAllMyLeave =
-            "SELECT COUNT(*) as COUNT FROM hr_employee " +
-            "INNER JOIN users ON hr_employee.Employee_ID = users.employee_id " +
-            "INNER JOIN hr_leave ON hr_leave.user_id = users.id " +
-            "INNER JOIN time_task_status ON time_task_status.task_status_id = hr_leave.status_id " +
-            "WHERE hr_leave.user_id = ? " + paramSelect + " LIMIT ? OFFSET ?";
+            "SELECT COUNT(*) as COUNT " + //SELECT
+            "FROM hr_employee " + //FROM
+            "INNER JOIN users ON hr_employee.Employee_ID = users.employee_id " + //JOIN
+            "INNER JOIN hr_leave ON hr_leave.user_id = users.id " + //JOIN
+            "INNER JOIN time_task_status ON time_task_status.task_status_id = hr_leave.status_id " + //JOIN
+            "WHERE hr_leave.user_id = ? " + paramSelect + //WHERE
+            " LIMIT ? " + //LIMIT
+            "OFFSET ?"; //OFFSET
 
-        var queryStatus = "SELECT time_task_status.task_status_id, time_task_status.name FROM time_task_status";
+        var queryStatus =
+            "SELECT time_task_status.task_status_id, time_task_status.name " + //SELECT
+            "FROM time_task_status"; //FROM
 
         db.sequelize.query(queryGetAllMyLeave, null, {
                 raw: true
@@ -240,13 +253,14 @@ module.exports = {
                                     }
                                     //END LEAVE ID
 
-                                    var queryGetNodeIdLevel1 = "SElECT DISTINCT sys_hierarchy_nodes.TO_NODE_ID " +
-                                        "FROM hr_leave " +
-                                        "INNER JOIN users ON hr_leave.user_id = users.id " +
-                                        "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " +
-                                        "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " +
-                                        "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " +
-                                        "WHERE sys_hierarchy_group.GROUP_TYPE='Time Sheet' AND hr_leave.leave_id IN " + listLeaveId;
+                                    var queryGetNodeIdLevel1 =
+                                        "SElECT DISTINCT sys_hierarchy_nodes.TO_NODE_ID " + //SELECT
+                                        "FROM hr_leave " + //FROM
+                                        "INNER JOIN users ON hr_leave.user_id = users.id " + //JOIN
+                                        "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " + //JOIN
+                                        "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " + //JOIN
+                                        "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " + //JOIN
+                                        "WHERE sys_hierarchy_group.GROUP_TYPE='Time Sheet' AND hr_leave.leave_id IN " + listLeaveId; //WHERE
                                     db.sequelize.query(queryGetNodeIdLevel1)
                                         .success(function(resultNodeIdLevel1) {
                                             if (resultNodeIdLevel1 !== undefined &&
@@ -261,22 +275,23 @@ module.exports = {
                                                 } else {
                                                     listNodeLevel1 = "(" + listNodeLevel1.substring(0, listNodeLevel1.length - 2) + ")";
                                                 }
-                                                var queryGetNodeIdLevel2 = "SElECT DISTINCT sys_hierarchy_nodes.TO_NODE_ID " +
-                                                    "FROM sys_hierarchy_nodes " +
-                                                    "INNER JOIN sys_hierarchies_users ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " +
-                                                    "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " +
-                                                    "WHERE sys_hierarchy_group.GROUP_TYPE='Time Sheet' AND sys_hierarchy_nodes.NODE_ID IN " + listNodeLevel1;
+                                                var queryGetNodeIdLevel2 =
+                                                    "SElECT DISTINCT sys_hierarchy_nodes.TO_NODE_ID " + //SELECT
+                                                    "FROM sys_hierarchy_nodes " + //FROM
+                                                    "INNER JOIN sys_hierarchies_users ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " + //JOIN
+                                                    "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " + //JOIN
+                                                    "WHERE sys_hierarchy_group.GROUP_TYPE='Time Sheet' AND sys_hierarchy_nodes.NODE_ID IN " + listNodeLevel1; //WHERE
                                                 db.sequelize.query(queryGetNodeIdLevel2)
                                                     .success(function(resultNodeLevel2) {
                                                         //GET INFO LEVEL 1 AND LEVEL 2
                                                         var queryGetInfoLevel1 =
-                                                            "SElECT hr_employee.FirstName, hr_employee.LastName " +
-                                                            "FROM hr_employee " +
-                                                            "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
-                                                            "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " +
-                                                            "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " +
-                                                            "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " +
-                                                            "WHERE sys_hierarchy_group.GROUP_TYPE='Time Sheet' AND sys_hierarchy_nodes.NODE_ID IN " + listNodeLevel1;
+                                                            "SElECT hr_employee.FirstName, hr_employee.LastName " + //SELECT
+                                                            "FROM hr_employee " + //FROM
+                                                            "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //JOIN
+                                                            "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " + //JOIN
+                                                            "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " + //JOIN
+                                                            "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " + //JOIN
+                                                            "WHERE sys_hierarchy_group.GROUP_TYPE='Time Sheet' AND sys_hierarchy_nodes.NODE_ID IN " + listNodeLevel1; //WHERE
                                                         db.sequelize.query(queryGetInfoLevel1)
                                                             .success(function(resultInfoLevel1) {
                                                                 if (resultNodeLevel2 !== undefined &&
@@ -292,13 +307,13 @@ module.exports = {
                                                                         listNodeLevel2 = "(" + listNodeLevel2.substring(0, listNodeLevel2.length - 2) + ")";
                                                                     }
                                                                     var queryGetInfoLevel2 =
-                                                                        "SElECT hr_employee.FirstName, hr_employee.LastName " +
-                                                                        "FROM hr_employee " +
-                                                                        "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
-                                                                        "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " +
-                                                                        "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " +
-                                                                        "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " +
-                                                                        "WHERE sys_hierarchy_group.GROUP_TYPE='Time Sheet' AND sys_hierarchy_nodes.NODE_ID IN " + listNodeLevel2;
+                                                                        "SElECT hr_employee.FirstName, hr_employee.LastName " + //SELECT
+                                                                        "FROM hr_employee " + //FROM
+                                                                        "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //JOIN
+                                                                        "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " + //JOIN
+                                                                        "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " + //JOIN
+                                                                        "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " + //JOIN
+                                                                        "WHERE sys_hierarchy_group.GROUP_TYPE='Time Sheet' AND sys_hierarchy_nodes.NODE_ID IN " + listNodeLevel2; //WHERE
                                                                     db.sequelize.query(queryGetInfoLevel2)
                                                                         .success(function(resultInfoLevel2) {
                                                                             //PROCESSING FOREACH
@@ -457,31 +472,73 @@ module.exports = {
 
     // VIEW LEAVE
     ViewLeave: function(req, res) {
-        var leave_id = req.body.leave_id;
+        var info = req.body.info
+        var leave_id = info.leave_id;
         var queryView =
-            "SELECT hr_employee.FirstName, hr_employee.LastName, hr_leave.leave_id, hr_leave.is_reject, " +
-            "hr_leave.time_leave as time_leave_all, hr_leave.reason_leave as reason_leave_all, " +
-            "hr_leave.application_date, hr_leave.work_date, hr_leave_detail.type_other, " +
-            "hr_leave.start_date, hr_leave.finish_date, hr_leave_type.leave_name, " +
-            "hr_leave_detail.time_leave, hr_leave_detail.reason_leave, time_task_status.name as status, time_task_status.task_status_id " +
-            "FROM hr_employee " +
-            "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
-            "INNER JOIN hr_leave ON hr_leave.user_id = users.id " +
-            "INNER JOIN hr_leave_detail ON hr_leave.leave_id = hr_leave_detail.leave_id " +
-            "INNER JOIN hr_leave_type ON hr_leave_type.leave_type_id = hr_leave_detail.leave_type_id " +
-            "INNER JOIN time_task_status ON time_task_status.task_status_id = hr_leave.status_id " +
-            "WHERE hr_leave.leave_id = :leave_id";
+            "SELECT hr_employee.FirstName, hr_employee.LastName, hr_leave.leave_id, hr_leave.is_reject, " + //SELECT
+            "hr_leave.time_leave as time_leave_all, hr_leave.reason_leave as reason_leave_all, " + //SELECT
+            "hr_leave.application_date, hr_leave.work_date, hr_leave_detail.type_other, " + //SELECT
+            "hr_leave.start_date, hr_leave.finish_date, hr_leave_type.leave_name, hr_leave.standard, " + //SELECT
+            "hr_leave.is_approve_first, hr_leave.is_approve_second, " + //SELECT
+            "hr_leave_detail.time_leave, hr_leave_detail.reason_leave, time_task_status.name as status, " + //SELECT
+            "time_task_status.task_status_id " + //SELECT
+            "FROM hr_employee " + //FROM
+            "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //JOIN
+            "INNER JOIN hr_leave ON hr_leave.user_id = users.id " + //JOIN
+            "INNER JOIN hr_leave_detail ON hr_leave.leave_id = hr_leave_detail.leave_id " + //JOIN
+            "INNER JOIN hr_leave_type ON hr_leave_type.leave_type_id = hr_leave_detail.leave_type_id " + //JOIN
+            "INNER JOIN time_task_status ON time_task_status.task_status_id = hr_leave.status_id " + //JOIN
+            "WHERE hr_leave.leave_id = :leave_id"; //WHERE
         db.sequelize.query(queryView, null, {
                 raw: true
             }, {
                 leave_id: leave_id
             })
             .success(function(result) {
-                res.json({
-                    status: "success",
-                    result: result
-                });
-                return;
+                //GET PERSON-IN-CHARGE
+                var queryGetTitleEmployee =
+                    "SELECT hr_employee.TITLE " +
+                    "FROM hr_employee " +
+                    "INNER JOIN users on users.employee_id = hr_employee.Employee_ID " +
+                    "WHERE users.id = :userId";
+                db.sequelize.query(queryGetTitleEmployee, null, {
+                        raw: true
+                    }, {
+                        userId: info.user_id
+                    })
+                    .success(function(resultTitle) {
+                        var isPermiss = true;
+                        if (resultTitle !== undefined &&
+                            resultTitle !== null &&
+                            resultTitle[0] !== undefined &&
+                            resultTitle[0] !== null &&
+                            resultTitle[0].TITLE === "Head of Dept." &&
+                            result !== undefined &&
+                            result !== null &&
+                            result[0] !== undefined &&
+                            result[0] !== null &&
+                            result[0].standard === 0 &&
+                            result[0].is_approve_first === 0 &&
+                            result[0].is_approve_second === 1) {
+                            isPermiss = false;
+                        }
+                        res.json({
+                            status: "success",
+                            isPermiss: isPermiss,
+                            result: result
+                        });
+                        return;
+                    })
+                    .error(function(err) {
+                        console.log("*****ERROR:" + err + "*****");
+                        res.json({
+                            status: "error",
+                            result: []
+                        });
+                        return;
+                    });
+
+                //END
             })
             .error(function(err) {
                 console.log("*****ERROR:" + err + "*****");
@@ -502,9 +559,10 @@ module.exports = {
         var userID = req.body.info.userID;
         var dateUpdate = moment().format("YYYY-MM-DD hh:mm:ss");
         var queryUpdateStatus =
-            "UPDATE hr_leave SET hr_leave.status_id = :statusID, status_id_first = :statusIdFirst, " +
-            "last_update_date = :dateUpdate " +
-            "WHERE hr_leave.leave_id = :leaveID";
+            "UPDATE hr_leave " + //UPDATE
+            "SET hr_leave.status_id = :statusID, status_id_first = :statusIdFirst, " + //SET
+            "last_update_date = :dateUpdate " + //SET
+            "WHERE hr_leave.leave_id = :leaveID"; //WHERE
         db.sequelize.query(queryUpdateStatus, null, {
                 raw: true
             }, {
@@ -544,64 +602,104 @@ module.exports = {
 
     //LOAD LEAVE EDIT
     LoadLeaveEdit: function(req, res) {
-        var leaveID = req.body.leaveID;
-        var queryLoadLeaveEdit =
-            "SELECT hr_leave.leave_id, hr_leave.application_date, hr_leave.start_date, hr_leave.is_reject, hr_leave.status_id, " +
-            "hr_leave.finish_date, hr_leave.work_date, hr_leave.standard, hr_leave.status_id, hr_leave.time_leave, departments.departmentName, " +
-            "hr_leave.reason_leave, hr_employee.FirstName, hr_employee.LastName, hr_employee.TypeOfContruct " +
+        var info = req.body.info;
+        var leaveID = info.idLeave;
+        //CHECK LEAVE
+        var queryPermiss =
+            "SELECT hr_leave.status_id " +
             "FROM hr_leave " +
-            "INNER JOIN users ON users.id = hr_leave.user_id " +
-            "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " +
-            "INNER JOIN departments ON departments.departmentid = hr_employee.Dept_ID " +
-            "WHERE hr_leave.leave_id = :leaveID";
-        var queryLoadLeaveDetailEdit =
-            "SELECT hr_leave_detail.leave_detail_id, hr_leave_detail.time_leave, " +
-            "hr_leave_detail.reason_leave, " +
-            "hr_leave_detail.type_other, hr_leave_type.leave_name, hr_leave_type.leave_type_id " +
-            "FROM hr_employee " +
-            "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
-            "INNER JOIN hr_leave ON hr_leave.user_id = users.id " +
-            "INNER JOIN hr_leave_detail ON hr_leave.leave_id = hr_leave_detail.leave_id " +
-            "INNER JOIN hr_leave_type ON hr_leave_type.leave_type_id = hr_leave_detail.leave_type_id " +
-            "WHERE hr_leave.leave_id = :leaveID";
-        db.sequelize.query(queryLoadLeaveEdit, null, {
+            "WHERE hr_leave.user_id = :userId AND hr_leave.leave_id = :idLeave";
+        db.sequelize.query(queryPermiss, null, {
                 raw: true
             }, {
-                leaveID: leaveID
+                userId: info.userId,
+                idLeave: leaveID
             })
-            .success(function(resultLeave) {
-                db.sequelize.query(queryLoadLeaveDetailEdit, null, {
-                        raw: true
-                    }, {
-                        leaveID: leaveID
-                    })
-                    .success(function(resultLeaveDetail) {
-                        res.json({
-                            status: "success",
-                            resultLeave: resultLeave,
-                            resultLeaveDetail: resultLeaveDetail
+            .success(function(resultPermiss) {
+                if (resultPermiss !== undefined &&
+                    resultPermiss !== null &&
+                    resultPermiss.length !== 0 &&
+                    resultPermiss[0] !== undefined &&
+                    resultPermiss[0] !== null &&
+                    resultPermiss[0].status_id !== 2 &&
+                    resultPermiss[0].status_id !== 3 &&
+                    resultPermiss[0].status_id !== 5) {
+                    //LOAD EDIT
+                    var queryLoadLeaveEdit =
+                        "SELECT hr_leave.leave_id, hr_leave.application_date, hr_leave.start_date, hr_leave.is_reject, hr_leave.status_id, " + //SELECT
+                        "hr_leave.finish_date, hr_leave.work_date, hr_leave.standard, hr_leave.status_id, hr_leave.time_leave, departments.departmentName, " + //SELECT
+                        "hr_leave.reason_leave, hr_employee.FirstName, hr_employee.LastName, hr_employee.TypeOfContruct " + //SELECT
+                        "FROM hr_leave " + //FROM
+                        "INNER JOIN users ON users.id = hr_leave.user_id " + //JOIN
+                        "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " + //JOIN
+                        "INNER JOIN departments ON departments.departmentid = hr_employee.Dept_ID " + //JOIN
+                        "WHERE hr_leave.leave_id = :leaveID"; //WHERE
+
+                    var queryLoadLeaveDetailEdit =
+                        "SELECT hr_leave_detail.leave_detail_id, hr_leave_detail.time_leave, " + //SELECT
+                        "hr_leave_detail.reason_leave, " + //SELECT
+                        "hr_leave_detail.type_other, hr_leave_type.leave_name, hr_leave_type.leave_type_id " + //SELECT
+                        "FROM hr_employee " + //FROM
+                        "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //JOIN
+                        "INNER JOIN hr_leave ON hr_leave.user_id = users.id " + //JOIN
+                        "INNER JOIN hr_leave_detail ON hr_leave.leave_id = hr_leave_detail.leave_id " + //JOIN
+                        "INNER JOIN hr_leave_type ON hr_leave_type.leave_type_id = hr_leave_detail.leave_type_id " + //JOIN
+                        "WHERE hr_leave.leave_id = :leaveID"; //WHERE
+                    db.sequelize.query(queryLoadLeaveEdit, null, {
+                            raw: true
+                        }, {
+                            leaveID: leaveID
+                        })
+                        .success(function(resultLeave) {
+                            db.sequelize.query(queryLoadLeaveDetailEdit, null, {
+                                    raw: true
+                                }, {
+                                    leaveID: leaveID
+                                })
+                                .success(function(resultLeaveDetail) {
+                                    res.json({
+                                        status: "success",
+                                        resultLeave: resultLeave,
+                                        resultLeaveDetail: resultLeaveDetail
+                                    });
+                                    return;
+                                })
+                                .error(function(err) {
+                                    console.log("*****ERROR:" + err + "*****");
+                                    res.json({
+                                        status: "error",
+                                        resultLeave: [],
+                                        resultLeaveDetail: []
+                                    });
+                                    return;
+                                });
+                        })
+                        .error(function(err) {
+                            console.log("*****ERROR:" + err + "*****");
+                            res.json({
+                                status: "error",
+                                resultLeave: [],
+                                resultLeaveDetail: []
+                            });
+                            return;
                         });
-                        return;
-                    })
-                    .error(function(err) {
-                        console.log("*****ERROR:" + err + "*****");
-                        res.json({
-                            status: "error",
-                            resultLeave: [],
-                            resultLeaveDetail: []
-                        });
-                        return;
+                    //END EDIT
+
+                } else {
+                    res.json({
+                        status: "error"
                     });
+                    return;
+                }
             })
             .error(function(err) {
-                console.log("*****ERROR:" + err + "*****");
+                console.log("*****ERROR: " + err + "*****");
                 res.json({
-                    status: "error",
-                    resultLeave: [],
-                    resultLeaveDetail: []
+                    status: "error"
                 });
                 return;
             });
+        //END
     },
     //END LOAD EDIT
 
@@ -639,17 +737,16 @@ module.exports = {
                 }
                 chainer.runSerially()
                     .success(function(resultAll) {
+                        //TRACKER LEAVE
+                        var trackerInfo = {
+                            statusID: info.statusID,
+                            leaveID: info.leave_id,
+                            creationDate: moment().format("YYYY-MM-DD h:mm:ss"),
+                            userID: info.USER_ID
+                        };
+                        functionForTimesheet.TracKerLeave(trackerInfo);
+                        //END TRACKER
                         if (info.statusID === 2 || info.statusID === 5) {
-                            //TRACKER LEAVE
-                            var trackerInfo = {
-                                statusID: info.statusID,
-                                leaveID: info.leave_id,
-                                creationDate: moment().format("YYYY-MM-DD h:mm:ss"),
-                                userID: info.USER_ID
-                            };
-                            functionForTimesheet.TracKerLeave(trackerInfo);
-                            //END TRACKER
-
                             //CALL SEND MAIL
                             var sendMailInfo = {
                                 userID: trackerInfo.userID,
@@ -842,29 +939,33 @@ module.exports = {
                                                     result.forEach(function(elemResult, indexResult) {
                                                         var promise_link = function() {
                                                             var deferred = Q.defer();
+                                                            var queryAdd = "";
+                                                            if (NODE_CODE === "Head of Dept.") {
+                                                                queryAdd = "AND sys_hierarchies_users.DEPARTMENT_CODE_ID = :deptId";
+                                                            }
                                                             //GET PERSON-IN-CHARGE
                                                             var queryGetNodeLevel1 =
-                                                                "SELECT DISTINCT sys_hierarchy_nodes.TO_NODE_ID " +
-                                                                "FROM sys_hierarchy_nodes " +
-                                                                "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.NODE_ID = sys_hierarchy_nodes.NODE_ID " +
-                                                                "INNER JOIN users on users.id = sys_hierarchies_users.USER_ID " +
-                                                                "INNER JOIN hr_leave ON hr_leave.user_id = users.id " +
-                                                                "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " +
-                                                                "WHERE sys_hierarchy_group.GROUP_TYPE = 'Time Sheet' AND hr_leave.leave_id = :leaveId AND sys_hierarchies_users.DEPARTMENT_CODE_ID = :deptId";
+                                                                "SELECT DISTINCT sys_hierarchy_nodes.TO_NODE_ID " + //SELECT
+                                                                "FROM sys_hierarchy_nodes " + //FROM
+                                                                "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.NODE_ID = sys_hierarchy_nodes.NODE_ID " + //JOIN
+                                                                "INNER JOIN users on users.id = sys_hierarchies_users.USER_ID " + //JOIN
+                                                                "INNER JOIN hr_leave ON hr_leave.user_id = users.id " + //JOIN
+                                                                "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " + //JOIN
+                                                                "WHERE sys_hierarchy_group.GROUP_TYPE = 'Time Sheet' AND hr_leave.leave_id = :leaveId " + queryAdd; //WHERE
                                                             db.sequelize.query(queryGetNodeLevel1, null, {
                                                                     raw: true
                                                                 }, {
                                                                     leaveId: result[indexResult].leave_id,
-                                                                    deptId: resultDept[0].DEPARTMENT_CODE_ID
+                                                                    deptId: resultDept[0].DEPARTMENT_CODE_ID //USE WHEN Head of Dept.
                                                                 })
                                                                 .success(function(resultNodeLevel1) {
                                                                     var queryGetNodeLevel2 =
-                                                                        "SELECT DISTINCT sys_hierarchy_nodes.TO_NODE_ID " +
-                                                                        "FROM sys_hierarchy_nodes " +
-                                                                        "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.NODE_ID = sys_hierarchy_nodes.NODE_ID " +
-                                                                        "INNER JOIN users on users.id = sys_hierarchies_users.USER_ID " +
-                                                                        "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " +
-                                                                        "WHERE sys_hierarchy_group.GROUP_TYPE = 'Time Sheet' AND sys_hierarchy_nodes.NODE_ID = :nodeId";
+                                                                        "SELECT DISTINCT sys_hierarchy_nodes.TO_NODE_ID " + //SELECT
+                                                                        "FROM sys_hierarchy_nodes " + //FROM
+                                                                        "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.NODE_ID = sys_hierarchy_nodes.NODE_ID " + //JOIN
+                                                                        "INNER JOIN users on users.id = sys_hierarchies_users.USER_ID " + //JOIN
+                                                                        "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " + //JOIN
+                                                                        "WHERE sys_hierarchy_group.GROUP_TYPE = 'Time Sheet' AND sys_hierarchy_nodes.NODE_ID = :nodeId"; //WHERE
                                                                     db.sequelize.query(queryGetNodeLevel2, null, {
                                                                             raw: true
                                                                         }, {
@@ -876,13 +977,13 @@ module.exports = {
                                                                         })
                                                                         .success(function(resultNodeLevel2) {
                                                                             var getInfoLevel1 =
-                                                                                "SELECT DISTINCT hr_employee.FirstName, hr_employee.LastName " +
-                                                                                "FROM hr_employee " +
-                                                                                "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
-                                                                                "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " +
-                                                                                "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " +
-                                                                                "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_group.GROUP_ID " +
-                                                                                "WHERE sys_hierarchy_group.GROUP_TYPE='Time Sheet' AND sys_hierarchy_nodes.NODE_ID = :nodeId";
+                                                                                "SELECT DISTINCT hr_employee.FirstName, hr_employee.LastName " + //SELECT
+                                                                                "FROM hr_employee " + //FROM
+                                                                                "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //JOIN
+                                                                                "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " + //JOIN
+                                                                                "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " + //JOIN
+                                                                                "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_group.GROUP_ID " + //JOIN
+                                                                                "WHERE sys_hierarchy_group.GROUP_TYPE='Time Sheet' AND sys_hierarchy_nodes.NODE_ID = :nodeId"; //WHERE
                                                                             db.sequelize.query(getInfoLevel1, null, {
                                                                                     raw: true
                                                                                 }, {
@@ -894,13 +995,13 @@ module.exports = {
                                                                                 })
                                                                                 .success(function(resultInfoLevel1) {
                                                                                     var getInfoLevel2 =
-                                                                                        "SELECT DISTINCT hr_employee.FirstName, hr_employee.LastName " +
-                                                                                        "FROM hr_employee " +
-                                                                                        "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
-                                                                                        "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " +
-                                                                                        "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " +
-                                                                                        "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_group.GROUP_ID " +
-                                                                                        "WHERE sys_hierarchy_group.GROUP_TYPE='Time Sheet' AND sys_hierarchy_nodes.NODE_ID = :nodeId";
+                                                                                        "SELECT DISTINCT hr_employee.FirstName, hr_employee.LastName " + //SELECT
+                                                                                        "FROM hr_employee " + //FROM
+                                                                                        "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //JOIN
+                                                                                        "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " + //JOIN
+                                                                                        "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " + //JOIN
+                                                                                        "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_group.GROUP_ID " + //JOIN
+                                                                                        "WHERE sys_hierarchy_group.GROUP_TYPE='Time Sheet' AND sys_hierarchy_nodes.NODE_ID = :nodeId"; //WHERE
                                                                                     db.sequelize.query(getInfoLevel2, null, {
                                                                                             raw: true
                                                                                         }, {
@@ -925,7 +1026,11 @@ module.exports = {
                                                                                                     result[indexResult].status_id === 5) &&
                                                                                                 result[indexResult].standard === 0 &&
                                                                                                 result[indexResult].is_approve_first === 0 &&
-                                                                                                result[indexResult].is_approve_second === 1) {
+                                                                                                result[indexResult].is_approve_second === 1 &&
+                                                                                                resultInfoLevel2 !== undefined &&
+                                                                                                resultInfoLevel2 !== null &&
+                                                                                                resultInfoLevel2[0] !== undefined &&
+                                                                                                resultInfoLevel2[0] !== null) {
                                                                                                 result[indexResult].person_charge = resultInfoLevel2[0].FirstName + " " + resultInfoLevel2[0].LastName;
                                                                                             } else if (elemResult.status_id === 3 &&
                                                                                                 elemResult.standard === 0) {
@@ -957,6 +1062,10 @@ module.exports = {
                                                                                                     result[indexResult].person_charge = resultInfoLevel1[0].FirstName + " " + resultInfoLevel1[0].LastName;
                                                                                                 }
                                                                                                 //END LEVEL 1
+                                                                                            } else if (elemResult.status_id === 4) {
+                                                                                                //LEAVE IS REJECT
+                                                                                                result[indexResult].person_charge = result[indexResult].FirstName + " " + result[indexResult].LastName;
+                                                                                                //END LEAVE IS REJECT
                                                                                             }
                                                                                             deferred.resolve(resultInfoLevel2);
                                                                                         })

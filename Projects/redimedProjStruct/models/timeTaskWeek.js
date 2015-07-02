@@ -11,7 +11,6 @@ module.exports = function(sequelize, DataTypes) {
         week_no: DataTypes.INTEGER(11),
         approved_date: DataTypes.DATE,
         time_charge: DataTypes.INTEGER(11),
-        time_spent: DataTypes.INTEGER(11),
         time_rest: DataTypes.INTEGER(11),
         over_time: DataTypes.INTEGER(11),
         date_submited: DataTypes.DATE,

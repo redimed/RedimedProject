@@ -1,11 +1,6 @@
 angular.module("app.loggedIn.timesheet.create.controller", [])
 
-.controller("TimesheetCreateController", function($rootScope, ConfigService, $scope, $stateParams, $cookieStore, $filter, $modal, calendarHelper, moment, StaffService, $state, toastr, FileUploader) {
-    //CLOSE MEMU
-    $('body').addClass("page-sidebar-closed");
-    $('ul').addClass("page-sidebar-menu-closed");
-    //END CLOSE
-
+.controller("TimesheetCreateController", function($rootScope, ConfigService, $scope, $stateParams, $cookieStore, $filter, $modal, calendarHelper, moment, StaffService, $state, toastr, FileUploader, $timeout) {
     // DATE
     $scope.dateOptions = {
         formatYear: 'yy',
@@ -53,9 +48,11 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
 
     //CHECK TIME IN LIEU
     $scope.checkTimeInLieu = function() {
-        var toDate = new Date();
-        var weekNo = $scope.getWeekNumber(toDate);
-        StaffService.checkTimeInLieu(weekNo, $cookieStore.get('userInfo').id).then(function(response) {
+        var info = {
+            date: new Date(),
+            userId: $cookieStore.get('userInfo').id
+        };
+        StaffService.checkTimeInLieu(info).then(function(response) {
             if (response.status === "error") {
                 toastr.error("Check Time in Lieu fail!", "Fail");
             } else if (response.status === "success") {
@@ -169,8 +166,8 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
     //END CHANGE
 
     //FUNCTION GET WEEK NUMBER
-    $scope.getWeekNumber = function(d) {
-        d = new Date(+d);
+    $scope.getWeekNumber = function(date) {
+        var d = new Date(+date);
         d.setHours(0, 0, 0);
         d.setDate(d.getDate() + 4 - (d.getDay() || 7));
         var yearStart = new Date(d.getFullYear(), 0, 1);
@@ -182,9 +179,11 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
     //GET TIM IN LIEU
 
     // GET TIME IN LIEU TO CHECK SUBMIT
-    var toDate = new Date();
-    var weekNo = $scope.getWeekNumber(toDate);
-    StaffService.checkTimeInLieu(weekNo, $cookieStore.get('userInfo').id).then(function(response) {
+    var info = {
+        date: new Date(),
+        userId: $cookieStore.get('userInfo').id
+    };
+    StaffService.checkTimeInLieu(info).then(function(response) {
         if (response.status === "error") {
             toastr.error("Check Time in Lieu fail!", "Fail");
         } else if (response.status === "success") {
@@ -203,7 +202,6 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
 
     //FUNCTION CHECK TASK WEEK
     $scope.checkTaskWeek = function(date) {
-        $scope.tasks = [];
         startWeek = $filter('date')(date, 'yyyy-MM-dd');
         $scope.info.startWeek = startWeek;
         StaffService.checkTaskWeek($scope.info).then(function(response) {
@@ -211,25 +209,28 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 toastr.error("Error", "Error");
             } else {
                 if (response['data'] !== 'no') {
+                    $scope.tasks = [];
                     angular.forEach(response['data'], function(data) {
                         data.isEdit = true;
                         $scope.tasks.push(data);
                     });
                 } else {
+                    $scope.orgiTask = angular.copy($scope.tasks);
+                    $scope.tasks = [];
                     $scope.viewWeek = calendarHelper.getWeekView(date, true);
-                    angular.forEach($scope.viewWeek.columns, function(data) {
+                    angular.forEach($scope.viewWeek.columns, function(data, index) {
                         $scope.task = {
-                            order: 1,
-                            task: null,
+                            order: $scope.orgiTask[index].order,
+                            task: $scope.orgiTask[index].task,
                             date: data.dateChosen,
-                            department_code_id: null,
-                            location_id: null,
-                            activity_id: null,
-                            time_charge: null,
-                            isInputItem: false,
-                            isBillable: false,
-                            isParent: 1,
-                            item: []
+                            department_code_id: $scope.orgiTask[index].department_code_id,
+                            location_id: $scope.orgiTask[index].location_id,
+                            activity_id: $scope.orgiTask[index].activity_id,
+                            time_charge: $scope.orgiTask[index].time_charge,
+                            isInputItem: $scope.orgiTask[index].isInputItem,
+                            isBillable: $scope.orgiTask[index].isBillable,
+                            isParent: $scope.orgiTask[index].isParent,
+                            item: $scope.orgiTask[index].item
                         };
                         $scope.tasks.push($scope.task);
                     });
@@ -250,7 +251,6 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 if (response['status'] === 'success') {
                     $scope.nextDay = moment(response['maxDate']).add(7, 'day').toDate();
                 } else if (response['status'] === 'no maxDate') {
-
                     $scope.nextDay = moment($scope.calendarDay).add(7, 'day').toDate();
                 }
                 $scope.viewWeek = calendarHelper.getWeekView($scope.nextDay, true);
@@ -342,8 +342,11 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 if ($stateParams.id) {
                     //EDIT TIMESHEET
                     $scope.isEdit = true;
-                    $scope.idWeek = $stateParams.id;
-                    StaffService.showEdit($scope.idWeek).then(function(response) {
+                    var info = {
+                        idWeek: $stateParams.id,
+                        userId: $cookieStore.get("userInfo").id
+                    };
+                    StaffService.showEdit(info).then(function(response) {
                         if (response['data'] !== undefined &&
                             response['data'][0] !== undefined &&
                             response['data'][0].date !== undefined) {
@@ -351,7 +354,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                             $scope.dateStart = response['data'][0].date;
                             //END
                         }
-                        if (response['status'] == 'fail' || response['status'] == 'error') {
+                        if (response['status'] == 'fail') {
                             angular.forEach(response['data'], function(data) {
                                 data.item = [];
                                 data.isEdit = true;
@@ -423,6 +426,11 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                                 //END PUSH AND REFRESH
 
                             });
+                        } else if (response['status'] === 'error') {
+                            $state.go("loggedIn.home", null, {
+                                "reload": true
+                            });
+                            toastr.error("Load fail!", "Error");
                         }
                     });
                 } else {
@@ -541,9 +549,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 StaffService.addAllTask($scope.tasks, $scope.info).then(function(response) {
                     if (response['status'] == 'success') {
                         toastr.success("success", "Success");
-                        $state.go('loggedIn.TimeSheetHome.view', null, {
-                            'reload': true
-                        });
+                        $state.go('loggedIn.timesheetHome.loadTimesheetHistory');
                     } else {
                         toastr.error("Error", "Error");
                     }
@@ -555,9 +561,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 StaffService.editTask($scope.tasks, $scope.info).then(function(response) {
                     if (response['status'] == 'success') {
                         toastr.success("Edit Success");
-                        $state.go('loggedIn.TimeSheetHome.view', null, {
-                            'reload': true
-                        });
+                        $state.go('loggedIn.timesheetHome.loadTimesheetHistory');
                     } else {
                         toastr.error("Error", "Error");
                     }

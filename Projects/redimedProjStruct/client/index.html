@@ -716,20 +716,6 @@ RLOB PAPERLESS STRUCTURE -->
     <script type='text/javascript' src='modules/sysservices/controllers/SysServicesController.js'></script>
     <script type='text/javascript' src='modules/sysservices/controllers/SysServicesListController.js'></script>
     <!-- END SYS_SERVICES MODULE -->
-    <!-- STAFF -->
-    <script type="text/javascript" src="vendor/angular-bootstrap-calendar/calendar-jquery/jquery.animate.clip.js"></script>
-    <script type="text/javascript" src="vendor/angular-bootstrap-calendar/calendar-jquery/jCal.js"></script>
-    <link href="vendor/angular-bootstrap-calendar/calendar-jquery/jCal.css" type="text/css" rel="stylesheet" />
-    <script type="text/javascript" src="modules/TimeSheet/controllers/ViewTaskController.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/controllers/StaffWeekController.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/controllers/StaffMonthController.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/controllers/createTimesheetController.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/controllers/viewTimesheetController.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/services/StaffService.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/directives/StaffCalendarDirective.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/directives/StaffMonthDirective.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/directives/StaffWeekDirective.js"></script>
-    <!-- END STAFF -->
     <!--END AUTO CREATE-->
     <!--INJURY MANAGEMENT MODULE-->
     <script type="text/javascript" src="modules/injuryManagement/InjuryManagement.js"></script>
@@ -769,62 +755,19 @@ RLOB PAPERLESS STRUCTURE -->
     <!-- CUSTOM CSS -->
     <link rel="stylesheet" type="text/css" href="theme/custom.css">
     <!-- END CUSTOM CSS -->
-    <!-- CALENDAR -->
-    <script src="vendor/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js"></script>
-    <!-- END CALENDAR -->
     <link rel="stylesheet" type="text/css" href="theme/BootSideMenu.css" />
     <script type="text/javascript" src="theme/BootSideMenu.js"></script>
+    <!-- THANH TEAM -->
     <!-- MODULE TREEAPPROVE -->
-    <script type="text/javascript" src="modules/treeApprove/controllers/AllControllers.js"></script>
-    <script type="text/javascript" src="modules/treeApprove/controllers/TreeDetail.js"></script>
-    <script type="text/javascript" src="modules/treeApprove/TreeApprove.js"></script>
-    <script type="text/javascript" src="modules/treeApprove/controllers/ListTreeController.js"></script>
-    <script type="text/javascript" src="modules/treeApprove/controllers/ListFunctionController.js"></script>
-    <script type="text/javascript" src="modules/treeApprove/directives/DirectiveAddNode.js"></script>
-    <script type="text/javascript" src="modules/treeApprove/directives/DirectiveAddFunction.js"></script>
-    <script type="text/javascript" src="modules/treeApprove/directives/DirectiveAddTree.js"></script>
-    <script type="text/javascript" src="modules/treeApprove/directives/DirectiveTree.js"></script>
+    <script type="text/javascript" src="modules/treeApprove/routes_treeApprove.js"></script>
     <script type="text/javascript" src="modules/treeApprove/services/Service.js"></script>
     <!-- END MODULE TREEAPPROVE -->
-    <!-- MODULE TIME SHEET -->
-    <script type="text/javascript" src="modules/TimeSheet/controllers/TimeSheetHomeController.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/directives/TimeSheetDirectives.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/directives/TimeSheetItemCodeDirective.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/directives/TimeSheetOnlyDigits.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/directives/TimeSheetViewTaskDirective.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/directives/TimeSheetDetailDirective.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/directives/TimeSheetActivityDetailDirective.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/directives/TimeSheetFilter.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/directives/TimeSheetTimeDirective.js"></script>
+    <!-- MODULE TIMESHEET -->
+    <script type="text/javascript" src="modules/TimeSheet/routes_timesheet.js"></script>
     <script type="text/javascript" src="modules/TimeSheet/services/TimeSheetServices.js"></script>
-    <!-- REPORT -->
-    <script type="text/javascript" src="modules/TimeSheet/controllers/TimeSheetReport1Controller.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/controllers/TimeSheetReport2Controller.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/controllers/TimeSheetReport3Controller.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/controllers/TimeSheetReport4Controller.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/controllers/TimeSheetReport5Controller.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/controllers/TimeSheetReport6Controller.js"></script>
-    <!-- END REPORT -->
-    <script type="text/javascript" src="modules/TimeSheet/controllers/TimeSheetApproveTaskController.js">
-    </script>
-    <script type="text/javascript" src="modules/TimeSheet/directives/TimeSheetViewItem.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/TimeSheet.js"></script>
-    <!-- JQUERY MASK -->
-    <script type="text/javascript" src="vendor/jquery-mask/masked.js"></script>
-    <!-- END JQUERY MASK -->
-    <!-- MUTIPLE SELECT -->
-    <script type="text/javascript" src="vendor/dropdown-multiselect/src/angularjs-dropdown-multiselect.js"></script>
-    <!-- END SELECT -->
-    <!-- MODULE LEAVE FORM -->
-    <script type="text/javascript" src="modules/TimeSheet/controllers/TimeSheetCreateLeaveController.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/controllers/TimeSheetHistoryLeaveController.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/controllers/TimeSheetApproveLeaveController.js"></script>
-    <script type="text/javascript" src="vendor/datetimepicker-leave/datetimepicker.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/directives/TimeSheetViewLeaveDirective.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/directives/TimeSheetViewLeaveApproveDirective.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/controllers/TimeSheetReportOweLeaveController.js"></script>
-    <!-- END LEAVE -->
-    <!-- END MODULE TIME SHEET -->
+    <script type="text/javascript" src="modules/TimeSheet/services/StaffService.js"></script>
+    <!-- END MODULE TIMESHEET -->
+    <!-- END THANH TEAM -->
     <!--MODULE CONSULTATION-->
     <link rel="stylesheet" type="text/css" href="lib/angular-modal/modal.css">
     <script type="text/javascript" src="lib/angular-modal/modal-4.0.js"></script>

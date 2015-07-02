@@ -1,12 +1,6 @@
 angular.module("app.loggedIn.timesheet.view.controller", [])
 
 .controller("TimesheetViewController", function($rootScope, $scope, MODE_ROW, $filter, $cookieStore, ConfigService, $modal, calendarHelper, moment, StaffService, $state, toastr) {
-
-    //close siderba
-    $('body').addClass("page-sidebar-closed");
-    $('body').find('ul').addClass("page-sidebar-menu-closed");
-    //end close siderba
-
     //SELECT STATUS
     $scope.listStatus = [{
         code: 1,
@@ -113,6 +107,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
     $scope.changeDate = function(dateValue) {
         var dateFrom = new Date(dateValue.substr(6, 4), dateValue.substr(3, 2) - 1, dateValue.substr(0, 2));
         $scope.searchObjectMap.week_no = $scope.getWeekNumber(dateFrom);
+        $scope.searchObjectMap.dateFrom = dateFrom;
         $scope.loadList();
     };
 
@@ -191,9 +186,11 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
     //FUNCTION GET WEEK NUMBER
 
     // GET TIME IN LIEU TO CHECK SUBMIT
-    var toDate = new Date();
-    var weekNo = $scope.getWeekNumber(toDate);
-    StaffService.checkTimeInLieu(weekNo, $cookieStore.get('userInfo').id).then(function(response) {
+    var info = {
+        date: new Date(),
+        userId: $cookieStore.get('userInfo').id
+    };
+    StaffService.checkTimeInLieu(info).then(function(response) {
         if (response.status === "error") {
             toastr.error("Check Time in Lieu fail!", "Fail");
         } else if (response.status === "success") {
@@ -229,7 +226,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
 
     $scope.okClick = function() {
         $modalInstance.close();
-        $state.go('loggedIn.TimeSheetHome.create', {
+        $state.go('loggedIn.timesheetHome.loadTimesheetCreate', {
             id: infoWeek.task_week_id
         });
     };
@@ -252,7 +249,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                     $modalInstance.close();
                 } else if (response.status === 'success') {
                     $modalInstance.close();
-                    $state.go("loggedIn.TimeSheetHome.view", null, {
+                    $state.go("loggedIn.timesheetHome.loadTimesheetHistory", null, {
                         "reload": true
                     });
                     toastr.success("Submit success", "Success");
@@ -289,7 +286,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                 //end get
                 if (infoWeek.date != 'full') {
                     $scope.one = true;
-                    $scope.Title = "TimeSheet Detail"; //seet title TimeSheet Detail
+                    $scope.Title = "Timesheet Detail"; //seet title TimeSheet Detail
                     $scope.tasks = _.filter(response['data'], function(data) {
                         return data.date == infoWeek.date;
                     });
@@ -357,9 +354,11 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
     };
     //FUNCTION GET WEEK NUMBER
     // GET TIME IN LIEU TO CHECK SUBMIT
-    var toDate = new Date();
-    var weekNo = $scope.getWeekNumber(toDate);
-    StaffService.checkTimeInLieu(weekNo, $cookieStore.get('userInfo').id).then(function(response) {
+    var info = {
+        date: new Date(),
+        userId: $cookieStore.get('userInfo').id
+    };
+    StaffService.checkTimeInLieu(info).then(function(response) {
         if (response.status === "error") {
             toastr.error("Check Time in Lieu fail!", "Fail");
         } else if (response.status === "success") {
@@ -403,9 +402,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                     $modalInstance.close();
                 } else if (response.status === 'success') {
                     $modalInstance.close();
-                    $state.go("loggedIn.TimeSheetHome.view", null, {
-                        "reload": true
-                    });
+                    $state.go("loggedIn.timesheetHome.loadTimesheetHistory", null,{"reload": true});
                     toastr.success("Submit success", "Success");
                 }
 
@@ -414,7 +411,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
     };
     $scope.okClick = function() {
         $modalInstance.close();
-        $state.go('loggedIn.TimeSheetHome.create', {
+        $state.go('loggedIn.timesheetHome.loadTimesheetCreate', {
             id: infoWeek.task_week_id
         });
     };
@@ -444,35 +441,48 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                     $scope.employee_name = (result[0].FirstName === null || result[0].FirstName === "") ? ((result[0].LastName === null || result[0].LastName === "") ? " " : result[0].LastName) : (result[0].FirstName + " " + ((result[0].LastName === null || result[0].LastName === "") ? " " : result[0].LastName));
                 }
                 // END
-                $scope.tasks = _.chain(response['data'])
-                    .groupBy("date")
-                    .map(function(value, key) {
-                        return _.object(_.zip(["date", "rows"], [key, _.chain(value)
-                            .groupBy("activity_id")
-                            .map(function(value1, activity_id) {
-                                var time_charge = _.reduce(value1, function(result, currentObject) {
-                                    return result.time_charge + currentObject.time_charge;
-                                });
-                                if (typeof time_charge == 'object') {
-                                    time_charge = time_charge.time_charge;
-                                }
-                                return _.object(_.zip(["activity_id", "time_charge"], [activity_id, time_charge]));
-                            })
-                            .value()
-                        ]));
-                    })
-                    .value();
-                var sum = 0;
-                angular.forEach($scope.tasks, function(data) {
-                    data.arrActivity = ['-', '-', '-', '-', '-'];
-                    sum = 0;
-                    angular.forEach(data.rows, function(row) {
-                        sum = sum + row.time_charge;
-                        row.time_charge = StaffService.getFortMatTimeCharge(row.time_charge);
-                        data.arrActivity[row.activity_id - 1] = row.time_charge;
+                var arrayDate = [];
+                var arrayActivity = [];
+                //PUSH DATE
+                angular.forEach(response['data'], function(valueData, indexData) {
+                    var isFoundDate = false;
+                    angular.forEach(arrayDate, function(valueDate, indexDate) {
+                        if (valueData.date === valueDate.date) {
+                            isFoundDate = true;
+                        }
                     });
-                    data.total = StaffService.getFortMatTimeCharge(sum);
+                    if (isFoundDate === false) {
+                        arrayDate.push({
+                            date: valueData.date
+                        });
+                    }
                 });
+                //END
+                angular.forEach(arrayDate, function(valueDate, indexDate) {
+                    var timeChargeDate = 0;
+                    var timeChargeActivity = 0;
+                    arrayDate[indexDate].timeActivity = [{
+                        time_charge: 0
+                    }, {
+                        time_charge: 0
+                    }, {
+                        time_charge: 0
+                    }, {
+                        time_charge: 0
+                    }, {
+                        time_charge: 0
+                    }];
+                    angular.forEach(response['data'], function(valueData, indexData) {
+                        var time_charge = (valueData.time_charge !== undefined && valueData.time_charge !== null) ? valueData.time_charge : 0;
+                        if (valueData.date === valueDate.date) {
+                            timeChargeDate += time_charge;
+                            arrayDate[indexDate].timeActivity[valueData.activity_id - 1].time_charge += time_charge;
+                        }
+                    });
+                    arrayDate[indexDate].time_charge_date = timeChargeDate;
+                });
+
+                $scope.tasks = angular.copy(arrayDate);
             }
         });
         $scope.tasks.loading = false;

@@ -10,12 +10,13 @@
          var DATE_OF_WEEK = arrayWeek[moment(info.dateSubmit).format('e') - 1];
          var DATE_SUBMIT = moment(info.dateSubmit).format('DD/MM/YYYY - HH:mm:ss');
          //GET INFOMATION MANAGE AND EMPLOYEE
-         var queryGetInfoEmployee = "SELECT hr_employee.FirstName, hr_employee.LastName, sys_hierarchy_nodes.NODE_ID " +
-             "FROM hr_employee " +
-             "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
-             "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " +
-             "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " +
-             "WHERE users.id = :userID";
+         var queryGetInfoEmployee =
+             "SELECT hr_employee.FirstName, hr_employee.LastName, sys_hierarchy_nodes.NODE_ID " + //SELECT
+             "FROM hr_employee " + //FROM
+             "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //JOIN
+             "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " + //JOIN
+             "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " + //JOIN
+             "WHERE users.id = :userID"; //WHERE
          db.sequelize.query(queryGetInfoEmployee, null, {
                  raw: true
              }, {
@@ -28,12 +29,13 @@
                      resultInfoEmployee[0] !== undefined &&
                      resultInfoEmployee[0] !== null &&
                      !(isNaN(resultInfoEmployee[0].NODE_ID))) {
-                     var queryGetInfoManage = "SELECT hr_employee.FirstName, hr_employee.LastName, hr_employee.Email " +
-                         "FROM hr_employee " +
-                         "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
-                         "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " +
-                         "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.TO_NODE_ID = sys_hierarchies_users.NODE_ID " +
-                         "WHERE sys_hierarchy_nodes.NODE_ID = :nodeID";
+                     var queryGetInfoManage =
+                         "SELECT hr_employee.FirstName, hr_employee.LastName, hr_employee.Email " + //SELECT
+                         "FROM hr_employee " + //FROM
+                         "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //JOIN
+                         "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " + //JOIN
+                         "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.TO_NODE_ID = sys_hierarchies_users.NODE_ID " + //JOIN
+                         "WHERE sys_hierarchy_nodes.NODE_ID = :nodeID"; //WHERE
                      db.sequelize.query(queryGetInfoManage, null, {
                              raw: true
                          }, {
@@ -60,12 +62,18 @@
                                          'Access the e-Timesheet System at https://apps.redimed.com.au</label><br/><br/><br/>' +
                                          '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
                                          '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">e-Timesheet Reporting System<br></label><br/><br/><br/>' +
-                                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label>' +
-                                         '<hr/><table><tbody><tr><td><img src="cid:logoRedimed"></td><td><b><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">A</b>&nbsp;1 Frederick Street, Belmont, Western Australia 610</span>' +
-                                         '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T&nbsp;</b>1300 881 301 (REDiMED Emergency Service 24/7)</span><br/><span><b>W&nbsp;</b>www.redimed.com.au</span></td></tr><tr><tr>' +
-                                         '<td colspan="2"><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This message and any files transmitted with it contains confidential information intended only for the use of the addressee. If you are not the intended recipient of this message, ' +
-                                         'any unauthorized form of reproduction of this message is strictly prohibited. If you have received this message in error, please notify us immediately.</span></td></tr>' +
-                                         '<br/><br/><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Please consider our environment before printing this e-mail.</span></td></tr></tbody></table>'
+                                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label><br/><br/><br/>' +
+                                         '<table style="font-size:9.0pt;color:#203864;"><tbody><tr><td><b><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">A</b>&nbsp;1 Frederick Street, Belmont WA 6104</span>' +
+                                         '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T&nbsp;</b> 08 9230 0900 | F: 08 9230 0999</span><br/><span><b>W&nbsp;</b>www.redimed.com.au</span></td></tr>' +
+                                         '<tr><td><img src="cid:logoRedimed"></td></tr>' +
+                                         '<tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">&nbsp;&nbsp;&nbsp;Joondalup| Belmont | Rockingham</span></td></tr>' +
+                                         '<tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail and any attachments are intended for the addressee(s) only and may be confidential.<br/>' +
+                                         'They may contain legally privileged or copyright material.You should not read, copy, use or disclose them without authorisation.<br/>' +
+                                         'If you are not the intended recipient, please contact the sender as soon as possible by return e-mail and then please delete both messages.<br/>' +
+                                         'Please note that any views or opinions presented in this email are solely those of the author and do not necessarily represent those of REDIMED Pty Ltd. The ' +
+                                         'recipient should check this email and any attachments for the presence of viruses. REDIMED Pty Ltd accepts no liability for any damage caused by any virus ' +
+                                         'transmitted by this email.' +
+                                         '</td></tr></tbody></table>'
                                  };
 
                                  // CALL SEND MAIL
@@ -98,13 +106,13 @@
          var DATE_OF_WEEK = arrayWeek[moment(info.dateSubmit).format('e') - 1];
          var DATE_SUBMIT = moment(info.dateSubmit).format('DD/MM/YYYY - HH:mm:ss');
          var queryGetNodeIdUserApproveFirst =
-             "SElECT hr_employee.FirstName, hr_employee.LastName, hr_employee.Email, sys_hierarchy_nodes.TO_NODE_ID " +
-             "FROM hr_employee " +
-             "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
-             "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " +
-             "INNER JOIN sys_hierarchy_nodes ON sys_hierarchies_users.NODE_ID = sys_hierarchy_nodes.NODE_ID " +
-             "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " +
-             "WHERE sys_hierarchies_users.USER_ID = :userId";
+             "SElECT hr_employee.FirstName, hr_employee.LastName, hr_employee.Email, sys_hierarchy_nodes.TO_NODE_ID " + //SELECT
+             "FROM hr_employee " + //FROM
+             "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //JOIN
+             "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " + //JOIN
+             "INNER JOIN sys_hierarchy_nodes ON sys_hierarchies_users.NODE_ID = sys_hierarchy_nodes.NODE_ID " + //JOIN
+             "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " + //JOIN
+             "WHERE sys_hierarchies_users.USER_ID = :userId"; //WHERE
          db.sequelize.query(queryGetNodeIdUserApproveFirst, null, {
                  raw: true
              }, {
@@ -115,13 +123,13 @@
                      resultNodeInUserApproveFirst !== null &&
                      resultNodeInUserApproveFirst.length !== 0) {
                      var queryGetInfoUserApproveSecond =
-                         "SElECT hr_employee.FirstName, hr_employee.LastName, hr_employee.Email " +
-                         "FROM hr_employee " +
-                         "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
-                         "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " +
-                         "INNER JOIN sys_hierarchy_nodes ON sys_hierarchies_users.NODE_ID = sys_hierarchy_nodes.NODE_ID " +
-                         "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " +
-                         "WHERE sys_hierarchy_nodes.NODE_ID = :nodeId";
+                         "SElECT hr_employee.FirstName, hr_employee.LastName, hr_employee.Email " + //SELECT
+                         "FROM hr_employee " + //FROM
+                         "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //JOIN
+                         "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " + //JOIN
+                         "INNER JOIN sys_hierarchy_nodes ON sys_hierarchies_users.NODE_ID = sys_hierarchy_nodes.NODE_ID " + //JOIN
+                         "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " + //JOIN
+                         "WHERE sys_hierarchy_nodes.NODE_ID = :nodeId"; //WHERE
                      db.sequelize.query(queryGetInfoUserApproveSecond, null, {
                              raw: true
                          }, {
@@ -132,14 +140,14 @@
                                  resultInfoUserApproveSecond !== null &&
                                  resultInfoUserApproveSecond.length !== 0) {
                                  var queryGetInfoEmployee =
-                                     "SELECT DISTINCT hr_employee.FirstName, hr_employee.LastName, hr_employee.Email " +
-                                     "FROM hr_employee " +
-                                     "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
-                                     "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " +
-                                     "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " +
-                                     "INNER JOIN sys_hierarchy_group on sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " +
-                                     "INNER JOIN hr_leave ON hr_leave.user_id = users.id " +
-                                     "WHERE hr_leave.leave_id = :leaveID AND sys_hierarchy_group.GROUP_TYPE='Time Sheet'";
+                                     "SELECT DISTINCT hr_employee.FirstName, hr_employee.LastName, hr_employee.Email " + //SELECT
+                                     "FROM hr_employee " + //FROM
+                                     "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //JOIN
+                                     "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " + //JOIN
+                                     "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " + //JOIN
+                                     "INNER JOIN sys_hierarchy_group on sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " + //JOIN
+                                     "INNER JOIN hr_leave ON hr_leave.user_id = users.id " + //JOIN
+                                     "WHERE hr_leave.leave_id = :leaveID AND sys_hierarchy_group.GROUP_TYPE='Time Sheet'"; //WHERE
                                  db.sequelize.query(queryGetInfoEmployee, null, {
                                          raw: true
                                      }, {
@@ -161,12 +169,18 @@
                                                          'Access the e-Timesheet System at https://apps.redimed.com.au</label><br/><br/><br/>' +
                                                          '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
                                                          '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">e-Timesheet Reporting System<br></label><br/><br/><br/>' +
-                                                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label>' +
-                                                         '<hr/><table><tbody><tr><td><img src="cid:logoRedimed"></td><td><b><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">A</b>&nbsp;1 Frederick Street, Belmont, Western Australia 610</span>' +
-                                                         '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T&nbsp;</b>1300 881 301 (REDiMED Emergency Service 24/7)</span><br/><span><b>W&nbsp;</b>www.redimed.com.au</span></td></tr><tr><tr>' +
-                                                         '<td colspan="2"><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This message and any files transmitted with it contains confidential information intended only for the use of the addressee. If you are not the intended recipient of this message, ' +
-                                                         'any unauthorized form of reproduction of this message is strictly prohibited. If you have received this message in error, please notify us immediately.</span></td></tr>' +
-                                                         '<br/><br/><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Please consider our environment before printing this e-mail.</span></td></tr></tbody></table>'
+                                                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label><br/><br/><br/>' +
+                                                         '<table style="font-size:9.0pt;color:#203864;"><tbody><tr><td><b><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">A</b>&nbsp;1 Frederick Street, Belmont WA 6104</span>' +
+                                                         '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T&nbsp;</b> 08 9230 0900 | F: 08 9230 0999</span><br/><span><b>W&nbsp;</b>www.redimed.com.au</span></td></tr>' +
+                                                         '<tr><td><img src="cid:logoRedimed"></td></tr>' +
+                                                         '<tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">&nbsp;&nbsp;&nbsp;Joondalup| Belmont | Rockingham</span></td></tr>' +
+                                                         '<tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail and any attachments are intended for the addressee(s) only and may be confidential.<br/>' +
+                                                         'They may contain legally privileged or copyright material.You should not read, copy, use or disclose them without authorisation.<br/>' +
+                                                         'If you are not the intended recipient, please contact the sender as soon as possible by return e-mail and then please delete both messages.<br/>' +
+                                                         'Please note that any views or opinions presented in this email are solely those of the author and do not necessarily represent those of REDIMED Pty Ltd. The ' +
+                                                         'recipient should check this email and any attachments for the presence of viruses. REDIMED Pty Ltd accepts no liability for any damage caused by any virus ' +
+                                                         'transmitted by this email.' +
+                                                         '</td></tr></tbody></table>'
                                                  };
 
                                                  // CALL SEND MAIL
@@ -215,10 +229,11 @@
      sendMailLeave: function(req, res, info) {
          var mailOptions = {};
          var queryGetInfoEmployee =
-             "SELECT hr_employee.FirstName, hr_employee.TITLE, hr_employee.Email, hr_employee.LastName, hr_leave.start_date, hr_leave.finish_date, hr_leave.user_id " +
-             "FROM hr_employee INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
-             "INNER JOIN hr_leave ON users.id = hr_leave.user_id " +
-             "WHERE hr_leave.leave_id = :leaveID";
+             "SELECT hr_employee.FirstName, hr_employee.TITLE, hr_employee.Email, hr_employee.LastName, " + //SELECT
+             "hr_leave.start_date, hr_leave.finish_date, hr_leave.user_id " + //SELECT
+             "FROM hr_employee INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //FROM
+             "INNER JOIN hr_leave ON users.id = hr_leave.user_id " + //JOIN
+             "WHERE hr_leave.leave_id = :leaveID"; //WHERE
          db.sequelize.query(queryGetInfoEmployee, null, {
                  raw: true
              }, {
@@ -243,18 +258,24 @@
                              '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Access the e-Timesheet System at https://apps.redimed.com.au<label><br/><br/><br/>' +
                              '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
                              '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">e-Timesheet Reporting System<br></label><br/><br/><br/>' +
-                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond' +
-                             '<hr/><table><tbody><tr><td><img src="cid:logoRedimed"></td><td><b><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">A</b>&nbsp;1 Frederick Street, Belmont, Western Australia 610</span>' +
-                             '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T&nbsp;</b>1300 881 301 (REDiMED Emergency Service 24/7)</span><br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>W&nbsp;</b>www.redimed.com.au</span></td></tr><tr><tr>' +
-                             '<td colspan="2"><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This message and any files transmitted with it contains confidential information intended only for the use of the addressee. If you are not the intended recipient of this message, ' +
-                             'any unauthorized form of reproduction of this message is strictly prohibited. If you have received this message in error, please notify us immediately.</span></td></tr>' +
-                             '<br/><br/><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Please consider our environment before printing this e-mail.</span></td></tr></tbody></table>'
+                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label><br/><br/><br/>' +
+                             '<table style="font-size:9.0pt;color:#203864;"><tbody><tr><td><b><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">A</b>&nbsp;1 Frederick Street, Belmont WA 6104</span>' +
+                             '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T&nbsp;</b> 08 9230 0900 | F: 08 9230 0999</span><br/><span><b>W&nbsp;</b>www.redimed.com.au</span></td></tr>' +
+                             '<tr><td><img src="cid:logoRedimed"></td></tr>' +
+                             '<tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">&nbsp;&nbsp;&nbsp;Joondalup| Belmont | Rockingham</span></td></tr>' +
+                             '<tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail and any attachments are intended for the addressee(s) only and may be confidential.<br/>' +
+                             'They may contain legally privileged or copyright material.You should not read, copy, use or disclose them without authorisation.<br/>' +
+                             'If you are not the intended recipient, please contact the sender as soon as possible by return e-mail and then please delete both messages.<br/>' +
+                             'Please note that any views or opinions presented in this email are solely those of the author and do not necessarily represent those of REDIMED Pty Ltd. The ' +
+                             'recipient should check this email and any attachments for the presence of viruses. REDIMED Pty Ltd accepts no liability for any damage caused by any virus ' +
+                             'transmitted by this email.' +
+                             '</td></tr></tbody></table>'
                      };
                      queryGetPositionUserReject =
-                         "SELECT hr_employee.TITLE " +
-                         "FROM hr_employee " +
-                         "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
-                         "WHERE users.id = :userId";
+                         "SELECT hr_employee.TITLE " + //SELECT
+                         "FROM hr_employee " + //FROM
+                         "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //JOIN
+                         "WHERE users.id = :userId"; //WHERE
                      db.sequelize.query(queryGetPositionUserReject, null, {
                              raw: true
                          }, {
@@ -269,11 +290,11 @@
                                  resultPosition[0].TITLE === "Director" &&
                                  result[0].TITLE === "Staff") {
                                  var queryGetNodeIdManage =
-                                     "SELECT sys_hierarchy_nodes.TO_NODE_ID " +
-                                     "FROM sys_hierarchy_nodes " +
-                                     "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.NODE_ID = sys_hierarchy_nodes.NODE_ID " +
-                                     "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " +
-                                     "WHERE sys_hierarchy_group.GROUP_TYPE='Time Sheet' AND sys_hierarchies_users.USER_ID = :userId";
+                                     "SELECT sys_hierarchy_nodes.TO_NODE_ID " + //SELECT
+                                     "FROM sys_hierarchy_nodes " + //FROM
+                                     "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.NODE_ID = sys_hierarchy_nodes.NODE_ID " + //JOIN
+                                     "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " + //JOIN
+                                     "WHERE sys_hierarchy_group.GROUP_TYPE='Time Sheet' AND sys_hierarchies_users.USER_ID = :userId"; //WHERE
                                  db.sequelize.query(queryGetNodeIdManage, null, {
                                          raw: true
                                      }, {
@@ -284,12 +305,12 @@
                                              resultNodeIdManage !== null &&
                                              resultNodeIdManage.length !== 0) {
                                              var queryGetEmailTeamLeader =
-                                                 "SElECT hr_employee.Email " +
-                                                 "FROM hr_employee " +
-                                                 "INNER JOIN users ON hr_employee.Employee_ID = users.employee_id " +
-                                                 "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " +
-                                                 "INNER JOIN sys_hierarchy_nodes ON sys_hierarchies_users.NODE_ID = sys_hierarchy_nodes.TO_NODE_ID " +
-                                                 "WHERE sys_hierarchies_users.NODE_ID = :nodeId";
+                                                 "SElECT hr_employee.Email " + //SELECT
+                                                 "FROM hr_employee " + //FROM
+                                                 "INNER JOIN users ON hr_employee.Employee_ID = users.employee_id " + //JOIN
+                                                 "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " + //JOIN
+                                                 "INNER JOIN sys_hierarchy_nodes ON sys_hierarchies_users.NODE_ID = sys_hierarchy_nodes.TO_NODE_ID " + //JOIN
+                                                 "WHERE sys_hierarchies_users.NODE_ID = :nodeId"; //WHERE
                                              db.sequelize.query(queryGetEmailTeamLeader, null, {
                                                      raw: true
                                                  }, {
@@ -354,12 +375,18 @@
                              '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Access the e-Timesheet System at https://apps.redimed.com.au</label><br/><br/><br/>' +
                              '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
                              '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">e-Timesheet Reporting System<label><br/><br/><br/>' +
-                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label</i>' +
-                             '<hr/><table><tbody><tr><td><img src="cid:logoRedimed"></td><td><b><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">A</b>&nbsp;1 Frederick Street, Belmont, Western Australia 610</span>' +
-                             '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T&nbsp;</b>1300 881 301 (REDiMED Emergency Service 24/7)</span><br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>W&nbsp;</b>www.redimed.com.au</span></td></tr><tr><tr>' +
-                             '<td colspan="2"><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This message and any files transmitted with it contains confidential information intended only for the use of the addressee. If you are not the intended recipient of this message, ' +
-                             'any unauthorized form of reproduction of this message is strictly prohibited. If you have received this message in error, please notify us immediately.</span></td></tr>' +
-                             '<br/><br/><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Please consider our environment before printing this e-mail.</span></td></tr></tbody></table>'
+                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label><br/><br/><br/>' +
+                             '<table style="font-size:9.0pt;color:#203864;"><tbody><tr><td><b><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">A</b>&nbsp;1 Frederick Street, Belmont WA 6104</span>' +
+                             '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T&nbsp;</b> 08 9230 0900 | F: 08 9230 0999</span><br/><span><b>W&nbsp;</b>www.redimed.com.au</span></td></tr>' +
+                             '<tr><td><img src="cid:logoRedimed"></td></tr>' +
+                             '<tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">&nbsp;&nbsp;&nbsp;Joondalup| Belmont | Rockingham</span></td></tr>' +
+                             '<tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail and any attachments are intended for the addressee(s) only and may be confidential.<br/>' +
+                             'They may contain legally privileged or copyright material.You should not read, copy, use or disclose them without authorisation.<br/>' +
+                             'If you are not the intended recipient, please contact the sender as soon as possible by return e-mail and then please delete both messages.<br/>' +
+                             'Please note that any views or opinions presented in this email are solely those of the author and do not necessarily represent those of REDIMED Pty Ltd. The ' +
+                             'recipient should check this email and any attachments for the presence of viruses. REDIMED Pty Ltd accepts no liability for any damage caused by any virus ' +
+                             'transmitted by this email.' +
+                             '</td></tr></tbody></table>'
                      };
                      // END APPROVE
 
@@ -380,15 +407,19 @@
 
      SendMailNotification: function(req, res) {
          //SEND MAIL
-         var queryNode = "SELECT sys_hierarchy_nodes.NODE_ID FROM sys_hierarchy_nodes " +
-             "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " +
-             "WHERE sys_hierarchy_group.GROUP_TYPE = 'Time Sheet' AND (sys_hierarchy_nodes.NODE_CODE = 'Staff' OR sys_hierarchy_nodes.NODE_CODE = 'Head of Dept.')";
+         var queryNode =
+             "SELECT sys_hierarchy_nodes.NODE_ID " + //SELECT
+             "FROM sys_hierarchy_nodes " + //FROM
+             "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " + //JOIN
+             "WHERE sys_hierarchy_group.GROUP_TYPE = 'Time Sheet' AND (sys_hierarchy_nodes.NODE_CODE = 'Staff' OR sys_hierarchy_nodes.NODE_CODE = 'Head of Dept.')"; //WHERE
          db.sequelize.query(queryNode)
              .success(function(resultNode) {
                  var strNode = "";
                  if (resultNode !== undefined && resultNode !== null) {
                      for (var i = 0; i < resultNode.length; i++) {
-                         if (resultNode[i] !== undefined && resultNode[i] !== null) {
+                         if (resultNode[i] !== undefined &&
+                             resultNode[i] !== null &&
+                             !isNaN(resultNode[i].NODE_ID)) {
                              strNode += resultNode[i].NODE_ID + ", ";
                          }
                      }
@@ -398,13 +429,21 @@
                  } else {
                      strNode = "(" + strNode.substring(0, strNode.length - 2) + ")";
                  }
-                 var queryHasTimeSheet = "SELECT time_tasks_week.user_id FROM time_tasks_week WHERE time_tasks_week.week_no = " + getWeekNo();
-                 db.sequelize.query(queryHasTimeSheet)
+                 var yearNow = moment().format("YYYY");
+                 var queryHasTimeSheet = "SELECT time_tasks_week.user_id FROM time_tasks_week WHERE time_tasks_week.week_no = :weekNo AND YEAR(time_tasks_week.end_date)=:yearNow";
+                 db.sequelize.query(queryHasTimeSheet, null, {
+                         raw: true
+                     }, {
+                         weekNo: module.exports.getWeekNo(),
+                         yearNow: yearNow
+                     })
                      .success(function(resultHasTimeSheet) {
                          var strHasTimeSheet = "";
                          if (resultHasTimeSheet !== undefined && resultHasTimeSheet !== null) {
                              for (var i = 0; i < resultHasTimeSheet.length; i++) {
-                                 if (resultHasTimeSheet[i] !== undefined && resultHasTimeSheet[i] !== null) {
+                                 if (resultHasTimeSheet[i] !== undefined &&
+                                     resultHasTimeSheet[i] !== null &&
+                                     !isNaN(resultHasTimeSheet[i].user_id)) {
                                      strHasTimeSheet += resultHasTimeSheet[i].user_id + ", ";
                                  }
                              }
@@ -427,7 +466,7 @@
                                      var mailOptions = {
                                          senders: 'TimeSheet',
                                          recipients: resultListEmp[lM].Email,
-                                         subject: '<span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Notification of Late Timesheet(s) Due</span>',
+                                         subject: 'Notification of Late Timesheet(s) Due',
                                          htmlBody: '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Dear <b>' + resultListEmp[lM].FirstName + ' ' + resultListEmp[lM].LastName + '</label></b>,<br/><br/><br/>' +
                                              '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This is a reminder that your timesheet was due</label><b> FRIDAY, ' + FRIDAY + ' - 12:00pm.&nbsp;</b><br/><br/><br/>' +
                                              '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Please log into the Timesheet System to complete and submit your timesheet. ' +
@@ -436,12 +475,18 @@
                                              '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Access the e-Timesheet at https://apps.redimed.com.au</label><br/><br/><br/>' +
                                              '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
                                              '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Timesheet Reporting System</label><br/><br/><br/>' +
-                                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label>' +
-                                             '<hr/><table><tbody><tr><td><img src="cid:logoRedimed"></td><td><b><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">A</b>&nbsp;1 Frederick Street, Belmont, Western Australia 610</span>' +
-                                             '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T&nbsp;</b>1300 881 301 (REDiMED Emergency Service 24/7)</span><br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>W&nbsp;</b>www.redimed.com.au</span></td></tr><tr><tr>' +
-                                             '<td colspan="2"><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This message and any files transmitted with it contains confidential information intended only for the use of the addressee. If you are not the intended recipient of this message, ' +
-                                             'any unauthorized form of reproduction of this message is strictly prohibited. If you have received this message in error, please notify us immediately.</span></td></tr>' +
-                                             '<br/><br/><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Please consider our environment before printing this e-mail.</span></td></tr></tbody></table>'
+                                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label><br/>' +
+                                             '<table style="font-size:9.0pt;color:#203864;"><tbody><tr><td><b><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">A</b>&nbsp;1 Frederick Street, Belmont WA 6104</span>' +
+                                             '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T&nbsp;</b> 08 9230 0900 | F: 08 9230 0999</span><br/><span><b>W&nbsp;</b>www.redimed.com.au</span></td></tr>' +
+                                             '<tr><td><img src="cid:logoRedimed"></td></tr>' +
+                                             '<tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">&nbsp;&nbsp;&nbsp;Joondalup| Belmont | Rockingham</span></td></tr>' +
+                                             '<tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail and any attachments are intended for the addressee(s) only and may be confidential.<br/>' +
+                                             'They may contain legally privileged or copyright material.You should not read, copy, use or disclose them without authorisation.<br/>' +
+                                             'If you are not the intended recipient, please contact the sender as soon as possible by return e-mail and then please delete both messages.<br/>' +
+                                             'Please note that any views or opinions presented in this email are solely those of the author and do not necessarily represent those of REDIMED Pty Ltd. The ' +
+                                             'recipient should check this email and any attachments for the presence of viruses. REDIMED Pty Ltd accepts no liability for any damage caused by any virus ' +
+                                             'transmitted by this email.' +
+                                             '</td></tr></tbody></table>'
                                      };
                                      //CALL SEND MAIL
                                      FunctionSendMail.sendEmail(req, res, mailOptions);
@@ -474,8 +519,8 @@
          //END
      },
 
-     getWeekNo: function() {
-         d = new Date();
+     getWeekNo: function(date) {
+         var d = new Date(date);
          d.setHours(0, 0, 0);
          d.setDate(d.getDate() + 4 - (d.getDay() || 7));
          var yearStart = new Date(d.getFullYear(), 0, 1);
@@ -504,29 +549,56 @@
      },
 
      TracKerLeave: function(info) {
-         var arrayAction = {
-             1: "Save",
-             2: "Submit",
-             3: "Approve",
-             4: "Reject",
-             5: "Resubmit"
-         };
-         var nameAction = arrayAction[info.statusID];
-         var queryTracKer = "INSERT INTO leave_tracker (action_name, leave_id, user_id, creation_date) " +
-             "VALUES(:nameAction, :leaveID, :userID, :creationDate)";
-         db.sequelize.query(queryTracKer, null, {
-                 "reload": true
+         var queryGetUserIdLeave =
+             "SElECT hr_leave.user_id " +
+             "FROM hr_leave " +
+             "WHERE hr_leave.leave_id = :leaveId";
+         db.sequelize.query(queryGetUserIdLeave, null, {
+                 raw: true
              }, {
-                 nameAction: nameAction,
-                 leaveID: info.leaveID,
-                 userID: info.userID,
-                 creationDate: info.creationDate
+                 leaveId: info.leaveID
              })
-             .success(function(resultTracKer) {
-                 console.log("***** SAVE TRACKER SUCCESS *****");
+             .success(function(resultUserIdLeave) {
+                 if (resultUserIdLeave !== undefined &&
+                     resultUserIdLeave !== null &&
+                     resultUserIdLeave.length !== 0) {
+                     var arrayAction = {
+                         1: "Save",
+                         2: "Submit",
+                         3: "Approve",
+                         4: "Reject",
+                         5: "Resubmit"
+                     };
+                     var nameAction = "";
+                     if (resultUserIdLeave[0].user_id === info.userID &&
+                         info.statusID === 4) {
+                         nameAction = "Save";
+                     } else {
+                         nameAction = arrayAction[info.statusID];
+                     }
+                     var queryTracKer = "INSERT INTO leave_tracker (action_name, leave_id, user_id, creation_date) " +
+                         "VALUES(:nameAction, :leaveID, :userID, :creationDate)";
+                     db.sequelize.query(queryTracKer, null, {
+                             "reload": true
+                         }, {
+                             nameAction: nameAction,
+                             leaveID: info.leaveID,
+                             userID: info.userID,
+                             creationDate: info.creationDate
+                         })
+                         .success(function(resultTracKer) {
+                             console.log("***** SAVE TRACKER SUCCESS *****");
+                         })
+                         .error(function(error) {
+                             console.log("***** SAVE TRACKER ERROR *****");
+                         });
+                 }
              })
-             .error(function(error) {
-                 console.log("***** SAVE TRACKER ERROR *****");
+             .error(function(err) {
+                 console.log("*****ERROR:" + err + "*****");
+                 res.json({
+                     status: "error"
+                 });
              });
      },
 
@@ -568,11 +640,18 @@
 
      SendMailTimeSheet: function(req, res, info) {
          var mailOptions = {};
-         var query = "SELECT hr_employee.FirstName, hr_employee.Email, hr_employee.LastName, time_tasks_week.start_date, time_tasks_week.end_date " +
-             "FROM hr_employee INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
-             "INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id " +
-             "WHERE time_tasks_week.task_week_id = " + info.idTaskWeek;
-         db.sequelize.query(query)
+         var query =
+             "SELECT hr_employee.FirstName, hr_employee.Email, hr_employee.LastName, time_tasks_week.start_date, " + //SELECT
+             "time_tasks_week.end_date " + //SELECT
+             "FROM hr_employee " + //FROM
+             "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //JOIN
+             "INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id " + //JOIN
+             "WHERE time_tasks_week.task_week_id = :idTaskWeek";
+         db.sequelize.query(query, null, {
+                 raw: true
+             }, {
+                 idTaskWeek: info.idTaskWeek
+             })
              .success(function(result) {
                  var start_date = "";
                  var end_date = "";
@@ -592,12 +671,18 @@
                              '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Access the e-Timesheet at https://apps.redimed.com.au<label><br/><br/><br/>' +
                              '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
                              '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Timesheet Reporting System<br></label><br/><br/><br/>' +
-                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond' +
-                             '<hr/><table><tbody><tr><td><img src="cid:logoRedimed"></td><td><b><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">A</b>&nbsp;1 Frederick Street, Belmont, Western Australia 610</span>' +
-                             '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T&nbsp;</b>1300 881 301 (REDiMED Emergency Service 24/7)</span><br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>W&nbsp;</b>www.redimed.com.au</span></td></tr><tr><tr>' +
-                             '<td colspan="2"><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This message and any files transmitted with it contains confidential information intended only for the use of the addressee. If you are not the intended recipient of this message, ' +
-                             'any unauthorized form of reproduction of this message is strictly prohibited. If you have received this message in error, please notify us immediately.</span></td></tr>' +
-                             '<br/><br/><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Please consider our environment before printing this e-mail.</span></td></tr></tbody></table>'
+                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label></br/>' +
+                             '<table style="font-size:9.0pt;color:#203864;"><tbody><tr><td><b><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">A</b>&nbsp;1 Frederick Street, Belmont WA 6104</span>' +
+                             '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T&nbsp;</b> 08 9230 0900 | F: 08 9230 0999</span><br/><span><b>W&nbsp;</b>www.redimed.com.au</span></td></tr>' +
+                             '<tr><td><img src="cid:logoRedimed"></td></tr>' +
+                             '<tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">&nbsp;&nbsp;&nbsp;Joondalup| Belmont | Rockingham</span></td></tr>' +
+                             '<tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail and any attachments are intended for the addressee(s) only and may be confidential.<br/>' +
+                             'They may contain legally privileged or copyright material.You should not read, copy, use or disclose them without authorisation.<br/>' +
+                             'If you are not the intended recipient, please contact the sender as soon as possible by return e-mail and then please delete both messages.<br/>' +
+                             'Please note that any views or opinions presented in this email are solely those of the author and do not necessarily represent those of REDIMED Pty Ltd. The ' +
+                             'recipient should check this email and any attachments for the presence of viruses. REDIMED Pty Ltd accepts no liability for any damage caused by any virus ' +
+                             'transmitted by this email.' +
+                             '</td></tr></tbody></table>'
                      };
                      // END APPROVE
 
@@ -619,12 +704,18 @@
                              '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Access the e-Timesheet at https://apps.redimed.com.au</label><br/><br/><br/>' +
                              '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
                              '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Timesheet Reporting System<label><br/><br/><br/>' +
-                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label</i>' +
-                             '<hr/><table><tbody><tr><td><img src="cid:logoRedimed"></td><td><b><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">A</b>&nbsp;1 Frederick Street, Belmont, Western Australia 610</span>' +
-                             '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T&nbsp;</b>1300 881 301 (REDiMED Emergency Service 24/7)</span><br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>W&nbsp;</b>www.redimed.com.au</span></td></tr><tr><tr>' +
-                             '<td colspan="2"><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This message and any files transmitted with it contains confidential information intended only for the use of the addressee. If you are not the intended recipient of this message, ' +
-                             'any unauthorized form of reproduction of this message is strictly prohibited. If you have received this message in error, please notify us immediately.</span></td></tr>' +
-                             '<br/><br/><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Please consider our environment before printing this e-mail.</span></td></tr></tbody></table>'
+                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label<br/>' +
+                             '<table style="font-size:9.0pt;color:#203864;"><tbody><tr><td><b><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">A</b>&nbsp;1 Frederick Street, Belmont WA 6104</span>' +
+                             '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T&nbsp;</b> 08 9230 0900 | F: 08 9230 0999</span><br/><span><b>W&nbsp;</b>www.redimed.com.au</span></td></tr>' +
+                             '<tr><td><img src="cid:logoRedimed"></td></tr>' +
+                             '<tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">&nbsp;&nbsp;&nbsp;Joondalup| Belmont | Rockingham</span></td></tr>' +
+                             '<tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail and any attachments are intended for the addressee(s) only and may be confidential.<br/>' +
+                             'They may contain legally privileged or copyright material.You should not read, copy, use or disclose them without authorisation.<br/>' +
+                             'If you are not the intended recipient, please contact the sender as soon as possible by return e-mail and then please delete both messages.<br/>' +
+                             'Please note that any views or opinions presented in this email are solely those of the author and do not necessarily represent those of REDIMED Pty Ltd. The ' +
+                             'recipient should check this email and any attachments for the presence of viruses. REDIMED Pty Ltd accepts no liability for any damage caused by any virus ' +
+                             'transmitted by this email.' +
+                             '</td></tr></tbody></table>'
                      };
                      // END APPROVE
 
@@ -643,8 +734,11 @@
              });
 
      },
- };
 
+     defineNumberWeekTimeSheet: function(req, res) {
+         return 2;
+     },
+ };
 
  var job = new CronJob({
      cronTime: '00 00 07 * * 5',

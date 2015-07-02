@@ -3,22 +3,22 @@
     <ul class="page-breadcrumb">
         <li>
             <i class="fa fa-home"></i>
-            <a ui-sref="loggedIn.home" style="font-size:14px; font-weight:bold;">Home</a>
+            <a ui-sref="loggedIn.home">Home</a>
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
-            <a ui-sref="loggedIn.ListFunction" style="font-size:14px; font-weight:bold;">Functions</a>
+            <a ui-sref="loggedIn.treeApprove.loadListFunction">Functions</a>
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
-            <a ui-sref="loggedIn.ListTree" style="font-size:14px; font-weight:bold;">Trees</a>
+            <a ui-sref="loggedIn.treeApprove.loadListTree">Trees</a>
             <i class="fa fa-angle-right"></i>
         </li>
     </ul>
 </div>
 <div class="portlet box blue-hoki">
     <div class="portlet-title">
-        <a class="btn blue pull-right btn-xs" style="margin-top:10px;font-size:14px;" ng-click="AddTree()">New tree</a>
+        <a class="btn blue pull-right btn-xs" style="margin-top:10px;" ng-click="AddTree()">New tree</a>
         <div class="caption" style="font-size:13px;font-weight:bold;">
             <i class="fa fa-cogs"></i>List of tree
             <a ng-click="reset()"><i class="glyphicon glyphicon-refresh"></i></a>
@@ -31,14 +31,14 @@
             <table class="responsive table table-bordered" ng-show="!list.loading">
                 <thead ng-show="list.result!==null">
                     <tr>
-                        <th>
+                        <th style="width:70%;">
                             <div class="th">
                                 Tree name
                             </div>
                         </th>
-                        <th>
+                        <th style="width:20%;">
                             <div class="th">
-                                Creation Date&nbsp;
+                                Creation Date
                                 <span class="glyphicon glyphicon-chevron-up" ng-click="loadList('ASC')" ng-class="{'active': searchObjectMap.order==='ASC'}">
                             </span>
                                 <span class="glyphicon glyphicon-chevron-down" ng-click="loadList('DESC')" ng-class="{ 'active': searchObjectMap.order==='DESC' } ">
@@ -55,36 +55,34 @@
                 <tbody>
                     <tr ng-show="list.result!==null || (list.result.length!==0 && list.result!==null)">
                         <!-- FUNCTION NAME -->
-                        <td>
-                            <input type="text " id="GROUP_NAME" ng-model="searchObjectMap.data.GROUP_NAME " ng-change="loadList(GROUP_NAME) " class="form-control input-sm " style="font-size:14px;">
+                        <td style="width:70%;">
+                            <input type="text " id="GROUP_NAME" ng-model="searchObjectMap.data.GROUP_NAME " ng-change="loadList(GROUP_NAME) " class="form-control input-sm ">
                         </td>
                         <!-- END FUNCTION NAME -->
-
-                        <td></td>
-
-                        <td></td>
+                        <td style="width:20%;"></td>
+                        <td style="width:10%;"></td>
                     </tr>
                     <tr ng-show="list.result===null">
-                        <td colspan="4 " style="font-size:14px;">
+                        <td colspan="4 ">
                             <h4 class="custom-timesheet">There is no items</h4>
                         </td>
                     </tr>
                     <tr ng-repeat="l in list.result " ng-class-odd="'odd'" style="cursor: pointer; ">
-                        <td class="btn btn-xs" style="text-align:left;font-size:14px;">{{l.GROUP_NAME || " " }}</td>
-                        <td class="btn btn-xs" style="text-align:left; font-size:14px;">{{l.CREATION_DATE | date: "dd/MM/yyyy h:mm:ss a "|| " " }}</td>
-                        <td style="text-align: center;">
+                        <td style="width:70%;">{{l.GROUP_NAME || " " }}</td>
+                        <td style="width:20%;">{{l.CREATION_DATE | date: "dd/MM/yyyy h:mm:ss a "|| " " }}</td>
+                        <td style="text-align: center; width:10%;">
                             <!-- DOPDOWN ACTION -->
                             <li class="dropdown btn-group">
-                                <a class="dropdown-toggle btn btn-circle btn-xs blue" data-toggle="dropdown" ui-sref="a" style="width:50px; font-size:14px;">More<span class="caret"></span>
+                                <a class="dropdown-toggle btn btn-circle btn-xs blue" data-toggle="dropdown" ui-sref="a" style="width:50px;">More<span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a ng-click="goTotreeApproveDetail(l)" style="font-size:14px;"><i class="fa fa-check"></i>Detail</a>
+                                    <li><a ng-click="goTotreeApproveDetail(l)"><i class="fa fa-check"></i>Detail</a>
                                     </li>
                                     <li class="divider"></li>
-                                    <li><a ng-click="EditTree(l.GROUP_ID)" style="font-size:14px;"><i class="fa fa-pencil"></i>Edit</a>
+                                    <li><a ng-click="EditTree(l.GROUP_ID)"><i class="fa fa-pencil"></i>Edit</a>
                                     </li>
                                     <li class="divider"></li>
-                                    <li><a ng-click="DeleteTree(l.GROUP_ID)" style="font-size:14px;"><i class="fa fa-times"></i>Delete</a>
+                                    <li><a ng-click="DeleteTree(l.GROUP_ID)"><i class="fa fa-times"></i>Delete</a>
                                     </li>
                                 </ul>
                             </li>
@@ -97,12 +95,11 @@
                 <div class="row ">
                     <div class="col-ms-6 page-num-info ">
                         <div class="col-md-4 col-sm-5 ">
-                            <span class="bold custom-timesheet" style="font-size:14px;">Total: {{list.count}}</span>
-
-                            <span class="custom-timesheet" style="font-size:14px;">Show</span>
+                            <span class="bold custom-timesheet">Total: {{list.count}}</span>
+                            <span class="custom-timesheet">Show</span>
                             <select class="custom-timesheet" ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows ">
                             </select>
-                            <span class="custom-timesheet" style="font-size:14px;">entries per page</span>
+                            <span class="custom-timesheet">entries per page</span>
                         </div>
                         <div class="col-ms-6 text-right pagination-container ">
                             <span ng-show="count.loading "><i class="fa fa-spinner fa-spin fa-2x "></i></span>
@@ -114,7 +111,6 @@
         </div>
     </div>
 </div>
-
 <!-- MODULE ADD DEPARTMENT -->
 <script type="text/ng-template" id="AddTree">
     <add-tree on-cancel="getReturnedValue(return)" ng-model="TreeIdEdit" on-save="getInfo(return)"></add-tree>

@@ -25,52 +25,52 @@
                     <table class="responsive table table-bordered" ng-show="!list.loading">
                         <thead ng-show="list.result!==null">
                             <tr>
-                                <th>
+                                <th style="width:10%;">
                                     <div class="th">
                                         Date
                                     </div>
                                 </th>
-                                <th>
+                                <th style="width:10%;">
                                     <div class="th">
                                         Activity
                                     </div>
                                 </th>
-                                <th>
+                                <th style="width:12%;">
                                     <div class="th">
                                         Location
                                     </div>
                                 </th>
-                                <th>
+                                <th style="width:12%;">
                                     <div class="th">
                                         Department
                                     </div>
                                 </th>
-                                <th>
+                                <th style="width:7%;">
                                     <div class="th">
                                         Time Charge
                                     </div>
                                 </th>
-                                <th>
+                                <th style="width:15%;">
                                     <div class="th">
                                         Tasks/Items
                                     </div>
                                 </th>
-                                <th>
+                                <th style="width:7%;">
                                     <div class="th">
                                         Actual Unit
                                     </div>
                                 </th>
-                                <th>
+                                <th style="width:8%;">
                                     <div class="th">
                                         Standard Unit
                                     </div>
                                 </th>
-                                <th>
+                                <th style="width:auto;">
                                     <div class="th">
                                         Comments
                                     </div>
                                 </th>
-                                <th style="width: 15px;text-align:center;">
+                                <th style="width: 2%;text-align:center;">
                                     <div class="th">
                                         <i class="glyphicon glyphicon-paperclip"></i>
                                     </div>
@@ -79,16 +79,16 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="(index,l) in list.result " style="cursor: pointer; " ng-class="{'same':(l.date|getDate)%2===0 && Title === 'Full Timesheet'}">
-                                <td style="text-align:left; font-size:13px;">{{l.date | date: 'EEE, dd MMMM yyyy'}}</td>
-                                <td style="text-align:left;font-size:13px;">{{(l.NAME===null || l.NAME==="")?"":l.NAME}}</td>
-                                <td style="text-align:left;font-size:13px;">{{(l.LOCATION===null || l.LOCATION==="")?"N/A":l.LOCATION}}</td>
-                                <td style="text-align:left;font-size:13px;">{{(l.departmentName===null ||l.departmentName==="")?"N/A":l.departmentName}}</td>
-                                <td style="font-size:13px; text-align:center;">{{(l.item_id===null||l.item_id==="" || l.item_id===undefined)?(l.time_charge | customHours):(l.chargeItem|customHours)}}</td>
-                                <td style="text-align:left;font-size:13px;">{{l.IS_BILLABLE===1?(l.item_id):(l.ITEM_NAME)}}</td>
-                                <td style="font-size:13px; text-align:center;">{{(l.ratio===null||l.ratio==="" || l.ratio===undefined)?"N/A":l.ratio}}</td>
-                                <td style="font-size:13px; text-align:center;">{{(l.units===null||l.units==="" || l.units===undefined)?"N/A":l.units}}</td>
-                                <td style="text-align:left;font-size:13px;">{{(l.units===null||l.units==="" || l.units===undefined)?((l.task===""||l.task===null)?" ":l.task):l.comment}}</td>
-                                <td style="text-align:center;">
+                                <td style="text-align:left; font-size:13px; width:10%;">{{l.date | date: 'EEE, dd MMMM yyyy'}}</td>
+                                <td style="text-align:left;font-size:13px;width:10%;">{{(l.NAME===null || l.NAME==="")?"":l.NAME}}</td>
+                                <td style="text-align:left;font-size:13px;width:12%;">{{(l.LOCATION===null || l.LOCATION==="")?"N/A":l.LOCATION}}</td>
+                                <td style="text-align:left;font-size:13px;width:12%;">{{(l.departmentName===null ||l.departmentName==="")?"N/A":l.departmentName}}</td>
+                                <td style="font-size:13px; text-align:center;width:7%;">{{(l.item_id===null||l.item_id==="" || l.item_id===undefined)?(l.time_charge | customHours):(l.chargeItem|customHours)}}</td>
+                                <td style="text-align:left;font-size:13px;width:15%;">{{l.IS_BILLABLE===1?(l.item_id):(l.ITEM_NAME)}}</td>
+                                <td style="font-size:13px; text-align:center;width:7%;">{{(l.ratio===null||l.ratio==="" || l.ratio===undefined)?"N/A":l.ratio}}</td>
+                                <td style="font-size:13px; text-align:center;width:8%;">{{(l.units===null||l.units==="" || l.units===undefined)?"N/A":l.units}}</td>
+                                <td style="text-align:left;font-size:13px; width: auto;">{{(l.units===null||l.units==="" || l.units===undefined)?((l.task===""||l.task===null)?" ":l.task):l.comment}}</td>
+                                <td style="text-align:center; width:2%;">
                                     <div ng-repeat="file in l.files">
                                         <a href="/api/TimeSheet/get-download-file/{{file.file_id}}" title="{{file.file_name}}" target="_blank">
                                             <i class="glyphicon glyphicon-file" style="font-size:12px;"></i>

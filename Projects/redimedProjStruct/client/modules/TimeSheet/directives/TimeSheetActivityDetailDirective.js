@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
-    .directive("activityDetail", function(TimeSheetService, $state, toastr, MODE_ROW, StaffService, FileUploader, $cookieStore, $timeout) {
+    .directive("activityDetail", function(TimeSheetService, $state, toastr, MODE_ROW, StaffService, FileUploader, $cookieStore, $timeout, $window, $modal, $location) {
         return {
             restrict: "EA",
             required: "ngModel",
@@ -62,15 +62,11 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                                 });
                                 //end set isShow
                             } else if (response.status === "error") {
-                                $state.go("loggedIn.TimeSheetHome.create", null, {
-                                    "reload": true
-                                });
+                                $state.go("loggedIn.timesheetHome.loadTimesheetCreate");
                                 toastr.error("Loading fail!", "Error");
                             } else {
                                 //catch exception
-                                $state.go("loggedIn.TimeSheetHome.create", null, {
-                                    "reload": true
-                                });
+                                $state.go("loggedIn.timesheetHome.loadTimesheetCreate");
                                 toastr.error("Server not response!", "Error");
                             }
                         });
@@ -223,9 +219,17 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
 
                 //FILETER LIMIT FILE UPLOAD
                 scope.uploader.filters.push({
-                    name: "customFilter",
+                    name: "limitFile",
                     fn: function(item /*{File|FileLikeObject}*/ , options) {
-                        return this.queue.length < 5;
+                        return (this.queue.length < 5);
+                    }
+                });
+
+                scope.uploader.filters.push({
+                    name: "limitSize",
+                    fn: function(item) {
+                        // return (item.size / 1048576) < 10;
+                        return true;
                     }
                 });
                 //END FILTER LIMIT FILE UPLOAD
@@ -259,9 +263,17 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                 //SOME CALLBACKS UPLOAD FILE
                 scope.uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/ , filter, options) {
                     //CHECK FILTER
-                    if (filter) {
+                    if (filter.name === "folder") {
                         swal({
-                            title: "Limit 5 file to upload!",
+                            title: "Limit 5 file to upload.",
+                            type: "warning",
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "Yes",
+                            closeOnConfirm: true
+                        });
+                    } else if (filter.name === "queueLimit") {
+                        swal({
+                            title: "The file you are trying to send exceeds the 10MB attachment limit.",
                             type: "warning",
                             confirmButtonColor: "#DD6B55",
                             confirmButtonText: "Yes",
@@ -321,11 +333,13 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                     //DO NOTHING
                 };
                 scope.uploader.onProgressItem = function(fileItem, progress) {
+                    scope.fileNameProgress = fileItem.file.name;
                     scope.progress = progress;
                 };
-                scope.uploader.onProgressAll = function(progress) {
-                    //DO NOTHING 
+                scope.uploader.onProgressAll = function(progressAll) {
+                    //DO NOTHING
                 };
+
                 scope.uploader.onSuccessItem = function(fileItem, response, status, headers) {
                     //FIND FIRST FILE UPLOADING
                     var isFound = false;
@@ -390,16 +404,16 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                         });
                         if (check === true) {
                             return {
-                                width: "250px"
+                                width: "5%"
                             };
                         } else {
                             return {
-                                width: "15px"
+                                width: "2%"
                             };
                         }
                     } else {
                         return {
-                            width: '15px'
+                            width: '2%'
                         };
                     }
                 };

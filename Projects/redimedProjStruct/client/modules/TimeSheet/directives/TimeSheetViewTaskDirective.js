@@ -19,9 +19,7 @@ angular.module("app.loggedIn.TimeSheet.ViewTask.Directive", [])
                         //END
                         TimeSheetService.ViewApproved(newModel).then(function(response) {
                             if (response.status === "error") {
-                                $state.go("loggedIn.TimeSheetHome.ApproveTask", null, {
-                                    "reload": true
-                                });
+                                $state.go("loggedIn.timesheetHome.loadTimesheetApprove");
                                 toastr.error("Loading fail!", "Error");
                             } else if (response.status === "success") {
                                 scope.list = response;
@@ -73,41 +71,46 @@ angular.module("app.loggedIn.TimeSheet.ViewTask.Directive", [])
                     scope.info.isReject = 1;
                     scope.info.isApprove = 1;
                 };
-                scope.changeTimeInLieu = function() {
-                    if (scope.info.time_in_lieu !== undefined) {
+
+                //WATCH TIME IN LIEU
+                scope.$watch('info.time_in_lieu', function(newTimeInLieu, oldTimeInLieu) {
+                    if (newTimeInLieu !== undefined && newTimeInLieu !== null) {
                         //process
-                        if (scope.info.time_in_lieu.length === 0) {
+                        if (newTimeInLieu.length === 0) {
                             scope.info.time_in_lieu = null;
                             scope.info.over_time = null;
-                        } else if (StaffService.convertShowToFull(scope.info.time_in_lieu) > scope.info.time_rest) {
+                        } else if (StaffService.convertShowToFull(newTimeInLieu) > scope.info.time_rest) {
                             scope.info.time_in_lieu = null;
                             scope.info.over_time = null;
                         } else {
-                            scope.info.time_in_lieuFull = StaffService.convertShowToFull(scope.info.time_in_lieu);
+                            scope.info.time_in_lieuFull = StaffService.convertShowToFull(newTimeInLieu);
                             scope.info.over_timeFull = scope.info.time_rest - scope.info.time_in_lieuFull;
                             scope.info.over_time = StaffService.convertFromFullToShow(scope.info.over_timeFull);
                         }
                         //end
                     }
-                };
+                });
+                //END TIME IN LIEU
 
-                scope.changeOverTime = function() {
-                    if (scope.info.over_time !== undefined) {
+                //WATCH OVER TIME
+                scope.$watch('info.over_time', function(newOverTime, oldOverTime) {
+                    if (newOverTime !== undefined && newOverTime !== null) {
                         //process
-                        if (scope.info.over_time.length === 0) {
+                        if (newOverTime.length === 0) {
                             scope.info.over_time = null;
                             scope.info.time_in_lieu = null;
-                        } else if (StaffService.convertShowToFull(scope.info.over_time) > scope.info.time_rest) {
+                        } else if (StaffService.convertShowToFull(newOverTime) > scope.info.time_rest) {
                             scope.info.time_in_lieu = null;
                             scope.info.over_time = null;
                         } else {
-                            scope.info.over_timeFull = StaffService.convertShowToFull(scope.info.over_time);
+                            scope.info.over_timeFull = StaffService.convertShowToFull(newOverTime);
                             scope.info.time_in_lieuFull = scope.info.time_rest - scope.info.over_timeFull;
                             scope.info.time_in_lieu = StaffService.convertFromFullToShow(scope.info.time_in_lieuFull);
                         }
                         //end
                     }
-                };
+                });
+                //END
 
                 var dialogViewDetail = function(ID, DATE, detailType) {
                     var modalInstance = $modal.open({

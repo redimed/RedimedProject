@@ -1,9 +1,5 @@
 angular.module("app.loggedIn.TimeSheet.ApproveTask.Controller", [])
     .controller("ApproveTask", function($scope, $modal, TimeSheetService, toastr, $state, MODE_ROW, $cookieStore) {
-        //close siderba
-        $('body').addClass("page-sidebar-closed");
-        $('body').find('ul').addClass("page-sidebar-menu-closed");
-        //end close siderba
         //STATUS
         $scope.listStatus = [{
             code: 2,
@@ -132,15 +128,13 @@ angular.module("app.loggedIn.TimeSheet.ApproveTask.Controller", [])
                             TimeSheetService.RejectTaskWeek(info).then(function(response) {
                                 if (response.status === "success") {
                                     modalInstance.close();
-                                    $state.go("loggedIn.TimeSheetHome.ApproveTask", null, {
+                                    $state.go("loggedIn.timesheetHome.loadTimesheetApprove", null, {
                                         "reload": true
                                     });
                                     toastr.success("Reject success!", "Success");
                                 } else if (response.status === "error") {
                                     modalInstance.close();
-                                    $state.go("loggedIn.TimeSheetHome.ApproveTask", null, {
-                                        "reload": true
-                                    });
+                                    $state.go("loggedIn.timesheetHome.loadTimesheetApprove");
                                     toastr.error("Reject fail!", "Error");
                                 } else {
                                     //catch exception
@@ -175,15 +169,13 @@ angular.module("app.loggedIn.TimeSheet.ApproveTask.Controller", [])
                                         TimeSheetService.ApproveTaskWeek(info).then(function(response) {
                                             if (response.status === "success") {
                                                 modalInstance.close();
-                                                $state.go("loggedIn.TimeSheetHome.ApproveTask", null, {
+                                                $state.go("loggedIn.timesheetHome.loadTimesheetApprove", null, {
                                                     "reload": true
                                                 });
                                                 toastr.success("Approve success!", "Success");
                                             } else if (response.status === "error") {
                                                 modalInstance.close();
-                                                $state.go("loggedIn.TimeSheetHome.ApproveTask", null, {
-                                                    "reload": true
-                                                });
+                                                $state.go("loggedIn.timesheetHome.loadTimesheetApprove");
                                                 toastr.error("Approve fail!", "Error");
                                             } else {
                                                 //catch exception
@@ -202,15 +194,11 @@ angular.module("app.loggedIn.TimeSheet.ApproveTask.Controller", [])
                                 TimeSheetService.ApproveTaskWeek(info).then(function(response) {
                                     if (response.status === "success") {
                                         modalInstance.close();
-                                        $state.go("loggedIn.TimeSheetHome.ApproveTask", null, {
-                                            "reload": true
-                                        });
+                                        $state.go("loggedIn.timesheetHome.loadTimesheetApprove");
                                         toastr.success("Approve success!", "Success");
                                     } else if (response.status === "error") {
                                         modalInstance.close();
-                                        $state.go("loggedIn.TimeSheetHome.ApproveTask", null, {
-                                            "reload": true
-                                        });
+                                        $state.go("loggedIn.timesheetHome.loadTimesheetApprove");
                                         toastr.error("Approve fail!", "Error");
                                     } else {
                                         //catch exception
