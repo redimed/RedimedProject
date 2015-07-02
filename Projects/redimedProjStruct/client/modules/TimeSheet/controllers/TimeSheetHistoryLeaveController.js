@@ -34,6 +34,9 @@ angular.module("app.loggedIn.TimeSheet.HistoryLeave.Controller", [])
                 USER_ID: $cookieStore.get('userInfo').id,
                 select: {
                     "hr_leave.status_id": ""
+                },
+                order: {
+                    0: "DESC"
                 }
             };
             $scope.rows = MODE_ROW;
@@ -66,7 +69,9 @@ angular.module("app.loggedIn.TimeSheet.HistoryLeave.Controller", [])
                         TimeSheetService.SubmitOnViewLeave(info).then(function(response) {
                             if (response.status === "success") {
                                 modalInstance.close();
-                                $state.go("loggedIn.timesheetHome.loadLeaveHistory", null,{"reload": true});
+                                $state.go("loggedIn.timesheetHome.loadLeaveHistory", null, {
+                                    "reload": true
+                                });
                                 toastr.success("Submit success!", "Success");
                             } else if (response.status === "error") {
                                 $state.go("loggedIn.home", null, {
@@ -95,4 +100,14 @@ angular.module("app.loggedIn.TimeSheet.HistoryLeave.Controller", [])
             });
         };
         //END VIEW
+
+        $scope.clickAsc = function() {
+            $scope.searchObjectMap.order[0] = "ASC";
+            $scope.loadList();
+        };
+
+        $scope.clickDesc = function() {
+            $scope.searchObjectMap.order[0] = "DESC";
+            $scope.loadList();
+        };
     });

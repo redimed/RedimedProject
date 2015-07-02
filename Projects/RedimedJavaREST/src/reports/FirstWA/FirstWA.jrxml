@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FirstWA" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8c1bde60-6e00-4470-a6cb-d8f3a613e87f">
 	<property name="ireport.zoom" value="1.2722928551174548"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="143"/>
+	<property name="ireport.y" value="1743"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<parameter name="real_path" class="java.lang.String">
@@ -19,13 +19,15 @@ f.`noCapaFrom` , f.`noCapaTo` , f.`isLiftUp` , f.`liftUpKg` , f.`isSitUp` , f.`s
 f.`isMoreInfo` , f.`isRTW` , f.`isInvolved` ,f.`isNotReview`, f.`isReview` , f.`reviewOn`, f.`reviewCmt` , SUBSTRING_INDEX(f.`signature`, ',', -1) AS signature,
 p.`First_name`, p.`Sur_name`, p.`DOB`, p.`Email`, p.`Mobile`, p.`Home_phone`, CONCAT(p.`Address1`, p.`Address2`) AS patientAddress,
 c.`Company_name`, c.`Addr`, c.`Phone` AS cPhone, c.`Industry`,
-d.`ABN_no`, d.`Address` AS docAddress, d.`Email` AS docEmail, d.`Phone` AS docPhone, SUBSTRING_INDEX(d.`Signature`, ',', -1) AS docSign, d.`NAME` AS FullName
+d.`ABN_no`, d.`Address` AS docAddress, d.`Email` AS docEmail, d.`Phone` AS docPhone, SUBSTRING_INDEX(d.`Signature`, ',', -1) AS docSign, d.`NAME` AS FullName,
+u.`Booking_Person`
 FROM `th_first_assessment` f
 INNER JOIN `cln_appointment_calendar` a ON f.`cal_id` = a.`CAL_ID`
 INNER JOIN `cln_appt_patients` ap on ap.`CAL_ID` = a.`CAL_ID`
 INNER JOIN `cln_patients` p ON ap.`Patient_id` = p.`Patient_id`
 INNER JOIN `companies` c ON p.`company_id` = c.`id`
-INNER JOIN `doctors` d ON a.`DOCTOR_ID` = d.`doctor_id`
+INNER JOIN `users` u ON f.`Created_by` = u.`id`
+INNER JOIN `doctors` d ON u.`id` = d.`User_id`
 WHERE f.`Ass_id` = $P{id}]]>
 	</queryString>
 	<field name="examDate" class="java.sql.Timestamp">
@@ -196,7 +198,7 @@ WHERE f.`Ass_id` = $P{id}]]>
 	<field name="reviewCmt" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="signature" class="java.lang.Object">
+	<field name="signature" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="First_name" class="java.lang.String">
@@ -236,6 +238,9 @@ WHERE f.`Ass_id` = $P{id}]]>
 	<field name="docPhone" class="java.lang.String"/>
 	<field name="docSign" class="java.lang.String"/>
 	<field name="FullName" class="java.lang.String"/>
+	<field name="Booking_Person" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -614,7 +619,7 @@ WHERE f.`Ass_id` = $P{id}]]>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="78" y="669" width="198" height="15" uuid="e4a29764-a881-4fcb-9bf1-904cd2a3968e"/>
-				<textFieldExpression><![CDATA[$F{FullName}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{Booking_Person}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="73" y="691" width="203" height="36" uuid="d454fca9-b200-49b6-8f65-a10af5acbdf3"/>

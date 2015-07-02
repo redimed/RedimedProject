@@ -182,6 +182,20 @@ module.exports = {
             paramSelect = "";
         }
         //end select
+
+        //order
+        var strOrder = " ORDER BY ";
+        for (var keyOrder in searchObj.order) {
+            if (searchObj.order[keyOrder] !== undefined && searchObj.order[keyOrder] !== null && searchObj.order[keyOrder] !== "") {
+                strOrder += "hr_leave.start_date " + searchObj.order[keyOrder] + ", ";
+            }
+        }
+        if (strOrder.length === 10) {
+            strOrder = "";
+        } else {
+            strOrder = strOrder.substring(0, strOrder.length - 2);
+        }
+        //end order
         var queryGetAllMyLeave =
             "SELECT hr_employee.FirstName, hr_employee.LastName, hr_leave.start_date, time_task_status.name, " + //SELECT
             "hr_leave.finish_date, hr_leave.standard, hr_leave.status_id, hr_leave.time_leave, hr_leave.is_approve_first, " + //SELECT
@@ -192,8 +206,8 @@ module.exports = {
             "INNER JOIN hr_leave ON hr_leave.user_id = users.id " + //JOIN
             "INNER JOIN time_task_status ON time_task_status.task_status_id = hr_leave.status_id " + //JOIN
             "WHERE hr_leave.user_id = ? " + paramSelect + //WHERE
-            " ORDER BY hr_leave.start_date DESC " + //ORDER
-            "LIMIT ? " + //LIMIT
+            strOrder + //ORDER
+            " LIMIT ? " + //LIMIT
             "OFFSET ?"; //OFFSET
 
         var queryCountAllMyLeave =
@@ -841,11 +855,15 @@ module.exports = {
                     var NODE_ID = resultDept[0].NODE_ID;
                     var queryGetListLeave = "";
                     var queryCountListLeave = "";
+                    var queryAddListUser = "";
+                    if (NODE_CODE === "Director") {
+                        queryAddListUser = " OR sys_hierarchy_nodes.NODE_CODE = 'Head of Dept.'";
+                    }
                     var queryGetUserSubordinate =
                         "SELECT DISTINCT sys_hierarchies_users.USER_ID, sys_hierarchies_users.DEPARTMENT_CODE_ID " + //SELECT
                         "FROM sys_hierarchies_users " + //FROM
                         "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " + //INNER JOIN
-                        "WHERE sys_hierarchy_nodes.TO_NODE_ID = :nodeId AND sys_hierarchies_users.DEPARTMENT_CODE_ID = :deptId"; //WHERE
+                        "WHERE (sys_hierarchy_nodes.TO_NODE_ID = :nodeId AND sys_hierarchies_users.DEPARTMENT_CODE_ID = :deptId)" + queryAddListUser; //WHERE
                     db.sequelize.query(queryGetUserSubordinate, null, {
                             raw: true
                         }, {

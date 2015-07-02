@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-06-11T12:59:31 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cln_lines_type_7_9_header" pageWidth="255" pageHeight="842" columnWidth="255" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b22fa206-db29-4f1d-808e-fc0415f5a4f9">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="patient_id" class="java.lang.String"/>
 	<parameter name="cal_id" class="java.lang.String"/>
 	<parameter name="real_path" class="java.lang.String"/>
@@ -13,8 +14,8 @@
 		<![CDATA[select *
 from `cln_fa_df_line_details` detail
 where detail.ISENABLE = 1
-and detail.PATIENT_ID =  $P{patient_id} 
-and detail.CAL_ID =  $P{cal_id} 
+and detail.PATIENT_ID =  $P{patient_id}
+and detail.CAL_ID =  $P{cal_id}
 and detail.LINE_ID =  $P{line_id}
 and detail.ORD = 1]]>
 	</queryString>
@@ -114,14 +115,18 @@ and detail.ORD = 1]]>
 	<detail>
 		<band height="22">
 			<textField>
-				<reportElement x="0" y="0" width="130" height="22" uuid="ed2a3759-74fe-42f4-a517-aad6187bf0b4"/>
+				<reportElement x="0" y="0" width="115" height="22" uuid="ed2a3759-74fe-42f4-a517-aad6187bf0b4"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Job demand: "+$F{VAL1_VALUE}+" kgs"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Job demand: "+$F{VAL1_VALUE}+
+($F{VAL1_ISVALUE}==7?" kgs":
+$F{VAL1_ISVALUE}==8?" m":
+$F{VAL1_ISVALUE}==9?" mm":
+$F{VAL1_ISVALUE}==10?" g":"")]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="130" y="0" width="124" height="22" uuid="03efd4ff-4466-419a-b971-c7f1890d4647">
+				<reportElement x="115" y="0" width="139" height="22" uuid="03efd4ff-4466-419a-b971-c7f1890d4647">
 					<printWhenExpression><![CDATA[$F{VAL2_VALUE} != null && $F{VAL2_VALUE} != ""]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle">

@@ -1,5 +1,4 @@
 // EXPORTS MODULE
-var adminController = require("./controllers/TimeSheetController/adminController");
 var downloadController = require("./controllers/TimeSheetController/downloadController");
 var functionForTimesheet = require("./controllers/TimeSheetController/functionForTimesheet");
 var manageLeaveController = require("./controllers/TimeSheetController/manageLeaveController");
@@ -12,30 +11,6 @@ var reportController = require("./controllers/TimeSheetController/reportControll
 var staffTimesheetController = require('./controllers/TimeSheetController/staffTimesheetController');
 var multipartMiddleware = multipart();
 //END EXPORTS MODULE
-
-//TIMESHEET FOR ADMIN
-app.post("/api/TimeSheet/post-list-tree", adminController.LoadTreeTimeSheet);
-app.post("/api/TimeSheet/post-list-node", adminController.LoadNodeTimeSheet);
-app.post("/api/TimeSheet/post-list-user", adminController.LoadUserTimeSheet);
-app.get("/api/TimeSheet/post-select-user", adminController.LoadSelectUser);
-app.post("/api/TimeSheet/post-delete-user", adminController.DeleteUser);
-app.get("/api/TimeSheet/get-list-department", adminController.LoadDepartMent);
-app.post("/api/TimeSheet/post-node-select", adminController.LoadNodeSelect);
-app.post("/api/TimeSheet/post-user-list", adminController.LoadUser);
-app.post("/api/TimeSheet/post-user-add", adminController.AddUser);
-app.post("/api/TimeSheet/post-user-one", adminController.LoadOneUser);
-app.post("/api/TimeSheet/post-user-update", adminController.UpdateUser);
-app.post("/api/TimeSheet/post-role-where", adminController.LoadRoleWhere);
-app.post("/api/TimeSheet/post-dept-where", adminController.LoadDeptWhere);
-app.post("/api/TimeSheet/post-dept-list", adminController.LoadDept);
-app.post("/api/TimeSheet/post-dept-del", adminController.DeleteDept);
-app.get("/api/TimeSheet/get-location-list", adminController.LoadLocation);
-app.post("/api/TimeSheet/post-dept-one", adminController.LoadOneDept);
-app.post("/api/TimeSheet/post-dept-insert", adminController.InsertDept);
-app.post("/api/TimeSheet/post-dept-update", adminController.UpdateDept);
-app.post("/api/TimeSheet/post-list-emp", adminController.StepEmployee);
-//END TIMESHEET FR ADMIN
-
 
 //TIMESHEET FOR MANAGE
 app.post("/api/TimeSheet/post-one-approved", manageTimesheetController.ViewApproved);

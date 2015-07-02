@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-06-14T14:53:54 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cln_fa_summary_line_type_5_details" pageWidth="300" pageHeight="22" columnWidth="300" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="d0ab9448-e9fd-49c5-a2fb-98e338ed47d4">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -12,6 +10,9 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="patient_id" class="java.lang.String"/>
 	<parameter name="cal_id" class="java.lang.String"/>
 	<parameter name="real_path" class="java.lang.String"/>
@@ -20,9 +21,9 @@
 	<queryString>
 		<![CDATA[select * from `cln_fa_df_line_details` detail
 where detail.ISENABLE = 1
-and detail.PATIENT_ID =  $P{patient_id} 
-and detail.CAL_ID =  $P{cal_id} 
-and detail.LINE_ID =  $P{line_id} ]]>
+and detail.PATIENT_ID =  $P{patient_id}
+and detail.CAL_ID =  $P{cal_id}
+and detail.LINE_ID =  $P{line_id}]]>
 	</queryString>
 	<field name="PATIENT_ID" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -118,9 +119,9 @@ and detail.LINE_ID =  $P{line_id} ]]>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<detail>
-		<band height="22">
+		<band height="16">
 			<textField>
-				<reportElement x="0" y="0" width="160" height="22" uuid="1f9ffc4c-ab1f-4bdf-9aa8-2f843cff774b"/>
+				<reportElement x="0" y="0" width="160" height="16" uuid="1f9ffc4c-ab1f-4bdf-9aa8-2f843cff774b"/>
 				<box>
 					<topPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
@@ -133,7 +134,7 @@ and detail.LINE_ID =  $P{line_id} ]]>
 				<textFieldExpression><![CDATA[$F{QUESTION}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="160" y="0" width="60" height="22" uuid="4b90d861-2712-468c-8ea0-84484ff6eb73"/>
+				<reportElement x="160" y="0" width="60" height="16" uuid="4b90d861-2712-468c-8ea0-84484ff6eb73"/>
 				<box>
 					<topPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
@@ -144,7 +145,7 @@ and detail.LINE_ID =  $P{line_id} ]]>
 				<textFieldExpression><![CDATA[$F{VAL1_VALUE}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="220" y="0" width="80" height="22" uuid="b88ec76a-4dc7-475e-8390-b45da94c4d94"/>
+				<reportElement x="220" y="0" width="80" height="16" uuid="b88ec76a-4dc7-475e-8390-b45da94c4d94"/>
 				<box>
 					<topPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>

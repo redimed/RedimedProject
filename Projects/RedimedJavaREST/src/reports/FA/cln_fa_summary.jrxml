@@ -112,7 +112,7 @@ and header.FA_ID =  $P{fa_id}]]>
 		</band>
 	</title>
 	<detail>
-		<band height="80">
+		<band height="64">
 			<subreport>
 				<reportElement x="0" y="0" width="555" height="50" uuid="5c58bb30-796a-46f3-b3ac-863dc2637cde"/>
 				<subreportParameter name="patient_id">
@@ -134,9 +134,9 @@ and header.FA_ID =  $P{fa_id}]]>
 				<subreportExpression><![CDATA[$P{real_path}+"cln_fa_summary_line_types.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="316">
+		<band height="218">
 			<frame>
-				<reportElement x="0" y="30" width="555" height="202" uuid="f299e02c-bc88-4981-ba7b-d052a13523a6"/>
+				<reportElement x="0" y="30" width="555" height="104" uuid="f299e02c-bc88-4981-ba7b-d052a13523a6"/>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
@@ -158,40 +158,40 @@ and header.FA_ID =  $P{fa_id}]]>
 					<text><![CDATA[Comments/Recommodations:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="0" y="25" width="555" height="155" uuid="98a3a20f-9f5f-45fa-86f4-749c95e33203"/>
+					<reportElement x="0" y="25" width="555" height="58" uuid="98a3a20f-9f5f-45fa-86f4-749c95e33203"/>
 					<textElement textAlignment="Left" verticalAlignment="Top">
 						<paragraph firstLineIndent="0" leftIndent="10" spacingBefore="10"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{Comments}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="0" y="180" width="300" height="22" uuid="dcea01ed-779e-4a30-8e7b-7d4148edef99"/>
+					<reportElement x="0" y="82" width="300" height="22" uuid="dcea01ed-779e-4a30-8e7b-7d4148edef99"/>
 					<textElement verticalAlignment="Middle">
 						<paragraph leftIndent="10"/>
 					</textElement>
 					<text><![CDATA[Health & Rehab Coordinator Review Recommended]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="330" y="180" width="40" height="22" uuid="0ff818a2-8480-4a02-bbbc-1f5b815e2f42"/>
+					<reportElement x="330" y="82" width="40" height="22" uuid="0ff818a2-8480-4a02-bbbc-1f5b815e2f42"/>
 					<textElement verticalAlignment="Middle">
 						<paragraph leftIndent="10"/>
 					</textElement>
 					<text><![CDATA[Yes]]></text>
 				</staticText>
 				<image>
-					<reportElement x="310" y="184" width="15" height="15" uuid="fec9347f-e160-44a3-92fa-0069f5e6c209">
+					<reportElement x="310" y="86" width="15" height="15" uuid="fec9347f-e160-44a3-92fa-0069f5e6c209">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					</reportElement>
 					<imageExpression><![CDATA[$F{Recommend}.equals("1")?$P{real_path}+"checked.png":$P{real_path}+"uncheck.png"]]></imageExpression>
 				</image>
 				<image>
-					<reportElement x="380" y="184" width="15" height="15" uuid="7415ef0f-d070-4f4e-a844-8429c83c6510">
+					<reportElement x="380" y="86" width="15" height="15" uuid="7415ef0f-d070-4f4e-a844-8429c83c6510">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					</reportElement>
 					<imageExpression><![CDATA[$F{Recommend}.equals("1")?$P{real_path}+"checked.png":$P{real_path}+"uncheck.png"]]></imageExpression>
 				</image>
 				<staticText>
-					<reportElement x="400" y="180" width="40" height="22" uuid="c676d049-0754-4002-be31-353e305769b4"/>
+					<reportElement x="400" y="82" width="40" height="22" uuid="c676d049-0754-4002-be31-353e305769b4"/>
 					<textElement verticalAlignment="Middle">
 						<paragraph leftIndent="10"/>
 					</textElement>
@@ -211,7 +211,7 @@ and header.FA_ID =  $P{fa_id}]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="16" isBold="true"/>
 					</textElement>
-					<text><![CDATA[LOW RISK]]></text>
+					<text><![CDATA[Low Risk]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="180" y="0" width="180" height="30" uuid="1d582a3e-39b7-4be7-a6ef-a758175381d1"/>
@@ -224,7 +224,7 @@ and header.FA_ID =  $P{fa_id}]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="16" isBold="true"/>
 					</textElement>
-					<text><![CDATA[MEDIUM RISK]]></text>
+					<text><![CDATA[Medium Risk]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="360" y="0" width="195" height="30" uuid="a4301300-e49a-45d1-9ce0-29fb3c6166ae"/>
@@ -237,7 +237,7 @@ and header.FA_ID =  $P{fa_id}]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="16" isBold="true"/>
 					</textElement>
-					<text><![CDATA[HIGH RISK]]></text>
+					<text><![CDATA[High Risk]]></text>
 				</staticText>
 				<ellipse>
 					<reportElement mode="Transparent" x="9" y="0" width="161" height="30" uuid="6ad555a3-cb29-458c-bf6a-928ad092537e">
@@ -265,7 +265,7 @@ and header.FA_ID =  $P{fa_id}]]>
 				</ellipse>
 			</frame>
 			<frame>
-				<reportElement x="0" y="232" width="555" height="30" uuid="557e19c2-a55e-47d7-8432-7d182204e3ea"/>
+				<reportElement x="0" y="134" width="555" height="30" uuid="557e19c2-a55e-47d7-8432-7d182204e3ea"/>
 				<staticText>
 					<reportElement x="0" y="0" width="179" height="30" uuid="e884b6ca-03ea-47af-a9db-a948b5780c2b"/>
 					<box>
@@ -277,7 +277,7 @@ and header.FA_ID =  $P{fa_id}]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="16" isBold="true"/>
 					</textElement>
-					<text><![CDATA[LIGHT BUILD]]></text>
+					<text><![CDATA[Light Build]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="179" y="0" width="180" height="30" uuid="1c24db02-90b2-4d53-b2ed-759fb240e5cc"/>
@@ -290,7 +290,7 @@ and header.FA_ID =  $P{fa_id}]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="16" isBold="true"/>
 					</textElement>
-					<text><![CDATA[MEDIUM BUILD]]></text>
+					<text><![CDATA[Medium Build]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="359" y="0" width="196" height="30" uuid="4804a0cb-37ad-4b92-bc05-25723617b9f7"/>
@@ -303,7 +303,7 @@ and header.FA_ID =  $P{fa_id}]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="16" isBold="true"/>
 					</textElement>
-					<text><![CDATA[HEAVY BUILD]]></text>
+					<text><![CDATA[Heavy Build]]></text>
 				</staticText>
 				<ellipse>
 					<reportElement mode="Transparent" x="9" y="0" width="161" height="30" uuid="ad1dc91a-9dc8-4b00-8783-44dce2a809f8">
@@ -331,7 +331,7 @@ and header.FA_ID =  $P{fa_id}]]>
 				</ellipse>
 			</frame>
 			<frame>
-				<reportElement x="0" y="262" width="555" height="53" uuid="48d71f87-3999-443f-a287-57d04a11637e"/>
+				<reportElement x="0" y="164" width="555" height="53" uuid="48d71f87-3999-443f-a287-57d04a11637e"/>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
