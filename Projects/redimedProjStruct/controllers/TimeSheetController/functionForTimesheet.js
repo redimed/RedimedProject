@@ -11,7 +11,7 @@
          var DATE_SUBMIT = moment(info.dateSubmit).format('DD/MM/YYYY - HH:mm:ss');
          //GET INFOMATION MANAGE AND EMPLOYEE
          var queryGetInfoEmployee =
-             "SELECT hr_employee.FirstName, hr_employee.LastName, sys_hierarchy_nodes.NODE_ID, sys_hierarchies_users.DEPARTMENT_CODE_ID " + //SELECT
+             "SELECT hr_employee.FirstName, hr_employee.LastName, hr_employee.TITLE, sys_hierarchy_nodes.NODE_ID, sys_hierarchies_users.DEPARTMENT_CODE_ID " + //SELECT
              "FROM hr_employee " + //FROM
              "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //JOIN
              "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " + //JOIN
@@ -29,18 +29,22 @@
                      resultInfoEmployee[0] !== undefined &&
                      resultInfoEmployee[0] !== null &&
                      !(isNaN(resultInfoEmployee[0].NODE_ID))) {
+                     var queryAddWhenHeadOfDept = "";
+                     if (resultInfoEmployee[0].TITLE === "Staff") {
+                         queryAddWhenHeadOfDept = " AND sys_hierarchies_users.DEPARTMENT_CODE_ID = :deptId";
+                     }
                      var queryGetInfoManage =
                          "SELECT hr_employee.FirstName, hr_employee.LastName, hr_employee.Email " + //SELECT
                          "FROM hr_employee " + //FROM
                          "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //JOIN
                          "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " + //JOIN
                          "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.TO_NODE_ID = sys_hierarchies_users.NODE_ID " + //JOIN
-                         "WHERE sys_hierarchy_nodes.NODE_ID = :nodeID AND sys_hierarchies_users.DEPARTMENT_CODE_ID = :deptId"; //WHERE
+                         "WHERE sys_hierarchy_nodes.NODE_ID = :nodeID" + queryAddWhenHeadOfDept; //WHERE
                      db.sequelize.query(queryGetInfoManage, null, {
                              raw: true
                          }, {
                              nodeID: resultInfoEmployee[0].NODE_ID,
-                             deptId: resultInfoEmployee[0].DEPARTMENT_CODE_ID
+                             deptId: resultInfoEmployee[0].DEPARTMENT_CODE_ID //USE for Head of Dept.
                          })
                          .success(function(resultInfoManage) {
                              if (resultInfoManage !== undefined &&

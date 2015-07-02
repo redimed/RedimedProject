@@ -900,13 +900,13 @@ module.exports = {
                                         "WHERE hr_leave.status_id != 1 AND hr_leave.user_id IN " + listUser +
                                         selectStr + " " + searchStr + " " + orderStr + " LIMIT :limit OFFSET :offset";
                                     queryCountListLeave =
-                                        "SELECT COUNT(*) " + //SElECT
+                                        "SELECT COUNT(*) AS COUNT " + //SElECT
                                         "FROM hr_employee " + //FROM
                                         "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //INNER JOIN
                                         "INNER JOIN hr_leave ON users.id = hr_leave.user_id " + //INNER JOIN
                                         "INNER JOIN time_task_status ON time_task_status.task_status_id = hr_leave.status_id_first " + //INNER JOIN
                                         "WHERE hr_leave.status_id != 1 AND hr_leave.user_id IN " + listUser +
-                                        selectStr + " " + searchStr + " " + orderStr + " LIMIT :limit OFFSET :offset";
+                                        selectStr + " " + searchStr + " " + orderStr;
                                 } else if (NODE_CODE === "Director") {
                                     queryGetListLeave = "SELECT hr_employee.FirstName, hr_employee.LastName, " + //SELECT
                                         "hr_leave.status_id, hr_leave.is_approve_first, hr_leave.is_approve_second, hr_leave.standard, " + //SELECT
@@ -919,14 +919,14 @@ module.exports = {
                                         " AND ((hr_leave.is_approve_first = 0 AND hr_leave.is_approve_second = 1 AND hr_leave.standard = 0) OR hr_leave.user_id IN " +
                                         listUser + ") AND hr_leave.status_id!=1 " +
                                         selectStr + " " + searchStr + " " + orderStr + " LIMIT :limit OFFSET :offset";
-                                    queryCountListLeave = "SELECT COUNT(*) " + //SElECT
+                                    queryCountListLeave = "SELECT COUNT(*) AS COUNT " + //SElECT
                                         "FROM hr_employee " + //FROM
                                         "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //INNER JOIN
                                         "INNER JOIN hr_leave ON users.id = hr_leave.user_id " + //INNER JOIN
                                         "INNER JOIN time_task_status ON time_task_status.task_status_id = hr_leave.status_id " + //INNER JOIN
                                         " AND ((hr_leave.is_approve_first = 0 AND hr_leave.is_approve_second = 1 AND hr_leave.standard = 0) OR hr_leave.user_id IN " +
                                         listUser + ") AND hr_leave.status_id!=1 " +
-                                        selectStr + " " + searchStr + " " + orderStr + " LIMIT :limit OFFSET :offset";
+                                        selectStr + " " + searchStr + " " + orderStr;
                                 }
                                 db.sequelize.query(queryGetListLeave, null, {
                                         raw: true
@@ -937,9 +937,6 @@ module.exports = {
                                     .success(function(result) {
                                         db.sequelize.query(queryCountListLeave, null, {
                                                 raw: true
-                                            }, {
-                                                limit: info.limit,
-                                                offset: info.offset
                                             })
                                             .success(function(resultCount) {
                                                 if (searchStr === "" &&
@@ -947,7 +944,8 @@ module.exports = {
                                                     result.length === 0) {
                                                     res.json({
                                                         status: "success",
-                                                        result: null
+                                                        result: null,
+                                                        count: 0
                                                     });
                                                     return;
                                                 } else {

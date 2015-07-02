@@ -35,6 +35,7 @@ angular.module("app.loggedIn.TimeSheet.ApproveLeave.Controller", [])
             TimeSheetService.LoadLeaveApprove($scope.searchObjectMap).then(function(response) {
                 if (response.status === "success") {
                     $scope.list = response;
+                    $scope.count = response.count;
                 } else if (response.status === "error") {
                     $state.go("loggedIn.home", null, {
                         "reload": true
