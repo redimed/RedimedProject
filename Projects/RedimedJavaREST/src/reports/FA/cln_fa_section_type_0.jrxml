@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cln_fa_section_type_0" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="22dedb11-5f7f-44d3-9a09-23065af0423f">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cln_fa_section_type_0" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="0" bottomMargin="0" uuid="22dedb11-5f7f-44d3-9a09-23065af0423f">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.0000000000000004"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="patient_id" class="java.lang.String"/>
@@ -35,9 +35,9 @@ and line.LineType != 1]]>
 	</field>
 	<group name="section_type0_group">
 		<groupHeader>
-			<band height="74">
+			<band height="70">
 				<staticText>
-					<reportElement x="-20" y="52" width="140" height="22" uuid="a4551ebc-ab95-4be7-92fa-6ef58b64a295">
+					<reportElement x="-20" y="52" width="140" height="18" uuid="a4551ebc-ab95-4be7-92fa-6ef58b64a295">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
@@ -54,7 +54,7 @@ and line.LineType != 1]]>
 					<text><![CDATA[Region]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="120" y="52" width="140" height="22" uuid="2055dcde-472c-4bc9-849d-f264d8176042">
+					<reportElement x="120" y="52" width="140" height="18" uuid="2055dcde-472c-4bc9-849d-f264d8176042">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
@@ -71,7 +71,7 @@ and line.LineType != 1]]>
 					<text><![CDATA[Movement]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="260" y="52" width="140" height="22" uuid="98d85ca5-859b-4a69-a93a-b0eb9e8b050f">
+					<reportElement x="260" y="52" width="140" height="18" uuid="98d85ca5-859b-4a69-a93a-b0eb9e8b050f">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					</reportElement>
 					<box>
@@ -87,7 +87,7 @@ and line.LineType != 1]]>
 					<text><![CDATA[Measurement]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="400" y="52" width="140" height="22" uuid="817d5935-106d-4a61-a5a6-49d485e7d888">
+					<reportElement x="400" y="52" width="140" height="18" uuid="817d5935-106d-4a61-a5a6-49d485e7d888">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					</reportElement>
 					<box>
@@ -107,7 +107,7 @@ and line.LineType != 1]]>
 					<textElement>
 						<font isBold="true"/>
 					</textElement>
-					<text><![CDATA[Note: Injuries beyond recovered strains/sprains, which are identified or declare by the candidate in their medical history, will undergo goniometric range of motion testing.]]></text>
+					<text><![CDATA[Note: Injuries beyond recovered strains/sprains, which are identified or declared by the candidate in their medical history, will undergo goniometric range of motion testing.]]></text>
 				</staticText>
 				<textField>
 					<reportElement x="-20" y="0" width="560" height="20" uuid="38a4c871-ee10-4702-9589-66b3c7d46ee8"/>
@@ -120,10 +120,10 @@ and line.LineType != 1]]>
 		</groupHeader>
 	</group>
 	<detail>
-		<band height="22">
+		<band height="16" splitType="Prevent">
 			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<frame>
-				<reportElement x="-20" y="0" width="560" height="22" uuid="a396eb87-3eea-4661-8c3f-0b58e346cdcb">
+				<reportElement x="-20" y="0" width="560" height="16" uuid="a396eb87-3eea-4661-8c3f-0b58e346cdcb">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
@@ -133,19 +133,8 @@ and line.LineType != 1]]>
 					<bottomPen lineWidth="0.3"/>
 					<rightPen lineWidth="0.3"/>
 				</box>
-				<textField>
-					<reportElement x="0" y="0" width="140" height="22" uuid="38eac3f9-9d5d-404a-b13f-262195cefc97">
-						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-					</reportElement>
-					<textElement>
-						<font isBold="false" isUnderline="true"/>
-						<paragraph leftIndent="10" spacingBefore="5"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{QUESTION}]]></textFieldExpression>
-				</textField>
 				<subreport>
-					<reportElement x="140" y="0" width="420" height="22" uuid="9dec9ec5-d2b5-4352-bfc5-c5911d5f3ce6">
+					<reportElement x="140" y="0" width="420" height="16" uuid="9dec9ec5-d2b5-4352-bfc5-c5911d5f3ce6">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<subreportParameter name="patient_id">
@@ -166,6 +155,21 @@ and line.LineType != 1]]>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					<subreportExpression><![CDATA[$P{real_path}+"cln_fa_section_type_0_details.jasper"]]></subreportExpression>
 				</subreport>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="140" height="16" isPrintWhenDetailOverflows="true" uuid="137aeea7-aa1a-4eb0-ab49-7ff3baaf72db"/>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.25"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font isUnderline="true"/>
+						<paragraph leftIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{QUESTION}]]></textFieldExpression>
+				</textField>
 			</frame>
 		</band>
 	</detail>

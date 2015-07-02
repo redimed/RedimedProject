@@ -1,23 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cln_lines_type_7_9_header" pageWidth="255" pageHeight="842" columnWidth="255" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b22fa206-db29-4f1d-808e-fc0415f5a4f9">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
-	<property name="com.jaspersoft.studio.unit." value="pixel"/>
-	<property name="ireport.zoom" value="1.0"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cln_fa_lines_type_15_details" language="groovy" pageWidth="200" pageHeight="802" columnWidth="200" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="c607a40c-c85b-45c8-adbf-51f6921bd9e6">
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="patient_id" class="java.lang.String"/>
-	<parameter name="cal_id" class="java.lang.String"/>
-	<parameter name="real_path" class="java.lang.String"/>
-	<parameter name="sub_report_dir" class="java.lang.String"/>
-	<parameter name="line_id" class="java.lang.String"/>
+	<parameter name="patient_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cal_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="line_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="real_path" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="sub_report_dir" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[select *
 from `cln_fa_df_line_details` detail
 where detail.ISENABLE = 1
 and detail.PATIENT_ID =  $P{patient_id}
 and detail.CAL_ID =  $P{cal_id}
-and detail.LINE_ID =  $P{line_id}
-and detail.ORD = 1]]>
+and detail.LINE_ID =  $P{line_id}]]>
 	</queryString>
 	<field name="PATIENT_ID" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -32,6 +39,9 @@ and detail.ORD = 1]]>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="QUESTION" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DESCRIPTION" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="VAL1_NAME" class="java.lang.String">
@@ -113,26 +123,28 @@ and detail.ORD = 1]]>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<detail>
-		<band height="22">
+		<band height="16">
 			<textField>
-				<reportElement x="0" y="0" width="115" height="22" uuid="ed2a3759-74fe-42f4-a517-aad6187bf0b4"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA["Job demand: "+$F{VAL1_VALUE}+
-($F{VAL1_ISVALUE}==7?" kgs":
-$F{VAL1_ISVALUE}==8?" m":
-$F{VAL1_ISVALUE}==9?" mm":
-$F{VAL1_ISVALUE}==10?" g":"")]]></textFieldExpression>
+				<reportElement stretchType="RelativeToBandHeight" x="60" y="0" width="140" height="16" uuid="fb7539ff-3d8c-4019-b229-e65f00268819"/>
+				<box>
+					<topPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$F{VAL1_VALUE}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="115" y="0" width="139" height="22" uuid="03efd4ff-4466-419a-b971-c7f1890d4647">
-					<printWhenExpression><![CDATA[$F{VAL2_VALUE} != null && $F{VAL2_VALUE} != ""]]></printWhenExpression>
-				</reportElement>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA["up to "+$F{VAL2_VALUE}+" m"]]></textFieldExpression>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="60" height="16" uuid="cd0b4dba-b335-4767-b18e-1c02cbbcca5e"/>
+				<box>
+					<topPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$F{QUESTION}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

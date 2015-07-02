@@ -1,30 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cln_fa_lines_type_12_details" pageWidth="555" pageHeight="842" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="298ef202-5af4-4e4d-8052-fe46247bc236">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
-	<property name="com.jaspersoft.studio.unit." value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cln_fa_lines_type_13_details" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="1751a8e8-1c38-47f8-8d5f-0af6b941e24f">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="patient_id" class="java.lang.String"/>
-	<parameter name="cal_id" class="java.lang.String"/>
-	<parameter name="real_path" class="java.lang.String"/>
-	<parameter name="sub_report_dir" class="java.lang.String"/>
-	<parameter name="line_id" class="java.lang.String"/>
+	<parameter name="patient_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cal_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="line_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="sub_report_dir" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="real_path" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[select *
-from `cln_fa_df_line_details` detail
-where detail.ISENABLE = 1
-and detail.PATIENT_ID =  $P{patient_id}
-and detail.CAL_ID = $P{cal_id}
-and detail.LINE_ID = $P{line_id}]]>
+		<![CDATA[select * from `cln_fa_df_line_details` detail
+where detail.PATIENT_ID =  $P{patient_id}
+and detail.CAL_ID =  $P{cal_id}
+and detail.LINE_ID =  $P{line_id}
+and detail.ISENABLE = 1]]>
 	</queryString>
 	<field name="PATIENT_ID" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -39,6 +38,9 @@ and detail.LINE_ID = $P{line_id}]]>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="QUESTION" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DESCRIPTION" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="VAL1_NAME" class="java.lang.String">
@@ -120,62 +122,65 @@ and detail.LINE_ID = $P{line_id}]]>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<detail>
-		<band height="50">
+		<band height="70">
 			<textField>
-				<reportElement x="0" y="0" width="150" height="50" uuid="8023e9d4-8fa5-4c6c-8dfd-8bddd01f4fdf"/>
+				<reportElement x="0" y="0" width="138" height="70" uuid="51338d86-d8ff-4a0d-98d6-616790edf883"/>
 				<box>
-					<topPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
+					<pen lineWidth="0.3"/>
+					<topPen lineWidth="0.3"/>
+					<leftPen lineWidth="0.3"/>
+					<bottomPen lineWidth="0.3"/>
+					<rightPen lineWidth="0.3"/>
 				</box>
-				<textElement verticalAlignment="Middle">
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font isBold="false"/>
 					<paragraph leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{QUESTION}]]></textFieldExpression>
 			</textField>
 			<frame>
-				<reportElement x="150" y="0" width="190" height="50" uuid="c525c2fd-25bf-470d-b693-38233bd3ae63"/>
+				<reportElement x="274" y="0" width="175" height="70" uuid="25dd6024-aa76-48f0-bb16-6b23731d68a7"/>
 				<box>
-					<topPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
+					<pen lineWidth="0.3"/>
+					<topPen lineWidth="0.3"/>
+					<leftPen lineWidth="0.3"/>
+					<bottomPen lineWidth="0.3"/>
+					<rightPen lineWidth="0.3"/>
 				</box>
 				<staticText>
-					<reportElement x="11" y="4" width="50" height="22" uuid="0fdea192-08a9-41f7-b57e-33d8c120eb4a"/>
+					<reportElement x="5" y="3" width="50" height="22" uuid="3c3b25af-76a5-46c8-9e83-98f6cf4e0937"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
 					<text><![CDATA[UNABLE]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="68" y="4" width="50" height="22" uuid="b91b095a-f84d-446d-9da1-322e22ed8302"/>
+					<reportElement x="62" y="3" width="50" height="22" uuid="d48a7a3f-9b59-4a2b-8135-8cc9b986fd4e"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
 					<text><![CDATA[PARTIAL]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="125" y="4" width="50" height="22" uuid="6bc246db-76d2-4f2a-af88-f1921f51becb"/>
+					<reportElement x="119" y="3" width="50" height="22" uuid="ee3d289d-196b-4337-b38b-737eaf630595"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
 					<text><![CDATA[ABLE]]></text>
 				</staticText>
+				<image>
+					<reportElement x="36" y="31" width="15" height="15" uuid="57f9ee1f-04c3-4fbc-8bef-cd522e3183aa"/>
+					<imageExpression><![CDATA[$F{VAL2_CHECKBOX}.equals("0")?($P{real_path}+"uncheck.png"):($P{real_path}+"checked.png")]]></imageExpression>
+				</image>
 				<staticText>
-					<reportElement x="62" y="32" width="105" height="16" uuid="9dc49b2c-53a9-43e6-ac72-9ac7ae9b37df"/>
+					<reportElement x="56" y="31" width="105" height="16" uuid="c0c80d86-536d-439b-b463-b32871019e28"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font isBold="false"/>
 					</textElement>
 					<text><![CDATA[No Pain/Discomfort ]]></text>
 				</staticText>
-				<image>
-					<reportElement x="42" y="32" width="15" height="15" uuid="94277c1d-395e-4d82-b7c7-8744c99a4b63"/>
-					<imageExpression><![CDATA[$F{VAL2_CHECKBOX}.equals("0")?($P{real_path}+"uncheck.png"):($P{real_path}+"checked.png")]]></imageExpression>
-				</image>
 				<ellipse>
-					<reportElement mode="Transparent" x="7" y="3" width="56" height="22" uuid="17d45b72-0e38-48de-92dd-73378fd453c6">
+					<reportElement mode="Transparent" x="1" y="2" width="56" height="22" uuid="6abca3ba-a364-45b4-8c93-f4f1b5aede1f">
 						<printWhenExpression><![CDATA[$F{VAL1_CHECKBOX}.equals("0")]]></printWhenExpression>
 					</reportElement>
 					<graphicElement>
@@ -183,16 +188,16 @@ and detail.LINE_ID = $P{line_id}]]>
 					</graphicElement>
 				</ellipse>
 				<ellipse>
-					<reportElement mode="Transparent" x="66" y="4" width="56" height="22" uuid="00fae0bd-eb39-4a1a-a485-d3e9ff607d39">
-						<printWhenExpression><![CDATA[$F{VAL1_CHECKBOX}.equals("1")]]></printWhenExpression>
+					<reportElement mode="Transparent" x="117" y="3" width="56" height="22" uuid="e74efb3b-a447-4d50-b4f4-a6a1a1a85f90">
+						<printWhenExpression><![CDATA[$F{VAL1_CHECKBOX}.equals("2")]]></printWhenExpression>
 					</reportElement>
 					<graphicElement>
 						<pen lineWidth="2.0" lineStyle="Solid"/>
 					</graphicElement>
 				</ellipse>
 				<ellipse>
-					<reportElement mode="Transparent" x="123" y="4" width="56" height="22" uuid="2fffdbb6-707e-4e0a-87ae-aa1fc0ba437c">
-						<printWhenExpression><![CDATA[$F{VAL1_CHECKBOX}.equals("2")]]></printWhenExpression>
+					<reportElement mode="Transparent" x="60" y="3" width="56" height="22" uuid="50db553b-7a30-4405-9376-f0b75e50e2c3">
+						<printWhenExpression><![CDATA[$F{VAL1_CHECKBOX}.equals("1")]]></printWhenExpression>
 					</reportElement>
 					<graphicElement>
 						<pen lineWidth="2.0" lineStyle="Solid"/>
@@ -200,37 +205,46 @@ and detail.LINE_ID = $P{line_id}]]>
 				</ellipse>
 			</frame>
 			<textField>
-				<reportElement x="340" y="0" width="65" height="50" uuid="af893157-f5a6-4bb6-a6fe-ef2c4ab73590"/>
+				<reportElement x="138" y="0" width="136" height="70" uuid="b2b12370-53fc-492a-a323-11e2d57c93b3"/>
 				<box>
-					<topPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
+					<pen lineWidth="0.3"/>
+					<topPen lineWidth="0.3"/>
+					<leftPen lineWidth="0.3"/>
+					<bottomPen lineWidth="0.3"/>
+					<rightPen lineWidth="0.3"/>
 				</box>
-				<textElement verticalAlignment="Middle">
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font isBold="false"/>
 					<paragraph leftIndent="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{VAL1_ISCHECKBOX}==4?
-	($F{VAL1_CHECKBOX}.equals("0") || $F{VAL1_CHECKBOX}.equals("1")?
-	"0/1":"1/1"):
-	($F{VAL1_CHECKBOX}.equals("0")?"0/2":(
-		$F{VAL1_CHECKBOX}.equals("1")?"1/2":"2/2"
-	))
-)]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{DESCRIPTION}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="405" y="0" width="150" height="50" uuid="74302afe-da9a-43b4-931b-237c3a62973d"/>
+			<frame>
+				<reportElement x="449" y="0" width="106" height="70" uuid="5fd29a45-58ed-4209-8b36-604f8cf79dab"/>
 				<box>
-					<topPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
+					<pen lineWidth="0.3"/>
+					<topPen lineWidth="0.3"/>
+					<leftPen lineWidth="0.3"/>
+					<bottomPen lineWidth="0.3"/>
+					<rightPen lineWidth="0.3"/>
 				</box>
-				<textElement verticalAlignment="Middle">
-					<paragraph leftIndent="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{COMMENTS}]]></textFieldExpression>
-			</textField>
+				<staticText>
+					<reportElement x="0" y="0" width="106" height="16" uuid="28653dea-27d2-42c1-95f8-c71e245a6b4a"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font isBold="true"/>
+						<paragraph leftIndent="10"/>
+					</textElement>
+					<text><![CDATA[Comments:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="0" y="16" width="106" height="54" uuid="08a0e70e-5563-4529-9e88-7e44223ef850"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+						<font isBold="false"/>
+						<paragraph leftIndent="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{COMMENTS}]]></textFieldExpression>
+				</textField>
+			</frame>
 		</band>
 	</detail>
 </jasperReport>

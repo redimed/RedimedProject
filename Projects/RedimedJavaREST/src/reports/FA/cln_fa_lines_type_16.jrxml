@@ -1,31 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cln_fa_lines_type_12" pageWidth="575" pageHeight="842" columnWidth="555" leftMargin="0" rightMargin="20" topMargin="0" bottomMargin="0" uuid="0b508cbf-03a7-42b1-89b6-a1be3e1949d0">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
-	<property name="com.jaspersoft.studio.unit." value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
-	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cln_fa_lines_type_16" language="groovy" pageWidth="575" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="20" topMargin="0" bottomMargin="0" uuid="19bbba46-6d2a-4dd7-bf71-1b345ff9af90">
+	<property name="ireport.zoom" value="1.3636363636363635"/>
+	<property name="ireport.x" value="81"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="patient_id" class="java.lang.String"/>
-	<parameter name="cal_id" class="java.lang.String"/>
-	<parameter name="real_path" class="java.lang.String"/>
-	<parameter name="sub_report_dir" class="java.lang.String"/>
-	<parameter name="line_id" class="java.lang.String"/>
+	<parameter name="patient_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cal_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="line_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="real_path" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="sub_report_dir" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/LocalData/RedimedProject/Projects/RedimedJavaREST/src/reports/FA/"]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[select  * from `cln_fa_df_lines` line
-where line.ISENABLE = 1
-and line.PATIENT_ID =  $P{patient_id}
-and line.CAL_ID =  $P{cal_id}
+		<![CDATA[select line.*
+from `cln_fa_df_lines` line
+where line.PATIENT_ID = $P{patient_id}
+and line.CAL_ID = $P{cal_id}
 and line.LINE_ID =  $P{line_id}
-and line.LineType!=1
-and line.SCORE_TYPE1=12]]>
+and line.LineType != 1
+and line.SCORE_TYPE1 = 16]]>
 	</queryString>
 	<field name="PATIENT_ID" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -132,11 +135,11 @@ and line.SCORE_TYPE1=12]]>
 	<field name="IS_SHOW_RANKING_TABLE" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<group name="line_type_12_group">
+	<group name="cln_fa_lines_16">
 		<groupHeader>
-			<band height="30">
+			<band height="50">
 				<textField>
-					<reportElement x="0" y="8" width="555" height="22" uuid="110cd7e0-a30f-480e-b1bd-fd21bbc94e36"/>
+					<reportElement x="0" y="28" width="555" height="22" uuid="54608502-5e7e-487c-9259-91b61de40cc6"/>
 					<textElement verticalAlignment="Middle">
 						<font isBold="true" isUnderline="false"/>
 					</textElement>
@@ -146,88 +149,74 @@ and line.SCORE_TYPE1=12]]>
 		</groupHeader>
 	</group>
 	<detail>
-		<band height="22">
+		<band height="16">
 			<staticText>
-				<reportElement x="0" y="0" width="150" height="22" uuid="f3867c25-a676-4e53-85e3-fc8304ea00c3"/>
+				<reportElement x="0" y="0" width="190" height="16" uuid="855bc629-248c-47d7-9031-d7305d759d0a"/>
 				<box>
-					<topPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="0.3"/>
+					<leftPen lineWidth="0.3"/>
+					<bottomPen lineWidth="0.3"/>
+					<rightPen lineWidth="0.3"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font isBold="true"/>
+					<paragraph leftIndent="10"/>
 				</textElement>
 				<text><![CDATA[Test]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="150" y="0" width="190" height="22" uuid="5c439957-f5e8-4070-9049-2d473797aa3b"/>
+				<reportElement x="405" y="0" width="150" height="16" uuid="6f88afeb-4183-44e7-b39c-04664daff31d"/>
 				<box>
-					<topPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="0.3"/>
+					<leftPen lineWidth="0.3"/>
+					<bottomPen lineWidth="0.3"/>
+					<rightPen lineWidth="0.3"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Result]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="405" y="0" width="150" height="22" uuid="b059eb94-a691-424d-a1a8-7b1e8666516a"/>
-				<box>
-					<topPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<paragraph leftIndent="10"/>
 				</textElement>
 				<text><![CDATA[Comment]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="340" y="0" width="65" height="22" uuid="e4f310dd-d323-43b5-b1bb-4ec3737f47b4"/>
+				<reportElement x="190" y="0" width="215" height="16" uuid="ad0d6730-07e3-4d4f-8092-5db98bcf158b"/>
 				<box>
-					<topPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.3" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="0.3"/>
+					<leftPen lineWidth="0.3"/>
+					<bottomPen lineWidth="0.3"/>
+					<rightPen lineWidth="0.3"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font isBold="true"/>
+					<paragraph leftIndent="10"/>
 				</textElement>
-				<text><![CDATA[Score]]></text>
+				<text><![CDATA[Result]]></text>
 			</staticText>
 		</band>
-		<band height="22">
+		<band height="50">
 			<subreport>
-				<reportElement x="0" y="0" width="555" height="22" uuid="ef841b48-c22f-49a5-b42a-75a967c237c1"/>
-				<subreportParameter name="patient_id">
-					<subreportParameterExpression><![CDATA[$P{patient_id}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="cal_id">
-					<subreportParameterExpression><![CDATA[$P{cal_id}]]></subreportParameterExpression>
+				<reportElement x="0" y="0" width="555" height="50" uuid="e8d26281-f135-4972-9c1e-18862e3a3a98"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="real_path">
 					<subreportParameterExpression><![CDATA[$P{real_path}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="sub_report_dir">
-					<subreportParameterExpression><![CDATA[$P{sub_report_dir}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="line_id">
 					<subreportParameterExpression><![CDATA[$F{LINE_ID}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="cal_id">
+					<subreportParameterExpression><![CDATA[$P{cal_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="patient_id">
+					<subreportParameterExpression><![CDATA[$P{patient_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="sub_report_dir">
+					<subreportParameterExpression><![CDATA[$P{sub_report_dir}]]></subreportParameterExpression>
+				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{real_path}+"cln_fa_lines_type_12_details.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "cln_fa_lines_type_16_details.jasper"]]></subreportExpression>
 			</subreport>
-		</band>
-		<band height="22">
-			<textField>
-				<reportElement x="340" y="0" width="100" height="22" uuid="5fbb5068-339d-4567-8aac-873a9a3daa94"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA["Total: " +$F{RATING_VALUE1}+ "/4"]]></textFieldExpression>
-			</textField>
 		</band>
 	</detail>
 </jasperReport>

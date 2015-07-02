@@ -254,18 +254,24 @@
 						</div>
 						<!-- end AVG Score -->
 						<!-- MAX Score -->
-						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISSCORE1 === 1 && (line.SCORE_TYPE1 === 10 || line.SCORE_TYPE1 === 9)">
-							<label class="control-label pull-right" style="margin-top:15px;" ng-if="line.SCORE_TYPE1 !== 9">Score (MAX): </label>
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISSCORE1 === 1 && (line.SCORE_TYPE1 === 10 || line.SCORE_TYPE1 === 9 || line.SCORE_TYPE1 === 17 || line.SCORE_TYPE1 === 18 || line.SCORE_TYPE1 === 19)">
+							<label class="control-label pull-right" style="margin-top:15px;" ng-if="line.SCORE_TYPE1 !== 9 && SCORE_TYPE1 !== 17 && SCORE_TYPE1 !== 18 && SCORE_TYPE1 !== 19">Score (MAX): </label>
 							<label class="control-label pull-right" style="margin-top:15px;" ng-if="line.SCORE_TYPE1 === 9">Managed (kg): </label>
+							<label class="control-label pull-right" style="margin-top:15px;" ng-if="line.SCORE_TYPE1 === 17">Managed (mm): </label>
+							<label class="control-label pull-right" style="margin-top:15px;" ng-if="line.SCORE_TYPE1 === 18">Comfortable managed (kg): </label>
+							<label class="control-label pull-right" style="margin-top:15px;" ng-if="line.SCORE_TYPE1 === 19">Comfortable managed (mm): </label>
 						</div>
-						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISSCORE1 === 1 && (line.SCORE_TYPE1 === 10 || line.SCORE_TYPE1 === 9)">
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISSCORE1 === 1 && (line.SCORE_TYPE1 === 10 || line.SCORE_TYPE1 === 9 || line.SCORE_TYPE1 === 17 || line.SCORE_TYPE1 === 18 || line.SCORE_TYPE1 === 19)">
 							<label class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">{{line.SCORE1}}</b> </label>
 						</div>
-						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISSCORE2 === 1 && (line.SCORE_TYPE2 === 10 || line.SCORE_TYPE2 === 9)">
-							<label class="control-label pull-right" style="margin-top:15px;" ng-if="line.SCORE_TYPE2 !== 9">Score (MAX): </label>
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISSCORE2 === 1 && (line.SCORE_TYPE2 === 10 || line.SCORE_TYPE2 === 9 || line.SCORE_TYPE2 === 17 || line.SCORE_TYPE2 === 18 || line.SCORE_TYPE2 === 19)">
+							<label class="control-label pull-right" style="margin-top:15px;" ng-if="line.SCORE_TYPE2 !== 9 && SCORE_TYPE2 !== 17 && SCORE_TYPE2 !== 18 && SCORE_TYPE2 !== 19">Score (MAX): </label>
 							<label class="control-label pull-right" style="margin-top:15px;" ng-if="line.SCORE_TYPE2 === 9">Managed (kg): </label>
+							<label class="control-label pull-right" style="margin-top:15px;" ng-if="line.SCORE_TYPE2 === 17">Managed (mm): </label>
+							<label class="control-label pull-right" style="margin-top:15px;" ng-if="line.SCORE_TYPE2 === 18">Comfortable managed (kg): </label>
+							<label class="control-label pull-right" style="margin-top:15px;" ng-if="line.SCORE_TYPE2 === 19">Comfortable managed (mm): </label>
 						</div>
-						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISSCORE2 === 1 && l(line.SCORE_TYPE2 === 10 || line.SCORE_TYPE1 === 2)">
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISSCORE2 === 1 && l(line.SCORE_TYPE2 === 10 || line.SCORE_TYPE2 === 2 || line.SCORE_TYPE2 === 17 || line.SCORE_TYPE2 === 18 || line.SCORE_TYPE2 === 19)">
 							<label class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">{{line.SCORE2}}</b></label>
 						</div>
 						<!-- end MAX Score -->

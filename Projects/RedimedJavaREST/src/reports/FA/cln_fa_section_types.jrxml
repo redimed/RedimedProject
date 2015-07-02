@@ -72,7 +72,7 @@ where
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<detail>
-		<band height="50">
+		<band height="50" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<subreport>
 				<reportElement x="0" y="0" width="555" height="50" isRemoveLineWhenBlank="true" uuid="41bd5fe5-b053-4097-8ebc-10478ef59414">
@@ -100,7 +100,7 @@ where
 				<subreportExpression><![CDATA[$P{real_path}+"cln_fa_section_type_0.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
-		<band height="50">
+		<band height="50" splitType="Stretch">
 			<subreport>
 				<reportElement x="0" y="0" width="555" height="50" isRemoveLineWhenBlank="true" uuid="0690f339-832d-47c1-b7b6-d62b51712f96">
 					<printWhenExpression><![CDATA[$F{SECTION_TYPE} == 1]]></printWhenExpression>
