@@ -1,0 +1,109 @@
+
+<link href="modules/makeCall/views/call.css" rel="stylesheet" type="text/css" />
+
+<div ng-class="{'mouse-move': mouseMove}">
+
+    <div ng-if="isCaller && !isAccept">
+      <div class="row-fluid" >
+        <div class="span4 offset4 text-center">
+          <div class="calling-title">Calling <span style="color: red;">{{callUserInfo.user_name}}</span>...</div>
+        </div>
+      </div>
+
+      <div class="row-fluid" style="margin-top: 10%;">
+        <div class="span4 offset4 text-center">
+          <div class="skype">
+            <div class="content-img">
+              <img width="100%" height="100%" class="img-circle" ng-src="{{callUserInfo.img}}" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id='session'>
+        <div id="remote" style="position: absolute; display: block; width: 100%; height: 100%">
+            <div id="myRemoteVideo" style="display: inline-block; width: 100%; height: 100%"></div>
+            <video id="myLocalVideo" autoplay="autoplay" muted="true"></video>
+        </div>  
+        <div id="facePublisher">
+            <video width="100%" height="100%" id="myMiniVideo" autoplay="autoplay" muted="true"></video>
+        </div>
+    </div>
+
+    <div id="statusMessages">
+        <div style="border-radius: 50px !important;" id="status" class="statusMessage"></div>
+        <!-- <div style="border-radius: 50px !important;" id="command" class="statusMessage"></div> -->
+    </div>
+
+    <nav mfb-menu position="br" effect="zoomin" label="Features"
+         active-icon="icon ion-close-round" resting-icon="icon ion-cube "
+         toggling-method="click">
+        
+        <button mfb-button 
+                ng-click="toggleShareScreen()"
+                ng-disabled="!screenShareSupported || selectingScreenSource || promptToInstall || !connected" 
+                icon="icon ion-android-laptop" 
+                label="Share Screen"></button>
+        <button mfb-button 
+                ng-click="toggleWhiteboard()"
+                icon="icon ion-images" 
+                label="Drawings"></button>
+        <button mfb-button 
+                ng-click="toggleBluetooth()"
+                icon="icon ion-bluetooth" 
+                label="Medical Devices"></button>
+    </nav>
+
+    <nav mfb-menu position="bl" effect="zoomin" label="Menu"
+         active-icon="icon ion-close-round" resting-icon="icon ion-navicon-round"
+         toggling-method="click">
+        
+        <button mfb-button 
+                ng-click="addPeople()"
+                icon="icon ion-person-add" 
+                label="Add User"></button>
+        <button mfb-button 
+                ng-if="!isVideoMuted"
+                ng-click="muteVideo()"
+                icon="icon ion-eye" 
+                label="Mute Video"></button>
+        <button mfb-button 
+                ng-if="isVideoMuted"
+                ng-click="muteVideo()"
+                icon="icon ion-eye-disabled" 
+                label="Mute Video"></button>
+        <button mfb-button 
+                ng-if="!isAudioMuted"
+                ng-click="muteAudio()"
+                icon="icon ion-android-microphone"
+                label="Mute Audio"></button>
+        <button mfb-button 
+                ng-if="isAudioMuted"
+                ng-click="muteAudio()"
+                icon="ion-android-microphone-off" 
+                label="Mute Audio"></button>
+        <button mfb-button 
+                ng-click="cancelCall()"
+                icon="icon ion-power" 
+                label="Cancel Call"></button>
+
+    </nav>
+
+
+
+</div>
+<script>
+    document.body.style.backgroundColor = "#3A3537";
+</script>
+
+
+
+
+
+
+
+
+
+
+

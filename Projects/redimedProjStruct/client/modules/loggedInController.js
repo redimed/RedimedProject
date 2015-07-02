@@ -40,6 +40,8 @@ angular.module("app.loggedIn.controller",[
             $modalInstance.close();
 
             popup($state.href("make_call",{apiKey:opentokRoom.apiKey,sessionId:opentokRoom.sessionId,token:opentokRoom.token,callUser: userInfo.id, isCaller: 0, patientId: patientId}));
+
+            // popup($state.href('test_call',{apiKey:opentokRoom.apiKey, clientId:opentokRoom.clientId, callUser: userInfo.id, isCaller: 0, patientId:patientId}));
         }
 
         var newwin = null;
@@ -67,6 +69,8 @@ angular.module("app.loggedIn.controller",[
 
     $scope.isShow = true;
 
+    socket.removeAllListeners();
+
     $scope.$on('onBeforeUnload', function (e, confirmation) {
         confirmation.message = "Your sure want to leave this page!";
         e.preventDefault();
@@ -82,7 +86,7 @@ angular.module("app.loggedIn.controller",[
 
     socket.on("forceLogout",function(){
 
-        toastr.error("Someone Is Logged Into Your Account!");
+        toastr.error("Please Login Again!");
 
         $cookieStore.remove("userInfo");
         $cookieStore.remove("companyInfo");
@@ -97,7 +101,7 @@ angular.module("app.loggedIn.controller",[
         console.log("Remove Success");
     }
 
-    socket.removeListener('messageReceived');
+    socket.removeListener('messageReceived',cancelListenerHandler);
 
     socket.on("messageReceived",function(fromId,fromUser,message){
         if(message.type == 'call')
@@ -135,6 +139,11 @@ angular.module("app.loggedIn.controller",[
                                             sessionId: message.sessionId,
                                             token: message.token
                                         }
+
+                                    // var opentokRoom = {
+                                    //     apiKey: message.apiKey,
+                                    //     clientId: message.clientId
+                                    // }
                                     return opentokRoom;
                                 },
                                 patientId: function(){

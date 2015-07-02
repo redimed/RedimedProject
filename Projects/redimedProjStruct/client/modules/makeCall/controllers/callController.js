@@ -6,6 +6,8 @@ angular.module("app.calling")
         var audio = new Audio('theme/assets/phone_calling.mp3');
         var toSt= $cookieStore.get('toState');
 
+        socket.removeAllListeners();
+
         var params = {};
 
         var apiKey = $stateParams.apiKey;
@@ -136,7 +138,6 @@ angular.module("app.calling")
             console.log("Remove Success");
         }
 
-        socket.removeListener('messageReceived');
 
         socket.on("messageReceived",function(fromId,fromUser,message){
             if(message.type === 'answer')
@@ -318,6 +319,11 @@ angular.module("app.calling")
             {
                 if($scope.streams.length < 2)
                 {
+                    var arrUser = [];
+                    for(var i=0 ; i<$scope.streams.length; i++)
+                    {
+                        arrUser.push($scope.streams[i].name);
+                    }
                     var modalInstance = $modal.open({
                         templateUrl: 'modules/makeCall/views/dialogs/invitePeople.html',
                         size: 'sm',
@@ -326,6 +332,9 @@ angular.module("app.calling")
                         resolve: {
                             userInfo: function(){
                                 return $scope.userInfo;
+                            },
+                            arrUser: function(){
+                                return arrUser;
                             },
                             sessionId: function(){
                                 return sessionId;
@@ -337,7 +346,7 @@ angular.module("app.calling")
                                 return $scope.patientId;
                             }
                         },
-                        controller: function($scope,UserService,$modalInstance,toastr,socket,userInfo,sessionId,OTSession,patientId){
+                        controller: function($scope,UserService,$modalInstance,toastr,socket,userInfo,sessionId,OTSession,patientId,arrUser){
 
                             $scope.isMakeCall = false;
                             $scope.callUser = null;
@@ -429,7 +438,6 @@ angular.module("app.calling")
         });
 
         $scope.$on('$destroy', function () {
-            socket.removeListener('messageReceived');
             if ($scope.session && $scope.connected) {
                 $scope.session.disconnect();
                 $scope.connected = false;

@@ -527,6 +527,9 @@ angular.module("app.loggedIn.patient.consult")
 				if(opentokRoom)
 					popup($state.href('make_call',{apiKey:opentokRoom.apiKey,sessionId:opentokRoom.sessionId,token:opentokRoom.token,callUser: user.id, isCaller: 1, patientId:$scope.patient_id}));
 			})
+
+			// var apiKey = "5a17b6b777548c2feb4e8af4b6b6591b";
+			// popup($state.href('test_call',{apiKey:apiKey, clientId: null,callUser: user.id, isCaller: 1, patientId:$scope.patient_id}));
 	    }
 
 	    //==================================FILE SHARING============================

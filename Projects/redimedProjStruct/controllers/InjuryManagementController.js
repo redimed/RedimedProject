@@ -101,7 +101,7 @@ module.exports = {
                           patient.user_id = info.id;
                           db.Patient.create(patient)
                             .success(function(){
-                              res.json({status:'success'});
+                              res.json({status: 'success', userId: patient.user_id})
                             })
                             .error(function(err){
                                 res.json({status:'error'});
@@ -184,7 +184,8 @@ module.exports = {
               STATUS: imInfo.cal_id == null || typeof imInfo.cal_id === 'undefined' ?"New":null,
               pickup_address: imInfo.cal_id == null || typeof imInfo.cal_id === 'undefined' ? (imInfo.infoMaps.format_address == null || typeof imInfo.infoMaps.format_address === 'undefined' ? null : imInfo.infoMaps.format_address) : null,
               latitude: imInfo.cal_id == null || typeof imInfo.cal_id === 'undefined' ?  (imInfo.infoMaps.lat == null || typeof imInfo.infoMaps.lat === 'undefined' ? null : imInfo.infoMaps.lat) : null,
-              longitude: imInfo.cal_id == null || typeof imInfo.cal_id === 'undefined' ? (imInfo.infoMaps.lng == null || typeof imInfo.infoMaps.lng === 'undefined' ? null : imInfo.infoMaps.lng) : null
+              longitude: imInfo.cal_id == null || typeof imInfo.cal_id === 'undefined' ? (imInfo.infoMaps.lng == null || typeof imInfo.infoMaps.lng === 'undefined' ? null : imInfo.infoMaps.lng) : null,
+              signature: imInfo.signature
           },{raw:true})
               .success(function(data){
                   db.IMInjury.find({where:data.dataValues},{raw:true})
@@ -663,24 +664,33 @@ module.exports = {
     },
     getOnlineUsers: function(req,res){
         var userList = [];
-        db.User.findAll({where: "socket IS NOT NULL"},{raw:true})
-            .success(function(data){
-                if(data)
-                {
-                    for (var i = 0; i < data.length; i++) {
-                        userList.push({
-                            id: data[i].id,
-                            username: data[i].user_name,
-                            socket: data[i].socket,
-                            fullName: data[i].Booking_Person
-                        });
-                    }
-                    res.json({data:userList});
-                }
-            })
-            .error(function(err){
-                console.log(err);
-            })
+        db.UserType.find({where:{user_type: 'Doctor'}},{raw:true})
+          .success(function(type){
+              if(type)
+              {
+                  db.sequelize.query("SELECT `users`.*, `UserType`.`id` AS `UserType.id`, `UserType`.`user_type` AS `UserType.user_type` "+
+                                     "FROM `users` LEFT OUTER JOIN `user_type` AS `UserType` ON `UserType`.`id` = `users`.`user_type` WHERE SOCKET IS NOT NULL AND `UserType`.`id` = ?",null,{raw:true},[type.ID])
+                    .success(function(data){
+                        if(data)
+                        {
+                            for (var i = 0; i < data.length; i++) {
+                                userList.push({
+                                    id: data[i].id,
+                                    username: data[i].user_name,
+                                    socket: data[i].socket,
+                                    fullName: data[i].Booking_Person,
+                                    userType: data[i].UserType.user_type
+                                });
+                            }
+                            res.json({data:userList});
+                        }
+                    })
+                    .error(function(err){
+                        console.log(err);
+                    })
+              }
+          })
+        
     },
     getInjuryByCompany: function(req,res){
         var companyId = req.body.companyId;
@@ -688,7 +698,7 @@ module.exports = {
         db.sequelize.query("SELECT i.*,p.*,CONCAT(IFNULL(p.Title,''), ' . ', IFNULL(p.`First_name`,''),' ',IFNULL(p.`Sur_name`,''),' ',IFNULL(p.`Middle_name`,'')) as FullName,c.Company_name as CompanyName,c.Addr as CompanyAddr, c.Industry FROM `im_injury` i " +
                             "INNER JOIN `cln_patients` p ON i.`patient_id` = p.`Patient_id` " +
                             "INNER JOIN companies c ON c.id = p.company_id " +
-                            "WHERE c.id = ?",null,{raw:true},[companyId])
+                            "WHERE c.id = ? ORDER BY i.injury_date DESC",null,{raw:true},[companyId])
             .success(function(data){
                 res.json({status:'success',data:data})
             })
@@ -704,8 +714,6 @@ module.exports = {
                 for(var i=0; i<data.length; i++)
                 {
                     arr.push({id: data[i].id,
-                              // device_id:data[i].device_id,
-                              // device_img:data[i].device_img!=null || data[i].device_img!='' ? base64Image(data[i].device_img):'',
                               device_name:data[i].device_name});
                 }
 

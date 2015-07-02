@@ -188,6 +188,20 @@ module.exports = {
             res.redirect('/');
         else
             next();
+    },
+    checkOnline: function(req,res){
+        var userId = req.body.user_id;
+
+        db.User.find({where:{id: userId}},{raw:true})
+            .success(function(user){
+                if(user.socket == null)
+                    res.json({status:'offline'})
+                else
+                    res.json({status:'online'})
+            })
+            .error(function(err){
+                console.log(err);
+            })
     }
     // ,
     // loggedIn: function(req,res){

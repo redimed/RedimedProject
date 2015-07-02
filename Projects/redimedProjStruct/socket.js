@@ -48,8 +48,12 @@ module.exports = function(io,cookie,cookieParser) {
 
     io.use(parser);
 
-    io.on('connection', function (socket) {
+    db.User.update({socket: null})
+        .success(function(){
+            console.log("=====Server Restart=====");
+        })
 
+    io.on('connection', function (socket) {
         var header = socket.request.headers;
         var source = header['user-agent'];
         ua = useragent.parse(source);
@@ -397,15 +401,15 @@ module.exports = function(io,cookie,cookieParser) {
 
         })
 
-        socket.on('lostCookie',function(){
-            db.sequelize.query("UPDATE `users` SET `socket` = NULL WHERE socket = ?",null,{raw:true},[socket.id])
-                .success(function(){
-                    getOnlineUser();
-                })
-                .error(function(err){
-                    console.log(err);
-                })
-        })
+        // socket.on('lostCookie',function(){
+        //     db.sequelize.query("UPDATE `users` SET `socket` = NULL WHERE socket = ?",null,{raw:true},[socket.id])
+        //         .success(function(){
+        //             getOnlineUser();
+        //         })
+        //         .error(function(err){
+        //             console.log(err);
+        //         })
+        // })
 
         // socket.on('disconnect', function (reason) {
 
@@ -460,14 +464,17 @@ module.exports = function(io,cookie,cookieParser) {
 
         function getOnlineUser(){
             userList = [];
-            db.User.findAll({where: "socket IS NOT NULL"},{raw:true})
+            db.User.belongsTo(db.UserType,{foreignKey:'user_type'});
+            db.User.findAll({where: "socket IS NOT NULL",include:[db.UserType]},{raw:true})
                 .success(function(data){
                     for (var i = 0; i < data.length; i++) {
                         userList.push({
                             id: data[i].id,
                             username: data[i].user_name,
                             socket: data[i].socket,
-                            img: data[i].img
+                            img: data[i].img,
+                            fullName: data[i].Booking_Person,
+                            userType: data[i].UserType.user_type
                         });
                     }
                     io.sockets.emit('online', userList);
