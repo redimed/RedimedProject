@@ -826,9 +826,25 @@ module.exports = {
             strWeek = " AND time_tasks_week.week_no = " + searchObj.week_no + " AND YEAR(time_tasks_week.end_date) = :yearNow";
         }
         //END SEARCH
+
+        //ORDER BY
+        var strOrder = " ORDER BY ";
+        for (var keyOrder in searchObj.order) {
+            if (searchObj.order[keyOrder] !== undefined && searchObj.order[keyOrder] !== null && searchObj.order[keyOrder] !== "") {
+                strOrder += " time_tasks_week.start_date " + searchObj.order[keyOrder] + ", ";
+            }
+        }
+        if (strOrder.length === 10) {
+            strOrder = "";
+        } else {
+            strOrder = strOrder.substring(0, strOrder.length - 2);
+        }
+        //END ORDER BY
         var query = "SELECT time_tasks_week.start_date,time_tasks_week.task_week_id, time_tasks_week.end_date, time_tasks_week.time_charge, time_task_status.name, " +
             "time_tasks_week.comments FROM time_tasks_week INNER JOIN time_task_status ON time_task_status.task_status_id = " +
-            "time_tasks_week.task_status_id WHERE time_tasks_week.user_id = :userId" + strWeek + strSearch + " ORDER BY time_tasks_week.start_date DESC LIMIT :limit OFFSET :offset";
+            "time_tasks_week.task_status_id WHERE time_tasks_week.user_id = :userId" + strWeek + strSearch +
+            strOrder +
+            " LIMIT :limit OFFSET :offset";
         db.sequelize.query(query, null, {
                 raw: true
             }, {
