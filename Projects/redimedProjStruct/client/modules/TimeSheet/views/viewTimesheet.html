@@ -27,7 +27,10 @@
                     <tr>
                         <th style="width:15%;">
                             <div class="th">
-                                For The Week
+                                <span class="glyphicon glyphicon-chevron-up" ng-click="clickAsc()" ng-class="{'active': searchObjectMap.order[0]==='ASC'}">
+                            </span>
+                                <span class="glyphicon glyphicon-chevron-down" ng-click="clickDesc()" ng-class="{ 'active': searchObjectMap.order[0]==='DESC' } ">
+                            </span> For The Week
                             </div>
                         </th>
                         <th style="width:13%;">

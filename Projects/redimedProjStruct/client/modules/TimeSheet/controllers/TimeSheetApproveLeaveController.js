@@ -137,7 +137,7 @@ angular.module("app.loggedIn.TimeSheet.ApproveLeave.Controller", [])
                     0: null
                 },
                 order: {
-                    0: null
+                    0: 'DESC'
                 },
                 select: {
                     0: null

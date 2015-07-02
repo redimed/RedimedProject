@@ -85,6 +85,12 @@ angular.module("app.loggedIn.TimeSheet", [
                                     });
                             },
                             function(callback) {
+                                $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetTimeDirective.js")
+                                    .then(function() {
+                                        callback(null);
+                                    });
+                            },
+                            function(callback) {
                                 if ($stateParams.id) {
                                     $state.go("loggedIn.timesheetHome.leaveCreate", {
                                         id: $stateParams.id
@@ -337,6 +343,12 @@ angular.module("app.loggedIn.TimeSheet", [
                         },
                         function(callback) {
                             $ocLazyLoad.load("vendor/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js")
+                                .then(function() {
+                                    callback(null);
+                                });
+                        },
+                        function(callback) {
+                            $ocLazyLoad.load("modules/TimeSheet/directives/TimeSheetTimeDirective.js")
                                 .then(function() {
                                     callback(null);
                                 });
