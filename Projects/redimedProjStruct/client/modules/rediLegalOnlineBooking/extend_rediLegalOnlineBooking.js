@@ -15,7 +15,7 @@ angular.module('app.loggedIn.rlob')
                 templateUrl: "modules/rediLegalOnlineBooking/views/contactus.html",
             })
 
-            .state("loggedIn.rlob.rlob_booking_online",{
+            .state("loggedIn.rlob.rlob_booking",{
                 url:"/booking",
                 templateUrl: "modules/rediLegalOnlineBooking/views/booking.html",
                 controller: 'rlob_bookingController'
