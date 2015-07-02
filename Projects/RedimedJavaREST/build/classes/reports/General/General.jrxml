@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CertificateReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="f828c8c1-0693-4bf1-9703-ef8317bc2333">
 	<property name="ireport.zoom" value="1.2100000000000002"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="525"/>
+	<property name="ireport.y" value="432"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<parameter name="id" class="java.lang.Integer">
@@ -58,17 +58,18 @@
 	d.`NAME` as doctor_fullname,
 	d.`Address`,
 	d.`Phone` as doctor_phone,
-	d.`Medical_Reg_no`,
 	SUBSTRING_INDEX(d.`Signature`, ',', -1) AS docSign,
 
-	g.`examDate`
+	g.`examDate`,
+	u.`Booking_Person`
 
 from `th_general_assessment` g
 inner join `cln_patients` p on g.`patient_id` = p.`Patient_id`
 inner join `companies` c on p.`company_id` = c.`id`
 inner join `cln_insurers` i on c.`Insurer` = i.`id`
 inner join `cln_appointment_calendar` a on g.`cal_id` = a.`CAL_ID`
-inner join `doctors` d on a.`DOCTOR_ID` = d.`doctor_id`
+INNER JOIN `users` u ON g.`Created_by` = u.`id`
+INNER JOIN `doctors` d ON u.`id` = d.`User_id`
 where g.`id`= $P{id}]]>
 	</queryString>
 	<field name="patient_fullName" class="java.lang.String"/>
@@ -162,11 +163,11 @@ where g.`id`= $P{id}]]>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="doctor_phone" class="java.lang.String"/>
-	<field name="Medical_Reg_no" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
 	<field name="docSign" class="java.lang.String"/>
 	<field name="examDate" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Booking_Person" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<variable name="Service" class="java.lang.String">
@@ -562,7 +563,7 @@ where g.`id`= $P{id}]]>
 			</textField>
 			<textField>
 				<reportElement positionType="Float" x="49" y="535" width="254" height="13" uuid="70deec4f-9b5f-4777-baf7-22017a1a9fba"/>
-				<textFieldExpression><![CDATA[$F{doctor_fullname}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{Booking_Person}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement positionType="Float" x="56" y="549" width="247" height="13" uuid="9869e209-1a03-4d8d-8409-a934a556951b"/>
@@ -578,7 +579,6 @@ where g.`id`= $P{id}]]>
 			</textField>
 			<textField>
 				<reportElement positionType="Float" x="407" y="535" width="141" height="13" uuid="b4bcf132-c731-4465-b90f-4be20b44ae95"/>
-				<textFieldExpression><![CDATA[$F{Medical_Reg_no}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement positionType="Float" x="152" y="515" width="396" height="13" uuid="e1f7dda4-9826-4b5b-ade3-0fc35fbcbab5"/>
