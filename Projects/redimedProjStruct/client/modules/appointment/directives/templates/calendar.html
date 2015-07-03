@@ -15,25 +15,21 @@
     </div>
         <div ng-repeat="list in alertCenter.list" ng-if="list.test !== 0 || list.alert.length !== 0">
         <label ng-if="list.alert.length > 0 || list.cal.length > 0" style="font-size: 16px;margin-left: 16px;font-weight: bold;">
-            <span ng-if="list.alert.length > 0"> 
-            	{{list.First_name}} {{list.Sur_name}}
-            </span>
+            {{list.First_name}} {{list.Sur_name}}
         </label>
         <ul ng-repeat="alert in list.alert" ng-if="list.alert.length > 0">
             <li>{{alert.name}}</li>
         </ul>
+        <ul ng-if="list.alert.length === 0">
+            <li> There is no alert</li>
+        </ul>
         <p ng-repeat="cal in list.cal" ng-if="list.cal.length > 0 && list.test === 1">
-            <span ng-if="cal.OUTREFERRAL === 'no'" style="margin-left: 24px;">
-            	<label ng-if="$index==0 && list.alert.length === 0 " style="font-size: 16px;font-weight: bold;">
-            		<span style="  margin-left: -9px;">{{list.First_name}} {{list.Sur_name}}</span>
-            	</label></br>
-            	<span style="margin-left: 21px;">
-	                {{cal.FROM_TIME}}-{{cal.TO_TIME}}:&nbsp
-	                There is no referral
-	            </span>
+            <span ng-if="cal.IS_REFERRAL && cal.OUTREFERRAL === 'no'" style="margin-left: 24px;">
+                {{cal.FROM_TIME}}-{{cal.TO_TIME}}:&nbsp
+                There is no referral
             </span>
         </p>
-       <hr style="border:1px solid white;" />
+        <hr style="border:1px solid white;" />
         </div>
 </div>
 <!-- <div id="alert-center" class="bv-right-list">
