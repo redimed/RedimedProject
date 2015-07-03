@@ -29,6 +29,9 @@
         <ul ng-repeat="alert in list.alert" ng-if="list.alert.length > 0">
             <li>{{alert.name}}</li>
         </ul>
+        <ul ng-if="list.alert.length === 0">
+            <li> There is no alert</li>
+        </ul>
         <p ng-repeat="cal in list.cal" ng-if="list.cal.length > 0">
             <span ng-if="cal.IS_REFERRAL && cal.OUTREFERRAL === 'no'" style="margin-left: 24px;">
                 {{cal.FROM_TIME}}-{{cal.TO_TIME}}:&nbsp
