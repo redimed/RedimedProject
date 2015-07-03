@@ -578,60 +578,91 @@ module.exports = {
 
     showEdit: function(req, res) {
         var info = req.body.info;
-        var query = "SELECT * FROM time_tasks WHERE time_tasks.tasks_week_id = " +
-            info + " AND time_tasks.deleted = 0 ORDER BY time_tasks.order ASC";
-        db.sequelize.query(query)
-            .success(function(tasks) {
-                if (tasks === null || tasks.length === 0) {
-                    console.log("Not found tasks in table");
-                    res.json({
-                        status: 'fail'
-                    });
-                    return false;
-                } else {
-                    db.sequelize.query("SELECT DISTINCT time_tasks_week.task_status_id, time_tasks_week.after_status_id, " +
-                            "t.`tasks_id`, t.isParent, c.`item_id` as ITEM_ID,c.`ITEM_NAME`,i.deleted, i.`units`, i.ratio, i.`COMMENT` as comment, " +
-                            "i.`time_charge` FROM `time_tasks` t LEFT JOIN `time_item_task` i ON i.`task_id` " +
-                            "= t.`tasks_id` LEFT JOIN `time_item_code` c ON c.`ITEM_ID` = i.`item_id`" +
-                            " INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = t.tasks_week_id " +
-                            " WHERE " +
-                            "t.`tasks_week_id` = ?", null, {
-                                raw: true
-                            }, [info])
-                        .success(function(item) {
-                            db.sequelize.query("SELECT DISTINCT t.`tasks_id`, c.`item_id` as ITEM_ID, " +
-                                    "time_task_file.path_file, time_task_file.file_id, time_task_file.file_name, time_task_file.file_size " +
-                                    "FROM `time_tasks` t INNER JOIN `time_item_task` i ON i.`task_id` = t.`tasks_id` " +
-                                    "INNER JOIN `time_item_code` c ON c.`ITEM_ID` = i.`item_id`" +
-                                    "INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = t.tasks_week_id " +
-                                    "INNER JOIN time_item_file ON time_item_file.task_id = i.task_id AND time_item_file.item_id = i.item_id " +
-                                    "INNER JOIN time_task_file ON time_task_file.file_id = time_item_file.file_id " +
-                                    " WHERE " +
-                                    "t.`tasks_week_id` = ?", null, {
-                                        raw: true
-                                    }, [info])
-                                .success(function(file) {
-                                    if (item === null || item.length === 0) {
-                                        console.log("Not found item in table");
-                                        res.json({
-                                            status: 'fail'
-                                        });
-                                        return false;
-                                    } else {
-                                        res.json({
-                                            status: 'success',
-                                            data: tasks,
-                                            item: item,
-                                            file: file
-                                        });
-                                    }
-                                })
-                                .error(function(err) {
-                                    res.json({
-                                        status: 'error'
-                                    });
-                                    console.log(err);
+        //CHECK PERMISS
+        var queryGetPermiss = "SELECT time_tasks_week.task_status_id " + //SELECT
+            "FROM time_tasks_week " + //FROM
+            "WHERE task_week_id = :idWeek AND time_tasks_week.user_id = :userId";
+        db.sequelize.query(queryGetPermiss, null, {
+                raw: true
+            }, {
+                idWeek: info.idWeek,
+                userId: info.userId
+            })
+            .success(function(resultPermiss) {
+                if (resultPermiss !== undefined &&
+                    resultPermiss !== null &&
+                    resultPermiss.length !== 0 &&
+                    resultPermiss[0] !== undefined &&
+                    resultPermiss[0] !== null &&
+                    resultPermiss[0].task_status_id !== 2 &&
+                    resultPermiss[0].task_status_id !== 3 &&
+                    resultPermiss[0].task_status_id !== 5) {
+                    //LOAD EDIT
+                    var query = "SELECT * FROM time_tasks WHERE time_tasks.tasks_week_id =:idWeek AND time_tasks.deleted = 0 ORDER BY time_tasks.order ASC";
+                    db.sequelize.query(query, null, {
+                            raw: true
+                        }, {
+                            idWeek: info.idWeek
+                        })
+                        .success(function(tasks) {
+                            if (tasks === null || tasks.length === 0) {
+                                console.log("Not found tasks in table");
+                                res.json({
+                                    status: 'fail'
                                 });
+                                return false;
+                            } else {
+                                db.sequelize.query("SELECT DISTINCT time_tasks_week.task_status_id, time_tasks_week.after_status_id, " +
+                                        "t.`tasks_id`, t.isParent, c.`item_id` as ITEM_ID,c.`ITEM_NAME`,i.deleted, i.`units`, i.ratio, i.`COMMENT` as comment, " +
+                                        "i.`time_charge` FROM `time_tasks` t LEFT JOIN `time_item_task` i ON i.`task_id` " +
+                                        "= t.`tasks_id` LEFT JOIN `time_item_code` c ON c.`ITEM_ID` = i.`item_id`" +
+                                        " INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = t.tasks_week_id " +
+                                        " WHERE " +
+                                        "t.`tasks_week_id` = ?", null, {
+                                            raw: true
+                                        }, [info.idWeek])
+                                    .success(function(item) {
+                                        db.sequelize.query("SELECT DISTINCT t.`tasks_id`, c.`item_id` as ITEM_ID, " +
+                                                "time_task_file.path_file, time_task_file.file_id, time_task_file.file_name, time_task_file.file_size " +
+                                                "FROM `time_tasks` t INNER JOIN `time_item_task` i ON i.`task_id` = t.`tasks_id` " +
+                                                "INNER JOIN `time_item_code` c ON c.`ITEM_ID` = i.`item_id`" +
+                                                "INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = t.tasks_week_id " +
+                                                "INNER JOIN time_item_file ON time_item_file.task_id = i.task_id AND time_item_file.item_id = i.item_id " +
+                                                "INNER JOIN time_task_file ON time_task_file.file_id = time_item_file.file_id " +
+                                                " WHERE " +
+                                                "t.`tasks_week_id` = ?", null, {
+                                                    raw: true
+                                                }, [info.idWeek])
+                                            .success(function(file) {
+                                                if (item === null || item.length === 0) {
+                                                    console.log("Not found item in table");
+                                                    res.json({
+                                                        status: 'fail'
+                                                    });
+                                                    return false;
+                                                } else {
+                                                    res.json({
+                                                        status: 'success',
+                                                        data: tasks,
+                                                        item: item,
+                                                        file: file
+                                                    });
+                                                }
+                                            })
+                                            .error(function(err) {
+                                                res.json({
+                                                    status: 'error'
+                                                });
+                                                console.log(err);
+                                            });
+                                    })
+                                    .error(function(err) {
+                                        res.json({
+                                            status: 'error'
+                                        });
+                                        console.log(err);
+                                    });
+                            }
                         })
                         .error(function(err) {
                             res.json({
@@ -639,14 +670,23 @@ module.exports = {
                             });
                             console.log(err);
                         });
+                    //END LOAD
+                } else {
+                    res.json({
+                        status: "error"
+                    });
+                    return;
                 }
             })
             .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
                 res.json({
-                    status: 'error'
+                    status: "error"
                 });
-                console.log(err);
+                return;
             });
+
+        //END
     },
 
     checkFirstTaskWeek: function(req, res) {
@@ -786,9 +826,25 @@ module.exports = {
             strWeek = " AND time_tasks_week.week_no = " + searchObj.week_no + " AND YEAR(time_tasks_week.end_date) = :yearNow";
         }
         //END SEARCH
+
+        //ORDER BY
+        var strOrder = " ORDER BY ";
+        for (var keyOrder in searchObj.order) {
+            if (searchObj.order[keyOrder] !== undefined && searchObj.order[keyOrder] !== null && searchObj.order[keyOrder] !== "") {
+                strOrder += " time_tasks_week.start_date " + searchObj.order[keyOrder] + ", ";
+            }
+        }
+        if (strOrder.length === 10) {
+            strOrder = "";
+        } else {
+            strOrder = strOrder.substring(0, strOrder.length - 2);
+        }
+        //END ORDER BY
         var query = "SELECT time_tasks_week.start_date,time_tasks_week.task_week_id, time_tasks_week.end_date, time_tasks_week.time_charge, time_task_status.name, " +
             "time_tasks_week.comments FROM time_tasks_week INNER JOIN time_task_status ON time_task_status.task_status_id = " +
-            "time_tasks_week.task_status_id WHERE time_tasks_week.user_id = :userId" + strWeek + strSearch + " ORDER BY time_tasks_week.start_date DESC LIMIT :limit OFFSET :offset";
+            "time_tasks_week.task_status_id WHERE time_tasks_week.user_id = :userId" + strWeek + strSearch +
+            strOrder +
+            " LIMIT :limit OFFSET :offset";
         db.sequelize.query(query, null, {
                 raw: true
             }, {
@@ -1255,12 +1311,18 @@ var SendMailSubmit = function(req, res, info) {
                                                                     'Access the e-Timesheet at https://apps.redimed.com.au:4000/#/login</label><br/><br/><br/>' +
                                                                     '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
                                                                     '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Timesheet Reporting System<br></label><br/><br/><br/>' +
-                                                                    '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label>' +
-                                                                    '<hr/><table><tbody><tr><td><img src="cid:logoRedimed"></td><td><b><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">A</b>&nbsp;1 Frederick Street, Belmont, Western Australia 610</span>' +
-                                                                    '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T&nbsp;</b>1300 881 301 (REDiMED Emergency Service 24/7)</span><br/><span><b>W&nbsp;</b>www.redimed.com.au</span></td></tr><tr><tr>' +
-                                                                    '<td colspan="2"><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This message and any files transmitted with it contains confidential information intended only for the use of the addressee. If you are not the intended recipient of this message, ' +
-                                                                    'any unauthorized form of reproduction of this message is strictly prohibited. If you have received this message in error, please notify us immediately.</span></td></tr>' +
-                                                                    '<br/><br/><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Please consider our environment before printing this e-mail.</span></td></tr></tbody></table>'
+                                                                    '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label><br/><br/><br/>' +
+                                                                    '<table style="font-size:9.0pt;color:#203864;"><tbody><tr><td><b><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">A</b>&nbsp;1 Frederick Street, Belmont WA 6104</span>' +
+                                                                    '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T&nbsp;</b> 08 9230 0900 | F: 08 9230 0999</span><br/><span><b>W&nbsp;</b>www.redimed.com.au</span></td></tr>' +
+                                                                    '<tr><td><img src="cid:logoRedimed"></td></tr>' +
+                                                                    '<tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">&nbsp;&nbsp;&nbsp;Joondalup| Belmont | Rockingham</span></td></tr>' +
+                                                                    '<tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail and any attachments are intended for the addressee(s) only and may be confidential.<br/>' +
+                                                                    'They may contain legally privileged or copyright material.You should not read, copy, use or disclose them without authorisation.<br/>' +
+                                                                    'If you are not the intended recipient, please contact the sender as soon as possible by return e-mail and then please delete both messages.<br/>' +
+                                                                    'Please note that any views or opinions presented in this email are solely those of the author and do not necessarily represent those of REDIMED Pty Ltd. The ' +
+                                                                    'recipient should check this email and any attachments for the presence of viruses. REDIMED Pty Ltd accepts no liability for any damage caused by any virus ' +
+                                                                    'transmitted by this email.' +
+                                                                    '</td></tr></tbody></table>'
                                                             };
                                                             // END APPROVE
 
