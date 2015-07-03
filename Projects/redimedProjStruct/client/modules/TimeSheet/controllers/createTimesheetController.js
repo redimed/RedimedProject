@@ -529,13 +529,15 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
     //END TASK
 
     //ADD ALL TASK OF WEEK
-    $scope.addAllTask = function(status) {
+    $scope.addAllTask = function(status, formValid) {
         //CHECK ENOUGH 38 TIME CHARGE - FULL TIME
         if ($scope.info.time_temp < (38 * 60) && $scope.TypeOfContruct === "Full-time" && status !== 1) {
             toastr.warning("Please check time charge(>=38)", "Error");
         } else if ($scope.info.time_in_lieuFull > $scope.info.time_in_lieuHas && status !== 1) {
             //CHECK TIME IN LIEU
             toastr.warning("Please check time in lieu use larger time in lieu you have!", "Fail");
+        } else if (formValid.$invalid) {
+            toastr.error("Please Input All Required Information!", "Error");
         } else {
             if (!$scope.isEdit) {
                 //ADD NEW TIMESHEET
