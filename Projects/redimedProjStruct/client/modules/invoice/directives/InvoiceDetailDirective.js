@@ -305,7 +305,7 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 						}
 			
 						InvoiceService.save(scope.params.id, scope.InvoiceMap).then(function(response){
-							if(response.status == 'error') 
+							if(response.status == 'fail') 
 								toastr.error('Cannot send to ERP', 'Error')
 							else
 								toastr.success('Edit Successfully !!!', 'Success');

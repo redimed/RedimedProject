@@ -26,7 +26,8 @@ module.exports =
 		var prefix=moment().format("YYYYMM");
         var sql=
             " SELECT MAX(header.`INVOICE_NUMBER`) AS CURRENT_INVOICE_NUMBER FROM `cln_invoice_header` header    "+
-            " WHERE header.`INVOICE_NUMBER` LIKE CONCAT(?,'%')                        ";
+            " WHERE header.`INVOICE_NUMBER` LIKE CONCAT(?,'%')                        "+
+            " HAVING MAX(header.`INVOICE_NUMBER`) IS NOT NULL ";
         kiss.executeQuery(req,sql,[prefix],function(rows){
             var nextInvoiceNumber=null;
             if(rows.length>0)
@@ -44,6 +45,6 @@ module.exports =
             functionSuccess(nextInvoiceNumber);
         },function(err){
         	functionErr(err);
-        })
+        },true)
 	}
 }

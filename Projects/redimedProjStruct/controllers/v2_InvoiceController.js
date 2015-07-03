@@ -770,7 +770,7 @@ module.exports = {
 												ERP_REST.addInvoiceCustomer(customerInfo)
 												.then(function(data){
 													kiss.exFileJSON(data.data,'addInvoiceCustomer.txt');
-													if(data.data===true)
+													if(data.data==true)
 													{
 														kiss.exlog(fHeader,'Add customer to erp thanh cong');
 														return ERP_REST.addInvoiceItems(listItemInfo);
@@ -785,7 +785,7 @@ module.exports = {
 												})
 												.then(function(data){
 													kiss.exFileJSON(data.data,'addInvoiceItems.txt');
-													if(data.data===true)
+													if(data.data==true)
 													{
 														kiss.exlog(fHeader,'Add items to erp thanh cong');
 														return ERP_REST.addInvoiceLines(listInvoiceLine);
@@ -800,7 +800,7 @@ module.exports = {
 												})
 												.then(function(data){
 													kiss.exFileJSON(data.data,'addInvoiceLines.txt');
-													if(data.data===true)
+													if(data.data==true)
 													{
 														kiss.exlog(fHeader,'Add lines to erp thanh cong');
 														kiss.commit(req,function(){

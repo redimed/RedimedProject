@@ -35,11 +35,11 @@ public class InvoiceService {
 	{
 		SessionFactoryImplementor sessionFactoryImplementation = (SessionFactoryImplementor) sessionFactory;
 		ConnectionProvider connectionProvider = sessionFactoryImplementation.getConnectionProvider();
-		int num=0;
+		String result="";
 		try {
 			// do your work using connection
 		    Connection connection = connectionProvider.getConnection();
-		    CallableStatement cs = connection.prepareCall("{ call AR.ARBILLINGS.SYNCUSTOMERS(?,?,?,?,?,?,?,?) }");
+		    CallableStatement cs = connection.prepareCall("{ call AR.ARBILLINGS.SYNCUSTOMERS(?,?,?,?,?,?,?,?,?) }");
 			cs.setString(1,item.getpVsName());  
 		    cs.setString(2,item.getpAddress());  
 		    cs.setString(3,item.getpCusChar20());  
@@ -48,14 +48,20 @@ public class InvoiceService {
 		    cs.setString(6,item.getpAddressLine1());  
 		    cs.setString(7,item.getpCountry());  
 		    cs.setString(8,item.getpPhone());  
-		    num=cs.executeUpdate();  
+		    cs.registerOutParameter(9, java.sql.Types.VARCHAR);
+		    cs.executeUpdate();  
+		    result=cs.getString(9);
 		} catch (SQLException e) {
 		    e.printStackTrace();
 		}
-		if(num>0)
+		if(result.equals("Completed"))
+		{
 			return true;
+		}
 		else
+		{
 			return false;
+		}
 	}
 	
 	public Boolean insertListCustomers(ArBillingCustomerListJson listCustomer)
@@ -68,7 +74,7 @@ public class InvoiceService {
 //			connection.setAutoCommit(false);
 			for(int i=0;i<listCustomer.getListArBillingCustomerJson().size();i++){
 				ArBillingCustomerJson item=listCustomer.getListArBillingCustomerJson().get(i);
-				CallableStatement cs = connection.prepareCall("{ call AR.ARBILLINGS.SYNCUSTOMERS(?,?,?,?,?,?,?,?) }");
+				CallableStatement cs = connection.prepareCall("{ call AR.ARBILLINGS.SYNCUSTOMERS(?,?,?,?,?,?,?,?,?) }");
 				cs.setString(1,item.getpVsName());  
 			    cs.setString(2,item.getpAddress());  
 			    cs.setString(3,item.getpCusChar20());  
@@ -76,8 +82,10 @@ public class InvoiceService {
 			    cs.setString(5,item.getpVsSiteName());  
 			    cs.setString(6,item.getpAddressLine1());  
 			    cs.setString(7,item.getpCountry());  
-			    cs.setString(8,item.getpPhone());  
+			    cs.setString(8,item.getpPhone()); 
+			    cs.registerOutParameter(9, java.sql.Types.VARCHAR);
 			    cs.executeUpdate();  
+			    String result=cs.getString(9);
 			}
 			//connection.commit();
 		} catch (SQLException e) {
@@ -92,21 +100,27 @@ public class InvoiceService {
 		SessionFactoryImplementor sessionFactoryImplementation = (SessionFactoryImplementor) sessionFactory;
 		ConnectionProvider connectionProvider = sessionFactoryImplementation.getConnectionProvider();
 		Connection connection;
+		String result="";
 		try {
 			connection = connectionProvider.getConnection();
 			//connection.setAutoCommit(false);
-			CallableStatement cs = connection.prepareCall("{ call AR.ARBILLINGS.SYNITEMS(?,?,?,?) }");
+			CallableStatement cs = connection.prepareCall("{ call AR.ARBILLINGS.SYNITEMS(?,?,?,?,?) }");
 			cs.setString(1,item.getpOldItemNumber());  
 		    cs.setString(2,item.getpOldItemNumber2());  
 		    cs.setString(3,item.getpPrimaryUom());  
 		    cs.setString(4,item.getpItemName1());  
+		    cs.registerOutParameter(5, java.sql.Types.VARCHAR);
 		    cs.executeUpdate();  
-			//connection.commit();
+		    result=cs.getString(5);
+			//connection.commit(); 
+		    
 		} catch (SQLException e) {
 			return false;
 		}
-		
-		return true;
+		if(result.equals("Completed"))
+			return true;
+		else
+			return false;
 	}
 	
 	public Boolean insertListItems(ArBillingItemListJson listItem)
@@ -119,12 +133,14 @@ public class InvoiceService {
 //			connection.setAutoCommit(false);
 			for(int i=0;i<listItem.getListItem().size();i++){
 				ArBillingItemJson item=listItem.getListItem().get(i);
-				CallableStatement cs = connection.prepareCall("{ call AR.ARBILLINGS.SYNITEMS(?,?,?,?) }");
+				CallableStatement cs = connection.prepareCall("{ call AR.ARBILLINGS.SYNITEMS(?,?,?,?,?) }");
 				cs.setString(1,item.getpOldItemNumber());  
 			    cs.setString(2,item.getpOldItemNumber2());  
 			    cs.setString(3,item.getpPrimaryUom());  
 			    cs.setString(4,item.getpItemName1());  
+			    cs.registerOutParameter(5, java.sql.Types.VARCHAR);
 			    cs.executeUpdate();  
+			    String result=cs.getString(5);
 			}
 			//connection.commit();
 		} catch (SQLException e) {
