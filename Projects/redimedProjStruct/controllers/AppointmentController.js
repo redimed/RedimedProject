@@ -68,7 +68,7 @@ module.exports = {
 		// })
 		.leftOuterJoin('cln_patient_alerts', function(){
 			this.on('cln_appt_patients.Patient_id', 'cln_patient_alerts.patient_id')
-			.andOn('cln_patient_alerts.cal_id','cln_appointment_calendar.CAL_ID')
+			// .andOn('cln_patient_alerts.cal_id','cln_appointment_calendar.CAL_ID')
 		})
 		.leftOuterJoin('cln_alerts', 'cln_patient_alerts.alert_id', 'cln_alerts.id')
 		.leftOuterJoin('cln_patient_outreferral', function(){
@@ -122,7 +122,7 @@ module.exports = {
 		// })
 		.leftOuterJoin('cln_patient_alerts', function(){
 			this.on('cln_appt_patients.Patient_id', 'cln_patient_alerts.patient_id')
-			.andOn('cln_patient_alerts.cal_id','cln_appointment_calendar.CAL_ID')
+			// .andOn('cln_patient_alerts.cal_id','cln_appointment_calendar.CAL_ID')
 		})
 		.leftOuterJoin('cln_alerts', 'cln_patient_alerts.alert_id', 'cln_alerts.id')
 		.leftOuterJoin('cln_patient_outreferral', function(){
