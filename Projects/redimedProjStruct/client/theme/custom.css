@@ -1444,6 +1444,11 @@ table.timetable-table td:last-child {
     border: dashed blue 20px;
     opacity: 0.5;
 }
+.m-style-alert{
+      border-top-width: 5px !important;
+      border-top-style: solid;
+      border-top-color: rgb(255, 255, 255)
+}
 .bv-right-list-reception{
     position: absolute;
     /*padding: 10px;*/

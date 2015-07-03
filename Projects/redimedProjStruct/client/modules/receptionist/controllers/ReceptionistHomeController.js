@@ -90,6 +90,7 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 								})
 
 								if(cal_flag){
+									$scope.alertCenter.list[flag].test = row.IS_REFERRAL;
 									$scope.alertCenter.list[flag].cal.push({IS_REFERRAL: row.IS_REFERRAL, CAL_ID: row.CAL_ID, FROM_TIME: row.FROM_TIME, TO_TIME: row.TO_TIME, OUTREFERRAL: 'no', DOCTOR_ID: row.DOCTOR_ID});
 									if(row.outreferral_id){
 										var cal_length = $scope.alertCenter.list[flag].cal.length;
@@ -106,6 +107,7 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 							}
 
 							if(row.CAL_ID){
+								object.test = row.IS_REFERRAL;
 								object.cal.push({IS_REFERRAL: row.IS_REFERRAL, DOCTOR_ID: row.DOCTOR_ID, CAL_ID: row.CAL_ID, FROM_TIME: row.FROM_TIME, TO_TIME: row.TO_TIME, OUTREFERRAL: 'no'});
 								if(row.outreferral_id)
 									object.cal[0].OUTREFERRAL = 'yes';

@@ -22,7 +22,7 @@
     <div class="m-background">
         <label style="font-weight: bold;font-size: 19px;">Notification List</label>
     </div>
-        <div ng-repeat="list in alertCenter.list">
+        <div ng-repeat="list in alertCenter.list" ng-if="list.test !== 0 || list.alert.length !== 0">
         <label ng-if="list.alert.length > 0 || list.cal.length > 0" style="font-size: 16px;margin-left: 16px;font-weight: bold;">
             {{list.First_name}} {{list.Sur_name}}
         </label>
@@ -32,7 +32,7 @@
         <ul ng-if="list.alert.length === 0">
             <li> There is no alert</li>
         </ul>
-        <p ng-repeat="cal in list.cal" ng-if="list.cal.length > 0">
+        <p ng-repeat="cal in list.cal" ng-if="list.cal.length > 0 && list.test === 1">
             <span ng-if="cal.IS_REFERRAL && cal.OUTREFERRAL === 'no'" style="margin-left: 24px;">
                 {{cal.FROM_TIME}}-{{cal.TO_TIME}}:&nbsp
                 There is no referral
