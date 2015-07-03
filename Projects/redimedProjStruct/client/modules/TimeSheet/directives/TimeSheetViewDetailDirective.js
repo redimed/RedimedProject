@@ -11,9 +11,7 @@ angular.module("app.loggedIn.TimeSheet.ViewDetail.Directive", [])
                 scope.$watch('ngModel', function(newId, oldId) {
                     TimeSheetService.ViewApproved(newId).then(function(response) {
                         if (response.status === "error") {
-                            $state.go("loggedIn.TimeSheetHome.ViewAppovedTimeSheet", null, {
-                                "reload": true
-                            });
+                            $state.go("loggedIn.timesheetHome.timesheetApprove");
                             toastr.error("Loading fail!", "Error");
                         } else if (response.status === "success") {
                             scope.list = response;

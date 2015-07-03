@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
-    .controller("CreateLeaveController", function($scope, TimeSheetService, $cookieStore, $state, toastr, moment, $modal, StaffService, $stateParams) {
+    .controller("CreateLeaveController", function($scope, TimeSheetService, $cookieStore, $state, toastr, $modal, StaffService, $stateParams) {
         $scope.info = {};
 
         // POPUP DATE
@@ -14,46 +14,57 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
             //SET FIELD EDIT
             $scope.isEdit = true;
             //END SET
-
+            var info = {
+                idLeave: $stateParams.id,
+                userId: $cookieStore.get("userInfo").id
+            };
             //EDIT
-            TimeSheetService.LoadLeaveEdit($stateParams.id).then(function(response) {
-                if (response !== undefined && response !== null &&
-                    response.resultLeave !== undefined &&
-                    response.resultLeave !== null &&
-                    response.resultLeave.length !== 0 &&
-                    response.resultLeave[0] !== undefined && response.resultLeave[0] !== null) {
-                    $scope.info = response.resultLeave[0];
-                    $scope.is_reject = response.resultLeave[0].is_reject;
-                    $scope.status_id = response.resultLeave[0].status_id;
+            TimeSheetService.LoadLeaveEdit(info).then(function(response) {
+                if (response.status === "success") {
+
+                    if (response !== undefined && response !== null &&
+                        response.resultLeave !== undefined &&
+                        response.resultLeave !== null &&
+                        response.resultLeave.length !== 0 &&
+                        response.resultLeave[0] !== undefined && response.resultLeave[0] !== null) {
+                        $scope.info = response.resultLeave[0];
+                        $scope.is_reject = response.resultLeave[0].is_reject;
+                        $scope.status_id = response.resultLeave[0].status_id;
+
+                        //convert time
+                        $scope.info.time_leave = StaffService.convertFromFullToShow($scope.info.time_leave);
+                        //end
+                    }
+
+                    $scope.info.infoTypeLeave = response.resultLeaveDetail;
 
                     //convert time
-                    $scope.info.time_leave = StaffService.convertFromFullToShow($scope.info.time_leave);
-                    //end
-                }
-
-                $scope.info.infoTypeLeave = response.resultLeaveDetail;
-
-                //convert time
-                angular.forEach($scope.info.infoTypeLeave, function(leave, index) {
-                    if ($scope.info.infoTypeLeave[index] !== undefined &&
-                        $scope.info.infoTypeLeave[index] !== null &&
-                        $scope.info.infoTypeLeave[index].time_leave !== undefined &&
-                        $scope.info.infoTypeLeave[index].time_leave !== null &&
-                        $scope.info.infoTypeLeave[index].time_leave !== 0 &&
-                        !(isNaN($scope.info.infoTypeLeave[index].time_leave))) {
-                        $scope.info.infoTypeLeave[index].time_leave = StaffService.convertFromFullToShow($scope.info.infoTypeLeave[index].time_leave);
-                        if (index === 0 &&
-                            $scope.info.infoTypeLeave[index].time_leave.length === 4 &&
-                            $scope.info.standard === 0) {
-                            $scope.info.infoTypeLeave[index].time_leave = '0' + $scope.info.infoTypeLeave[index].time_leave;
+                    angular.forEach($scope.info.infoTypeLeave, function(leave, index) {
+                        if ($scope.info.infoTypeLeave[index] !== undefined &&
+                            $scope.info.infoTypeLeave[index] !== null &&
+                            $scope.info.infoTypeLeave[index].time_leave !== undefined &&
+                            $scope.info.infoTypeLeave[index].time_leave !== null &&
+                            $scope.info.infoTypeLeave[index].time_leave !== 0 &&
+                            !(isNaN($scope.info.infoTypeLeave[index].time_leave))) {
+                            $scope.info.infoTypeLeave[index].time_leave = StaffService.convertFromFullToShow($scope.info.infoTypeLeave[index].time_leave);
+                            if (index === 0 &&
+                                $scope.info.infoTypeLeave[index].time_leave.length === 4 &&
+                                $scope.info.standard === 0) {
+                                $scope.info.infoTypeLeave[index].time_leave = '0' + $scope.info.infoTypeLeave[index].time_leave;
+                            }
                         }
-                    }
-                });
-                //end convert
+                    });
+                    //end convert
 
-                //CALL CHANGE TIME - INIT TIME CHARGE
-                $scope.changeTime();
-                //END CALL
+                    //CALL CHANGE TIME - INIT TIME CHARGE
+                    $scope.changeTime();
+                    //END CALL
+                } else {
+                    $state.go("loggedIn.home", null, {
+                        "reload": true
+                    });
+                    toastr.error("Load fail!", "Error");
+                }
             });
         } else {
             $scope.isEdit = false;
@@ -130,7 +141,7 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                     TimeSheetService.UpLeaveServer($scope.info).then(function(response) {
                         if (response.status === "success") {
                             toastr.success("Apply for leave success!", "Success");
-                            $state.go("loggedIn.TimeSheetHome.LeaveHistory", null, {
+                            $state.go("loggedIn.timesheetHome.leaveHistory", null, {
                                 "reload": true
                             });
                         } else if (response.status === "error") {
@@ -152,7 +163,7 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                     //UPDATE
                     TimeSheetService.UpdateLeave($scope.info).then(function(response) {
                         if (response.status === "success") {
-                            $state.go("loggedIn.TimeSheetHome.LeaveHistory", null, {
+                            $state.go("loggedIn.timesheetHome.leaveHistory", null, {
                                 "reload": true
                             });
                             toastr.success("Update leave success!", "Success");
@@ -252,7 +263,7 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                                     closeOnConfirm: true
                                 }, function(isConfirm) {
                                     if (isConfirm) {
-                                        $state.go("loggedIn.TimeSheetHome.LeaveHistory", null, {
+                                        $state.go("loggedIn.timesheetHome.leaveHistory", null, {
                                             "reload": true
                                         });
                                     } else {

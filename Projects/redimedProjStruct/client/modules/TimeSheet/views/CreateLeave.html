@@ -13,7 +13,7 @@
                 <i class="fa fa-angle-right"></i>
             </li>
             <li>
-                <a ui-sref="loggedIn.TimeSheetHome.CreateLeave">
+                <a ui-sref="loggedIn.timesheetHome.leaveCreate">
                     <span ng-if="isEdit===false">Apply Leave Form</span>
                     <span ng-if="isEdit===true">Edit Leave Form</span>
                 </a>
@@ -191,7 +191,7 @@
                 </table>
             </div>
             <div class="row" style="margin-right:-7px;">
-                <a class="btn btn-xs yellow pull-right" ng-if="isEdit===true" ui-sref="loggedIn.TimeSheetHome.LeaveHistory" style="width:75px;">Cancel</a>
+                <a class="btn btn-xs yellow pull-right" ng-if="isEdit===true" ui-sref="loggedIn.timesheetHome.leaveHistory" style="width:75px;">Cancel</a>
                 <a class="btn btn-xs yellow pull-right" ng-if="isEdit===false" ui-sref="loggedIn.home" style="width:75px;">Cancel</a>
                 <button class="btn btn-xs blue pull-right" ng-click="clickSendServer(2,formLeave)" style="width:75px;" ng-if="is_reject!==1">Submit</button>
                 <button class="btn btn-xs purple pull-right" ng-click="clickSendServer(5,formLeave)" style="width:75px; " ng-if="is_reject===1">Re-submit</button>
