@@ -3216,6 +3216,10 @@ label{
     background-color: #F6F6F6!important;
 }
 
+.un_tn_panel_whiteness{
+    background-color: #FFFFFF!important;
+}
+
 /*bo tri label tren panel*/
 .un_tn_panel_lg_label{
     position: absolute;
