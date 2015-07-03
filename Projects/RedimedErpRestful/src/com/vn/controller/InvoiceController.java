@@ -62,7 +62,7 @@ public class InvoiceController {
 	@ResponseStatus(HttpStatus.OK)
 	public @ResponseBody Boolean insertItems(@RequestBody ArInvoiceInterfaceJson postData)
 	{
-		Boolean result=invoiceService.addInvoiceLine(postData);
+		Boolean result=invoiceService.addLineInterface(postData);
 		return result;
 	}
 	
@@ -70,8 +70,30 @@ public class InvoiceController {
 	@ResponseStatus(HttpStatus.OK)
 	public @ResponseBody Boolean insertItems(@RequestBody ArInvoiceInterfaceListJson postData)
 	{
-		Boolean result=invoiceService.addListInvoiceLines(postData);
-		return result;
+		if(postData!=null && postData.getListInvoiceInterface().size()>0)
+		{
+			ArInvoiceInterfaceJson fist= postData.getListInvoiceInterface().get(0);
+			if(invoiceService.deleteInvoiceInterface(fist.getHeaderId()))
+			{
+				if(invoiceService.addListLineInterface(postData))
+				{
+					return invoiceService.insertBilling(fist.getHeaderId());
+				}
+				else
+				{
+					return false;
+				}
+				
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			return false;
+		}
 	}
 	
 	

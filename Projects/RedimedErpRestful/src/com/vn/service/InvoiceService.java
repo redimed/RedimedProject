@@ -152,12 +152,12 @@ public class InvoiceService {
 	}
 	
 	/**
-	 * Ham insert invoice line su dung store procedure
+	 * Ham insert interface line su dung store procedure
 	 * tannv.dts@gmail.com
 	 * @param line
 	 * @return
 	 */
-	public Boolean addInvoiceLine(ArInvoiceInterfaceJson line)
+	public Boolean addLineInterface(ArInvoiceInterfaceJson line)
 	{
 		SessionFactoryImplementor sessionFactoryImplementation = (SessionFactoryImplementor) sessionFactory;
 		ConnectionProvider connectionProvider = sessionFactoryImplementation.getConnectionProvider();
@@ -166,7 +166,7 @@ public class InvoiceService {
 		try {
 			connection = connectionProvider.getConnection();
 			//connection.setAutoCommit(false);
-			CallableStatement cs = connection.prepareCall("{ call AR.ARBILLINGS.InsertBilling(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) }");
+			CallableStatement cs = connection.prepareCall("{ call AR.ARBILLINGS.InsertInterface(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) }");
 			cs.setInt(1, line.getHeaderId());
 			cs.setInt(2, line.getLineId());
 			cs.setString(3, line.getInvoiceNumber());
@@ -199,12 +199,12 @@ public class InvoiceService {
 	}
 	
 	/**
-	 * ham insert invoice lines su dung store procedure
+	 * ham insert interface lines su dung store procedure
 	 * tannv.dts@gmail.com
 	 * @param listLine
 	 * @return
 	 */
-	public Boolean addListInvoiceLines(ArInvoiceInterfaceListJson listLine)
+	public Boolean addListLineInterface(ArInvoiceInterfaceListJson listLine)
 	{
 		SessionFactoryImplementor sessionFactoryImplementation = (SessionFactoryImplementor) sessionFactory;
 		ConnectionProvider connectionProvider = sessionFactoryImplementation.getConnectionProvider();
@@ -215,7 +215,7 @@ public class InvoiceService {
 //			connection.setAutoCommit(false);
 			for(int i=0;i<listLine.getListInvoiceInterface().size();i++){
 				ArInvoiceInterfaceJson line=listLine.getListInvoiceInterface().get(i);
-				CallableStatement cs = connection.prepareCall("{ call AR.ARBILLINGS.InsertBilling(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) }");
+				CallableStatement cs = connection.prepareCall("{ call AR.ARBILLINGS.InsertInterface(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) }");
 				cs.setInt(1, line.getHeaderId());
 				cs.setInt(2, line.getLineId());
 				cs.setString(3, line.getInvoiceNumber());
@@ -346,5 +346,56 @@ public class InvoiceService {
 			return list.get(0);
 		else 
 			return null;
+	}
+	
+	public Boolean deleteInvoiceInterface(Integer headerId)
+	{
+		SessionFactoryImplementor sessionFactoryImplementation = (SessionFactoryImplementor) sessionFactory;
+		ConnectionProvider connectionProvider = sessionFactoryImplementation.getConnectionProvider();
+		Connection connection;
+		String result="";
+		try {
+			connection = connectionProvider.getConnection();
+			//connection.setAutoCommit(false);
+			CallableStatement cs = connection.prepareCall("{ call AR.ARBILLINGS.DeleteInterface(?,?) }");
+			cs.setInt(1, headerId);
+		    cs.registerOutParameter(2, java.sql.Types.VARCHAR);
+		    cs.executeUpdate();  
+		    result=cs.getString(2);
+			//connection.commit(); 
+		    
+		} catch (SQLException e) {
+			return false;
+		}
+		if(result.equals("Completed"))
+			return true;
+		else
+			return false;
+	}
+	
+	public Boolean insertBilling(Integer headerId)
+	{
+		SessionFactoryImplementor sessionFactoryImplementation = (SessionFactoryImplementor) sessionFactory;
+		ConnectionProvider connectionProvider = sessionFactoryImplementation.getConnectionProvider();
+		Connection connection;
+		String result="";
+		try {
+			connection = connectionProvider.getConnection();
+			//connection.setAutoCommit(false);
+			CallableStatement cs = connection.prepareCall("{ call AR.ARBILLINGS.InsertBilling(?,?) }");
+			cs.setInt(1, headerId);
+		    cs.registerOutParameter(2, java.sql.Types.VARCHAR);
+		    cs.executeUpdate();  
+		    result=cs.getString(2);
+			//connection.commit(); 
+		    
+		} catch (SQLException e) {
+			return false;
+		}
+		if(result.equals("Completed"))
+			return true;
+		else
+			return false;
+
 	}
 }
