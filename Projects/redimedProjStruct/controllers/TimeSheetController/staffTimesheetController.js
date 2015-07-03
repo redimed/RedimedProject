@@ -1253,7 +1253,8 @@ var SendMailSubmit = function(req, res, info) {
     var DATE_OF_WEEK = arrayWeek[moment(info.date).format('e') - 1];
     var DATE_SUBMIT = moment(info.date).format('DD/MM/YYYY - HH:mm:ss');
     var idTaskWeek = info.idTaskWeek;
-    var queryNodeChildren = "SELECT DISTINCT sys_hierarchies_users.NODE_ID, sys_hierarchies_users.DEPARTMENT_CODE_ID FROM sys_hierarchies_users " +
+    var queryNodeChildren =
+        "SELECT DISTINCT sys_hierarchies_users.NODE_ID, sys_hierarchies_users.DEPARTMENT_CODE_ID FROM sys_hierarchies_users " +
         "INNER JOIN hr_employee ON hr_employee.Dept_ID = sys_hierarchies_users.DEPARTMENT_CODE_ID " +
         "WHERE sys_hierarchies_users.USER_ID = :userId";
     db.sequelize.query(queryNodeChildren, null, {
@@ -1263,7 +1264,8 @@ var SendMailSubmit = function(req, res, info) {
         })
         .success(function(result) {
             if (result[0] !== undefined && result[0] !== null && result[0].NODE_ID !== undefined && result[0].NODE_ID !== null && result[0].DEPARTMENT_CODE_ID !== undefined && result[0].DEPARTMENT_CODE_ID !== null) {
-                var queryParentNodeId = "SELECT sys_hierarchy_nodes.TO_NODE_ID FROM sys_hierarchy_nodes WHERE sys_hierarchy_nodes.NODE_ID = :nodeId";
+                var queryParentNodeId = "SELECT sys_hierarchy_nodes.TO_NODE_ID, sys_hierarchy_nodes.NODE_CODE " +
+                    "FROM sys_hierarchy_nodes WHERE sys_hierarchy_nodes.NODE_ID = :nodeId";
                 db.sequelize.query(queryParentNodeId, null, {
                         raw: true
                     }, {
@@ -1271,14 +1273,18 @@ var SendMailSubmit = function(req, res, info) {
                     })
                     .success(function(result2) {
                         if (result2[0] !== undefined && result2[0] !== null && result2[0].TO_NODE_ID !== undefined && result2[0].TO_NODE_ID !== null) {
+                            var queryAddForStaff = "";
+                            if (result2[0].NODE_CODE === "Staff") {
+                                queryAddForStaff = "AND sys_hierarchies_users.DEPARTMENT_CODE_ID = :departmentCode"
+                            }
                             var queryGetUser = "SELECT sys_hierarchies_users.USER_ID FROM sys_hierarchies_users " +
-                                "WHERE sys_hierarchies_users.NODE_ID = :toNodeId" +
-                                " AND sys_hierarchies_users.DEPARTMENT_CODE_ID = :departmentCode";
+                                "WHERE sys_hierarchies_users.NODE_ID = :toNodeId " +
+                                queryAddForStaff;
                             db.sequelize.query(queryGetUser, null, {
                                     raw: true
                                 }, {
                                     toNodeId: result2[0].TO_NODE_ID,
-                                    departmentCode: result[0].DEPARTMENT_CODE_ID
+                                    departmentCode: result[0].DEPARTMENT_CODE_ID //USE fo Staff
                                 })
                                 .success(function(result3) {
                                     if (result3[0] !== undefined && result3[0] !== null && result3[0].USER_ID !== undefined && result3[0].USER_ID !== null) {
