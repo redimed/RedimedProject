@@ -19,6 +19,9 @@ module.exports = function(sequelize, DataTypes){
 		IS_ENABLE: DataTypes.INTEGER(1),
 		LAST_UPDATED_BY: DataTypes.INTEGER(11),
 		CREATED_BY: DataTypes.INTEGER(11),
+		TAX_ID:DataTypes.INTEGER(11),
+		TAX_CODE:DataTypes.STRING(20),
+		TAX_RATE:DataTypes.FLOAT
 	}, {
 		tableName: 'cln_invoice_lines',
 		createdAt: 'CREATION_DATE',

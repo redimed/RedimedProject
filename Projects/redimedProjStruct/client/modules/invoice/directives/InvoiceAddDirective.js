@@ -267,7 +267,12 @@ angular.module('app.loggedIn.invoice.add.directive', [])
 					if(response.status == 'error') {
 						toastr.error('Cannot Insert', 'Error')
 					} else if(response.status == 'success') {
-						 PatientService.saveItemSheet(insertArr).then(function(response){
+						/**
+						 * tannv.dts@gmail.com
+						 * function se phat trien sau nen tam frame function ben duoi
+						 * saveItemSheet->saveInvoiceLineSheet
+						 */
+						 /*PatientService.saveItemSheet(insertArr).then(function(response){
 			               // console.log(response);
 			                if(response.status === 'success'){
 			                    toastr.success('Save successfully!','Success!');
@@ -275,7 +280,7 @@ angular.module('app.loggedIn.invoice.add.directive', [])
 			                else{
 			                    toastr.error('Save failed!','Error!');
 			                }
-			            });		
+			            });		*/
 						if(scope.onsuccess) {
 							scope.onsuccess();
 						}

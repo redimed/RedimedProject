@@ -185,7 +185,6 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 	                        item.has_price = false;
 	                    }
 
-
 	                    var postData={
 	                    	patientId:$scope.InvoiceMap.Patient_id,
 	                    	calId:$scope.InvoiceMap.cal_id,
@@ -226,6 +225,9 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
                     {field: 'ITEM_ID', is_hide: true},
                     {field: 'ITEM_CODE', label: 'Item Code', width:"10%"},
                     {field: 'ITEM_NAME', label: 'Item Name'},    
+                    {field: 'TAX_ID', label: 'Tax Id', is_hide: true},    
+                    {field: 'TAX_CODE', label: 'Tax Code'},    
+                    {field: 'TAX_RATE', label: 'Tax Rate'},    
             	],
                 use_filters:true,
                 filters:{
@@ -348,8 +350,7 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 
 				modalInstance.result.then(function(){
 					var postData={
-						invoiceLineId:item.line_id,
-						apptItemId:item.appt_item_id
+						invoiceLineId:item.line_id
 					}
 					InvoiceService.removeInvoiceLine(postData)
 					.then(function(data){

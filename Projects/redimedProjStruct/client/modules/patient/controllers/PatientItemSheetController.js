@@ -1,5 +1,5 @@
 angular.module('app.loggedIn.patient.itemsheet.controller',[])
-    .controller('PatientItemSheetController', function($filter,$scope, $stateParams,ReceptionistService, PatientService,toastr){
+    .controller('PatientItemSheetController', function($filter,$scope, $stateParams,ReceptionistService, PatientService,toastr,InvoiceService){
         var arrGetBy = $filter('arrGetBy');
         $scope.appointment = {CAL_ID: $stateParams.cal_id, Patient_id:  $stateParams.patient_id};
 
@@ -21,8 +21,31 @@ angular.module('app.loggedIn.patient.itemsheet.controller',[])
             return false;
         }
 
+        $scope.invoiceHeaderInfo=null;//tannv.dts add
         // INIT INVOICE
-        PatientService.initInvoice($scope.appointment.Patient_id, $scope.appointment.CAL_ID);
+        // tannv.dts modify
+        PatientService.initInvoice($scope.appointment.Patient_id, $scope.appointment.CAL_ID)
+        .then(function(data){
+            //tannv.dts add
+            InvoiceService.selectInvoiceHeaderBySession($scope.appointment.Patient_id, $scope.appointment.CAL_ID)
+            .then(function(data){
+                if(data.status=='success')
+                {
+                    $scope.invoiceHeaderInfo=data.data;
+                }
+                else
+                {
+                    alert("Get Invoice Header Error.");
+                    exlog.logErr(data);
+                }
+            },function(err){
+                alert("Get Invoice Header Error.");
+                exlog.logErr(err);
+            })
+        },function(err){
+            alert("Init Invoice Error.");
+            exlog.logErr(err);
+        })
         // END INIT INVOICE 
 
         ReceptionistService.apptDetail( $scope.appointment.CAL_ID)
@@ -41,8 +64,8 @@ angular.module('app.loggedIn.patient.itemsheet.controller',[])
                 $scope.deptItems = response.data.filter(function(item){
                     return item.clnDeptItemList.ISENABLE;
                 });
-				
-                return PatientService.getApptItems($scope.appointment.CAL_ID, $scope.appointment.Patient_id);
+				return InvoiceService.selectInvoiceLinesBySession($scope.appointment.Patient_id,$scope.appointment.CAL_ID);//tan add
+                //return PatientService.getApptItems($scope.appointment.CAL_ID, $scope.appointment.Patient_id);//tan rem
             }
         })
         // GET ITEMS OF APPT AND GET ONLY EXTRA ITEM
@@ -69,12 +92,12 @@ angular.module('app.loggedIn.patient.itemsheet.controller',[])
                         t_item.QUANTITY = item.QUANTITY;
                         t_item.TIME_SPENT = item.TIME_SPENT;
                         t_item.PRICE = item.PRICE;
-                        t_item.checked = item.is_enable === 1 ? '1' : '0';
+                        t_item.checked = item.IS_ENABLE === 1 ? '1' : '0';
                         t_item.inserted = (t_item.checked === '1');
                     } else { // IN EXTRA ITEMS
                         $scope.extraItems.push(item);
                         item_id_list.push(item.ITEM_ID);
-                        item.checked = item.is_enable === 1 ? '1' : '0';
+                        item.checked = item.IS_ENABLE === 1 ? '1' : '0';
                         item.inserted = (item.checked === '1');
                     }
                 });
@@ -152,6 +175,9 @@ angular.module('app.loggedIn.patient.itemsheet.controller',[])
                     {field: 'ITEM_ID', is_hide: true},
                     {field: 'ITEM_CODE', label: 'Item Code', width:"10%"},
                     {field: 'ITEM_NAME', label: 'Item Name'},    
+                    {field: 'TAX_ID', label: 'Tax Id', is_hide: true},    
+                    {field: 'TAX_CODE', label: 'Tax code'},    
+                    {field: 'TAX_RATE', label: 'Tax rate'} 
             ],
                 use_filters:true,
                 filters:{
@@ -176,14 +202,20 @@ angular.module('app.loggedIn.patient.itemsheet.controller',[])
             
             
             var fnInsertArr = function(item) {
-                 var t = {
-                    CLN_ITEM_ID: item.ITEM_ID,
-                    Patient_id: $scope.appointment.Patient_id,
-                    cal_id: $scope.appointment.CAL_ID,
-                    PRICE: item.PRICE,
+
+                //tan modify
+                var t = {
+                    HEADER_ID:$scope.invoiceHeaderInfo.header_id,
+                    ITEM_ID:item.ITEM_ID,
+                    PRICE:item.PRICE,
+                    QUANTITY:item.QUANTITY,
+                    AMOUNT:item.PRICE*item.QUANTITY,
+                    TAX_ID:item.TAX_ID,
+                    TAX_CODE:item.TAX_CODE,
+                    TAX_RATE:item.TAX_RATE,
+                    TAX_AMOUNT:item.PRICE*item.QUANTITY*(item.TAX_RATE?item.TAX_RATE:0.0),
                     TIME_SPENT: !item.TIME_SPENT ? 0: item.TIME_SPENT,
-                    QUANTITY: item.QUANTITY,
-                    is_enable: item.checked == '1' ? 1 : 0
+                    IS_ENABLE: item.checked == '1' ? 1 : 0
                 }
                 insertArr.push(t);
             }
@@ -194,15 +226,30 @@ angular.module('app.loggedIn.patient.itemsheet.controller',[])
             
             angular.forEach($scope.extraItems, fnInsertArr);
             
-            PatientService.saveItemSheet(insertArr).then(function(response){
-                console.log(response);
-                if(response.status === 'success'){
-                    toastr.success('Save successfully!','Success!');
-                    PatientService.endInvoice($scope.appointment.Patient_id, $scope.appointment.CAL_ID);
+            /**
+             * tannv.dts add
+             * 25-06-2015
+             */
+            var postData={
+                invoiceHeaderId:$scope.invoiceHeaderInfo.header_id,
+                listLine:insertArr
+            }
+            InvoiceService.saveInvoiceLineSheet(postData)
+            .then(function(data){
+                if(data.status=='success')
+                {
+                    toastr.success('Save invoice item success.');
                 }
-                else{
-                    toastr.error('Save failed!','Error!');
+                else if(data.status='non-data')
+                {
+                    toastr.warning('No invoice item.');
                 }
+                else
+                {
+                    toastr.error('Save invoice item error.');
+                }
+            },function(err){
+                toastr.error('Save invoice item error.');
             });
         }
         
