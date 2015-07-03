@@ -62,7 +62,7 @@ public class InvoiceController {
 	@ResponseStatus(HttpStatus.OK)
 	public @ResponseBody Boolean insertItems(@RequestBody ArInvoiceInterfaceJson postData)
 	{
-		Boolean result=invoiceService.insertInvoiceLine(postData);
+		Boolean result=invoiceService.addInvoiceLine(postData);
 		return result;
 	}
 	
@@ -70,7 +70,7 @@ public class InvoiceController {
 	@ResponseStatus(HttpStatus.OK)
 	public @ResponseBody Boolean insertItems(@RequestBody ArInvoiceInterfaceListJson postData)
 	{
-		Boolean result=invoiceService.insertListInvoiceLines(postData);
+		Boolean result=invoiceService.addListInvoiceLines(postData);
 		return result;
 	}
 	

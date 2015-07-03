@@ -151,7 +151,110 @@ public class InvoiceService {
 		return true;
 	}
 	
+	/**
+	 * Ham insert invoice line su dung store procedure
+	 * tannv.dts@gmail.com
+	 * @param line
+	 * @return
+	 */
+	public Boolean addInvoiceLine(ArInvoiceInterfaceJson line)
+	{
+		SessionFactoryImplementor sessionFactoryImplementation = (SessionFactoryImplementor) sessionFactory;
+		ConnectionProvider connectionProvider = sessionFactoryImplementation.getConnectionProvider();
+		Connection connection;
+		String result="";
+		try {
+			connection = connectionProvider.getConnection();
+			//connection.setAutoCommit(false);
+			CallableStatement cs = connection.prepareCall("{ call AR.ARBILLINGS.InsertBilling(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) }");
+			cs.setInt(1, line.getHeaderId());
+			cs.setInt(2, line.getLineId());
+			cs.setString(3, line.getInvoiceNumber());
+			cs.setDate(4,new java.sql.Date(line.getInvoiceDate().getTime()));
+			cs.setInt(5, line.getPatientId());
+			cs.setString(6,line.getPatientName());
+			cs.setInt(7,line.getCompanyId());
+			cs.setInt(8, line.getInsurerId());
+			cs.setInt(9,line.getTaxId());
+			cs.setFloat(10, line.getTaxRate());
+			cs.setInt(11, line.getItemId());
+			cs.setFloat(12, line.getPrice());
+			cs.setInt(13, line.getQuantity());
+			cs.setFloat(14,line.getAmount());
+			cs.setFloat(15,line.getTaxAmount());
+			cs.setFloat(16,line.getTotalAmount());
+		    cs.registerOutParameter(17, java.sql.Types.VARCHAR);
+		    cs.executeUpdate();  
+		    result=cs.getString(17);
+			//connection.commit(); 
+		    
+		} catch (SQLException e) {
+			return false;
+		}
+		if(result.equals("Completed"))
+			return true;
+		else
+			return false;
+		
+	}
 	
+	/**
+	 * ham insert invoice lines su dung store procedure
+	 * tannv.dts@gmail.com
+	 * @param listLine
+	 * @return
+	 */
+	public Boolean addListInvoiceLines(ArInvoiceInterfaceListJson listLine)
+	{
+		SessionFactoryImplementor sessionFactoryImplementation = (SessionFactoryImplementor) sessionFactory;
+		ConnectionProvider connectionProvider = sessionFactoryImplementation.getConnectionProvider();
+		Connection connection;
+		String result="";
+		try {
+			connection = connectionProvider.getConnection();
+//			connection.setAutoCommit(false);
+			for(int i=0;i<listLine.getListInvoiceInterface().size();i++){
+				ArInvoiceInterfaceJson line=listLine.getListInvoiceInterface().get(i);
+				CallableStatement cs = connection.prepareCall("{ call AR.ARBILLINGS.InsertBilling(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) }");
+				cs.setInt(1, line.getHeaderId());
+				cs.setInt(2, line.getLineId());
+				cs.setString(3, line.getInvoiceNumber());
+				cs.setDate(4,new java.sql.Date(line.getInvoiceDate().getTime()));
+				cs.setInt(5, line.getPatientId());
+				cs.setString(6,line.getPatientName());
+				cs.setObject(7,line.getCompanyId());
+				cs.setObject(8, line.getInsurerId());
+				cs.setObject(9,line.getTaxId());
+				cs.setObject(10, line.getTaxRate());
+				cs.setInt(11, line.getItemId());
+				cs.setFloat(12, line.getPrice());
+				cs.setInt(13, line.getQuantity());
+				cs.setFloat(14,line.getAmount());
+				cs.setFloat(15,line.getTaxAmount());
+				cs.setFloat(16,line.getTotalAmount());
+			    cs.registerOutParameter(17, java.sql.Types.VARCHAR);
+			    cs.executeUpdate();  
+			    result=cs.getString(17);
+			    if(!result.equals("Completed"))
+			    	break;
+			}
+			//connection.commit();
+		} catch (SQLException e) {
+			System.out.println(e);
+			e.printStackTrace();
+			return false;
+		}
+		if(result.equals("Completed"))
+			return true;
+		else
+			return false;
+	}
+	
+	/**
+	 * Ham insert invoice line vao bang tam
+	 * tannv.dts@gmail.com
+	 * Hien tai khong su dung
+	 */
 	public Boolean insertInvoiceLine(ArInvoiceInterfaceJson line)
 	{
 		Session session = sessionFactory.openSession();
@@ -186,6 +289,15 @@ public class InvoiceService {
 		return true;
 	}
 	
+	
+	
+	/**
+	 * Ham insert invoice lines vao bang tam
+	 * tannv.dts@gmail.com
+	 * Hien tai khong su dung
+	 * @param listLine
+	 * @return
+	 */
 	public Boolean insertListInvoiceLines(ArInvoiceInterfaceListJson listLine)
 	{
 		Session session = sessionFactory.openSession();
