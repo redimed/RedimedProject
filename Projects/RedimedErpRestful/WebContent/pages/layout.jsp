@@ -47,7 +47,7 @@
 			dataType: 'json', 
 			contentType: 'application/json',
 		    mimeType: 'application/json',
-			url: "http://localhost:8085/RedimedErpRestful/insert-user.html",
+			url: "http://localhost:3011/RedimedErpRestful/insert-user.html",
 			//data: "{\"userName\":\"hmkcode\",\"id\":2}", 
 			data: JSON.stringify(userInfo), 
 			success: function(data)
@@ -60,7 +60,7 @@
 	function getTaxes()
 	{
 		$.ajax({
-			url : "http://localhost:8085/RedimedErpRestful/erp/po-taxes/get-list-active.html",
+			url : "http://localhost:3011/RedimedErpRestful/erp/po-taxes/get-list-active.html",
 			type: "GET",
 			success: function(data) {
 				alert(JSON.stringify(data));
@@ -99,7 +99,7 @@
 			dataType: 'json', 
 			contentType: 'application/json',
 		    mimeType: 'application/json',
-			url: "http://localhost:8085/RedimedErpRestful/erp/ar-billing-customer/insert-customers.html",
+			url: "http://localhost:3011/RedimedErpRestful/erp/ar-billing-customer/insert-customers.html",
 			//data: "{\"userName\":\"hmkcode\",\"id\":2}", 
 			data: JSON.stringify(list), 
 			success: function(data)
@@ -123,7 +123,7 @@
 			dataType: 'json', 
 			contentType: 'application/json',
 		    mimeType: 'application/json',
-			url: "http://localhost:8085/RedimedErpRestful/erp/ar-billing-customer/insert-customer.html",
+			url: "http://localhost:3011/RedimedErpRestful/erp/ar-billing-customer/insert-customer.html",
 			//data: "{\"userName\":\"hmkcode\",\"id\":2}", 
 			data: JSON.stringify(cus), 
 			success: function(data)
@@ -155,7 +155,7 @@
 			dataType: 'json', 
 			contentType: 'application/json',
 		    mimeType: 'application/json',
-			url: "http://localhost:8085/RedimedErpRestful/erp/ar-billing-item/insert-item.html",
+			url: "http://localhost:3011/RedimedErpRestful/erp/ar-billing-item/insert-item.html",
 			//data: "{\"userName\":\"hmkcode\",\"id\":2}", 
 			data: JSON.stringify(item), 
 			success: function(data)
@@ -197,7 +197,7 @@
 			dataType: 'json', 
 			contentType: 'application/json',
 		    mimeType: 'application/json',
-			url: "http://localhost:8085/RedimedErpRestful/erp/ar-billing-item/insert-items.html",
+			url: "http://localhost:3011/RedimedErpRestful/erp/ar-billing-item/insert-items.html",
 			//data: "{\"userName\":\"hmkcode\",\"id\":2}", 
 			data: JSON.stringify(list), 
 			success: function(data)
@@ -244,7 +244,7 @@
 			dataType: 'json', 
 			contentType: 'application/json',
 		    mimeType: 'application/json',
-			url: "http://localhost:8085/RedimedErpRestful/erp/ar-invoice-interface/insert-line.html",
+			url: "http://localhost:3011/RedimedErpRestful/erp/ar-invoice-interface/insert-line.html",
 			//data: "{\"userName\":\"hmkcode\",\"id\":2}", 
 			data: JSON.stringify(line), 
 			success: function(data)
@@ -312,7 +312,7 @@
 			dataType: 'json', 
 			contentType: 'application/json',
 		    mimeType: 'application/json',
-			url: "http://localhost:8085/RedimedErpRestful/erp/ar-invoice-interface/insert-lines.html",
+			url: "http://localhost:3011/RedimedErpRestful/erp/ar-invoice-interface/insert-lines.html",
 			//data: "{\"userName\":\"hmkcode\",\"id\":2}", 
 			data: JSON.stringify(list), 
 			success: function(data)
@@ -334,7 +334,7 @@
 	{
 		$.ajax({
 	        type: "GET",
-	        url: "http://localhost:8085/RedimedErpRestful/erp/ar-invoice-interface/header-status.html",
+	        url: "http://localhost:3011/RedimedErpRestful/erp/ar-invoice-interface/header-status.html",
 	        data: {
 	        	headerId:77
 	        }, 
