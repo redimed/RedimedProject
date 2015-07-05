@@ -3844,7 +3844,7 @@ label{
     border-bottom-right-radius: 8px !important;
     border:1px solid rgb(190, 190, 190)!important;
     width: 12%;
-    margin-left: 2px;
+    margin-left: 0px;
     height: 34px;
     outline: 0;
 }
@@ -3947,6 +3947,50 @@ label{
 .un_overflow_auto{
     overflow: auto;
 }  
+.un_box_shadow{
+    box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+.un_header_notification_list{
+    background-color: white;
+    padding: 10px 0px 10px 0px;
+}
+.un_header_notification_list label{
+    color: white;
+    background: black;
+    font-weight: bold;
+    font-size: 19px;
+    margin-bottom: 0px;
+    padding: 0px 35px 0px 35px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+
+}
+.un_header_notification_list i{
+    font-size: 47px;
+    position: absolute;
+    top: 17px;
+    border-left: -1px solid red;
+    right: 14px;
+}
+.un_body_notification_list{
+    border-bottom: 1px dotted black;
+    padding-top: 10px;
+}
+.un_body_notification_list div{
+    padding: 0px 10px 0px 10px;
+    background-color: #E7E7E7;
+    color: #6490C1;
+}
+.un_arrow {
+    width: 0;
+    height: 0;
+    border-top: 27px solid transparent;
+    border-bottom: 0px solid transparent;
+    z-index: 888;
+    border-right: 20px solid black;
+    position: absolute;
+    top: 142px;
+    right: 225px;
+}
 /*phanquocchien patient end*/
 
 .ql-container{

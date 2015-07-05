@@ -863,13 +863,12 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 
 			scope.clickArrow = function(){
 				scope.alertCenter.arrow = !scope.alertCenter.arrow;
-
 				if(scope.alertCenter.arrow){
 					angular.element('#alert-center').css({display: 'none'});
-					angular.element('.bv-arrow').css({right: 0});
+					angular.element('.un_arrow').css({right: 0});
 				}else{
 					angular.element('#alert-center').css({display: 'block'});
-					angular.element('.bv-arrow').css({right: '225px'});
+					angular.element('.un_arrow').css({right: '225px'});
 				}
 			}
 

@@ -18,35 +18,28 @@
 	}
 
 </style>
-<div id="alert-center" class="bv-right-list-reception">
-    <div class="m-background">
-        <label style="font-weight: bold;font-size: 19px;">Notification List</label>
+<div id="alert-center" class="bv-right-list-reception un_box_shadow">
+    <div class="un_header_notification_list">
+        <label>Notification List</label><i class="fa fa-caret-right"></i>
     </div>
-        <div ng-repeat="list in alertCenter.list" ng-if="list.test !== 0 || list.alert.length !== 0">
-        <label ng-if="list.alert.length > 0 || list.cal.length > 0" style="font-size: 16px;margin-left: 16px;font-weight: bold;">
-            <span ng-if="list.alert.length > 0"> 
-            	{{list.First_name}} {{list.Sur_name}}
-            </span>
-        </label>
-        <ul ng-repeat="alert in list.alert" ng-if="list.alert.length > 0">
-            <li>{{alert.name}}</li>
-        </ul>
-        <p ng-repeat="cal in list.cal" ng-if="list.cal.length > 0 && list.test === 1">
-            <span ng-if="cal.OUTREFERRAL === 'no'" style="margin-left: 24px;">
-            	<label ng-if="$index==0 && list.alert.length === 0 " style="font-size: 16px;font-weight: bold;">
-            		<span style="  margin-left: -9px;">{{list.First_name}} {{list.Sur_name}}</span>
-            	</label></br>
-            	<span style="margin-left: 21px;">
-	                {{cal.FROM_TIME}}-{{cal.TO_TIME}}:&nbsp
-	                There is no referral
-	            </span>
-            </span>
-        </p>
-       <hr style="border:1px solid white;" />
-        </div>
-</div>  </div>
+    <div class="un_body_notification_list" ng-repeat="list in alertCenter.list">
+    	<div>
+		    <label ng-if="list.alert.length > 0 || list.cal.length > 0" style="font-size: 16px;font-weight: bold;">
+		        {{list.First_name}} {{list.Sur_name}}
+		    </label>
+		    <ul ng-repeat="alert in list.alert" ng-if="list.alert.length > 0">
+		        <li>{{alert.name}}</li>
+		    </ul>
+		    <p ng-repeat="cal in list.cal" ng-if="list.cal.length > 0">
+		        <span ng-if="cal.IS_REFERRAL && cal.OUTREFERRAL === 'no'" style="margin-left: 10px;">
+		            {{cal.FROM_TIME}}-{{cal.TO_TIME}}:&nbsp
+		            There is no referral
+		        </span>
+		    </p>
+		</div>
+    </div>
 </div>
-<div class="bv-arrow" ng-click="clickArrow()" style="top:80px"></div>
+<div class="un_arrow" ng-click="clickArrow()" style="top:90px"></div>
 <div class="row">
 	<div class="col-md-4 col-sm-4">
 
