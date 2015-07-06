@@ -622,6 +622,9 @@ module.exports = {
         //CHUYEN LIST EMPL VA LIST DEPT THANH CHUOI STRING
         var stringEMP = "";
         var stringDept = "";
+        var stringline1 = "";
+        var getnewdate= new Date();
+        getnewdate.setHours(0, 0, 0);
         for (var i = 0; i < info.listEMP.length; i++) {
             stringEMP += info.listEMP[i].id + ", ";
         }
@@ -658,7 +661,7 @@ module.exports = {
                 db.sequelize.query(sql_get_data1)
                     .success(function(data1) {
                         //get time in lieu*********************
-                        if (data1 !== null && data1 !== undefined) {
+                        if (data1 !== null && data1 !== undefined && data1 !=="" && data1.length!==0) {
 
                             data1.forEach(function(value, index) {
 
@@ -691,241 +694,269 @@ module.exports = {
                                     }
                                 });
                             });
-                        }
-                        //end get time in lieu**********
-                        var sql_get_data2 = "SELECT users.id, " +
-                            "hr_employee.Employee_ID , " +
-                            "departments.departmentid, " +
-                            "time_tasks_week.week_no, " +
-                            "time_tasks_week.task_week_id, " +
-                            "time_item_task.task_id, " +
-                            "time_item_task.time_charge " +
-                            "FROM hr_employee  " +
-                            "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
-                            "INNER JOIN departments ON hr_employee.Dept_ID = departments.departmentid " +
-                            "INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id " +
-                            "INNER JOIN time_tasks ON time_tasks.tasks_week_id = time_tasks_week.task_week_id " +
-                            "INNER JOIN time_item_task ON time_item_task.task_id = time_tasks.tasks_id " +
-                            "WHERE time_tasks_week.task_status_id = 3 AND " +
-                            "departments.departmentid IN (" + stringDept + ") AND " +
-                            "hr_employee.Employee_ID IN (" + stringEMP + ") AND " +
-                            "time_item_task.item_id=22";
-                        db.sequelize.query(sql_get_data2)
-                            .success(function(data2) {
-                                //get time in lieu used and time in lieu remain *******************
-                                if (data !== null && data !== undefined) {
-                                    data.forEach(function(value, index) {
-                                        data[index].time_in_lieu_used = 0;
-                                        data[index].time_in_lieu_remain = 0;
-                                        data[index].time_in_lieu_gan_nhat = 0;
+                            //end get time in lieu**********
+                            var sql_get_data2 = "SELECT users.id, " +
+                                "hr_employee.Employee_ID , " +
+                                "departments.departmentid, " +
+                                "time_tasks_week.week_no, " +
+                                "time_tasks_week.task_week_id, " +
+                                "time_item_task.task_id, " +
+                                "time_item_task.time_charge " +
+                                "FROM hr_employee  " +
+                                "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
+                                "INNER JOIN departments ON hr_employee.Dept_ID = departments.departmentid " +
+                                "INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id " +
+                                "INNER JOIN time_tasks ON time_tasks.tasks_week_id = time_tasks_week.task_week_id " +
+                                "INNER JOIN time_item_task ON time_item_task.task_id = time_tasks.tasks_id " +
+                                "WHERE time_tasks_week.task_status_id = 3 AND " +
+                                "departments.departmentid IN (" + stringDept + ") AND " +
+                                "hr_employee.Employee_ID IN (" + stringEMP + ") AND " +
+                                "time_item_task.item_id=22";
+                            db.sequelize.query(sql_get_data2)
+                                .success(function(data2) {
+                                    if(data2!==undefined && data2!==null && data2!=="" && data2.length!==0){                                           
+                                        //get time in lieu used and time in lieu remain *******************                                        
+                                        if (data !== null && data !== undefined) {
+                                            data.forEach(function(value, index) {
+                                                data[index].time_in_lieu_used = 0;
+                                                data[index].time_in_lieu_remain = 0;
+                                                data[index].time_in_lieu_gan_nhat = 0;
 
-                                        if (value !== null && value !== undefined) {
-                                            data2.forEach(function(valueTime, indexTime) {
-                                                if (value.Employee_id === valueTime.Employee_ID && value.Department_id === valueTime.departmentid) {
-                                                    data[index].time_in_lieu_used = data[index].time_in_lieu_used + valueTime.time_charge;
+                                                if (value !== null && value !== undefined) {
+                                                    data2.forEach(function(valueTime, indexTime) {
+                                                        if (value.Employee_id === valueTime.Employee_ID && value.Department_id === valueTime.departmentid) {
+                                                            data[index].time_in_lieu_used = data[index].time_in_lieu_used + valueTime.time_charge;
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                            data.forEach(function(value, index) {
+                                                if (value !== null && value !== undefined) {
+                                                    data[index].time_in_lieu_remain = data[index].time_in_lieu - data[index].time_in_lieu_used;
                                                 }
                                             });
                                         }
-                                    });
-                                    data.forEach(function(value, index) {
-                                        if (value !== null && value !== undefined) {
-                                            data[index].time_in_lieu_remain = data[index].time_in_lieu - data[index].time_in_lieu_used;
-                                        }
-                                    });
-                                }
-                                //end get ***********************************
-                                //get time in lieu for Department
-                                if (data !== null && data !== undefined) {
-                                    data.forEach(function(value, index) {
-                                        if (value !== null && value !== undefined) {
-                                            var isFound = false;
-                                            data_Dept.forEach(function(valueDept, indexDept) {
-                                                if (valueDept !== null &&
-                                                    valueDept !== undefined &&
-                                                    valueDept.Department_id === value.Department_id) {
-
-                                                    isFound = true;
-                                                }
-                                            });
-                                            if (isFound == false) {
-                                                data_Dept.push({
-                                                    Department_id: value.Department_id
-                                                });
-                                            }
-                                        }
-                                    });
-                                    data_Dept.forEach(function(value, index) {
-                                        data_Dept[index].time_in_lieu_Dept = 0;
-                                        data_Dept[index].time_in_lieu_used_Dept = 0;
-                                        data_Dept[index].time_in_lieu_remain_Dept = 0;
-                                        if (value !== null && value !== undefined) {
-                                            data.forEach(function(valueTime, indexTime) {
-                                                if (value.Department_id == valueTime.Department_id) {
-                                                    data_Dept[index].time_in_lieu_Dept = data_Dept[index].time_in_lieu_Dept + valueTime.time_in_lieu;
-                                                    data_Dept[index].time_in_lieu_used_Dept = data_Dept[index].time_in_lieu_used_Dept + valueTime.time_in_lieu_used;
-                                                    data_Dept[index].time_in_lieu_remain_Dept = data_Dept[index].time_in_lieu_remain_Dept + valueTime.time_in_lieu_remain;
-                                                }
-                                            });
-                                        }
-                                    });
-                                }
-
-                                //end get***********************
-
-                                //get time_in_lieu_all***************
-                                var time_in_lieu_all = 0;
-                                var time_in_lieu_used_all = 0;
-                                var time_in_lieu_remain_all = 0;
-                                if (data_Dept !== null && data_Dept !== undefined) {
-                                    data_Dept.forEach(function(value, index) {
-                                        if (value !== null && value !== undefined) {
-                                            time_in_lieu_all = time_in_lieu_all + data_Dept[index].time_in_lieu_Dept;
-                                            time_in_lieu_used_all = time_in_lieu_used_all + data_Dept[index].time_in_lieu_used_Dept;
-                                            time_in_lieu_remain_all = time_in_lieu_remain_all + data_Dept[index].time_in_lieu_remain_Dept;
-
-                                        }
-                                    });
-                                    data_Dept.forEach(function(value, index) {
-                                        data_Dept[index].time_in_lieu_all = 0;
-                                        data_Dept[index].time_in_lieu_used_all = 0;
-                                        data_Dept[index].time_in_lieu_remain_all = 0;
-                                        if (value !== null && value !== undefined) {
-                                            data_Dept[index].time_in_lieu_all = time_in_lieu_all;
-                                            data_Dept[index].time_in_lieu_used_all = time_in_lieu_used_all;
-                                            data_Dept[index].time_in_lieu_remain_all = time_in_lieu_remain_all;
-                                        }
-                                    });
-                                }
-
-                                //end get************************
-
-                                //push data_Dept into data**********************
-                                if (data !== null && data !== undefined) {
-                                    data.forEach(function(value, index) {
-                                        data[index].time_in_lieu_Dept = 0;
-                                        data[index].time_in_lieu_used_Dept = 0;
-                                        data[index].time_in_lieu_remain_Dept = 0;
-                                        data[index].time_in_lieu_gan_nhat_Dept = 0;
-                                        data[index].time_in_lieu_all = 0;
-                                        data[index].time_in_lieu_used_all = 0;
-                                        data[index].time_in_lieu_remain_all = 0;
-                                        data[index].time_in_lieu_gan_nhat_all = 0;
-                                        if (value !== null && value !== undefined) {
-                                            data_Dept.forEach(function(valueTime, indexTime) {
-                                                if (valueTime !== null && valueTime !== undefined && valueTime.Department_id === value.Department_id) {
-                                                    data[index].time_in_lieu_Dept = data_Dept[indexTime].time_in_lieu_Dept;
-                                                    data[index].time_in_lieu_used_Dept = data_Dept[indexTime].time_in_lieu_used_Dept;
-                                                    data[index].time_in_lieu_remain_Dept = data_Dept[indexTime].time_in_lieu_remain_Dept;
-                                                    data[index].time_in_lieu_all = data_Dept[indexTime].time_in_lieu_all;
-                                                    data[index].time_in_lieu_used_all = data_Dept[indexTime].time_in_lieu_used_all;
-                                                    data[index].time_in_lieu_remain_all = data_Dept[indexTime].time_in_lieu_remain_all;
-                                                }
-                                            });
-                                        }
-                                    });
-                                }
-                                //end push*********************************
-                                //get data3 
-                                var week2 = weeks - 2;
-                                var sql_get_data3 = "SELECT users.id, " +
-                                    "hr_employee.Employee_ID , " +
-                                    "departments.departmentid, " +
-                                    "time_tasks_week.week_no," +
-                                    "time_tasks_week.task_week_id, " +
-                                    "time_tasks_week.time_in_lieu " +
-                                    "FROM hr_employee  " +
-                                    "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
-                                    "INNER JOIN departments ON hr_employee.Dept_ID = departments.departmentid  " +
-                                    "INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id " +
-                                    "WHERE time_tasks_week.task_status_id = 3 AND " +
-                                    "departments.departmentid IN (" + stringDept + ") AND " +
-                                    "(time_tasks_week.week_no BETWEEN " + week2 + " AND " + weeks + " ) AND " +
-                                    "hr_employee.Employee_ID IN (" + stringEMP + ")";
-                                db.sequelize.query(sql_get_data3)
-                                    .success(function(data3) {
-
-                                        if (data3 !== undefined) {
-                                            if (data === null) {
-                                                data.forEach(function(value, index) {
-                                                    data[index].time_in_lieu_gan_nhat = 0;
-                                                    data[index].time_in_lieu_gan_nhat_Dept = 0;
-                                                    data[index].time_in_lieu_gan_nhat_all = 0;
-                                                });
-                                            } else {
-                                                data.forEach(function(value, index) {
-                                                    data[index].time_in_lieu_gan_nhat = 0;
-                                                    data[index].time_in_lieu_gan_nhat_Dept = 0;
-                                                    data[index].time_in_lieu_gan_nhat_all = 0;
-                                                    if (value !== null && value !== undefined) {
-                                                        data3.forEach(function(valueTime, indexTime) {
-                                                            if (valueTime !== null && valueTime !== undefined && valueTime.departmentid === value.Department_id) {
-                                                                data[index].time_in_lieu_gan_nhat = data[index].time_in_lieu_gan_nhat + valueTime.time_in_lieu;
-                                                            }
-                                                        })
-                                                    }
-                                                });
-                                                data_Dept.forEach(function(value, index) {
-                                                    data_Dept[index].time_in_lieu_gan_nhat_Dept = 0;
-                                                    if (value !== null && value !== undefined) {
-                                                        data.forEach(function(valueTime, indexTime) {
-                                                            if (valueTime !== null && valueTime !== undefined && valueTime.Department_id === value.Department_id) {
-                                                                data_Dept[index].time_in_lieu_gan_nhat_Dept = data_Dept[index].time_in_lieu_gan_nhat_Dept + valueTime.time_in_lieu_gan_nhat;
-                                                            }
-                                                        });
-                                                    }
-                                                });
-                                                var time_in_lieu_gan_nhat_all = 0;
-                                                data_Dept.forEach(function(value, index) {
-                                                    if (value !== null && value !== undefined) {
-                                                        time_in_lieu_gan_nhat_all = time_in_lieu_gan_nhat_all + value.time_in_lieu_gan_nhat_Dept;
-                                                    }
-                                                });
-                                                data.forEach(function(value, index) {
-                                                    if (value !== null && value !== undefined) {
-                                                        data[index].time_in_lieu_gan_nhat_all = time_in_lieu_gan_nhat_all;
-                                                        data_Dept.forEach(function(valueTime, indexTime) {
-                                                            if (valueTime !== null && valueTime !== undefined && valueTime.Department_id === value.Department_id) {
-                                                                data[index].time_in_lieu_gan_nhat_Dept = valueTime.time_in_lieu_gan_nhat_Dept;
-                                                            }
-                                                        })
-                                                    }
-                                                })
-                                            }
-                                        }
+                                        //end get ***********************************
+                                        //get time in lieu for Department
                                         if (data !== null && data !== undefined) {
                                             data.forEach(function(value, index) {
                                                 if (value !== null && value !== undefined) {
-                                                    value.time_in_lieu_remain = value.time_in_lieu_remain - value.time_in_lieu_gan_nhat;
-                                                    value.time_in_lieu_remain_Dept = value.time_in_lieu_remain_Dept - value.time_in_lieu_gan_nhat_Dept;
-                                                    value.time_in_lieu_remain_all = value.time_in_lieu_remain_all - value.time_in_lieu_gan_nhat_all;
+                                                    var isFound = false;
+                                                    data_Dept.forEach(function(valueDept, indexDept) {
+                                                        if (valueDept !== null &&
+                                                            valueDept !== undefined &&
+                                                            valueDept.Department_id === value.Department_id) {
+
+                                                            isFound = true;
+                                                        }
+                                                    });
+                                                    if (isFound == false) {
+                                                        data_Dept.push({
+                                                            Department_id: value.Department_id
+                                                        });
+                                                    }
+                                                }
+                                            });
+                                            data_Dept.forEach(function(value, index) {
+                                                data_Dept[index].time_in_lieu_Dept = 0;
+                                                data_Dept[index].time_in_lieu_used_Dept = 0;
+                                                data_Dept[index].time_in_lieu_remain_Dept = 0;
+                                                if (value !== null && value !== undefined) {
+                                                    data.forEach(function(valueTime, indexTime) {
+                                                        if (value.Department_id == valueTime.Department_id) {
+                                                            data_Dept[index].time_in_lieu_Dept = data_Dept[index].time_in_lieu_Dept + valueTime.time_in_lieu;
+                                                            data_Dept[index].time_in_lieu_used_Dept = data_Dept[index].time_in_lieu_used_Dept + valueTime.time_in_lieu_used;
+                                                            data_Dept[index].time_in_lieu_remain_Dept = data_Dept[index].time_in_lieu_remain_Dept + valueTime.time_in_lieu_remain;
+                                                        }
+                                                    });
                                                 }
                                             });
                                         }
-                                        for (var t = 0; t < data.length; t++) {
-                                            chainer.add(db.time_in_lieu_report.create({
-                                                create_id: data[t].create_id,
-                                                Employee_id: data[t].Employee_id,
-                                                Department_id: data[t].Department_id,
-                                                time_in_lieu: data[t].time_in_lieu,
-                                                time_in_lieu_used: data[t].time_in_lieu_used,
-                                                time_in_lieu_remain: data[t].time_in_lieu_remain,
-                                                time_in_lieu_gan_nhat: data[t].time_in_lieu_gan_nhat,
-                                                time_in_lieu_Dept: data[t].time_in_lieu_Dept,
-                                                time_in_lieu_used_Dept: data[t].time_in_lieu_used_Dept,
-                                                time_in_lieu_remain_Dept: data[t].time_in_lieu_remain_Dept,
-                                                time_in_lieu_gan_nhat_Dept: data[t].time_in_lieu_gan_nhat_Dept,
-                                                time_in_lieu_all: data[t].time_in_lieu_all,
-                                                time_in_lieu_used_all: data[t].time_in_lieu_used_all,
-                                                time_in_lieu_remain_all: data[t].time_in_lieu_remain_all,
-                                                time_in_lieu_gan_nhat_all: data[t].time_in_lieu_gan_nhat_all,
-                                                user_id: data[t].user_id
-                                            }));
+                                        //end get***********************
+
+                                        //get time_in_lieu_all***************
+                                        var time_in_lieu_all = 0;
+                                        var time_in_lieu_used_all = 0;
+                                        var time_in_lieu_remain_all = 0;
+                                        if (data_Dept !== null && data_Dept !== undefined) {
+                                            data_Dept.forEach(function(value, index) {
+                                                if (value !== null && value !== undefined) {
+                                                    time_in_lieu_all = time_in_lieu_all + data_Dept[index].time_in_lieu_Dept;
+                                                    time_in_lieu_used_all = time_in_lieu_used_all + data_Dept[index].time_in_lieu_used_Dept;
+                                                    time_in_lieu_remain_all = time_in_lieu_remain_all + data_Dept[index].time_in_lieu_remain_Dept;
+                                                }
+                                            });
+                                            data_Dept.forEach(function(value, index) {
+                                                data_Dept[index].time_in_lieu_all = 0;
+                                                data_Dept[index].time_in_lieu_used_all = 0;
+                                                data_Dept[index].time_in_lieu_remain_all = 0;
+                                                if (value !== null && value !== undefined) {
+                                                    data_Dept[index].time_in_lieu_all = time_in_lieu_all;
+                                                    data_Dept[index].time_in_lieu_used_all = time_in_lieu_used_all;
+                                                    data_Dept[index].time_in_lieu_remain_all = time_in_lieu_remain_all;
+                                                }
+                                            });
                                         }
-                                        chainer.runSerially()
-                                            .success(function(data_success) {
-                                                res.json({
-                                                    status: "success"
-                                                });
+                                        //end get************************
+
+                                        //push data_Dept into data**********************
+                                        if (data !== null && data !== undefined) {
+                                            data.forEach(function(value, index) {
+                                                data[index].time_in_lieu_Dept = 0;
+                                                data[index].time_in_lieu_used_Dept = 0;
+                                                data[index].time_in_lieu_remain_Dept = 0;
+                                                data[index].time_in_lieu_gan_nhat_Dept = 0;
+                                                data[index].time_in_lieu_all = 0;
+                                                data[index].time_in_lieu_used_all = 0;
+                                                data[index].time_in_lieu_remain_all = 0;
+                                                data[index].time_in_lieu_gan_nhat_all = 0;
+                                                if (value !== null && value !== undefined) {
+                                                    data_Dept.forEach(function(valueTime, indexTime) {
+                                                        if (valueTime !== null && valueTime !== undefined && valueTime.Department_id === value.Department_id) {
+                                                            data[index].time_in_lieu_Dept = data_Dept[indexTime].time_in_lieu_Dept;
+                                                            data[index].time_in_lieu_used_Dept = data_Dept[indexTime].time_in_lieu_used_Dept;
+                                                            data[index].time_in_lieu_remain_Dept = data_Dept[indexTime].time_in_lieu_remain_Dept;
+                                                            data[index].time_in_lieu_all = data_Dept[indexTime].time_in_lieu_all;
+                                                            data[index].time_in_lieu_used_all = data_Dept[indexTime].time_in_lieu_used_all;
+                                                            data[index].time_in_lieu_remain_all = data_Dept[indexTime].time_in_lieu_remain_all;
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                        }
+                                        //end push*********************************
+                                        //get data3 
+                                        var week2 = weeks - 2;
+                                        var sql_get_data3 = "SELECT users.id, " +
+                                            "hr_employee.Employee_ID , " +
+                                            "departments.departmentid, " +
+                                            "time_tasks_week.week_no," +
+                                            "time_tasks_week.task_week_id, " +
+                                            "time_tasks_week.time_in_lieu " +
+                                            "FROM hr_employee  " +
+                                            "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
+                                            "INNER JOIN departments ON hr_employee.Dept_ID = departments.departmentid  " +
+                                            "INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id " +
+                                            "WHERE time_tasks_week.task_status_id = 3 AND " +
+                                            "departments.departmentid IN (" + stringDept + ") AND " +
+                                            "(time_tasks_week.week_no BETWEEN " + week2 + " AND " + weeks + " ) AND " +
+                                            "hr_employee.Employee_ID IN (" + stringEMP + ")";
+                                        db.sequelize.query(sql_get_data3)
+                                            .success(function(data3) {
+                                                if (data3 !== undefined) {
+                                                    if (data === null) {
+                                                        data.forEach(function(value, index) {
+                                                            data[index].time_in_lieu_gan_nhat = 0;
+                                                            data[index].time_in_lieu_gan_nhat_Dept = 0;
+                                                            data[index].time_in_lieu_gan_nhat_all = 0;
+                                                        });
+                                                    } else {
+                                                        data.forEach(function(value, index) {
+                                                            data[index].time_in_lieu_gan_nhat = 0;
+                                                            data[index].time_in_lieu_gan_nhat_Dept = 0;
+                                                            data[index].time_in_lieu_gan_nhat_all = 0;
+                                                            if (value !== null && value !== undefined) {
+                                                                data3.forEach(function(valueTime, indexTime) {
+                                                                    if (valueTime !== null && valueTime !== undefined && valueTime.departmentid === value.Department_id) {
+                                                                        data[index].time_in_lieu_gan_nhat = data[index].time_in_lieu_gan_nhat + valueTime.time_in_lieu;
+                                                                    }
+                                                                })
+                                                            }
+                                                        });
+                                                        data_Dept.forEach(function(value, index) {
+                                                            data_Dept[index].time_in_lieu_gan_nhat_Dept = 0;
+                                                            if (value !== null && value !== undefined) {
+                                                                data.forEach(function(valueTime, indexTime) {
+                                                                    if (valueTime !== null && valueTime !== undefined && valueTime.Department_id === value.Department_id) {
+                                                                        data_Dept[index].time_in_lieu_gan_nhat_Dept = data_Dept[index].time_in_lieu_gan_nhat_Dept + valueTime.time_in_lieu_gan_nhat;
+                                                                    }
+                                                                });
+                                                            }
+                                                        });
+                                                        var time_in_lieu_gan_nhat_all = 0;
+                                                        data_Dept.forEach(function(value, index) {
+                                                            if (value !== null && value !== undefined) {
+                                                                time_in_lieu_gan_nhat_all = time_in_lieu_gan_nhat_all + value.time_in_lieu_gan_nhat_Dept;
+                                                            }
+                                                        });
+                                                        data.forEach(function(value, index) {
+                                                            if (value !== null && value !== undefined) {
+                                                                data[index].time_in_lieu_gan_nhat_all = time_in_lieu_gan_nhat_all;
+                                                                data_Dept.forEach(function(valueTime, indexTime) {
+                                                                    if (valueTime !== null && valueTime !== undefined && valueTime.Department_id === value.Department_id) {
+                                                                        data[index].time_in_lieu_gan_nhat_Dept = valueTime.time_in_lieu_gan_nhat_Dept;
+                                                                    }
+                                                                })
+                                                            }
+                                                        })
+                                                    }
+                                                }
+                                                if (data !== null && data !== undefined) {
+                                                    data.forEach(function(value, index) {
+                                                        if (value !== null && value !== undefined) {
+                                                            value.time_in_lieu_remain = value.time_in_lieu_remain - value.time_in_lieu_gan_nhat;
+                                                            value.time_in_lieu_remain_Dept = value.time_in_lieu_remain_Dept - value.time_in_lieu_gan_nhat_Dept;
+                                                            value.time_in_lieu_remain_all = value.time_in_lieu_remain_all - value.time_in_lieu_gan_nhat_all;
+                                                        }
+                                                    });
+                                                }
+                                                for(var i = 0; i < data.length; i++){
+                                                    stringline1+="("+
+                                                                data[i].create_id+","+
+                                                                data[i].Employee_id+","+
+                                                                data[i].Department_id+","+
+                                                                data[i].time_in_lieu+","+
+                                                                data[i].time_in_lieu_used+","+
+                                                                data[i].time_in_lieu_remain+","+
+                                                                data[i].time_in_lieu_gan_nhat+","+
+                                                                data[i].time_in_lieu_Dept+","+
+                                                                data[i].time_in_lieu_used_Dept+","+
+                                                                data[i].time_in_lieu_remain_Dept+","+
+                                                                data[i].time_in_lieu_gan_nhat_Dept+","+
+                                                                data[i].time_in_lieu_all+","+
+                                                                data[i].time_in_lieu_used_all+","+
+                                                                data[i].time_in_lieu_remain_all+","+
+                                                                data[i].time_in_lieu_gan_nhat_all+",'"+
+                                                                moment(getnewdate).format("YYYY-MM-DD")+"',"+
+                                                                data[i].user_id+","+
+                                                                data[i].user_id+"),";
+                                                }
+                                                stringline1 = stringline1.substring(0, stringline1.length - 1);
+                                                var sql_insert = "INSERT INTO "+
+                                                                "time_in_lieu_report "+
+                                                                "(create_id, "+
+                                                                "Employee_id, "+
+                                                                "Department_id, "+
+                                                                "time_in_lieu, "+
+                                                                "time_in_lieu_used, "+
+                                                                "time_in_lieu_remain, "+
+                                                                "time_in_lieu_gan_nhat, "+
+                                                                "time_in_lieu_Dept, "+
+                                                                "time_in_lieu_used_Dept, "+
+                                                                "time_in_lieu_remain_Dept, "+
+                                                                "time_in_lieu_gan_nhat_Dept, "+
+                                                                "time_in_lieu_all, "+
+                                                                "time_in_lieu_used_all, "+
+                                                                "time_in_lieu_remain_all, "+
+                                                                "time_in_lieu_gan_nhat_all, "+
+                                                                "Creation_date, "+
+                                                                "Creation_by, "+
+                                                                "user_id) "+
+                                                                "VALUE "+stringline1;
+                                                db.sequelize.query(sql_insert)
+                                                    .success(function(insert_success){
+                                                        res.json({
+                                                            status:"success"
+                                                        });
+                                                        return;
+                                                    })
+                                                    .error(function(err){
+                                                        console.log("*****ERROR: "+err+" *****");
+                                                        res.json({
+                                                            status:"error"
+                                                        });
+                                                        return;
+                                                    })
                                             })
                                             .error(function(err) {
                                                 console.log("*****ERROR: " + err + " *****");
@@ -934,25 +965,29 @@ module.exports = {
                                                 });
                                                 return;
                                             })
-
-                                    })
-                                    .error(function(err) {
-                                        console.log("*****ERROR: " + err + " *****");
+                                            //
+                                    }
+                                    else{
                                         res.json({
-                                            status: "error"
+                                            status:"null"
                                         });
                                         return;
-                                    })
-                                    //
-
-                            })
-                            .error(function(err) {
-                                console.log("*****ERROR: " + err + " *****");
-                                res.json({
-                                    status: "error"
-                                });
-                                return;
-                            })
+                                    }
+                                })
+                                .error(function(err) {
+                                    console.log("*****ERROR: " + err + " *****");
+                                    res.json({
+                                        status: "error"
+                                    });
+                                    return;
+                                })
+                        }
+                        else{
+                            res.json({
+                                status:"null"
+                            });
+                            return;
+                        }                        
 
                     })
                     .error(function(err) {
