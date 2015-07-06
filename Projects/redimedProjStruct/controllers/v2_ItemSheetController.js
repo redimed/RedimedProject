@@ -4,6 +4,12 @@ var ApptItemsModel = require('../v1_models/Cln_appt_items.js');
 var kiss=require('./kissUtilsController');
 
 module.exports = {
+
+    /**
+     * created by: unknown
+     * tannv.dts mark
+     * co the tiep tuc su dung
+     */
     postDeptItems: function(req,res){
         var dept_id = kiss.checkData(req.body.id)?req.body.id:'';
         if(!kiss.checkListData(dept_id))
@@ -22,7 +28,7 @@ module.exports = {
                     include: [
                         {
                             model: db.InvItem,  as: 'Items',
-                            attributes: ['ITEM_ID', 'ITEM_NAME', 'ITEM_CODE']
+                            attributes: ['ITEM_ID', 'ITEM_NAME', 'ITEM_CODE','TAX_ID','TAX_RATE','TAX_CODE']
                         }
                     ],
                     order: ['POPULAR_HEADER_ID']
@@ -47,6 +53,8 @@ module.exports = {
     /**
      * created by: unknown
      * tannv.dts@gmail.com mark
+     * client: patientService->saveItemSheet
+     * loai bo, khong su dung nua
      */
     postInsertDeptItems: function(req,res){
         var insert_arr = req.body.list;

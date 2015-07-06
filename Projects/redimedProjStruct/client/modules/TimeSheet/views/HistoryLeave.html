@@ -12,7 +12,7 @@
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
-            <a ui-sref="loggedIn.CreateLeave">
+            <a ui-sref="loggedIn.timesheetHome.leaveHistory">
                 <span>My Leave History</span>
             </a>
             <i class="fa fa-angle-right"></i>
@@ -36,7 +36,10 @@
                         <tr>
                             <th style="width:15%;">
                                 <div class="th">
-                                    Time Leave
+                                    <span class="glyphicon glyphicon-chevron-up" ng-click="clickAsc()" ng-class="{'active': searchObjectMap.order[0]==='ASC'}">
+                            </span>
+                                    <span class="glyphicon glyphicon-chevron-down" ng-click="clickDesc()" ng-class="{ 'active': searchObjectMap.order[0]==='DESC' } ">
+                            </span> Time Leave
                                 </div>
                             </th>
                             <th style="width:13%;">

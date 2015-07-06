@@ -126,10 +126,10 @@ angular.module("app.loggedIn.TimeSheet.Service", [])
             });
         };
 
-        TimeSheetService.ViewLeave = function(idLeave) {
+        TimeSheetService.ViewLeave = function(infoPost) {
             var ViewLeave = api.all("TimeSheet/post-view-leave");
             return ViewLeave.post({
-                leave_id: idLeave
+                info: infoPost
             });
         };
 
@@ -140,10 +140,10 @@ angular.module("app.loggedIn.TimeSheet.Service", [])
             });
         };
 
-        TimeSheetService.LoadLeaveEdit = function(leaveIDPost) {
+        TimeSheetService.LoadLeaveEdit = function(infoPost) {
             var LoadLeaveEdit = api.all("TimeSheet/post-load-edit");
             return LoadLeaveEdit.post({
-                leaveID: leaveIDPost
+                info: infoPost
             });
         };
 

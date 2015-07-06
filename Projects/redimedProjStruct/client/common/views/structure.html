@@ -245,7 +245,7 @@
                     </a>
                     <!-- END ERP -->
 
-                    <ul ng-if="menu.parent.childs.length > 0&&menu.parent.name!=='e-Timesheets'" class="sub-menu">
+                    <ul ng-if="menu.parent.childs.length > 0&&menu.parent.name!=='e-Timesheets'" class="sub-menu" ng-class="{'menu_change2':change_menu===true, 'menu_change1':change_menu===false}">
                         <li ng-repeat="submenu in menu.parent.childs">
                             <a ui-sref="{{submenu.definition}}">
                                 <i class="fa fa-angle-right"></i> {{submenu.name}}
@@ -261,12 +261,12 @@
                             </a>
                             <ul class="sub-menu" style=" margin-left: 100.3%">
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.LeaveHistory">
+                                    <a ui-sref="loggedIn.timesheetHome.leaveHistory">
                                         <i class="fa fa-angle-right"></i>My Leave History
                                     </a>
                                 </li>
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.CreateLeave">
+                                    <a ui-sref="loggedIn.timesheetHome.leaveCreate">
                                         <i class="fa fa-angle-right"></i>Apply Leave Form
                                     </a>
                                 </li>
@@ -275,12 +275,12 @@
                         <!-- END LEAVE FORM -->
                         <!--E-TIMESHEET -->
                         <li>
-                            <a ui-sref="loggedIn.TimeSheetHome.view">
+                            <a ui-sref="loggedIn.timesheetHome.timesheetHistory">
                                 <i class="fa fa-angle-right"></i>View Timesheets History
                             </a>
                         </li>
                         <li>
-                            <a ui-sref="loggedIn.TimeSheetHome.create">
+                            <a ui-sref="loggedIn.timesheetHome.timesheetCreate">
                                 <i class="fa fa-angle-right"></i>Create New Timesheet
                             </a>
                         </li>
@@ -292,17 +292,17 @@
                             </a>
                             <ul class="sub-menu" style="width: 360px; margin-left: 100.3%">
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.Report2TimeSheet">
+                                    <a ui-sref="loggedIn.timesheetHome.timesheetReport2">
                                         <i class="fa fa-angle-right"></i>Report on Utilization Ratio - View by Detail Activites
                                     </a>
                                 </li>
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.Report3TimeSheet">
+                                    <a ui-sref="loggedIn.timesheetHome.timesheetReport3">
                                         <i class="fa fa-angle-right"></i>Report on Utilization Ratio - View by Summary Activites
                                     </a>
                                 </li>
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.Report6TimeSheet">
+                                    <a ui-sref="loggedIn.timesheetHome.timesheetReport6">
                                         <i class="fa fa-angle-right"></i>Report on Item Numbers
                                     </a>
                                 </li>
@@ -320,17 +320,17 @@
                             </a>
                             <ul class="sub-menu" style="margin-left: 100.3%; width: 230px;">
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.LeaveHistory">
+                                    <a ui-sref="loggedIn.timesheetHome.leaveHistory">
                                         <i class="fa fa-angle-right"></i>My Leave History
                                     </a>
                                 </li>
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.CreateLeave">
+                                    <a ui-sref="loggedIn.timesheetHome.leaveCreate">
                                         <i class="fa fa-angle-right"></i>Apply Leave Form
                                     </a>
                                 </li>
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.ApproveLeave">
+                                    <a ui-sref="loggedIn.timesheetHome.leaveApprove">
                                         <i class="fa fa-angle-right"></i>Approve and Manage Leave
                                     </a>
                                 </li>
@@ -339,17 +339,17 @@
                         <!-- END LEAVE FORM -->
                         <!--E-TIMESHEET -->
                         <li>
-                            <a ui-sref="loggedIn.TimeSheetHome.view">
+                            <a ui-sref="loggedIn.timesheetHome.timesheetHistory">
                                 <i class="fa fa-angle-right"></i>View Timesheets History
                             </a>
                         </li>
                         <li>
-                            <a ui-sref="loggedIn.TimeSheetHome.create">
+                            <a ui-sref="loggedIn.timesheetHome.timesheetCreate">
                                 <i class="fa fa-angle-right"></i>Create New Timesheet
                             </a>
                         </li>
                         <li>
-                            <a ui-sref="loggedIn.TimeSheetHome.ApproveTask">
+                            <a ui-sref="loggedIn.timesheetHome.timesheetApprove">
                                 <i class="fa fa-angle-right"></i>Approve and Manage Timesheets
                             </a>
                         </li>
@@ -361,37 +361,37 @@
                             </a>
                             <ul class="sub-menu" style="width:360px; margin-left: 100.3%">
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.Report1TimeSheet">
+                                    <a ui-sref="loggedIn.timesheetHome.timesheetReport1">
                                         <i class="fa fa-angle-right"></i>Report on Time In Lieu
                                     </a>
                                 </li>
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.Report2TimeSheet">
+                                    <a ui-sref="loggedIn.timesheetHome.timesheetReport2">
                                         <i class="fa fa-angle-right"></i>Report on Utilization Ratio - View by Detail Activites
                                     </a>
                                 </li>
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.Report3TimeSheet">
+                                    <a ui-sref="loggedIn.timesheetHome.timesheetReport3">
                                         <i class="fa fa-angle-right"></i>Report on Utilization Ratio - View by Summary Activites
                                     </a>
                                 </li>
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.Report4TimeSheet">
+                                    <a ui-sref="loggedIn.timesheetHome.timesheetReport4">
                                         <i class="fa fa-angle-right"></i>Report on Actual Working Hours
                                     </a>
                                 </li>
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.Report5TimeSheet">
+                                    <a ui-sref="loggedIn.timesheetHome.timesheetReport5">
                                         <i class="fa fa-angle-right"></i>Report on Actual Working Ratio
                                     </a>
                                 </li>
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.Report6TimeSheet">
+                                    <a ui-sref="loggedIn.timesheetHome.timesheetReport6">
                                         <i class="fa fa-angle-right"></i>Report on Item Numbers
                                     </a>
                                 </li>
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.ReportOweLeave">
+                                    <a ui-sref="loggedIn.timesheetHome.leaveReportOwe">
                                         <i class="fa fa-angle-right"></i>List of Employee on Unsubmitted Leave Form
                                     </a>
                                 </li>
@@ -410,7 +410,7 @@
                             </a>
                             <ul class="sub-menu" style="margin-left: 100.3%; width: 230px;">
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.ApproveLeave">
+                                    <a ui-sref="loggedIn.timesheetHome.leaveApprove">
                                         <i class="fa fa-angle-right"></i>Approve and Manage Leave
                                     </a>
                                 </li>
@@ -419,7 +419,7 @@
                         <!-- END LEAVE FORM -->
                         <!--E-TIMESHEET -->
                         <li>
-                            <a ui-sref="loggedIn.TimeSheetHome.ApproveTask">
+                            <a ui-sref="loggedIn.timesheetHome.timesheetApprove">
                                 <i class="fa fa-angle-right"></i>Approve and Manage Timesheets
                             </a>
                         </li>
@@ -431,37 +431,37 @@
                             </a>
                             <ul class="sub-menu" style="width:360px; margin-left: 100.3%">
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.Report1TimeSheet">
+                                    <a ui-sref="loggedIn.timesheetHome.timesheetReport1">
                                         <i class="fa fa-angle-right"></i>Report on Time In Lieu
                                     </a>
                                 </li>
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.Report2TimeSheet">
+                                    <a ui-sref="loggedIn.timesheetHome.timesheetReport2">
                                         <i class="fa fa-angle-right"></i>Report on Utilization Ratio - View by Detail Activites
                                     </a>
                                 </li>
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.Report3TimeSheet">
+                                    <a ui-sref="loggedIn.timesheetHome.timesheetReport3">
                                         <i class="fa fa-angle-right"></i>Report on Utilization Ratio - View by Summary Activites
                                     </a>
                                 </li>
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.Report4TimeSheet">
+                                    <a ui-sref="loggedIn.timesheetHome.timesheetReport4">
                                         <i class="fa fa-angle-right"></i>Report on Actual Working Hours
                                     </a>
                                 </li>
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.Report5TimeSheet">
+                                    <a ui-sref="loggedIn.timesheetHome.timesheetReport5">
                                         <i class="fa fa-angle-right"></i>Report on Actual Working Ratio
                                     </a>
                                 </li>
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.Report6TimeSheet">
+                                    <a ui-sref="loggedIn.timesheetHome.timesheetReport6">
                                         <i class="fa fa-angle-right"></i>Report on Item Numbers
                                     </a>
                                 </li>
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.ReportOweLeave">
+                                    <a ui-sref="loggedIn.timesheetHome.leaveReportOwe">
                                         <i class="fa fa-angle-right"></i>List of Employee on Unsubmitted Leave Form
                                     </a>
                                 </li>
@@ -470,23 +470,6 @@
                         <!-- END REPORT -->
                     </ul>
                     <!-- END FOR DIRECTOR -->
-                    <!-- FOR ADMIN -->
-                    <ul class="sub-menu" ng-if="menu.parent.menu_id===161">
-                        <li>
-                            <a ui-sref="loggedIn.TimeSheetHome.TimeSheetTree">
-                                <i class="fa fa-angle-right"></i>Manager Users
-                            </a>
-                        </li>
-                        <li>
-                            <a ui-sref="loggedIn.TimeSheetHome.TimeSheetDept">
-                                <i class="fa fa-angle-right"></i>Manage Departments
-                            </a>
-                        </li>
-                    </ul>
-                    <!-- END FOR DIRECTOR -->
-                    <!-- END FOR ADMIN -->
-
-                    
 
                     <!-- <a href="javascript:;" ng-click="menuParentClick(menu.parent.definition)" ng-if="menu.parent.name==='e-Timesheets'">
                         <i><img src="{{menu.parent.icon}}"></i>

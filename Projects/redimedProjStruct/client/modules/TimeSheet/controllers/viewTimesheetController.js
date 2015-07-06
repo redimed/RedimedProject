@@ -78,7 +78,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
             userID: $cookieStore.get('userInfo').id,
             week_no: null,
             order: {
-                "time_tasks_week.week_no": "DESC"
+                0: "DESC"
             },
             select: {
                 "time_tasks_week.task_status_id": null
@@ -164,6 +164,16 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
         });
     };
 
+    $scope.clickAsc = function() {
+        $scope.searchObjectMap.order[0] = "ASC";
+        $scope.loadList();
+    };
+
+    $scope.clickDesc = function() {
+        $scope.searchObjectMap.order[0] = "DESC";
+        $scope.loadList();
+    };
+
     //CHECK MOTH AND WEEK
     StaffService.showWeek(); //    VIEW NOT DISABLE
     //END
@@ -226,7 +236,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
 
     $scope.okClick = function() {
         $modalInstance.close();
-        $state.go('loggedIn.TimeSheetHome.create', {
+        $state.go('loggedIn.timesheetHome.timesheetCreate', {
             id: infoWeek.task_week_id
         });
     };
@@ -249,7 +259,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                     $modalInstance.close();
                 } else if (response.status === 'success') {
                     $modalInstance.close();
-                    $state.go("loggedIn.TimeSheetHome.view", null, {
+                    $state.go("loggedIn.timesheetHome.timesheetHistory", null, {
                         "reload": true
                     });
                     toastr.success("Submit success", "Success");
@@ -402,7 +412,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                     $modalInstance.close();
                 } else if (response.status === 'success') {
                     $modalInstance.close();
-                    $state.go("loggedIn.TimeSheetHome.view", null, {
+                    $state.go("loggedIn.timesheetHome.timesheetHistory", null, {
                         "reload": true
                     });
                     toastr.success("Submit success", "Success");
@@ -413,7 +423,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
     };
     $scope.okClick = function() {
         $modalInstance.close();
-        $state.go('loggedIn.TimeSheetHome.create', {
+        $state.go('loggedIn.timesheetHome.timesheetCreate', {
             id: infoWeek.task_week_id
         });
     };

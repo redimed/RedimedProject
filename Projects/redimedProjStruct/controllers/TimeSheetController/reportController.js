@@ -415,13 +415,11 @@ module.exports = {
         var stringEMP = "";
         var stringDept = "";
         var stringID = "";
+        var stringline1 ="";
         var start_date;
         var finish_date;
         var date;
-        var flag1 = 0;
-        var flag2 = 0;
-        var flag3 = 0;
-        var flag4 = 0;
+        var array = [];
         var listleave = [];
         for (var i = 0; i < info.listEMP.length; i++) {
             stringEMP += info.listEMP[i].id + ", ";
@@ -431,222 +429,192 @@ module.exports = {
             stringDept += info.listDept[j].id + ", ";
         }
         stringDept += 0;
-        var sql_get_data_hr_leave_owe_table = "SELECT "+
-                                            "users.id, "+
-                                            "hr_employee.FirstName, "+
-                                            "hr_employee.LastName, "+
-                                            "hr_employee.Employee_ID ,"+ 
-                                            "departments.departmentid, "+
-                                            "departments.departmentName, "+
-                                            "time_tasks_week.time_charge, "+
-                                            "time_tasks_week.time_in_lieu, "+
-                                            "time_tasks_week.week_no, "+
-                                            "time_tasks_week.creation_date, "+ 
-                                            "time_tasks_week.last_update_date, "+ 
-                                            "time_tasks_week.task_week_id " +
-                                            "FROM hr_employee " + 
-                                            "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + 
-                                            "INNER JOIN departments ON hr_employee.Dept_ID = departments.departmentid " + 
-                                            "INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id " + 
-                                            "WHERE time_tasks_week.task_status_id = 3 "+
-                                                "AND departments.departmentid IN ( " + stringDept + " ) "+
-                                                "AND (time_tasks_week.start_date BETWEEN :start_date AND :end_date ) "+//WHERE
-                                                "AND (time_tasks_week.end_date BETWEEN :start_date AND :end_date ) "+//WHERE
-                                                "AND hr_employee.Employee_ID IN ( " + stringEMP + " )";
-
+        var getnewdate= new Date();
+        getnewdate.setHours(0, 0, 0);
         var delete_hr_leave_owe = "DELETE FROM hr_leave_owe WHERE create_id =" + info.USER_ID + " ";
-
-        var delete_hr_leave_owe_table = "DELETE FROM hr_leave_owe_table WHERE create_id =" + info.USER_ID + " ";
         db.sequelize.query(delete_hr_leave_owe)
-            .success(function(delete1) {
-                db.sequelize.query(delete_hr_leave_owe_table)
-                    .success(function(delete2) {
-
-                        db.sequelize.query(sql_get_data_hr_leave_owe_table,null,{
-                            raw: true
-                        },{
-                            start_date : info.weekFrom,
-                            end_date   : info.weekTo
-                        })
-                            .success(function(data_hr_leave_owe_table) {
-                                if(data_hr_leave_owe_table!==undefined&&data_hr_leave_owe_table!==null&&data_hr_leave_owe_table!==""&&data_hr_leave_owe_table.length!==0){
-                                    for (var i = 0; i < data_hr_leave_owe_table.length; i++) {
-                                        db.hr_leave_owe_table.create({
-                                                create_id: info.USER_ID,
-                                                user_id: data_hr_leave_owe_table[i].id,
-                                                task_week_id: data_hr_leave_owe_table[i].task_week_id,
-                                                Employee_id: data_hr_leave_owe_table[i].Employee_ID,
-                                                Department_id: data_hr_leave_owe_table[i].departmentid,
-                                                FirstName: data_hr_leave_owe_table[i].FirstName,
-                                                LastName: data_hr_leave_owe_table[i].LastName,
-                                                Department_name: data_hr_leave_owe_table[i].departmentName,
-                                                weekno: data_hr_leave_owe_table[i].week_no,
-                                                from_date: info.weekFrom,
-                                                to_date: info.weekTo
-                                            })
-                                            .success(function(data_insert1) {
-                                                flag1++;
-                                                if (flag1 == data_hr_leave_owe_table.length) {
-                                                    //console.log("NEXXT")
-                                                    var sql_get_data_1 = "SELECT " + 
-                                                    "hr_leave_owe_table.create_id, " + 
-                                                    "hr_leave_owe_table.user_id, " + 
-                                                    "hr_leave_owe_table.task_week_id, " + 
-                                                    "hr_leave_owe_table.Employee_id, " + 
-                                                    "hr_leave_owe_table.Department_id, " + 
-                                                    "hr_leave_owe_table.from_date, " + 
-                                                    "hr_leave_owe_table.to_date, " + 
-                                                    "time_tasks.tasks_id, " + 
-                                                    "time_tasks.date, " + 
-                                                    "time_item_task.item_id " + 
-                                                    "FROM hr_leave_owe_table " + 
-                                                    "INNER JOIN time_tasks     ON time_tasks.tasks_week_id = hr_leave_owe_table.task_week_id " + 
-                                                    "INNER JOIN time_item_task ON time_item_task.task_id  = time_tasks.tasks_id " + 
-                                                    "WHERE time_item_task.item_id IN (15,16,17,19,24,25) AND hr_leave_owe_table.create_id=" + info.USER_ID + 
-                                                    " ORDER BY hr_leave_owe_table.user_id ";
-                                                    db.sequelize.query(sql_get_data_1)
-                                                        .success(function(data_1) {
-                                                            if(data_1!==undefined&&data_1!==null&&data_1!==""&&data_1.length!==0){
-                                                                for (var j = 0; j < data_1.length; j++) {
-                                                                    stringID += data_1[j].user_id + ", ";
-                                                                }
-                                                                stringID += 0;
-                                                                //console.log(stringID)
-                                                                var sql_get_data_2 = "SELECT leave_id,start_date,finish_date,status_id,user_id " + 
-                                                                "FROM hr_leave " + "WHERE user_id IN (" + stringID + ") AND status_id=3 ORDER BY user_id ";
-                                                                db.sequelize.query(sql_get_data_2)
-                                                                    .success(function(data_2){
-                                                                        if(data_2!==undefined&&data_2!==null&&data_2!==""&&data_2.length!==0){
-
-                                                                            for(var i = 0;i < data_1.length; i++){
-                                                                               data_1[i].isReject = 0;
-                                                                            }
-                                                                            for(var x = 0; x < data_1.length;x++){
-                                                                                date = moment(moment(data_1[x].date).format("YYYY-MM-DD")).format("X");
-                                                                                for(var y =0; y <data_2.length; y++){
-                                                                                    start_date = moment(moment(data_2[y].start_date).format("YYYY-MM-DD")).format("X");
-                                                                                    finish_date = moment(moment(data_2[y].finish_date).format("YYYY-MM-DD")).format("X");
-                                                                                    if(date>=start_date){
-                                                                                        if(date<=finish_date){
-                                                                                            data_1[x].isReject = 1;
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                            for(var j = 0; j <data_1.length; j++){
-                                                                                if(data_1[j].isReject==0){
-                                                                                    listleave.push(data_1[j]);
-                                                                                }
-                                                                            }
-                                                                            if(listleave!==undefined&&listleave!==null&&listleave!==""&&listleave.length!=0){
-                                                                                for(var q = 0; q < listleave.length; q++){
-                                                                                    chainer.add(db.hr_leave_owe.create({
-                                                                                        create_id: listleave[q].create_id,
-                                                                                        user_id: listleave[q].user_id,
-                                                                                        department: listleave[q].Department_id,
-                                                                                        date_leave: listleave[q].date,
-                                                                                        employee: listleave[q].Employee_id,
-                                                                                        from_date: listleave[q].from_date,
-                                                                                        to_date: listleave[q].to_date,
-                                                                                        created_by: info.USER_ID
-                                                                                    }));
-                                                                                }
-                                                                                chainer.runSerially()
-                                                                                    .success(function(success){
-
-                                                                                        res.json({
-                                                                                            status:"success"
-                                                                                        });
-                                                                                        return;
-                                                                                    })
-                                                                                    .error(function(err){
-                                                                                        console.log("*****ERROR :"+err+" *****");
-                                                                                        res.json({
-                                                                                            status:"error"
-                                                                                        });
-                                                                                        return;
-                                                                                    })
-                                                                            }
-                                                                            else{
-                                                                                res.json({
-                                                                                    status:"null"
-                                                                                });
-                                                                                return;
-                                                                            }
-                                                                        }
-                                                                        else{
-                                                                            res.json({
-                                                                                status:"null"
-                                                                            });
-                                                                            return;
-                                                                        }
-                                                                    })
-                                                                    .error(function(err) {
-                                                                        console.log("*****ERROR: " + err + " *****");
-                                                                        res.json({
-                                                                            status: "error"
-                                                                        });
-                                                                        return;
-                                                                    })
-                                                            }
-                                                            else{
-                                                                res.json({
-                                                                    status:"null"
-                                                                });
-                                                                return;
-                                                            }
-                                                        })
-                                                        .error(function(err) {
-                                                            console.log("*****ERROR: " + err + " *****");
-                                                            res.json({
-                                                                status: "error"
-                                                            });
-                                                            return;
-                                                        })
-                                                }
-                                            })
-                                            .error(function(err) {
-                                                console.log("*****ERROR: " + err + " *****");
-                                                res.json({
-                                                    status: "error"
-                                                });
-                                                return;
-                                            })
+            .success(function(deletes){
+                var sql_data1 = "SELECT "+
+                                "users.id, "+
+                                "hr_employee.FirstName, "+
+                                "hr_employee.LastName, "+
+                                "hr_employee.Employee_ID , "+
+                                "departments.departmentid, "+
+                                "departments.departmentName, "+
+                                "time_tasks_week.time_charge, "+
+                                "time_tasks_week.time_in_lieu, "+
+                                "time_tasks_week.week_no, "+
+                                "time_tasks_week.creation_date, "+
+                                "time_tasks_week.last_update_date, "+
+                                "time_tasks_week.task_week_id , "+
+                                "time_tasks.tasks_id, "+
+                                "time_tasks.date, "+
+                                "time_item_task.item_id "+
+                                "FROM hr_employee "+
+                                "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID "+
+                                "INNER JOIN departments ON hr_employee.Dept_ID = departments.departmentid "+
+                                "INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id "+
+                                "INNER JOIN time_tasks     ON time_tasks.tasks_week_id = time_tasks_week.task_week_id "+
+                                "INNER JOIN time_item_task ON time_item_task.task_id  = time_tasks.tasks_id "+
+                                "WHERE time_tasks_week.task_status_id = 3 AND "+
+                                "departments.departmentid IN ( "+stringDept+" ) AND "+
+                                "(time_tasks_week.start_date BETWEEN :start_date AND :end_date ) AND "+
+                                "(time_tasks_week.end_date BETWEEN :start_date AND :end_date ) AND "+
+                                "hr_employee.Employee_ID IN ( "+stringEMP+" ) AND "+
+                                "time_item_task.item_id IN (15,16,17,19,24,25)";
+                db.sequelize.query(sql_data1,null,{
+                    raw : true
+                },{
+                    start_date : info.weekFrom,
+                    end_date   : info.weekTo
+                })
+                    .success(function(data_1){
+                        if(data_1!==undefined&&data_1!==null&&data_1!==""&&data_1.length!==0){
+                            data_1.forEach(function(value,index){
+                                if(value!==undefined&&value!==null){
+                                    var isFound = false;
+                                    array.forEach(function(valueTime,indexTime){
+                                        if(valueTime!==undefined&&valueTime!==null&&
+                                            valueTime.user_id===value.id){
+                                            isFound = true;
+                                        }
+                                    });
+                                    if(isFound===false){
+                                        array.push({
+                                            user_id     : value.id,
+                                            create_id       : info.USER_ID,
+                                            Employee_id   : value.Employee_ID,
+                                            Department_id : value.departmentid
+                                        })
                                     }
                                 }
-                                else{
-                                    res.json({
-                                        status:"null"
-                                    });
-                                    return;
+                            });
+                            if(array!==undefined&&array!==null&&array!==""&&array.length!==0){
+                                for (var i = 0; i < array.length; i++) {
+                                    stringID += array[i].user_id + ", ";
                                 }
-                            })
-                            .error(function(err) {
-                                console.log("*****ERROR: " + err + " *****");
+                                stringID += 0;
+                                var sql_data2 = "SELECT leave_id,start_date,finish_date,status_id,user_id " + 
+                                                "FROM hr_leave " + 
+                                                "WHERE user_id IN (" + stringID + ") AND status_id=3 ORDER BY user_id";
+                                db.sequelize.query(sql_data2)
+                                    .success(function(data_2){
+                                       if(data_2!==undefined&&data_2!==null&&data_2!==""&&data_2.length!==0){
+                                            for(var i = 0;i < data_1.length; i++){
+                                                data_1[i].isReject = 0;
+                                            }
+                                            for(var x = 0; x < data_1.length;x++){
+                                                date = moment(moment(data_1[x].date).format("YYYY-MM-DD")).format("X");
+                                                for(var y =0; y <data_2.length; y++){
+                                                    start_date = moment(moment(data_2[y].start_date).format("YYYY-MM-DD")).format("X");
+                                                    finish_date = moment(moment(data_2[y].finish_date).format("YYYY-MM-DD")).format("X");
+                                                    if(date>=start_date){
+                                                        if(date<=finish_date){
+                                                            data_1[x].isReject = 1;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            for(var j = 0; j <data_1.length; j++){
+                                                if(data_1[j].isReject==0){
+                                                    listleave.push(data_1[j]);
+                                                }
+                                            }
+                                            if(listleave!==undefined&&listleave!==null&&listleave!==""&&listleave.length!==0){
+                                                for(var q = 0; q < listleave.length; q++){
+                                                    stringline1+="("+
+                                                        info.USER_ID+","+
+                                                        listleave[q].id+","+
+                                                        listleave[q].isReject+", "+
+                                                        listleave[q].departmentid+",'"+
+                                                        moment(listleave[q].date).format("YYYY-MM-DD")+"',"+
+                                                        listleave[q].Employee_ID+",'"+
+                                                        moment(info.weekFrom).format("YYYY-MM-DD") + "','" +
+                                                        moment(info.weekTo).format("YYYY-MM-DD") + "','"+
+                                                        moment(getnewdate).format("YYYY-MM-DD")+ "',"+
+                                                        info.USER_ID +"),";
+                                                }
+                                                stringline1 = stringline1.substring(0, stringline1.length - 1);
+                                                console.log(stringline1);
+                                                var sql_insert = "INSERT INTO "+
+                                                                    "hr_leave_owe "+
+                                                                    "(create_id, "+
+                                                                    "user_id, "+
+                                                                    "isReject, "+
+                                                                    "department, "+
+                                                                    "date_leave, "+
+                                                                    "employee, "+
+                                                                    "from_date, "+
+                                                                    "to_date, "+
+                                                                    "creation_date, "+
+                                                                    "created_by ) "+
+                                                                    "VALUE "+stringline1;
+                                                db.sequelize.query(sql_insert)
+                                                    .success(function(data_success){
+                                                        res.json({
+                                                            status:"success"
+                                                        });
+                                                        return;
+                                                    })
+                                                    .error(function(err){
+                                                        console.log("*****ERROR: "+err+" *****");
+                                                        res.json({
+                                                            status:"error"
+                                                        });
+                                                        return;
+                                                    })
+                                            }
+                                            else{
+                                                res.json({
+                                                    status:"null"
+                                                });
+                                                return;
+                                            }
+                                       }
+                                       else{
+                                        res.json({
+                                            status:"null"
+                                        });
+                                        return;
+                                       }
+                                    })
+                                    .error(function(err){
+                                        console.log("*****ERROR: "+err+" *****");
+                                        res.json({
+                                            status:"error"
+                                        });
+                                        return;
+                                    })
+                            }
+                            else{
                                 res.json({
-                                    status: "error"
+                                    status:"null"
                                 });
                                 return;
-                            })
-
+                            }
+                        }
+                        else{
+                            res.json({
+                                status:"null"
+                            });
+                            return;
+                        }
                     })
-
+                    .error(function(err){
+                        console.log("*****ERROR :"+err+" *****");
+                        res.json({
+                            status:"error"
+                        });
+                        return;
+                    })
             })
-            .error(function(err) {
-                console.log("*****ERROR: " + err + " *****");
+            .error(function(err){
+                console.log("*****ERROR: "+err+" *****");
                 res.json({
-                    status: "error"
+                    status:"error"
                 });
                 return;
             })
-
-        .error(function(err) {
-            console.log("*****ERROR: " + err + " *****");
-            res.json({
-                status: "error"
-            });
-            return;
-        })
     },
 
     LoadReportTimeInLieu: function(req, res) {

@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.receptionist.home.controller", [])
 
-.controller("ReceptionistHomeController", function ($scope,$filter, $state, $timeout, $modal,socket, $cookieStore, toastr, ConfigService, DoctorService, ReceptionistService, PatientService, localStorageService, sysServiceService, receptionStileService,AppointmentModel) {
+.controller("ReceptionistHomeController", function (AppointmentModel,$scope,$filter, $state, $timeout, $modal,socket, $cookieStore, toastr, ConfigService, DoctorService, ReceptionistService, PatientService, localStorageService, sysServiceService, receptionStileService,AppointmentModel) {
 	$scope.apptDate = new Date();
 	//phanquocchien.c1109g@gmail.com
 	//lay thong tin su server
@@ -14,6 +14,17 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 	$scope.undoArr= [];
 	$scope.fromAppt = {};
 	$scope.startCheckedTime = null;
+
+	$scope.servicedata ={};
+	$scope.getServiceColor = function(){
+		AppointmentModel.getServiceColor('data')
+		.then(function(response){
+			$scope.servicedata = response.data;
+		},function(error){
+
+		})
+	}
+	$scope.getServiceColor();
 
 	ReceptionistService.getSite().then(function(rs){
 		if(rs.status == 'success')
@@ -29,10 +40,10 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 
 		if($scope.alertCenter.arrow){
 			angular.element('#alert-center').css({display: 'none'});
-			angular.element('.bv-arrow').css({right: 0});
+			angular.element('.un_arrow').css({right: 0});
 		}else{
 			angular.element('#alert-center').css({display: 'block'});
-			angular.element('.bv-arrow').css({right: '225px'});
+			angular.element('.un_arrow').css({right: '225px'});
 		}
 	}
 	var loadAlertCenter = function(site){
@@ -79,6 +90,7 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 								})
 
 								if(cal_flag){
+									$scope.alertCenter.list[flag].test = row.IS_REFERRAL;
 									$scope.alertCenter.list[flag].cal.push({IS_REFERRAL: row.IS_REFERRAL, CAL_ID: row.CAL_ID, FROM_TIME: row.FROM_TIME, TO_TIME: row.TO_TIME, OUTREFERRAL: 'no', DOCTOR_ID: row.DOCTOR_ID});
 									if(row.outreferral_id){
 										var cal_length = $scope.alertCenter.list[flag].cal.length;
@@ -95,6 +107,7 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 							}
 
 							if(row.CAL_ID){
+								object.test = row.IS_REFERRAL;
 								object.cal.push({IS_REFERRAL: row.IS_REFERRAL, DOCTOR_ID: row.DOCTOR_ID, CAL_ID: row.CAL_ID, FROM_TIME: row.FROM_TIME, TO_TIME: row.TO_TIME, OUTREFERRAL: 'no'});
 								if(row.outreferral_id)
 									object.cal[0].OUTREFERRAL = 'yes';

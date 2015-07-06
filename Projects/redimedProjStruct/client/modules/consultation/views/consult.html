@@ -715,11 +715,14 @@
                                         <th width="10%">QUANITY</th>
                                         <th width="10%">TIME SPENT</th>
                                         <th width="10%">PRICE</th>
+                                        <th width="10%">TAX CODE</th><!--tan add-->
+                                        <th width="10%">TAX RATE</th><!--tan add-->
+        
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat-start="cat in deptItems" class="item-label">
-                                        <td colspan="6" style="text-transform: uppercase;" class="text-center bold"> {{cat.POPULAR_NAME}} </td>
+                                        <td colspan="8" style="text-transform: uppercase;" class="text-center bold"> {{cat.POPULAR_NAME}} </td>
                                     </tr>
                                     <tr ng-repeat-end ng-repeat="item in cat.items" 
                                                 ng-class="{success: (item.inserted && item.checked =='1'), warning: (item.inserted && item.checked =='0')} ">
@@ -739,23 +742,33 @@
                                                 <td><input type="number" min="1" class="form-control" ng-model="item.QUANTITY"></td>
                                         <td><input type="number" min="0" class="form-control" ng-model="item.TIME_SPENT"></td>
                                         <td><input type="number" ng-disabled="item.disable_fee" min="0"  class="form-control" ng-model="item.PRICE"></td>
+
+                                        <td>{{item.TAX_CODE}}</td><!--tan add-->
+                                        <td>{{item.TAX_RATE}}</td><!--tan add-->
+                           
                                     </tr>
                                             
                                             
                         
-                                            <tr ng-show="extraItems.length > 0" class="item-label">
-                                        <td colspan="6" style="text-transform: uppercase;" class="text-center bold"> EXTRA ITEMS </td>
+                                    <tr ng-show="extraItems.length > 0" class="item-label">
+                                        <td colspan="8" style="text-transform: uppercase;" class="text-center bold"> EXTRA ITEMS </td>
                                     </tr>
-                                            <tr ng-repeat="item in extraItems" 
+                                    <tr ng-repeat="item in extraItems" 
                                                 ng-class="{success: (item.inserted && item.checked =='1'), warning: (item.inserted && item.checked =='0')}">
                                         <td>
                                             <input class="form-control"  type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="item.checked" />
                                         </td>
                                         <td>{{item.ITEM_CODE}}</td>
-                                        <td>{{item.ITEM_NAME}}</td>
+                                        <td>
+                                            <span popover="{{item.ITEM_NAME}}" popover-trigger="mouseenter">
+                                                {{item.ITEM_NAME| limitTo:70}}{{item.ITEM_NAME.length>70?'...':''}}
+                                            </span>
+                                        </td>
                                                 <td><input type="number" min="1" class="form-control" ng-model="item.QUANTITY"></td>
                                         <td><input type="number" min="1" class="form-control" ng-model="item.TIME_SPENT"></td>
                                         <td><input type="number" ng-disabled="item.disable_fee" min="0" class="form-control" ng-model="item.PRICE"></td>
+                                        <td>{{item.TAX_CODE}}</td>
+                                        <td>{{item.TAX_RATE}}</td>
                                     </tr>
                         
                                         
@@ -1732,6 +1745,9 @@
         </table>
     </div>
     <div class="modal-footer">
+	
+		<!--<button class="un_tn_btn un_tn_btn_gray un_tn_btn_sm" ng-click="continue()">Continue</button>
+        <button class="un_tn_btn un_tn_btn_gray un_tn_btn_sm" ng-click="close()">Close</button>-->
         <button class="un_tn_btn un_tn_btn_gray un_tn_btn_sm" ng-click="ok()">Ok</button>
     </div>
 </script>

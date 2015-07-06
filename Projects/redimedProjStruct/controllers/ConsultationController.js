@@ -534,10 +534,14 @@ module.exports = {
         }
 
         var sql=
-            " SELECT apptItem.* FROM `cln_appt_items` apptItem                                  "+
-            " WHERE apptItem.`cal_id`=? AND apptItem.`Patient_id`=? AND apptItem.`is_enable`=1  ";
+            " SELECT line.*                                                                    "+
+            " FROM `cln_invoice_lines` line                                                    "+
+            " INNER JOIN `cln_invoice_header` header ON line.`HEADER_ID`=header.`header_id`    "+
+            " WHERE header.`cal_id`=? AND header.`Patient_id`=? AND line.`IS_ENABLE`=1;        ";
+            
         var params=[calId,patientId];
         kiss.executeQuery(req,sql,params,function(rows){
+            kiss.exlog(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",rows);
            res.json({status:'success',data:rows})
         },function(err){
             kiss.exlog(fHeader,"Loi truy van select cac item cua apptPatient",err);

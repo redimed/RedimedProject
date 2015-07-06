@@ -78,8 +78,12 @@ angular.module("app.loggedIn.patient.services", [])
         var funcApi = khankAPI.all('patients/check_patient_info');
         return funcApi.post({First_name:First_name,Sur_name:Sur_name,Middle_name:Middle_name,DOB:DOB});
     }
-    
-
+    /*phanquocchien.c1109g@gmail.com*/
+    /*get doctorinfo by user_id*/
+    instanceService.getDoctorInfoByUserId = function(user_id){
+        var funcApi = khankAPI.all('doctor/doctor_info_by_user_id');
+        return funcApi.post({user_id:user_id});
+    }
     instanceService.initInvoice = function(patient_id, cal_id){
         var funcApi = khankAPI.all('invoice/init');
         return funcApi.post({patient_id: patient_id, cal_id: cal_id});

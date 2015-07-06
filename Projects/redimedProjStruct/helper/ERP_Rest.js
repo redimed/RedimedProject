@@ -1,3 +1,9 @@
+/**
+ * created by: khanh
+ * addition:tannv.dts
+ * addition date: 23-06-2015
+ */
+
 var BaseRestClient = require('./k_rest_client');
 var $q = require('q');
 
@@ -5,6 +11,41 @@ var _ = require('lodash');
 
 function ERP_Rest (options) {
 	var base_rest = new BaseRestClient(options.base_url);
+
+	/**
+	 * --------------------------------------------------------------------------------
+	 * --------------------------------------------------------------------------------
+	 *
+	 * tannv.dts@gmail.com
+	 */
+	this.getActivePoTaxes=function()
+	{
+		return base_rest.get('erp/po-taxes/get-list-active.html')
+	}
+
+	this.addInvoiceCustomer=function(customerInfo)
+	{
+		return base_rest.post('erp/ar-billing-customer/insert-customer.html',customerInfo);
+	}
+
+	this.addInvoiceItems=function(listItemInfo)
+	{
+		var data={
+			listItem:listItemInfo
+		}
+		return base_rest.post('erp/ar-billing-item/insert-items.html',data);
+	}
+
+	this.addInvoiceLines=function(listInvoiceLine)
+	{
+		var data={
+			listInvoiceInterface:listInvoiceLine
+		}
+		return base_rest.post('erp/ar-invoice-interface/insert-lines.html',data);
+	}
+	//---------------------------------------------------------------------------------
+	//---------------------------------------------------------------------------------
+	//---------------------------------------------------------------------------------
 
 	/*
 	*	SEND TO SERVER 
@@ -164,8 +205,13 @@ function ERP_Rest (options) {
 	return this;
 }
 
+//tan comment
+// var ERP = new ERP_Rest({
+// 	base_url: '192.168.40.12:8080/apex/'
+// });
+
 var ERP = new ERP_Rest({
-	base_url: '192.168.40.12:8080/apex/'
+	base_url: 'localhost:3011/RedimedErpRestful/'
 });
 
 module.exports = ERP;

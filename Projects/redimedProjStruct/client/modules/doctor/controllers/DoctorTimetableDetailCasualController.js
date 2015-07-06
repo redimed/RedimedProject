@@ -36,8 +36,6 @@ angular.module("app.loggedIn.doctor.timetable.detail.casual.controller",[])
 			// tan add
 			var from_time_part=moment(cal.FROM_TIME,"HHmm").format("HH:mm");
 			var to_time_part=moment(cal.TO_TIME,"HHmm").format("HH:mm");
-			// var from_time = moment(item.DATE).format('YYYY-MM-DD')+" "+ cal.FROM_TIME +":00";
-			// var to_time = moment(item.DATE).format('YYYY-MM-DD')+ " "+ cal.TO_TIME+":00";
 			var from_time = moment(item.DATE).format('YYYY-MM-DD')+" "+ from_time_part +":00";
 			var to_time = moment(item.DATE).format('YYYY-MM-DD')+ " "+ to_time_part+":00";
 

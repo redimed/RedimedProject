@@ -5,6 +5,8 @@ var kiss=require('./kissUtilsController');
 var moment=require('moment');
 var bcrypt = require('bcrypt-nodejs');
 var randomstr = require('randomstring');
+var ERP_REST = require('../helper/ERP_Rest');
+var invoiceUtil = require('./invoiceUtilController');
 
 var emailConfirm=function(req,res,redilegalUserName,status)
 {
@@ -422,6 +424,16 @@ module.exports =
         },function(err){
             res.json(err);
         })
+    },
+
+    testERP:function(req,res)
+    {
+        invoiceUtil.getNewInvoiceNumber(req,function(data){
+            res.json({result:data});
+        },function(err){
+            
+        })
+
     }
 
 }

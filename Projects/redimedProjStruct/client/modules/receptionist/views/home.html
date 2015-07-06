@@ -18,27 +18,28 @@
 	}
 
 </style>
-<div id="alert-center" class="bv-right-list-reception">
-    <div class="m-background">
-        <label style="font-weight: bold;font-size: 19px;">Notification List</label>
+<div id="alert-center" class="bv-right-list-reception un_box_shadow">
+    <div class="un_header_notification_list">
+        <label>Notification List</label><i class="fa fa-caret-right"></i>
     </div>
-        <div ng-repeat="list in alertCenter.list">
-        <label ng-if="list.alert.length > 0 || list.cal.length > 0" style="font-size: 16px;margin-left: 16px;font-weight: bold;">
-            {{list.First_name}} {{list.Sur_name}}
-        </label>
-        <ul ng-repeat="alert in list.alert" ng-if="list.alert.length > 0">
-            <li>{{alert.name}}</li>
-        </ul>
-        <p ng-repeat="cal in list.cal" ng-if="list.cal.length > 0">
-            <span ng-if="cal.IS_REFERRAL && cal.OUTREFERRAL === 'no'" style="margin-left: 24px;">
-                {{cal.FROM_TIME}}-{{cal.TO_TIME}}:&nbsp
-                There is no referral
-            </span>
-        </p>
-        <hr style="border:1px solid white;" />
-        </div>
+    <div class="un_body_notification_list" ng-repeat="list in alertCenter.list">
+    	<div>
+		    <label ng-if="list.alert.length > 0 || list.cal.length > 0" style="font-size: 16px;font-weight: bold;">
+		        {{list.First_name}} {{list.Sur_name}}
+		    </label>
+		    <ul ng-repeat="alert in list.alert" ng-if="list.alert.length > 0">
+		        <li>{{alert.name}}</li>
+		    </ul>
+		    <p ng-repeat="cal in list.cal" ng-if="list.cal.length > 0">
+		        <span ng-if="cal.IS_REFERRAL && cal.OUTREFERRAL === 'no'" style="margin-left: 10px;">
+		            {{cal.FROM_TIME}}-{{cal.TO_TIME}}:&nbsp
+		            There is no referral
+		        </span>
+		    </p>
+		</div>
+    </div>
 </div>
-<div class="bv-arrow" ng-click="clickArrow()" style="top:80px"></div>
+<div class="un_arrow" ng-click="clickArrow()" style="top:90px"></div>
 <div class="row">
 	<div class="col-md-4 col-sm-4">
 
@@ -50,6 +51,12 @@
 		<button class="re_buttom_sreach">
 			<i style="font-size: 20px;" class="fa fa-search"></i>
 		</button>
+	</div>
+	<div class="col-md-6">
+		<p ng-repeat="service in servicedata" ng-if="servicedata.length > 0" class="inline">
+			<button ng-style="{'background-color': '{{service.SERVICE_COLOR}}'}" style="height: 20px;width: 20px;"></button>
+			<span> {{service.SERVICE_NAME}}  </span>
+		<p>
 	</div>
 </div>
 <br/>
@@ -143,8 +150,10 @@
            					<a style="font-size: 15px;" href="javascript:;" class="collapse"></a>
            				</div>
            			</div>
+           			
            			<div class="portlet-body">
-       					<div style="color: black; border-color: #7FA8CB; cursor: pointer;" 
+       					<div ng-style="{background:a.SERVICE_COLOR}" 
+       						style="color: black; border-color: #7FA8CB; cursor: pointer;" 
        						class="re_bg_info appt-profile" 
        						ng-repeat="a in appt.appointment"
        						data-drag="{{a.appt_status != 'Cancelled' ? true : false}}" 
@@ -249,7 +258,8 @@
            			</div>
            			<div class="portlet-body">
            				<div ng-repeat="a in appt.appointment" >
-	       					<div style=" color: black; border-color: #7FA8CB" 
+	       					<div ng-style="{background:a.SERVICE_COLOR}" 
+	       					    style=" color: black; border-color: #7FA8CB" 
 	       						class="re_bg_info appt-profile" ng-if="!a.isEmpty && a.numsOfRoom > 0">
 	       						<div class="media">
 	       							<div style="width: 50px; height: 50px;border-radius: 5px !important;" class="pull-left">
@@ -347,7 +357,8 @@
                     </div>
 	        	</div>
            		<div ng-if="completeAppt.length > 0">
-   					<div style="color: black; border-color: #7FA8CB" 
+   					<div ng-style="{background:a.SERVICE_COLOR}"
+   					     style="color: black; border-color: #7FA8CB" 
    						class="re_bg_info appt-profile" ng-repeat="a in completeAppt">
    						<div class="media">
    							<div style="width: 50px; height: 50px;" class="pull-left">

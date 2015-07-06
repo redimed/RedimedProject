@@ -342,8 +342,11 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 if ($stateParams.id) {
                     //EDIT TIMESHEET
                     $scope.isEdit = true;
-                    $scope.idWeek = $stateParams.id;
-                    StaffService.showEdit($scope.idWeek).then(function(response) {
+                    var info = {
+                        idWeek: $stateParams.id,
+                        userId: $cookieStore.get("userInfo").id
+                    };
+                    StaffService.showEdit(info).then(function(response) {
                         if (response['data'] !== undefined &&
                             response['data'][0] !== undefined &&
                             response['data'][0].date !== undefined) {
@@ -351,7 +354,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                             $scope.dateStart = response['data'][0].date;
                             //END
                         }
-                        if (response['status'] == 'fail' || response['status'] == 'error') {
+                        if (response['status'] == 'fail') {
                             angular.forEach(response['data'], function(data) {
                                 data.item = [];
                                 data.isEdit = true;
@@ -423,6 +426,11 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                                 //END PUSH AND REFRESH
 
                             });
+                        } else if (response['status'] === 'error') {
+                            $state.go("loggedIn.home", null, {
+                                "reload": true
+                            });
+                            toastr.error("Load fail!", "Error");
                         }
                     });
                 } else {
@@ -541,8 +549,8 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 StaffService.addAllTask($scope.tasks, $scope.info).then(function(response) {
                     if (response['status'] == 'success') {
                         toastr.success("success", "Success");
-                        $state.go('loggedIn.TimeSheetHome.view', null, {
-                            'reload': true
+                        $state.go('loggedIn.timesheetHome.timesheetHistory', null, {
+                            "reload": true
                         });
                     } else {
                         toastr.error("Error", "Error");
@@ -555,8 +563,8 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 StaffService.editTask($scope.tasks, $scope.info).then(function(response) {
                     if (response['status'] == 'success') {
                         toastr.success("Edit Success");
-                        $state.go('loggedIn.TimeSheetHome.view', null, {
-                            'reload': true
+                        $state.go('loggedIn.timesheetHome.timesheetHistory', null, {
+                            "reload": true
                         });
                     } else {
                         toastr.error("Error", "Error");

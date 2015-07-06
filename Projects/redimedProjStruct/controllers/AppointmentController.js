@@ -61,13 +61,14 @@ module.exports = {
 		)
 		.innerJoin('cln_appt_patients', 'cln_appointment_calendar.CAL_ID', 'cln_appt_patients.CAL_ID')
 		.innerJoin('cln_patients', 'cln_appt_patients.Patient_id', 'cln_patients.Patient_id')
-		//.innerJoin('sys_services', 'cln_appointment_calendar.SERVICE_ID', 'sys_services.SERVICE_ID')
-		.innerJoin('sys_services',function(){
-			this.on('cln_appointment_calendar.SERVICE_ID', '=', 'sys_services.SERVICE_ID')
-			.andOn('sys_services.IS_REFERRAL', 1)
-		})
+		.innerJoin('sys_services', 'cln_appointment_calendar.SERVICE_ID', 'sys_services.SERVICE_ID')
+		// .innerJoin('sys_services',function(){
+		// 	this.on('cln_appointment_calendar.SERVICE_ID', '=', 'sys_services.SERVICE_ID')
+		// 	.andOn('sys_services.IS_REFERRAL', 1)
+		// })
 		.leftOuterJoin('cln_patient_alerts', function(){
 			this.on('cln_appt_patients.Patient_id', 'cln_patient_alerts.patient_id')
+			// .andOn('cln_patient_alerts.cal_id','cln_appointment_calendar.CAL_ID')
 		})
 		.leftOuterJoin('cln_alerts', 'cln_patient_alerts.alert_id', 'cln_alerts.id')
 		.leftOuterJoin('cln_patient_outreferral', function(){
@@ -114,13 +115,14 @@ module.exports = {
 		)
 		.innerJoin('cln_appt_patients', 'cln_appointment_calendar.CAL_ID', 'cln_appt_patients.CAL_ID')
 		.innerJoin('cln_patients', 'cln_appt_patients.Patient_id', 'cln_patients.Patient_id')
-		//.innerJoin('sys_services', 'cln_appointment_calendar.SERVICE_ID', 'sys_services.SERVICE_ID')
-		.innerJoin('sys_services',function(){
-			this.on('cln_appointment_calendar.SERVICE_ID', '=', 'sys_services.SERVICE_ID')
-			.andOn('sys_services.IS_REFERRAL', 1)
-		})
+		.innerJoin('sys_services', 'cln_appointment_calendar.SERVICE_ID', 'sys_services.SERVICE_ID')
+		// .innerJoin('sys_services',function(){
+		// 	this.on('cln_appointment_calendar.SERVICE_ID', '=', 'sys_services.SERVICE_ID')
+		// 	.andOn('sys_services.IS_REFERRAL', 1)
+		// })
 		.leftOuterJoin('cln_patient_alerts', function(){
 			this.on('cln_appt_patients.Patient_id', 'cln_patient_alerts.patient_id')
+			// .andOn('cln_patient_alerts.cal_id','cln_appointment_calendar.CAL_ID')
 		})
 		.leftOuterJoin('cln_alerts', 'cln_patient_alerts.alert_id', 'cln_alerts.id')
 		.leftOuterJoin('cln_patient_outreferral', function(){

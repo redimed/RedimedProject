@@ -23,6 +23,14 @@ module.exports = function (sequelize, DataTypes) {
         'TAX_ID': {
             type: DataTypes.INTEGER(11),
         },
+        //tan add
+        'TAX_CODE':{
+            type:DataTypes.STRING(20),
+        },
+        //tan add
+        'TAX_RATE':{
+            type:DataTypes.FLOAT,
+        },
         'ISINV': {
             type: DataTypes.INTEGER(11),
         },

@@ -182,6 +182,20 @@ module.exports = {
             paramSelect = "";
         }
         //end select
+
+        //order
+        var strOrder = " ORDER BY ";
+        for (var keyOrder in searchObj.order) {
+            if (searchObj.order[keyOrder] !== undefined && searchObj.order[keyOrder] !== null && searchObj.order[keyOrder] !== "") {
+                strOrder += "hr_leave.start_date " + searchObj.order[keyOrder] + ", ";
+            }
+        }
+        if (strOrder.length === 10) {
+            strOrder = "";
+        } else {
+            strOrder = strOrder.substring(0, strOrder.length - 2);
+        }
+        //end order
         var queryGetAllMyLeave =
             "SELECT hr_employee.FirstName, hr_employee.LastName, hr_leave.start_date, time_task_status.name, " + //SELECT
             "hr_leave.finish_date, hr_leave.standard, hr_leave.status_id, hr_leave.time_leave, hr_leave.is_approve_first, " + //SELECT
@@ -192,8 +206,8 @@ module.exports = {
             "INNER JOIN hr_leave ON hr_leave.user_id = users.id " + //JOIN
             "INNER JOIN time_task_status ON time_task_status.task_status_id = hr_leave.status_id " + //JOIN
             "WHERE hr_leave.user_id = ? " + paramSelect + //WHERE
-            " ORDER BY hr_leave.start_date DESC " + //ORDER
-            "LIMIT ? " + //LIMIT
+            strOrder + //ORDER
+            " LIMIT ? " + //LIMIT
             "OFFSET ?"; //OFFSET
 
         var queryCountAllMyLeave =
@@ -472,12 +486,14 @@ module.exports = {
 
     // VIEW LEAVE
     ViewLeave: function(req, res) {
-        var leave_id = req.body.leave_id;
+        var info = req.body.info
+        var leave_id = info.leave_id;
         var queryView =
             "SELECT hr_employee.FirstName, hr_employee.LastName, hr_leave.leave_id, hr_leave.is_reject, " + //SELECT
             "hr_leave.time_leave as time_leave_all, hr_leave.reason_leave as reason_leave_all, " + //SELECT
             "hr_leave.application_date, hr_leave.work_date, hr_leave_detail.type_other, " + //SELECT
-            "hr_leave.start_date, hr_leave.finish_date, hr_leave_type.leave_name, " + //SELECT
+            "hr_leave.start_date, hr_leave.finish_date, hr_leave_type.leave_name, hr_leave.standard, " + //SELECT
+            "hr_leave.is_approve_first, hr_leave.is_approve_second, " + //SELECT
             "hr_leave_detail.time_leave, hr_leave_detail.reason_leave, time_task_status.name as status, " + //SELECT
             "time_task_status.task_status_id " + //SELECT
             "FROM hr_employee " + //FROM
@@ -493,11 +509,50 @@ module.exports = {
                 leave_id: leave_id
             })
             .success(function(result) {
-                res.json({
-                    status: "success",
-                    result: result
-                });
-                return;
+                //GET PERSON-IN-CHARGE
+                var queryGetTitleEmployee =
+                    "SELECT hr_employee.TITLE " +
+                    "FROM hr_employee " +
+                    "INNER JOIN users on users.employee_id = hr_employee.Employee_ID " +
+                    "WHERE users.id = :userId";
+                db.sequelize.query(queryGetTitleEmployee, null, {
+                        raw: true
+                    }, {
+                        userId: info.user_id
+                    })
+                    .success(function(resultTitle) {
+                        var isPermiss = true;
+                        if (resultTitle !== undefined &&
+                            resultTitle !== null &&
+                            resultTitle[0] !== undefined &&
+                            resultTitle[0] !== null &&
+                            resultTitle[0].TITLE === "Head of Dept." &&
+                            result !== undefined &&
+                            result !== null &&
+                            result[0] !== undefined &&
+                            result[0] !== null &&
+                            result[0].standard === 0 &&
+                            result[0].is_approve_first === 0 &&
+                            result[0].is_approve_second === 1) {
+                            isPermiss = false;
+                        }
+                        res.json({
+                            status: "success",
+                            isPermiss: isPermiss,
+                            result: result
+                        });
+                        return;
+                    })
+                    .error(function(err) {
+                        console.log("*****ERROR:" + err + "*****");
+                        res.json({
+                            status: "error",
+                            result: []
+                        });
+                        return;
+                    });
+
+                //END
             })
             .error(function(err) {
                 console.log("*****ERROR:" + err + "*****");
@@ -561,65 +616,104 @@ module.exports = {
 
     //LOAD LEAVE EDIT
     LoadLeaveEdit: function(req, res) {
-        var leaveID = req.body.leaveID;
-        var queryLoadLeaveEdit =
-            "SELECT hr_leave.leave_id, hr_leave.application_date, hr_leave.start_date, hr_leave.is_reject, hr_leave.status_id, " + //SELECT
-            "hr_leave.finish_date, hr_leave.work_date, hr_leave.standard, hr_leave.status_id, hr_leave.time_leave, departments.departmentName, " + //SELECT
-            "hr_leave.reason_leave, hr_employee.FirstName, hr_employee.LastName, hr_employee.TypeOfContruct " + //SELECT
-            "FROM hr_leave " + //FROM
-            "INNER JOIN users ON users.id = hr_leave.user_id " + //JOIN
-            "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " + //JOIN
-            "INNER JOIN departments ON departments.departmentid = hr_employee.Dept_ID " + //JOIN
-            "WHERE hr_leave.leave_id = :leaveID"; //WHERE
-
-        var queryLoadLeaveDetailEdit =
-            "SELECT hr_leave_detail.leave_detail_id, hr_leave_detail.time_leave, " + //SELECT
-            "hr_leave_detail.reason_leave, " + //SELECT
-            "hr_leave_detail.type_other, hr_leave_type.leave_name, hr_leave_type.leave_type_id " + //SELECT
-            "FROM hr_employee " + //FROM
-            "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //JOIN
-            "INNER JOIN hr_leave ON hr_leave.user_id = users.id " + //JOIN
-            "INNER JOIN hr_leave_detail ON hr_leave.leave_id = hr_leave_detail.leave_id " + //JOIN
-            "INNER JOIN hr_leave_type ON hr_leave_type.leave_type_id = hr_leave_detail.leave_type_id " + //JOIN
-            "WHERE hr_leave.leave_id = :leaveID"; //WHERE
-        db.sequelize.query(queryLoadLeaveEdit, null, {
+        var info = req.body.info;
+        var leaveID = info.idLeave;
+        //CHECK LEAVE
+        var queryPermiss =
+            "SELECT hr_leave.status_id " +
+            "FROM hr_leave " +
+            "WHERE hr_leave.user_id = :userId AND hr_leave.leave_id = :idLeave";
+        db.sequelize.query(queryPermiss, null, {
                 raw: true
             }, {
-                leaveID: leaveID
+                userId: info.userId,
+                idLeave: leaveID
             })
-            .success(function(resultLeave) {
-                db.sequelize.query(queryLoadLeaveDetailEdit, null, {
-                        raw: true
-                    }, {
-                        leaveID: leaveID
-                    })
-                    .success(function(resultLeaveDetail) {
-                        res.json({
-                            status: "success",
-                            resultLeave: resultLeave,
-                            resultLeaveDetail: resultLeaveDetail
+            .success(function(resultPermiss) {
+                if (resultPermiss !== undefined &&
+                    resultPermiss !== null &&
+                    resultPermiss.length !== 0 &&
+                    resultPermiss[0] !== undefined &&
+                    resultPermiss[0] !== null &&
+                    resultPermiss[0].status_id !== 2 &&
+                    resultPermiss[0].status_id !== 3 &&
+                    resultPermiss[0].status_id !== 5) {
+                    //LOAD EDIT
+                    var queryLoadLeaveEdit =
+                        "SELECT hr_leave.leave_id, hr_leave.application_date, hr_leave.start_date, hr_leave.is_reject, hr_leave.status_id, " + //SELECT
+                        "hr_leave.finish_date, hr_leave.work_date, hr_leave.standard, hr_leave.status_id, hr_leave.time_leave, departments.departmentName, " + //SELECT
+                        "hr_leave.reason_leave, hr_employee.FirstName, hr_employee.LastName, hr_employee.TypeOfContruct " + //SELECT
+                        "FROM hr_leave " + //FROM
+                        "INNER JOIN users ON users.id = hr_leave.user_id " + //JOIN
+                        "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " + //JOIN
+                        "INNER JOIN departments ON departments.departmentid = hr_employee.Dept_ID " + //JOIN
+                        "WHERE hr_leave.leave_id = :leaveID"; //WHERE
+
+                    var queryLoadLeaveDetailEdit =
+                        "SELECT hr_leave_detail.leave_detail_id, hr_leave_detail.time_leave, " + //SELECT
+                        "hr_leave_detail.reason_leave, " + //SELECT
+                        "hr_leave_detail.type_other, hr_leave_type.leave_name, hr_leave_type.leave_type_id " + //SELECT
+                        "FROM hr_employee " + //FROM
+                        "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //JOIN
+                        "INNER JOIN hr_leave ON hr_leave.user_id = users.id " + //JOIN
+                        "INNER JOIN hr_leave_detail ON hr_leave.leave_id = hr_leave_detail.leave_id " + //JOIN
+                        "INNER JOIN hr_leave_type ON hr_leave_type.leave_type_id = hr_leave_detail.leave_type_id " + //JOIN
+                        "WHERE hr_leave.leave_id = :leaveID"; //WHERE
+                    db.sequelize.query(queryLoadLeaveEdit, null, {
+                            raw: true
+                        }, {
+                            leaveID: leaveID
+                        })
+                        .success(function(resultLeave) {
+                            db.sequelize.query(queryLoadLeaveDetailEdit, null, {
+                                    raw: true
+                                }, {
+                                    leaveID: leaveID
+                                })
+                                .success(function(resultLeaveDetail) {
+                                    res.json({
+                                        status: "success",
+                                        resultLeave: resultLeave,
+                                        resultLeaveDetail: resultLeaveDetail
+                                    });
+                                    return;
+                                })
+                                .error(function(err) {
+                                    console.log("*****ERROR:" + err + "*****");
+                                    res.json({
+                                        status: "error",
+                                        resultLeave: [],
+                                        resultLeaveDetail: []
+                                    });
+                                    return;
+                                });
+                        })
+                        .error(function(err) {
+                            console.log("*****ERROR:" + err + "*****");
+                            res.json({
+                                status: "error",
+                                resultLeave: [],
+                                resultLeaveDetail: []
+                            });
+                            return;
                         });
-                        return;
-                    })
-                    .error(function(err) {
-                        console.log("*****ERROR:" + err + "*****");
-                        res.json({
-                            status: "error",
-                            resultLeave: [],
-                            resultLeaveDetail: []
-                        });
-                        return;
+                    //END EDIT
+
+                } else {
+                    res.json({
+                        status: "error"
                     });
+                    return;
+                }
             })
             .error(function(err) {
-                console.log("*****ERROR:" + err + "*****");
+                console.log("*****ERROR: " + err + "*****");
                 res.json({
-                    status: "error",
-                    resultLeave: [],
-                    resultLeaveDetail: []
+                    status: "error"
                 });
                 return;
             });
+        //END
     },
     //END LOAD EDIT
 
@@ -761,11 +855,15 @@ module.exports = {
                     var NODE_ID = resultDept[0].NODE_ID;
                     var queryGetListLeave = "";
                     var queryCountListLeave = "";
+                    var queryAddListUser = "";
+                    if (NODE_CODE === "Director") {
+                        queryAddListUser = " OR sys_hierarchy_nodes.NODE_CODE = 'Head of Dept.'";
+                    }
                     var queryGetUserSubordinate =
                         "SELECT DISTINCT sys_hierarchies_users.USER_ID, sys_hierarchies_users.DEPARTMENT_CODE_ID " + //SELECT
                         "FROM sys_hierarchies_users " + //FROM
                         "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " + //INNER JOIN
-                        "WHERE sys_hierarchy_nodes.TO_NODE_ID = :nodeId AND sys_hierarchies_users.DEPARTMENT_CODE_ID = :deptId"; //WHERE
+                        "WHERE (sys_hierarchy_nodes.TO_NODE_ID = :nodeId AND sys_hierarchies_users.DEPARTMENT_CODE_ID = :deptId)" + queryAddListUser; //WHERE
                     db.sequelize.query(queryGetUserSubordinate, null, {
                             raw: true
                         }, {
@@ -802,13 +900,13 @@ module.exports = {
                                         "WHERE hr_leave.status_id != 1 AND hr_leave.user_id IN " + listUser +
                                         selectStr + " " + searchStr + " " + orderStr + " LIMIT :limit OFFSET :offset";
                                     queryCountListLeave =
-                                        "SELECT COUNT(*) " + //SElECT
+                                        "SELECT COUNT(*) AS COUNT " + //SElECT
                                         "FROM hr_employee " + //FROM
                                         "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //INNER JOIN
                                         "INNER JOIN hr_leave ON users.id = hr_leave.user_id " + //INNER JOIN
                                         "INNER JOIN time_task_status ON time_task_status.task_status_id = hr_leave.status_id_first " + //INNER JOIN
                                         "WHERE hr_leave.status_id != 1 AND hr_leave.user_id IN " + listUser +
-                                        selectStr + " " + searchStr + " " + orderStr + " LIMIT :limit OFFSET :offset";
+                                        selectStr + " " + searchStr + " " + orderStr;
                                 } else if (NODE_CODE === "Director") {
                                     queryGetListLeave = "SELECT hr_employee.FirstName, hr_employee.LastName, " + //SELECT
                                         "hr_leave.status_id, hr_leave.is_approve_first, hr_leave.is_approve_second, hr_leave.standard, " + //SELECT
@@ -821,14 +919,14 @@ module.exports = {
                                         " AND ((hr_leave.is_approve_first = 0 AND hr_leave.is_approve_second = 1 AND hr_leave.standard = 0) OR hr_leave.user_id IN " +
                                         listUser + ") AND hr_leave.status_id!=1 " +
                                         selectStr + " " + searchStr + " " + orderStr + " LIMIT :limit OFFSET :offset";
-                                    queryCountListLeave = "SELECT COUNT(*) " + //SElECT
+                                    queryCountListLeave = "SELECT COUNT(*) AS COUNT " + //SElECT
                                         "FROM hr_employee " + //FROM
                                         "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //INNER JOIN
                                         "INNER JOIN hr_leave ON users.id = hr_leave.user_id " + //INNER JOIN
                                         "INNER JOIN time_task_status ON time_task_status.task_status_id = hr_leave.status_id " + //INNER JOIN
                                         " AND ((hr_leave.is_approve_first = 0 AND hr_leave.is_approve_second = 1 AND hr_leave.standard = 0) OR hr_leave.user_id IN " +
                                         listUser + ") AND hr_leave.status_id!=1 " +
-                                        selectStr + " " + searchStr + " " + orderStr + " LIMIT :limit OFFSET :offset";
+                                        selectStr + " " + searchStr + " " + orderStr;
                                 }
                                 db.sequelize.query(queryGetListLeave, null, {
                                         raw: true
@@ -839,9 +937,6 @@ module.exports = {
                                     .success(function(result) {
                                         db.sequelize.query(queryCountListLeave, null, {
                                                 raw: true
-                                            }, {
-                                                limit: info.limit,
-                                                offset: info.offset
                                             })
                                             .success(function(resultCount) {
                                                 if (searchStr === "" &&
@@ -849,7 +944,8 @@ module.exports = {
                                                     result.length === 0) {
                                                     res.json({
                                                         status: "success",
-                                                        result: null
+                                                        result: null,
+                                                        count: 0
                                                     });
                                                     return;
                                                 } else {
@@ -859,6 +955,10 @@ module.exports = {
                                                     result.forEach(function(elemResult, indexResult) {
                                                         var promise_link = function() {
                                                             var deferred = Q.defer();
+                                                            var queryAdd = "";
+                                                            if (NODE_CODE === "Head of Dept.") {
+                                                                queryAdd = "AND sys_hierarchies_users.DEPARTMENT_CODE_ID = :deptId";
+                                                            }
                                                             //GET PERSON-IN-CHARGE
                                                             var queryGetNodeLevel1 =
                                                                 "SELECT DISTINCT sys_hierarchy_nodes.TO_NODE_ID " + //SELECT
@@ -867,12 +967,12 @@ module.exports = {
                                                                 "INNER JOIN users on users.id = sys_hierarchies_users.USER_ID " + //JOIN
                                                                 "INNER JOIN hr_leave ON hr_leave.user_id = users.id " + //JOIN
                                                                 "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " + //JOIN
-                                                                "WHERE sys_hierarchy_group.GROUP_TYPE = 'Time Sheet' AND hr_leave.leave_id = :leaveId AND sys_hierarchies_users.DEPARTMENT_CODE_ID = :deptId"; //WHERE
+                                                                "WHERE sys_hierarchy_group.GROUP_TYPE = 'Time Sheet' AND hr_leave.leave_id = :leaveId " + queryAdd; //WHERE
                                                             db.sequelize.query(queryGetNodeLevel1, null, {
                                                                     raw: true
                                                                 }, {
                                                                     leaveId: result[indexResult].leave_id,
-                                                                    deptId: resultDept[0].DEPARTMENT_CODE_ID
+                                                                    deptId: resultDept[0].DEPARTMENT_CODE_ID //USE WHEN Head of Dept.
                                                                 })
                                                                 .success(function(resultNodeLevel1) {
                                                                     var queryGetNodeLevel2 =
@@ -942,7 +1042,11 @@ module.exports = {
                                                                                                     result[indexResult].status_id === 5) &&
                                                                                                 result[indexResult].standard === 0 &&
                                                                                                 result[indexResult].is_approve_first === 0 &&
-                                                                                                result[indexResult].is_approve_second === 1) {
+                                                                                                result[indexResult].is_approve_second === 1 &&
+                                                                                                resultInfoLevel2 !== undefined &&
+                                                                                                resultInfoLevel2 !== null &&
+                                                                                                resultInfoLevel2[0] !== undefined &&
+                                                                                                resultInfoLevel2[0] !== null) {
                                                                                                 result[indexResult].person_charge = resultInfoLevel2[0].FirstName + " " + resultInfoLevel2[0].LastName;
                                                                                             } else if (elemResult.status_id === 3 &&
                                                                                                 elemResult.standard === 0) {
