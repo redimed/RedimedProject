@@ -718,6 +718,7 @@ module.exports = {
 														{
 															var row=rows[i];
 															var amount=kiss.checkData(row.AMOUNT)?row.AMOUNT:0;
+															var taxRate=kiss.checkData(row.TAX_RATE)?row.TAX_RATE:0;
 															var taxAmount=kiss.checkData(row.TAX_AMOUNT)?row.TAX_AMOUNT:0;
 															var item={
 																headerId:invoiceHeaderId,
@@ -730,7 +731,7 @@ module.exports = {
 																insurerId:insurerId,
 																claimNo:row.Claim_no,
 																taxId:row.TAX_ID,
-																taxRate:row.TAX_RATE,
+																taxRate:taxRate,
 																itemId:row.ITEM_ID,
 																price:row.PRICE,
 																quantity:row.QUANTITY,

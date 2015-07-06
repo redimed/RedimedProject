@@ -174,9 +174,9 @@ public class InvoiceService {
 			cs.setString(5, line.getClaimNo());
 			cs.setInt(6, line.getPatientId());
 			cs.setString(7,line.getPatientName());
-			cs.setInt(8,line.getCompanyId());
-			cs.setInt(9, line.getInsurerId());
-			cs.setInt(10,line.getTaxId());
+			cs.setObject(8,line.getCompanyId());
+			cs.setObject(9, line.getInsurerId());
+			cs.setObject(10,line.getTaxId());
 			cs.setFloat(11, line.getTaxRate());
 			cs.setInt(12, line.getItemId());
 			cs.setFloat(13, line.getPrice());
@@ -224,9 +224,9 @@ public class InvoiceService {
 				cs.setString(5, line.getClaimNo());
 				cs.setInt(6, line.getPatientId());
 				cs.setString(7,line.getPatientName());
-				cs.setInt(8,line.getCompanyId());
-				cs.setInt(9, line.getInsurerId());
-				cs.setInt(10,line.getTaxId());
+				cs.setObject(8,line.getCompanyId());
+				cs.setObject(9, line.getInsurerId());
+				cs.setObject(10,line.getTaxId());
 				cs.setFloat(11, line.getTaxRate());
 				cs.setInt(12, line.getItemId());
 				cs.setFloat(13, line.getPrice());
