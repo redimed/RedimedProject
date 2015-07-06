@@ -403,6 +403,15 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 			scope.handleWhenLineChanged=function(item)
 			{
 				item.notSave=true;
+		 		var amount=0;
+		 		for(var i=0;i<scope.InvoiceMap.lines.length;i++)
+		 		{
+		 			var line=scope.InvoiceMap.lines[i];
+		 			line.AMOUNT=line.QUANTITY*line.PRICE;
+		 			amount+=line.AMOUNT;
+		 		}
+
+		 		scope.InvoiceMap.AMOUNT = amount;
 			}
 
 			/**
