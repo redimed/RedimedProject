@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cln_fa_summary_overall_rating" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="8544ce92-3956-4886-8414-21eaf3361943">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="patient_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cal_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="real_path" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="sub_report_dir" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fa_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from `cln_fa_df_headers` header
+where header.ISENABLE = 1
+and header.PATIENT_ID =  $P{patient_id}
+and header.CAL_ID =  $P{cal_id}
+and header.FA_ID =  $P{fa_id}]]>
+	</queryString>
+	<field name="PATIENT_ID" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CAL_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FA_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ENTITY_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TYPE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FA_NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ISENABLE" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ITEM_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Created_by" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Creation_date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Last_updated_by" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Last_update_date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Risk" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Comments" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Recommend" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Att_Flexibility" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Att_Core_Stability" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Att_Wirst_Elbow_func" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Att_Shoulder_func" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Att_Lower_Limb_func" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Att_Balance" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ASSESSED_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ASSESSED_SIGN" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ASSESSED_DATE" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ASSESSED_NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PATIENT_SIGN" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="can_perform_today" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="met_all_req" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="not_met_all_req" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="improve_comment" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="not_met_all_reason" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<title>
+		<band height="16">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="16" uuid="7269470e-f900-4d6c-a231-99d35f81fce2"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Overall Rating:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="209">
+			<frame>
+				<reportElement x="0" y="0" width="555" height="124" uuid="02c7ea85-fb10-475a-bc35-ddbe216eba07"/>
+				<box>
+					<pen lineWidth="0.3"/>
+					<topPen lineWidth="0.3"/>
+					<leftPen lineWidth="0.3"/>
+					<bottomPen lineWidth="0.3"/>
+					<rightPen lineWidth="0.3"/>
+				</box>
+				<image>
+					<reportElement x="0" y="7" width="15" height="15" uuid="ea2ae743-ddc9-4ecb-99cf-23959fefe578">
+						<printWhenExpression><![CDATA[$F{ISENABLE}==1]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$F{met_all_req}==1?($P{real_path}+"checked.png"):($P{real_path}+"uncheck.png")]]></imageExpression>
+				</image>
+				<staticText>
+					<reportElement x="18" y="8" width="537" height="29" uuid="6626cd28-6299-48c7-8827-82ba550da80a"/>
+					<textElement verticalAlignment="Top">
+						<font isBold="false"/>
+					</textElement>
+					<text><![CDATA[Candidate met all testing requirements & demonstrated the physical capacity to perform the proposed occupation .]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="37" width="555" height="15" uuid="4d331147-34da-48ae-bf7d-a045512e4d41"/>
+					<textElement verticalAlignment="Top">
+						<font isBold="false"/>
+					</textElement>
+					<text><![CDATA[For improved health and wellbeing, it was noted the candidate could improve on the below.]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="0" y="52" width="555" height="57" uuid="248ab442-ba98-4913-b794-2d481a3823c9"/>
+					<textFieldExpression><![CDATA[$F{improve_comment}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="109" width="555" height="15" uuid="b8f35d9c-c24e-4c8d-9fa4-dcf9db46c554"/>
+					<textElement verticalAlignment="Top">
+						<font isBold="false"/>
+					</textElement>
+					<text><![CDATA[Advice and stretches were provided at the time of the assessment.]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement x="0" y="124" width="555" height="85" uuid="2a31798d-8aa8-44bf-99c0-83fac0043fee"/>
+				<box>
+					<pen lineWidth="0.3"/>
+					<topPen lineWidth="0.3"/>
+					<leftPen lineWidth="0.3"/>
+					<bottomPen lineWidth="0.3"/>
+					<rightPen lineWidth="0.3"/>
+				</box>
+				<image>
+					<reportElement x="0" y="7" width="15" height="15" uuid="e83d63c3-6f19-4b06-b6c0-d2a0069da54a">
+						<printWhenExpression><![CDATA[$F{ISENABLE}==1]]></printWhenExpression>
+					</reportElement>
+					<imageExpression><![CDATA[$F{not_met_all_req}==1?($P{real_path}+"checked.png"):($P{real_path}+"uncheck.png")]]></imageExpression>
+				</image>
+				<staticText>
+					<reportElement x="18" y="8" width="537" height="14" uuid="492c2afb-99ff-4bd5-8339-bd741fe5dbf1"/>
+					<textElement verticalAlignment="Top">
+						<font isBold="false"/>
+					</textElement>
+					<text><![CDATA[Candidate did not demonstrate the physical capacity to perform the proposed occupation, due to:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="0" y="22" width="555" height="57" uuid="85d52e39-d02c-4305-8f3d-842320d63c18"/>
+					<textFieldExpression><![CDATA[$F{not_met_all_reason}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+</jasperReport>
