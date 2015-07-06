@@ -58,7 +58,25 @@ module.exports = function(io,cookie,cookieParser) {
         var source = header['user-agent'];
         ua = useragent.parse(source);
 
-        console.log("=========Connection===========: ", socket.id);
+        socket.on('reconnected',function(id){
+            db.User.find({where:{id: id}},{raw:true})
+                .success(function(user){
+                    if(user)
+                    {
+                        socket.join(user.user_name);
+                        db.User.update({
+                            socket: socket.id
+                        },{id:id})
+                            .success(function(){
+                                getOnlineUser();
+                            })
+                            .error(function(err){
+                                console.log(err);
+                            })
+                        
+                    }
+                })
+        })
 
         socket.on('notifyPatient',function(apptId){
             db.sequelize.query("SELECT p.Title,p.`First_name`,p.`Sur_name`,p.`Middle_name`, d.`NAME` as doctor_name "+
@@ -126,32 +144,23 @@ module.exports = function(io,cookie,cookieParser) {
         })
 
         socket.on("generateSession",function(id){
-            db.User.find({where:{id: id}},{raw:true})
-                .success(function(user){
-                    if(user)
-                    {
-                        opentok.createSession({mediaMode:"routed"},function(err, ses) {
-                            if (err) 
-                                return console.log(err);
+            opentok.createSession({mediaMode:"routed"},function(err, ses) {
+                if (err) 
+                    return console.log(err);
 
-                            var tokenOptions = {};
-                            tokenOptions.role = "moderator";
+                var tokenOptions = {};
+                tokenOptions.role = "moderator";
 
-                            var token = opentok.generateToken(ses.sessionId,tokenOptions);
+                var token = opentok.generateToken(ses.sessionId,tokenOptions);
 
-                            var opentokRoom = {
-                                apiKey: apiKey,
-                                sessionId: ses.sessionId,
-                                token: token
-                            }
+                var opentokRoom = {
+                    apiKey: apiKey,
+                    sessionId: ses.sessionId,
+                    token: token
+                }
 
-                            socket.emit("generateSessionSuccess",opentokRoom);
-                        });
-                    }
-                })
-                .error(function(err){
-                    console.log(err);
-                })
+                socket.emit("generateSessionSuccess",opentokRoom);
+            });
         });
 
         socket.on('sendMessage', function (currUser,contactUser, message) {
@@ -177,8 +186,10 @@ module.exports = function(io,cookie,cookieParser) {
                                            message.apiKey = apiKey;
                                            message.token = token;
 
-                                           io.to(contact.socket)
-                                                .emit('messageReceived',currentUser.id ,currentUser.user_name, message);
+                                           // io.to(contact.socket)
+                                           //      .emit('messageReceived',currentUser.id ,currentUser.user_name, message);
+                                           console.log("=====Rooms======: ",io.sockets.adapter.rooms);
+                                            socket.to(contact.user_name.toLowerCase()).emit('messageReceived',currentUser.id ,currentUser.user_name, message);
 
                                             // ==============GCM PUSH==============
                                             var gcmMessage = new gcm.Message();
@@ -229,8 +240,10 @@ module.exports = function(io,cookie,cookieParser) {
                                         }
                                         else
                                         {
-                                            io.to(contact.socket)
-                                                .emit('messageReceived',currentUser.id ,currentUser.user_name, message);
+                                            // io.to(contact.socket)
+                                                // .emit('messageReceived',currentUser.id ,currentUser.user_name, message);
+
+                                            socket.to(contact.user_name.toLowerCase()).emit('messageReceived',currentUser.id ,currentUser.user_name, message);
                                         }
                                     }
 
@@ -246,19 +259,6 @@ module.exports = function(io,cookie,cookieParser) {
                     console.log(err);
                 })
         });
-
-
-        socket.on('reconnected',function(id){
-            db.User.update({
-                socket: socket.id
-            },{id:id})
-                .success(function(){
-                    getOnlineUser();
-                })
-                .error(function(err){
-                    console.log(err);
-                })
-        })
 
         socket.on('forceLogin',function(username){
 
@@ -301,6 +301,7 @@ module.exports = function(io,cookie,cookieParser) {
         });
 
         socket.on('updateSocketLogin',function(username){
+            socket.join(username);
             db.User.update({
                 socket: socket.id
             },{user_name: username})
@@ -348,6 +349,7 @@ module.exports = function(io,cookie,cookieParser) {
                                        io.sockets.emit('driverLogout',id);
 
                                    socket.emit('logoutSuccess');
+                                    socket.leave(username);
                                    getOnlineUser();
                                })
                                .error(function(err){

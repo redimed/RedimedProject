@@ -65,7 +65,7 @@ angular.module("app", [
             'reconnectionAttempts': 1000,
             'secure': true,
             'timeout': 500,
-            'force new connection': true,
+            'force new connection': false,
 			'transports': ['websocket', 
                           'flashsocket', 
                           'htmlfile', 

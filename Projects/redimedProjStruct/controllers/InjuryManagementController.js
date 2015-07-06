@@ -768,14 +768,10 @@ module.exports = {
                     generalArr: []
                   };
 
-                  delete result.consultData["FirstAssId"];
-                  delete result.consultData["ProgressAssId"];
-                  delete result.consultData["FinalAssId"];
-                  delete result.consultData["GeneralAssId"];
-
                   var tempFirst = [], tempProgress = [], tempFinal = [], tempGeneral = [];
                   for(var i=0; i< data.length; i++)
                   {
+                      console.log(data[i]);
                       if(data[i].FirstAssId != null)
                         tempFirst.push(data[i].FirstAssId);
                       if(data[i].ProgressAssId != null)
