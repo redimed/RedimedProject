@@ -403,9 +403,35 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 			scope.handleWhenLineChanged=function(item)
 			{
 				item.notSave=true;
+		 		var amount=0;
+		 		for(var i=0;i<scope.InvoiceMap.lines.length;i++)
+		 		{
+		 			var line=scope.InvoiceMap.lines[i];
+		 			line.AMOUNT=line.QUANTITY*line.PRICE;
+		 			amount+=line.AMOUNT;
+		 		}
+
+		 		scope.InvoiceMap.AMOUNT = amount;
 			}
 
-
+			/**
+			 * tannv.dts@gmail.com
+			 * 06-07-2015
+			 * Xoa claim
+			 */
+			
+			scope.removeClaim=function()
+			{
+				var postData = {claim_id: null};
+				InvoiceService.update(scope.params.id, postData)
+				.then(function(response){
+					if(response.status == 'success') {
+						toastr.success('Remove Claim Successfully !!!', 'Success');
+						scope.InvoiceMap.claim = null;
+						scope.InvoiceMap.claim_id = null;
+					}
+				})
+			}
 		}//end link
 	}//end return
 })

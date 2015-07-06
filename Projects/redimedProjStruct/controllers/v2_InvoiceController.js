@@ -548,8 +548,9 @@ module.exports = {
 												console.log(">>>>>>>>>>>>>>>>>getCustomerInfo");
 												var customerInfo={};
 												var q = $q.defer();
-												if(kiss.checkData(invoiceHeaderUpdateInfo.Insurer_id))
+												if(kiss.checkData(invoiceHeaderUpdateInfo.claim_id))
 												{
+													kiss.exlog(fHeader,">>>>>>>>>>>>>>>>>","this is insurer");
 													//patient co insurer
 													var sql="SELECT insurer.* FROM `cln_insurers` insurer WHERE insurer.`id`=?";
 													kiss.executeQuery(req,sql,[invoiceHeaderUpdateInfo.Insurer_id],function(rows){
@@ -582,8 +583,9 @@ module.exports = {
 														})
 														q.reject();
 													})
-												}else if(kiss.checkData(invoiceHeaderId.Company_id))
+												}else if(kiss.checkData(invoiceHeaderUpdateInfo.Company_id))
 												{
+													kiss.exlog(fHeader,">>>>>>>>>>>>>>>>>","this is company");
 													var sql="SELECT company.* FROM `companies` company WHERE company.`id`=?";
 													kiss.executeQuery(req,sql,[invoiceHeaderUpdateInfo.Company_id],function(rows){
 														if(rows.length>0)
@@ -617,6 +619,7 @@ module.exports = {
 												}
 												else
 												{
+													kiss.exlog(fHeader,">>>>>>>>>>>>>>>>>","this is patient");
 													var sql="SELECT patient.* FROM `cln_patients` patient WHERE patient.`Patient_id`=?";
 													kiss.executeQuery(req,sql,[patientId],function(rows){
 														if(rows.length>0){
@@ -702,10 +705,11 @@ module.exports = {
 												var q = $q.defer();
 												var listInvoiceLine=[];
 												var sql=
-													" SELECT line.*,patient.`First_name`,patient.`Sur_name`                           "+
+													" SELECT line.*,patient.`First_name`,patient.`Sur_name`,claim.`Claim_no`          "+              
 													" FROM `cln_invoice_lines` line                                                   "+
 													" INNER JOIN `cln_invoice_header` header ON line.`HEADER_ID`=header.`header_id`   "+
 													" INNER JOIN `cln_patients` patient ON patient.`Patient_id`=header.`Patient_id`   "+
+													" LEFT JOIN `cln_claims` claim ON header.`claim_id`=claim.`Claim_id`              "+
 													" WHERE line.`HEADER_ID`=? AND line.`IS_ENABLE`=1                                 ";
 												kiss.executeQuery(req,sql,[invoiceHeaderId],function(rows){
 													if(rows.length>0)
@@ -714,6 +718,7 @@ module.exports = {
 														{
 															var row=rows[i];
 															var amount=kiss.checkData(row.AMOUNT)?row.AMOUNT:0;
+															var taxRate=kiss.checkData(row.TAX_RATE)?row.TAX_RATE:0;
 															var taxAmount=kiss.checkData(row.TAX_AMOUNT)?row.TAX_AMOUNT:0;
 															var item={
 																headerId:invoiceHeaderId,
@@ -724,8 +729,9 @@ module.exports = {
 																patientName:row.First_name+' '+row.Sur_name,
 																companyId:companyId,
 																insurerId:insurerId,
+																claimNo:row.Claim_no,
 																taxId:row.TAX_ID,
-																taxRate:row.TAX_RATE,
+																taxRate:taxRate,
 																itemId:row.ITEM_ID,
 																price:row.PRICE,
 																quantity:row.QUANTITY,

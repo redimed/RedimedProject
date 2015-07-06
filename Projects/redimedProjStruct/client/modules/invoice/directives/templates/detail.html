@@ -151,8 +151,8 @@
 											Claim <i class="fa fa-angle-down"></i>
 										</button>
 										<ul class="dropdown-menu" role="menu">
-											<li><a ng-click="patientClaim.open()"><i class="fa fa-search"></i> Choose Claim </a></li>
-											<li><a><i class="fa fa-times"></i> Remove Claim</a></li>
+											<li><a ng-click="patientClaim.open();"><i class="fa fa-search"></i> Choose Claim </a></li>
+											<li><a ng-click="removeClaim();"><i class="fa fa-times"></i> Remove Claim</a></li>
 										</ul>
 									</span>
 								</div>
@@ -248,15 +248,15 @@
 							
 						</td>
 					</tr>
-
+					
 
 
 					<tr>
 						<td colspan="5"><strong> Total </strong></td>
 						<td class="text-right">${{InvoiceMap.AMOUNT}}</td>
-						<td class="text-right">
-							
-						</td>
+						<td class="text-right"></td>
+						<td class="text-right"></td>
+						<td class="text-right"></td>
 					</tr>
 				</table>
 			</div>

@@ -96,4 +96,12 @@ gulp.task('common', function(){
 	.pipe(concat('common.js'))
 	.pipe(uglify())
 	.pipe(gulp.dest('./client/dist/'));
+}),
+gulp.task('home', function(){
+	return gulp.src(['./client/modules/home/Home.js', 
+					'./client/modules/home/controllers/HomeController.js', 
+	])
+	.pipe(concat('home.js'))
+	.pipe(uglify({mangle: false}))
+	.pipe(gulp.dest('./client/dist/'));
 })
