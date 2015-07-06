@@ -12,12 +12,15 @@
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="56"/>
 	<parameter name="patient_id" class="java.lang.String"/>
 	<parameter name="cal_id" class="java.lang.String"/>
 	<parameter name="real_path" class="java.lang.String"/>
 	<parameter name="sub_report_dir" class="java.lang.String"/>
 	<parameter name="fa_id" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/LocalData/RedimedProject/Projects/RedimedJavaREST/src/reports/FA/"]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[select * from `cln_fa_df_headers` header
 where header.ISENABLE = 1
@@ -134,9 +137,32 @@ and header.FA_ID =  $P{fa_id}]]>
 				<subreportExpression><![CDATA[$P{real_path}+"cln_fa_summary_line_types.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
+		<band height="80">
+			<printWhenExpression><![CDATA[$F{TYPE}.equals("Boart")]]></printWhenExpression>
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="63" uuid="2646e63a-0e03-4478-a7ed-26f675fd2e9e"/>
+				<subreportParameter name="real_path">
+					<subreportParameterExpression><![CDATA[$P{real_path}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="fa_id">
+					<subreportParameterExpression><![CDATA[$F{FA_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="cal_id">
+					<subreportParameterExpression><![CDATA[$P{cal_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="patient_id">
+					<subreportParameterExpression><![CDATA[$P{patient_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="sub_report_dir">
+					<subreportParameterExpression><![CDATA[$P{sub_report_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "cln_fa_summary_overall_rating.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
 		<band height="218">
 			<frame>
-				<reportElement x="0" y="30" width="555" height="104" uuid="f299e02c-bc88-4981-ba7b-d052a13523a6"/>
+				<reportElement x="0" y="164" width="555" height="53" uuid="48d71f87-3999-443f-a287-57d04a11637e"/>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
@@ -144,59 +170,97 @@ and header.FA_ID =  $P{fa_id}]]>
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<staticText>
-					<reportElement x="0" y="0" width="555" height="25" uuid="1206bcbd-318f-4d4a-9c34-ff6cdd50bf99"/>
+					<reportElement x="0" y="0" width="555" height="25" uuid="935c4347-5f55-4af9-9f68-dd537bc56d50"/>
 					<box>
-						<topPen lineWidth="0.3"/>
-						<leftPen lineWidth="0.3"/>
-						<bottomPen lineWidth="0.3"/>
-						<rightPen lineWidth="0.3"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="0.0"/>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font isBold="true"/>
 						<paragraph leftIndent="10"/>
 					</textElement>
-					<text><![CDATA[Comments/Recommodations:]]></text>
-				</staticText>
-				<textField>
-					<reportElement x="0" y="25" width="555" height="58" uuid="98a3a20f-9f5f-45fa-86f4-749c95e33203"/>
-					<textElement textAlignment="Left" verticalAlignment="Top">
-						<paragraph firstLineIndent="0" leftIndent="10" spacingBefore="10"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{Comments}]]></textFieldExpression>
-				</textField>
-				<staticText>
-					<reportElement x="0" y="82" width="300" height="22" uuid="dcea01ed-779e-4a30-8e7b-7d4148edef99"/>
-					<textElement verticalAlignment="Middle">
-						<paragraph leftIndent="10"/>
-					</textElement>
-					<text><![CDATA[Health & Rehab Coordinator Review Recommended]]></text>
+					<text><![CDATA[Additional Tests Attached:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="330" y="82" width="40" height="22" uuid="0ff818a2-8480-4a02-bbbc-1f5b815e2f42"/>
+					<reportElement x="10" y="25" width="40" height="22" uuid="00701ea2-ed4c-43fe-9c6c-6eba5847df33"/>
 					<textElement verticalAlignment="Middle">
-						<paragraph leftIndent="10"/>
+						<paragraph leftIndent="0"/>
 					</textElement>
-					<text><![CDATA[Yes]]></text>
+					<text><![CDATA[Ankle]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="80" y="25" width="40" height="22" uuid="78733493-7e85-4ac4-861a-6680f94064e4"/>
+					<textElement verticalAlignment="Middle">
+						<paragraph leftIndent="0"/>
+					</textElement>
+					<text><![CDATA[Knee]]></text>
 				</staticText>
 				<image>
-					<reportElement x="310" y="86" width="15" height="15" uuid="fec9347f-e160-44a3-92fa-0069f5e6c209">
+					<reportElement x="120" y="27" width="15" height="15" uuid="4788341b-eff8-4b90-994f-af2308357fa8">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					</reportElement>
-					<imageExpression><![CDATA[$F{Recommend}.equals("1")?$P{real_path}+"checked.png":$P{real_path}+"uncheck.png"]]></imageExpression>
-				</image>
-				<image>
-					<reportElement x="380" y="86" width="15" height="15" uuid="7415ef0f-d070-4f4e-a844-8429c83c6510">
-						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-					</reportElement>
-					<imageExpression><![CDATA[$F{Recommend}.equals("1")?$P{real_path}+"checked.png":$P{real_path}+"uncheck.png"]]></imageExpression>
+					<imageExpression><![CDATA[$F{Att_Core_Stability}!=1 ?$P{real_path}+"uncheck.png":$P{real_path}+"checked.png"]]></imageExpression>
 				</image>
 				<staticText>
-					<reportElement x="400" y="82" width="40" height="22" uuid="c676d049-0754-4002-be31-353e305769b4"/>
+					<reportElement x="150" y="25" width="30" height="22" uuid="37bea284-cb9a-4803-a6e6-4a32a2e505b3"/>
 					<textElement verticalAlignment="Middle">
-						<paragraph leftIndent="10"/>
+						<paragraph leftIndent="0"/>
 					</textElement>
-					<text><![CDATA[No]]></text>
+					<text><![CDATA[Hip]]></text>
 				</staticText>
+				<image>
+					<reportElement x="180" y="27" width="15" height="15" uuid="097e5eca-5656-44c3-8b25-c3a611e3373c">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<imageExpression><![CDATA[$F{Att_Wirst_Elbow_func}==1?$P{real_path}+"checked.png":$P{real_path}+"uncheck.png"]]></imageExpression>
+				</image>
+				<staticText>
+					<reportElement x="210" y="25" width="39" height="22" uuid="d945e09e-893c-461e-a9f7-641ff8a475e9"/>
+					<textElement verticalAlignment="Middle">
+						<paragraph leftIndent="0"/>
+					</textElement>
+					<text><![CDATA[Back]]></text>
+				</staticText>
+				<image>
+					<reportElement x="249" y="27" width="15" height="15" uuid="58cb66da-b11a-4e1f-aaea-1579181ffac6">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<imageExpression><![CDATA[$F{Att_Shoulder_func}==1?$P{real_path}+"checked.png":$P{real_path}+"uncheck.png"]]></imageExpression>
+				</image>
+				<staticText>
+					<reportElement x="279" y="25" width="68" height="22" uuid="9c470b15-234e-4129-ba8f-27d2017eb9f8"/>
+					<textElement verticalAlignment="Middle">
+						<paragraph leftIndent="0"/>
+					</textElement>
+					<text><![CDATA[Elbow/Wrist]]></text>
+				</staticText>
+				<image>
+					<reportElement x="348" y="27" width="15" height="15" uuid="ce3f06fb-db2d-45eb-b006-81e4790a0637">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<imageExpression><![CDATA[$F{Att_Lower_Limb_func}==1?$P{real_path}+"checked.png":$P{real_path}+"uncheck.png"]]></imageExpression>
+				</image>
+				<staticText>
+					<reportElement x="380" y="25" width="50" height="22" uuid="7900d3c8-5039-45cc-b1de-92011a569895"/>
+					<textElement verticalAlignment="Middle">
+						<paragraph leftIndent="0"/>
+					</textElement>
+					<text><![CDATA[Shoulder]]></text>
+				</staticText>
+				<image>
+					<reportElement x="430" y="27" width="15" height="15" uuid="8e7c9a3c-472a-4086-ad7a-86d5b4cd8f26">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<imageExpression><![CDATA[$F{Att_Balance}==1?$P{real_path}+"checked.png":$P{real_path}+"uncheck.png"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement x="51" y="27" width="15" height="15" uuid="c043ec6f-2d68-46cb-9ef6-304e6d8e8fc3">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<imageExpression><![CDATA[$F{Att_Flexibility}==0 || $F{Att_Flexibility}==null ?$P{real_path}+"uncheck.png":$P{real_path}+"checked.png"]]></imageExpression>
+				</image>
 			</frame>
 			<frame>
 				<reportElement x="0" y="0" width="555" height="30" uuid="8350a228-13a7-4fd8-b6ed-bb5a0e2b62be"/>
@@ -331,7 +395,7 @@ and header.FA_ID =  $P{fa_id}]]>
 				</ellipse>
 			</frame>
 			<frame>
-				<reportElement x="0" y="164" width="555" height="53" uuid="48d71f87-3999-443f-a287-57d04a11637e"/>
+				<reportElement x="0" y="30" width="555" height="104" uuid="f299e02c-bc88-4981-ba7b-d052a13523a6"/>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
@@ -339,97 +403,59 @@ and header.FA_ID =  $P{fa_id}]]>
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<staticText>
-					<reportElement x="0" y="0" width="555" height="25" uuid="935c4347-5f55-4af9-9f68-dd537bc56d50"/>
+					<reportElement x="0" y="0" width="555" height="25" uuid="1206bcbd-318f-4d4a-9c34-ff6cdd50bf99"/>
 					<box>
-						<topPen lineWidth="0.0"/>
-						<leftPen lineWidth="0.0"/>
-						<bottomPen lineWidth="0.0"/>
-						<rightPen lineWidth="0.0"/>
+						<topPen lineWidth="0.3"/>
+						<leftPen lineWidth="0.3"/>
+						<bottomPen lineWidth="0.3"/>
+						<rightPen lineWidth="0.3"/>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font isBold="true"/>
 						<paragraph leftIndent="10"/>
 					</textElement>
-					<text><![CDATA[Additional Tests Attached:]]></text>
+					<text><![CDATA[Comments/Recommodations:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="0" y="25" width="555" height="58" uuid="98a3a20f-9f5f-45fa-86f4-749c95e33203"/>
+					<textElement textAlignment="Left" verticalAlignment="Top">
+						<paragraph firstLineIndent="0" leftIndent="10" spacingBefore="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{Comments}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="82" width="300" height="22" uuid="dcea01ed-779e-4a30-8e7b-7d4148edef99"/>
+					<textElement verticalAlignment="Middle">
+						<paragraph leftIndent="10"/>
+					</textElement>
+					<text><![CDATA[Health & Rehab Coordinator Review Recommended]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="10" y="25" width="40" height="22" uuid="00701ea2-ed4c-43fe-9c6c-6eba5847df33"/>
+					<reportElement x="330" y="82" width="40" height="22" uuid="0ff818a2-8480-4a02-bbbc-1f5b815e2f42"/>
 					<textElement verticalAlignment="Middle">
-						<paragraph leftIndent="0"/>
+						<paragraph leftIndent="10"/>
 					</textElement>
-					<text><![CDATA[Ankle]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="80" y="25" width="40" height="22" uuid="78733493-7e85-4ac4-861a-6680f94064e4"/>
-					<textElement verticalAlignment="Middle">
-						<paragraph leftIndent="0"/>
-					</textElement>
-					<text><![CDATA[Knee]]></text>
+					<text><![CDATA[Yes]]></text>
 				</staticText>
 				<image>
-					<reportElement x="120" y="27" width="15" height="15" uuid="4788341b-eff8-4b90-994f-af2308357fa8">
+					<reportElement x="310" y="86" width="15" height="15" uuid="fec9347f-e160-44a3-92fa-0069f5e6c209">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					</reportElement>
-					<imageExpression><![CDATA[$F{Att_Core_Stability}!=1 ?$P{real_path}+"uncheck.png":$P{real_path}+"checked.png"]]></imageExpression>
+					<imageExpression><![CDATA[$F{Recommend}.equals("1")?$P{real_path}+"checked.png":$P{real_path}+"uncheck.png"]]></imageExpression>
+				</image>
+				<image>
+					<reportElement x="380" y="86" width="15" height="15" uuid="7415ef0f-d070-4f4e-a844-8429c83c6510">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<imageExpression><![CDATA[$F{Recommend}.equals("1")?$P{real_path}+"checked.png":$P{real_path}+"uncheck.png"]]></imageExpression>
 				</image>
 				<staticText>
-					<reportElement x="150" y="25" width="30" height="22" uuid="37bea284-cb9a-4803-a6e6-4a32a2e505b3"/>
+					<reportElement x="400" y="82" width="40" height="22" uuid="c676d049-0754-4002-be31-353e305769b4"/>
 					<textElement verticalAlignment="Middle">
-						<paragraph leftIndent="0"/>
+						<paragraph leftIndent="10"/>
 					</textElement>
-					<text><![CDATA[Hip]]></text>
+					<text><![CDATA[No]]></text>
 				</staticText>
-				<image>
-					<reportElement x="180" y="27" width="15" height="15" uuid="097e5eca-5656-44c3-8b25-c3a611e3373c">
-						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-					</reportElement>
-					<imageExpression><![CDATA[$F{Att_Wirst_Elbow_func}==1?$P{real_path}+"checked.png":$P{real_path}+"uncheck.png"]]></imageExpression>
-				</image>
-				<staticText>
-					<reportElement x="210" y="25" width="39" height="22" uuid="d945e09e-893c-461e-a9f7-641ff8a475e9"/>
-					<textElement verticalAlignment="Middle">
-						<paragraph leftIndent="0"/>
-					</textElement>
-					<text><![CDATA[Back]]></text>
-				</staticText>
-				<image>
-					<reportElement x="249" y="27" width="15" height="15" uuid="58cb66da-b11a-4e1f-aaea-1579181ffac6">
-						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-					</reportElement>
-					<imageExpression><![CDATA[$F{Att_Shoulder_func}==1?$P{real_path}+"checked.png":$P{real_path}+"uncheck.png"]]></imageExpression>
-				</image>
-				<staticText>
-					<reportElement x="279" y="25" width="68" height="22" uuid="9c470b15-234e-4129-ba8f-27d2017eb9f8"/>
-					<textElement verticalAlignment="Middle">
-						<paragraph leftIndent="0"/>
-					</textElement>
-					<text><![CDATA[Elbow/Wrist]]></text>
-				</staticText>
-				<image>
-					<reportElement x="348" y="27" width="15" height="15" uuid="ce3f06fb-db2d-45eb-b006-81e4790a0637">
-						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-					</reportElement>
-					<imageExpression><![CDATA[$F{Att_Lower_Limb_func}==1?$P{real_path}+"checked.png":$P{real_path}+"uncheck.png"]]></imageExpression>
-				</image>
-				<staticText>
-					<reportElement x="380" y="25" width="50" height="22" uuid="7900d3c8-5039-45cc-b1de-92011a569895"/>
-					<textElement verticalAlignment="Middle">
-						<paragraph leftIndent="0"/>
-					</textElement>
-					<text><![CDATA[Shoulder]]></text>
-				</staticText>
-				<image>
-					<reportElement x="430" y="27" width="15" height="15" uuid="8e7c9a3c-472a-4086-ad7a-86d5b4cd8f26">
-						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-					</reportElement>
-					<imageExpression><![CDATA[$F{Att_Balance}==1?$P{real_path}+"checked.png":$P{real_path}+"uncheck.png"]]></imageExpression>
-				</image>
-				<image>
-					<reportElement x="51" y="27" width="15" height="15" uuid="c043ec6f-2d68-46cb-9ef6-304e6d8e8fc3">
-						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-					</reportElement>
-					<imageExpression><![CDATA[$F{Att_Flexibility}==0 || $F{Att_Flexibility}==null ?$P{real_path}+"uncheck.png":$P{real_path}+"checked.png"]]></imageExpression>
-				</image>
 			</frame>
 		</band>
 	</detail>
