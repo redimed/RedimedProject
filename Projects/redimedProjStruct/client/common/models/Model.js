@@ -749,7 +749,11 @@ angular.module("app.model", [])
 	ASSESSED_DATE: null,
 	ASSESSED_NAME: '',
 	PATIENT_SIGN: '',
-	can_perform_today: null
+	can_perform_today: null,
+	met_all_req: null,
+	not_met_all_req: null,
+	improve_comment: '',
+	not_met_all_reason: '',
 })
 // END FA HEADER
 
