@@ -12,6 +12,7 @@ public class ArInvoiceInterfaceJson {
 	private String patientName;
 	private Integer companyId;
 	private Integer insurerId;
+	private String claimNo;
 	private Integer taxId;
 	private Float taxRate;
 	private Integer itemId;
@@ -69,6 +70,13 @@ public class ArInvoiceInterfaceJson {
 	}
 	public void setInsurerId(Integer insurerId) {
 		this.insurerId = insurerId;
+	}
+	
+	public String getClaimNo() {
+		return claimNo;
+	}
+	public void setClaimNo(String claimNo) {
+		this.claimNo = claimNo;
 	}
 	public Integer getTaxId() {
 		return taxId;

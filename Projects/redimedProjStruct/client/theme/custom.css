@@ -3345,7 +3345,7 @@ label{
  * button search ke ben inputtext
  */
 .un_tn_btn_side{
-    height: 19.5px;
+    height: 25.5px;/*tan change 25.5*/
     /*width:20px;*/
     padding:0px;
     border:none;

@@ -405,7 +405,24 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 				item.notSave=true;
 			}
 
-
+			/**
+			 * tannv.dts@gmail.com
+			 * 06-07-2015
+			 * Xoa claim
+			 */
+			
+			scope.removeClaim=function()
+			{
+				var postData = {claim_id: null};
+				InvoiceService.update(scope.params.id, postData)
+				.then(function(response){
+					if(response.status == 'success') {
+						toastr.success('Remove Claim Successfully !!!', 'Success');
+						scope.InvoiceMap.claim = null;
+						scope.InvoiceMap.claim_id = null;
+					}
+				})
+			}
 		}//end link
 	}//end return
 })
