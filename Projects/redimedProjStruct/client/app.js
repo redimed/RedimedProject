@@ -65,6 +65,7 @@ angular.module("app", [
             'reconnectionAttempts': 1000,
             'secure': true,
             'timeout': 500,
+            'force new connection': true,
 			'transports': ['websocket', 
                           'flashsocket', 
                           'htmlfile', 
@@ -199,6 +200,24 @@ angular.module("app", [
 .run(function(beforeUnload, $window, $modalStack, $cookieStore, $interval, $state, $rootScope, $idle, $log, $keepalive, editableOptions, socket, toastr, localStorageService,rlobService, TimeSheetService, UserService) {
 
     window.loading_screen.finish();
+
+    socket.on('connect',function(){
+        if ($cookieStore.get("userInfo"))
+            socket.emit("reconnected", $cookieStore.get("userInfo").id);
+    })
+
+    socket.on('disconnect',function(){
+        toastr.error("Disconnect From Server! Please Login Again!");
+
+        $cookieStore.remove("userInfo");
+        $cookieStore.remove("companyInfo");
+        $cookieStore.remove("doctorInfo");
+        $cookieStore.remove("fromState");
+        $cookieStore.remove("toState");
+        $cookieStore.remove("isRemember");
+
+        $state.go("security.login",null,{location: "replace", reload: true});
+    })
 
     $idle.watch();
 

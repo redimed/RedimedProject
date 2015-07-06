@@ -71,19 +71,6 @@ angular.module("app.loggedIn.controller",[
 
     // socket.removeAllListeners();
 
-    socket.on('disconnect',function(){
-        toastr.error("Disconnect From Server! Please Login Again!");
-
-        $cookieStore.remove("userInfo");
-        $cookieStore.remove("companyInfo");
-        $cookieStore.remove("doctorInfo");
-        $cookieStore.remove("fromState");
-        $cookieStore.remove("toState");
-        $cookieStore.remove("isRemember");
-
-        $state.go("security.login",null,{location: "replace", reload: true});
-    })
-
     socket.on('reconnect', function() {
         if ($cookieStore.get("userInfo"))
             socket.emit("reconnected", $cookieStore.get("userInfo").id);
@@ -103,17 +90,17 @@ angular.module("app.loggedIn.controller",[
     })
 
 
-    $scope.$on('onBeforeUnload', function (e, confirmation) {
-        confirmation.message = "Your sure want to leave this page!";
-        e.preventDefault();
-    });
-    $scope.$on('onUnload', function (e) {
-        // if($cookieStore.get("isRemember") != null || typeof $cookieStore.get("isRemember") !== 'undefined')
-        // {
-        //     if(!$cookieStore.get("isRemember"))
-        //         $scope.logout();
-        // }
-    });
+    // $scope.$on('onBeforeUnload', function (e, confirmation) {
+    //     confirmation.message = "Your sure want to leave this page!";
+    //     e.preventDefault();
+    // });
+    // $scope.$on('onUnload', function (e) {
+    //     if($cookieStore.get("isRemember") != null || typeof $cookieStore.get("isRemember") !== 'undefined')
+    //     {
+    //         if(!$cookieStore.get("isRemember"))
+    //             $scope.logout();
+    //     }
+    // });
 
 
     socket.on("forceLogout",function(){
@@ -129,11 +116,11 @@ angular.module("app.loggedIn.controller",[
 
     })
 
-    // function cancelListenerHandler(){
-    //     console.log("Remove Success");
-    // }
+    function cancelListenerHandler(){
+        console.log("Remove Success");
+    }
 
-    // socket.removeListener('messageReceived',cancelListenerHandler);
+    socket.removeListener('messageReceived',cancelListenerHandler);
 
     socket.on("messageReceived",function(fromId,fromUser,message){
         console.log("=========== Call Receive ============");

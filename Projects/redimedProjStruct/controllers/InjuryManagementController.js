@@ -250,36 +250,43 @@ module.exports = {
                           }
                           else
                           {
-                            db.Appointment.max('CAL_ID')
-                              .success(function(max)
-                              {
-                                  var id = max + 1;
-                                  db.Appointment.create({
-                                    SITE_ID: 1,
-                                    FROM_TIME: moment.utc(),
-                                    TO_TIME: moment.utc()
-                                  })
-                                  .success(function(){
-                                      db.ApptPatient.create({
-                                        Patient_id: imInfo.Patient_id,
-                                        CAL_ID: id,
-                                        appt_status: 'Injury',
-                                        injury_id: rs.injury_id
+                            db.sequelize.query("SELECT * FROM sys_services WHERE SERVICE_NAME LIKE 'Emergency'",null,{raw:true})
+                              .success(function(service){
+                                  if(service.length > 0)
+                                  {
+                                     var serviceId = service[0].SERVICE_ID;
+                                     db.Appointment.max('CAL_ID')
+                                      .success(function(max)
+                                      {
+                                          var id = max + 1;
+                                          db.Appointment.create({
+                                            SITE_ID: 1,
+                                            FROM_TIME: moment.utc(),
+                                            TO_TIME: moment.utc(),
+                                            SERVICE_ID: serviceId
+                                          })
+                                          .success(function(){
+                                              db.ApptPatient.create({
+                                                Patient_id: imInfo.Patient_id,
+                                                CAL_ID: id,
+                                                appt_status: 'Emergency',
+                                                injury_id: rs.injury_id
+                                              })
+                                              .success(function(){
+                                                res.json({status:'success',injury_id:rs.injury_id});
+                                              })
+                                              .error(function(err){
+                                                res.json({status:'error'});
+                                                console.log(err);
+                                              })
+                                          })
+                                          .error(function(err){
+                                              res.json({status:'error'});
+                                              console.log(err);
+                                          })
                                       })
-                                      .success(function(){
-                                        res.json({status:'success',injury_id:rs.injury_id});
-                                      })
-                                      .error(function(err){
-                                        res.json({status:'error'});
-                                        console.log(err);
-                                      })
-                                  })
-                                  .error(function(err){
-                                      res.json({status:'error'});
-                                      console.log(err);
-                                  })
+                                  }
                               })
-                              
                           }
                       })
                       .error(function(err){

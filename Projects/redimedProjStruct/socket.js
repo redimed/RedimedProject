@@ -58,6 +58,8 @@ module.exports = function(io,cookie,cookieParser) {
         var source = header['user-agent'];
         ua = useragent.parse(source);
 
+        console.log("=========Connection===========: ", socket.id);
+
         socket.on('notifyPatient',function(apptId){
             db.sequelize.query("SELECT p.Title,p.`First_name`,p.`Sur_name`,p.`Middle_name`, d.`NAME` as doctor_name "+
                                 "FROM cln_appt_patients a "+
