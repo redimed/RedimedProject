@@ -39,5 +39,4 @@ app.get('/api/users/loggedin', function(req, res) {
     res.send(req.isAuthenticated() ? req.user : '0');
 });
 
-app.post('/api/user/checkOnline', AuthenticationController.checkOnline);
 

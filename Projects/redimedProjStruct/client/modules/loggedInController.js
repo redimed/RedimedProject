@@ -52,13 +52,13 @@ angular.module("app.loggedIn.controller",[
              params += ', top=0, left=0';
              params += ', fullscreen=yes';
 
-            if ((newwin == null) || (newwin.closed))
+            if ((window.calling_screen == null) || (window.calling_screen.closed))
             {
-                newwin=window.open(url,'RedimedCallingWindow', params);
-                newwin.focus();
+                window.calling_screen = window.open(url,'RedimedCallingWindow', params);
+                window.calling_screen.focus();
             }
 
-            if(newwin != null && !newwin.closed)
+            if(window.calling_screen != null && !window.calling_screen.closed)
                 window.open('','RedimedCallingWindow','');
             return false;
         }
@@ -69,18 +69,50 @@ angular.module("app.loggedIn.controller",[
 
     $scope.isShow = true;
 
-    socket.removeAllListeners();
+    // socket.removeAllListeners();
+
+    socket.on('disconnect',function(){
+        toastr.error("Disconnect From Server! Please Login Again!");
+
+        $cookieStore.remove("userInfo");
+        $cookieStore.remove("companyInfo");
+        $cookieStore.remove("doctorInfo");
+        $cookieStore.remove("fromState");
+        $cookieStore.remove("toState");
+        $cookieStore.remove("isRemember");
+
+        $state.go("security.login",null,{location: "replace", reload: true});
+    })
+
+    socket.on('reconnect', function() {
+        if ($cookieStore.get("userInfo"))
+            socket.emit("reconnected", $cookieStore.get("userInfo").id);
+    })
+
+    socket.on('reconnect_failed', function() {
+        toastr.error("Disconnect From Server! Please Login Again!");
+        
+        $cookieStore.remove("userInfo");
+        $cookieStore.remove("companyInfo");
+        $cookieStore.remove("doctorInfo");
+        $cookieStore.remove("fromState");
+        $cookieStore.remove("toState");
+        $cookieStore.remove("isRemember");
+
+        $state.go("security.login",null,{location: "replace", reload: true});
+    })
+
 
     $scope.$on('onBeforeUnload', function (e, confirmation) {
         confirmation.message = "Your sure want to leave this page!";
         e.preventDefault();
     });
     $scope.$on('onUnload', function (e) {
-        if($cookieStore.get("isRemember") != null || typeof $cookieStore.get("isRemember") !== 'undefined')
-        {
-            if(!$cookieStore.get("isRemember"))
-                $scope.logout();
-        }
+        // if($cookieStore.get("isRemember") != null || typeof $cookieStore.get("isRemember") !== 'undefined')
+        // {
+        //     if(!$cookieStore.get("isRemember"))
+        //         $scope.logout();
+        // }
     });
 
 
@@ -92,18 +124,19 @@ angular.module("app.loggedIn.controller",[
         $cookieStore.remove("companyInfo");
         $cookieStore.remove("doctorInfo");
         $cookieStore.remove("fromState");
+        $cookieStore.remove("isRemember");
         $state.go("security.login",null,{location: "replace", reload: true});
 
-        socket.removeAllListeners();
     })
 
-    function cancelListenerHandler(){
-        console.log("Remove Success");
-    }
+    // function cancelListenerHandler(){
+    //     console.log("Remove Success");
+    // }
 
-    socket.removeListener('messageReceived',cancelListenerHandler);
+    // socket.removeListener('messageReceived',cancelListenerHandler);
 
     socket.on("messageReceived",function(fromId,fromUser,message){
+        console.log("=========== Call Receive ============");
         if(message.type == 'call')
         {
             UserService.getUserInfo(fromId).then(function(data){

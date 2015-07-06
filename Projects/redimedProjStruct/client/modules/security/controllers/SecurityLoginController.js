@@ -12,6 +12,8 @@ angular.module("app.security.login.controller",[
         isRemember: false
     }
 
+    // socket.removeAllListeners();
+
     // SUBMIT LOGIN
     $scope.login = function(){
         $scope.showClickedValidation = true;
@@ -59,7 +61,6 @@ angular.module("app.security.login.controller",[
                     // $scope.isLogging = false;
                 });
 
-                socket.removeAllListeners();
             // }
             // else
             // {

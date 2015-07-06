@@ -294,14 +294,14 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			 params += ', top=0, left=0';
 			 params += ', fullscreen=yes';
 
-		 	if ((newwin == null) || (newwin.closed))
+		 	if ((window.calling_screen == null) || (window.calling_screen.closed))
 			{
-				newwin=window.open(url,'RedimedCallingWindow', params);
-				newwin.focus();
+				window.calling_screen = window.open(url,'RedimedCallingWindow', params);
+				window.calling_screen.focus();
 			}
 
-			if(newwin != null && !newwin.closed)
-				window.open('','RedimedCallingWindow','');
+			if(window.calling_screen != null && !window.calling_screen.closed)
+				window.calling_screen.open('','RedimedCallingWindow','');
 			return false;
 		}
 

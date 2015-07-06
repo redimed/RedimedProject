@@ -738,6 +738,65 @@ module.exports = {
               res.json({status:'fail',
                   error:err});
           })
+    },
+    getInjuryConsultation: function(req,res){
+      var injuryId = req.body.injury_id;
+      
+      db.sequelize.query("SELECT c.*, f.`Ass_id` AS FirstAssId, p.`progress_id` AS ProgressAssId, fi.`id` AS FinalAssId, g.`id` AS GeneralAssId "+
+                          "FROM cln_patient_consults c "+
+                          "LEFT JOIN th_first_assessment f ON c.`patient_id` = f.`patient_id` AND c.`cal_id` = f.`cal_id` "+
+                          "LEFT JOIN th_progress_assessment p ON c.`patient_id` = p.`patient_id` AND c.`cal_id` = p.`cal_id` "+
+                          "LEFT JOIN th_final_assessment fi ON c.`patient_id` = fi.`patient_id` AND c.`cal_id` = fi.`cal_id` "+
+                          "LEFT JOIN th_general_assessment g ON c.`patient_id` = g.`patient_id` AND c.`cal_id` = g.`cal_id` "+
+                          "WHERE c.`cal_id` = (SELECT p.`CAL_ID` FROM cln_appt_patients p WHERE p.`injury_id` = ?) "+
+                          "AND c.`patient_id` = (SELECT p.`Patient_id` FROM cln_appt_patients p WHERE p.`injury_id` = ?)",null,{raw:true},[injuryId, injuryId])
+          .success(function(data){
+              if(data.length > 0)
+              {
+                  var result = {
+                    consultData: data[0],
+                    firstArr: [],
+                    progressArr: [],
+                    finalArr: [],
+                    generalArr: []
+                  };
+
+                  delete result.consultData["FirstAssId"];
+                  delete result.consultData["ProgressAssId"];
+                  delete result.consultData["FinalAssId"];
+                  delete result.consultData["GeneralAssId"];
+
+                  var tempFirst = [], tempProgress = [], tempFinal = [], tempGeneral = [];
+                  for(var i=0; i< data.length; i++)
+                  {
+                      if(data[i].FirstAssId != null)
+                        tempFirst.push(data[i].FirstAssId);
+                      if(data[i].ProgressAssId != null)
+                        tempProgress.push(data[i].ProgressAssId);
+                      if(data[i].FinalAssId != null)
+                        tempFinal.push(data[i].FinalAssId);
+                      if(data[i].GeneralAssId != null)
+                        tempGeneral.push(data[i].GeneralAssId);
+                  }
+
+                  if(tempFirst.length > 0)
+                    result.firstArr = _.uniq(tempFirst);
+                  if(tempProgress.length > 0)
+                    result.progressArr = _.uniq(tempProgress);
+                  if(tempFinal.length > 0)
+                    result.finalArr = _.uniq(tempFinal);
+                  if(tempGeneral.length > 0)
+                    result.generalArr = _.uniq(tempGeneral);
+
+                  res.json({status:'success', data: result});
+              }
+              else
+                  res.json({status:'error'});
+          })
+          .error(function(err){
+              res.josn({status:'error'});
+              console.log(err);
+          })
     }
 };
 

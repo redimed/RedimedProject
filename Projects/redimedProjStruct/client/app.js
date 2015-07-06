@@ -60,11 +60,11 @@ angular.module("app", [
 
         var socket = io.connect('https://'+host+':'+port, {
             'reconnection': true,
-            'reconnectionDelay': 1000,
-            'reconnectionDelayMax': 5000,
-            'reconnectionAttempts': 10000,
+            'reconnectionDelay': 500,
+            'reconnectionDelayMax': 1000,
+            'reconnectionAttempts': 1000,
             'secure': true,
-            'timeout': 1000,
+            'timeout': 500,
 			'transports': ['websocket', 
                           'flashsocket', 
                           'htmlfile', 
@@ -199,25 +199,6 @@ angular.module("app", [
 .run(function(beforeUnload, $window, $modalStack, $cookieStore, $interval, $state, $rootScope, $idle, $log, $keepalive, editableOptions, socket, toastr, localStorageService,rlobService, TimeSheetService, UserService) {
 
     window.loading_screen.finish();
-    
-    socket.on('reconnect', function() {
-        if ($cookieStore.get("userInfo"))
-            socket.emit("reconnected", $cookieStore.get("userInfo").id);
-    })
-
-    socket.on('reconnect_failed', function() {
-        $cookieStore.remove("userInfo");
-        $cookieStore.remove("companyInfo");
-        $cookieStore.remove("doctorInfo");
-        $cookieStore.remove("fromState");
-        $cookieStore.remove("toState");
-        $state.go("security.login", null, {
-            location: "replace",
-            reload: true
-        });
-
-        socket.removeAllListeners();
-    })
 
     $idle.watch();
 
@@ -277,24 +258,6 @@ angular.module("app", [
                 }
             }
         }
-        else
-        {
-            UserService.checkUserOnline($cookieStore.get("userInfo").id).then(function(rs){
-                if(rs.status == 'offline')
-                {
-                    toastr.error("Please Login Again!");
-                    $modalStack.dismissAll();
-                    $cookieStore.remove("userInfo");
-                    $cookieStore.remove("companyInfo");
-                    $cookieStore.remove("doctorInfo");
-                    $cookieStore.remove("fromState");
-                    $state.go("security.login",null,{location: "replace", reload: true});
-
-                    socket.removeAllListeners();
-                }
-            })
-        }
-
     });
     $rootScope.$on("$stateChangeStart", function(e, toState, toParams, fromState, fromParams) {
         //LOAD ROLE ON TREEAPPROVE

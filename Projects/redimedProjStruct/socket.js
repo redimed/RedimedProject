@@ -401,67 +401,6 @@ module.exports = function(io,cookie,cookieParser) {
 
         })
 
-        // socket.on('lostCookie',function(){
-        //     db.sequelize.query("UPDATE `users` SET `socket` = NULL WHERE socket = ?",null,{raw:true},[socket.id])
-        //         .success(function(){
-        //             getOnlineUser();
-        //         })
-        //         .error(function(err){
-        //             console.log(err);
-        //         })
-        // })
-
-        // socket.on('disconnect', function (reason) {
-
-        //     db.User.find({where:{socket:socket.id}},{raw:true})
-        //         .success(function(user){
-        //             if(user)
-        //             {
-        //                 db.UserType.find({where:{ID:user.user_type}},{raw:true})
-        //                     .success(function(type){
-        //                         if(type.user_type == 'Driver')
-        //                             io.sockets.emit('driverLogout',user.id);
-
-        //                         if(user.socket == socket.id)
-        //                         {
-        //                              db.sequelize.query("UPDATE `users` SET `socket` = NULL, socketMobile = NULL WHERE socket = ?", null, {raw: true}, [socket.id])
-        //                                 .success(function () {
-        //                                     getOnlineUser();
-        //                                 })
-        //                                 .error(function (err) {
-        //                                     console.log(err);
-        //                                 })
-        //                         }
-
-        //                         if(user.socketMobile == socket.id)
-        //                         {
-        //                             db.sequelize.query("UPDATE `users` SET socketMobile = NULL WHERE socketMobile = ?", null, {raw: true}, [socket.id])
-        //                                 .success(function () {
-        //                                     getOnlineUser();
-        //                                 })
-        //                                 .error(function (err) {
-        //                                     console.log(err);
-        //                                 })
-        //                         }
-
-
-                               
-        //                     })
-        //                     .error(function (err) {
-        //                         console.log(err);
-        //                     })
-        //             }
-
-        //         })
-        //         .error(function (err) {
-        //             console.log(err);
-        //         })
-
-        //         socket.removeAllListeners();
-
-        // });
-
-
         function getOnlineUser(){
             userList = [];
             db.User.belongsTo(db.UserType,{foreignKey:'user_type'});

@@ -6,8 +6,6 @@ angular.module("app.calling")
         var audio = new Audio('theme/assets/phone_calling.mp3');
         var toSt= $cookieStore.get('toState');
 
-        socket.removeAllListeners();
-
         var params = {};
 
         var apiKey = $stateParams.apiKey;
@@ -137,7 +135,7 @@ angular.module("app.calling")
         function cancelListenerHandler(){
             console.log("Remove Success");
         }
-
+        socket.removeListener('messageReceived',cancelListenerHandler);
 
         socket.on("messageReceived",function(fromId,fromUser,message){
             if(message.type === 'answer')
@@ -182,8 +180,8 @@ angular.module("app.calling")
 
                 window.close();
                 
-                if (($scope.newwin != null) || (!$scope.newwin.closed))
-                    $scope.newwin.close();
+                if ((window.whiteboard_screen != null) || (!window.whiteboard_screen.closed))
+                    window.whiteboard_screen.close();
             }
             else
             {
@@ -199,8 +197,8 @@ angular.module("app.calling")
                         {
                             window.close();
 
-                            if (($scope.newwin != null) || (!$scope.newwin.closed))
-                                $scope.newwin.close();
+                            if ((window.whiteboard_screen != null) || (!window.whiteboard_screen.closed))
+                                window.whiteboard_screen.close();
                         }
                     });
                 })
@@ -237,8 +235,8 @@ angular.module("app.calling")
                         if($scope.streams.length == 0)
                         {
                             window.close();
-                            if (($scope.newwin != null) || (!$scope.newwin.closed))
-                                $scope.newwin.close();
+                            if ((window.whiteboard_screen != null) || (!window.whiteboard_screen.closed))
+                                window.whiteboard_screen.close();
                         }
                     }, 1.5 * 1000);
                     
@@ -263,13 +261,13 @@ angular.module("app.calling")
              params += ', top='+0;
              params += ', fullscreen=yes';
 
-            if (($scope.newwin == null) || ($scope.newwin.closed))
+            if ((window.whiteboard_screen == null) || (window.whiteboard_screen.closed))
             {
-                $scope.newwin=window.open(url,'RedimedWhiteboard', params);
-                $scope.newwin.focus();
+                window.whiteboard_screen=window.open(url,'RedimedWhiteboard', params);
+                window.whiteboard_screen.focus();
             }
 
-            if($scope.newwin != null && !$scope.newwin.closed)
+            if(window.whiteboard_screen != null && !window.whiteboard_screen.closed)
                 window.open('','RedimedWhiteboard','');
             return false;
         }
@@ -313,11 +311,12 @@ angular.module("app.calling")
         };
 
         $scope.addPeople = function(){
-            if($scope.isCaller && !$scope.isAccept)
+            console.log($scope.streams);
+            if($scope.streams.length == 0)
                 toastr.warning("Please Wait For Calling Person First!")
             else
             {
-                if($scope.streams.length < 2)
+                if($scope.streams.length < 2 && $scope.streams.length > 0)
                 {
                     var arrUser = [];
                     for(var i=0 ; i<$scope.streams.length; i++)
