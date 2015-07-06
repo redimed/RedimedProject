@@ -535,7 +535,6 @@ module.exports = {
                                                         info.USER_ID +"),";
                                                 }
                                                 stringline1 = stringline1.substring(0, stringline1.length - 1);
-                                                console.log(stringline1);
                                                 var sql_insert = "INSERT INTO "+
                                                                     "hr_leave_owe "+
                                                                     "(create_id, "+
