@@ -58,6 +58,8 @@ module.exports = function(io,cookie,cookieParser) {
         var source = header['user-agent'];
         ua = useragent.parse(source);
 
+        console.log("=========Connection===========: ", socket.id);
+
         socket.on('notifyPatient',function(apptId){
             db.sequelize.query("SELECT p.Title,p.`First_name`,p.`Sur_name`,p.`Middle_name`, d.`NAME` as doctor_name "+
                                 "FROM cln_appt_patients a "+
@@ -400,67 +402,6 @@ module.exports = function(io,cookie,cookieParser) {
             }
 
         })
-
-        // socket.on('lostCookie',function(){
-        //     db.sequelize.query("UPDATE `users` SET `socket` = NULL WHERE socket = ?",null,{raw:true},[socket.id])
-        //         .success(function(){
-        //             getOnlineUser();
-        //         })
-        //         .error(function(err){
-        //             console.log(err);
-        //         })
-        // })
-
-        // socket.on('disconnect', function (reason) {
-
-        //     db.User.find({where:{socket:socket.id}},{raw:true})
-        //         .success(function(user){
-        //             if(user)
-        //             {
-        //                 db.UserType.find({where:{ID:user.user_type}},{raw:true})
-        //                     .success(function(type){
-        //                         if(type.user_type == 'Driver')
-        //                             io.sockets.emit('driverLogout',user.id);
-
-        //                         if(user.socket == socket.id)
-        //                         {
-        //                              db.sequelize.query("UPDATE `users` SET `socket` = NULL, socketMobile = NULL WHERE socket = ?", null, {raw: true}, [socket.id])
-        //                                 .success(function () {
-        //                                     getOnlineUser();
-        //                                 })
-        //                                 .error(function (err) {
-        //                                     console.log(err);
-        //                                 })
-        //                         }
-
-        //                         if(user.socketMobile == socket.id)
-        //                         {
-        //                             db.sequelize.query("UPDATE `users` SET socketMobile = NULL WHERE socketMobile = ?", null, {raw: true}, [socket.id])
-        //                                 .success(function () {
-        //                                     getOnlineUser();
-        //                                 })
-        //                                 .error(function (err) {
-        //                                     console.log(err);
-        //                                 })
-        //                         }
-
-
-                               
-        //                     })
-        //                     .error(function (err) {
-        //                         console.log(err);
-        //                     })
-        //             }
-
-        //         })
-        //         .error(function (err) {
-        //             console.log(err);
-        //         })
-
-        //         socket.removeAllListeners();
-
-        // });
-
 
         function getOnlineUser(){
             userList = [];

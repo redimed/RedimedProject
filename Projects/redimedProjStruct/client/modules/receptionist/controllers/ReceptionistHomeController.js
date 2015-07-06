@@ -229,9 +229,10 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
         console.log("Remove Success");
     }
 
-    socket.removeListener('receiveNotifyReceptionist', cancelListenerHandler());
+    // socket.removeListener('receiveNotifyReceptionist', cancelListenerHandler());
 
 	socket.on('receiveNotifyReceptionist',function(){
+		console.log("=======aaaaaaaaaaaaa========");
 		getAppt($scope.apptDate,$scope.apptSite);
 	})
 

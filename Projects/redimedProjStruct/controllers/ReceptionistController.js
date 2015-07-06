@@ -44,7 +44,7 @@ module.exports = {
 						if(item.appt_id != null && status == 'completed')
 							apptComplete.push(item);
 
-						if(item.appt_id != null && status == 'injury')
+						if(item.appt_id != null && status == 'emergency')
 							apptInjury.push(item);
 					};
 
@@ -219,7 +219,7 @@ module.exports = {
 		{
 			var status = '';
 
-			if(fromAppt.appt_status.toLowerCase() == 'injury')
+			if(fromAppt.appt_status.toLowerCase() == 'emergency')
 				status = 'Urgent';
 			else
 				status = 'Waiting';
