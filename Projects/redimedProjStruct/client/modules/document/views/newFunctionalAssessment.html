@@ -598,8 +598,50 @@
 	</div>
 	
 
+	
 
-
+	<!-- Overral Rating -->
+	<div class="panel panel-default" ng-if="header.TYPE === 'Boart'">
+	    <div class="panel-body">
+	    	<label class="control-label text-info bold" style="margin-top:10px;">Overall rating</label>
+	        <div class="row">
+	            <div class="col-md-12 col-sm-12 col-xs-12">
+	                <label class="control-label">
+	                	<input type="checkbox" ng-model="header.met_all_req" ng-checked="header.met_all_req===1"/>
+	                	Candidate <b>met all testing requirements</b> & demonstrated the physical capacity to perform the proposed occupation. 
+	                </label>
+	                <label class="control-label">
+	                	For improved health and wellbeing, it was noted the candidate could improve on the below.
+	                </label>
+	            </div>
+	        </div>
+	        <div class="row">
+	        	<div class="col-md-12 col-sm-12 col-xs-12">
+	        		<textarea class="form-control" rows="4" ng-model="header.improve_comment"></textarea>
+	        	</div>
+	        </div>
+	        <div class="row">
+	        	<div class="col-md-12 col-sm-12 col-xs-12">
+	        		<label class="control-label">
+	        			<i>Advice and stretches were provided at the time of the assessment.</i>
+	        		</label>
+	        	</div>
+	        </div>
+	        <div class="row">
+	            <div class="col-md-12 col-sm-12 col-xs-12">
+	                <label class="control-label">
+	                	<input type="checkbox" ng-model="header.not_met_all_req" ng-checked="header.not_met_all_req===1"/>
+	                	Candidate <b>did not</b> demonstrate the physical capacity to perform the proposed occupation, due to:
+	                </label>
+	            </div>
+	        </div>
+	        <div class="row">
+	        	<div class="col-md-12 col-sm-12 col-xs-12">
+	        		<textarea class="form-control" rows="4" ng-model="header.not_met_all_reason"></textarea>
+	        	</div>
+	        </div>
+	    </div>
+	</div>
 
 	<!-- Risk rating and additional test -->
 	<div class="panel panel-default">
