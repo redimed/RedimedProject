@@ -17,7 +17,12 @@ angular.module("app.loggedIn.TimeSheet.formValidate.Directive", [])
                 //END NITIFICATION
 
                 //LISENT MODEL
-                scope.$watch('ngModel', function(newModel, oldModel) {
+                scope.$watch('modelValidate', function(newModel, oldModel) {
+                    if (newModel !== undefined && newModel !== null && newModel.length !== 0) {
+                        attrs.$set("required", true);
+                    } else {
+                        attrs.$set("required", false);
+                    }
                     var isErr = false;
                     var indexErr = -1;
                     angular.forEach(scope.formValidate, function(valueError, indexError) {
@@ -27,10 +32,11 @@ angular.module("app.loggedIn.TimeSheet.formValidate.Directive", [])
                         }
                     });
                     if (isErr) {
-                        //CHECK ESIXT TOOLTIPLE
+                        //SET COLOR FOR INPUT
                         elem.css("border-color", "#F3565D");
                         //END
-                        //CHECK IF EXIST DELETE AND ADD
+
+                        //CHECK IF EXIST DELETE
                         if (elem.hasClass("tooltipstered")) {
                             angular.element(elem).tooltipster("destroy");
                         }
@@ -55,7 +61,43 @@ angular.module("app.loggedIn.TimeSheet.formValidate.Directive", [])
                 });
                 //END LISTEN MODEL
 
-                // elem.css("border-color", "#F3565D");#ECECEC
+                scope.$watch("ngModel", function(newModel, oldModel) {
+                    var isErr = false;
+                    var indexErr = -1;
+                    angular.forEach(scope.formValidate, function(valueError, indexError) {
+                        if (valueError === true) {
+                            isErr = true;
+                            indexErr = indexError;
+                        }
+                    });
+                    if (isErr) {
+                        //SET COLOR FOR INPUT
+                        elem.css("border-color", "#F3565D");
+                        //END
+
+                        //CHECK IF EXIST DELETE
+                        if (elem.hasClass("tooltipstered")) {
+                            angular.element(elem).tooltipster("destroy");
+                        }
+                        //ADD
+                        angular.element(elem).tooltipster({
+                            theme: "tooltip-error-theme",
+                            contentAsHTML: true,
+                            content: notiError[indexErr]
+                        });
+                        //END
+                    } else {
+                        if (elem.hasClass("tooltipstered")) {
+                            //REMOVE TOOLTIP
+                            angular.element(elem).tooltipster("destroy");
+                            angular.element(elem).removeAttr("title");
+                            //END
+                        }
+                        //CHECK IF ESIXT REMOVE
+                        elem.css("border-color", "#ECECEC");
+                        //END
+                    }
+                });
             }
         };
     });

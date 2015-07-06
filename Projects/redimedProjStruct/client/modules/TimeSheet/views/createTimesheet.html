@@ -111,7 +111,7 @@
                             </td>
                             <td style="text-align: center;width:8%;">
                                 <!-- ENTER VALUE -->
-                                <input type="text" ui-mask="99:99" ng-model="task.time_charge" name="time_charge" ng-change="changeTimeCharge()" style="font-style: 'normal';text-align: center;" ng-if="((task.department_code_id===19 || task.department_code_id===27 ||task.department_code_id===29 || task.department_code_id===30 ||task.department_code_id===31) && task.activity_id===1)" class="form-control input-sm" time-charge/>
+                                <input type="text" ui-mask="99:99" ng-model="task.time_charge" name="time_charge" ng-change="changeTimeCharge()" style="font-style: 'normal';text-align: center;" ng-if="((task.department_code_id===19 || task.department_code_id===27 ||task.department_code_id===29 || task.department_code_id===30 ||task.department_code_id===31) && task.activity_id===1)" class="form-control input-sm" time-charge="task.time_charge" form-validate="formRepeat.time_charge.$error" ng-required="true" />
                                 <!-- END -->
                                 <!-- VIEW OTHER VALUE -->
                                 <label type="text" disabled name="time_charge" style="font-style: 'normal';text-align: center;" ng-if="!((task.department_code_id===19 || task.department_code_id===27 ||task.department_code_id===29 || task.department_code_id===30 ||task.department_code_id===31) && task.activity_id===1)" class="form-control input-sm">
