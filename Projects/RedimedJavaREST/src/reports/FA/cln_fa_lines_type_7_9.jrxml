@@ -175,6 +175,13 @@ and (line.SCORE_TYPE1=7 or line.SCORE_TYPE1=9 or line.SCORE_TYPE1=18 or line.SCO
 			</staticText>
 			<textField>
 				<reportElement x="40" y="0" width="60" height="44" uuid="8100ac79-2ff9-48e3-9149-97c281096a48"/>
+				<box>
+					<pen lineWidth="0.3"/>
+					<topPen lineWidth="0.3"/>
+					<leftPen lineWidth="0.3"/>
+					<bottomPen lineWidth="0.3"/>
+					<rightPen lineWidth="0.3"/>
+				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font isBold="true"/>
 				</textElement>
