@@ -236,7 +236,7 @@ public class InvoiceService {
 				cs.setFloat(17,line.getTotalAmount());
 			    cs.registerOutParameter(18, java.sql.Types.VARCHAR);
 			    cs.executeUpdate();  
-			    result=cs.getString(17);
+			    result=cs.getString(18);
 			    if(!result.equals("Completed"))
 			    	break;
 			}
