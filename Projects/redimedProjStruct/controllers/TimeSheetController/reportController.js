@@ -430,7 +430,6 @@ module.exports = {
         }
         stringDept += 0;
         var getnewdate= new Date();
-        getnewdate.setHours(0, 0, 0);
         var delete_hr_leave_owe = "DELETE FROM hr_leave_owe WHERE create_id =" + info.USER_ID + " ";
         db.sequelize.query(delete_hr_leave_owe)
             .success(function(deletes){
@@ -516,7 +515,7 @@ module.exports = {
                                                 }
                                             }
                                             for(var j = 0; j <data_1.length; j++){
-                                                if(data_1[j].isReject==0){
+                                                if(data_1[j].isReject==1){
                                                     listleave.push(data_1[j]);
                                                 }
                                             }
@@ -535,7 +534,6 @@ module.exports = {
                                                         info.USER_ID +"),";
                                                 }
                                                 stringline1 = stringline1.substring(0, stringline1.length - 1);
-                                                console.log(stringline1);
                                                 var sql_insert = "INSERT INTO "+
                                                                     "hr_leave_owe "+
                                                                     "(create_id, "+
@@ -900,6 +898,8 @@ module.exports = {
                                                         }
                                                     });
                                                 }
+                                                var a = new Date();
+                                                        console.log(a);
                                                 for(var i = 0; i < data.length; i++){
                                                     stringline1+="("+
                                                                 data[i].create_id+","+
