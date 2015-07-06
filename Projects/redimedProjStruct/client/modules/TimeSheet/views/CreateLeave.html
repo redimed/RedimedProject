@@ -48,7 +48,9 @@
                                 <label style="margin-top:3px;">Leave Application Date:</label>
                             </td>
                             <td style="width:90%;">
-                                <input ng-model="info.application_date" type="text" class="form-control input-sm" name="application_date" datepicker-popup="dd/MM/yyyy" is-open="openDOB" ng-click="openDOB = true" datepicker-options="dateOptions3" close-text="Close" style="width:200px; margin-bottom:0px; color:#31708f;" ng-required="info.application_date===undefined || info.application_date===null || info.application_date.length===0" />
+                                <div ng-class="{'error-input':isRequired===1 && formLeave.application_date.$error.required===true}" style="width:202px;">
+                                    <input ng-model="info.application_date" type="text" class="form-control input-sm" name="application_date" datepicker-popup="dd/MM/yyyy" is-open="openDOB" ng-click="openDOB = true" datepicker-options="dateOptions3" close-text="Close" style="width:200px; margin-bottom:0px; color:#31708f;" ng-required="info.application_date===undefined || info.application_date===null || info.application_date.length===0" />
+                                </div>
                             </td>
                         </tr>
                         <tr>
@@ -84,7 +86,9 @@
                                 <label style="margin-top:3px;">Leave Start Date:</label>
                             </td>
                             <td style="width:90%;">
-                                <input ng-model="info.start_date" type="text" name="start_date" class="form-control input-sm" datepicker-popup="dd/MM/yyyy" is-open="openDOB1" ng-click="openDOB1 = true" datepicker-options="dateOptions3" max-date="info.finish_date" close-text="Close" style="width:200px; margin-bottom:0px; color:#31708f;" ng-required="info.start_date===undefined || info.start_date===null || info.start_date.length===0" ng-change="checkLeaveExist()" />
+                                <div ng-class="{'error-input':isRequired===1 && formLeave.start_date.$error.required}" style="width:202px;">
+                                    <input ng-model="info.start_date" type="text" name="start_date" class="form-control input-sm" datepicker-popup="dd/MM/yyyy" is-open="openDOB1" ng-click="openDOB1 = true" datepicker-options="dateOptions3" max-date="info.finish_date" close-text="Close" style="width:200px; margin-bottom:0px; color:#31708f;" ng-required="info.start_date===undefined || info.start_date===null || info.start_date.length===0" ng-change="checkLeaveExist()" />
+                                </div>
                             </td>
                         </tr>
                         <tr>
@@ -92,7 +96,9 @@
                                 <label style="margin-top:3px;">Leave Finish Date:</label>
                             </td>
                             <td style="width:90%;">
-                                <input ng-model="info.finish_date" type="text" class="form-control input-sm" name="finish_date" datepicker-popup="dd/MM/yyyy" is-open="openDOB2" ng-click="openDOB2 = true" datepicker-options="dateOptions3" max-date="info.work_date" min-date="info.start_date" close-text="Close" style="width:200px; margin-bottom:0px; color:#31708f;" ng-required="info.finish_date===undefined ||info.finish_date===null || info.finish_date.length===0" ng-change="checkLeaveExist()" />
+                                <div ng-class="{'error-input':isRequired===1 && formLeave.finish_date.$error.required}" style="width:202px;">
+                                    <input ng-model="info.finish_date" type="text" class="form-control input-sm" name="finish_date" datepicker-popup="dd/MM/yyyy" is-open="openDOB2" ng-click="openDOB2 = true" datepicker-options="dateOptions3" max-date="info.work_date" min-date="info.start_date" close-text="Close" style="width:200px; margin-bottom:0px; color:#31708f;" ng-required="info.finish_date===undefined ||info.finish_date===null || info.finish_date.length===0" ng-change="checkLeaveExist()" />
+                                </div>
                             </td>
                         </tr>
                         <tr>
@@ -100,7 +106,9 @@
                                 <label style="margin-top:3px;">Return to Work Date:</label>
                             </td>
                             <td style="width:90%;">
-                                <input ng-model="info.work_date" type="text" class="form-control input-sm" name="work_date" datepicker-popup="dd/MM/yyyy" is-open="openDOB3" ng-click="openDOB3 = true" datepicker-options="dateOptions3" min-date="info.finish_date" close-text="Close" style="width:200px; margin-bottom:0px; color:#31708f;" ng-required="info.work_date===undefined || info.work_date===null || info.work_date.length===0" />
+                                <div ng-class="{'error-input':isRequired===1 && formLeave.work_date.$error.required}" style="width:202px;">
+                                    <input ng-model="info.work_date" type="text" class="form-control input-sm" name="work_date" datepicker-popup="dd/MM/yyyy" is-open="openDOB3" ng-click="openDOB3 = true" datepicker-options="dateOptions3" min-date="info.finish_date" close-text="Close" style="width:200px; margin-bottom:0px; color:#31708f;" ng-required="info.work_date===undefined || info.work_date===null || info.work_date.length===0" />
+                                </div>
                             </td>
                         </tr>
                     </tbody>
