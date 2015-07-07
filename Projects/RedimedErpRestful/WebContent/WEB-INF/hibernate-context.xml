@@ -45,21 +45,21 @@
 	add -->
 	
 	
-	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	<!-- <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
 		<property name="url" value="jdbc:oracle:thin:@localhost:1521:XE" />
 		<property name="username" value="hr" />
 		<property name="password" value="hr" />
-	</bean>
+	</bean> -->
 	
 	
 	
-	<!-- <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
 		<property name="url" value="jdbc:oracle:thin:@192.168.40.14:1521:XE" />
 		<property name="username" value="hr" />
 		<property name="password" value="hr" />
-	</bean>  -->
+	</bean> 
 	
 
 	<!-- Declare a transaction manager-->

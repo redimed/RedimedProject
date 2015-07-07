@@ -169,3 +169,6 @@ app.get('/abcxyz/erp/test', rlRegisterController.testERP);
 app.post('/api/rlob/sponsor/insert-emergency', rlobBookingMobileController.insertEmergency);
 app.post('/api/rlob/sponsor/insert-nonemergency', rlobBookingMobileController.insertNonEmergency);
 app.post('/api/rlob/sponsor/upload',multipartMiddleware, rlobBookingMobileController.uploadFile);
+
+//phanquocchien.c1109g@mail.com
+app.post('/api/rlob/cln_appt_patients/add', rlBookingsController.addApptPatient);
