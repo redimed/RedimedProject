@@ -697,6 +697,7 @@ angular.module('app.loggedIn.document.services', [])
                 columns: [
                     {field: 'CAL_ID' , is_hide: true },
                     {field: 'FA_ID' , is_hide: true },
+                    {field: 'TYPE' , label:'Type'},
                     {field: 'FA_NAME', label:'Name'},
                     {field: 'Creation_date', label: 'Created Date', type: 'custom', fn: function(item){
                         return ConfigService.getCommonDateDefault(item.Creation_date);

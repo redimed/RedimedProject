@@ -13,7 +13,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 
 	$scope.patient_age = null;
 	$scope.header = {};
-	$scope.header.Comments = "Meet all manual handling requirements with good technique."
+	$scope.header.Comments = "Met all manual handling requirements with good technique."
 	$scope.header.ASSESSED_DATE = moment().format("YYYY-MM-DD hh:mm:ss");
 	$scope.patient_info = {};
 	$scope.isSignatureShow = false;
@@ -33,7 +33,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 				$scope.header.CAL_ID = cal_id;
 				$scope.header.ASSESSED_SIGN = '';
 				$scope.header.ASSESSED_DATE = moment().format("YYYY-MM-DD hh:mm:ss");
-				$scope.header.Comments = "Meet all manual handling requirements with good technique."
+				$scope.header.Comments = "Met all manual handling requirements with good technique."
 				getDoctorInfo(cal_id, patient_id);
 				//get lines of section
 				$scope.header.sections.forEach(function(section){

@@ -119,16 +119,16 @@
 
 							<!-- simple check box with detail comment -->
 								<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL1_ISCHECKBOX===1">
-									<label class="control-label pull-right" style="margin-top:10px;">{{detail.VAL1_NAME}}</label>
+									<label class="control-label pull-right" >{{detail.VAL1_NAME}}</label>
 								</div>
 								<div class="col-md-1 col-sm-1 col-xs-1" ng-if="detail.VAL1_ISCHECKBOX===1">
-									<input type="checkbox" class="form-control" ng-true-value="1" ng-false-value="0" ng-model="detail.VAL1_CHECKBOX">
+									<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="detail.VAL1_CHECKBOX">
 								</div>
 								<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL2_ISCHECKBOX===1">
-									<label class="control-label pull-right" style="margin-top:10px;">{{detail.VAL2_NAME}}</label>
+									<label class="control-label pull-right">{{detail.VAL2_NAME}}</label>
 								</div>
 								<div class="col-md-1 col-sm-1 col-xs-1" ng-if="detail.VAL2_ISCHECKBOX===1">
-									<input type="checkbox" class="form-control" ng-true-value="1" ng-false-value="0" ng-model="detail.VAL2_CHECKBOX">
+									<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="detail.VAL2_CHECKBOX">
 								</div>
 							<!-- end simple check box with detail comment -->
 
@@ -684,6 +684,23 @@
 					</label>
 					<label class="btn">
 						No <input type="radio" ng-model="header.Recommend" value="0">
+					</label>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-2 col-sm-2 col-xs-2">
+					<label class="control-label bold">Build rating:</label>
+				</div>
+				<div class="col-md-10 col-sm-10 col-xs-10">
+					<label class="btn">
+						Light Build <input type="radio" ng-model="header.Build" value="0">
+					</label>
+					<label class="btn">
+						Medium Build <input type="radio" ng-model="header.Build" value="1">
+					</label>
+					<label class="btn">
+						Heavy Build <input type="radio" ng-model="header.Build" value="2">
 					</label>
 				</div>
 			</div>
