@@ -59,7 +59,7 @@ module.exports = function(io,cookie,cookieParser) {
         ua = useragent.parse(source);
 
         socket.on('reconnected',function(id){
-            
+            console.log("==========Reconnected=============: ",id);
             db.User.find({where:{id: id}},{raw:true})
                 .success(function(user){
                     if(user)

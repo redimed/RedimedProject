@@ -201,6 +201,16 @@ angular.module("app", [
 
     window.loading_screen.finish();
 
+    function closeWindow(){
+        var callingWindow= window.open('','RedimedCallingWindow', '');
+        callingWindow.focus();
+        callingWindow.close();
+
+        var whiteboardWindow = window.open('','RedimedWhiteboard', '');
+        whiteboardWindow.focus();
+        whiteboardWindow.close();
+    }
+
     socket.on('connect',function(){
         if ($cookieStore.get("userInfo"))
             socket.emit("reconnected", $cookieStore.get("userInfo").id);
@@ -208,7 +218,7 @@ angular.module("app", [
 
     socket.on('disconnect',function(){
         toastr.error("Disconnect From Server! Please Login Again!");
-
+        closeWindow();
         $cookieStore.remove("userInfo");
         $cookieStore.remove("companyInfo");
         $cookieStore.remove("doctorInfo");

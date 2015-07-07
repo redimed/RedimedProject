@@ -205,20 +205,21 @@ module.exports = {
 
         db.User.find({where:{id:id}},{raw:true})
             .success(function(data){
-                if(bcrypt.compareSync(oldPass,data.password) == true)
+                if(data)
                 {
-                    var hashPass = bcrypt.hashSync(newPass);
-                    db.User.update({password:hashPass},{id:id},{raw:true})
-                        .success(function(data){
-                            res.json({status:'success'});
-                        })
-                        .error(function(err){
-                            res.json({status:'error'});
-                        })
-                }
-                else
-                {
-                    res.json({status:'error'});
+                    if(bcrypt.compareSync(oldPass,data.password) == true)
+                    {
+                        var hashPass = bcrypt.hashSync(newPass);
+                        db.User.update({password:hashPass},{id:id},{raw:true})
+                            .success(function(data){
+                                res.json({status:'success'});
+                            })
+                            .error(function(err){
+                                res.json({status:'error'});
+                            })
+                    }
+                    else
+                        res.json({status:'error'});
                 }
             })
             .error(function(err){
