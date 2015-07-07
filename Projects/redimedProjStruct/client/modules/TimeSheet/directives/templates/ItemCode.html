@@ -79,7 +79,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-class-odd="'odd'" style="cursor: pointer; " ng-repeat="item in items">
+                            <tr ng-class-odd="'odd'" style="cursor: pointer; " ng-repeat="item in items" ng-form="formRepeat">
                                 <td ng-show="item.show===true" style="width:10%; text-align:center;">{{item.ITEM_ID}}</td>
                                 <!-- MORE -->
                                 <td ng-show="item.show===true" style="border:1px solid #ccc; text-align:left; width:30%;" ng-if="(item.ITEM_NAME | readMoreSelected).check===true">
@@ -95,19 +95,15 @@
                                 </td>
                                 <!-- END MORE -->
                                 <td ng-show="item.show===true" style="text-align:center;width:8%;">
-                                    <div ng-class="{'error-input':items[$index].time_charge==='' || items[$index].time_charge ===null || items[$index].time_charge===undefined}">
                                         <!-- TIME CHARGE NORMAL -->
-                                         <input type="text" tabindex="4" class="input-sm" ng-model="items[$index].time_charge" ui-mask="99:99" name="time_charge" ng-required="item.show===true" style="font-size:13px;border:1px solid #ccc;height:25px; text-align:center;" id="time_chargeID" time-charge>
+                                         <input type="text" tabindex="4" class="input-sm" ng-model="items[$index].time_charge" ui-mask="99:99" name="time_charge" ng-required="item.show===true" style="font-size:13px;border:1px solid #ECECEC;height:25px; text-align:center;" id="time_chargeID" time-charge form-validate="formRepeat.time_charge.$error">
                                         <!-- END -->
-                                    </div>
                                 </td>
                                 <td ng-show="item.show===true" style="text-align:center;width:8%;">
-                                    <div ng-class="{'error-input':items[$index].ratio==='' || items[$index].ratio ===null || items[$index].ratio===undefined}">
-                                        <input type="text" tabindex="4" class="input-sm" name="ratio" ng-model="items[$index].ratio" ng-required="item.show===true" style="font-size:13px;border:1px solid #ccc;height:25px; text-align:center;" id="ratioID" ng-change="changeTimeCharge($index,items[$index].ratio)" only-digits ng-maxlength="2">
-                                    </div>
+                                        <input type="text" tabindex="4" class="input-sm" name="ratio" ng-model="items[$index].ratio" ng-required="item.show===true" style="font-size:13px;border:1px solid #ccc;height:25px; text-align:center;" id="ratioID" ng-change="changeTimeCharge($index,items[$index].ratio)" only-digits ng-maxlength="2" model-validate="items[$index].ratio" form-validate="formRepeat.ratio.$error">
                                 </td>
                                 <td ng-show="item.show===true" style="text-align:center;width:auto;">
-                                    <input type="text" tabindex="3" class="input-sm" name="comment" ng-model="items[$index].comment" style="font-size:13px;border:1px solid #ccc;height:25px;" id="commentID">
+                                    <input type="text" tabindex="3" class="input-sm" name="comment" ng-model="items[$index].comment" style="font-size:13px;border:1px solid #ECECEC;height:25px;" id="commentID" model-validate="items[$index].comment" form-validate="formRepeat.comment.$error" ng-maxlength="200">
                                 </td>
                                 <td ng-show="item.show===true" style="text-align:center;width:2%;">
                                     <a ng-click="deleteItem($index)">

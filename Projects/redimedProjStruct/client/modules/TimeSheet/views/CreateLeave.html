@@ -147,30 +147,23 @@
                         </tr>
                         <!-- END TTILE -->
                         <!-- BODY -->
-                        <tr ng-repeat="l in info.infoTypeLeave">
+                        <tr ng-repeat="l in info.infoTypeLeave" ng-form="formRepeat">
                             <td style="width:50%; ">
                                 <label style="margin-top:3px;" ng-if="l.leave_type_id!==5">{{l.leave_name}}</label>
                                 <div class='col-md-3' style="width:auto;margin-left:-15px;" ng-if="l.leave_type_id===5">
                                     <label style="margin-top:3px;">{{l.leave_name}}</label>
                                 </div>
-                                <div class="col-md-9" style="margin-bottom:0px;" ng-if="l.leave_type_id===5">
-                                    <div ng-class="{'error-input': ((info.infoTypeLeave[$index].reason_leave!==undefined && info.infoTypeLeave[$index].reason_leave!==null && info.infoTypeLeave[$index].reason_leave!=='') || (info.infoTypeLeave[$index].time_leave!==undefined && info.infoTypeLeave[$index].time_leave!==null && info.infoTypeLeave[$index].time_leave!=='' && info.infoTypeLeave[$index].time_leave!==0)) && (info.infoTypeLeave[$index].type_other===undefined || info.infoTypeLeave[$index].type_other===null || info.infoTypeLeave[$index].type_other==='')}" style="width:437px;">
-                                        <input ng-if="l.leave_type_id===5" class="form-control input-sm" style=" width:435px; margin-bottom:0px;" ng-model="info.infoTypeLeave[$index].type_other" ng-required="((info.infoTypeLeave[$index].reason_leave!==undefined && info.infoTypeLeave[$index].reason_leave!==null && info.infoTypeLeave[$index].reason_leave!=='') || (info.infoTypeLeave[$index].time_leave!==undefined && info.infoTypeLeave[$index].time_leave!==null && info.infoTypeLeave[$index].time_leave!=='' && info.infoTypeLeave[$index].time_leave!==0)) && (info.infoTypeLeave[$index].type_other===undefined || info.infoTypeLeave[$index].type_other===null || info.infoTypeLeave[$index].type_other==='')" />
-                                    </div>
-                                </div>
+                                <input ng-if="l.leave_type_id===5" name="leave_type" class="form-control input-sm" style=" width:435px; margin-bottom:0px;" ng-model="info.infoTypeLeave[$index].type_other" ng-required="false" model-validate="info.infoTypeLeave[$index].time_leave" form-validate="formRepeat.leave_type.$error" ng-maxlength="500" />
                             </td>
                             <td style="width:10%;">
-                                <div ng-class="{'error-input':(info.infoTypeLeave[$index].reason_leave!==undefined && info.infoTypeLeave[$index].reason_leave!==null && info.infoTypeLeave[$index].reason_leave!=='') && (info.infoTypeLeave[$index].time_leave===undefined || info.infoTypeLeave[$index].time_leave===null || info.infoTypeLeave[$index].time_leave==='')}">
-                                    <!-- WHEN BEWEEN NON-STANDARD -->
-                                    <input type="text" ui-mask="999:99" ng-if="info.standard===0 && l.leave_type_id===1" class='form-control input-sm' ng-model="info.infoTypeLeave[$index].time_leave" ng-change="changeTime()" style="text-align:center; margin-bottom:0px;width:100%;" ng-required="info.infoTypeLeave[$index].reason_leave!==undefined && info.infoTypeLeave[$index].reason_leave!==null && info.infoTypeLeave[$index].reason_leave!==''" time-chargenon/>
-                                    <!-- END -->
-                                    <!-- WHEN STANDARD -->
-                                    <input type="text" ui-mask="99:99" ng-if="(info.standard===1 || (info.standard===0 && l.leave_type_id!==1))" class='form-control input-sm' ng-model="info.infoTypeLeave[$index].time_leave" ng-change="changeTime()" style="text-align:center; margin-bottom:0px;width:100%;" ng-required="(info.infoTypeLeave[$index].reason_leave!==undefined && info.infoTypeLeave[$index].reason_leave!==null && info.infoTypeLeave[$index].reason_leave!=='') && (info.infoTypeLeave[$index].time_leave===undefined || info.infoTypeLeave[$index].time_leave===null || info.infoTypeLeave[$index].time_leave==='')" time-charge/>
-                                    <!-- END -->
-                                </div>
+                                <input type="text" ui-mask="999:99" name="time_leave_nonStandard" ng-if="info.standard===0 && l.leave_type_id===1" class='form-control input-sm' ng-model="info.infoTypeLeave[$index].time_leave" ng-change="changeTime()" style="text-align:center; margin-bottom:0px;width:100%;" time-chargenon form-validate="formRepeat.time_leave_nonStandard.$error" require-validate="info.infoTypeLeave[$index].reason_leave" />
+                                <!-- END -->
+                                <!-- WHEN STANDARD -->
+                                <input type="text" ui-mask="99:99" name="time_leave_standard" ng-if="(info.standard===1 || (info.standard===0 && l.leave_type_id!==1))" class='form-control input-sm' ng-model="info.infoTypeLeave[$index].time_leave" ng-change="changeTime()" style="text-align:center; margin-bottom:0px;width:100%;" ng-required="false" time-chargeleave form-validate="formRepeat.time_leave_standard.$error" require-validate="info.infoTypeLeave[$index].reason_leave" />
+                                <!-- END -->
                             </td>
                             <td style="width:40%; text-align:center; ">
-                                <input type="text" style="margin-bottom:0px;width:100%; margin-left:2.5px;" class="form-control input-sm" ng-model="info.infoTypeLeave[$index].reason_leave" />
+                                <input type="text" name="reason_leave" style="margin-bottom:0px;width:100%; margin-left:2.5px;" class="form-control input-sm" ng-model="info.infoTypeLeave[$index].reason_leave" form-validate="formRepeat.reason_leave.$error" model-validate="info.infoTypeLeave[$index].reason_leave" ng-maxlength="500" />
                             </td>
                         </tr>
                         <tr>
@@ -183,7 +176,7 @@
                                 </label>
                             </td>
                             <td style="width:40%;">
-                                <input type="text" style="margin-bottom:0px; width:100%; margin-left:2.5px;" class="form-control input-sm" ng-model="info.reason_leave" />
+                                <input type="text" style="margin-bottom:0px; width:100%; margin-left:2.5px;" class="form-control input-sm" ng-model="info.reason_leave" name="reason_leave" model-validate="info.reason_leave" form-validate="formLeave.reason_leave.$error" ng-maxlength="500" />
                             </td>
                         </tr>
                         <!-- END BODY -->

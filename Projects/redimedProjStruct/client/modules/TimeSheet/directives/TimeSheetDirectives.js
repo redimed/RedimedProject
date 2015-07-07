@@ -10,4 +10,5 @@ angular.module("app.loggedIn.TimeSheet.Directives", [
     "app.loggedIn.TimeSheet.ViewLeave.Directive",
     "app.loggedIn.TimeSheet.ApproveLeave.Directive",
     "app.loggedIn.staff.calendar.directive",
+    "app.loggedIn.TimeSheet.formValidate.Directive"
 ]);
