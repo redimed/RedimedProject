@@ -2127,7 +2127,8 @@ module.exports =
            Patient_id:patientId,
            CAL_ID:calId,
            Created_by:userId,
-           Creation_date:currentTime
+           Creation_date:currentTime,
+           isEnable:1
         }
         req.getConnection(function(err,connection)
         {
@@ -2140,8 +2141,8 @@ module.exports =
                 }
                 else
                 {
-                    kiss.exlog("ID",data.id);
-                    res.json({status:'success',data:data});    
+                    console.log('iddddddddddddddddd',data.insertId)
+                    res.json({status:'success',data:data.insertId});    
                 }
             });
         });

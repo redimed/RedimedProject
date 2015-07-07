@@ -310,7 +310,8 @@ module.exports = {
                                                             .success(function(resultInfoLevel1) {
                                                                 if (resultNodeLevel2 !== undefined &&
                                                                     resultNodeLevel2 !== null &&
-                                                                    resultNodeLevel2.length !== 0) {
+                                                                    resultNodeLevel2.length !== 0 &&
+                                                                    resultNodeLevel2[0].TO_NODE_ID !== null) {
                                                                     var listNodeLevel2 = "";
                                                                     resultNodeLevel2.forEach(function(elemLevel2, indexLevel2) {
                                                                         listNodeLevel2 += elemLevel2.TO_NODE_ID + ", ";
@@ -397,7 +398,6 @@ module.exports = {
                                                                                 result[indexResult].person_charge = resultInfoLevel1[0].FirstName + " " + resultInfoLevel1[0].LastName;
                                                                             }
                                                                             //END LEVEL 1
-
                                                                         }
                                                                     });
                                                                     res.json({

@@ -84,7 +84,7 @@ angular.module("app.loggedIn.patient.appointment.controller", [])
                 $scope.cal_id = response.data;
                 // console.log($scope.cal_id);
                 rlobService.addApptPatient($scope.patient_id,response.data).then(function(data){
-                    console.log(data);
+                    // console.log(data);
                     if (data.status == 'success') {
                         angular.element('#popupNewAppoint').modal('hide');
                         angular.element('#popupNewAppoint').on('hidden.bs.modal', function (e) {

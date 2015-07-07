@@ -754,6 +754,7 @@ angular.module("app.model", [])
 	not_met_all_req: null,
 	improve_comment: '',
 	not_met_all_reason: '',
+	Build:'',
 })
 // END FA HEADER
 

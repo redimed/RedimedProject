@@ -103,6 +103,27 @@ and header.FA_ID =  $P{fa_id}]]>
 	<field name="ASSESSED_NAME" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="PATIENT_SIGN" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="can_perform_today" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="met_all_req" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="not_met_all_req" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="improve_comment" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="not_met_all_reason" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Build" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<title>
 		<band height="30">
 			<staticText>
@@ -371,7 +392,7 @@ and header.FA_ID =  $P{fa_id}]]>
 				</staticText>
 				<ellipse>
 					<reportElement mode="Transparent" x="9" y="0" width="161" height="30" uuid="ad1dc91a-9dc8-4b00-8783-44dce2a809f8">
-						<printWhenExpression><![CDATA[$F{Risk}.equals("0")]]></printWhenExpression>
+						<printWhenExpression><![CDATA[$F{Build}.equals("0")]]></printWhenExpression>
 					</reportElement>
 					<graphicElement>
 						<pen lineWidth="2.0"/>
@@ -379,7 +400,7 @@ and header.FA_ID =  $P{fa_id}]]>
 				</ellipse>
 				<ellipse>
 					<reportElement mode="Transparent" x="189" y="0" width="161" height="30" uuid="d2fae15a-da7f-4d3e-9d12-8b2398e3d99a">
-						<printWhenExpression><![CDATA[$F{Risk}.equals("1")]]></printWhenExpression>
+						<printWhenExpression><![CDATA[$F{Build}.equals("1")]]></printWhenExpression>
 					</reportElement>
 					<graphicElement>
 						<pen lineWidth="2.0"/>
@@ -387,7 +408,7 @@ and header.FA_ID =  $P{fa_id}]]>
 				</ellipse>
 				<ellipse>
 					<reportElement mode="Transparent" x="372" y="0" width="161" height="30" uuid="67e88ed8-31e4-499c-84ad-1e06cf7d83e0">
-						<printWhenExpression><![CDATA[$F{Risk}.equals("2")]]></printWhenExpression>
+						<printWhenExpression><![CDATA[$F{Build}.equals("2")]]></printWhenExpression>
 					</reportElement>
 					<graphicElement>
 						<pen lineWidth="2.0"/>

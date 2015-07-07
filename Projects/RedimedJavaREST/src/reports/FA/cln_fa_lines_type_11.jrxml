@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cln_lines_type_11" pageWidth="575" pageHeight="842" columnWidth="555" leftMargin="0" rightMargin="20" topMargin="0" bottomMargin="0" uuid="5e4aaed7-373e-4e0c-a27f-8074a717fb36">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
-	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.zoom" value="1.0263162364614133"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="patient_id" class="java.lang.String"/>
@@ -280,7 +280,7 @@ and line.SCORE_TYPE1=11]]>
 				<text><![CDATA[Good (3)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="445" y="49" width="110" height="16" uuid="eaab4165-4357-473e-8618-eb070d4403f5"/>
+				<reportElement x="445" y="65" width="110" height="16" uuid="eaab4165-4357-473e-8618-eb070d4403f5"/>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
@@ -294,7 +294,7 @@ and line.SCORE_TYPE1=11]]>
 				<text><![CDATA[Poor (1)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="445" y="65" width="110" height="16" uuid="7c2d2ebf-adfa-445d-8e9e-f7dc2901a418"/>
+				<reportElement x="445" y="49" width="110" height="16" uuid="7c2d2ebf-adfa-445d-8e9e-f7dc2901a418"/>
 				<box>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
@@ -324,7 +324,7 @@ and line.SCORE_TYPE1=11]]>
 				</graphicElement>
 			</ellipse>
 			<ellipse>
-				<reportElement mode="Transparent" x="432" y="49" width="131" height="16" uuid="5348739d-d5f2-458b-8fc2-f366732b3c58">
+				<reportElement mode="Transparent" x="432" y="65" width="131" height="16" uuid="5348739d-d5f2-458b-8fc2-f366732b3c58">
 					<printWhenExpression><![CDATA[$F{RATING_VALUE1}==2]]></printWhenExpression>
 				</reportElement>
 				<graphicElement>
@@ -332,7 +332,7 @@ and line.SCORE_TYPE1=11]]>
 				</graphicElement>
 			</ellipse>
 			<ellipse>
-				<reportElement mode="Transparent" x="432" y="65" width="131" height="16" uuid="315124de-f04c-46e9-b10b-2e473b969145">
+				<reportElement mode="Transparent" x="432" y="49" width="131" height="16" uuid="315124de-f04c-46e9-b10b-2e473b969145">
 					<printWhenExpression><![CDATA[$F{RATING_VALUE1}==1]]></printWhenExpression>
 				</reportElement>
 				<graphicElement>
