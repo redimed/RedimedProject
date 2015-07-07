@@ -268,7 +268,7 @@ module.exports = {
                                     //END LEAVE ID
 
                                     var queryGetNodeIdLevel1 =
-                                        "SElECT DISTINCT sys_hierarchy_nodes.TO_NODE_ID " + //SELECT
+                                        "SElECT DISTINCT sys_hierarchy_nodes.TO_NODE_ID, sys_hierarchy_nodes.NODE_CODE, sys_hierarchies_users.DEPARTMENT_CODE_ID " + //SELECT
                                         "FROM hr_leave " + //FROM
                                         "INNER JOIN users ON hr_leave.user_id = users.id " + //JOIN
                                         "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " + //JOIN
@@ -289,15 +289,27 @@ module.exports = {
                                                 } else {
                                                     listNodeLevel1 = "(" + listNodeLevel1.substring(0, listNodeLevel1.length - 2) + ")";
                                                 }
+                                                var queryAdd = "";
+                                                if (resultNodeIdLevel1[0].NODE_CODE === 'Staff') {
+                                                    queryAdd = " AND sys_hierarchies_users.DEPARTMENT_CODE_ID = :deptId";
+                                                }
                                                 var queryGetNodeIdLevel2 =
                                                     "SElECT DISTINCT sys_hierarchy_nodes.TO_NODE_ID " + //SELECT
                                                     "FROM sys_hierarchy_nodes " + //FROM
                                                     "INNER JOIN sys_hierarchies_users ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " + //JOIN
                                                     "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " + //JOIN
-                                                    "WHERE sys_hierarchy_group.GROUP_TYPE='Time Sheet' AND sys_hierarchy_nodes.NODE_ID IN " + listNodeLevel1; //WHERE
-                                                db.sequelize.query(queryGetNodeIdLevel2)
+                                                    "WHERE sys_hierarchy_group.GROUP_TYPE='Time Sheet' AND sys_hierarchy_nodes.NODE_ID IN " + listNodeLevel1 + queryAdd; //WHERE
+                                                db.sequelize.query(queryGetNodeIdLevel2, null, {
+                                                        raw: true
+                                                    }, {
+                                                        deptId: resultNodeIdLevel1[0].DEPARTMENT_CODE_ID
+                                                    })
                                                     .success(function(resultNodeLevel2) {
                                                         //GET INFO LEVEL 1 AND LEVEL 2
+                                                        var queryAdd = "";
+                                                        if (resultNodeIdLevel1[0].NODE_CODE === 'Staff') {
+                                                            queryAdd = " AND sys_hierarchies_users.DEPARTMENT_CODE_ID = :deptId";
+                                                        }
                                                         var queryGetInfoLevel1 =
                                                             "SElECT hr_employee.FirstName, hr_employee.LastName " + //SELECT
                                                             "FROM hr_employee " + //FROM
@@ -305,12 +317,17 @@ module.exports = {
                                                             "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " + //JOIN
                                                             "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " + //JOIN
                                                             "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " + //JOIN
-                                                            "WHERE sys_hierarchy_group.GROUP_TYPE='Time Sheet' AND sys_hierarchy_nodes.NODE_ID IN " + listNodeLevel1; //WHERE
-                                                        db.sequelize.query(queryGetInfoLevel1)
+                                                            "WHERE sys_hierarchy_group.GROUP_TYPE='Time Sheet' AND sys_hierarchy_nodes.NODE_ID IN " + listNodeLevel1 + queryAdd; //WHERE
+                                                        db.sequelize.query(queryGetInfoLevel1, null, {
+                                                                raw: true
+                                                            }, {
+                                                                deptId: resultNodeIdLevel1[0].DEPARTMENT_CODE_ID
+                                                            })
                                                             .success(function(resultInfoLevel1) {
                                                                 if (resultNodeLevel2 !== undefined &&
                                                                     resultNodeLevel2 !== null &&
-                                                                    resultNodeLevel2.length !== 0) {
+                                                                    resultNodeLevel2.length !== 0 &&
+                                                                    resultNodeLevel2[0].TO_NODE_ID !== null) {
                                                                     var listNodeLevel2 = "";
                                                                     resultNodeLevel2.forEach(function(elemLevel2, indexLevel2) {
                                                                         listNodeLevel2 += elemLevel2.TO_NODE_ID + ", ";
@@ -397,7 +414,6 @@ module.exports = {
                                                                                 result[indexResult].person_charge = resultInfoLevel1[0].FirstName + " " + resultInfoLevel1[0].LastName;
                                                                             }
                                                                             //END LEVEL 1
-
                                                                         }
                                                                     });
                                                                     res.json({
