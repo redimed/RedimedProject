@@ -3,8 +3,8 @@ var db = require('./models');
 var parser = require('socket.io-cookie');
 var useragent = require('express-useragent');
 
-var apiKey = "45250512";
-var apiSecret = "dbc771fe427700feea2e481c56457f6024c72088";
+var apiKey = "45279332";
+var apiSecret = "8d7639ab2088de84784beab28b3167f78a08c674";
 
 var OpenTok = require('opentok'),
     opentok = new OpenTok(apiKey, apiSecret);
@@ -59,11 +59,12 @@ module.exports = function(io,cookie,cookieParser) {
         ua = useragent.parse(source);
 
         socket.on('reconnected',function(id){
+            
             db.User.find({where:{id: id}},{raw:true})
                 .success(function(user){
                     if(user)
                     {
-                        socket.join(user.user_name);
+                        socket.join(user.user_name.toLowerCase()+'--'+user.id);
                         db.User.update({
                             socket: socket.id
                         },{id:id})
@@ -76,6 +77,36 @@ module.exports = function(io,cookie,cookieParser) {
                         
                     }
                 })
+        })
+
+        socket.on('disconnect',function(){
+            var roomObj = io.sockets.adapter.rooms;
+            var arrUser = [];
+            for (var key in roomObj) {
+                if(key.indexOf('--') != -1)
+                    arrUser.push(key.split('--')[1]);
+            }
+
+            if(arrUser.length > 0)
+            {
+                db.sequelize.query("UPDATE users SET socket = null WHERE id NOT IN (?)",null,{raw:true},[arrUser])
+                    .success(function(){
+                        getOnlineUser();
+                    })
+                    .error(function(err){
+                        console.log(err);
+                    })
+            }
+            else
+            {
+                db.User.update({socket: null})
+                    .success(function(){
+                        getOnlineUser();
+                    })
+                    .error(function(err){
+                        console.log(err);
+                    })
+            }
         })
 
         socket.on('notifyPatient',function(apptId){
@@ -105,8 +136,7 @@ module.exports = function(io,cookie,cookieParser) {
                         {
                             db.User.find({where:{id: doctor.User_id}},{raw:true})
                                 .success(function(user){
-                                    if(user.socket)
-                                        io.to(user.socket).emit('receiveNotifyDoctor');
+                                    socket.to(user.user_name.toLowerCase()+'--'+user.id).emit('receiveNotifyDoctor');
                                 })
                                 .error(function(err){
                                     console.log(err);
@@ -129,8 +159,7 @@ module.exports = function(io,cookie,cookieParser) {
                             {
                                 for(var i=0; i< users.length; i++)
                                 {
-                                    if(users[i].socket)
-                                        io.to(users[i].socket).emit('receiveNotifyReceptionist');
+                                    socket.to(users[i].user_name.toLowerCase()+'--'+users[i].id).emit('receiveNotifyReceptionist');
                                 }   
                             }
                         })
@@ -188,8 +217,7 @@ module.exports = function(io,cookie,cookieParser) {
 
                                            // io.to(contact.socket)
                                            //      .emit('messageReceived',currentUser.id ,currentUser.user_name, message);
-                                           console.log("=====Rooms======: ",io.sockets.adapter.rooms);
-                                            socket.to(contact.user_name.toLowerCase()).emit('messageReceived',currentUser.id ,currentUser.user_name, message);
+                                            socket.to(contact.user_name.toLowerCase()+'--'+contact.id).emit('messageReceived',currentUser.id ,currentUser.user_name, message);
 
                                             // ==============GCM PUSH==============
                                             var gcmMessage = new gcm.Message();
@@ -243,7 +271,7 @@ module.exports = function(io,cookie,cookieParser) {
                                             // io.to(contact.socket)
                                                 // .emit('messageReceived',currentUser.id ,currentUser.user_name, message);
 
-                                            socket.to(contact.user_name.toLowerCase()).emit('messageReceived',currentUser.id ,currentUser.user_name, message);
+                                            socket.to(contact.user_name.toLowerCase()+'--'+contact.id).emit('messageReceived',currentUser.id ,currentUser.user_name, message);
                                         }
                                     }
 
@@ -261,16 +289,15 @@ module.exports = function(io,cookie,cookieParser) {
         });
 
         socket.on('forceLogin',function(username){
-
             db.User.find({where:{user_name: username}},{raw:true})
                 .success(function(user){
                     if(user.socket != null)
                     {
+                        socket.to(user.user_name.toLowerCase()+'--'+user.id).emit('forceLogout');
                         db.User.update({
                             socket: null
-                        },{user_name: username})
+                        },{id: user.id})
                             .success(function(){
-                                io.to(user.socket).emit('forceLogout');
                                 getOnlineUser();
                             })
                             .error(function(err){
@@ -281,7 +308,6 @@ module.exports = function(io,cookie,cookieParser) {
                 .error(function(err){
                     console.log(err);
                 })
-
         })
 
         socket.on('checkLogin',function(username){
@@ -301,16 +327,22 @@ module.exports = function(io,cookie,cookieParser) {
         });
 
         socket.on('updateSocketLogin',function(username){
-            socket.join(username);
-            db.User.update({
-                socket: socket.id
-            },{user_name: username})
-                .success(function(){
-                    getOnlineUser();
-                    socket.emit('login_success')
-                })
-                .error(function(err){
-                    console.log(err);
+            db.User.find({where:{user_name: username}},{raw:true})
+                .success(function(user){
+                    if(user)
+                    {
+                        socket.join(user.user_name.toLowerCase()+'--'+user.id);
+                        db.User.update({
+                            socket: socket.id
+                        },{user_name: username})
+                            .success(function(){
+                                getOnlineUser();
+                                socket.emit('login_success')
+                            })
+                            .error(function(err){
+                                console.log(err);
+                            })
+                    }
                 })
 
         })
@@ -349,7 +381,7 @@ module.exports = function(io,cookie,cookieParser) {
                                        io.sockets.emit('driverLogout',id);
 
                                    socket.emit('logoutSuccess');
-                                    socket.leave(username);
+                                    socket.leave(username+'--'+id);
                                    getOnlineUser();
                                })
                                .error(function(err){
@@ -392,11 +424,7 @@ module.exports = function(io,cookie,cookieParser) {
                 db.User.find({where:{id:id}},{raw:true})
                     .success(function(user){
                         if(user)
-                        {
-                            if(user.socket != null)
-                                io.to(user.socket).emit('getMeasureData',info);
-                        }
-
+                            socket.to(user.user_name.toLowerCase()+'--'+user.id).emit('getMeasureData', info);
                     })
                     .error(function(err){
                         console.log(err);
