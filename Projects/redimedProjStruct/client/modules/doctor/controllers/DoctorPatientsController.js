@@ -54,7 +54,7 @@ angular.module("app.loggedIn.doctor.patients.controller", [
                     datetime : moment().format('YYYY-MM-DD hh:mm:ss'),
                     patient_id :list.Patient_id
                 }
-                //exlog.alert(postData)
+                ////exlog.alert(postData)
                 CompanyModel.getFromTime(postData)
                 .then(function(response){
                     if (response.data == -1 ) {
