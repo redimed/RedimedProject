@@ -1,6 +1,6 @@
 angular.module('app.loggedIn.invoice.add.directive', [])
 
-.directive('invoiceAdd', function($stateParams,$modal,InvoiceHeaderModel, PatientService, ConfigService, InvoiceService, ReceptionistService, toastr, $filter, $state, CompanyService){
+.directive('invoiceAdd', function($stateParams,$modal,PatientService,InvoiceHeaderModel, ConfigService, InvoiceService, ReceptionistService, toastr, $filter, $state, CompanyService){
 	var arrGetBy = $filter('arrGetBy');	
 	return {
 		restrict: 'EA',
@@ -22,67 +22,51 @@ angular.module('app.loggedIn.invoice.add.directive', [])
 			}//end init
 			init();
 
-			/*
-			*	SEARCH PATIENT
-			*/
-
-			$scope.patientSearch = {
-				is_show: false,
-				open: function() {
-					this.is_show = true;
-				},
-				close: function() {
-					this.is_show = false;
-				},
-				click: function(item) {
-					$scope.InvoiceMap.Patient_id = item.Patient_id;
-					$scope.InvoiceMap.Company_id = item.company_id;
-					$scope.InvoiceMap.patient = {
-						full_name: item.First_name + ' ' + item.Sur_name
-					}
-					$scope.patientSearch.close();
-
-					// LOAD COMPANY
-					CompanyService.get(item.company_id).then(function(response){
-						if( response.status == 'success' && response.data) {
-							var company = response.data;
-							$scope.InvoiceMap.company = {Company_name: company.Company_name};
+			// PATIENT_ID 
+            if($scope.patient) {
+            	$scope.InvoiceMap.Patient_id = $scope.patient;
+            	PatientService.mdtById($scope.patient).then(function(data){
+            		if (data.status == 'success') {
+						$scope.InvoiceMap.patient = {
+							full_name: data.data.First_name + ' ' + data.data.Middle_name +' '+ data.data.Sur_name
 						}
-					})
+						if (data.company) {
+							// alert('zozozo');
+							$scope.InvoiceMap.Company_id = data.data.company_id;
+							$scope.InvoiceMap.company = {Company_name: data.company.Company_name};
+						};
+            		};
+            	})
+			}
 
-					// LOAD CLAIM 
-					// $scope.patientClaim.options.search.Patient_id = item.Patient_id;
-			 		$scope.patientClaimPanel.reload();
-				}
+			if($scope.calendar) {
+				$scope.InvoiceMap.cal_id = $scope.calendar;
 			}
 
 			/*
 			*	SEARCH DOCTOR
 			*/
-
 			$scope.doctorSearch = {
 				open: function() {
 					$modal.open({
 						templateUrl: 'popupDoctorSearch',
-						controller: function($scope, $modalInstance){
-							
+						controller: function($scope, $modalInstance,ConfigService){
+							$scope.rowClick = function(item){
+								ConfigService.system_service_by_clinical(item.CLINICAL_DEPT_ID).then(function(response){
+									$modalInstance.close({item:item,response:response});
+								});
+							}
 						},
 						size: 'md'
 					})
-				},
-				click: function(item) {
-					$scope.InvoiceMap.DOCTOR_ID = item.doctor_id;
-					$scope.InvoiceMap.DEPT_ID = item.CLINICAL_DEPT_ID;
-
-					$scope.InvoiceMap.doctor = {
-						NAME: item.NAME
-					}
-					$scope.doctorSearch.close();
-					// LOAD SERVICE
-
-					ConfigService.system_service_by_clinical(item.CLINICAL_DEPT_ID).then(function(response){
-						$scope.opt_services = [{SERVICE_ID: '', SERVICE_NAME: '-- Choose Service --'}].concat(response);
-					});
+					.result.then(function(data){
+						$scope.InvoiceMap.DOCTOR_ID = data.item.doctor_id;
+						$scope.InvoiceMap.DEPT_ID = data.item.CLINICAL_DEPT_ID;
+						$scope.InvoiceMap.doctor = {
+							NAME: data.item.NAME
+						}
+						$scope.opt_services = [{SERVICE_ID: '', SERVICE_NAME: '-- Choose Service --'}].concat(data.response);
+					})
 				}
 			}
 
@@ -90,119 +74,102 @@ angular.module('app.loggedIn.invoice.add.directive', [])
 			/*
 			*	SEARCH CLAIM
 			*/
-            $scope.patientClaimPanel = {};
 
 			$scope.patientClaim = {
-				is_show: false,
 				open: function() {
-					this.is_show = true;
+					$modal.open({
+						templateUrl:'popupSelectClaim',
+						controller: function($scope,$modalInstance,patient_id){
+            				$scope.patientClaimPanel = {};
+							$scope.options = {
+				                api:'api/erm/v2/patients/claims',
+				                method:'post',
+				                scope:$scope.patientClaimPanel,
+				                columns: [
+				                	{field: 'Claim_id', is_hide: true},
+				                    {field: 'Injury_name', label: 'Injury'},
+				                    {field: 'Insurer'} ,
+				                    {field: 'insurer_id', is_hide: true}//tan add
+				                ],
+				                not_load: false,
+				                search: {Patient_id: patient_id}
+				            };
+							$scope.rowClick = function(item){
+								$modalInstance.close({item:item});
+							};
+						},
+						size:'md',
+						resolve: {
+							patient_id:function(){
+								return $scope.patient;
+							}
+						}
+					})
+					.result.then(function(data){
+						$scope.InvoiceMap.claim = data.item;
+						$scope.InvoiceMap.Insurer_id = data.item.insurer_id;//tan add
+						$scope.InvoiceMap.claim_id = data.item.Claim_id;
+						$scope.InvoiceMap.insurer = { insurer_name: data.item.Insurer };
+					});
 				},
-				close: function() {
-					this.is_show = false;
-				},
-				click: function(item) {
-					$scope.InvoiceMap.claim = item;
-					// $scope.InvoiceMap.Insurer_id = item.insurer_site;//tan comment
-					$scope.InvoiceMap.Insurer_id = item.insurer_id;//tan add
-					$scope.InvoiceMap.claim_id = item.Claim_id;
-					$scope.InvoiceMap.insurer = { insurer_name: item.Insurer };
-					$scope.patientClaim.close();
-
-				},
-				options:{
-	                api:'api/erm/v2/patients/claims',
-	                method:'post',
-	                scope: $scope.patientClaimPanel,
-	                columns: [
-	                	{field: 'Claim_id', is_hide: true},
-	                    {field: 'Injury_name', label: 'Injury'},
-	                    {field: 'Insurer'} ,
-	                    // {field: 'insurer_site', is_hide: true}//tan comment
-	                    {field: 'insurer_id', is_hide: true}//tan add
-	                ],
-	                not_load: false,
-	                search: {Patient_id: $scope.patient}
-	            },   
+				
 			}
 
 			/*
 			*	SEARCH ITEM
 			*/
-			$scope.itemSearchPanel = {}
 
 			$scope.itemSearch = {
-				is_show: false,
 				open: function() {
-					this.is_show = true;
-				},
-				close: function() {
-					this.is_show = false;
-				},
-				click: function(item) {
-					console.log($scope.InvoiceMap.lines);
-					var t_item = arrGetBy($scope.InvoiceMap.lines, 'ITEM_ID', item.ITEM_ID);
-					if(t_item) {
-						return;
-					}
-					item.ITEM_NAME = item.ITEM_NAME.substring(0, 50);
-					item.QUANTITY = 1;
-					item.TIME_SPENT = 0;
-					item.IS_ENABLE = 1;
-					
-					$scope.InvoiceMap.lines.push(item);
+					$modal.open({
+						templateUrl:'popupChooseItem',
+						controller: function($scope,$modalInstance){
+							$scope.itemSearchPanel = {};
+							$scope.itemSearchOption = {
+				                api:'api/erm/v2/items/search',
+				                method:'post',
+				                scope: $scope.itemSearchPanel,
+				                columns: [
+				                    {field: 'ITEM_ID', is_hide: true},
+				                    {field: 'ITEM_CODE', label: 'Item Code', width:"10%"},
+				                    {field: 'ITEM_NAME', label: 'Item Name'},    
+				            	],
+				                use_filters:true,
+				                filters:{
+				                    ITEM_CODE: {type: 'text'},
+				                    ITEM_NAME: {type: 'text'},
+				                }
+				            };
+				            $scope.rowClick = function(item){
+				            	$modalInstance.close({item:item});
+				            }
+						},
+						size:'md',
+					})
+					.result.then(function(data){
+						var t_item = arrGetBy($scope.InvoiceMap.lines, 'ITEM_ID', data.item.ITEM_ID);
+						if(t_item) {
+							return;
+						}
+						data.item.ITEM_NAME = data.item.ITEM_NAME.substring(0, 50);
+						data.item.QUANTITY = 1;
+						data.item.TIME_SPENT = 0;
+						data.item.IS_ENABLE = 1;
+						
+						$scope.InvoiceMap.lines.push(data.item);
 
-					ReceptionistService.itemFeeAppt($scope.InvoiceMap.SERVICE_ID,[item.ITEM_ID]).then(function(response){
-	                    if(response.list.length > 0) {
-	                        item.PRICE = response.list[0].SCHEDULE_FEE
-	                        item.has_price = true;
-	                    } else {
-	                        item.PRICE = 0;
-	                        item.has_price = false;
-	                    }
-	                });
+						ReceptionistService.itemFeeAppt($scope.InvoiceMap.SERVICE_ID,[data.item.ITEM_ID]).then(function(response){
+		                    if(response.list.length > 0) {
+		                        data.item.PRICE = response.list[0].SCHEDULE_FEE
+		                        data.item.has_price = true;
+		                    } else {
+		                        data.item.PRICE = 0;
+		                        data.item.has_price = false;
+		                    }
+		                });
+					})
 				}
 			}
-
-			$scope.itemSearchOption = {
-                api:'api/erm/v2/items/search',
-                method:'post',
-                scope: $scope.itemSearchPanel,
-                columns: [
-                    {field: 'ITEM_ID', is_hide: true},
-                    {field: 'ITEM_CODE', label: 'Item Code', width:"10%"},
-                    {field: 'ITEM_NAME', label: 'Item Name'},    
-            	],
-                use_filters:true,
-                filters:{
-                    ITEM_CODE: {type: 'text'},
-                    ITEM_NAME: {type: 'text'},
-                }
-            }
-
-            // PATIENT_ID 
-            if($scope.patient) {
-            	$scope.InvoiceMap.Patient_id = $scope.patient;
-            	PatientService.get($scope.patient).then(function(response){
-            		var p = response.data;
-            		if(response.data) {
-            			$scope.InvoiceMap.Company_id = p.company_id;
-						$scope.InvoiceMap.patient = {
-							full_name: p.First_name + ' ' + p.Sur_name
-						}
-						CompanyService.get(p.company_id).then(function(response){
-							if( response.status == 'success' && response.data) {
-								var company = response.data;
-								$scope.InvoiceMap.company = {Company_name: company.Company_name};
-							}
-						});
-
-						$scope.patientClaim.options.search.Patient_id = p.Patient_id;
-            		}
-            	})
-			}
-
-			if($scope.calendar) 
-				$scope.InvoiceMap.cal_id = $scope.calendar;
 
 			/*
 			*	FUNCTION 

@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.patient.invoices.controller", [])
-.controller("PatientInvoicesController", function($scope, $state, $stateParams, PatientService, ConfigService){
+.controller("PatientInvoicesController", function($scope, $state,toastr,$modal, $stateParams, PatientService, ConfigService){
 	var patient_id = $stateParams.patient_id;
     $scope.patient_id = patient_id;
     var cal_id = $stateParams.cal_id;
@@ -69,16 +69,35 @@ angular.module("app.loggedIn.patient.invoices.controller", [])
     $scope.addFormInvoice = {
         open: function () {
             $modal.open({
-                templateUrl: 'popupDoctorSearch',
-                controller: function($scope, $modalInstance){
-                    
+                templateUrl: 'popupAddInvoice',
+                controller: function($scope, $modalInstance,options,patient_id,cal_id){
+                    $scope.options = options;
+                    $scope.patient_id = patient_id;
+                    $scope.cal_id = cal_id;
+                    $scope.success = function(){
+                        $modalInstance.close({'status':'success'});
+                    }
                 },
-                size: 'lg'
+                size: 'lg',
+                resolve:{
+                    options:function(){
+                        return $scope.options;
+                    },
+                    patient_id:function(){
+                        return $stateParams.patient_id;
+                    },
+                    cal_id:function(){
+                        return $stateParams.cal_id;
+                    }
+
+                }
             })
-        },
-        success: function(){
-            $scope.addFormInvoice.close();
-            $scope.invoicePanel.reload();
+            .result.then(function(data){
+                if (data.status == 'success') {
+                    $scope.invoicePanel.reload();
+                    toastr.success('Save successfully!','Success!');
+                };
+            })
         }
     }
 
