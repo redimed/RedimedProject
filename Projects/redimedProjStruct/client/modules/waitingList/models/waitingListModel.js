@@ -18,6 +18,14 @@ angular.module('app.loggedIn.waitingList.models', [])
 		var instanceApi = mainApi.all('remove');
 		return instanceApi.post({data: data});
 	}
+	mainModel.remove = function(data){
+		var instanceApi = mainApi.all('remove');
+		return instanceApi.post({data: data});
+	}
+	mainModel.getPatientFromId = function(data){
+		var instanceApi = mainApi.all('getPatientFromId');
+		return instanceApi.post({data: data});
+	}
 
 	return mainModel;
 })
