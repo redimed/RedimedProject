@@ -3967,8 +3967,7 @@ label{
 .un_header_notification_list i{
     font-size: 47px;
     position: absolute;
-    top: 17px;
-    border-left: -1px solid red;
+    top: 16px;
     right: 14px;
 }
 .un_body_notification_list{

@@ -211,14 +211,16 @@
  <!-- END POPUP PATIENT SEARCH  -->
 
 <!-- POPUP DOCTOR SEARCH -->
-<div class="mdt-search" style="display: block;" ng-show="doctorSearch.is_show">
-    <div class="pull-right text-center ng-scope">
-        <button class="btn btn-sm btn-block red" ng-click="doctorSearch.close()">
-            <i class="fa fa-times"></i>
-        </button>
-    </div>
-    <mdtdoctor-search click-row="doctorSearch.click(row)"></mdtdoctor-search>
-</div>
+<script type="text/ng-template" id="popupDoctorSearch">
+	<style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+    </style>
+	<div class="modal-body">	
+    	<mdtdoctor-search click-row="doctorSearch.click(row)"></mdtdoctor-search>
+	</div>
+</script>
  <!-- END POPUP DOCTOR SEARCH  -->
 
 

@@ -1,6 +1,6 @@
 angular.module('app.loggedIn.invoice.add.directive', [])
 
-.directive('invoiceAdd', function($stateParams,InvoiceHeaderModel, PatientService, ConfigService, InvoiceService, ReceptionistService, toastr, $filter, $state, CompanyService){
+.directive('invoiceAdd', function($stateParams,$modal,InvoiceHeaderModel, PatientService, ConfigService, InvoiceService, ReceptionistService, toastr, $filter, $state, CompanyService){
 	var arrGetBy = $filter('arrGetBy');	
 	return {
 		restrict: 'EA',
@@ -61,12 +61,14 @@ angular.module('app.loggedIn.invoice.add.directive', [])
 			*/
 
 			$scope.doctorSearch = {
-				is_show: false,
 				open: function() {
-					this.is_show = true;
-				},
-				close: function() {
-					this.is_show = false;
+					$modal.open({
+						templateUrl: 'popupDoctorSearch',
+						controller: function($scope, $modalInstance){
+							
+						},
+						size: 'md'
+					})
 				},
 				click: function(item) {
 					$scope.InvoiceMap.DOCTOR_ID = item.doctor_id;

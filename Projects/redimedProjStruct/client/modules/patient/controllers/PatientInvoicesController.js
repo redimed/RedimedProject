@@ -67,12 +67,14 @@ angular.module("app.loggedIn.patient.invoices.controller", [])
 	};
 
     $scope.addFormInvoice = {
-        is_show: false,
         open: function () {
-            this.is_show = true;
-        },
-        close: function () {
-            this.is_show = false;
+            $modal.open({
+                templateUrl: 'popupDoctorSearch',
+                controller: function($scope, $modalInstance){
+                    
+                },
+                size: 'lg'
+            })
         },
         success: function(){
             $scope.addFormInvoice.close();
