@@ -749,7 +749,7 @@ module.exports = {
     getInjuryConsultation: function(req,res){
       var injuryId = req.body.injury_id;
       
-      db.sequelize.query("SELECT c.*, f.`Ass_id` AS FirstAssId, p.`progress_id` AS ProgressAssId, fi.`id` AS FinalAssId, g.`id` AS GeneralAssId "+
+      db.sequelize.query("SELECT c.*, f.`Ass_id` AS FirstAssId, f.examDate AS FirstAssDate , p.`progress_id` AS ProgressAssId, p.examDate AS ProgressAssDate , fi.`id` AS FinalAssId, fi.examDate AS FinalAssDate , g.`id` AS GeneralAssId, g.examDate AS GeneralAssDate "+
                           "FROM cln_patient_consults c "+
                           "LEFT JOIN th_first_assessment f ON c.`patient_id` = f.`patient_id` AND c.`cal_id` = f.`cal_id` "+
                           "LEFT JOIN th_progress_assessment p ON c.`patient_id` = p.`patient_id` AND c.`cal_id` = p.`cal_id` "+
@@ -771,25 +771,24 @@ module.exports = {
                   var tempFirst = [], tempProgress = [], tempFinal = [], tempGeneral = [];
                   for(var i=0; i< data.length; i++)
                   {
-                      console.log(data[i]);
                       if(data[i].FirstAssId != null)
-                        tempFirst.push(data[i].FirstAssId);
+                        tempFirst.push({id:data[i].FirstAssId, date:data[i].FirstAssDate});
                       if(data[i].ProgressAssId != null)
-                        tempProgress.push(data[i].ProgressAssId);
+                        tempProgress.push({id:data[i].ProgressAssId, date:data[i].ProgressAssDate});
                       if(data[i].FinalAssId != null)
-                        tempFinal.push(data[i].FinalAssId);
+                        tempFinal.push({id:data[i].FinalAssId, date:data[i].FinalAssDate});
                       if(data[i].GeneralAssId != null)
-                        tempGeneral.push(data[i].GeneralAssId);
+                        tempGeneral.push({id:data[i].GeneralAssId, date:data[i].GeneralAssDate});
                   }
 
                   if(tempFirst.length > 0)
-                    result.firstArr = _.uniq(tempFirst);
+                    result.firstArr = _.uniq(tempFirst,function(item){return JSON.stringify(item);});
                   if(tempProgress.length > 0)
-                    result.progressArr = _.uniq(tempProgress);
+                    result.progressArr = _.uniq(tempProgress,function(item){return JSON.stringify(item);});
                   if(tempFinal.length > 0)
-                    result.finalArr = _.uniq(tempFinal);
+                    result.finalArr = _.uniq(tempFinal,function(item){return JSON.stringify(item);});
                   if(tempGeneral.length > 0)
-                    result.generalArr = _.uniq(tempGeneral);
+                    result.generalArr = _.uniq(tempGeneral,function(item){return JSON.stringify(item);});
 
                   res.json({status:'success', data: result});
               }
