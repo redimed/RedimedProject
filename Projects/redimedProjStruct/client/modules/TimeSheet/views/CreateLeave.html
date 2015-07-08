@@ -116,22 +116,26 @@
             </div>
             <!-- STANDARD - NON-STANDARD -->
             <div class='row'>
-                <div class='col-md-1' style='width:5px;'>
-                    <input type='radio' id='idStandard' ng-model="info.standard" ng-value="1" ng-click="clickStandardChange(1)" />
-                </div>
-                <div class='col-md-3 col-sm-3' style='width:auto; margin-left:-10px;'>
-                    <label class='control-label bold' for='idStandard'>STANDARD LEAVE REQUEST</label>
-                </div>
-                <div class='col-md-1' style='width:5px;'>
-                    <input type='radio' id='idNonStandard' ng-model="info.standard" ng-value="0" ng-click="clickStandardChange(0)" />
-                </div>
-                <div class='col-md-3 col-sm-3' style='margin-left:-10px;'>
-                    <label class='control-label bold' for='idNonStandard'>NON-STANDARD LEAVE REQUEST</label>
-                </div>
+                <label for='idStandard' class='col-md-6 col-sm-6' style='width:270px; margin-left:-15px;'>
+                    <div class='col-md-1' style='width:5px;'>
+                        <input type='radio' name="standard" id='idStandard' ng-model="info.standard" ng-value="1" ng-click="clickStandardChange(1)" />
+                    </div>
+                    <div class='col-md-11 col-sm-11' style='margin-left:-10px;'>
+                        <span class='control-label bold'>STANDARD LEAVE REQUEST</span>
+                    </div>
+                </label>
+                <label for='idNonStandard' class='col-md-6 col-sm-6'>
+                    <div class='col-md-1' style='width:5px;'>
+                        <input type='radio' name="nonStandard" id='idNonStandard' ng-model="info.standard" ng-value="0" ng-click="clickStandardChange(0)" />
+                    </div>
+                    <div class='col-md-11 col-sm-11' style='margin-left:-10px;'>
+                        <span class='control-label bold' for='idNonStandard'>NON-STANDARD LEAVE REQUEST</span>
+                    </div>
+                </label>
             </div>
             <!-- END -->
             <div>
-                <span class="bold">Note:</span><span> When taking Personal Leave (sick), for absences of 1 day or more, a medical certificate or statutory declaration is required. Please ensure this is submitted along with completed Leave Form.</span>
+                <span class="bold">Note:</span><span> When taking Personal Leave (Sick Leave), for absences of 1 day or more, a medical certificate or statutory declaration is required. Please ensure this is submitted along with completed Leave Form.</span>
             </div>
         </div>
         <!-- STANDARD LEAVE REQUEST -->
