@@ -1123,8 +1123,13 @@ table.timetable-table td:last-child {
     font-size: 13px;
 }
 
-.label-paperless {
+.top-10 {
     margin-top: 10px;
+}
+
+.addon-paperless {
+    background-color: #fff !important;
+    border: none !important;
 }
 
 .submited {
