@@ -59,7 +59,7 @@ module.exports = {
 
 				res.json({status:'success',
 						  injury: apptInjury,
-						  upcoming: resultUpcoming,
+						  upcoming: apptUpcoming,
 						  completed: apptComplete});
 			})
 			.error(function(err){
