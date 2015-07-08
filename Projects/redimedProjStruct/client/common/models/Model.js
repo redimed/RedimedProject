@@ -755,6 +755,14 @@ angular.module("app.model", [])
 	improve_comment: '',
 	not_met_all_reason: '',
 	Build:'',
+	is_have_resting_measurement: null,
+	height:'',
+	weight:'',
+	bmi:'',
+	waist_girth:'',
+	hip_girth:'',
+	w_h_Raito:'',
+	colour_vision:null,
 })
 // END FA HEADER
 

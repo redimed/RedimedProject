@@ -62,6 +62,66 @@
 	        </div>
 		</div>
 	</div>
+	<div class="portlet box blue-hoki">
+		<div class="portlet-title">
+			<div class="caption">Resting Measurements</div>
+		</div>
+		<div class="portlet-body">
+			<div class="row">
+				<div class="col-md-2 col-sm-2 col-xs-2">
+					<label class="control-label pull-right" style="margin-top:10px;" >Height: </label>
+				</div>
+				<div class="col-md-2 col-sm-2 col-xs-2">
+					<input type="text" class="form-control" ng-model="header.height">
+				</div>
+				<div class="col-md-2 col-sm-2 col-xs-2">
+					<label class="control-label pull-right" style="margin-top:10px;" >Weight: </label>
+				</div>
+				<div class="col-md-2 col-sm-2 col-xs-2">
+					<input type="text" class="form-control" ng-model="header.weight">
+				</div>
+				<div class="col-md-2 col-sm-2 col-xs-2">
+					<label class="control-label pull-right" style="margin-top:10px;" >BMI: </label>
+				</div>
+				<div class="col-md-2 col-sm-2 col-xs-2">
+					<input type="text" class="form-control" ng-model="header.bmi">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-2 col-sm-2 col-xs-2">
+					<label class="control-label pull-right" style="margin-top:10px;" >Waist Girth: </label>
+				</div>
+				<div class="col-md-2 col-sm-2 col-xs-2">
+					<input type="text" class="form-control" ng-model="header.waist_girth">
+				</div>
+				<div class="col-md-2 col-sm-2 col-xs-2">
+					<label class="control-label pull-right" style="margin-top:10px;" >Hip Girth: </label>
+				</div>
+				<div class="col-md-2 col-sm-2 col-xs-2">
+					<input type="text" class="form-control" ng-model="header.hip_girth">
+				</div>
+				<div class="col-md-2 col-sm-2 col-xs-2">
+					<label class="control-label pull-right" style="margin-top:10px;" >Waist/Hip Raito: </label>
+				</div>
+				<div class="col-md-2 col-sm-2 col-xs-2">
+					<input type="text" class="form-control" ng-model="header.w_h_Raito">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-2 col-sm-2 col-xs-2">
+					<label class="control-label pull-right" style="margin-top:10px;" >Ishihara Colour Vision: </label>
+				</div>
+				<div class="col-md-4 col-sm-4 col-xs-4 btn-group">
+					<label class="btn">
+						<input type="radio" ng-model="header.colour_vision" value="0"> Normal
+					</label>
+					<label class="btn">
+						<input type="radio" ng-model="header.colour_vision" value="1"> Abnormal
+					</label>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div class="portlet box blue-hoki" ng-repeat="section in header.sections">
 		<div class="portlet-title">
 			<div class="caption">{{section.SECTION_NAME}}</div>
