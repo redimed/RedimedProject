@@ -30,7 +30,7 @@ angular.module('app.loggedIn.waitingList.directives.add', [])
 				if(typeof doctorId !== 'undefined'){
 					var postData = doctorId;
 					
-					OutreferralModel.DotorFromUserId(postData)
+					OutreferralModel.DotorFromDoctorId(postData)
 					.then(function(response){
 						scope.waitingList.model.doctor_id = response.data[0].doctor_id;
 						scope.doctor.name = response.data[0].NAME;
@@ -40,10 +40,10 @@ angular.module('app.loggedIn.waitingList.directives.add', [])
 
 			scope.$watch('patientId', function(patientId){
 				if(typeof patientId !== 'undefined'){
-					PatientService.get(patientId)
+					WaitingListModel.getPatientFromId(patientId)
 					.then(function(response){
-						scope.waitingList.model.Patient_id = response.data.Patient_id;
-						scope.patient.name = response.data.First_name+" "+response.data.Sur_name;
+						scope.waitingList.model.Patient_id = response.data[0].Patient_id;
+						scope.patient.name = response.data[0].First_name+" "+response.data[0].Sur_name;
 					}, function(error){})
 				}
 			})

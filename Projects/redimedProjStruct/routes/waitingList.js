@@ -6,3 +6,4 @@ var url = config.defaultUrl+'waitingList/';
 app.post(url+'add', WaitingListController.postAdd);
 app.post(url+'list', WaitingListController.postList);
 app.post(url+'remove', WaitingListController.postRemove);
+app.post(url+'getPatientFromId',WaitingListController.postGetPatientFromId);
