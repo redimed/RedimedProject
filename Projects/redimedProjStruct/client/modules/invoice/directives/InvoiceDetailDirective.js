@@ -15,226 +15,168 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 			}
 
 			/*
-			*	SEARCH PATIENT
-			*/
-
-			$scope.patientSearch = {
-				is_show: false,
-				open: function() {
-					this.is_show = true;
-				},
-				close: function() {
-					this.is_show = false;
-				},
-				click: function(item) {
-					console.log(item);
-					$scope.InvoiceMap.Patient_id = item.Patient_id;
-					$scope.InvoiceMap.Company_id = item.company_id;
-					$scope.InvoiceMap.patient = {
-						full_name: item.First_name + ' ' + item.Sur_name
-					}
-					$scope.patientSearch.close();
-
-					// LOAD COMPANY
-					CompanyService.get(item.company_id).then(function(response){
-						if( response.status == 'success' && response.data) {
-							var company = response.data;
-							console.log(response.data);
-							$scope.InvoiceMap.company = {Company_name: company.Company_name};
-						}
-					})
-
-					// LOAD CLAIM 
-					$scope.patientClaim.options.search.Patient_id = item.Patient_id;
-			 		$scope.patientClaimPanel.reload();
-				}
-			}
-
-			/*
 			*	SEARCH DOCTOR
 			*/
 
 			$scope.doctorSearch = {
-				is_show: false,
 				open: function() {
-					this.is_show = true;
-				},
-				close: function() {
-					this.is_show = false;
-				},
-				click: function(item) {
-					$scope.InvoiceMap.DOCTOR_ID = item.doctor_id;
-					$scope.InvoiceMap.DEPT_ID = item.CLINICAL_DEPT_ID;
-
-					$scope.InvoiceMap.doctor = {
-						NAME: item.NAME
-					}
-					$scope.doctorSearch.close();
-					// LOAD SERVICE
-
-					ConfigService.system_service_by_clinical(item.CLINICAL_DEPT_ID).then(function(response){
-						$scope.opt_services = [{SERVICE_ID: '', SERVICE_NAME: '-- Choose Service --'}].concat(response);
+					$modal.open({
+						templateUrl:'popupDoctorSearch',
+						controller: function($scope,$modalInstance,ConfigService){
+							$scope.rowClick = function(item){
+								ConfigService.system_service_by_clinical(item.CLINICAL_DEPT_ID).then(function(response){
+									$modalInstance.close({item:item,response:response});
+								});
+							}
+						},
+						size:'md'
+					})
+					.result.then(function(){
+						$scope.InvoiceMap.DOCTOR_ID = data.item.doctor_id;
+						$scope.InvoiceMap.DEPT_ID = data.item.CLINICAL_DEPT_ID;
+						$scope.InvoiceMap.doctor = {
+							NAME: data.item.NAME
+						}
+						// LOAD SERVICE
+						$scope.opt_services = [{SERVICE_ID: '', SERVICE_NAME: '-- Choose Service --'}].concat(data.response);
 					});
 				}
-			}
+			};
 
 			/*
 			*	SEARCH CLAIM
 			*/
-            $scope.patientClaimPanel = {};
 
 			$scope.patientClaim = {
-				is_show: false,
 				open: function() {
-					this.is_show = true;
-				},
-				close: function() {
-					this.is_show = false;
-				},
-				click: function(item) {
-					var postData = {claim_id: item.Claim_id};
-					InvoiceService.update($scope.params.id, postData)
-					.then(function(response){
-						if(response.status == 'success') {
-							toastr.success('Save Claim Successfully !!!', 'Success');
-							$scope.InvoiceMap.claim = item;
-							// $scope.InvoiceMap.Insurer_id = item.insurer_site;//tan comment
-							$scope.InvoiceMap.Insurer_id = item.insurer_id;//tan add
-							$scope.InvoiceMap.claim_id = item.Claim_id;
-							$scope.InvoiceMap.insurer = {insurer_name: item.Insurer };
-							$scope.patientClaim.close();
-						}
+					$modal.open({
+						templateUrl:'popupSelectClaim',
+						controller: function($scope,$modalInstance){
+            				$scope.patientClaimPanel = {};
+            				$scope.options = {
+				                api:'api/erm/v2/patients/claims',
+				                method:'post',
+				                scope: $scope.patientClaimPanel,
+				                columns: [
+				                	{field: 'Claim_id', is_hide: true},
+				                    {field: 'Injury_name', label: 'Injury'},
+				                    {field: 'Insurer'} ,
+				                    {field: 'insurer_site', is_hide: true},
+				                    {field: 'insurer_id', is_hide: true}
+				                ],
+				                not_load: true
+				            };
+				            $scope.rowClick = function(item){
+				            	$modalInstance.close({item:item});
+				            }
+						},
+						size:'md'
 					})
-				},
-				options:{
-	                api:'api/erm/v2/patients/claims',
-	                method:'post',
-	                scope: $scope.patientClaimPanel,
-	                columns: [
-	                	{field: 'Claim_id', is_hide: true},
-	                    {field: 'Injury_name', label: 'Injury'},
-	                    {field: 'Insurer'} ,
-	                    {field: 'insurer_site', is_hide: true},
-	                    {field: 'insurer_id', is_hide: true}
-	                ],
-	                not_load: true,
-	                search: {}
-	            },   
-			}
-
-			/*
-			*	SEARCH DOCTOR
-			*/
-
-			$scope.doctorSearch = {
-				is_show: false,
-				open: function() {
-					this.is_show = true;
-				},
-				close: function() {
-					this.is_show = false;
-				},
-				click: function(item) {
-					$scope.InvoiceMap.DOCTOR_ID = item.doctor_id;
-					$scope.InvoiceMap.DEPT_ID = item.CLINICAL_DEPT_ID;
-
-					$scope.InvoiceMap.doctor = {
-						NAME: item.NAME
-					}
-					$scope.doctorSearch.close();
-					// LOAD SERVICE
-
-					ConfigService.system_service_by_clinical(item.CLINICAL_DEPT_ID).then(function(response){
-						$scope.opt_services = [{SERVICE_ID: '', SERVICE_NAME: '-- Choose Service --'}].concat(response);
+					.result.then(function(data){
+						var postData = {claim_id: data.item.Claim_id};
+						InvoiceService.update($scope.params.id, postData)
+						.then(function(response){
+							if(response.status == 'success') {
+								$scope.InvoiceMap.claim = data.item;
+								$scope.InvoiceMap.Insurer_id = data.item.insurer_id;//tan add
+								$scope.InvoiceMap.claim_id = data.item.Claim_id;
+								$scope.InvoiceMap.insurer = {insurer_name: data.item.Insurer };
+								toastr.success('Save Claim Successfully !!!', 'Success');
+							}
+						});
 					});
 				}
-			}
+			};
 
 			/*
 			*	SEARCH ITEM
 			*/
-			$scope.itemSearchPanel = {}
-
 			$scope.itemSearch = {
-				is_show: false,
 				open: function() {
-					this.is_show = true;
-				},
-				close: function() {
-					this.is_show = false;
-				},
-				click: function(item) {
-					var t_item = arrGetBy($scope.InvoiceMap.lines, 'ITEM_ID', item.ITEM_ID);
-					if(t_item) {
-						return;
-					}
-					// item.ITEM_NAME = item.ITEM_NAME.substring(0, 50);// tan comment
-					item.QUANTITY = 1;
-					item.TIME_SPENT = 0;
-					item.IS_ENABLE = 1;
+					$modal.open({
+						templateUrl:'popupChooseItem',
+						controller: function($scope,$modalInstance){
+							$scope.itemSearchPanel = {};
+							$scope.itemSearchOption = {
+				                api:'api/erm/v2/items/search',
+				                method:'post',
+				                scope: $scope.itemSearchPanel,
+				                columns: [
+				                    {field: 'ITEM_ID', is_hide: true},
+				                    {field: 'ITEM_CODE', label: 'Item Code', width:"10%"},
+				                    {field: 'ITEM_NAME', label: 'Item Name'},    
+				                    {field: 'TAX_ID', label: 'Tax Id', is_hide: true},    
+				                    {field: 'TAX_CODE', label: 'Tax Code'},    
+				                    {field: 'TAX_RATE', label: 'Tax Rate'},    
+				            	],
+				                use_filters:true,
+				                filters:{
+				                    ITEM_CODE: {type: 'text'},
+				                    ITEM_NAME: {type: 'text'},
+				                }
+				            };
+				            $scope.rowClick = function(item){
+				            	$modalInstance.close({item:item});
+				            };
+						},
+						size:'md'
+					})
+					.result.then(function(data){
+						var t_item = arrGetBy($scope.InvoiceMap.lines, 'ITEM_ID', data.item.ITEM_ID);
+						if(t_item) {
+							return;
+						}
+						// item.ITEM_NAME = item.ITEM_NAME.substring(0, 50);// tan comment
+						data.item.QUANTITY = 1;
+						data.item.TIME_SPENT = 0;
+						data.item.IS_ENABLE = 1;
 
-					item.invItem = {ITEM_CODE : item.ITEM_CODE, ITEM_NAME: item.ITEM_NAME };
+						data.item.invItem = {ITEM_CODE : data.item.ITEM_CODE, ITEM_NAME: data.item.ITEM_NAME };
 
-					ReceptionistService.itemFeeAppt($scope.InvoiceMap.SERVICE_ID,[item.ITEM_ID]).then(function(response){
+						ReceptionistService.itemFeeAppt($scope.InvoiceMap.SERVICE_ID,[data.item.ITEM_ID]).then(function(response){
 
-	                    if(response.list.length > 0) {
-	                        item.PRICE = response.list[0].SCHEDULE_FEE
-	                        item.has_price = true;
-	                    } else {
-	                        item.PRICE = 0;
-	                        item.has_price = false;
-	                    }
+		                    if(response.list.length > 0) {
+		                        data.item.PRICE = response.list[0].SCHEDULE_FEE
+		                        data.item.has_price = true;
+		                    } else {
+		                        data.item.PRICE = 0;
+		                        data.item.has_price = false;
+		                    }
 
-	                    var postData={
-	                    	patientId:$scope.InvoiceMap.Patient_id,
-	                    	calId:$scope.InvoiceMap.cal_id,
-	                    	invoiceHeaderId:$scope.InvoiceMap.header_id,
-	                    	invoiceLine:item
-	                    }
-	                    InvoiceService.createInvoiceLine(postData)
-	                    .then(function(data){
-	                    	if(data.status=='success')
-	                    	{
-	                    		toastr.success('Add item success.','Success');
-	                    		angular.copy(data.data,item);
-	                    		$scope.InvoiceMap.lines.push(item);
-	                    	}
-	                    	else if(data.status="exist")
-	                    	{
-	                    		toastr.warning('Duplicate item','Warning');
-	                    	}
-	                    	else
-	                    	{
-	                    		toastr.error('Add fail.','Error');
-	                    		exlog.logErr(data);
-	                    	}
-	                    },function(err){
-	                    	toastr.error('Add fail.','Error');
-	                    	exlog.logErr(err);
-	                    })
-	                });
+		                    var postData={
+		                    	patientId:$scope.InvoiceMap.Patient_id,
+		                    	calId:$scope.InvoiceMap.cal_id,
+		                    	invoiceHeaderId:$scope.InvoiceMap.header_id,
+		                    	invoiceLine:data.item
+		                    }
+		                    InvoiceService.createInvoiceLine(postData)
+		                    .then(function(data){
+		                    	if(data.status=='success')
+		                    	{
+		                    		toastr.success('Add item success.','Success');
+		                    		angular.copy(data.data,item);
+		                    		$scope.InvoiceMap.lines.push(item);
+		                    	}
+		                    	else if(data.status="exist")
+		                    	{
+		                    		toastr.warning('Duplicate item','Warning');
+		                    	}
+		                    	else
+		                    	{
+		                    		toastr.error('Add fail.','Error');
+		                    		exlog.logErr(data);
+		                    	}
+		                    },function(err){
+		                    	toastr.error('Add fail.','Error');
+		                    	exlog.logErr(err);
+		                    })
+		                });
+					});
 				}
 			}
 
 
-			$scope.itemSearchOption = {
-                api:'api/erm/v2/items/search',
-                method:'post',
-                scope: $scope.itemSearchPanel,
-                columns: [
-                    {field: 'ITEM_ID', is_hide: true},
-                    {field: 'ITEM_CODE', label: 'Item Code', width:"10%"},
-                    {field: 'ITEM_NAME', label: 'Item Name'},    
-                    {field: 'TAX_ID', label: 'Tax Id', is_hide: true},    
-                    {field: 'TAX_CODE', label: 'Tax Code'},    
-                    {field: 'TAX_RATE', label: 'Tax Rate'},    
-            	],
-                use_filters:true,
-                filters:{
-                    ITEM_CODE: {type: 'text'},
-                    ITEM_NAME: {type: 'text'},
-                }
-            }
+			
 
 		},
 		link: function(scope, element, attrs){

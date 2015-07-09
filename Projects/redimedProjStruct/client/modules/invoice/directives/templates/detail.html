@@ -23,11 +23,6 @@
 							    </label>
 							    <div class="input-group">
 									<input disabled placeholder="Patient" type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="InvoiceMap.patient.full_name">
-									<span class="input-group-btn">
-										<button style="width:20px" class="btn un_tn_btn_side un_tn_btn_side_gray" ng-click="patientSearch.open()">
-											<i class="fa fa-search"></i>
-										</button>
-									</span>
 								</div>
 							</div>
 						</div>
@@ -264,47 +259,44 @@
 
 
 		<!-- POPUP PATIENT CLAIM -->
-		<div class="mdt-search" style="display: block;" ng-show="patientClaim.is_show">
-		    <div class="pull-right text-center ng-scope">
-		        <button class="btn btn-sm btn-block red" ng-click="patientClaim.close()">
-		            <i class="fa fa-times"></i>
-		        </button>
-		    </div>
-		    <my-data-table options="patientClaim.options" rowclick="patientClaim.click"></my-data-table>
-		</div>
+		<script type="text/ng-template" id="popupSelectClaim">
+			<style type="text/css">
+		          .modal.in .modal-dialog {
+		           margin-top:50px;
+		          }
+		    </style>
+			<div class="modal-body">	
+				<label class="un-label-popup-header-m un-bg-label-B41E46-m">Claim</label>
+		    	<my-data-table options="options" rowclick="rowClick"></my-data-table>
+			</div>
+		</script>
 		 <!-- END POPUP PATIENT CLAIM  -->
 
 		 <!-- POPUP SEARCH-ITEM  -->
-		<div class="mdt-search" style="display: block;" ng-if="itemSearch.is_show">
-		    <div class="pull-right text-center ng-scope">
-		        <button class="btn btn-sm btn-block red" ng-click="itemSearch.close()">
-		            <i class="fa fa-times"></i>
-		        </button>
-		    </div>
-		    <my-data-table options="itemSearchOption" rowclass="itemSearch.class" rowclick="itemSearch.click"></my-data-table>
-		</div>
+		 <script type="text/ng-template" id="popupChooseItem">
+			<style type="text/css">
+		          .modal.in .modal-dialog {
+		           margin-top:50px;
+		          }
+		    </style>
+			<div class="modal-body">	
+				<label class="un-label-popup-header-m un-bg-label-B41E46-m">Choose Item</label>
+		    	<my-data-table options="itemSearchOption" rowclass="itemSearch.class" rowclick="rowClick"></my-data-table>
+			</div>
+		</script>
 		 <!-- POPUP SEARCH-ITEM  -->
 
-		 <!-- POPUP PATIENT SEARCH -->
-		<div class="mdt-search" style="display: block;" ng-show="patientSearch.is_show">
-		    <div class="pull-right text-center ng-scope">
-		        <button class="btn btn-sm btn-block red" ng-click="patientSearch.close()">
-		            <i class="fa fa-times"></i>
-		        </button>
-		    </div>
-		    <patient-search click-row="patientSearch.click(row)"></patient-search>
-		</div>
-		 <!-- END POPUP PATIENT SEARCH  -->
-
 		<!-- POPUP DOCTOR SEARCH -->
-		<div class="mdt-search" style="display: block;" ng-show="doctorSearch.is_show">
-		    <div class="pull-right text-center ng-scope">
-		        <button class="btn btn-sm btn-block red" ng-click="doctorSearch.close()">
-		            <i class="fa fa-times"></i>
-		        </button>
-		    </div>
-		    <mdtdoctor-search click-row="doctorSearch.click(row)"></mdtdoctor-search>
-		</div>
+		<script type="text/ng-template" id="popupDoctorSearch">
+			<style type="text/css">
+		          .modal.in .modal-dialog {
+		           margin-top:50px;
+		          }
+		    </style>
+			<div class="modal-body">	
+		    	<mdtdoctor-search click-row="rowClick(row)"></mdtdoctor-search>
+			</div>
+		</script>
 		 <!-- END POPUP DOCTOR SEARCH  -->
 
 		 <script type="text/ng-template" id="notifyToRemoveInvoiceLine">
