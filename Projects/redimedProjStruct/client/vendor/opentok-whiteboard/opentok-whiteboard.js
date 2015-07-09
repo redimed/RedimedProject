@@ -14,6 +14,7 @@ var OpenTokWhiteboard = angular.module('opentok-whiteboard', ['opentok','restang
         restrict: 'E',
         scope: {
             patient:'=',
+            calendar: '=',
             callSession: '='
         },
         template: '<canvas></canvas>' + 
@@ -171,7 +172,7 @@ var OpenTokWhiteboard = angular.module('opentok-whiteboard', ['opentok','restang
                 {
                     var imgData = canvas.toDataURL('image/png');
                         
-                    Restangular.all('api/consultation/draw/saveImage').post({patient_id: scope.patient, imgData: imgData}).then(function(rs){
+                    Restangular.all('api/consultation/draw/saveImage').post({patient_id: scope.patient,cal_id: scope.calendar, imgData: imgData}).then(function(rs){
                         if(rs.status == 'success')
                         {
                             var signal = {

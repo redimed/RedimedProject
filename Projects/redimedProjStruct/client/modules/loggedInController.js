@@ -2,7 +2,7 @@ angular.module("app.loggedIn.controller",[
 ])
 
 
-.controller("callDialogController",function($scope, $state,$modalInstance,$modal, UserService,socket,toastr ,userInfo,$cookieStore,notify, opentokRoom,patientId){
+.controller("callDialogController",function($scope, $state,$modalInstance,$modal, UserService,socket,toastr ,userInfo,$cookieStore,notify, opentokRoom,patientId, calId){
 
         var audio = new Audio('theme/assets/notification.mp3');
         audio.loop = true;
@@ -39,7 +39,7 @@ angular.module("app.loggedIn.controller",[
 
             $modalInstance.close();
 
-            popup($state.href("make_call",{apiKey:opentokRoom.apiKey,sessionId:opentokRoom.sessionId,token:opentokRoom.token,callUser: userInfo.id, isCaller: 0, patientId: patientId}));
+            popup($state.href("make_call",{apiKey:opentokRoom.apiKey,sessionId:opentokRoom.sessionId,token:opentokRoom.token,callUser: userInfo.id, isCaller: 0, patientId: patientId, calId: calId}));
 
             // popup($state.href('test_call',{apiKey:opentokRoom.apiKey, clientId:opentokRoom.clientId, callUser: userInfo.id, isCaller: 0, patientId:patientId}));
         }
@@ -175,6 +175,9 @@ angular.module("app.loggedIn.controller",[
                                 },
                                 patientId: function(){
                                     return message.patientId;
+                                },
+                                calId: function(){
+                                    return message.calId;
                                 }
                             },
                             backdrop: 'static',

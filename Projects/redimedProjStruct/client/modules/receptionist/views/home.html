@@ -17,8 +17,87 @@
 	    right: 10;
 	}
 
+	.panel{
+    	margin-bottom: 0px;
+    	position: fixed;
+	     bottom: 0;
+	     right: 0;
+	     width: 350px !important;
+	}
+
+	.icon_minim{
+	    padding:2px 10px;
+	}
+	.msg_container_base{
+	  background: #e5e5e5;
+	  margin: 0;
+	  padding: 0 10px 10px;
+	  max-height:300px;
+	  overflow-x:hidden;
+	}
+	.top-bar {
+	  background: #666;
+	  color: white;
+	  padding: 10px;
+	  position: relative;
+	  overflow: hidden;
+	}
+
+	.msg_container_base::-webkit-scrollbar-track
+	{
+	    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	    background-color: #F5F5F5;
+	}
+
+	.msg_container_base::-webkit-scrollbar
+	{
+	    width: 12px;
+	    background-color: #F5F5F5;
+	}
+
+	.msg_container_base::-webkit-scrollbar-thumb
+	{
+	    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	    background-color: #555;
+	}
+
 </style>
-<div id="alert-center" class="bv-right-list-reception un_box_shadow">
+<div class="panel panel-default">
+    <div class="panel-heading top-bar">
+        <div class="col-md-8 col-xs-8">
+            <h3 class="panel-title"><span class="glyphicon glyphicon-comment"></span> Notification List</h3>
+        </div>
+        <div class="col-md-4 col-xs-4" style="text-align: right;">
+            <a href="javascript:;"><span id="minim_chat_window" class="glyphicon glyphicon-minus icon_minim"></span></a>
+        </div>
+    </div>
+    <div class="panel-body msg_container_base">
+       <div ng-if="alertCenter.list.length > 0" class="un_body_notification_list" ng-repeat="list in alertCenter.list">
+	    	<div>
+			    <label ng-if="list.alert.length > 0 || list.cal.length > 0" style="font-size: 16px;font-weight: bold;">
+			        {{list.First_name}} {{list.Sur_name}}
+			    </label>
+			    <ul ng-repeat="alert in list.alert" ng-if="list.alert.length > 0">
+			        <li>{{alert.name}}</li>
+			    </ul>
+			    <p ng-repeat="cal in list.cal" ng-if="list.cal.length > 0">
+			        <span ng-if="cal.IS_REFERRAL && cal.OUTREFERRAL === 'no'" style="margin-left: 10px;">
+			            {{cal.FROM_TIME}}-{{cal.TO_TIME}}:&nbsp
+			            There is no referral
+			        </span>
+			    </p>
+			</div>
+	    </div>
+	    <div ng-if="alertCenter.list.length == 0">
+	    	<div style="text-align: center;">
+                <span style="font-size: 15px; font-style: italic;font-weight: bold;">      
+                    Empty Data
+                </span>
+            </div>
+	    </div>
+    </div>
+</div>
+<!-- <div id="alert-center" class="bv-right-list-reception un_box_shadow">
     <div class="un_header_notification_list">
         <label>Notification List</label><i class="fa fa-caret-right"></i>
     </div>
@@ -38,8 +117,8 @@
 		    </p>
 		</div>
     </div>
-</div>
-<div class="un_arrow" ng-click="clickArrow()" style="top:90px"></div>
+</div> -->
+<!-- <div class="un_arrow" ng-click="clickArrow()" style="top:90px"></div> -->
 <div class="row">
 	<div class="col-md-4 col-sm-4">
 
@@ -61,12 +140,18 @@
 </div>
 <br/>
 <div class="row">
-	<div class="col-md-6 col-sm-6 col-lg-6">
+	<div ng-class="{'col-md-6 col-sm-6 col-lg-6': isTwoColumn, 'col-md-4 col-sm-4 col-lg-4': !isTwoColumn || isTwoColumn == null}">
 		<div class="portlet re_bg_white box re_boder_none">
 	        <div class="portlet-title re_bg_color_E0EFFF" >
 	            <div class="caption ">
 	                <span class="caption-subject re_color_005A59 bold">Upcoming</span>
 	            </div>
+	            <div class="tools">
+	            	<div style="height: 32px !important">
+            			<span class="caption-subject re_color_005A59">Two Column &nbsp;&nbsp;</span>
+   						<input bootstrap-switch ng-model="isTwoColumn" type="checkbox" >
+   					</div>
+   				</div>
 	        </div>
 	        <div class="portlet-body re_padding_0">
 	        	<div style="padding: 10px;" ng-if="upcomingAppt.length == 0 && injuryAppt.length == 0">
@@ -76,6 +161,76 @@
                         </span>
                     </div>
 	        	</div>
+	        	<div ng-if="injuryAppt.length > 0" style="margin-bottom: 0px !important; margin-top: 5px ! important;" class="portlet" >
+           			<div class="portlet-title re_portlet_title" style="min-height: 0px !important;">
+           				<div class="caption">
+           					<span style="font-size: 15px;" class="caption-subject">
+       							Emergency
+   							</span>
+           				</div>
+           				<div class="tools">
+           					<a style="font-size: 15px;" href="javascript:;" class="collapse"></a>
+           				</div>
+           			</div>
+           			
+           			<div class="portlet-body">
+	   					<div style="color: white !important; border-color: #7FA8CB; cursor: pointer;"
+							ng-style="{background:a.SERVICE_COLOR}"  
+	   						class="re_bg_info appt-profile" 
+	   						ng-class="{'col-md-6 col-sm-6': isTwoColumn}"
+	   						ng-repeat="a in injuryAppt"
+	   						data-drag="{{a.appt_status != 'Cancelled' ? true : false}}" 
+	   						data-jqyoui-options="{revert: 'invalid'}" 
+	   						jqyoui-draggable="{ animate:true, onStart: 'dragAppt(a)'}">
+	   						<div class="media">
+	   							<div class="corner" dropdown>
+	   								<span class="dropdown-toggle" data-toggle>
+	       								<i style="color:black" class="fa fa-caret-down"></i>
+	       							</span>
+	       							<ul ng-if="a.appt_status != 'Cancelled'" class="dropdown-menu" role="menu">
+	       								<li>
+									    	<a ui-sref="loggedIn.patient.consult({patient_id: a.Patient_id, cal_id: a.CAL_ID})" href="javascript:;">Details</a>
+								    	</li>
+									</ul>
+	   							</div>
+	   							
+	   							<div style="width: 50px; height: 50px;" class="pull-left">
+										<img width="100%" height="100%" class="img-circle" ng-src="{{(a.avatar == null || a.avatar == '') ? 'theme/assets/icon.png' : a.avatar}}">
+			                    </div>
+			                    <div class="media-body">
+			                    	<span style="font-size: 15px;" class="media-heading bold">{{a.patient_name}}</span>
+			                    	<div class="row" style="font-size: 10px;color: white;">
+			                    		<span class="col-md-6 col-sm-6">
+				                    		<i class="fa fa-calendar"></i>
+				                    		{{(a.DOB == null ? 'N/A' : a.DOB) | date:'dd/MM/yyyy'}}
+				                    	</span>
+				                    	<span class="col-md-6 col-sm-6">
+				                    		<i class="fa fa-building-o"></i>
+				                    		{{a.Company_name == null ? 'N/A' : a.Company_name}}
+				                    	</span>
+			                    	</div>
+			                    	<div class="row" style="font-size: 10px;color: white;">
+			                    		<span class="col-md-6 col-sm-6">
+			                    			<i class="fa fa-user-md"></i>
+				                    		{{a.doctor_name == null ? 'N/A' : a.doctor_name}}
+			                    		</span>
+				                    	<span class="col-md-6 col-sm-6 ">
+			                    			<span class="re_booking label-danger">
+				                    			{{a.appt_status}}
+			                    			</span>
+				                    	</span>
+			                    	</div>
+			                    	<div class="row" style="font-size: 10px;color: white;">
+			                    		<span class="col-md-12 col-sm-12">
+			                    			<i class="fa fa-clock-o"></i>
+				                    		<span style="color: white;" class="bold">{{a.Creation_date | moment: 'format': 'DD/MM/YYYY - hh:mm A'}}</span>
+			                    		</span>
+			                    	</div>
+			                    </div>
+	   						</div>
+	   					</div>
+   					</div>
+           		</div>
            		<div ng-if="upcomingAppt.length > 0" style="margin-bottom: 0px !important; margin-top: 5px ! important;" class="portlet" >
            			<div class="portlet-title re_portlet_title" style="min-height: 0px !important;">
            				<div class="caption">
@@ -91,7 +246,8 @@
            			<div class="portlet-body">
        					<div ng-style="{background:a.SERVICE_COLOR}" 
        						style="color: black; border-color: #7FA8CB; cursor: pointer;" 
-       						class="re_bg_info appt-profile col-md-6 col-sm-6" 
+       						class="re_bg_info appt-profile" 
+       						ng-class="{'col-md-6 col-sm-6': isTwoColumn}"
        						ng-repeat="a in upcomingAppt"
        						data-drag="{{a.appt_status != 'Cancelled' ? true : false}}" 
        						data-jqyoui-options="{revert: 'invalid'}" 
@@ -159,79 +315,11 @@
        					
            			</div>
            		</div>
-           		<div ng-if="injuryAppt.length > 0" style="margin-bottom: 0px !important; margin-top: 5px ! important;" class="portlet" >
-           			<div class="portlet-title re_portlet_title" style="min-height: 0px !important;">
-           				<div class="caption">
-           					<span style="font-size: 15px;" class="caption-subject">
-       							Emergency
-   							</span>
-           				</div>
-           				<div class="tools">
-           					<a style="font-size: 15px;" href="javascript:;" class="collapse"></a>
-           				</div>
-           			</div>
-           			
-           			<div class="portlet-body">
-	   					<div style="color: white !important; border-color: #7FA8CB; cursor: pointer;"
-							ng-style="{background:a.SERVICE_COLOR}"  
-	   						class="re_bg_info appt-profile col-md-6 col-sm-6" 
-	   						ng-repeat="a in injuryAppt"
-	   						data-drag="{{a.appt_status != 'Cancelled' ? true : false}}" 
-	   						data-jqyoui-options="{revert: 'invalid'}" 
-	   						jqyoui-draggable="{ animate:true, onStart: 'dragAppt(a)'}">
-	   						<div class="media">
-	   							<div class="corner" dropdown>
-	   								<span class="dropdown-toggle" data-toggle>
-	       								<i style="color:black" class="fa fa-caret-down"></i>
-	       							</span>
-	       							<ul ng-if="a.appt_status != 'Cancelled'" class="dropdown-menu" role="menu">
-	       								<li>
-									    	<a ui-sref="loggedIn.patient.consult({patient_id: a.Patient_id, cal_id: a.CAL_ID})" href="javascript:;">Details</a>
-								    	</li>
-									</ul>
-	   							</div>
-	   							
-	   							<div style="width: 50px; height: 50px;" class="pull-left">
-										<img width="100%" height="100%" class="img-circle" ng-src="{{(a.avatar == null || a.avatar == '') ? 'theme/assets/icon.png' : a.avatar}}">
-			                    </div>
-			                    <div class="media-body">
-			                    	<span style="font-size: 15px;" class="media-heading bold">{{a.patient_name}}</span>
-			                    	<div class="row" style="font-size: 10px;color: white;">
-			                    		<span class="col-md-6 col-sm-6">
-				                    		<i class="fa fa-calendar"></i>
-				                    		{{(a.DOB == null ? 'N/A' : a.DOB) | date:'dd/MM/yyyy'}}
-				                    	</span>
-				                    	<span class="col-md-6 col-sm-6">
-				                    		<i class="fa fa-building-o"></i>
-				                    		{{a.Company_name == null ? 'N/A' : a.Company_name}}
-				                    	</span>
-			                    	</div>
-			                    	<div class="row" style="font-size: 10px;color: white;">
-			                    		<span class="col-md-6 col-sm-6">
-			                    			<i class="fa fa-user-md"></i>
-				                    		{{a.doctor_name == null ? 'N/A' : a.doctor_name}}
-			                    		</span>
-				                    	<span class="col-md-6 col-sm-6 ">
-			                    			<span class="re_booking label-danger">
-				                    			{{a.appt_status}}
-			                    			</span>
-				                    	</span>
-			                    	</div>
-			                    	<div class="row" style="font-size: 10px;color: white;">
-			                    		<span class="col-md-12 col-sm-12">
-			                    			<i class="fa fa-clock-o"></i>
-				                    		<span style="color: white;" class="bold">{{a.Creation_date | moment: 'format': 'DD/MM/YYYY - hh:mm A'}}</span>
-			                    		</span>
-			                    	</div>
-			                    </div>
-	   						</div>
-	   					</div>
-   					</div>
-           		</div>
+           		
 	        </div>
         </div>
 	</div>
-	<div class="col-md-3 col-sm-3 col-lg-3">
+	<div ng-class="{'col-md-3 col-sm-3 col-lg-3': isTwoColumn, 'col-md-4 col-sm-4 col-lg-4': !isTwoColumn || isTwoColumn == null}">
 		<div class="portlet blue-hoki box re_boder_none">
 	        <div class="portlet-title re_bg_color_E0EFFF">
 	            <div class="caption">
@@ -347,7 +435,7 @@
 	        </div>
         </div>
 	</div>
-	<div class="col-md-3 col-sm-3 col-lg-3">
+	<div ng-class="{'col-md-3 col-sm-3 col-lg-3': isTwoColumn, 'col-md-4 col-sm-4 col-lg-4': !isTwoColumn || isTwoColumn == null}">
 		<div class="portlet blue-hoki box re_boder_none">
 	        <div class="portlet-title re_bg_color_E0EFFF">
 	            <div class="caption ">
@@ -400,3 +488,17 @@
         </div>
 	</div>
 </div>
+<script>
+	$(document).on('click', '.panel-heading span.icon_minim', function (e) {
+	    var $this = $(this);
+	    if (!$this.hasClass('panel-collapsed')) {
+	        $this.parents('.panel').find('.panel-body').slideUp();
+	        $this.addClass('panel-collapsed');
+	        $this.removeClass('glyphicon-minus').addClass('glyphicon-plus');
+	    } else {
+	        $this.parents('.panel').find('.panel-body').slideDown();
+	        $this.removeClass('panel-collapsed');
+	        $this.removeClass('glyphicon-plus').addClass('glyphicon-minus');
+	    }
+	});
+</script>

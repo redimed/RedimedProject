@@ -13,7 +13,7 @@ angular.module('app.calling', [])
 		})
 
 		.state('make_call', {
-			url: '/makeCall/:apiKey/:sessionId/:token/:callUser/:isCaller/:patientId',
+			url: '/makeCall/:apiKey/:sessionId/:token/:callUser/:isCaller/:patientId/:calId',
 	        views: {
 	            "root": {
 	                templateUrl: "modules/makeCall/views/call.html",
@@ -23,7 +23,7 @@ angular.module('app.calling', [])
 		})
 
 		.state('whiteboard', {
-			url: '/whiteboard/:apiKey/:sessionId/:token/:patientId',
+			url: '/whiteboard/:apiKey/:sessionId/:token/:patientId/:calId',
 	        views: {
 	            "root": {
 	                templateUrl: "modules/makeCall/views/whiteboard.html",
