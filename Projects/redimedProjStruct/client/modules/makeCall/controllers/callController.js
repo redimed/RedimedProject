@@ -22,6 +22,7 @@ angular.module("app.calling")
         $scope.callUserInfo = null;
 
         $scope.patientId = ($stateParams.patientId != null || $stateParams.patientId != undefined) ?  $stateParams.patientId : null;
+        $scope.calId = ($stateParams.calId != null || $stateParams.calId != undefined) ?  $stateParams.calId : null;
         $scope.isCaller = ($stateParams.isCaller == 1 || $stateParams.isCaller == '1') ? true : false;
 
         $scope.isAccept = false;
@@ -125,7 +126,7 @@ angular.module("app.calling")
             {
                 audio.loop = true;
                 audio.play();
-                socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'call',sessionId: sessionId});
+                socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'call',sessionId: sessionId, patientId: $scope.patientId, calId: $scope.calId});
             }
             else{
                 socket.emit("sendMessage",$scope.userInfo.id,$stateParams.callUser,{type:'answer'});
@@ -273,7 +274,7 @@ angular.module("app.calling")
         }
 
         $scope.toggleWhiteboard = function() {
-            popup($state.href('whiteboard',{apiKey:apiKey,sessionId:sessionId,token: token,patientId:$scope.patientId}));
+            popup($state.href('whiteboard',{apiKey:apiKey,sessionId:sessionId,token: token,patientId:$scope.patientId,calId:$scope.calId}));
         };
 
         $scope.toggleBluetooth = function(){
@@ -343,6 +344,9 @@ angular.module("app.calling")
                             },
                             patientId: function(){
                                 return $scope.patientId;
+                            },
+                            calId: function(){
+                                return $scope.calId;
                             }
                         },
                         controller: function($scope,UserService,$modalInstance,toastr,socket,userInfo,sessionId,OTSession,patientId,arrUser){
@@ -362,7 +366,7 @@ angular.module("app.calling")
                             $scope.callUser = function(u){
                                 $scope.isMakeCall = true;
                                 $scope.callUser = u;
-                                socket.emit("sendMessage",userInfo.id,u.id,{type:'call',sessionId: sessionId, patientId: patientId});
+                                socket.emit("sendMessage",userInfo.id,u.id,{type:'call',sessionId: sessionId, patientId: patientId, calId: calId});
                             }
 
                             $scope.cancelClick = function(){
@@ -451,6 +455,7 @@ angular.module("app.calling")
         var sessionId = $stateParams.sessionId;
         var token = $stateParams.token;
         $scope.patientId = $stateParams.patientId;
+        $scope.calId = $stateParams.calId;
         $scope.mouseMove = false;
         $scope.connected = false;
         $scope.session = null;

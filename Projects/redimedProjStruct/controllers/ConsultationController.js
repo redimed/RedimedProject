@@ -120,6 +120,7 @@ module.exports = {
 
     saveImage: function(req,res){
         var patient_id = req.body.patient_id;
+        var cal_id = req.body.cal_id;
         var imgData = req.body.imgData;
 
         var data = imgData.replace(/^data:image\/\w+;base64,/, "");
@@ -141,6 +142,7 @@ module.exports = {
                         db.ClnPatientDrawing.create({
                             id: max + 1,
                             patient_id: patient_id,
+                            cal_id: cal_id,
                             url: targetFolderForSave+"\\image_"+date+".png"
                         })
                         .success(function(data){
@@ -692,11 +694,13 @@ module.exports = {
             res.json({status:'fail'});
             return;
         }
-        var sql=
-            " SELECT d.*, p.`cal_id`  FROM `cln_patient_drawings` d                      "+
-            " INNER JOIN `cln_patient_consults` p ON d.`consult_id` = p.`consult_id`     "+
-            " WHERE d.`patient_id` = ?                                                   "+
-            " AND p.`cal_id` = ?                                                         ";
+        // var sql=
+        //     " SELECT d.*, p.`cal_id`  FROM `cln_patient_drawings` d                      "+
+        //     " INNER JOIN `cln_patient_consults` p ON d.`consult_id` = p.`consult_id`     "+
+        //     " WHERE d.`patient_id` = ?                                                   "+
+        //     " AND p.`cal_id` = ?                                                         ";
+
+        var sql = "SELECT d.* FROM `cln_patient_drawings` d WHERE d.`patient_id` = ? AND d.`cal_id` = ?";
         kiss.executeQuery(req,sql,[patientId,calId],function(rows){
             if(rows.length>0)
             {

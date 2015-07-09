@@ -3,6 +3,7 @@ module.exports = function(sequelize,DataTypes){
 	  id : {type: DataTypes.INTEGER(11), primaryKey: true },
 	  consult_id: DataTypes.INTEGER(11) ,
 	  patient_id : DataTypes.INTEGER(11) ,
+	  cal_id: DataTypes.INTEGER(11),
 	  notes: DataTypes.TEXT,
 	  url: DataTypes.TEXT
 },{
