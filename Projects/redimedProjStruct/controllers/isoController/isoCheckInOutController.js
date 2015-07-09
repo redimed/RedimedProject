@@ -1,4 +1,4 @@
-// var db = require('../models');
+﻿// var db = require('../models');
 var moment=require('moment');
 var mkdirp = require('mkdirp');
 var fs = require('fs');//Read js file for import into
@@ -1819,7 +1819,10 @@ module.exports =
                 }
                 else
                 {
-                    var newCheckInNoValue=parseInt(rows[0].CHECK_IN_NO)+1;
+                    if(rows.length>0)
+                        var newCheckInNoValue=parseInt(rows[0].CHECK_IN_NO)+1;
+                    else
+                        var newCheckInNoValue=1;
                     var newCheckInNo=isoUtil.pad(newCheckInNoValue,4);
                     newRow.CHECK_IN_NO=newCheckInNo;
                     newRow.CHECK_IN_FOLDER_STORAGE=newCheckInNo+' '+moment().format("DD-MM-YYYY");
