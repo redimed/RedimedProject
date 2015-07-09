@@ -1131,6 +1131,14 @@ table.timetable-table td:last-child {
     width: auto;
 }
 
+.label-paperless {
+    margin-top: 10px;
+}
+
+.height-200 {
+    height: 200px !important;
+}
+
 .addon-paperless {
     background-color: #fff !important;
     border: none !important;
