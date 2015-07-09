@@ -1,3 +1,67 @@
+<style>
+	.img-profile{
+	  position: relative;
+	  top: 50%;
+	    -webkit-transform: translateY(-50%);
+	    -ms-transform: translateY(-50%);
+	    transform: translateY(-50%);
+	}
+	.appt-profile {
+	    position: relative;
+	    padding: 9px !important;
+	}
+
+	.appt-profile .corner {
+	    position: absolute;
+	    top: 5;
+	    right: 10;
+	}
+
+	.panel{
+    	margin-bottom: 0px;
+    	position: fixed;
+	     bottom: 0;
+	     right: 0;
+	     width: 350px !important;
+	}
+
+	.icon_minim{
+	    padding:2px 10px;
+	}
+	.msg_container_base{
+	  background: #e5e5e5;
+	  margin: 0;
+	  padding: 0 10px 10px;
+	  max-height:300px;
+	  overflow-x:hidden;
+	}
+	.top-bar {
+	  background: #666;
+	  color: white;
+	  padding: 10px;
+	  position: relative;
+	  overflow: hidden;
+	}
+
+	.msg_container_base::-webkit-scrollbar-track
+	{
+	    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	    background-color: #F5F5F5;
+	}
+
+	.msg_container_base::-webkit-scrollbar
+	{
+	    width: 12px;
+	    background-color: #F5F5F5;
+	}
+
+	.msg_container_base::-webkit-scrollbar-thumb
+	{
+	    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	    background-color: #555;
+	}
+
+</style>
 <div class="row">
 	<div class="col-md-10">
 		<p ng-repeat="service in servicedata" ng-if="servicedata.length > 0" class="inline">
@@ -9,47 +73,41 @@
 	<button class="un-button un-bgBlack pull-right un-margin-bottom-6px" ng-click="addPatient()">Add Patient</button>
 	</div>
 </div>
-<div id="alert-center" class="bv-right-list un_box_shadow">
-    <div class="un_header_notification_list">
-        <label>Notification List</label><i class="fa fa-caret-right"></i>
+<div class="panel panel-default">
+    <div class="panel-heading top-bar">
+        <div class="col-md-8 col-xs-8">
+            <h3 class="panel-title"><span class="glyphicon glyphicon-comment"></span> Notification List</h3>
+        </div>
+        <div class="col-md-4 col-xs-4" style="text-align: right;">
+            <a href="javascript:;"><span id="minim_chat_window" class="glyphicon glyphicon-minus icon_minim"></span></a>
+        </div>
     </div>
-    <div class="un_body_notification_list" ng-repeat="list in alertCenter.list" ng-if="list.test !== 0 || list.alert.length !== 0">
-    	<div>
-    		<label ng-if="list.alert.length > 0 || list.cal.length > 0" style="font-size: 16px;font-weight: bold;">
-            {{list.First_name}} {{list.Sur_name}}
-	        </label>
-	        <ul ng-repeat="alert in list.alert" ng-if="list.alert.length > 0">
-	            <li>{{alert.name}}</li>
-	        </ul>
-	        <p ng-repeat="cal in list.cal" ng-if="list.cal.length > 0 && list.test === 1">
-	            <span ng-if="cal.IS_REFERRAL && cal.OUTREFERRAL === 'no'" style="margin-left: 10px;">
-	                {{cal.FROM_TIME}}-{{cal.TO_TIME}}:&nbsp
-	                There is no referral
-	            </span>
-	        </p>
-    	</div>
+    <div class="panel-body msg_container_base">
+       <div ng-if="list.test !== 0 || list.alert.length !== 0" class="un_body_notification_list" ng-repeat="list in alertCenter.list">
+	    	<div>
+			    <label ng-if="list.alert.length > 0 || list.cal.length > 0" style="font-size: 16px;font-weight: bold;">
+			        {{list.First_name}} {{list.Sur_name}}
+			    </label>
+			    <ul ng-repeat="alert in list.alert" ng-if="list.alert.length > 0">
+			        <li>{{alert.name}}</li>
+			    </ul>
+			    <p ng-repeat="cal in list.cal" ng-if="list.cal.length > 0 && list.test === 1">
+			        <span ng-if="cal.IS_REFERRAL && cal.OUTREFERRAL === 'no'" style="margin-left: 10px;">
+			            {{cal.FROM_TIME}}-{{cal.TO_TIME}}:&nbsp
+			            There is no referral
+			        </span>
+			    </p>
+			</div>
+	    </div>
+	    <div ng-if="alertCenter.list.length == 0">
+	    	<div style="text-align: center;">
+                <span style="font-size: 15px; font-style: italic;font-weight: bold;">      
+                    Empty Data
+                </span>
+            </div>
+	    </div>
     </div>
 </div>
-<!-- <div id="alert-center" class="bv-right-list">
-	<h3>Notification List</h3>
-	<hr>
-	<span ng-repeat="list in alertCenter.list">
-		<h4 ng-if="list.alert.length > 0 || list.cal.length > 0">
-			{{list.First_name}} {{list.Sur_name}}
-		</h4>
-		<ul ng-repeat="alert in list.alert" ng-if="list.alert.length > 0">
-			<li>{{alert.name}}</li>
-		</ul>
-		<p ng-repeat="cal in list.cal" ng-if="list.cal.length > 0">
-			<span ng-if="cal.IS_REFERRAL && cal.OUTREFERRAL === 'no'">
-				{{cal.FROM_TIME}}-{{cal.TO_TIME}}:&nbsp
-				There is no referral
-			</span>
-		</p>
-		
-	</span>
-</div> -->
-<div class="un_arrow" ng-click="clickArrow()">
 </div>
 <div id="appointment" style="overflow-x: scroll;">
 	<div class="row">
@@ -291,4 +349,18 @@
 	<div class="modal-body">
 		<patient-detail options="options" params="patientAddForm.params" onsuccess="onsuccess"/>
 	</div>
+</script>
+<script>
+	$(document).on('click', '.panel-heading span.icon_minim', function (e) {
+	    var $this = $(this);
+	    if (!$this.hasClass('panel-collapsed')) {
+	        $this.parents('.panel').find('.panel-body').slideUp();
+	        $this.addClass('panel-collapsed');
+	        $this.removeClass('glyphicon-minus').addClass('glyphicon-plus');
+	    } else {
+	        $this.parents('.panel').find('.panel-body').slideDown();
+	        $this.removeClass('panel-collapsed');
+	        $this.removeClass('glyphicon-plus').addClass('glyphicon-minus');
+	    }
+	});
 </script>
