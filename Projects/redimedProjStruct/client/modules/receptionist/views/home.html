@@ -23,6 +23,7 @@
 	     bottom: 0;
 	     right: 0;
 	     width: 350px !important;
+	     z-index: 99999 !important;
 	}
 
 	.icon_minim{
@@ -200,21 +201,21 @@
 			                    <div class="media-body">
 			                    	<span style="font-size: 15px;" class="media-heading bold">{{a.patient_name}}</span>
 			                    	<div class="row" style="font-size: 10px;color: white;">
-			                    		<span class="col-md-6 col-sm-6">
+			                    		<span class="col-md-5 col-sm-5">
 				                    		<i class="fa fa-calendar"></i>
 				                    		{{(a.DOB == null ? 'N/A' : a.DOB) | date:'dd/MM/yyyy'}}
 				                    	</span>
-				                    	<span class="col-md-6 col-sm-6">
+				                    	<span class="col-md-7 col-sm-7">
 				                    		<i class="fa fa-building-o"></i>
 				                    		{{a.Company_name == null ? 'N/A' : a.Company_name}}
 				                    	</span>
 			                    	</div>
 			                    	<div class="row" style="font-size: 10px;color: white;">
-			                    		<span class="col-md-6 col-sm-6">
+			                    		<span class="col-md-5 col-sm-5">
 			                    			<i class="fa fa-user-md"></i>
 				                    		{{a.doctor_name == null ? 'N/A' : a.doctor_name}}
 			                    		</span>
-				                    	<span class="col-md-6 col-sm-6 ">
+				                    	<span class="col-md-7 col-sm-7 ">
 			                    			<span class="re_booking label-danger">
 				                    			{{a.appt_status}}
 			                    			</span>
@@ -223,7 +224,7 @@
 			                    	<div class="row" style="font-size: 10px;color: white;">
 			                    		<span class="col-md-12 col-sm-12">
 			                    			<i class="fa fa-clock-o"></i>
-				                    		<span style="color: white;" class="bold">{{a.Creation_date | moment: 'format': 'DD/MM/YYYY - hh:mm A'}}</span>
+				                    		<span style="color: white;" class="bold">{{a.Creation_date | moment: 'format': 'hh:mm A'}}</span>
 			                    		</span>
 			                    	</div>
 			                    </div>
@@ -277,21 +278,21 @@
 			                    <div class="media-body">
 			                    	<span style="font-size: 15px;" class="media-heading bold">{{a.patient_name}}{{a.appt_status == 'Checked In' ?' - '+timerDisplay : ''}}</span>
 			                    	<div class="row" style="font-size: 10px;color: #585757;">
-			                    		<span class="col-md-6 col-sm-6">
+			                    		<span class="col-md-5 col-sm-5">
 				                    		<i class="fa fa-calendar"></i>
 				                    		{{(a.DOB == null ? 'N/A' : a.DOB) | date:'dd/MM/yyyy'}}
 				                    	</span>
-				                    	<span class="col-md-6 col-sm-6">
+				                    	<span class="col-md-7 col-sm-7">
 				                    		<i class="fa fa-building-o"></i>
 				                    		{{a.Company_name == null ? 'N/A' : a.Company_name}}
 				                    	</span>
 			                    	</div>
 			                    	<div class="row" style="font-size: 10px;color: #585757;">
-			                    		<span class="col-md-6 col-sm-6">
+			                    		<span class="col-md-5 col-sm-5">
 			                    			<i class="fa fa-user-md"></i>
 				                    		{{a.doctor_name == null ? 'N/A' : a.doctor_name}}
 			                    		</span>
-				                    	<span class="col-md-6 col-sm-6 ">
+				                    	<span class="col-md-7 col-sm-7 ">
 				                    		<span class="re_booking label-success" ng-if="a.appt_status == 'Checked In'">
 				                    			{{a.appt_status}}
 			                    			</span>
@@ -306,7 +307,7 @@
 			                    	<div class="row" style="font-size: 10px;color: #585757;">
 			                    		<span class="col-md-12 col-sm-12">
 			                    			<i class="fa fa-clock-o"></i>
-				                    		<span style="color: rgb(0, 102, 102);" class="bold">{{a.FROM_TIME | moment: 'utc' | moment: 'format': 'DD/MM/YYYY - hh:mm A'}}</span>
+				                    		<span style="color: rgb(0, 102, 102);" class="bold">{{a.FROM_TIME | moment: 'utc' | moment: 'format': 'hh:mm A'}}</span>
 			                    		</span>
 			                    	</div>
 			                    </div>
