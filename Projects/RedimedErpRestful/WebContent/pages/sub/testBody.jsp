@@ -1,0 +1,10 @@
+<button onclick="aaaa();">aaaa</button>
+<button onclick="insertUser();">insert user info</button>
+<button onclick="getTaxes();">get Taxes</button>
+<button onclick="insertCustomers();">Insert Customers</button>
+<button onclick="insertCustomer();">Insert Customer</button>
+<button onclick="insertItem();">Insert item</button>
+<button onclick="insertItems();">Insert items</button>
+<button onclick="insertInvoiceLine();">Insert invoice line</button>
+<button onclick="insertInvoiceLines();">Insert invoice lines</button>
+<button onclick="getInvoiceHeaderStatus();">Get Invoice Header Status</button>

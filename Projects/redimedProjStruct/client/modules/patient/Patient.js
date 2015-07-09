@@ -6,7 +6,8 @@ angular.module("app.loggedIn.patient", [
     "app.loggedIn.patient.claim",
     "app.loggedIn.patient.consult",
     "app.loggedIn.patient.injuryManagement",
-    "app.loggedIn.patient.problem"
+    "app.loggedIn.patient.problem",
+    "app.loggedIn.patient.makecall.directive"
 ])
 
 .config(function ($stateProvider) {

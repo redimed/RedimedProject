@@ -14,7 +14,6 @@ module.exports = {
 
 		var errors = [];
 		var required = [
-			{field: 'Claim_no', message: 'Claim No required'},
 			{field: 'Claim_date', message: 'Claim Date required'},
 			{field: 'Injury_name', message: 'Injury Name required'},
 			{field: 'Injury_date', message: 'Injury Date required'},
@@ -55,7 +54,7 @@ module.exports = {
 			.column(
 				'cln_claims.*'
 			)
-			.where('cln_claims.Isenable', 1)
+			//.where('cln_claims.Isenable', 1)
 			.where('Claim_id', postData.Claim_id)
 			.toString();
 
@@ -197,7 +196,6 @@ module.exports = {
 
 		var errors = [];
 		var required = [
-			{field: 'Claim_no', message: 'Claim No required'},
 			{field: 'Claim_date', message: 'Claim Date required'},
 			{field: 'Injury_name', message: 'Injury Name required'},
 			{field: 'Injury_date', message: 'Injury Date required'},
@@ -262,6 +260,7 @@ module.exports = {
 					knex.raw('IFNULL(Claim_no,\'\') AS Claim_no'),
 					knex.raw('IFNULL(Injury_name,\'\') AS Injury_name')
 				)
+				.column('cln_claims.Isenable')
 				.from('cln_claims')
 				.innerJoin('cln_patient_claim', 'cln_claims.Claim_id', 'cln_patient_claim.Claim_id')
 				.where('cln_patient_claim.Patient_id', postData.Patient_id)
@@ -310,6 +309,7 @@ module.exports = {
 					knex.raw('IFNULL(Claim_no,\'\') AS Claim_no'),
 					knex.raw('IFNULL(Injury_name,\'\') AS Injury_name')
 				)
+				.column('cln_claims.Isenable')
 				.from('cln_claims')
 				.innerJoin('cln_patient_claim', 'cln_claims.Claim_id', 'cln_patient_claim.Claim_id')
 				//.where('cln_claims.Isenable', 1)
@@ -369,5 +369,35 @@ module.exports = {
                 .error(function(error){
                     res.json(500, {error: error,sql:sql});
                 })  
+	},
+
+	postOpenClose: function(req, res){
+
+		var postData = req.body.data;
+
+		if(postData.Isenable == 1){
+			postData.Isenable = 0;
+		}else{
+			postData.Isenable = 1;
+		}
+
+		var sql = knex('cln_claims')
+		.update({
+			'Isenable': postData.Isenable
+		})
+		.where({
+			'Claim_id': postData.Claim_id
+		})
+		.toString();
+		db.sequelize.query(sql)
+		.success(function(data){
+			res.json({data: data});
+		})
+		.error(function(error){
+			res.json(500, {error: error,sql:sql});
+		})
+
 	}
+
+
 }

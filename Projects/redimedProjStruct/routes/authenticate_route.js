@@ -5,6 +5,7 @@ var passport = require('passport'),
     passportLocal = require('passport-local');
     passportHttp = require('passport-http');
 
+
 var AuthenticationController = require('./controllers/AuthenticationController');
 
 passport.serializeUser(function(user, done) {

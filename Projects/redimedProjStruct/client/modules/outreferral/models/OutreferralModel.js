@@ -61,6 +61,10 @@ angular.module("app.loggedIn.outreferral.model", [])
         var detailApi = appApi.all('DotorFromUserId');
         return detailApi.post({data: data});   
     }
+     instanceService.DotorFromDoctorId = function(data){
+        var detailApi = appApi.all('DotorFromDoctorId');
+        return detailApi.post({data: data});   
+    }
 
     return instanceService;
 })

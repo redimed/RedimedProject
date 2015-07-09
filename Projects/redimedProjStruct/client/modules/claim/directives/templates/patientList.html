@@ -1,4 +1,3 @@
-<label class="un-label-popup-header un-bg-label-333333">Add Claim</label>
 <script type="text/ng-template" id="claimAdd">
 	<div class="modal-body">	
 		<claim-patient-add patient-id="claim.Patient_id" cal-id="claim.CAL_ID" success="claim.success"></claim-patient-add>
@@ -31,6 +30,7 @@
 							<i class="fa fa-caret-down"></i>
 						</a>
 					</th>
+					<th>Status</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -52,6 +52,16 @@
 					<td>{{l.Injury_name}}</td>
 					<td>{{l.Injury_date | filterdate: 'DD/MM/YYYY'}}</td>
 					<td>
+						<span ng-if="l.Isenable">Open</span>
+						<span ng-if="!l.Isenable">Close</span>
+					</td>
+					<td>
+						<!--<button class="un-submit un-bgXam-colBlack" ng-click="claim.onOClose(l)" ng-if="l.Isenable">
+							Open
+						</button>
+						<button class="un-submit un-bgXam-colBlack" ng-click="claim.onOClose(l)" ng-if="!l.Isenable">
+							Close
+						</button>-->
 						<button class="un-submit un-bgXam-colBlack" ng-click="claim.dialog.edit(l)" ng-if="action.edit">
 							Edit claim
 						</button>

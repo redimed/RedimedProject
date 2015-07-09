@@ -67,13 +67,7 @@ angular.module("app.loggedIn.document", [
 
             })
 
-            .state("loggedIn.FA", {
-                url: "/FA/:patient_id/:cal_id/:fa_id",
-
-                templateUrl: "modules/document/views/functionAssessment.html",
-                controller: 'FAController'
-
-            })
+            
 
             .state("loggedIn.MA", {
                 url: "/MA/:patient_id/:cal_id",
@@ -156,11 +150,18 @@ angular.module("app.loggedIn.document", [
                 templateUrl: "modules/document/views/audiogramresults2.html",
                 controller: 'SA2Controller'
             })
-            .state("loggedIn.newFA",{
+            .state("loggedIn.FA",{
                 // url:"/newFA/:patient_id/:cal_id/:fa_id",
-                url:"/newFA/:patient_id/:cal_id/:fa_id",
+                url:"/FA/:patient_id/:cal_id/:fa_id",
                 templateUrl: "modules/document/views/newFunctionalAssessment.html",
                 controller: "newFAController"
+            })
+            .state("loggedIn.newFA", {
+                url: "/newFA/:patient_id/:cal_id/:fa_id",
+
+                templateUrl: "modules/document/views/functionAssessment.html",
+                controller: 'FAController'
+
             })
 
 

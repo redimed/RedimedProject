@@ -18,7 +18,10 @@ angular.module("app.loggedIn.TimeSheet.ApproveLeave.Directive", [])
                         scope.info.isReject = false;
                         scope.info.leaveID = newModel;
                         scope.info.userID = $cookieStore.get("userInfo").id;
-                        TimeSheetService.ViewLeave(newModel).then(function(response) {
+                        var info = {};
+                        info.leave_id = newModel;
+                        info.user_id = $cookieStore.get("userInfo").id;
+                        TimeSheetService.ViewLeave(info).then(function(response) {
                             scope.list = response;
                             if (scope.list !== undefined &&
                                 scope.list !== null &&
@@ -30,6 +33,7 @@ angular.module("app.loggedIn.TimeSheet.ApproveLeave.Directive", [])
                                     ((scope.list.result[0].LastName === null || scope.list.result[0].LastName === "") ? " " : scope.list.result[0].LastName) : (scope.list.result[0].FirstName +
                                         " " + ((scope.list.result[0].LastName === null || scope.list.result[0].LastName === "") ? " " : scope.list.result[0].LastName));
                                 scope.statusID = scope.list.result[0].task_status_id;
+                                scope.isPermiss = response.isPermiss;
                             }
                         });
                     } else if (newModel === "clickReject") {

@@ -224,35 +224,11 @@ angular.module('app.loggedIn.rlob.services',[])
         }
         //chien 
         //phanquocchien.c1109g@gmail.com
-        //add claim
-        rlobService.addClaim=function(data)
-        {
-            var Claim=api.all('restful/Claim');
-            return Claim.post(data);
-        }
-        //chien 
-        //phanquocchien.c1109g@gmail.com
-        //add Patient
-        rlobService.addPatient=function(data)
-        {
-            var Patient=api.all('restful/Patient');
-            return Patient.post(data);
-        }
-        //chien 
-        //phanquocchien.c1109g@gmail.com
         //add ApptPatient
         rlobService.addApptPatient=function(Patient_id,CAL_ID)
         {
-            var Patient=api.all('restful/ApptPatient');
+            var Patient=api.all('rlob/cln_appt_patients/add');
             return Patient.post({Patient_id:Patient_id,CAL_ID:CAL_ID});
-        }
-        //chien 
-        //phanquocchien.c1109g@gmail.com
-        //add checkApptPatient
-        rlobService.checkApptPatient=function(Patient_id,CAL_ID)
-        {
-            var Patient=api.one('restful/ApptPatient');
-            return Patient.get({Patient_id:Patient_id,CAL_ID:CAL_ID});
         }
 
         //chien 
@@ -260,7 +236,6 @@ angular.module('app.loggedIn.rlob.services',[])
         //update patient ID in booking
         rlobService.updatePatientIdBooking=function(BOOKING_ID,PATIENT_ID)
         {
-
             var result=api.all('rlob/rl_bookings/update-patient-booking');
             return result.post({BOOKING_ID:BOOKING_ID,PATIENT_ID:PATIENT_ID});
         }
@@ -375,6 +350,22 @@ angular.module('app.loggedIn.rlob.services',[])
         {
             var result=api.one('rlob/rl_bookings/admin/report/list-location-report');
             return result.get();
+        }
+        //chien 
+        //phanquocchien.c1109g@gmail.com
+        //list doctor mobile
+        rlobService.ListDoctorMobile=function(date)
+        {
+            var result=api.all('rlob/doctors/get-doctors-for-source-type-mobile');
+            return result.post({date:date});
+        }
+        //chien 
+        //phanquocchien.c1109g@gmail.com
+        //list location mobile
+        rlobService.ListLocationMobile=function(date)
+        {
+            var result=api.all('rlob/redimedsites/list-mobile');
+            return result.post({date:date});
         }
 
         rlobService.getPassBookingNotChangeStatus=function(bookingType,doctorId)

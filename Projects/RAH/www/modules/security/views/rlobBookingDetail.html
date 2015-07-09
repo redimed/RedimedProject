@@ -1,0 +1,124 @@
+<ion-view >
+    <ion-content class="content-scroll">
+              <div>
+                    <img src="img/bk.png" style="width:200px">
+              </div>
+              <div style="height: 50px;background-color: #13b2cf;">
+                  <div style="font-size: 18px;color: white;margin-left: 28px;padding-top: 14px;float:right;width: 185px;"> Check Infomation</div>
+                  <button id="register-back-btn" type="button" class="button button-clear" ui-sref="security.rlobNonEmergency.NEInfo" style="margin-top: 9px;margin-left: 6px;color:white">
+                           <i class="fa fa-reply fa-2x"></i> </button>
+              </div>
+            
+                 
+                <div style="height: 30px;background: #ebebeb;">
+                </div>
+                  <!-- start -->
+            <form  class="register-form" novalidate style="display: block;" name="FormNonEmergency">
+                              
+                <div id="form-config">
+
+                 <div class="form-group" >
+                      <label class="item item-input label-custom-field" >
+                        <span class="input-label span-input-color">First Name:</span>
+                        <span >{{non.FIRSTNAME}}</span>
+                    </label>
+                </div>
+                <div class="form-group"  >
+                      
+                    <label class="item item-input label-custom-field" >
+                        <span class="input-label span-input-color">Last Name:</span>
+                        <span>{{non.LASTNAME}}</span>
+                    </label>
+                </div>
+                <div class="form-group">
+                       <label class="item item-input  label-custom-field" >
+                        <span class="input-label span-input-color">Gender:</span>
+                         <span>{{non.GENDER}}</span>
+                    </label>
+                </div>
+       
+                <div  class="form-group"  >
+                        <label class="item item-input label-custom-field" >
+                              <span class="input-label span-input-color">Date Of Birth:</span>
+                              <span>{{non.DOB|date:'dd-MM-yyyy'}}</span>
+                          </label> 
+
+                </div>
+                <div class="form-group" >
+                     
+                      <label class="item item-input label-custom-field" >
+                              <span class="input-label span-input-color">Contact No:</span>
+                              <span>{{non.CONTACT_NO}}</span>
+                      </label> 
+                </div>    
+                <div class="form-group">
+                 
+                        <label class="item item-input label-custom-field" >
+                              <span class="input-label span-input-color">Medicare No:</span>
+                              <span>{{non.MEDICARE_NO}}</span>
+                      </label> 
+                </div>
+                <div class="form-group">
+                       <label class="item item-input label-custom-field" >
+                              <span class="input-label span-input-color">Medicare Ref:</span>
+                               <span>{{non.MEDICARE_REF}}</span>
+                      </label> 
+                </div>
+                <div class="form-group"  >
+                  
+                        <label class="item item-input label-custom-field" >
+                              <span class="input-label span-input-color">Description:</span>
+                  
+                               <span>{{non.INJURY}}</span>
+                      </label> 
+                </div>
+                 <div class="form-group" >
+                        <label class="item item-input label-custom-field" >
+                              <span class="input-label span-input-color">Doctor:</span>
+                               <span>{{non.DOCTOR}}</span>
+                      </label> 
+                </div>
+                <div class="form-group" >
+                        <label class="item item-input label-custom-field" >
+                              <span class="input-label span-input-color">Location:</span>
+                               <span>{{non.LOCATION}}</span>
+                      </label> 
+                </div>
+                 <div class="form-group" >
+                        <label class="item item-input label-custom-field" >
+                              <span class="input-label span-input-color">Date:</span>
+                               <span>{{non.DATE|date:'dd-MM-yyyy'}}</span>
+                      </label> 
+                </div>
+                 <div class="form-group" >
+                        <label class="item item-input label-custom-field" >
+                              <span class="input-label span-input-color">Time:</span>
+                               <span>{{non.TIME }}</span>
+                      </label> 
+                </div>
+                <div class="form-group" >
+                        <label class="item item-input label-custom-field" >
+                              <span class="input-label span-input-color">Booking Type:</span>
+                               <span>{{non.BookingType }}</span>
+                      </label> 
+                        <button style="background-color: rgb(179, 29, 68);color: white;width: 100%;border: none;height: 40px;border-radius: 4px;"  ng-click="booking()" >
+                                Submit</i>
+                            </button>
+                </div>
+                  <div  class="form-group">
+                     
+                      
+                    
+                          
+                  </div>
+            </form>
+
+                  <!-- end -->
+
+         
+                
+
+
+
+    </ion-content>
+</ion-view>

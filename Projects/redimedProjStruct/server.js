@@ -73,6 +73,7 @@ app.get('/',function(req, res) {
 });
 app.use(busboy());
 
+app.use(express.static(path.join(__dirname, 'public')));
 app.use('/img/patient/avt', express.static(uploadedFile));
 app.use('/document/fa/images', express.static(documentImage));
 /**
@@ -152,7 +153,6 @@ app.get('/api/booking/download/:bookingId/:candidateId', function(req, res, next
 
 });
 
-
 app.all('/*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
@@ -178,7 +178,6 @@ app.use(function(err, req, res, next){
 });
 
 var io = require('socket.io')(httpsServer);
-
 require('./socket')(io,cookie,cookieParser);
 
 db.sequelize

@@ -34,6 +34,12 @@ var model_sql = {
 
         return querybuilder.toString();
     },
+
+    /**
+     * tannv.dts mark
+     * 26-06-2015
+     * Ham nay se khong con duoc su dung do khong con su dung bang cln_appt_items
+     */
     sql_get_by_appt: function (appt_id) {
         var query_builder = squel.select().from('inv_items').where('cal_id = ?', appt_id);
         query_builder.join('cln_appt_items', 'appt_items', 'appt_items.CLN_ITEM_ID = inv_items.ITEM_ID');

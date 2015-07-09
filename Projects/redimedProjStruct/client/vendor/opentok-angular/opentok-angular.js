@@ -21,7 +21,6 @@ var OpenTokAngular = angular.module('opentok', [])
         publishers: [],
         init: function (apiKey, sessionId, token, cb) {
             this.session = TB.initSession(sessionId);
-
             OTSession.session.on({
                 sessionConnected: function(event) {
                     OTSession.publishers.forEach(function (publisher) {
@@ -94,12 +93,15 @@ var OpenTokAngular = angular.module('opentok', [])
         scope: {
             muteAudio: '=',
             muteVideo: '=',
+            username: '=',
             props: '&'
         },
         link: function(scope, element, attrs){
             var props = scope.props() || {};
             props.width = props.width ? props.width : angular.element(element).width();
             props.height = props.height ? props.height : angular.element(element).height();
+            props.name = scope.username;
+            props.style.nameDisplayMode = 'on';
             var oldChildren = angular.element(element).children();
             scope.publisher = TB.initPublisher(attrs.apikey || OTSession.session.apiKey,
                 element[0], props, function (err) {
@@ -186,6 +188,7 @@ var OpenTokAngular = angular.module('opentok', [])
                 props = scope.props() || {};
             props.width = props.width ? props.width : angular.element(element).width();
             props.height = props.height ? props.height : angular.element(element).height();
+            props.style.nameDisplayMode = 'on';
             var oldChildren = angular.element(element).children();
             var subscriber = OTSession.session.subscribe(stream, element[0], props, function (err) {
                 if (err) {

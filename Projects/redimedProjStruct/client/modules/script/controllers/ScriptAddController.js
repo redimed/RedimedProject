@@ -1,12 +1,13 @@
 angular.module('app.loggedIn.script.add.controller', [])
-.controller('ScriptAddController', function($scope, $state,$modalInstance,medicaname){
+.controller('ScriptAddController', function($scope, $state,$modalInstance,medicare){
 	$scope.scriptadd = {
 	  success: false,
-	  medicaname:medicaname
-	 }
-	 $scope.$watch('scriptadd.success', function(success){
+	  medicare:medicare
+	}
+	console.log('_________',  medicare);
+	$scope.$watch('scriptadd.success', function(success){
 		  if(success){
 		   $modalInstance.close($scope.scriptadd);
 		  }
-	 })
+	})
 })

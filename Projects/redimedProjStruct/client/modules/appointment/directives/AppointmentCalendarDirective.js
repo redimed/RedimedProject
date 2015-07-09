@@ -8,6 +8,46 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 			options: '='
 		},
 		link: function(scope, elem, attrs){
+
+			scope.servicedata ={};
+			scope.getServiceColor = function(){
+				AppointmentModel.getServiceColor('data')
+				.then(function(response){
+					scope.servicedata = response.data;
+				},function(error){
+
+				})
+			}
+			scope.getServiceColor();
+		
+			scope.addPatient = function(){
+				var modalInstance = $modal.open({
+					templateUrl: 'addPatient',
+					controller: function($scope, $modalInstance,toastr, options)
+					{
+						$scope.patientAddForm = {
+							params: {
+					            permission:{
+					                edit:false,
+					                create:true
+					            }
+				            }
+				        };
+				        $scope.options = options;
+				        $scope.$watch('onsuccess', function(success){
+							if(success){
+								$modalInstance.close('success');								
+							}
+						})
+					},
+					size: 'lg',
+					resolve:{
+						options: function(){
+							return scope.options;
+						}
+					}
+				})
+			}
 			scope.goToCalendarDetail = function(doctor){
 				$cookieStore.put('appointment', scope.appointment.search);
 
@@ -752,7 +792,6 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 			var loadAlertCenter = function(){
 				var postData = angular.copy(scope.appointment.search);
 				postData.datepicker = ConfigService.convertToDB(postData.datepicker);
-
 				scope.alertCenter.list = [];
 
 				AppointmentModel.alertCenter(postData)
@@ -791,6 +830,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 								})
 
 								if(cal_flag){
+									scope.alertCenter.list[flag].test = row.IS_REFERRAL;
 									scope.alertCenter.list[flag].cal.push({IS_REFERRAL: row.IS_REFERRAL, CAL_ID: row.CAL_ID, FROM_TIME: row.FROM_TIME, TO_TIME: row.TO_TIME, OUTREFERRAL: 'no', DOCTOR_ID: row.DOCTOR_ID});
 									if(row.outreferral_id){
 										var cal_length = scope.alertCenter.list[flag].cal.length;
@@ -807,9 +847,11 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 							}
 
 							if(row.CAL_ID){
+								object.test = row.IS_REFERRAL;
 								object.cal.push({IS_REFERRAL: row.IS_REFERRAL, DOCTOR_ID: row.DOCTOR_ID, CAL_ID: row.CAL_ID, FROM_TIME: row.FROM_TIME, TO_TIME: row.TO_TIME, OUTREFERRAL: 'no'});
-								if(row.outreferral_id)
+								if(row.outreferral_id){
 									object.cal[0].OUTREFERRAL = 'yes';
+								}
 							}
 
 							scope.alertCenter.list.push(object);
@@ -821,13 +863,12 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 
 			scope.clickArrow = function(){
 				scope.alertCenter.arrow = !scope.alertCenter.arrow;
-
 				if(scope.alertCenter.arrow){
 					angular.element('#alert-center').css({display: 'none'});
-					angular.element('.bv-arrow').css({right: 0});
+					angular.element('.un_arrow').css({right: 0});
 				}else{
 					angular.element('#alert-center').css({display: 'block'});
-					angular.element('.bv-arrow').css({right: '225px'});
+					angular.element('.un_arrow').css({right: '225px'});
 				}
 			}
 

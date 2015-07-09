@@ -1,151 +1,160 @@
-<div class="page-bar">
-    <ul class="page-breadcrumb">
-        <li>
-            <img src="/img/TimeSheet/icon_003.PNG" style="margin-top:-7px;">
-            <a ui-sref="loggedIn.home">e-Timesheets</a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-        <li>
-            <a ui-sref="#">
+<form name="formCreatTimesheet" accessibleForm>
+    <div class="page-bar">
+        <ul class="page-breadcrumb">
+            <li>
+                <img src="/img/TimeSheet/icon_003.PNG" style="margin-top:-7px;">
+                <a ui-sref="loggedIn.home">e-Timesheets</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <a ui-sref="loggedIn.timesheetHome.timesheetCreate">
+                    <span ng-hide='isEdit'>Create New Timesheet</span>
+                    <span ng-hide='!isEdit'>Edit Timesheet</span>
+                </a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+        </ul>
+    </div>
+    <div class="portlet box blue-hoki">
+        <div class="portlet-title">
+            <div class="caption">
                 <span ng-hide='isEdit'>Create New Timesheet</span>
                 <span ng-hide='!isEdit'>Edit Timesheet</span>
+            </div>
+            <a class="btn pull-right btn-info btn-xs btn-circle" ng-click="checkTimeInLieu()" style="margin-top:10px;font-size:13px;">Check Time in Lieu</a>
+            <a class="btn pull-right btn-xs">
+                <label for="weekFrom" style="color:white;margin-top:9px;font-weight:bold;">Week From</label>
+                <input id="weekFrom" ng-hide='isEdit' class="week-picker" ng-model="dateWeekFrom" ng-change="changeDate()" style="color:black; font-weight:bold;" />
+                <input ng-disabled='isEdit' ng-show='isEdit' type="text" name="dob" ng-model="dateStart" datepicker-popup="dd-MM-yyyy" is-open="openDOB" ng-click="openDOB = true" datepicker-options="dateOptions3" close-text="Close" style="color:black; font-weight:bold;font-family: 'inherit';" />
             </a>
-            <i class="fa fa-angle-right"></i>
-        </li>
-    </ul>
-</div>
-<div class="portlet box blue-hoki">
-    <div class="portlet-title">
-        <div class="caption">
-            <span ng-hide='isEdit'>Create New Timesheet</span>
-            <span ng-hide='!isEdit'>Edit Timesheet</span>
         </div>
-        <a class="btn pull-right btn-info btn-xs btn-circle" ng-click="checkTimeInLieu()" style="margin-top:10px;font-size:13px;">Check Time in Lieu</a>
-        <a class="btn pull-right btn-xs">
-            <label for="weekFrom" style="color:white;margin-top:9px;font-weight:bold;">Week From</label>
-            <input id="weekFrom" ng-hide='isEdit' class="week-picker" ng-model="dateWeekFrom" ng-change="changeDate()" style="color:black; font-weight:bold;" />
-            <input ng-disabled='isEdit' ng-show='isEdit' type="text" name="dob" ng-model="dateStart" datepicker-popup="dd-MM-yyyy" is-open="openDOB" ng-click="openDOB = true" datepicker-options="dateOptions3" close-text="Close" style="color:black; font-weight:bold;font-family: 'inherit';" />
-        </a>
-    </div>
-    <div class="portlet-body">
-        <div class="table-dynamic">
-            <center ng-show="tasks.loading"><i class="fa fa-spinner fa-spin fa-3x"></i>
-            </center>
-            <table class="responsive table table-bordered" ng-show="!tasks.loading">
-                <thead ng-show="tasks!==null">
-                    <tr>
-                        <th>
-                            <div class="th">
-                            </div>
-                        </th>
-                        <th style="width:15px;">
-                            <div class="th">
-                            </div>
-                        </th>
-                        <th>
-                            <div class="th">
-                                Date
-                            </div>
-                        </th>
-                        <th>
-                            <div class="th">
-                                Activity
-                            </div>
-                        </th>
-                        <th>
-                            <div class="th">
-                                Location
-                            </div>
-                        </th>
-                        <th>
-                            <div class="th">
-                                Department
-                            </div>
-                        </th>
-                        <th>
-                            <div class="th">
-                                Tasks / Items
-                            </div>
-                        </th>
-                        <th>
-                            <div class="th">
-                                Time Charge
-                            </div>
-                        </th>
-                        <th>
-                            <div class="th">
-                                Comments
-                            </div>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-hide="task.isAction == 'delete'" ng-repeat="(key,task) in tasks track by $index">
-                        <td style="text-align:center;width:15px;">
-                            <i ng-if="task.isParent === 1" class="fa fa-plus pointer" ng-click="addRow($index,task.date,task.tasks_week_id)" style="font-size: 13px;margin-top:9px;"></i>
-                        </td>
-                        <td style="text-align:center;width:15px;">
-                            <i ng-hide="task.isParent===1" ng-click="delTask($index,task.order)" class="fa fa-trash pointer" style="font-size: 13px;margin-top:7px;"></i>
-                        </td>
-                        <td style="vertical-align: middle; width:130px;">{{task.date | date : 'EEE, dd MMM yyyy'}}
-                        </td>
-                        <td style="width:200;">
-                            <select ng-model="task.activity_id" class="form-control input-sm" ng-options="activity.activity_id as activity.NAME for activity in activities" ng-change="ChangeActivity(task.activity_id,key)">
-                                <option value="">--Select Activity--</option>
-                            </select>
-                        </td>
-                        <td style="width:200px;">
-                            <select ng-disabled='task.activity_id ===5' ng-model="task.location_id" class="form-control input-sm" ng-options="location.location_id as location.NAME for location in locations">
-                                <option value="">--Select Location--</option>
-                            </select>
-                        </td>
-                        <td style="width:200px;">
-                            <select ng-disabled='task.activity_id === 5' ng-model="task.department_code_id" class="form-control input-sm" ng-options="department.departmentid as department.departmentName for department in departments">
-                                <option value="">--Select Department--</option>
-                            </select>
-                        </td>
-                        <td style="text-align:center;width:100px;">
-                            <a ng-disabled="((task.activity_id==='' || task.activity_id===undefined || task.activity_id===null || task.location_id==='' || task.location_id===null || task.location_id===undefined || task.department_code_id==='' || task.department_code_id===null || task.department_code_id===undefined)&&task.activity_id!==5) || ((task.department_code_id===19 || task.department_code_id===27 ||task.department_code_id===29 || task.department_code_id===30 ||task.department_code_id===31
+        <div class="portlet-body">
+            <div class="table-dynamic">
+                <center ng-show="tasks.loading"><i class="fa fa-spinner fa-spin fa-3x"></i>
+                </center>
+                <table class="responsive table table-bordered" ng-show="!tasks.loading">
+                    <thead ng-show="tasks!==null">
+                        <tr>
+                            <th style="width:2%">
+                                <div class="th">
+                                </div>
+                            </th>
+                            <th style="width:2%">
+                                <div class="th">
+                                </div>
+                            </th>
+                            <th style="width:10%">
+                                <div class="th">
+                                    Date
+                                </div>
+                            </th>
+                            <th style="width:15%;">
+                                <div class="th">
+                                    Activity
+                                </div>
+                            </th>
+                            <th style="width:16%;">
+                                <div class="th">
+                                    Location
+                                </div>
+                            </th>
+                            <th style="width:18%;">
+                                <div class="th">
+                                    Department
+                                </div>
+                            </th>
+                            <th style="width:10%;">
+                                <div class="th">
+                                    Tasks / Items
+                                </div>
+                            </th>
+                            <th style="width:8%;">
+                                <div class="th">
+                                    Time Charge
+                                </div>
+                            </th>
+                            <th style="width:auto;">
+                                <div class="th">
+                                    Comments
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-hide="task.isAction == 'delete'" ng-repeat="(key,task) in tasks track by $index" ng-form="formRepeat">
+                            <td style="text-align:center;width:2%;">
+                                <i ng-if="task.isParent === 1" class="fa fa-plus pointer" ng-click="addRow($index,task.date,task.tasks_week_id)" style="font-size: 13px;margin-top:10px;"></i>
+                            </td>
+                            <td style="text-align:center;width:2%;">
+                                <i ng-hide="task.isParent===1" ng-click="delTask($index,task.order)" class="fa fa-trash pointer" style="font-size: 13px;margin-top:7px;"></i>
+                            </td>
+                            <td style="vertical-align: middle; width:10%;">{{task.date | date : 'EEE, dd MMM yyyy'}}
+                            </td>
+                            <td style="width:15%;">
+                                <select ng-model="task.activity_id" class="form-control input-sm" ng-options="activity.activity_id as activity.NAME for activity in activities" ng-change="ChangeActivity(task.activity_id,key)">
+                                    <option value="">--Select Activity--</option>
+                                </select>
+                            </td>
+                            <td style="width:16%;">
+                                <select ng-disabled='task.activity_id ===5' ng-model="task.location_id" class="form-control input-sm" ng-options="location.location_id as location.NAME for location in locations">
+                                    <option value="">--Select Location--</option>
+                                </select>
+                            </td>
+                            <td style="width:18%;">
+                                <select ng-disabled='task.activity_id === 5' ng-model="task.department_code_id" class="form-control input-sm" ng-options="department.departmentid as department.departmentName for department in departments">
+                                    <option value="">--Select Department--</option>
+                                </select>
+                            </td>
+                            <td style="text-align:center;width:10%;">
+                                <a ng-disabled="((task.activity_id==='' || task.activity_id===undefined || task.activity_id===null || task.location_id==='' || task.location_id===null || task.location_id===undefined || task.department_code_id==='' || task.department_code_id===null || task.department_code_id===undefined)&&task.activity_id!==5) || ((task.department_code_id===19 || task.department_code_id===27 ||task.department_code_id===29 || task.department_code_id===30 ||task.department_code_id===31
                             ) && task.activity_id===1) || task.notPopup===true" ng-click="chooseItem(task, uploader, isEdit, key)" class="btn btn-xs blue-dark btn-circle" style="margin-left:5px; margin-top:5px;">Choose</a>
-                        </td>
-                        <td style="text-align: center;width:100px;">
-                            <input ng-if="!(task.time_charge>=10000)" type="text" ng-model="task.time_charge" ui-mask="99:99" name="time_charge" ng-change="changeTimeCharge()" style="font-style: 'normal';text-align: center;" ng-disabled="!((task.department_code_id===19 || task.department_code_id===27 ||task.department_code_id===29 || task.department_code_id===30 ||task.department_code_id===31) && task.activity_id===1)" class="form-control input-sm" time-charge />
-                            <input ng-if="task.time_charge>=10000" type="text" ng-model="task.time_charge" ui-mask="999:99" name="time_charge" ng-change="changeTimeCharge()" style="font-style: 'normal';text-align: center;" ng-disabled="!((task.department_code_id===19 || task.department_code_id===27 ||task.department_code_id===29 || task.department_code_id===30 ||task.department_code_id===31) && task.activity_id===1)" class="form-control input-sm" time-charge />
-                        </td>
-                        <td>
-                            <input type="text" class="form-control input-sm" ng-model="task.task" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="7" style="vertical-align: middle">
-                            <label class="bold pull-right" style="margin-top:5px;">Total Worked Hours: </label>
-                        </td>
-                        <td style="width:100px;">
-                            <input ng-if="!(info.time_charge>=10000)" disabled class="form-control input-sm" ng-model="info.time_charge" ui-mask="{{info.time_charge>=10000?'999:99':'99:99'}}" style="text-align:center; font-weight:bold;" />
-                            <input ng-if="info.time_charge>=10000" disabled class="form-control input-sm" ng-model="info.time_charge" ui-mask="999:99" style="text-align:center; font-weight:bold;" />
-                        </td>
-                        <td colspan="2">
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <footer class="table-footer">
-                <!-- BUTTON -->
+                            </td>
+                            <td style="text-align: center;width:8%;">
+                                <!-- ENTER VALUE -->
+                                <input type="text" ui-mask="99:99" ng-model="task.time_charge" name="time_charge" ng-change="changeTimeCharge()" style="font-style: 'normal';text-align: center;" ng-if="((task.department_code_id===19 || task.department_code_id===27 ||task.department_code_id===29 || task.department_code_id===30 ||task.department_code_id===31) && task.activity_id===1)" class="form-control input-sm" time-charge="task.time_charge" form-validate="formRepeat.time_charge.$error" ng-required="true" />
+                                <!-- END -->
+                                <!-- VIEW OTHER VALUE -->
+                                <label type="text" disabled name="time_charge" style="font-style: 'normal';text-align: center;" ng-if="!((task.department_code_id===19 || task.department_code_id===27 ||task.department_code_id===29 || task.department_code_id===30 ||task.department_code_id===31) && task.activity_id===1)" class="form-control input-sm">
+                                    <label style="margin-top:-3px;" ng-bind="task.time_charge | customTotalHours"></label>
+                                </label>
+                                <!-- END -->
+                            </td>
+                            <td style="width:auto;">
+                                <input type="text" class="form-control input-sm" name="comment" ng-model="task.task" model-validate="task.task" form-validate="formRepeat.comment.$error" ng-maxlength="150" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="7" style="vertical-align: middle">
+                                <label class="bold pull-right" style="margin-top:5px;">Total Worked Hours: </label>
+                            </td>
+                            <td style="width:8%;">
+                                <label disabled class="form-control input-sm" style="text-align:center;">
+                                    <label style="font-weight:bold; margin-top:-3px;" ng-bind="info.time_charge | customTotalHoursAll"></label>
+                                </label>
+                            </td>
+                            <td colspan="2">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <footer class="table-footer">
+                    <!-- BUTTON
                 <!-- BUTTON WHEN ADDNEW -->
-                <!-- BUTTON WHEN EDIT -->
-                <a class="btn btn-xs yellow pull-right" ng-show='!isEdit' ui-sref="loggedIn.home" style="width:70px;margin-right:-8px;">Cancel</a>
-                <!-- END EDIT-->
-                <a class="btn btn-xs yellow pull-right" ng-show='isEdit' ui-sref="loggedIn.TimeSheetHome.view" style="width:70px;margin-right:-8px;">Cancel</a>
-                <a class="btn btn-xs green pull-right" ng-show="(!isEdit || checkStatus===1) && afterStatusID!==4" ng-click="addAllTask(2)" style="width:70px;">Submit</a>
-                <a class="btn btn-xs purple pull-right" ng-show="(isEdit && (checkStatus!==1 || (afterStatusID ===4 && checkStatus==1)))" ng-click="addAllTask(5)" style="width:70px;">Re-submit</a>
-                <a class="btn btn-xs blue pull-right" ng-show="afterStatusID ===4" ng-click="addAllTask(4)" style="width:70px;">Save</a>
-                <a class="btn btn-xs blue pull-right" ng-show="afterStatusID !==4" ng-click="addAllTask(1)" style="width:70px;">Save</a>
-                <!-- END ADDNEW-->
-                <!-- END -->
-            </footer>
+                    <!-- BUTTON WHEN EDIT -->
+                    <a class="btn btn-xs yellow pull-right" ng-show='!isEdit' ui-sref="loggedIn.home" style="width:70px;margin-right:-8px;">Cancel</a>
+                    <!-- END EDIT-->
+                    <a class="btn btn-xs yellow pull-right" ng-show='isEdit' ui-sref="loggedIn.timesheetHome.timesheetHistory" style="width:70px;margin-right:-8px;">Cancel</a>
+                    <button class="btn btn-xs green pull-right" ng-show="(!isEdit || checkStatus===1) && afterStatusID!==4" ng-click="addAllTask(2, formCreatTimesheet)" style="width:70px;">Submit</button>
+                    <button class="btn btn-xs purple pull-right" ng-show="(isEdit && (checkStatus!==1 || (afterStatusID ===4 && checkStatus==1)))" ng-click="addAllTask(5,formCreatTimesheet)" style="width:70px;">Re-submit</button>
+                    <button class="btn btn-xs blue pull-right" ng-show="afterStatusID ===4" ng-click="addAllTask(4,formCreatTimesheet)" style="width:70px;">Save</button>
+                    <button class="btn btn-xs blue pull-right" ng-show="afterStatusID !==4" ng-click="addAllTask(1,formCreatTimesheet)" style="width:70px;">Save</button>
+                    <!-- END ADDNEW-->
+                    <!-- END -->
+                </footer>
+            </div>
         </div>
     </div>
-</div>
+</form>
 <script type="text/ng-template" id="ViewTask">
     <view-task ng-model="idDept" on-cancel="clickCancel(return)" on-save="clickSave(return)"></view-task>
 </script>

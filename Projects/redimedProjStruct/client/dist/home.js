@@ -1,0 +1,1 @@
+angular.module("app.loggedIn.home",["app.loggedIn.home.controller"]).config(function($stateProvider){$stateProvider.state("loggedIn.home",{url:"/home",templateUrl:"modules/home/views/home.html",controller:"HomeController"})}),angular.module("app.loggedIn.home.controller",[]).controller("HomeController",function($scope,$http,$state,$cookieStore,$modal){});

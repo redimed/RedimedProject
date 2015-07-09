@@ -1,298 +1,325 @@
-<div class="portlet box red">
-	<div class="portlet-title">
-	    <div class="caption">
-	        <i class="fa fa-medkit"></i> Invoice Detail
-	    </div>
-	    <div class="pull-right navbar-right">
-            <button ng-click="clickAction()" class="un_tn_btn un_tn_btn_pink" ng-show="showSave"><i class="fa fa-save"></i> Save </button>
-        </div>
-	</div>
-	<div class="portlet-body">
-<div class="row" style="margin-top: 15px;">
 
-	<!--Patient_id-->
-	<div class="col-md-3 col-sm-6 col-xs-12">
-		<span class="field">
-			<label>Patient</label>
-			<div>
-				<input disabled type="text" placeholder="Patient" class="form-control" 
-				ng-model="InvoiceMap.patient.full_name" float-label>
+<div class="un_tn_panel_lg un_tn_panel_white un_tn_panel_border_white">
+	<label class="un_tn_panel_lg_label un_tn_panel_label_color_black">Edit Inovice</label>
+	<div class="un_tn_panel_action">
+		
+	</div>
+	<div class="un_tn_panel_body">
+		<!---Content-->
+		<div class="un_tn_panel_lg un_tn_panel_whiteness un_tn_panel_border_gray">
+			<label class="un_tn_panel_lg_label un_tn_panel_label_color_black">Invoice Detail</label>
+			<div class="un_tn_panel_action">
+				<button ng-click="clickAction()" class="un_tn_btn un_tn_btn_pink" ng-show="showSave"><i class="fa fa-save"></i> Save </button>
 			</div>
-			<div style="position: absolute;right: 0;top: 0px;">
-			<button  style="height: 32px;width: 40px;margin-right: 0px;" class="btn btn-block green" ng-click="patientSearch.open()">
-				<i class="fa fa-search"></i>
-			</button>
+			<div class="un_tn_panel_body">
+				<div class="row" style="margin-top: 15px;">
+					<form name="patientForm" novalidate>
+						<!--Patient_id-->
+						<div class="col-md-3 col-sm-6 col-xs-12">
+
+							<!-- tan add -->
+							<div class="form-group">
+							    <label class="un_tn_form_label un_tn_form_label_gray" style="width:100px" >		Patient
+							    </label>
+							    <div class="input-group">
+									<input disabled placeholder="Patient" type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="InvoiceMap.patient.full_name">
+								</div>
+							</div>
+						</div>
+						<!--Patient_id-->
+
+						<!--Company_id-->
+						<div class="col-md-3 col-sm-6 col-xs-12">
+
+							<div class="form-group">
+							    <label class="un_tn_form_label un_tn_form_label_gray" style="width:100px" >
+							    	Company
+							    </label>
+							    <input type="text" disabled placeholder="Company" ng-model="InvoiceMap.company.Company_name" class="form-control un_tn_form_control un_tn_form_control_gray">
+						 	</div>
+						</div>
+						<!--Company_id-->
+
+						<!--Insurer_id-->
+						<div class="col-md-3 col-sm-6 col-xs-12">
+							<div class="form-group">
+								<label class="un_tn_form_label un_tn_form_label_gray" style="width:100px">
+									Insurer
+								</label>
+								<input type="text" disabled placeholder="Insurer" ng-model="InvoiceMap.insurer.insurer_name" class="form-control un_tn_form_control un_tn_form_control_gray">
+							</div>
+						</div>
+						<!--Insurer_id-->
+
+						<!--SERVICE_ID-->
+						<div class="col-md-3 col-sm-6 col-xs-12">
+							<div class="form-group">
+								<label class="un_tn_form_label un_tn_form_label_gray" style="width:100px">
+									Service
+								</label>
+								<select class="form-control un_tn_form_control un_tn_form_control_gray" name="SERVICE_ID" id="SERVICE_ID" ng-model="InvoiceMap.SERVICE_ID" ng-options="item.SERVICE_ID as item.SERVICE_NAME for item in opt_services">
+								</select>
+							</div>
+						</div>
+						<!--SERVICE_ID-->
+
+						<div class="break-row"></div>
+
+						<!--SITE_ID-->
+						<div class="col-md-3 col-sm-6 col-xs-12">
+							<div class="form-group">
+								<label class="un_tn_form_label un_tn_form_label_gray" style="width:100px">
+									Site
+								</label>
+								<select class="form-control un_tn_form_control un_tn_form_control_gray" name="SITE_ID" ng-model="InvoiceMap.SITE_ID" ng-options="item.id as item.Site_name for item in options.redimedsites">
+								</select>
+							</div>
+						</div>
+						<!--SITE_ID-->
+
+						<!--DEPT_ID-->
+						<div class="col-md-3 col-sm-6 col-xs-12">
+							<div class="form-group">
+								<label class="un_tn_form_label un_tn_form_label_gray" style="width:100px">
+									Department
+								</label>
+
+								<select disabled class="form-control un_tn_form_control un_tn_form_control_gray" name="DEPT_ID" id="DEPT_ID"
+									ng-model="InvoiceMap.DEPT_ID"
+									ng-options="item.CLINICAL_DEPT_ID as item.CLINICAL_DEPT_NAME for item in options.departments">
+								</select>
+							</div>
+							
+						</div>
+						<!--DEPT_ID-->
+
+						<!--DOCTOR_ID-->
+						<div class="col-md-3 col-sm-6 col-xs-12">
+
+							<div class="form-group">
+								<label class="un_tn_form_label un_tn_form_label_gray" style="width:100px">
+									Doctor
+								</label>
+								<div class="input-group">
+									<input type="text" disabled placeholder="Doctor"  ng-model="InvoiceMap.doctor.NAME" class="form-control un_tn_form_control un_tn_form_control_gray">
+									<span class="input-group-btn">
+										<button style="width:20px" class="btn un_tn_btn_side un_tn_btn_side_gray" ng-click="doctorSearch.open()">
+											<i class="fa fa-search"></i>
+										</button>
+									</span>
+								</div>
+							</div>
+
+						</div>
+						<!--DOCTOR_ID-->
+
+						<div class="break-row"></div>
+
+						<!--STATUS-->
+						<div class="col-md-3 col-sm-6 col-xs-12">
+							<div class="form-group">
+								<label class="un_tn_form_label un_tn_form_label_gray">Status</label>
+								<select class="form-control un_tn_form_control un_tn_form_control_gray" name="STATUS" id="STATUS"
+									ng-model="InvoiceMap.STATUS"
+									ng-options="item.code as item.label for item in options.invoice_status">
+								</select>
+							</div>
+							
+						</div>
+						<!--STATUS-->
+
+						<!--claim_id-->
+						<div class="col-md-3 col-sm-6 col-xs-12">
+							<div class="form-group">
+								<label class="un_tn_form_label un_tn_form_label_gray" style="width:100px">
+									Claim
+								</label>
+							    
+							    <div class="input-group">
+
+									<input ng-if="!InvoiceMap.claim_id" disabled type="text" value="No Claim" class="form-control un_tn_form_control un_tn_form_control_gray" placeholder=".input-large" >
+								
+									<input ng-if="InvoiceMap.claim_id" disabled type="text" ng-model="InvoiceMap.claim.Injury_name" class="form-control un_tn_form_control un_tn_form_control_gray">
+									
+									<span class="input-group-btn dropdown">
+										<button style="width:55px" type="button" ng-disabled="disabled" data-toggle="dropdown" class="btn un_tn_btn_side un_tn_btn_side_gray dropdown-toggle"> 
+											Claim <i class="fa fa-angle-down"></i>
+										</button>
+										<ul class="dropdown-menu" role="menu">
+											<li><a ng-click="patientClaim.open();"><i class="fa fa-search"></i> Choose Claim </a></li>
+											<li><a ng-click="removeClaim();"><i class="fa fa-times"></i> Remove Claim</a></li>
+										</ul>
+									</span>
+								</div>
+								
+							</div>
+
+						</div>
+						<!--claim_id-->
+					</form>
+				</div>
 			</div>
-		</span>	
-	</div>
-	<!--Patient_id-->
+		</div>
 
-	<!--Company_id-->
-	<div class="col-md-3 col-sm-6 col-xs-12">
-		<span class="field">
-			<label for="company_id">Company</label>
-			<input type="text" disabled placeholder="Company" ng-model="InvoiceMap.company.Company_name" class="form-control"float-label>
-		</span>	
-	</div>
-	<!--Company_id-->
-
-	<!--Insurer_id-->
-	<div class="col-md-3 col-sm-6 col-xs-12">
-		<span class="field">
-			<label>Insurer</label>
-			<input type="text" disabled placeholder="Insurer" ng-model="InvoiceMap.insurer.insurer_name" class="form-control"  float-label>
-		</span>	
-	</div>
-	<!--Insurer_id-->
-
-	<!--SERVICE_ID-->
-	<!-- <div class="col-md-3 col-sm-6 col-xs-12">
-		<span class="field">
-			<label>Service</label>
-			<input type="text" disabled placeholder="Service" ng-model="InvoiceMap.service.SERVICE_NAME" class="form-control" float-label>
-		</span>	
-	</div> -->
-	<!--SERVICE_ID-->
-	<!--SERVICE_ID-->
-	<div class="col-md-3 col-sm-6 col-xs-12">
-		<span class="field">
-			<label>Service</label>
-			<select class="form-control" name="SERVICE_ID" id="SERVICE_ID"
-				ng-model="InvoiceMap.SERVICE_ID"
-				ng-options="item.SERVICE_ID as item.SERVICE_NAME for item in opt_services" float-label>
-			</select>
-		</span>	
-	</div>
-	<!--SERVICE_ID-->
-
-	<div class="break-row"></div>
-
-	<!--SITE_ID-->
-	<div class="col-md-3 col-sm-6 col-xs-12">
-		<span class="field">
-			<label>Site</label>
-			<!-- <input type="text" placeholder="Site" ng-model="InvoiceMap.site.Site_name" class="form-control" float-label> -->
-			<select class="form-control" name="SITE_ID"
-				ng-model="InvoiceMap.SITE_ID"
-				ng-options="item.id as item.Site_name for item in options.redimedsites"  float-label>
-			</select>
-		</span>	
-	</div>
-	<!--SITE_ID-->
-
-	<!--DEPT_ID-->
-	<div class="col-md-3 col-sm-6 col-xs-12">
-		<span class="field">
-			<label>Department</label>
-			<!-- <input type="text" disabled placeholder="Department" ng-model="InvoiceMap.department.CLINICAL_DEPT_NAME" class="form-control" float-label> -->
-			<select disabled class="form-control" name="DEPT_ID" id="DEPT_ID"
-				ng-model="InvoiceMap.DEPT_ID"
-				ng-options="item.CLINICAL_DEPT_ID as item.CLINICAL_DEPT_NAME for item in options.departments" float-label>
-			</select>
-		</span>	
-	</div>
-	<!--DEPT_ID-->
-
-	<!--DOCTOR_ID-->
-	<div class="col-md-3 col-sm-6 col-xs-12">
-		<span class="field">
-			<label>Doctor</label>
-			<div>
-				<input type="text" disabled placeholder="Doctor"  ng-model="InvoiceMap.doctor.NAME" class="form-control"  float-label>
+		<div class="un_tn_panel_lg un_tn_panel_whiteness un_tn_panel_border_gray">
+			<label class="un_tn_panel_lg_label un_tn_panel_label_color_black">Invoice Items</label>
+			<div class="un_tn_panel_action" ng-hide="statusDisable">
+				<button ng-click="itemSearch.open()" class="un_tn_btn un_tn_btn_gray"><i class="fa fa-search">
+	            	</i> Choose Item 
+	        	</button>
 			</div>
-			<div style="position: absolute;right: 0;top: 0px;">
-				<button style="height: 32px;width: 40px;margin-right: 0px;" class="btn btn-block green" ng-click="doctorSearch.open()">
-					<i class="fa fa-search"></i>
-				</button>
-			</div>
-		</span>	
-	</div>
-	<!--DOCTOR_ID-->
+			<div class="un_tn_panel_body">
+				<table class='mdt-table'>
+					<tr>
+						<th> Item No</th>
+						<th> Item Name</th>
+						<th> Time Spent </th>
+						<th> Quantity </th>
+						<th> Price </th>
+						<th> Amount </th>
+						<th> Tax Code </th>
+						<th> Tax Rate </th>
+						<th> Tax Amount </th>
+						<th>Actions</th>
+					</tr>
+					<tr ng-if="statusDisable" ng-repeat="item in InvoiceMap.lines" ng-show="item.IS_ENABLE != 0">
+						<td>{{item.invItem.ITEM_CODE}}</td>
+						<td>{{item.invItem.ITEM_NAME}}</td>
+						<td>{{item.TIME_SPENT}}</td>
+						<td>{{item.QUANTITY}}</td>
+						<td class="text-right">${{item.PRICE}}</td>
+						<td class="text-right">${{item.AMOUNT}}</td>
+						<td class="text-right">{{item.TAX_CODE}}</td>
+						<td class="text-right">{{item.TAX_RATE}}</td>
+						<td class="text-right">{{item.TAX_AMOUNT}}</td>
+						<td class="text-right">
+							<!-- <button class="un_tn_btn un_tn_btn_gray un_tn_btn_sm" ng-click="removeInvoiceLine(item)">
+								Remove
+							</button> -->
+						</td>
+					</tr>
 
+					<tr ng-if="!statusDisable" ng-repeat="item in InvoiceMap.lines" ng-show="item.IS_ENABLE != 0" ng-class="{un_tn_table_row_border_red:item.notSave}">
+						<td>{{item.invItem.ITEM_CODE}}</td>
+						<td>
+							<span popover="{{item.invItem.ITEM_NAME}}" popover-trigger='mouseenter'>
+                            	{{item.invItem.ITEM_NAME| limitTo:50}}{{item.invItem.ITEM_NAME.length>50?'...':''}}
+                            </span>
+						</td>
 
+						<td>
+							<!-- <span ng-if="item.appt_item_id">{{item.TIME_SPENT}}</span>
+							<input  ng-if="!item.appt_item_id" type="number" min="0" class="form-control" ng-model="item.TIME_SPENT" /> --> <!-- tannv.dts frame -->
+							<input ng-change="handleWhenLineChanged(item)" type="number" min="0" class="form-control" ng-model="item.TIME_SPENT" /> <!-- tannv.dts add -->
+						</td>
 
+						<td>
+							<!-- <span ng-if="item.appt_item_id">{{item.QUANTITY}}</span>
+							<input ng-if="!item.appt_item_id" type="number" min="0" class="form-control" ng-model="item.QUANTITY" /> --> <!-- tannv.dts frame -->
+							<input ng-change="handleWhenLineChanged(item)" type="number" min="0" class="form-control" ng-model="item.QUANTITY" /><!-- tannv.dts add -->
+						</td>
 
-	<!--cal_id-->
-	<div class="col-md-3 col-sm-6 col-xs-12">
-		<a ng-if="InvoiceMap.cal_id" ng-click="goToAppt(InvoiceMap.Patient_id, InvoiceMap.cal_id)" class="btn btn-primary btn-block"><i class="fa fa-calendar"></i> Appointment Detail</a>
-	</div>
-	<!--cal_id-->
+						<td class="text-right">
+							<!-- <span ng-if="item.appt_item_id">${{item.PRICE}}</span>
+							<input ng-if="!item.appt_item_id" type="number" min="0" class="form-control" ng-model="item.PRICE" /> --> <!-- tannv.dts frame -->
+							<input ng-change="handleWhenLineChanged(item)" type="number" min="0" class="form-control" ng-model="item.PRICE" /><!-- tannv.dts add -->
+						</td>
+						<td class="text-right">${{item.PRICE * item.QUANTITY}}</td>
+						<td class="text-right">{{item.TAX_CODE}}</td>
+						<td class="text-right">{{item.TAX_RATE}}</td>
+						<td class="text-right">{{item.TAX_RATE?item.PRICE * item.QUANTITY * item.TAX_RATE:null}}</td>
+						<!-- <td class="text-right"> -->
+						<td style="width:220px!important">
+							<div style="display:inline">
+								<span style="float:left" ng-show="item.notSave" class="un_tn_asterisk">*</span>
+								<button style="float:left" class="un_tn_btn un_tn_btn_pink un_tn_btn_sm " ng-click="updateInvoiceLine(item)">
+									Save
+								</button>
 
-	<div class="break-row"></div>
-
-	<!--STATUS-->
-	<div class="col-md-3 col-sm-6 col-xs-12">
-		<span class="field">
-			<label for="status">Status</label>
-			<select class="form-control" name="STATUS"
-				ng-model="InvoiceMap.STATUS"
-				ng-options="item.code as item.label for item in options.invoice_status"
-				ng-disabled="statusDisable">
-			</select>
-		</span>	
-	</div>
-	<!--STATUS-->
-
-	<!--claim_id-->
-	<div class="col-md-3 col-sm-6 col-xs-12">
-		<!-- <button class="btn btn-block green" ng-click="patientClaim.open()">
-			<span ng-if="!InvoiceMap.claim_id">
-				<i class="fa fa-search"></i> Choose Claim
-			</span>
-		</button> -->
-		<span class="field">
-			<input ng-if="!InvoiceMap.claim_id" disabled type="text" value="No Claim" class="form-control" placeholder=".input-large">
-			
-			<input ng-if="InvoiceMap.claim_id" disabled type="text" ng-model="InvoiceMap.claim.Injury_name" class="form-control">
-
-			<div style="position: absolute;top: 0;right: 0;" dropdown="">
-				<button style="margin-right: 0px;height: 32px;" type="button" class="btn green dropdown-toggle"  ng-disabled="disabled" ng-disabled="disabled" aria-haspopup="true" aria-expanded="false" ng-show="claimShow">Claim <i class="fa fa-angle-down"></i></button>
-				<ul class="dropdown-menu" role="menu">
-					<li><a ng-click="patientClaim.open()"><i class="fa fa-search"></i> Choose Claim </a></li>
-					<li><a><i class="fa fa-times"></i> Remove Claim</a></li>
-				</ul>
-			</div>
-		</span>
-	</div>
-	<!--claim_id-->
-	<div class="break-row"></div>
-</div>
-
-
-	</div>
-</div>
-
-
-<div class="portlet box red">
-	<div class="portlet-title">
-	    <div class="caption">
-	        <i class="fa fa-medkit"></i> Invoice Items
-	    </div>
-	    <div class="pull-right navbar-right" ng-hide="statusDisable">
-            <button ng-click="itemSearch.open()" class="un_tn_btn un_tn_btn_gray"><i class="fa fa-search">
-            	</i> Choose Item 
-        	</button>
-            <button ng-click="clickAction()" class="un_tn_btn un_tn_btn_pink" ng-show="showSave"><i class="fa fa-save"></i> Save </button>
-        </div>
-	</div>
-	<div class="portlet-body">
-		<table class="table table-bordered">
-			<tr>
-				<th> Item No</th>
-				<th> Item Name</th>
-				<th> Time Spent </th>
-				<th> Quantity </th>
-				<th> Price </th>
-				<th> Amount </th>
-				<th>Actions</th>
-			</tr>
-			<tr ng-if="statusDisable" ng-repeat="item in InvoiceMap.lines" ng-show="item.IS_ENABLE != 0">
-				<td>{{item.invItem.ITEM_CODE}}</td>
-				<td>{{item.invItem.ITEM_NAME}}</td>
-				<td>{{item.TIME_SPENT}}</td>
-				<td>{{item.QUANTITY}}</td>
-				<td class="text-right">${{item.PRICE}}</td>
-				<td class="text-right">${{item.AMOUNT}}</td>
-				<td class="text-right">
-					<!-- <button class="un_tn_btn un_tn_btn_gray un_tn_btn_sm" ng-click="removeInvoiceLine(item)">
-						Remove
-					</button> -->
-				</td>
-			</tr>
-
-			<tr ng-if="!statusDisable" ng-repeat="item in InvoiceMap.lines" ng-show="item.IS_ENABLE != 0">
-				<td>{{item.invItem.ITEM_CODE}}</td>
-				<td>{{item.invItem.ITEM_NAME}}</td>
-
-				<td>
-					<!-- <span ng-if="item.appt_item_id">{{item.TIME_SPENT}}</span>
-					<input  ng-if="!item.appt_item_id" type="number" min="0" class="form-control" ng-model="item.TIME_SPENT" /> --> <!-- tannv.dts frame -->
-					<input type="number" min="0" class="form-control" ng-model="item.TIME_SPENT" /> <!-- tannv.dts add -->
-				</td>
-
-				<td>
-					<!-- <span ng-if="item.appt_item_id">{{item.QUANTITY}}</span>
-					<input ng-if="!item.appt_item_id" type="number" min="0" class="form-control" ng-model="item.QUANTITY" /> --> <!-- tannv.dts frame -->
-					<input type="number" min="0" class="form-control" ng-model="item.QUANTITY" /><!-- tannv.dts add -->
-				</td>
-
-				<td class="text-right">
-					<!-- <span ng-if="item.appt_item_id">${{item.PRICE}}</span>
-					<input ng-if="!item.appt_item_id" type="number" min="0" class="form-control" ng-model="item.PRICE" /> --> <!-- tannv.dts frame -->
-					<input type="number" min="0" class="form-control" ng-model="item.PRICE" /><!-- tannv.dts add -->
-				</td>
-				<td class="text-right">${{item.PRICE * item.QUANTITY}}</td>
-				<td class="text-right">
-					<button class="un_tn_btn un_tn_btn_gray un_tn_btn_sm un_tn_btn_zip" ng-click="removeInvoiceLine(item)">
-						Remove
-					</button>
-				</td>
-			</tr>
-
-
-
-			<tr>
-				<td colspan="5"><strong> Total </strong></td>
-				<td class="text-right">${{InvoiceMap.AMOUNT}}</td>
-				<td class="text-right">
+								<button style="float:left" class="un_tn_btn un_tn_btn_gray un_tn_btn_sm  un_tn_btn_zip" ng-click="removeInvoiceLine(item)">
+									Remove
+								</button>
+							</div>
+							
+						</td>
+					</tr>
 					
-				</td>
-			</tr>
-		</table>
+
+
+					<tr>
+						<td colspan="5"><strong> Total </strong></td>
+						<td class="text-right">${{InvoiceMap.AMOUNT}}</td>
+						<td class="text-right"></td>
+						<td class="text-right"></td>
+						<td class="text-right"></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+
+
+		<!-- POPUP PATIENT CLAIM -->
+		<script type="text/ng-template" id="popupSelectClaim">
+			<style type="text/css">
+		          .modal.in .modal-dialog {
+		           margin-top:50px;
+		          }
+		    </style>
+			<div class="modal-body">	
+				<label class="un-label-popup-header-m un-bg-label-B41E46-m">Claim</label>
+		    	<my-data-table options="options" rowclick="rowClick"></my-data-table>
+			</div>
+		</script>
+		 <!-- END POPUP PATIENT CLAIM  -->
+
+		 <!-- POPUP SEARCH-ITEM  -->
+		 <script type="text/ng-template" id="popupChooseItem">
+			<style type="text/css">
+		          .modal.in .modal-dialog {
+		           margin-top:50px;
+		          }
+		    </style>
+			<div class="modal-body">	
+				<label class="un-label-popup-header-m un-bg-label-B41E46-m">Choose Item</label>
+		    	<my-data-table options="itemSearchOption" rowclass="itemSearch.class" rowclick="rowClick"></my-data-table>
+			</div>
+		</script>
+		 <!-- POPUP SEARCH-ITEM  -->
+
+		<!-- POPUP DOCTOR SEARCH -->
+		<script type="text/ng-template" id="popupDoctorSearch">
+			<style type="text/css">
+		          .modal.in .modal-dialog {
+		           margin-top:50px;
+		          }
+		    </style>
+			<div class="modal-body">	
+		    	<mdtdoctor-search click-row="rowClick(row)"></mdtdoctor-search>
+			</div>
+		</script>
+		 <!-- END POPUP DOCTOR SEARCH  -->
+
+		 <script type="text/ng-template" id="notifyToRemoveInvoiceLine">
+		    <div class="modal-body">
+		        <p>Do you want to remove this item?</p>
+		    </div>
+		    <div class="modal-footer">
+		        <button class="btn btn-primary btn-xs" ng-click="ok()">OK</button>
+		        <button class="btn btn-warning btn-xs" ng-click="cancel()">Cancel</button>
+		    </div>
+		</script>
+	<!---End Content-->
 	</div>
 </div>
 
+<!-- <div class="col-lg-12 un-bgXam-colBlack un-margin-top-30 ng-scope">
+ <label class="un-label-popup-header un-bg-label-333333">Edit Inovice</label>
+  <div class="un-padding-top-bottom-10 ">
+    <div class="un-div-content un-bgWhite-boxshadow-bottom un-padding-10">
 
-<!-- POPUP PATIENT CLAIM -->
-<div class="mdt-search" style="display: block;" ng-show="patientClaim.is_show">
-    <div class="pull-right text-center ng-scope">
-        <button class="btn btn-sm btn-block red" ng-click="patientClaim.close()">
-            <i class="fa fa-times"></i>
-        </button>
-    </div>
-    <my-data-table options="patientClaim.options" rowclick="patientClaim.click"></my-data-table>
-</div>
- <!-- END POPUP PATIENT CLAIM  -->
+	</div>
+  </div>
+</div> -->
 
- <!-- POPUP SEARCH-ITEM  -->
-<div class="mdt-search" style="display: block;" ng-if="itemSearch.is_show">
-    <div class="pull-right text-center ng-scope">
-        <button class="btn btn-sm btn-block red" ng-click="itemSearch.close()">
-            <i class="fa fa-times"></i>
-        </button>
-    </div>
-    <my-data-table options="itemSearchOption" rowclass="itemSearch.class" rowclick="itemSearch.click"></my-data-table>
-</div>
- <!-- POPUP SEARCH-ITEM  -->
 
- <!-- POPUP PATIENT SEARCH -->
-<div class="mdt-search" style="display: block;" ng-show="patientSearch.is_show">
-    <div class="pull-right text-center ng-scope">
-        <button class="btn btn-sm btn-block red" ng-click="patientSearch.close()">
-            <i class="fa fa-times"></i>
-        </button>
-    </div>
-    <patient-search click-row="patientSearch.click(row)"></patient-search>
-</div>
- <!-- END POPUP PATIENT SEARCH  -->
 
-<!-- POPUP DOCTOR SEARCH -->
-<div class="mdt-search" style="display: block;" ng-show="doctorSearch.is_show">
-    <div class="pull-right text-center ng-scope">
-        <button class="btn btn-sm btn-block red" ng-click="doctorSearch.close()">
-            <i class="fa fa-times"></i>
-        </button>
-    </div>
-    <mdtdoctor-search click-row="doctorSearch.click(row)"></mdtdoctor-search>
-</div>
- <!-- END POPUP DOCTOR SEARCH  -->
-
- <script type="text/ng-template" id="notifyToRemoveInvoiceLine">
-    <div class="modal-body">
-        <p>Do you want to remove this item?</p>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-primary btn-xs" ng-click="ok()">OK</button>
-        <button class="btn btn-warning btn-xs" ng-click="cancel()">Cancel</button>
-    </div>
-</script>

@@ -13,19 +13,6 @@ angular.module('app.loggedIn.template.directives.list', [])
 				var modalInstance = $modal.open({
 					templateUrl: 'removeTemplate',
 					controller: function($scope, $modalInstance){
-						/*$scope.success = false;
-
-						$timeout(function(){
-							$scope.doctor_id = col.DOCTOR_ID;
-							$scope.patient_id = patient.Patient_id;
-						}, 200)
-
-						$scope.$watch('success', function(success){
-							if(success){
-								$modalInstance.close('success');								
-							}
-						})*/
-
 						$scope.clickNo = function(){
 							$modalInstance.dismiss('cancel');
 						}
@@ -70,29 +57,6 @@ angular.module('app.loggedIn.template.directives.list', [])
 			}
 
 			load();
-
-			/*scope.template = {
-				inputfile: null
-			}
-
-			$('#fileinput').bind('change', function(){
-				scope.$apply(function(){
-					scope.template.inputfile = $('#fileinput')[0].files[0];
-				})
-			})
-
-			scope.turnToTemplate = function(){
-				var fd = new FormData();
-        		fd.append('file', scope.template.inputfile);
-        		$http.post('api/meditek/v1/template/upload', fd, {
-            		transformRequest: angular.identity,
-            		headers: {'Content-Type': undefined}
-        		})
-        		.success(function(){
-        		})
-        		.error(function(){
-        		});
-			}*/
 		}
 	}
 })

@@ -1,0 +1,133 @@
+<ion-view >
+    <ion-content class="content-scroll">
+              <div>
+                  <img src="img/bk.png" style="width:200px">
+              </div>
+               <div class="title-0">
+                  <div class="title-1" style="float: right;padding-right: 2%;">Online Booking</div>
+                  <button id="register-back-btn" type="button" class="button button-clear" style="margin-top: 9px;
+  margin-left: 6px;color:white" ui-sref="security.rlobNonEmergency.rlobBooking">
+                            <i class="fa fa-reply fa-2x"></i> </button>
+              </div>
+             
+             
+                  <div style="height: 30px;background: #ebebeb;">
+                  
+                  </div>
+                <form  class="register-form" novalidate style="display: block;" name="FormNonEmergency">
+                     <div class="form-group">
+                      <span style="color: red;">*</span>Indicates Required field
+                    </div>
+               
+            
+
+                   <div class="form-group" show-errors='{showSuccess: true}'>
+                        <label class="item item-input label-custom-field" >
+                          <span class="input-label span-input-color">First Name<span style="color: red;">*</span></span>
+                          <input ng-required="true" type="text" placeholder="First Name" ng-model="non.FIRSTNAME" name="FIRSTNAME" required 
+                          />
+                      </label>
+                  </div>
+                  <div class="form-group" show-errors='{showSuccess: true}'>
+                        
+                      <label class="item item-input label-custom-field" >
+                          <span class="input-label span-input-color">Last Name<span style="color: red;">*</span></span>
+                          <input ng-required="true" type="text" placeholder="Last Name" ng-model="non.LASTNAME" name="LASTNAME" required 
+                           />
+                      </label>
+
+                  </div>
+                  <div class="form-group">
+                         <label class="item item-input  label-custom-field" >
+                          <span class="input-label span-input-color">Gender<span style="color: red;">*</span></span>
+                          <select ng-required="true" ng-model="non.GENDER" name="Gender" class="browser-default" style="border:none">
+                              <option value="">--Gender--</option>
+                              <option>Male</option>
+                              <option >Female</option>
+                          </select>
+                      </label>
+                       
+                  </div>
+       
+                  <div  class="form-group" show-errors='{showSuccess: true}'>
+                         
+                            <span class="input-label span-input-color" style="margin-left: 14px;float: left;margin-top: 6px;font-size: 14px;padding-right: 15px;">Date Of Birth<span style="color: red;">*</span></span>
+                            <div style="width:100%" >
+                                <input id="day" auto-tab-to="month" type="tel" maxlength="2" placeholder="DD" ng-model="non.date" ng-change="checkdate('date')" required/>
+                                <span style="float: left;width: 15px;margin-top: 6px;">/</span>              
+                                <input id="month" auto-tab-to="year" type="tel" maxlength="2" placeholder="MM" ng-model="non.month" ng-change="checkdate('month')" required/>
+                                <span style="float: left;width: 15px;margin-top: 6px;">/</span>
+                                <input id="year" type="tel" maxlength="4" placeholder="YYYY" ng-model="non.year" ng-change="checkdate('year')" required/>
+                            </div>
+                           
+                         
+                  </div>
+                   <div class="form-group">
+                         <label class="item item-input label-custom-field" style="width:100%" show-errors='{showSuccess: true}'>
+                                <span class="input-label span-input-color">Email Address<span style="color: red;"><sup>*</sup></span></span>
+                                <input  type="email" placeholder="Email Address" ng-model="non.EMAIL" name="Email"  required />
+                        </label> 
+                  </div>
+                  <div class="form-group" show-errors='{showSuccess: true}'>
+                       
+                        <label class="item item-input label-custom-field" >
+                                <span class="input-label span-input-color">Contact No<span style="color: red;">*</span></span>
+                                <input ng-required="true" type="number" placeholder="Contact No" ng-model="non.CONTACT_NO" name="CONTACT_NO" required 
+                                />
+                        </label> 
+                  </div>    
+                  <div class="form-group">
+                   
+                          <label class="item item-input label-custom-field" >
+                                <span class="input-label span-input-color">Medicare No</span>
+                                <input type="text" placeholder="Medicare No" ng-model="non.MEDICARE_NO" name="MEDICARE_NO"  />
+                        </label> 
+                  </div>
+                  <div class="form-group">
+                         <label class="item item-input label-custom-field" >
+                                <span class="input-label span-input-color">Medicare Ref</span>
+                                <input  type="text" placeholder="Medicare Ref" ng-model="non.MEDICARE_REF" name="MEDICARE_REF"  />
+                        </label> 
+                  </div>
+                  <div class="form-group" show-errors='{showSuccess: true}'>
+                    
+                          <label class="item item-input label-custom-field" >
+                                <span class="input-label span-input-color">Description:<span style="color: red;">*</span></span>
+                                <input ng-required="true" type="text" placeholder="Injury" ng-model="non.INJURY" name="INJURY" required 
+                               />
+                        </label> 
+                         
+                  </div>
+                   <div class="form-group" show-errors='{showSuccess: true}'>
+                    <li class="item item-checkbox " style="border:none;white-space: normal;" >
+                           <label class="checkbox ">
+                             <input type="checkbox" ng-model="non.REMEMBER_PATIENTS"  ng-true-value="1" ng-false-value="0">
+                           </label>
+                          Remember patients details on this device 
+                      </li>
+                       <li class="item item-checkbox " style="border:none;white-space: normal;" >
+                           <label class="checkbox ">
+                             <input type="checkbox" ng-model="non.RECEIVE_REDIMED"  ng-true-value="1" ng-false-value="0">
+                           </label>
+                           Receive REDIMED offers, information and relevant notifications
+                      </li>
+                      <br>
+                      
+                         
+                  </div>
+                <div class="form-group" style="height:50px">
+                  
+                       <button style="background-color: rgb(179, 29, 68);color: white;width: 100%;border: none;height: 40px;border-radius: 4px;"  ng-click="next(FormNonEmergency)">
+                            Next
+                        </button>
+                       
+            
+                
+                </div>
+         
+            </form>
+          
+
+              
+    </ion-content>
+</ion-view>

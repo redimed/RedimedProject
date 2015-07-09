@@ -6,14 +6,13 @@ angular.module('starter.booking.rlobDetailBooking.controller',[
         $scope.patientID = $stateParams.PatientID;
 
         $scope.injuryInfo = localStorageService.get('injuryInfo');
-
+       
         $scope.description = $scope.injuryInfo.info.injury_description;
 
         $scope.imgURI = $scope.injuryInfo.dataImage;
-
-        $timeout(function(){
-            $scope.selectedBooking=localStorageService.get("selectedBooking");
-        },300);
+        // console.log( localStorageService.get("selectedBooking"));
+        
+       $scope.selectedBooking=localStorageService.get("selectedBooking");
         var serverUpload = "https://192.168.135.115:3000/api/im/upload";
         function uploadFile(img, server, params) {
             var options = new FileUploadOptions();
@@ -29,17 +28,20 @@ angular.module('starter.booking.rlobDetailBooking.controller',[
             }, options);
         }
         $scope.addbooking = function(des){
-            var infoBooking = {
-                Patient_id:  $scope.patientID,
-                doctor_id:$scope.selectedBooking.DOCTOR_ID,
-                cal_id:$scope.selectedBooking.CAL_ID,
-                injury_description:des,
-                STATUS:null,
-                driver_id :null,
-                injury_date:null
+            $scope.injuryInfo.info.cal_id = $scope.selectedBooking.CAL_ID;
+             $scope.injuryInfo.info.doctor_id = $scope.selectedBooking.DOCTOR_ID;
+             console.log();
+            // var infoBooking = {
+            //     Patient_id:  $scope.patientID,
+            //     doctor_id:$scope.selectedBooking.DOCTOR_ID,
+            //     cal_id:$scope.selectedBooking.CAL_ID,
+            //     injury_description:des,
+            //     STATUS:null,
+            //     driver_id :null,
+            //     injury_date:null
 
-            };
-            OnlineBookingService.submitBooking(infoBooking).then(function(data){
+            // };
+            OnlineBookingService.submitBooking($scope.injuryInfo.info).then(function(data){
                 if(data.status == 'success'){
 
                     for(var i = 0 ; i < $scope.imgURI.length; i++)
@@ -51,7 +53,12 @@ angular.module('starter.booking.rlobDetailBooking.controller',[
                         uploadFile($scope.imgURI[i].image,serverUpload,params);
                     }
                     alert('Add Booking Success');
-                    $state.go('app.injury.info');
+                    if($scope.injuryInfo.info.user_type == "Patient"){
+                         $state.go('app.injury.desInjury');
+                    }else{
+                         $state.go('app.injury.info');
+                    }
+                   
                 }
                 else{
                     alert('Error');
@@ -80,7 +87,7 @@ angular.module('starter.booking.rlobDetailBooking.controller',[
                         icon:'img/icon/hospital-building.png'
                     });
                 } else {
-                    alert('Geocode was not successful for the following reason: ' + status);
+                    // alert('Geocode was not successful for the following reason: ' + status);
                 }
             });
         }
@@ -88,7 +95,6 @@ angular.module('starter.booking.rlobDetailBooking.controller',[
             if($scope.selectedBooking)
                 codeAddress();
         });
-        $scope.isCollapsed = false;
 
 
 

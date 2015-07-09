@@ -2108,5 +2108,43 @@ module.exports =
             });
 
         });
+    },
+    //phanquocchien.c1109g@gmail.com
+    addApptPatient:function(req,res){
+        var userInfo=kiss.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+        var userId=kiss.checkData(userInfo.id)?userInfo.id:null;
+        var patientId = kiss.checkData(req.body.Patient_id)?req.body.Patient_id:null;
+        var calId = kiss.checkData(req.body.CAL_ID)?req.body.CAL_ID:null;
+        var currentTime=kiss.getCurrentTimeStr();
+
+        if (!kiss.checkListData(patientId,calId)) {
+            kiss.exlog("addApptPatient","Loi data truyen den");
+            res.json({status:'fail'});
+            return
+        };
+        var sql = 'INSERT INTO `cln_appt_patients` SET ?';
+        var postData={
+           Patient_id:patientId,
+           CAL_ID:calId,
+           Created_by:userId,
+           Creation_date:currentTime,
+           isEnable:1
+        }
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[postData],function(err,data)
+            {
+                if(err)
+                {
+                    kiss.exlog("addApptPatient",err,query.sql);
+                    res.json({status:'fail'});
+                }
+                else
+                {
+                    console.log('iddddddddddddddddd',data.insertId)
+                    res.json({status:'success',data:data.insertId});    
+                }
+            });
+        });
     }
 }

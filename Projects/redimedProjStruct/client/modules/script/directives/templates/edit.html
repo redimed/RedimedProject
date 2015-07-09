@@ -13,23 +13,29 @@
 					<div class="un-label-form-custom">
 						<span>Prescriber</span>
 					</div>
-					<input type="text" class="form-control" ng-model="script.form.prescriber" placeholder="Prescriber" id="prescriber" name="prescriber" />
+					<input type="text" class="form-control" ng-model="script.form.prescriber" placeholder="Prescriber" id="prescriber" name="prescriber" disabled="disabled" />
 				</div>
 				<div class="col-xs-4">
 					<div class="un-label-form-custom">
 						<span>Script Number</span>
 					</div>
-					<input type="text" class="form-control" ng-model="script.form.scriptNum" placeholder="Script Number" id="scriptNum" name="scriptNum" required />
+					<input type="text" class="form-control" ng-model="script.form.scriptNum" placeholder="Script Number" id="scriptNum" name="scriptNum" required number />
 				</div>
 			</div>
 			<div class="row" style="margin-top: 15px;">
-				<div class="col-xs-4">
+				<!--<div class="col-xs-4">
 					<div class="un-label-form-custom">
 						<span>Medicare</span>
 					</div>
 					<select ng-model="script.form.Medicare" class="form-control" ng-options=" item.medication_name as item.medication_name for item in medicaname"  required>
 						<option value="script.form.Medicare" class="">{{script.form.Medicare}}</option>
 					</select>
+				</div>-->
+				<div class="col-xs-4">
+					<div class="un-label-form-custom">
+						<span>Medicare Number</span>
+					</div>
+					<input class="form-control" disabled="disabled" name="MedicareNo" ng-mode="patient.item.Medicare_no" />
 				</div>
 				<div class="col-xs-4">
 					<div class="un-label-form-custom">
@@ -38,10 +44,10 @@
 					<input type="text" class="form-control" ng-model="script.form.EntitlementNo" placeholder="EntitlementNo" id="EntitlementNo" name="EntitlementNo" required />
 				</div>
 				<div class="col-xs-4">
-					<div class="un-label-form-custom">	
-						<span>Pharmacist</span>
+					<div class="un-label-form-custom">
+						<span>Agent Address</span>
 					</div>
-					<input type="text" class="form-control" ng-model="script.form.pharmacist" placeholder="Pharmarcist" id="pharmacist" name="pharmacist" required />
+					<input type="text" class="form-control" ng-model="script.form.agentAddress" placeholder="Agent Address" id="agentAddress" name="agentAddress" required />
 				</div>
 			</div>
 			<div class="row" style="margin-top: 15px;">
@@ -49,20 +55,15 @@
 					<div class="un-label-form-custom">
 						<span>Doctor Date</span>
 					</div>
-					<input custom-date class="form-control" placeholder="Doctor Date" ng-model="script.form.doctordate" id="doctordate" name="doctordate" float-label required />
+					<input custom-date class="form-control" placeholder="Doctor Date" ng-model="script.form.doctordate" id="doctordate" name="doctordate" required />
 				</div>
 				<div class="col-xs-4">
 					<div class="un-label-form-custom">
 						<span>Patient Date</span>
 					</div>
-					<input custom-date class="form-control" placeholder="Patient Date" ng-model="script.form.patientDate" id="patientDate" name="patientDate" float-label required />
+					<input custom-date class="form-control" placeholder="Patient Date" ng-model="script.form.patientDate" id="patientDate" name="patientDate" required />
 				</div>
-				<div class="col-xs-4">
-					<div class="un-label-form-custom">
-						<span>Agent Address</span>
-					</div>
-					<input type="text" class="form-control" ng-model="script.form.agentAddress" placeholder="Agent Address" id="agentAddress" name="agentAddress" required />
-				</div>
+				<div class="col-xs-4"></div>
 			</div>
 			<div class="form-group">
 				<div class="col-xs-2">
@@ -96,14 +97,136 @@
 					</label>
 				</div>
 			</div>
+			<div class="row">
+				<div class="table-dynamic col-xs-12" style="overflow-y: scroll; height: 250px;">
+					<table class="responsive table table-bordered">
+		                <thead>
+		                    <tr>
+		                    	<th>
+		                    		<div class="th">
+		                                <span style="color: white;"></span>
+		                            </div>
+		                    	</th>
+		                        <th>
+		                            <div class="th">
+		                                <span style="color: white;">Name</span>
+		                            </div>
+		                        </th>
+		                        <th>
+		                            <div class="th">
+		                                <span style="color: white;">Dose</span>
+		                            </div>
+		                        </th>
+		                        <th>
+		                            <div class="th">
+		                                <span style="color: white;">Unit</span>
+		                            </div>
+		                        </th>
+		                        <th>
+		                            <div class="th">
+		                                <span style="color: white;">Route</span>
+		                            </div>
+		                        </th>
+		                        <th>
+		                            <div class="th">
+		                                <span style="color: white;">Frequency</span>
+		                            </div>
+		                        </th>
+		                        <th>
+		                            <div class="th">
+		                                <span style="color: white;">Start Date</span>
+		                            </div>
+		                        </th>
+		                        <th>
+		                            <div class="th">
+		                                <span style="color: white;">End Date</span>
+		                            </div>
+		                        </th>
+		                        <th>
+		                            <div class="th">
+		                                <span style="color: white;">Quanlity</span>
+		                            </div>
+		                        </th>
+		                    </tr>
+		                </thead>
+		                <tbody>
+		                	<tr>
+                                <td colspan="11">
+                                    <div style="text-align: center;">
+                                        <span ng-if="list.length <= 0"></span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr style="background-color: white;" class="bold" ng-repeat="ml in list">
+                            	<td>
+                            		<input type="checkbox" name="Checked" ng-model="ml.Checked" ng-checked="ml.Checked" ng-true-value=1 ng-false-value=0 />
+                            	</td>
+                            	<td style="vertical-align: middle">
+                                    {{ml.medication_name}}
+                                </td>
+                                <td style="vertical-align: middle">
+                                    {{ml.dose}}
+                                </td>
+                                <td style="vertical-align: middle">
+                                    {{ml.unit}}
+                                </td>
+                                <td style="vertical-align: middle">
+                                    {{ml.route}}
+                                </td>
+                                <td style="vertical-align: middle">
+                                    {{ml.frequency}}
+                                </td>
+                                <td style="vertical-align: middle">
+                                    {{ml.start_date}}
+                                </td>
+                                 <td style="vertical-align: middle">
+                                    {{ml.end_date}}
+                                </td>
+                                 <td style="vertical-align: middle">
+                                    {{ml.qty}}
+                                </td>
+                            </tr>
+                            <tr style="background-color: white;" class="bold" ng-if="script.s_array.length > 0" ng-repeat="m in script.s_array">
+                            	<td>
+                            		<input type="checkbox" name="Checked" ng-model="m.Checked" ng-true-value=1 ng-false-value=0 />
+                            	</td>
+                            	<td style="vertical-align: middle">
+                                    {{m.medication_name}}
+                                </td>
+                                <td style="vertical-align: middle">
+                                    {{m.dose}}
+                                </td>
+                                <td style="vertical-align: middle">
+                                    {{m.unit}}
+                                </td>
+                                <td style="vertical-align: middle">
+                                    {{m.route}}
+                                </td>
+                                <td style="vertical-align: middle">
+                                    {{m.frequency}}
+                                </td>
+                                <td style="vertical-align: middle">
+                                    {{m.start_date}}
+                                </td>
+                                 <td style="vertical-align: middle">
+                                    {{m.end_date}}
+                                </td>
+                                 <td style="vertical-align: middle">
+                                    {{m.qty}}
+                                </td>
+                            </tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
 			<div class="row" style="margin-top: 15px;">
 				<div class="col-xs-6">
-					<div class="un-label-form-custom">
+					<div class="un-label-form-custom" style="width: 550px;">
 						<span>Doctor Signature</span>	
 					</div>
 				</div>
 				<div class="col-xs-6">
-					<div class="un-label-form-custom">
+					<div class="un-label-form-custom" style="width: 550px;">
 						<span>Patient Signature</span>
 					</div>
 				</div>
@@ -112,14 +235,14 @@
 			<div class="row" style="margin-top: 15px;">
 				<div class="col-xs-6">
 					<span>
-			            <canvas width="500" height="200" id="canvas" style="background-color: #DDDDDD; margin-bottom: 15px; border: 2px solid 64A0D9" signature ng-model="script.form.doctorSign">
+			            <canvas width="550" height="200" id="canvas" style="background-color: #DDDDDD; margin-bottom: 15px; border: 2px solid 64A0D9" signature ng-model="script.form.doctorSign">
 			            </canvas>
 			        </span>
 
 				</div>
 				<div class="col-xs-6">
 					<span>
-			            <canvas width="500" height="200" id="canvas_paient" style="background-color: #DDDDDD; margin-bottom: 15px; border: 2px solid 64A0D9" signature ng-model="script.form.patientSign">
+			            <canvas width="550" height="200" id="canvas_paient" style="background-color: #DDDDDD; margin-bottom: 15px; border: 2px solid 64A0D9" signature ng-model="script.form.patientSign">
 			            </canvas>
 			        </span>
 				</div>

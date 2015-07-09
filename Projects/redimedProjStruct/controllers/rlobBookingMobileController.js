@@ -21,7 +21,6 @@ module.exports =
         var CONTACT_NO=kiss.checkData(req.body.info.CONTACT_NO)?req.body.info.CONTACT_NO:null;
         var MEDICARE_NO=kiss.checkData(req.body.info.MEDICARE_NO)?req.body.info.MEDICARE_NO:null;
         var MEDICARE_REF=kiss.checkData(req.body.info.MEDICARE_REF)?req.body.info.MEDICARE_REF:null;
-        var TYPE_NAME=kiss.checkData(req.body.info.TYPE_NAME)?req.body.info.TYPE_NAME:null;
         var INJURY=kiss.checkData(req.body.info.INJURY)?req.body.info.INJURY:null;
         var LONGITUDE=kiss.checkData(req.body.info.LONGITUDE)?req.body.info.LONGITUDE:null;
         var LATITUDE=kiss.checkData(req.body.info.LATITUDE)?req.body.info.LATITUDE:null;
@@ -35,121 +34,306 @@ module.exports =
         var REMEMBER_PATIENTS=kiss.checkData(req.body.info.REMEMBER_PATIENTS)?req.body.info.REMEMBER_PATIENTS:0;
         var RECEIVE_REDIMED=kiss.checkData(req.body.info.RECEIVE_REDIMED)?req.body.info.RECEIVE_REDIMED:0;
         var currentDate=moment().format("YYYY/MM/DD HH:mm:ss");
-        if(!kiss.checkListData(FIRSTNAME,LASTNAME,GENDER,DOB,CONTACT_NO,INJURY,TYPE_NAME,CAL_ID,BookingType,EMAIL))
+        if(!kiss.checkListData(FIRSTNAME,LASTNAME,GENDER,DOB,CONTACT_NO,INJURY,CAL_ID,BookingType,EMAIL))
         {
             kiss.exlog('insertNonEmergency',"Loi data truyen den");
             res.json({status:'fail'});
             return;
         }
-        var insertRow={
-            FIRSTNAME:FIRSTNAME,
-            LASTNAME:LASTNAME,
-            GENDER:GENDER,
-            DOB:moment(DOB).format("YYYY/MM/DD"),
-            CONTACT_NO:CONTACT_NO,
-            MEDICARE_NO:MEDICARE_NO,
-            MEDICARE_REF:MEDICARE_REF,
-            TYPE_NAME:TYPE_NAME,
-            INJURY:INJURY,
-            CAL_ID:CAL_ID,
-            email:EMAIL,
-            BookingType:BookingType,
-            CREATION_DATE:currentDate,
-            remember_patients:REMEMBER_PATIENTS,
-            receive_redimed:RECEIVE_REDIMED
-        }
-
-        var sql="INSERT INTO `waf_sponsor1` SET ?";
+        var sql="SELECT * FROM `cln_patients` WHERE `First_name` = ? AND `Sur_name` = ? AND `Middle_name` IS NULL AND `DOB` = ?";
+        
         req.getConnection(function(err,connection)
         {
-            var query = connection.query(sql,[insertRow],function(err,result)
+            var query = connection.query(sql,[FIRSTNAME,LASTNAME,moment(DOB).format("YYYY-MM-DD")],function(err,rows)
             {
                 if(err)
                 {
-                    kiss.exlog("insertNonEmergency",err);
-                    res.json({status:'fail'});
+                    kiss.exlog("add",err,query.sql);
+                    res.json({status:'error'});
                 }
                 else
                 {
-                    res.json({status:'success'});    
-                    kiss.exlog("insertNonEmergency",'thanh cong');
-                    var emailInfo={
-                        subject:'',
-                        senders:'',
-                        recipients:'',
-                        htmlBody:'',
-                        textBody:''
+                    if (rows.length>0) {
+                        console.log('aaaaaaaaaa',rows[0].Patient_id);
+                        var Patient_id = rows[0].Patient_id;
+                        var insertApptPatient={
+                            Patient_id:Patient_id,
+                            CAL_ID:CAL_ID
+                        }
+
+                        var sql="INSERT INTO `cln_appt_patients` SET ?";
+                        req.getConnection(function(err,connection)
+                        {
+                            var query = connection.query(sql,[insertApptPatient],function(err,rows)
+                            {
+                                if(err)
+                                {
+                                    kiss.exlog("insert_cln_appt_patient",err);
+                                    res.json({status:'fail'});
+                                }
+                                else
+                                {
+                                    var insertRow={
+                                        CONTACT_NO:CONTACT_NO,
+                                        MEDICARE_NO:MEDICARE_NO,
+                                        MEDICARE_REF:MEDICARE_REF,
+                                        INJURY:INJURY,
+                                        CAL_ID:CAL_ID,
+                                        email:EMAIL,
+                                        BookingType:BookingType,
+                                        CREATION_DATE:currentDate,
+                                        remember_patients:REMEMBER_PATIENTS,
+                                        receive_redimed:RECEIVE_REDIMED,
+                                        patient_id:Patient_id
+                                    }
+
+                                    var sql="INSERT INTO `waf_sponsor1` SET ?";
+                                    req.getConnection(function(err,connection)
+                                    {
+                                        var query = connection.query(sql,[insertRow],function(err,result)
+                                        {
+                                            if(err)
+                                            {
+                                                kiss.exlog("insertNonEmergency",err);
+                                                res.json({status:'fail'});
+                                            }
+                                            else
+                                            {
+                                                res.json({status:'success'});    
+                                                kiss.exlog("insertNonEmergency",'thanh cong');
+                                                var emailInfo={
+                                                    subject:'',
+                                                    senders:'',
+                                                    recipients:'',
+                                                    htmlBody:'',
+                                                    textBody:''
+                                                };
+                                                emailInfo.subject='RE: Confirmation of booking '+FIRSTNAME+' '+LASTNAME;
+                                                emailInfo.recipients=insertRow.email;
+                                                emailInfo.senders=rlobUtil.getMedicoLegalMailSender() ;
+                                                var template=
+                                                    "   <p>Hi {{FIRSTNAME}},</p>                                                                                                                     "+      
+                                                    "   NonEmergency                                                                                                                                 "+
+                                                    "   <p>                                                                                                                                          "+      
+                                                    "    <table >                                                                                                                                    "+         
+                                                    "         <tr>                                                                                                                                   "+
+                                                    "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri !important;'>Gender:</td>                              "+
+                                                    "             <td style='font-size: 11pt !important;font-family: calibri  !important;'>{{GENDER}}</td>                                           "+
+                                                    "         </tr>                                                                                                                                  "+    
+                                                    "         <tr>                                                                                                                                   "+
+                                                    "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri  !important;'>DOB:</td>                                "+
+                                                    "             <td style='font-size: 11pt !important;font-family: calibri !important;'>{{DOB}}</td>                                               "+
+                                                    "         </tr>                                                                                                                                  "+    
+                                                    "         <tr>                                                                                                                                   "+
+                                                    "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri !important;'>Contact No:</td>                          "+
+                                                    "             <td style='font-size: 11pt !important;font-family: calibri !important;'>{{CONTACT_NO}}</td>                                        "+
+                                                    "         </tr>                                                                                                                                  "+     
+                                                    "         <tr>                                                                                                                                   "+
+                                                    "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri !important;'>Medicare No:</td>                         "+
+                                                    "             <td style='font-size: 11pt !important;font-family: calibri !important;'>{{MEDICARE_NO}}</td>                                       "+
+                                                    "         </tr>                                                                                                                                  "+            
+                                                    "         <tr>                                                                                                                                   "+
+                                                    "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri !important;'>Medicare Ref:</td>                        "+
+                                                    "             <td style='font-size: 11pt !important;font-family: calibri !important;'>{{MEDICARE_REF}}</td>                                      "+
+                                                    "         </tr>                                                                                                                                  "+
+                                                    "         <tr>                                                                                                                                   "+
+                                                    "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri !important;'>Injury:</td>                              "+
+                                                    "             <td style='font-size: 11pt !important;font-family: calibri !important;'>{{INJURY}}</td>                                            "+
+                                                    "         </tr>                                                                                                                                  "+
+                                                    "         <tr>                                                                                                                                   "+
+                                                    "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri !important;'>Doctor:</td>                              "+
+                                                    "             <td style='font-size: 11pt !important;font-family: calibri !important;'>{{DOCTOR}}</td>                                            "+
+                                                    "         </tr>                                                                                                                                  "+  
+                                                    "         <tr>                                                                                                                                   "+
+                                                    "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri !important;'>Location:</td>                            "+
+                                                    "             <td style='font-size: 11pt !important;font-family: calibri !important;'>{{LOCATION}}</td>                                          "+
+                                                    "         </tr>                                                                                                                                  "+
+                                                    "         <tr>                                                                                                                                   "+
+                                                    "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri !important;'>Date:</td>                                "+
+                                                    "             <td style='font-size: 11pt !important;font-family: calibri !important;'>{{DATE}}</td>                                              "+
+                                                    "         </tr>                                                                                                                                  "+      
+                                                    "         <tr>                                                                                                                                   "+
+                                                    "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri !important;'>Time:</td>                                "+
+                                                    "             <td style='font-size: 11pt !important;font-family: calibri !important;'>{{TIME}}</td>                                              "+
+                                                    "         </tr>                                                                                                                                  "+     
+                                                    "    </table>                                                                                                                                    ";         
+                                                var emailData={
+                                                    FIRSTNAME:FIRSTNAME,
+                                                    GENDER:GENDER,
+                                                    DOB:moment(DOB).format("YYYY-MM-DD"),
+                                                    CONTACT_NO:CONTACT_NO,
+                                                    MEDICARE_NO:MEDICARE_NO,
+                                                    MEDICARE_REF:MEDICARE_REF,
+                                                    INJURY:INJURY,
+                                                    DOCTOR:DOCTOR,
+                                                    LOCATION:LOCATION,
+                                                    DATE:moment(DATE).format("YYYY/MM/DD"),
+                                                    TIME:TIME
+                                                }
+                                                template=kiss.tokenBinding(template,emailData);
+                                                emailInfo.htmlBody=template;
+                                                rlobEmailController.sendEmail(req,res,emailInfo);
+                                            }
+                                        });
+                                    });
+                                }
+                            });
+                        });
+                    }else{
+                        console.log('bbbbbbbb',rows,query.sql);
+                        var insertRow={
+                            First_name:FIRSTNAME,
+                            Sur_name:LASTNAME,
+                            Sex:GENDER==='Male'?0:1,
+                            DOB:moment(DOB).format("YYYY/MM/DD")
+                        }
+                        var sql="INSERT INTO `cln_patients` SET ?";
+                        req.getConnection(function(err,connection)
+                        {
+                            var query = connection.query(sql,[insertRow],function(err,rows)
+                            {
+                                if(err)
+                                {
+                                    kiss.exlog("insert_cln_patient",err);
+                                    res.json({status:'fail'});
+                                }
+                                else
+                                {
+                                    var Patient_id = rows.insertId;
+                                    var insertApptPatient={
+                                        Patient_id:Patient_id,
+                                        CAL_ID:CAL_ID
+                                    }
+
+                                    var sql="INSERT INTO `cln_appt_patients` SET ?";
+                                    req.getConnection(function(err,connection)
+                                    {
+                                        var query = connection.query(sql,[insertApptPatient],function(err,rows)
+                                        {
+                                            if(err)
+                                            {
+                                                kiss.exlog("insert_cln_appt_patient",err);
+                                                res.json({status:'fail'});
+                                            }
+                                            else
+                                            {
+                                                var insertRow={
+                                                    CONTACT_NO:CONTACT_NO,
+                                                    MEDICARE_NO:MEDICARE_NO,
+                                                    MEDICARE_REF:MEDICARE_REF,
+                                                    INJURY:INJURY,
+                                                    CAL_ID:CAL_ID,
+                                                    email:EMAIL,
+                                                    BookingType:BookingType,
+                                                    CREATION_DATE:currentDate,
+                                                    remember_patients:REMEMBER_PATIENTS,
+                                                    receive_redimed:RECEIVE_REDIMED,
+                                                    patient_id:Patient_id
+                                                }
+
+                                                var sql="INSERT INTO `waf_sponsor1` SET ?";
+                                                req.getConnection(function(err,connection)
+                                                {
+                                                    var query = connection.query(sql,[insertRow],function(err,result)
+                                                    {
+                                                        if(err)
+                                                        {
+                                                            kiss.exlog("insertNonEmergency",err);
+                                                            res.json({status:'fail'});
+                                                        }
+                                                        else
+                                                        {
+                                                            res.json({status:'success'});    
+                                                            kiss.exlog("insertNonEmergency",'thanh cong');
+                                                            var emailInfo={
+                                                                subject:'',
+                                                                senders:'',
+                                                                recipients:'',
+                                                                htmlBody:'',
+                                                                textBody:''
+                                                            };
+                                                            emailInfo.subject='RE: Confirmation of booking '+FIRSTNAME+' '+LASTNAME;
+                                                            emailInfo.recipients=insertRow.email;
+                                                            emailInfo.senders=rlobUtil.getMedicoLegalMailSender() ;
+                                                            var template=
+                                                                "   <p>Hi {{FIRSTNAME}},</p>                                                                                                                     "+      
+                                                                "   NonEmergency                                                                                                                                 "+
+                                                                "   <p>                                                                                                                                          "+      
+                                                                "    <table >                                                                                                                                    "+         
+                                                                "         <tr>                                                                                                                                   "+
+                                                                "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri !important;'>Gender:</td>                              "+
+                                                                "             <td style='font-size: 11pt !important;font-family: calibri  !important;'>{{GENDER}}</td>                                           "+
+                                                                "         </tr>                                                                                                                                  "+    
+                                                                "         <tr>                                                                                                                                   "+
+                                                                "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri  !important;'>DOB:</td>                                "+
+                                                                "             <td style='font-size: 11pt !important;font-family: calibri !important;'>{{DOB}}</td>                                               "+
+                                                                "         </tr>                                                                                                                                  "+    
+                                                                "         <tr>                                                                                                                                   "+
+                                                                "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri !important;'>Contact No:</td>                          "+
+                                                                "             <td style='font-size: 11pt !important;font-family: calibri !important;'>{{CONTACT_NO}}</td>                                        "+
+                                                                "         </tr>                                                                                                                                  "+     
+                                                                "         <tr>                                                                                                                                   "+
+                                                                "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri !important;'>Medicare No:</td>                         "+
+                                                                "             <td style='font-size: 11pt !important;font-family: calibri !important;'>{{MEDICARE_NO}}</td>                                       "+
+                                                                "         </tr>                                                                                                                                  "+            
+                                                                "         <tr>                                                                                                                                   "+
+                                                                "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri !important;'>Medicare Ref:</td>                        "+
+                                                                "             <td style='font-size: 11pt !important;font-family: calibri !important;'>{{MEDICARE_REF}}</td>                                      "+
+                                                                "         </tr>                                                                                                                                  "+
+                                                                "         <tr>                                                                                                                                   "+
+                                                                "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri !important;'>Injury:</td>                              "+
+                                                                "             <td style='font-size: 11pt !important;font-family: calibri !important;'>{{INJURY}}</td>                                            "+
+                                                                "         </tr>                                                                                                                                  "+
+                                                                "         <tr>                                                                                                                                   "+
+                                                                "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri !important;'>Doctor:</td>                              "+
+                                                                "             <td style='font-size: 11pt !important;font-family: calibri !important;'>{{DOCTOR}}</td>                                            "+
+                                                                "         </tr>                                                                                                                                  "+  
+                                                                "         <tr>                                                                                                                                   "+
+                                                                "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri !important;'>Location:</td>                            "+
+                                                                "             <td style='font-size: 11pt !important;font-family: calibri !important;'>{{LOCATION}}</td>                                          "+
+                                                                "         </tr>                                                                                                                                  "+
+                                                                "         <tr>                                                                                                                                   "+
+                                                                "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri !important;'>Date:</td>                                "+
+                                                                "             <td style='font-size: 11pt !important;font-family: calibri !important;'>{{DATE}}</td>                                              "+
+                                                                "         </tr>                                                                                                                                  "+      
+                                                                "         <tr>                                                                                                                                   "+
+                                                                "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri !important;'>Time:</td>                                "+
+                                                                "             <td style='font-size: 11pt !important;font-family: calibri !important;'>{{TIME}}</td>                                              "+
+                                                                "         </tr>                                                                                                                                  "+     
+                                                                "    </table>                                                                                                                                    ";         
+                                                            var emailData={
+                                                                FIRSTNAME:FIRSTNAME,
+                                                                GENDER:GENDER,
+                                                                DOB:moment(DOB).format("YYYY-MM-DD"),
+                                                                CONTACT_NO:CONTACT_NO,
+                                                                MEDICARE_NO:MEDICARE_NO,
+                                                                MEDICARE_REF:MEDICARE_REF,
+                                                                INJURY:INJURY,
+                                                                DOCTOR:DOCTOR,
+                                                                LOCATION:LOCATION,
+                                                                DATE:moment(DATE).format("YYYY/MM/DD"),
+                                                                TIME:TIME
+                                                            }
+                                                            template=kiss.tokenBinding(template,emailData);
+                                                            emailInfo.htmlBody=template;
+                                                            rlobEmailController.sendEmail(req,res,emailInfo);
+                                                        }
+                                                    });
+                                                });
+                                            }
+                                        });
+                                    });
+                                }
+                            });
+                        });    
                     };
-                    emailInfo.subject='RE: Confirmation of booking '+insertRow.FIRSTNAME+' '+insertRow.LASTNAME;
-                    emailInfo.recipients=insertRow.email;
-                    emailInfo.senders=rlobUtil.getMedicoLegalMailSender() ;
-                    var template=
-                        "   <p>Hi {{FIRSTNAME}},</p>                                                                                                                     "+      
-                        "   NonEmergency                                                                                                                                 "+
-                        "   <p>                                                                                                                                          "+      
-                        "    <table >                                                                                                                                    "+         
-                        "         <tr>                                                                                                                                   "+
-                        "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri !important;'>Gender:</td>                              "+
-                        "             <td style='font-size: 11pt !important;font-family: calibri  !important;'>{{GENDER}}</td>                                           "+
-                        "         </tr>                                                                                                                                  "+    
-                        "         <tr>                                                                                                                                   "+
-                        "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri  !important;'>DOB:</td>                                "+
-                        "             <td style='font-size: 11pt !important;font-family: calibri !important;'>{{DOB}}</td>                                               "+
-                        "         </tr>                                                                                                                                  "+    
-                        "         <tr>                                                                                                                                   "+
-                        "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri !important;'>Contact No:</td>                          "+
-                        "             <td style='font-size: 11pt !important;font-family: calibri !important;'>{{CONTACT_NO}}</td>                                        "+
-                        "         </tr>                                                                                                                                  "+     
-                        "         <tr>                                                                                                                                   "+
-                        "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri !important;'>Medicare No:</td>                         "+
-                        "             <td style='font-size: 11pt !important;font-family: calibri !important;'>{{MEDICARE_NO}}</td>                                       "+
-                        "         </tr>                                                                                                                                  "+            
-                        "         <tr>                                                                                                                                   "+
-                        "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri !important;'>Medicare Ref:</td>                        "+
-                        "             <td style='font-size: 11pt !important;font-family: calibri !important;'>{{MEDICARE_REF}}</td>                                      "+
-                        "         </tr>                                                                                                                                  "+
-                        "         <tr>                                                                                                                                   "+
-                        "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri !important;'>Injury:</td>                              "+
-                        "             <td style='font-size: 11pt !important;font-family: calibri !important;'>{{INJURY}}</td>                                            "+
-                        "         </tr>                                                                                                                                  "+
-                        "         <tr>                                                                                                                                   "+
-                        "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri !important;'>Doctor:</td>                              "+
-                        "             <td style='font-size: 11pt !important;font-family: calibri !important;'>{{DOCTOR}}</td>                                            "+
-                        "         </tr>                                                                                                                                  "+  
-                        "         <tr>                                                                                                                                   "+
-                        "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri !important;'>Location:</td>                            "+
-                        "             <td style='font-size: 11pt !important;font-family: calibri !important;'>{{LOCATION}}</td>                                          "+
-                        "         </tr>                                                                                                                                  "+
-                        "         <tr>                                                                                                                                   "+
-                        "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri !important;'>Date:</td>                                "+
-                        "             <td style='font-size: 11pt !important;font-family: calibri !important;'>{{DATE}}</td>                                              "+
-                        "         </tr>                                                                                                                                  "+      
-                        "         <tr>                                                                                                                                   "+
-                        "             <td style='font-weight:bold;font-size: 11pt !important;font-family: calibri !important;'>Time:</td>                                "+
-                        "             <td style='font-size: 11pt !important;font-family: calibri !important;'>{{TIME}}</td>                                              "+
-                        "         </tr>                                                                                                                                  "+     
-                        "    </table>                                                                                                                                    ";         
-                    var emailData={
-                        FIRSTNAME:insertRow.FIRSTNAME,
-                        GENDER:insertRow.GENDER,
-                        DOB:insertRow.DOB,
-                        CONTACT_NO:insertRow.CONTACT_NO,
-                        MEDICARE_NO:insertRow.MEDICARE_NO,
-                        MEDICARE_REF:insertRow.MEDICARE_REF,
-                        INJURY:insertRow.INJURY,
-                        DOCTOR:DOCTOR,
-                        LOCATION:LOCATION,
-                        DATE:moment(DATE).format("YYYY/MM/DD"),
-                        TIME:TIME
-                    }
-                    template=kiss.tokenBinding(template,emailData);
-                    emailInfo.htmlBody=template;
-                    rlobEmailController.sendEmail(req,res,emailInfo);
                 }
             });
-        });
-    },insertEmergency:function(req,res){
-        // console.log('giappppppppppppppp',req.body.info);
+        }); 
+                        
+    }
+    ,insertEmergency:function(req,res){
+        console.log('giappppppppppppppp',req.body.info);
         // return
         // console.log()
         var FIRSTNAME=kiss.checkData(req.body.info.FIRSTNAME)?req.body.info.FIRSTNAME:null;
@@ -160,7 +344,6 @@ module.exports =
         var CONTACT_NO=kiss.checkData(req.body.info.CONTACT_NO)?req.body.info.CONTACT_NO:null;
         var MEDICARE_NO=kiss.checkData(req.body.info.MEDICARE_NO)?req.body.info.MEDICARE_NO:null;
         var MEDICARE_REF=kiss.checkData(req.body.info.MEDICARE_REF)?req.body.info.MEDICARE_REF:null;
-        var TYPE_NAME=kiss.checkData(req.body.info.TYPE_NAME)?req.body.info.TYPE_NAME:null;
         var INJURY=kiss.checkData(req.body.info.INJURY)?req.body.info.INJURY:null;
         var LONGITUDE=kiss.checkData(req.body.info.LONGITUDE)?req.body.info.LONGITUDE:null;
         var LATITUDE=kiss.checkData(req.body.info.LATITUDE)?req.body.info.LATITUDE:null;
@@ -169,7 +352,7 @@ module.exports =
         var REMEMBER_PATIENTS=kiss.checkData(req.body.info.REMEMBER_PATIENTS)?req.body.info.REMEMBER_PATIENTS:0;
         var RECEIVE_REDIMED=kiss.checkData(req.body.info.RECEIVE_REDIMED)?req.body.info.RECEIVE_REDIMED:0;
 
-        if(!kiss.checkListData(FIRSTNAME,LASTNAME,GENDER,DOB,CONTACT_NO,TYPE_NAME,INJURY,EMAIL))
+        if(!kiss.checkListData(FIRSTNAME,LASTNAME,GENDER,DOB,CONTACT_NO,INJURY))
         {
             kiss.exlog('insertEmergency',"Loi data truyen den");
             res.json({status:'fail'});
@@ -184,7 +367,6 @@ module.exports =
             CONTACT_NO:CONTACT_NO,
             MEDICARE_NO:MEDICARE_NO,
             MEDICARE_REF:MEDICARE_REF,
-            TYPE_NAME:TYPE_NAME,
             INJURY:INJURY,
             LONGITUDE:LONGITUDE,
             LATITUDE:LATITUDE,

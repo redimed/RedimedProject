@@ -7,6 +7,7 @@ angular.module('app.loggedIn.company.directives.add', [])
 		scope: {
 			options: '=',
 			onRowClick: '&',
+			//success:'=',
 			actionCenter:'='//tannv.dts@gmail.com add
 		},
 		link: function(scope, elem, attrs)
@@ -41,14 +42,17 @@ angular.module('app.loggedIn.company.directives.add', [])
 		        CODE:null,
 		        Insurer:null,
 		        Phone:null,
-		        Site_medic:null,
+		        Site_medic:[],
 		        User_id: $cookieStore.get('userInfo').id,
 		        isPO:null,
 		        isExtra:null,
 		        parent_id :null,
 		        listInsurerid :[],
+		        from_date:null,
+		        to_date:null,
 		        // patient_id :$stateParams.patientId//tannv.dts@gmail.com comment
-		        patient_id :$stateParams.patient_id//tannv.dts add
+		        patient_id :$stateParams.patient_id,//tannv.dts add
+		        suburb:null //phanquocchien.c1109g@gmail.com add
 			}
 			scope.onRowClick = function(row){
 				 var postData = { 
@@ -135,19 +139,98 @@ angular.module('app.loggedIn.company.directives.add', [])
 			}
 			var save = function(){
 				ConfigService.beforeSave(scope.company.errors);
+				_.forEach(form.Site_medic, function(n) {
+				  	delete n.$$hashKey;
+				});
+				scope.company.form.Site_medic = form.Site_medic;
 		    	var postData = angular.copy(scope.company.form);
 		    	postData.Insurer = scope.company.InsurerTemp === '' ? null : scope.company.InsurerTemp;
 		    	postData.listInsurerid = scope.company.listTemp;
+		    	if(postData.from_date)
+					postData.from_date = ConfigService.convertToDB(postData.from_date);
+				if(postData.to_date)
+					postData.to_date = ConfigService.convertToDB(postData.to_date);
 		  		CompanyModel.add(postData)
 		  			.then(function(response){
 		  				toastr.success('Add Company Successfully');
 		  				// $state.go('loggedIn.company');//tan comment
-		  				$state.go('loggedIn.patient.company');//tan add
+		  				//$state.go('loggedIn.patient.company');//tan add
 		  				scope.actionCenter.closeModal();
+		  				//scope.success = true;
 		  			}, function(error){
 		  				scope.company.errors = angular.copy(error.data.errors);
 					   ConfigService.beforeError(scope.company.errors);
 		  			})
+		    }
+		    var showListCompanyRep = function(){
+		    	var modalInstance = $modal.open({
+			      	templateUrl: 'modules/company/dialogs/templates/listCompanyRep.html',
+			      	controller: function($scope, $modalInstance)
+			      	{
+						$scope.list = form.Site_medic;
+						$scope.onRowClick = function(data){
+							swal({
+					            title: "Confirm Delete",
+					            text: "Are You Sure Want To Delete This Company Rep?",
+					            type: "warning",
+					            showCancelButton: true,
+					            confirmButtonColor: "#DD6B55",
+					            confirmButtonText: "Yes",
+					            closeOnConfirm: true
+					        }, function() {
+					            form.Site_medic.splice(data,1);
+					        })
+						}
+						$scope.addlist = function(){
+							var modalInstance = $modal.open({
+								templateUrl: 'modules/company/dialogs/templates/companyRep.html',
+								controller: function($scope, $modalInstance,toastr)
+								{
+									$scope.formAdd = true;
+									$scope.close = function(){
+  										$modalInstance.dismiss('cancel');
+    								}
+									$scope.submitItem = function(){
+
+										form.Site_medic.push({name:$scope.listInfo.name})
+										console.log(form.Site_medic);
+										toastr.success('Add Company Rep Successfully');
+										$scope.close();
+									}
+								},
+								size: 'sm'
+							});
+						}
+						$scope.editItem = function(name,index){
+							var name = name;
+							var index = index;
+							var modalInstance = $modal.open({
+								templateUrl: 'modules/company/dialogs/templates/companyRep.html',
+								controller: function($scope, $modalInstance)
+								{
+									$scope.formAdd = false;
+									$scope.listInfo = {
+										name:name
+									}
+									$scope.close = function(){
+  										$modalInstance.dismiss('cancel');
+    								}
+    								$scope.saveItem = function(){
+										form.Site_medic[index].name = $scope.listInfo.name;
+										console.log(form.Site_medic);
+										toastr.success('Edit Company Rep Successfully');
+										$scope.close();
+    								}
+								},
+								size: 'sm'
+							});
+						}
+						$scope.close = function(){
+							$modalInstance.dismiss('cancel');
+						}
+			      	},
+			      	size :'md'
+			    })
 		    }
 		    scope.company = {
 		    	form:form,
@@ -160,7 +243,8 @@ angular.module('app.loggedIn.company.directives.add', [])
 		    	save: function(){ save(); },
 		    	addCompany :function(){addCompany();},
 		    	addInsurer :function(){addInsurer();},
-		    	remove : function(row){remove(row);}
+		    	remove : function(row){remove(row);},
+		    	showListCompanyRep : function(){showListCompanyRep();}
 		    }
 
 		    scope.cancel=function()

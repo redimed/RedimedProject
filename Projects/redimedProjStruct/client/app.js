@@ -14,12 +14,12 @@ angular.module("app", [
         "angular-loading-bar", // ANGULAR LOADING BAR
         "ngTable", // ANGULAR TABLE
         "ngIdle", // Ng-Idle
+        "app.calling", //MODULES CALL
         "app.loggedIn", // MODULES LOGGED IN
         "app.security", // FOR LOGIN, FOTGOT FORM, REGISTER FORM
         "app.config", // ANGULAR CONFIG
         "app.model", // ANGULAR MODEL
         "app.lockscreen.controller", //LOCKSCREEN CONTROLLER
-        "app.call.controller", //CALL CONTROLLER
         "ui.slider", // ANGULAR SLIDER
         "pragmatic-angular", // ANGULAR PRAGMATIC
         "cfp.hotkeys", // ANGULAR HOTKEYS
@@ -36,7 +36,7 @@ angular.module("app", [
         'ngMap',
         'ng-mfb',
         'ngDragDrop',
-        'btford.socket-io',
+        // 'btford.socket-io',
         'btford.modal',
         'dateRangePicker',
         'angular-svg-round-progress',
@@ -54,36 +54,27 @@ angular.module("app", [
     	'app.sponsor1.nonemergency.controller'
         // 'angular-underscore'
     ])
-    .factory('callModal', function (btfModal) {
-      return btfModal({
-        controller: 'callController',
-        controllerAs: 'modal',
-        templateUrl: 'common/views/call.html'
-      });
-    })
-    .factory('socket', function(socketFactory) {
+    .factory('socket', function($rootScope) {
         var host = location.hostname;
         var port = location.port;
 
-        var socket = io.connect('https://' + host + '/', {
-            'port': port,
-            'reconnect': true,
-            'reconnection delay': 2000,
-            'max reconnection attempts': 10000,
-            'force new connection': false,
+        var socket = io.connect('https://'+host+':'+port, {
+            'reconnection': true,
+            'reconnectionDelay': 500,
+            'reconnectionDelayMax': 1000,
+            'reconnectionAttempts': 1000,
             'secure': true,
-			'transports': ['websocket'
-						  , 'flashsocket'
-						  , 'htmlfile'
-						  , 'xhr-polling'
-						  , 'jsonp-polling']
+            'timeout': 500,
+            'force new connection': false,
+			'transports': ['websocket', 
+                          'flashsocket', 
+                          'htmlfile', 
+                          'xhr-polling', 
+                          'jsonp-polling', 
+                          'polling']
         });
 
-        var socketFactory = socketFactory({
-            ioSocket: socket
-        })
-
-        return socketFactory;
+        return socket;
     })
     .factory('beforeUnload', function($rootScope, $window) {
 
@@ -176,26 +167,6 @@ angular.module("app", [
 
         })
 
-        .state('call', {
-            url: '/call/:apiKey/:sessionId/:token/:callUser/:isCaller/:patientId',
-            views: {
-                "root": {
-                    templateUrl: "common/views/call.html",
-                    controller: 'callController'
-                }
-            }
-        })
-
-        .state('whiteboard',{
-            url: '/whiteboard/:apiKey/:sessionId/:token/:patientId',
-            views: {
-                "root": {
-                    templateUrl: "common/views/whiteboard.html",
-                    controller: 'whiteboardController'
-                }
-            }
-        })
-
         .state('notifyScreen',{
             url:'/notification',
             views: {
@@ -226,27 +197,36 @@ angular.module("app", [
     })
 
 //When update any route
-.run(function(beforeUnload, $window, $modalStack, $cookieStore, $interval, $state, $rootScope, $idle, $log, $keepalive, editableOptions, socket, toastr, localStorageService,rlobService, TimeSheetService) {
+.run(function(beforeUnload, $window, $modalStack, $cookieStore, $interval, $state, $rootScope, $idle, $log, $keepalive, editableOptions, socket, toastr, localStorageService,rlobService, TimeSheetService, UserService) {
 
+    window.loading_screen.finish();
 
-    socket.on('reconnect', function() {
-        if ($cookieStore.get("userInfo")) {
+    function closeWindow(){
+        var callingWindow= window.open('','RedimedCallingWindow', '');
+        callingWindow.focus();
+        callingWindow.close();
+
+        var whiteboardWindow = window.open('','RedimedWhiteboard', '');
+        whiteboardWindow.focus();
+        whiteboardWindow.close();
+    }
+
+    socket.on('connect',function(){
+        if ($cookieStore.get("userInfo"))
             socket.emit("reconnected", $cookieStore.get("userInfo").id);
-        }
     })
 
-    socket.on('reconnect_failed', function() {
+    socket.on('disconnect',function(){
+        toastr.error("Disconnect From Server! Please Login Again!");
+        closeWindow();
         $cookieStore.remove("userInfo");
         $cookieStore.remove("companyInfo");
         $cookieStore.remove("doctorInfo");
         $cookieStore.remove("fromState");
         $cookieStore.remove("toState");
-        $state.go("security.login", null, {
-            location: "replace",
-            reload: true
-        });
+        $cookieStore.remove("isRemember");
 
-        socket.removeAllListeners();
+        $state.go("security.login",null,{location: "replace", reload: true});
     })
 
     $idle.watch();
@@ -263,9 +243,6 @@ angular.module("app", [
 
     editableOptions.theme = 'bs3';
 
-    if ($cookieStore.get("userInfo")) {
-        socket.emit("reconnected", $cookieStore.get("userInfo").id);
-    }
 
     if (!("Notification" in window)) {
         // alert("This browser does not support desktop notification");
@@ -277,18 +254,7 @@ angular.module("app", [
         });
     }
 
-    $rootScope.$on("$locationChangeSuccess", function(event, current, previous) {
-
-        if (current === previous) {
-            if ($cookieStore.get("userInfo")) {
-                socket.emit("reconnected", $cookieStore.get("userInfo").id);
-            }
-        }
-    })
-
-
     $rootScope.$on("$stateChangeSuccess", function(e, toState, toParams, fromState, fromParams) {
-
         $modalStack.dismissAll();
 
         var locationHref = location.href;
@@ -312,8 +278,6 @@ angular.module("app", [
         if (!$cookieStore.get("userInfo")) {
             if(toState.name !== "notifyScreen")
             {
-                socket.removeAllListeners();
-                socket.emit('lostCookie');
                 if (toState.name !== "security.forgot" && toState.name !== "security.login" && toState.name !== "security.term" && toState.name !== "security.redirect" && toState.name !=="security.rlobRegister" && toState.name!=='security.rlobSponsor' && toState.name!=='security.rlobSponsor.emergency' && toState.name!=='security.rlobSponsor.nonemergency' && toState.name!=='security.portalPatient' && toState.name.indexOf('webpatient') ) {
                     e.preventDefault();
                     $state.go("security.login", null, {
@@ -323,46 +287,44 @@ angular.module("app", [
                 }
             }
         }
-
     });
     $rootScope.$on("$stateChangeStart", function(e, toState, toParams, fromState, fromParams) {
         //LOAD ROLE ON TREEAPPROVE
         if ($cookieStore.get("userInfo") &&
             $cookieStore.get("userInfo").id) {
-            TimeSheetService.LoadRole($cookieStore.get("userInfo").id).then(function(response) {
-                if (response.status === "error") {
-                    $state.go("loggedIn.home", null, {
-                        "reload": true
-                    });
-                    toastr.error("Loading fail!", "Error");
-                } else if (response.status === "success") {
-                    localStorageService.set("position", response.position[0].TITLE);
-                    //ROLE
-                    if (toState.position !== undefined && toState.position !== null) {
-                        var status = false;
-                        angular.forEach(toState.position, function(postt, index) {
-                            if (postt === localStorageService.get("position")) {
-                                status = true;
-                            }
+                TimeSheetService.LoadRole($cookieStore.get("userInfo").id).then(function(response) {
+                    if (response.status === "error") {
+                        $state.go("loggedIn.home", null, {
+                            "reload": true
                         });
-                        if (status === false) {
-                            $state.go("loggedIn.home", null, {
-                                "reload": true
+                        toastr.error("Loading fail!", "Error");
+                    } else if (response.status === "success") {
+                        localStorageService.set("position", response.position[0].TITLE);
+                        //ROLE
+                        if (toState.position !== undefined && toState.position !== null) {
+                            var status = false;
+                            angular.forEach(toState.position, function(postt, index) {
+                                if (postt === localStorageService.get("position")) {
+                                    status = true;
+                                }
                             });
-                            toastr.error("You not permission!", "Error");
+                            if (status === false) {
+                                $state.go("loggedIn.home", null, {
+                                    "reload": true
+                                });
+                                toastr.error("You not permission!", "Error");
+                            }
                         }
+                        //END ROLE
+                    } else {
+                        //catch exception
+                        $state.go("loggedIn.home", null, {
+                            "reload": true
+                        });
+                        toastr.error("Server response error!", "Error");
+                        e.preventDefault();
                     }
-                    //END ROLE
-                } else {
-                    //catch exception
-                    $state.go("loggedIn.home", null, {
-                        "reload": true
-                    });
-                    toastr.error("Server response error!", "Error");
-                    e.preventDefault();
-                }
-            });
-
+                });
         }
         //END LOAD ROLE ON TREEAPPROVE
     });

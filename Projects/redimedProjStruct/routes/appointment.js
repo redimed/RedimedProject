@@ -14,3 +14,5 @@ app.post(url+'beforePostLeaveCal',AppointmentController.beforePostLeaveCal);
 
 //Vuong get alert center
 app.post(url+'alertCenter', AppointmentController.alertCenter);
+app.post(url+'alertSiteCenter', AppointmentController.alertSiteCenter);
+app.post(url+'getServiceColor', AppointmentController.getServiceColor);

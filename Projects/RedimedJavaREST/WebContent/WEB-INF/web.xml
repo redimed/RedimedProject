@@ -16,6 +16,7 @@
 		<servlet-name>Redimed REST Service</servlet-name>
 		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
 		<init-param>
+			<param-name>com.sun.jersey.config.property.packages</param-name>
 			<param-name>com.sun.jersey.spi.container.ContainerResponseFilters</param-name>
 			<param-value>com.redimed.service.CORSFilter</param-value>
 		</init-param>

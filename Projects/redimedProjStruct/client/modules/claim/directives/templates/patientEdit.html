@@ -5,7 +5,7 @@
 	<div class="col-md-6">
 		<div class="form-group">
 			<label class="un-label-group">
-				Claim No&nbsp;*
+				Claim No
 			</label>
 			<input class="form-control input-sm un-input-group" ng-model="claim.form.Claim_no" id="Claim_no">
 		</div>
@@ -113,6 +113,14 @@
 		</div>
 	</div>
 	<!-- END IS CURR -->
+	<!-- OPEN CLOSE -->
+	<div class="col-md-6">
+		<div>
+			<input type="checkbox" ng-model="claim.form.Isenable" ng-true-value="1" ng-false-value="0" class="un-input-checkbox">
+			<label>Open</label>
+		</div>
+	</div>
+	<!-- END OPEN CLOSE -->
 </div>
 
 <div class="row">

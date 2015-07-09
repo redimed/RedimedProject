@@ -4,7 +4,8 @@
 	        restrict: 'E',
 	        scope: {
 	        	images: '=',
-	        	patient: '='
+	        	patient: '=',
+	        	actionCenterDrawing:'='
 	        },
 	        templateUrl: "modules/consultation/directives/templates/drawingConsult.html",
 	        link: function (scope, element, attrs) {
@@ -109,6 +110,12 @@
 	                	{
 	                		scope.images.push(rs.id);
 	                		toastr.success("Image Saved!");
+	                		 //phanquocchien save img success
+		                    if(scope.actionCenterDrawing && scope.actionCenterDrawing.runWhenFinish)
+							{
+								scope.actionCenterDrawing.runWhenFinish();
+							}
+							//end
 	                	}
 	                	else
 	                		toastr.error("Error!");
@@ -195,4 +202,28 @@
 	        }
 	    };
 	})
-	
+	.directive('consultationHistory',function(){
+		return {
+			restrict: 'E',
+	        scope: {
+	        	actionCenter:'='
+	        },
+	        templateUrl: "modules/consultation/directives/templates/consultation-history.html",
+	        controller: function ($scope,ConsultationService) {
+	        	/*//get list consultation of patient
+				$scope.setListConsultationOfPatient = function(){
+					ConsultationService.getListConsultOfPatient($scope.actionCenter.patient_id).then(function(data){
+						if (data.status == 'success') {
+							$scope.listConsultOfPatient = data.data;
+							console.log(data.data);
+						};
+					});
+				}
+				$scope.actionCenter.load = function(){
+					$scope.setListConsultationOfPatient();
+				}
+				$scope.actionCenter.load();
+				//*/
+	        }
+		}
+	})

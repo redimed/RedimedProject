@@ -110,10 +110,6 @@ var rlobConstant={
     msgPopupType:{
         success:'success',
         error:'error'
-    },
-    sponsorType:{
-        emergency:'EMERGENCY',
-        nonemergency:'NONEMERGENCY'
     }
 }
 

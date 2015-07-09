@@ -6,13 +6,12 @@ angular.module('starter.security.forgot.controller',[])
         $scope.objForgotpass = {};
 
         $scope.submitResetPassword = function(){
+            $scope.messageLoading = {message: "Waiting..."};
             $ionicLoading.show({
-                template: "<div class='icon ion-ios7-reloading'></div>"+
-                "<br />"+
-                "<span>waiting...</span>",
+                templateUrl: "modules/loadingTemplate.html",
                 animation: 'fade-in',
-                showBackdrop: true,
-                maxWidth: 200,
+                scope: $scope,
+                maxWidth: 500,
                 showDelay: 0
             });
             SecurityService.forgotPass($scope.objForgotpass.email).then(function(data){
@@ -37,10 +36,13 @@ angular.module('starter.security.forgot.controller',[])
                         $scope.popupMessage = { message: "That e-mail address doesn't have an associated " +
                         "user account. Are you sure you've registered?"}
                         $ionicPopup.show({
-                            templateUrl: "modules/popup/PopUpError.html",
+                            templateUrl: "modules/popup/PopUpConfirm.html",
                             scope: $scope,
                             buttons: [
-                                { text: "Ok" }
+                                { text: "Ok" },
+                                {   text: "Cancel",
+                                    type: 'btn-cancel-popUp'
+                                },
                             ]
                         });
                     }

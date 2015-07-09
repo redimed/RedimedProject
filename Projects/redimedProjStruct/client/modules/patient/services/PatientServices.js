@@ -68,12 +68,22 @@ angular.module("app.loggedIn.patient.services", [])
     }
     
     
-     instanceService.numRecalls = function(patient_id){
+    instanceService.numRecalls = function(patient_id){
         var funcApi = khankAPI.one('patients/num_recalls');
         return funcApi.get({id: patient_id});
     }
-    
-
+    /*phanquochien.c1109g@gmail.com*/
+    /*check patient*/
+    instanceService.checkPatietnInfo = function(First_name,Sur_name,Middle_name,DOB){
+        var funcApi = khankAPI.all('patients/check_patient_info');
+        return funcApi.post({First_name:First_name,Sur_name:Sur_name,Middle_name:Middle_name,DOB:DOB});
+    }
+    /*phanquocchien.c1109g@gmail.com*/
+    /*get doctorinfo by user_id*/
+    instanceService.getDoctorInfoByUserId = function(user_id){
+        var funcApi = khankAPI.all('doctor/doctor_info_by_user_id');
+        return funcApi.post({user_id:user_id});
+    }
     instanceService.initInvoice = function(patient_id, cal_id){
         var funcApi = khankAPI.all('invoice/init');
         return funcApi.post({patient_id: patient_id, cal_id: cal_id});
@@ -333,9 +343,9 @@ angular.module("app.loggedIn.patient.services", [])
             label: 'Doctor',
             type: 'custom',
             fn: function(item) {
-                if(!item.appointment || !item.appointment.doctor) 
+                if(!item.user) 
                     return;
-                return item.appointment.doctor.NAME;
+                return item.user.Booking_Person;
             }
         }
 
@@ -447,5 +457,9 @@ angular.module("app.loggedIn.patient.services", [])
             ]
         };
     }
+    instanceService.Add_CAL = function(data){
+        var funcApi = mdtApi.all("appt_add");
+        return funcApi.post({data: data});
+    } 
     return instanceService;
 })

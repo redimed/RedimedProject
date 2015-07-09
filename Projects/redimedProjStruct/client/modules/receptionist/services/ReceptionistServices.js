@@ -1,4 +1,14 @@
 angular.module("app.loggedIn.receptionist.services", [])
+//phanquocchien.c1109g@gmail.com
+.service('receptionStileService', function(){
+    var receptionStile=null;
+	this.getreceptionStile=function(){
+        return receptionStile;
+    }
+    this.setreceptionStile=function(site){
+        receptionStile=JSON.parse(JSON.stringify(site));
+    }
+})
 
 .factory("ReceptionistService", function(Restangular){
 	var receptionistService = {};

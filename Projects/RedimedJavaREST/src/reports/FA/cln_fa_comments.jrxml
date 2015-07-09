@@ -1,64 +1,223 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cln_fa_comments" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="bea37961-7ddf-4f07-aaaa-2367f58ce731">
-	<property name="ireport.zoom" value="1.3310000000000008"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cln_fa comments" language="groovy" pageWidth="250" pageHeight="842" orientation="Landscape" columnWidth="250" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="482c75ea-a2d3-4703-9e9e-d2fb0ca08bd5">
+	<property name="ireport.zoom" value="1.3636363636363642"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="PATIENT_ID_PARAM" class="java.lang.String">
+	<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
+	<parameter name="patient_id" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="CAL_ID_PARAM" class="java.lang.String">
+	<parameter name="cal_id" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="LINE_ID_PARAM" class="java.lang.String">
+	<parameter name="line_id" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA[$P{DIR_PATH}]]></defaultValueExpression>
+	<parameter name="real_path" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="DIR_PATH" class="java.lang.String"/>
+	<parameter name="sub_report_dir" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[select DISTINCT l.`IsCommentsText`,l.`COMMENTS`
-from `cln_fa_df_lines` l
-where 	l.`PATIENT_ID`=$P{PATIENT_ID_PARAM}
-	and
-	l.`CAL_ID`=$P{CAL_ID_PARAM}
-	and
-	l.`LINE_ID`=$P{LINE_ID_PARAM}]]>
+		<![CDATA[SELECT comments.*
+FROM `cln_fa_df_comments` comments
+WHERE comments.PATIENT_ID =$P{patient_id}
+AND comments.CAL_ID =$P{cal_id}
+AND comments.LINE_ID =$P{line_id}]]>
 	</queryString>
-	<field name="IsCommentsText" class="java.lang.Integer">
+	<field name="PATIENT_ID" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="COMMENTS" class="java.lang.String">
+	<field name="CAL_ID" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<background>
+	<field name="FA_COMMENT_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LINE_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VALUE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ISENABLE" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Created_by" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Creation_date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Last_updated_by" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Last_update_date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Comment_Type" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<title>
 		<band splitType="Stretch"/>
-	</background>
+	</title>
 	<detail>
-		<band height="41">
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement x="0" y="0" width="254" height="15" isRemoveLineWhenBlank="true" uuid="651fdd39-e135-4bce-b37c-416d2cc5463c">
-					<printWhenExpression><![CDATA[$F{IsCommentsText}!=null && $F{IsCommentsText}==1]]></printWhenExpression>
-				</reportElement>
-				<textFieldExpression><![CDATA[$F{COMMENTS}]]></textFieldExpression>
+		<band height="16">
+			<printWhenExpression><![CDATA[$F{Comment_Type} ==1]]></printWhenExpression>
+			<textField>
+				<reportElement x="45" y="0" width="204" height="16" isPrintWhenDetailOverflows="true" uuid="25bff2a4-67ac-4407-9948-333871413293"/>
+				<textFieldExpression><![CDATA[$F{NAME}]]></textFieldExpression>
 			</textField>
-			<subreport>
-				<reportElement x="0" y="15" width="254" height="26" isRemoveLineWhenBlank="true" uuid="0738899c-006a-41cc-b86f-3aa772f5d209"/>
-				<subreportParameter name="DIR_PATH">
-					<subreportParameterExpression><![CDATA[$P{DIR_PATH}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="CAL_ID_PARAM">
-					<subreportParameterExpression><![CDATA[$P{CAL_ID_PARAM}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="LINE_ID_PARAM">
-					<subreportParameterExpression><![CDATA[$P{LINE_ID_PARAM}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="PATIENT_ID_PARAM">
-					<subreportParameterExpression><![CDATA[$P{PATIENT_ID_PARAM}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{DIR_PATH}+"cln_fa_comment_type_select.jasper"]]></subreportExpression>
-			</subreport>
+			<image>
+				<reportElement x="20" y="0" width="15" height="15" uuid="09a87e50-a5f5-43f4-b817-b1fdb97bd341">
+					<printWhenExpression><![CDATA[$F{ISENABLE}==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$F{VALUE}.equals("0")?($P{real_path}+"uncheck.png"):($P{real_path}+"checked.png")]]></imageExpression>
+			</image>
+		</band>
+		<band height="16">
+			<printWhenExpression><![CDATA[$F{Comment_Type} ==3]]></printWhenExpression>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="20" y="0" width="120" height="16" isPrintWhenDetailOverflows="true" uuid="5c5622ed-d23c-4ffe-a830-b307fb66ff41"/>
+				<textFieldExpression><![CDATA[$F{NAME}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="207" y="0" width="15" height="15" uuid="cf7504c4-336c-4efc-8413-c492b61b01f9">
+					<printWhenExpression><![CDATA[$F{ISENABLE}==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$F{VALUE}.equals("0")?($P{real_path}+"checked.png"):($P{real_path}+"uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="155" y="0" width="15" height="15" uuid="b962bb63-24a3-4964-9caf-3d1cc1ec41fa">
+					<printWhenExpression><![CDATA[$F{ISENABLE}==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$F{VALUE}.equals("1")?($P{real_path}+"checked.png"):($P{real_path}+"uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="178" y="0" width="19" height="16" uuid="52ac0d6d-d842-48c7-afaa-cbd1a8f0c139"/>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="230" y="0" width="19" height="16" uuid="f22ef13d-7b48-4a0c-ad5a-5ee13b7a0cfc"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+		</band>
+		<band height="31">
+			<printWhenExpression><![CDATA[$F{Comment_Type}==4]]></printWhenExpression>
+			<textField>
+				<reportElement x="20" y="0" width="230" height="16" isPrintWhenDetailOverflows="true" uuid="f715b064-a7a4-4a88-b1e1-85a77596ed31"/>
+				<textFieldExpression><![CDATA[$F{NAME}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="20" y="16" width="15" height="15" uuid="85e8ecb0-da84-4725-8f4b-63b800f9daba"/>
+				<imageExpression><![CDATA[$F{VALUE}.equals("3")?($P{real_path}+"checked.png"):($P{real_path}+"uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="45" y="16" width="35" height="15" uuid="b9ef58e1-70df-44a9-8e86-ca677043033a"/>
+				<text><![CDATA[Good]]></text>
+			</staticText>
+			<image>
+				<reportElement x="90" y="16" width="15" height="15" uuid="c091a77a-c417-4c23-8496-3503a9ee54c3"/>
+				<imageExpression><![CDATA[$F{VALUE}.equals("2")?($P{real_path}+"checked.png"):($P{real_path}+"uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="110" y="16" width="53" height="15" uuid="e3d36450-b944-42c4-9c09-41580df85317"/>
+				<text><![CDATA[Average]]></text>
+			</staticText>
+			<image>
+				<reportElement x="173" y="16" width="15" height="15" uuid="99758baa-2432-4e1f-ac3f-7b807a9e1172"/>
+				<imageExpression><![CDATA[$F{VALUE}.equals("1")?($P{real_path}+"checked.png"):($P{real_path}+"uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="197" y="16" width="36" height="15" uuid="a3b8f9c4-3814-43e6-b6cf-377b4ae8628c"/>
+				<text><![CDATA[Poor]]></text>
+			</staticText>
+		</band>
+		<band height="33">
+			<printWhenExpression><![CDATA[$F{Comment_Type}==5]]></printWhenExpression>
+			<textField>
+				<reportElement x="20" y="0" width="229" height="16" isPrintWhenDetailOverflows="true" uuid="044d56b4-13fd-4a0a-8418-38c6f158a728"/>
+				<textFieldExpression><![CDATA[$F{NAME}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="20" y="16" width="15" height="15" uuid="45052d96-1899-461f-9305-ed58e968c0c7">
+					<printWhenExpression><![CDATA[$F{ISENABLE}==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$F{VALUE}.equals("1")?($P{real_path}+"checked.png"):($P{real_path}+"uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="90" y="16" width="15" height="15" uuid="93bede27-556e-4df7-8119-7f9c3a807dd0"/>
+				<imageExpression><![CDATA[$F{VALUE}.equals("2")?($P{real_path}+"checked.png"):($P{real_path}+"uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="173" y="16" width="15" height="15" uuid="d208364e-9073-4a31-8505-aec44130ffc6">
+					<printWhenExpression><![CDATA[$F{ISENABLE}==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$F{VALUE}.equals("3")?($P{real_path}+"checked.png"):($P{real_path}+"uncheck.png")]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="40" y="16" width="45" height="15" uuid="0a8e6b26-9a4c-46fd-9137-23e255d1887c"/>
+				<text><![CDATA[Minimal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="120" y="16" width="48" height="15" uuid="82fcc731-ae13-4693-a3e0-729d7dc6517a"/>
+				<text><![CDATA[Moderate]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="197" y="16" width="46" height="15" uuid="1017a283-21d9-4427-bf69-006b69bab41a"/>
+				<text><![CDATA[Maximal]]></text>
+			</staticText>
+		</band>
+		<band height="58">
+			<printWhenExpression><![CDATA[$F{Comment_Type}==6]]></printWhenExpression>
+			<textField>
+				<reportElement x="20" y="0" width="229" height="16" isPrintWhenDetailOverflows="true" uuid="0af8927a-63cd-4817-8831-4ff23e8d596c"/>
+				<textFieldExpression><![CDATA[$F{NAME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="55" y="15" width="148" height="15" uuid="d206906b-fa4a-4d0f-8c6f-44ab950d356e"/>
+				<text><![CDATA[Above Normal Rage]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="55" y="29" width="148" height="15" uuid="52148dd5-5ff2-4b57-bf3d-94c4f5499792"/>
+				<text><![CDATA[Within Normal Rage]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="55" y="43" width="148" height="15" uuid="1ae96d1c-7b38-4ee4-92bc-761cb083a574"/>
+				<text><![CDATA[Below Normal Rage]]></text>
+			</staticText>
+			<image>
+				<reportElement x="20" y="29" width="15" height="15" uuid="2f1887a7-3598-4ed5-b73b-fd2855d401c3">
+					<printWhenExpression><![CDATA[$F{ISENABLE}==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$F{VALUE}.equals("2")?($P{real_path}+"checked.png"):($P{real_path}+"uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="20" y="15" width="15" height="15" uuid="791ac358-9612-4218-a671-a4c99aeb1af2">
+					<printWhenExpression><![CDATA[$F{ISENABLE}==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$F{VALUE}.equals("3")?($P{real_path}+"checked.png"):($P{real_path}+"uncheck.png")]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="20" y="43" width="15" height="15" uuid="8de9ee0f-9a57-4702-af43-df406b187a64">
+					<printWhenExpression><![CDATA[$F{ISENABLE}==1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$F{VALUE}.equals("1")?($P{real_path}+"checked.png"):($P{real_path}+"uncheck.png")]]></imageExpression>
+			</image>
 		</band>
 	</detail>
 </jasperReport>

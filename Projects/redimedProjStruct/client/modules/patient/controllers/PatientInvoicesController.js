@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.patient.invoices.controller", [])
-.controller("PatientInvoicesController", function($scope, $state, $stateParams, PatientService, ConfigService){
+.controller("PatientInvoicesController", function($scope, $state,toastr,$modal, $stateParams, PatientService, ConfigService){
 	var patient_id = $stateParams.patient_id;
     $scope.patient_id = patient_id;
     var cal_id = $stateParams.cal_id;
@@ -67,16 +67,37 @@ angular.module("app.loggedIn.patient.invoices.controller", [])
 	};
 
     $scope.addFormInvoice = {
-        is_show: false,
         open: function () {
-            this.is_show = true;
-        },
-        close: function () {
-            this.is_show = false;
-        },
-        success: function(){
-            $scope.addFormInvoice.close();
-            $scope.invoicePanel.reload();
+            $modal.open({
+                templateUrl: 'popupAddInvoice',
+                controller: function($scope, $modalInstance,options,patient_id,cal_id){
+                    $scope.options = options;
+                    $scope.patient_id = patient_id;
+                    $scope.cal_id = cal_id;
+                    $scope.success = function(){
+                        $modalInstance.close({'status':'success'});
+                    }
+                },
+                size: 'lg',
+                resolve:{
+                    options:function(){
+                        return $scope.options;
+                    },
+                    patient_id:function(){
+                        return $stateParams.patient_id;
+                    },
+                    cal_id:function(){
+                        return $stateParams.cal_id;
+                    }
+
+                }
+            })
+            .result.then(function(data){
+                if (data.status == 'success') {
+                    $scope.invoicePanel.reload();
+                    toastr.success('Save successfully!','Success!');
+                };
+            })
         }
     }
 

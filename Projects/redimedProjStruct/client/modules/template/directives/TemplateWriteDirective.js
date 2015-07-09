@@ -9,13 +9,19 @@ angular.module('app.loggedIn.template.directives.write', [])
 		link: function(scope, elem, attrs){
 
 			scope.savePDF = function(){
-				
-			}
+				var doc = new jsPDF();
 
-			var finishDownload = function(){
-				window.clearInterval(fileDownloadCheckTimer);
- 				$.removeCookie('fileDownloadToken'); //clears this cookie value
- 				$.unblockUI();
+				var specialElementHandlers = {
+					'#editor': function(element, renderer){
+						return true;
+					}
+				};
+
+				doc.fromHTML($('#writeTemplate').get(0), 15, 15, {
+					'width': 170
+				});
+
+				doc.save('test.pdf');
 			}
 
 			/* PATIENT LOAD */

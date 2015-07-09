@@ -1,0 +1,59 @@
+<label class="un-label-popup-header-m un-bg-label-B41E46-m" ng-if="exercise.form.exercise == '' ">Add Exercise</label>
+<label class="un-label-popup-header-m un-bg-label-B41E46-m"  ng-if="exercise.form.exercise !== '' ">Edit Exercise</label>
+<div class="row">
+	<!-- NAME -->
+	<div class="col-md-6">
+		<div class="form-group">
+			<label class="un-label-form-3 un-label-whidth-130" >Exercise</label>
+			<input ng-model="exercise.form.exercise" class="form-control input-sm select-outside ng-pristine ng-valid un-input-alert-m" id="exercise" name="exercise">
+		</div>
+	</div>
+	<!-- END NAME -->
+
+	<!-- DESCRIPTION -->
+	<div class="col-md-6">
+		<div class="form-group">
+			<label class="un-label-form-3 un-label-whidth-130 un-input-alert-m">Lastest Weight</label>
+			<input ng-model="exercise.form.lastest_weight" class="form-control input-sm select-outside ng-pristine ng-valid un-input-alert-m" id="lastest_weight"></input>
+		</div>
+	</div>
+	<!-- END DESCRIPTION -->
+</div>
+
+<div class="row">
+	<!-- NAME -->
+	<div class="col-md-6">
+		<div class="form-group">
+			<label class="un-label-form-3 un-label-whidth-130" >Sets</label>
+			<input ng-model="exercise.form.sets" class="form-control input-sm select-outside ng-pristine ng-valid un-input-alert-m" id="sets">
+		</div>
+	</div>
+	<!-- END NAME -->
+
+	<!-- DESCRIPTION -->
+	<div class="col-md-6">
+		<div class="form-group">
+			<label class="un-label-form-3 un-label-whidth-130 un-input-alert-m">Reps</label>
+			<input ng-model="exercise.form.reps" class="form-control input-sm select-outside ng-pristine ng-valid un-input-alert-m" id="reps"></input>
+		</div>
+	</div>
+	<!-- END DESCRIPTION -->
+</div>
+
+<div class="row">
+	<!-- NAME -->
+	<div class="col-md-12">
+		<div class="form-group">
+			<label class="un-label-form-3 un-label-whidth-130" >Other</label>
+			<input ng-model="exercise.form.other" class="form-control input-sm select-outside ng-pristine ng-valid un-input-alert-m" id="other" style="width: 556px;">
+		</div>
+	</div>
+	<!-- END NAME -->
+
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<button class="btn pull-right un-save-m ng-scope" ng-click="exercise.save()">Save</button>
+	</div>
+</div>	

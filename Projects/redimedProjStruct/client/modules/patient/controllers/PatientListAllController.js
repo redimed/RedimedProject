@@ -1,5 +1,5 @@
 angular.module('app.loggedIn.patient.listall.controller',[])
-	.controller('PatientListAllController', function($scope, $state){
+	.controller('PatientListAllController', function(CompanyModel,$scope, $state){
 		$scope.patient_panel={};
 
 		var selectedID = null;
@@ -30,10 +30,16 @@ angular.module('app.loggedIn.patient.listall.controller',[])
                 	Sur_name: {type: 'text'},
                 	Address1: {type: 'text'},
                 	Post_code: {type: 'text'}
-                 }
+                }
 			}
 		}
 
+        $scope.actionCenter={
+            runWhenFinish:function(){
+                $scope.patientAddForm.close();
+                $scope.patient_panel.reload();
+            }
+        }
 
 		$scope.patientAddForm = {
 			params: {
@@ -52,11 +58,26 @@ angular.module('app.loggedIn.patient.listall.controller',[])
             },
             success: function (response) {
                 if (response.status == 'success')
+                    alert('okokok');
                     $scope.patient_panel.reload();
             }
         }
         $scope.rowClick = function(item){
-            $state.go("loggedIn.patient.appointment", {patient_id: item.Patient_id, cal_id: 1});
+            var postData = {
+                datetime : moment().format('YYYY-MM-DD hh:mm:ss'),
+                patient_id :item.Patient_id
+            }
+            CompanyModel.getFromTime(postData)
+            .then(function(response){
+                if (response.data == -1 ) {
+                   $state.go("loggedIn.patient.appointment", {patient_id: item.Patient_id, cal_id: -1}); 
+                }else{
+                    $state.go("loggedIn.patient.appointment", {patient_id: item.Patient_id, cal_id: response.data.CAL_ID});
+                }
+                
+            }, function(error){
+            })
+            
         }
         $scope.patientEditForm = {
 			params: {

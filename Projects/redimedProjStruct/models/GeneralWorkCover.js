@@ -46,6 +46,10 @@ module.exports = function(sequelize, DataTypes){
                     as: 'Appointment',
                     foreignKey: 'cal_id'
                 });
+                GeneralWorkCover.belongsTo(models.User, { 
+                    as: 'User',
+                    foreignKey: 'Created_by'
+                });
             }
         }
 	});

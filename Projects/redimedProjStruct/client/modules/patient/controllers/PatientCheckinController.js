@@ -1,5 +1,5 @@
 angular.module('app.loggedIn.patient.checkin.controller',[])
-	.controller('PatientCheckinController',function($scope, ConfigService, PatientService, toastr,$state){
+	.controller('PatientCheckinController',function(socket,$scope, ConfigService, PatientService, toastr,$state){
         $scope.showPatientResult = false;
         $scope.showAppointmentOfId = null;
         $scope.patient_panel={};
@@ -85,9 +85,12 @@ angular.module('app.loggedIn.patient.checkin.controller',[])
                         }},
                         {type:'button', btnlabel:'Check In', 
                             btnfn:function(item){
+                                console.log('id neeeeee',item.appointment.DOCTOR_ID);
                                 PatientService.checkIn(item.CAL_ID, item.Patient_id).then(function(result){
                                     if(result.status!=="success") toastr.error("Check-in error!", "Error");
                                     else {
+                                        socket.emit('notifyReceptionist');
+                                        socket.emit('notifyDoctor',item.appointment.DOCTOR_ID);
                                         toastr.success("Checked In!", "Success!");
                                         $scope.appointment_panel.reload();
                                     }

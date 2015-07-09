@@ -98,16 +98,20 @@ angular.module("app.loggedIn.doctor.controller", [
         {
             return "un_tn_row_violet un_tn_row_hover_violet";
         }
-        else if(status==ptnConst.apptStatus.preProgress.value){
+        else if(status==ptnConst.apptStatus.waiting.value){
             return "un_tn_row_red un_tn_row_hover_red";
         }
-        else if(status==ptnConst.apptStatus.workInProgress.value)
+        else if(status==ptnConst.apptStatus.inConsult.value)
         {
             return "un_tn_row_yellow un_tn_row_hover_yellow";
         }
         else if(status==ptnConst.apptStatus.completed.value)
         {
             return "un_tn_row_green un_tn_row_hover_green";
+        }
+        else if(status==ptnConst.apptStatus.urgent.value)
+        {
+            return "un_tn_row_red un_tn_row_hover_red";
         }
         else{
             return "un_tn_row_blank un_tn_row_hover_blank";

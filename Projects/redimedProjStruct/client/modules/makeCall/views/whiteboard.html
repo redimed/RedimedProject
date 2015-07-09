@@ -1,0 +1,19 @@
+<link href="modules/makeCall/views/call.css" rel="stylesheet" type="text/css" />
+<div ng-class="{'mouse-move': mouseMove}">
+	<div id='session' ng-class="{'session-connected': connected}">
+		<ot-layout props="{animate:true,bigFixedRatio:true}">
+			<ot-whiteboard 
+				ng-if="connected"
+		        patient="patientId"
+		        call-session="session"
+		        width="1280"
+		        height="960"
+		        color="black"
+		        lineWidth="5">	
+		    </ot-whiteboard>
+	    </ot-layout>
+    </div>
+</div>
+<script>
+    document.body.style.backgroundColor = "#3A3537";
+</script>

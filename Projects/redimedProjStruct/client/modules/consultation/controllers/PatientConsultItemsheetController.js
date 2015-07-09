@@ -1,6 +1,7 @@
 angular.module("app.loggedIn.patient.consult.itemsheetController",[])
-	.controller("PatientConsultItemsheetController",function($filter,$cookieStore,$scope,$state,$modal,toastr,$stateParams,ConsultationService,PatientService,ReceptionistService){
-		 var arrGetBy = $filter('arrGetBy');
+	.controller("PatientConsultItemsheetController",function($filter,$cookieStore,$scope,$state,$modal,toastr,$stateParams,ConsultationService,PatientService,ReceptionistService,InvoiceService){
+        alert("Controller PatientConsultItemsheetController khong con duoc du dung");
+        var arrGetBy = $filter('arrGetBy');
         $scope.appointment = {CAL_ID: $stateParams.cal_id, Patient_id:  $stateParams.patient_id};
 
         $scope.items_search_panel = {};
@@ -45,8 +46,8 @@ angular.module("app.loggedIn.patient.consult.itemsheetController",[])
                 $scope.deptItems = response.data.filter(function(item){
                     return item.clnDeptItemList.ISENABLE;
                 });
-				
-                return PatientService.getApptItems($scope.appointment.CAL_ID, $scope.appointment.Patient_id);
+				return InvoiceService.selectInvoiceLinesBySession($scope.appointment.Patient_id,$scope.appointment.CAL_ID);//tan add
+                // return PatientService.getApptItems($scope.appointment.CAL_ID, $scope.appointment.Patient_id);//tan rem
             }
         })
         // GET ITEMS OF APPT AND GET ONLY EXTRA ITEM
@@ -197,7 +198,13 @@ angular.module("app.loggedIn.patient.consult.itemsheetController",[])
             
             angular.forEach($scope.extraItems, fnInsertArr);
             
-            PatientService.saveItemSheet(insertArr).then(function(response){
+            /**
+             * tannv.dts@gmail.com
+             * Controller nay khong con duoc du dung do khong thay bat ki noi nao khai bao su dung
+             * do do frame ham ben duoi lai ma khong sua
+             * 26-05-2015
+             */
+            /*PatientService.saveItemSheet(insertArr).then(function(response){
                 console.log(response);
                 if(response.status === 'success'){
                     toastr.success('Save successfully!','Success!');
@@ -206,6 +213,6 @@ angular.module("app.loggedIn.patient.consult.itemsheetController",[])
                 else{
                     toastr.error('Save failed!','Error!');
                 }
-            });
+            });*/
         }
 	})

@@ -344,5 +344,40 @@ module.exports = {
 		}).error(function(error){
 			res.json(500, {status: 'error', error: error});
 		});
+    },
+    postCheckPatientInfo : function(req,res){
+    	var First_name=kiss.checkData(req.body.First_name)?req.body.First_name:'';
+        var Sur_name=kiss.checkData(req.body.Sur_name)?req.body.Sur_name:'';
+        var Middle_name=kiss.checkData(req.body.Middle_name)?req.body.Middle_name:'';
+        var DOB=kiss.checkData(req.body.DOB)?req.body.DOB:'';
+
+        if(!kiss.checkListData(First_name,Sur_name,DOB))
+        {
+            kiss.exlog('postCheckPatientInfo',"Loi data truyen den");
+            res.json({status:'error'});
+            return;
+        }
+
+        var sql="SELECT * FROM `cln_patients` WHERE `First_name` = ? AND `Sur_name` = ? AND `Middle_name` = ? AND `DOB` = ?";
+        
+        req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[First_name,Sur_name,Middle_name,DOB],function(err,rows)
+            {
+                if(err)
+                {
+                    kiss.exlog("add",err,query.sql);
+                    res.json({status:'error'});
+                }
+                else
+                {
+                	if (rows.length>0) {
+                    	res.json({status:'success',data:rows});    
+                	}else{
+                    	res.json({status:'fail'});    
+                	};
+                }
+            });
+        }); 
     }
 }

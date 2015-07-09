@@ -1,0 +1,49 @@
+<button ng-click="Action('new', null)" class="un-button un-bgBlack pull-right un-margin-bottom-6px">Add Correspondence</button>
+<div class="row">
+	<div class="col-lg-12">
+		<table class="mdt-table">
+			<thead>
+				<tr>
+					<th>Date</th>
+					<th>Time</th>
+					<th>Mode</th>
+					<th>Duration</th>
+					<th>who</th>
+					<th>Details</th>
+					<th>Therapist</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="cr in cor.list">
+					<td>{{ cr.Date  | date:"dd/MM/yyyy" }}</td>
+					<td>{{ cr.Time }}</td>
+					<td>{{ cr.Mode }}</td>
+					<td>{{ cr.Duration }}</td>
+					<td>{{ cr.Who }}</td>
+					<td>{{ cr.Details }}</td>
+					<td>{{ cr.Therapist }}</td>
+					<td>
+						<button class="un-button-submit-m ng-scope" ng-click="Action('update', cr.ID)">Edit</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div align="right">
+			<pagination boundary-links="true" total-items="cor.count" ng-model="cor.search.page" 
+		    class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+		    items-per-page="cor.search.limit" max-size="cor.search.max_size" ng-change="setPage(cor.search.page)">
+			</pagination>
+		</div>
+</div>
+
+<script type="text/ng-template" id="CorAdd">
+	<div class="modal-body">
+		<add-cor success="addcor.success"></add-cor>
+	</div>
+</script>
+<script type="text/ng-template" id="CorEdit">
+	<div class="modal-body">
+		<edit-cor id="editcor.id" success="editcor.success"></edit-cor>
+	</div>
+</script>

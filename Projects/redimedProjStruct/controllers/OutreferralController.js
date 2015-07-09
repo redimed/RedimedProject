@@ -31,7 +31,13 @@ module.exports = {
 
 			db.sequelize.query(service_sql)
 			.success(function(services){
-				res.json({data: rows[0].count, service: services[0]});
+				console.log('------',services);
+				if (services.length == 0) {
+					res.json({data: -1, service: -1});
+				}else{
+					res.json({data: rows[0].count, service: services[0]});
+				}
+				
 			})
 			.error(function(error){
 				res.json(500, {error: error});	
@@ -429,6 +435,22 @@ module.exports = {
 	},
 
 	postDotorFromUserId : function(req,res){
+		var postData = req.body.data;
+		var sql = knex()
+				.select('*')
+				.from('doctors')
+				.where('User_id',postData)
+				.toString();
+
+		db.sequelize.query(sql)
+		.success(function(data){
+			res.json({data: data,sql:sql});
+		})
+		.error(function(error){
+			res.json(500, {error: error,sql: sql});
+		})
+	},
+	postDotorFromDoctorId : function(req,res){
 		var postData = req.body.data;
 		var sql = knex()
 				.select('*')

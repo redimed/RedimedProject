@@ -21,42 +21,42 @@
                     <table class="responsive table table-bordered" ng-show="!list.loading">
                         <thead ng-show="list.result!==null">
                             <tr>
-                                <th>
+                                <th style="width:10%;">
                                     <div class="th">
                                         Date
                                     </div>
                                 </th>
-                                <th>
+                                <th style="width:10%;">
                                     <div class="th">
                                         Billable Time
                                     </div>
                                 </th>
-                                <th>
+                                <th style="width:10%;">
                                     <div class="th">
                                         Administration Time
                                     </div>
                                 </th>
-                                <th>
+                                <th style="width:10%;">
                                     <div class="th">
                                         Training Time
                                     </div>
                                 </th>
-                                <th>
+                                <th style="width:10%;">
                                     <div class="th">
                                         Development Time
                                     </div>
                                 </th>
-                                <th>
+                                <th style="width:10%;">
                                     <div class="th">
                                         Non-charged
                                     </div>
                                 </th>
-                                <th>
+                                <th style="width:10%;">
                                     <div class="th">
                                         Total Worked Hours
                                     </div>
                                 </th>
-                                <th>
+                                <th style="width:10%;">
                                     <div class="th">
                                     </div>
                                 </th>
@@ -64,14 +64,14 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="l in list.result " ng-class-odd="'odd'">
-                                <td style="text-align:left;font-size:13px;">{{l.date | date : 'EEE, dd MMMM yyyy'}}</td>
+                                <td style="text-align:left;font-size:13px; width:10%;">{{l.date | date : 'EEE, dd MMMM yyyy'}}</td>
                                 <td style="font-size:13px; text-align:center;">{{(l.AC[1]!==undefined && l.AC[1]!==0)?(l.AC[1] | customHours):"-"}}</td>
-                                <td style="font-size:13px; text-align:center;">{{(l.AC[2]!==undefined && l.AC[2]!==0)?(l.AC[2] | customHours):"-"}}</td>
-                                <td style="font-size:13px; text-align:center;">{{(l.AC[3]!==undefined && l.AC[3]!==0)?(l.AC[3]| customHours):"-"}}</td>
-                                <td style="font-size:13px; text-align:center;">{{(l.AC[4]!==undefined && l.AC[1]!==0)?(l.AC[4]| customHours):"-"}}</td>
-                                <td style="font-size:13px; text-align:center;">{{(l.AC[5]!==undefined && l.AC[1]!==0)?(l.AC[5]| customHours):"-"}}</td>
-                                <td style="font-size:13px; text-align:center;">{{(l.sumDATE!==undefined && l.sumDATE!==0)?(l.sumDATE | customHours):"-"}}</td>
-                                <td style="text-align:center;font-size:13px;"><a class="btn btn-xs" ng-click="ViewDetail(list.result[0].task_week_id,l.date, 'on-date')" style="font-size:13px;">View Detail</a></td>
+                                <td style="font-size:13px; text-align:center; width:10%;">{{(l.AC[2]!==undefined && l.AC[2]!==0)?(l.AC[2] | customHours):"-"}}</td>
+                                <td style="font-size:13px; text-align:center; width:10%;">{{(l.AC[3]!==undefined && l.AC[3]!==0)?(l.AC[3]| customHours):"-"}}</td>
+                                <td style="font-size:13px; text-align:center; width:10%;">{{(l.AC[4]!==undefined && l.AC[1]!==0)?(l.AC[4]| customHours):"-"}}</td>
+                                <td style="font-size:13px; text-align:center; width:10%;">{{(l.AC[5]!==undefined && l.AC[1]!==0)?(l.AC[5]| customHours):"-"}}</td>
+                                <td style="font-size:13px; text-align:center; width:10%;">{{(l.sumDATE!==undefined && l.sumDATE!==0)?(l.sumDATE | customHours):"-"}}</td>
+                                <td style="text-align:center;font-size:13px; width:10%;"><a class="btn btn-xs" ng-click="ViewDetail(list.result[0].task_week_id,l.date, 'on-date')" style="font-size:13px;">View Detail</a></td>
                             </tr>
                         </tbody>
                     </table>

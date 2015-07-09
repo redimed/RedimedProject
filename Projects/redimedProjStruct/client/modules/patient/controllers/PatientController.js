@@ -29,14 +29,16 @@ angular.module("app.loggedIn.patient.controller", [
     $scope.search.Patient_id = $scope.patient_id;
     //change bar
     $scope.patientBarVer={};
-    $scope.patientBarVer.version='full';
+    $scope.patientBarVer.version='zip';
+    // phanquocchien.c1109g@gmail.com
+    // set bar version
     $scope.$on("$stateChangeStart", function(e, toState, toParams, fromState, fromParams) {
         if(toState.name.indexOf('loggedIn.patient')>-1)
         {
-            $scope.patientBarVer.version='full';
+            $scope.patientBarVer.version='zip';
+            // $scope.patientBarVer.version='full';
         }
     })
-   
     $scope.patient_detail_modules = [
         {wrap:0,'name': 'Patient', 'color': 'blue-soft', 'desc': 'Info', 'icon': 'fa fa-user',
             'state': 'loggedIn.patient.detail'},
@@ -48,15 +50,14 @@ angular.module("app.loggedIn.patient.controller", [
             'state': 'loggedIn.patient.alert.list({patientId:' + $stateParams.patient_id + ', calId:'+$stateParams.cal_id+'})'},
         {wrap:0,'name': 'Referral', 'color': 'purple-soft', 'desc': 'Total: 0', 'icon': 'fa fa-envelope-o',
             'state': 'loggedIn.patient.outreferral.list({patientId:' + $stateParams.patient_id + ', calId:'+$stateParams.cal_id+'})'},
-        {wrap:0,'name': 'Injury Management', 'icon': 'fa fa-medkit', 'color': 'blue-soft', 'desc': '',
-            'state': 'loggedIn.patient.im_List'},
-        {wrap:0,'name': 'Consultation', 'icon': 'fa fa-user-md', 'color': 'purple-soft', 'desc': '',
+        // {wrap:1,'name': 'Injury Management', 'icon': 'fa fa-medkit', 'color': 'blue-soft', 'desc': '',
+        //     'state': 'loggedIn.patient.im_List'},
+        {wrap:1,'name': 'Consultation', 'icon': 'fa fa-user-md', 'color': 'purple-soft', 'desc': '',
             'state': 'loggedIn.patient.consult({patient_id:' + $stateParams.patient_id + ', cal_id:' +$stateParams.cal_id+ '})'},    
         {wrap:0,'name':'Problem List', 'color':'red-soft', 'icon':'fa fa-exclamation-triangle', 
             'state':'loggedIn.patient.problem_list'},
         {wrap:0,'name':'Allergy list', 'color':'green-soft', 'icon':'fa fa-exclamation-triangle', 
             'state':'loggedIn.patient.allergy.list'},
-
     ];
 
     $scope.patient_apt_modules = [
@@ -72,7 +73,7 @@ angular.module("app.loggedIn.patient.controller", [
         //     'state': 'loggedIn.patient.script'},
         // {wrap:1,'name': 'Make Referral', 'icon': 'fa fa-envelope-square', 'color': 'blue-soft', 'desc': 'Has: 0',
         //     'state': 'loggedIn.patient.referral.list'},
-        {wrap:1,'name': 'Invoices', 'icon': 'fa fa-money', 'color': 'red-soft', 'desc': 'Total: 0',
+        {wrap:0,'name': 'Invoices', 'icon': 'fa fa-money', 'color': 'red-soft', 'desc': 'Total: 0',
             'state': 'loggedIn.patient.invoices'},    
         {wrap:1,'name': 'Appointment List', 'icon': 'fa fa-repeat', 'color': 'green-soft', 'desc': 'Total: 0',
             'state': 'loggedIn.patient.appt'},
@@ -98,15 +99,17 @@ angular.module("app.loggedIn.patient.controller", [
             }
 
             $scope.current_patient.Title = parseInt($scope.current_patient.Title);
-            mdtAppointmentService.byId($scope.cal_id).then(function(response){
-                if(response.status == 'error'){
-                    toastr.error('Error Get Detail', 'Error');
-                }else{
+            if ($stateParams.cal_id != -1) {
+                mdtAppointmentService.byId($scope.cal_id).then(function(response){
+                    if(response.status == 'error'){
+                        toastr.error('Error Get Detail', 'Error');
+                    }else{
 
-                    $scope.current_patient.Site_name=response.data.site.Site_name;
-                    $scope.current_patient.FROM_TIME=response.data.FROM_TIME;
-                }
-            })
+                        $scope.current_patient.Site_name=response.data.site.Site_name;
+                        $scope.current_patient.FROM_TIME=response.data.FROM_TIME;
+                    }
+                })
+            };
         });
     }
     $scope.getPatientInfo();

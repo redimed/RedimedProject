@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.TimeSheet.ViewLeave.Directive", [])
-    .directive("viewLeave", function(TimeSheetService) {
+    .directive("viewLeave", function(TimeSheetService, $cookieStore) {
         return {
             restrict: "EA",
             required: "ngModel",
@@ -12,7 +12,11 @@ angular.module("app.loggedIn.TimeSheet.ViewLeave.Directive", [])
             link: function(scope, attrs, elem) {
                 scope.$watch("ngModel", function(newModel, oldModel) {
                     if (newModel !== undefined && newModel !== null && !(isNaN(newModel))) {
-                        TimeSheetService.ViewLeave(newModel).then(function(response) {
+                        var info = {
+                            leave_id: newModel,
+                            user_id: $cookieStore.get("userInfo").id
+                        };
+                        TimeSheetService.ViewLeave(info).then(function(response) {
                             scope.list = response;
                             if (scope.list !== undefined &&
                                 scope.list !== null &&

@@ -17,6 +17,7 @@ module.exports = function(sequelize,DataTypes){
         pickup_postcode: DataTypes.STRING(100),
         latitude: DataTypes.STRING(100),
         longitude: DataTypes.STRING(100),
+        signature: DataTypes.TEXT,
         Created_by : DataTypes.INTEGER(11) ,
         Creation_date : DataTypes.DATE ,
         Last_updated_by : DataTypes.INTEGER(11) ,

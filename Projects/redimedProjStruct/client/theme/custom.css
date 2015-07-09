@@ -24,9 +24,13 @@ a:focus {
     margin-top: 15px;
 }
 /*Toom Style*/
+.bt-label{
+    margin-top: 51px;
+    margin-left: 26px;
+}
 .un-input-m-custom{
       width: 284px !important;
-    height: 20px;
+    height: 26px;
     border: 2px solid rgb(196, 196, 196)!important;
 }
 .un-input-alert-m{
@@ -46,6 +50,7 @@ a:focus {
     margin-bottom: -2px;
 }
 .un-button-submit-m{
+    outline: 0;
     color: white;
     border-radius: 20px !important;
     border: 3px solid white;
@@ -1277,7 +1282,7 @@ table.timetable-table td:last-child {
     border-right: 1.5px solid #ddd;
     -moz-user-select: none;
     -webkit-user-select: none;
-    width: 15;
+    width: 50;
 }
 
 .odd {
@@ -1361,10 +1366,10 @@ table.timetable-table td:last-child {
 .table-div .active {
     background-color: #2BEABB;
 }
-
+/*
 .appointment {
-    overflow: auto;
-}
+    
+}*/
 
 .appointment .appointment-row {
     display: block;
@@ -1439,12 +1444,40 @@ table.timetable-table td:last-child {
     border: dashed blue 20px;
     opacity: 0.5;
 }
-
+.m-style-alert{
+      border-top-width: 5px !important;
+      border-top-style: solid;
+      border-top-color: rgb(255, 255, 255)
+}
+.bv-right-list-reception{
+    position: absolute;
+    /*padding: 10px;*/
+    right: 0;
+    top: 80px;
+    min-height: 92%;
+    width: 225px;
+    color: #000000;
+    /*background-color: #3D4A53;*/
+    background-color: rgb(205, 204, 203);
+    /*border: 1px solid rgb(173, 188, 86);*/
+    z-index: 888;
+}
+.bv-arrow-reception{
+    width: 0; 
+    height: 0; 
+    border-top: 14px solid transparent;
+    border-bottom: 14px solid transparent; 
+    z-index: 888;
+    border-right:17px solid #333332;
+    position: absolute;
+    top: 132px;
+    right: 225px;
+}
 .bv-right-list{
     position: absolute;
     /*padding: 10px;*/
     right: 0;
-    top: 102px;
+    top: 132px;
     min-height: 92%;
     width: 225px;
     color: #000000;
@@ -1467,7 +1500,7 @@ table.timetable-table td:last-child {
     z-index: 888;
     border-right:17px solid #333332;
     position: absolute;
-    top: 102px;
+    top: 132px;
     right: 225px;
 }
 
@@ -1493,9 +1526,9 @@ table.timetable-table td:last-child {
 
 /*Phan Qu?c Chiên tang dong :v*/
 .un-background{
-    background-color: rgb(37, 33, 34)!important;
+    background-color: rgb(37, 33, 34);
     position: relative;
-    margin-top: 30px;
+    margin-top: 54px;
 
 }
 .un-bg-black{
@@ -1543,21 +1576,21 @@ table.timetable-table td:last-child {
     color: rgb(112, 112, 111)!important;
     background: rgb(204, 204, 203)!important;
     margin-bottom: 0px;
-    padding: 0px 10px 0px 10px;
+    padding: 0px 5px 0px 5px;
     font-size: 12px;
 }
 .un-label-form-2{
     color: rgb(201, 201, 200)!important;
     background: rgb(78, 79, 78)!important;
     margin-bottom: 0px;
-    padding: 0px 10px 0px 10px;
+    padding: 0px 5px 0px 5px;
     font-size: 12px;
 }
 .un-label-form-3{
     color: rgb(252, 252, 252)!important;
     background: rgb(153, 153, 153)!important;
     margin-bottom: 0px;
-    padding: 0px 10px 0px 10px;
+    padding: 0px 5px 0px 5px;
     font-size: 12px;
 }
 .un-form-left{
@@ -1583,12 +1616,12 @@ table.timetable-table td:last-child {
     padding-bottom: 5px;
 }
 .un-input-custom{
-    height: 20px;
+    height: 26px;
     /*phan quoc chien edit firefox*/
     padding: 0px 0px 0px 5px !important;
 }
 .un-input-custom-1{
-    height: 20px;
+    height: 26px;
     border: 2px solid rgb(196, 196, 196)!important;
     /*phan quoc chien edit firefox*/
     padding: 0px 0px 0px 5px !important;
@@ -1617,7 +1650,7 @@ table.timetable-table td:last-child {
     background: rgb(11, 14, 47) !important;
     color: white !important;
     border: 1px solid white !important;
-    padding: 2px 50px 0px 16px !important;
+    padding: 2px 16px 0px 0px !important;
 }
 .un-checkbox::after{
     height: 13px !important;
@@ -1725,7 +1758,8 @@ table.timetable-table td:last-child {
     padding-bottom: 0px;
 }
 .un-div-p-r-30{
-    padding-right: 30px;
+    padding-left: 20px;
+    padding-right: 10px;
 }
 .un-div-p-r-5{
     padding-right: 5px;
@@ -1763,19 +1797,19 @@ table.timetable-table td:last-child {
     padding-right: 10px !important;
 }
 .un-label-isenable{
-    padding: 0 !important;
+    padding: 2px 0px 0px 0px !important;
     background: white !important;
 }
 .un-label-isenable::after{
     height: 13px !important;
     right: 12px !important;
-    top: 2px !important;
+    top: 5px !important;
     width: 13px !important;
 } 
 .un-label-isenable::before{
     height: 5px !important;
     right: 16px !important;
-    top: 6px !important;
+    top: 9px !important;
     width: 5px !important;
 }
 .un-label-whidth-85{
@@ -1783,6 +1817,9 @@ table.timetable-table td:last-child {
 }
 .un-label-whidth-97{
     width: 97px !important;
+}
+.un-label-whidth-119{
+    width: 119px !important;
 }
 .un-label-whidth-130{
     width: 130px !important;
@@ -1792,8 +1829,8 @@ table.timetable-table td:last-child {
     margin-top: -20px;
 }
 .un-select-sex{
-    width: 78%;
-    height: 20px;
+    width: 70%;
+    height: 26px;
     padding: 0px !important;
     color: black;
 }
@@ -1812,16 +1849,14 @@ table.timetable-table td:last-child {
     font-size: 16px;
     float:left;
 }
-
-.un_main_nav_item:hover{
-    background: -webkit-linear-gradient(#9F9F9F, #262626); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(#9F9F9F, #262626); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(#9F9F9F, #262626); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(#9F9F9F, #262626); /* Standard syntax */
-    color:white;
+.un_main_nav_bar>li:active>.un_main_nav_item{
+    background: -webkit-linear-gradient(#9F9F9F, #262626) !important; /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#9F9F9F, #262626) !important; /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#9F9F9F, #262626) !important; /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#9F9F9F, #262626) !important; /* Standard syntax */
+    color: white !important;
 }
-
-.un_main_nav_item:active{
+.un_main_nav_item:hover{
     background: -webkit-linear-gradient(#9F9F9F, #262626); /* For Safari 5.1 to 6.0 */
     background: -o-linear-gradient(#9F9F9F, #262626); /* For Opera 11.1 to 12.0 */
     background: -moz-linear-gradient(#9F9F9F, #262626); /* For Firefox 3.6 to 15 */
@@ -1834,13 +1869,6 @@ table.timetable-table td:last-child {
     text-decoration: none;
 }
 
-.un_main_nav_item a::active un_main_nav_item{
-    background: -webkit-linear-gradient(#9F9F9F, #262626); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(#9F9F9F, #262626); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(#9F9F9F, #262626); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(#9F9F9F, #262626); /* Standard syntax */
-    color:white;
-}
 .un_main_nav_item:hover a{
     color: white;
     text-decoration: none;
@@ -1952,7 +1980,7 @@ nav bar begin*/
     float: right;
     width: 100%;
     /*chien edit*/
-    border-bottom: 20px solid #0F1030;
+    /*border-bottom: 20px solid #0F1030;*/
 }
 
 .un_main_nav_bar {
@@ -2058,7 +2086,7 @@ nav bar end*/
     padding-top: 0px !important;
 }
 .un-padding-bottom-10{
-    padding-bottom: 10px;
+    padding-bottom: 10px !important;
 }
  /*chien edit*/
 .un-padding-left-right-20-top-15-bottom-10{
@@ -2075,6 +2103,15 @@ nav bar end*/
 }
 .un-padding-left-10{
     padding-left: 10px;
+}
+.un-padding-right-10{
+    padding-right: 10px;
+}
+.un-padding-left-0{
+    padding-left: 0px;
+}
+.un-padding-left-5{
+    padding-left: 5px !important;
 }
 .un-padding-15{
     padding: 15px 15px 15px 15px;
@@ -2247,7 +2284,7 @@ label{
     margin-right: 20px;
 }
 .un-btn-black-label{
-    height: 25px !important;
+    height: 26px !important;
     padding: 0px 10px 0px 10px !important;
     background: rgb(49, 50, 50)!important;
     color: white !important;
@@ -2259,7 +2296,7 @@ label{
     color: white !important;
 }
 .un-input-xam-fig{
-    height: 25px !important;
+    height: 26px !important;
     background: rgb(102, 102, 102)!important;
     border: none !important;
     padding: 3px 5px 3px 5px !important;
@@ -2398,6 +2435,9 @@ label{
 .un-modal-body{
     position: relative;
     padding: 15px;
+}
+.un_padding_bottom_15{
+    padding-bottom: 15px;
 }
 /**
  * body content right css end
@@ -2572,6 +2612,7 @@ label{
     height: 40px;
     position: absolute;
     top: 8;
+    left: 7;
     width: 200px;
     vertical-align: middle;
     text-align: center;
@@ -2935,7 +2976,7 @@ label{
   position: relative;
   background: #ddd;
   background-image: linear-gradient(to bottom, #fff, #ddd);  
-  padding: .7em 3.5em;
+  padding: .7em 0.6em;
   float: left;
   text-decoration: none;
   color: #444;
@@ -3086,7 +3127,40 @@ label{
     float:right;
     outline: none;
 }
-
+.edit_sub_menu:hover{
+   width: 122.5% ;
+}
+.edit_sub_menu{
+   width: 122.5% ;
+}
+.edit_sub_menu2_change {
+    width:250px !important;
+    margin-top: -0.5% !important;
+}
+.edit_sub_menu2_not_change {
+    width:250px !important; 
+    position: absolute; 
+    margin-top: -29% !important;
+}
+.change_menus {
+    width: 80%;
+}
+.span_menus {
+    margin-top:-2% !important;
+    margin-left:38px;
+    font-size:10px; 
+    float:left;
+}
+.span_title{
+    margin-top:-15% !important; 
+    margin-left:38px;
+}
+.menu_change1{
+    margin-top: -29% !important;
+}
+.menu_change2{
+    margin-top: -0.5% !important;
+}
 /*giang css end*/
 /* END VUONG */
 /*TAN NAV ITEM DROPDOWN END*/
@@ -3102,6 +3176,11 @@ label{
 }
 .un-button:hover{
     text-decoration: none;
+    color: white;
+}
+.un-button:focus{
+    text-decoration: none;
+    color: white;
 }
 .un-popup-config{
     top: 50px !important;
@@ -3147,6 +3226,10 @@ label{
 
 .un_tn_panel_white{
     background-color: #F6F6F6!important;
+}
+
+.un_tn_panel_whiteness{
+    background-color: #FFFFFF!important;
 }
 
 /*bo tri label tren panel*/
@@ -3209,6 +3292,7 @@ label{
     margin-right:5px;
     font-size: 15px;
     font-weight: bold;
+    outline: 0;
 }
 
 .un_tn_btn_rect{
@@ -3221,19 +3305,23 @@ label{
 .un_tn_btn_gray{
     color: white;
     background: rgb(102, 102, 102) !important;
+    outline: 0;
 }
 /*mau cho button*/
 .un_tn_btn_pink{
     color: white;
     background: #B41E46 !important;
+    outline: 0;
 }
 .un_tn_btn_black{
     color: white;
     background: #525252 !important;
+    outline: 0;
 }
 .un_tn_btn_orange{
     color: white;
     background: #F37A21 !important;
+    outline: 0;
 }
 
 .un_tn_btn_lg{/*tannv.dts@gmail.com add*/
@@ -3246,13 +3334,30 @@ label{
 
 .un_tn_btn_sm{
     font-size: 10px;
+    line-height: 14px;
 }
 
 .un_tn_btn_zip{
-    padding-left:3px;
-    padding-right:3px;
+    padding-left:10px;
+    padding-right:10px;
 }
 
+/**
+ * button search ke ben inputtext
+ */
+.un_tn_btn_side{
+    height: 25.5px;/*tan change 25.5*/
+    /*width:20px;*/
+    padding:0px;
+    border:none;
+    position:relative;
+    z-index: 2;
+    left:-1;
+}
+.un_tn_btn_side_gray{
+    color: black!important;
+    background-color: rgb(197, 197, 197)!important;
+}
 
 .un_tn_txt_notify{
     /*border-radius: 20px !important;*/
@@ -3287,7 +3392,7 @@ label{
 
 /*style cho input form*/
 .un_tn_form_control{
-    height: 20px;
+    height: 26px;
     padding: 0px 0px 0px 5px !important;
 }
 .un_tn_form_control_gray{
@@ -3470,6 +3575,21 @@ label{
 .un_tn_legend_node_blank{
     border:1px solid #333333;
 }
+
+.un_tn_asterisk{
+    color:red;
+    font-size: 15px;
+}
+
+.un_tn_table_row_border_red td{
+    border-top:1px solid #900000;
+    border-right:1px solid #900000;
+    border-bottom:1px solid #900000;
+}
+
+.un_tn_table_row_zip td{
+    padding:0px;
+}
 /*---------------------------------------------*/
 /*---------------------------------------------*/
 /*TAN PANEL DEFINITION END*/
@@ -3575,6 +3695,9 @@ label{
 .pt_padding_right_0{
     padding-right: 0px !important;
 }
+.pt_padding_right_20{
+    padding-right: 20px !important;
+}
 .pt_background_image{
     background-image: url(../theme/un/bonha_21.png) !important;
 }
@@ -3623,9 +3746,6 @@ label{
 .pt_width_100{
     width: 100% !important;
 }
-.pt_padding_right_0{
-    padding-right: 0px !important;
-}
 .pt_padding_left_0{
     padding-left: 0px !important;
 }
@@ -3636,7 +3756,7 @@ label{
 .pt_submit{
     margin: auto;
     float: none;
-    padding-top: 19px;
+    padding-top: 18px;
 }
 .pt_font_size_13{
     font-size: 13px;
@@ -3689,7 +3809,187 @@ label{
     background: linear-gradient(to bottom, #F8F8F8 0%,#979797 100%);
     border-top-left-radius: 8px !important;
     border-bottom-left-radius: 8px !important;
-    border-color: rgb(190, 190, 190)!important
+    border-color: rgb(190, 190, 190)!important;
+}
+.re_bg_info{
+    margin-top: 5px;
+    background: linear-gradient(to bottom, #FFF 0%,#DBEFFF 100%);
+    color: #006666 !important;
+    border: 1px solid #B1B1B2 !important;
+    border-radius: 5px !important;
+    -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+
+}
+.re_margin_bottom_5{
+    margin-bottom: 5px !important;
+}
+.re_portlet_title{
+    min-height: 0px !important;
+    background-color: #ccc;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    margin-bottom: 5px !important;
+    font-size: 10px !important;
+}
+.re_booking{
+    /*background-color: rgb(244, 123, 33) !important;*/
+    color: white !important;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+}
+.re_buttom_sreach{
+    background: linear-gradient(to bottom, #F8F8F8 0%,#979797 100%);
+    border-top-right-radius: 8px !important;
+    border-bottom-right-radius: 8px !important;
+    border:1px solid rgb(190, 190, 190)!important;
+    width: 12%;
+    margin-left: 0px;
+    height: 34px;
+    outline: 0;
+}
+.re_bg_white{
+    background-color: white;
+}
+.un_bg_attach_files{
+    border-left: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    padding: 20px;
+}
+.un_header_attach_file{
+    color: black;
+    background-color: white;
+}
+.un_header_attach_file:hover{
+    border-left: 1px solid #ddd !important;
+    border-right: 1px solid #ddd !important;
+}
+.un_header_attach_file:focus{
+    border-left: 1px solid #ddd !important;
+    border-right: 1px solid #ddd !important;
+    border-top: 3px solid #f3565d !important;
+    color: black !important;
+    font-weight: bold !important;
+}
+.nav-tabs>li.active>.un_header_attach_file{
+    border-left: 1px solid #ddd !important;
+    border-right: 1px solid #ddd !important;
+    border-top: 3px solid #f3565d !important;
+    color: black !important;
+    font-weight: bold !important;
+}
+.un_header_attach_file:active{
+    border-left: 1px solid #ddd !important;
+    border-right: 1px solid #ddd !important;
+    border-top: 3px solid #f3565d !important;
+    color: black !important;
+    font-weight: bold !important;
+}
+.un_boder_bottom_none{
+    border-bottom: none !important;
+}
+.un_img_width_100{
+    width: 100%;
+}
+.un_padding_right_5{
+    padding-right: 5px;
+}
+.un_padding_left_5{
+    padding-left: 5px;
+}
+.un_tab_concultation{
+    border-bottom: none;
+}
+.un_tab_concultation_bottom{
+    color: white !important;
+    padding: 5px 20px !important;
+    border-radius: 20px !important;
+    border-radius: 20px !important;
+    border: 3px solid white !important;
+    background: black;
+    font-weight: bold;
+}
+.un_tab_concultation_bottom:hover{
+    color: white !important;
+    padding: 5px 20px !important;
+    border-radius: 20px !important;
+    border-radius: 20px !important;
+    border: 3px solid white !important;
+    background: black !important;
+    font-weight: bold;
+}
+.un_tab_concultation_bottom:focus{
+    color: white !important;
+    padding: 5px 20px !important;
+    border-radius: 20px !important;
+    border-radius: 20px !important;
+    border: 3px solid white !important;
+    background: black !important;
+    font-weight: bold;
+}
+.un_tab_concultation>li.active>.un_tab_concultation_bottom{
+    color: white !important;
+    background: rgb(102, 102, 102) !important;
+    font-weight: bold;
+}.un_table_tab_config{
+    position: initial;
+    margin-bottom: 0 ;
+    text-transform: none;
+}
+.un_table_tab_bg{
+    background-color: #808285 !important;
+}
+.un_label_popup_history{
+    background-color: #EEEEEE;
+    width: 100%;
+}
+.un_overflow_auto{
+    overflow: auto;
+}  
+.un_box_shadow{
+    box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+.un_header_notification_list{
+    background-color: white;
+    padding: 10px 0px 10px 0px;
+}
+.un_header_notification_list label{
+    color: white;
+    background: black;
+    font-weight: bold;
+    font-size: 19px;
+    margin-bottom: 0px;
+    padding: 0px 35px 0px 35px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+
+}
+.un_header_notification_list i{
+    font-size: 47px;
+    position: absolute;
+    top: 16px;
+    right: 14px;
+}
+.un_body_notification_list{
+    border-bottom: 1px dotted black;
+    padding-top: 10px;
+}
+.un_body_notification_list div{
+    padding: 0px 10px 0px 10px;
+    background-color: #E7E7E7;
+    color: #6490C1;
+}
+.un_arrow {
+    width: 0;
+    height: 0;
+    border-top: 27px solid transparent;
+    border-bottom: 0px solid transparent;
+    z-index: 888;
+    border-right: 20px solid black;
+    position: absolute;
+    top: 142px;
+    right: 225px;
 }
 /*phanquocchien patient end*/
 
@@ -3702,3 +4002,27 @@ label{
     outline: 0;
     background-color: transparent;
 }
+
+.wysiwyg-plugin-list {
+    max-height: 16em;
+    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+.wysiwyg-plugin-list a,
+.wysiwyg-plugin-list a:link,
+.wysiwyg-plugin-list a:visited {
+    display: block;
+    color: black;
+    padding: 5px 10px;
+    text-decoration: none;
+    cursor: pointer;
+}
+.wysiwyg-plugin-list a:hover {
+    color: HighlightText;
+    background-color: Highlight;
+}
+
+
+
+

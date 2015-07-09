@@ -1,5 +1,5 @@
 angular.module("app.calendar.mobile.controller",[])
-.controller('rlobCalendarMobileMasterController',function($modal,$scope,toastr,$http,$stateParams,Mailto,$cookieStore,$window,rlobService,$timeout,ConfigService,$state){
+.controller('rlobCalendarMobileMasterController',function(socket,$modal,$scope,toastr,$http,$stateParams,Mailto,$cookieStore,$window,rlobService,$timeout,ConfigService,$state){
 	$scope.loginInfo = $cookieStore.get('userInfo');
 
     //-------------------------------------------------------------
@@ -18,7 +18,10 @@ angular.module("app.calendar.mobile.controller",[])
         dateFormat: "dd/mm/yy",
         onSelect: function(date) {
             $scope.selectedFilter.var1 = date;
+            console.log($scope.selectedFilter.var1)
             $scope.updateAppoinmentsList();
+            $scope.getLocationsFilter();
+            $scope.getDoctorsFilter();
         }
      });
     //---------------------------------------------------------------------------
@@ -26,50 +29,24 @@ angular.module("app.calendar.mobile.controller",[])
     //Get all location for select
     $scope.getLocationsFilter=function()
     {
-        $http({
-            method:"GET",
-            url:"/api/rlob/redimedsites/list",
-            params:{bookingType:$scope.bookingType}
+        var date = new Date(moment($scope.selectedFilter.var1, "DD-MM-YYYY HH:mm Z"));
+        rlobService.ListLocationMobile(date).then(function(data){
+            if (data.status == 'success') {
+                $scope.locationsFilter=data.data;
+            };
         })
-            .success(function(data) {
-                $scope.locationsFilter=data;
-            })
-            .error(function (data) {
-                console.log("error");
-            })
-            .finally(function() {
-            });
     }
     $scope.getLocationsFilter();
 
     //Get all Doctors of specialtity
     $scope.getDoctorsFilter=function()
     {
-
-        $http({
-            method:"GET",
-            url:"/api/rlob/doctors/get-doctors-for-source-type",
-            params:{sourceType:$scope.bookingType}
+        var date = new Date(moment($scope.selectedFilter.var1, "DD-MM-YYYY HH:mm Z"));
+        rlobService.ListDoctorMobile(date).then(function(data){
+            if (data.status == 'success') {
+                $scope.doctorsFilter=data.data;
+            };
         })
-            .success(function(data) {
-                if(data.status=='success')
-                    $scope.doctorsFilter=data.data;
-
-                //if Vaccination
-
-                if($scope.bookingType=='Vaccination')
-                {
-                    $scope.selectedFilter.doctorSelected=$scope.doctorsFilter[0];
-                    $scope.updateAppoinmentsList();
-
-                }
-            })
-            .error(function (data) {
-                console.log("error");
-            })
-            .finally(function() {
-
-            });
     }
     $scope.getDoctorsFilter();
 
@@ -164,10 +141,8 @@ angular.module("app.calendar.mobile.controller",[])
     {
         $scope.selectedAppointmentCalendar=appointmentCalendar;
         $scope.CAL_ID = appointmentCalendar.CAL_ID;
-        console.log($scope.selectedAppointmentCalendar);
         $scope.updateAppoinmentsList();
         selectCalendar = $scope.selectedAppointmentCalendar;
-        console.log('ne',selectCalendar);
     } 
     $scope.submitCalendar = function(){
         if ($scope.patientInfoCalendar.Patient_id) {
@@ -175,6 +150,8 @@ angular.module("app.calendar.mobile.controller",[])
                 console.log("hehe",selectCalendar);
                 rlobService.addApptPatient($scope.patientInfoCalendar.Patient_id,$scope.selectedAppointmentCalendar.CAL_ID).then(function(data){
                     if (data.status == 'success') {
+                        socket.emit('notifyReceptionist');
+                        socket.emit('notifyDoctor',selectCalendar.DOCTOR_ID);
                         var modalInstance = $modal.open({
                             templateUrl: 'notifyid',
                             controller: function($scope, $modalInstance,$state){

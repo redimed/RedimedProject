@@ -22,12 +22,12 @@
 	<div class="row">
 		<div class="col-md-6 col-sm-6 col-xs-6">
 			<span class="field">
-				<label for="From">From</label>
+				<label for="From">Date of injury/illness</label>
 	           	<input ui-date="{dateFormat: 'dd/mm/yy'}" readonly="readonly" placeholder="From" name="from_date" ng-model="modelObjectMap.From_date" class="form-control" id="from_date" float-label required>
 	           	<!-- ERROR -->
 	            <span ng-show="mainForm.from_date.$invalid && isSubmit">
 	                <span class="mdt-popover above" ng-show="mainForm.from_date.$error.required">
-	                    From date is required
+	                    Date of injury/illness is required
 	                </span>
 	            </span>
 	            <!-- ERROR -->

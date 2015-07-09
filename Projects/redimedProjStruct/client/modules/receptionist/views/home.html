@@ -18,50 +18,81 @@
 	}
 
 </style>
+<div id="alert-center" class="bv-right-list-reception un_box_shadow">
+    <div class="un_header_notification_list">
+        <label>Notification List</label><i class="fa fa-caret-right"></i>
+    </div>
+    <div class="un_body_notification_list" ng-repeat="list in alertCenter.list" ng-if="list.test !== 0 || list.alert.length !== 0">
+    	<div>
+    		<label ng-if="list.alert.length > 0 || list.cal.length > 0" style="font-size: 16px;font-weight: bold;">
+            {{list.First_name}} {{list.Sur_name}}
+	        </label>
+	        <ul ng-repeat="alert in list.alert" ng-if="list.alert.length > 0">
+	            <li>{{alert.name}}</li>
+	        </ul>
+	        <p ng-repeat="cal in list.cal" ng-if="list.cal.length > 0 && list.test === 1">
+	            <span ng-if="cal.IS_REFERRAL && cal.OUTREFERRAL === 'no'" style="margin-left: 10px;">
+	                {{cal.FROM_TIME}}-{{cal.TO_TIME}}:&nbsp
+	                There is no referral
+	            </span>
+	        </p>
+    	</div>
+    </div>
+</div>
+<div class="un_arrow" ng-click="clickArrow()" style="top:90px"></div>
 <div class="row">
 	<div class="col-md-4 col-sm-4">
-		<span class=" pull-right" style="font-size: 20px">Site:</span>
-	</div>
-	<div class="col-md-4 col-sm-4">
-		<select ng-model="apptSite" class="form-control re_bg_seach" 
+
+		<select style="width: 87%;float: left;" ng-model="apptSite" class="form-control re_bg_seach" 
 				ng-options="site.id as site.Site_name for site in siteList"
 				ng-change="getAppointment()">
 			<option value="">--Choose Site--</option>
 		</select>
+		<button class="re_buttom_sreach">
+			<i style="font-size: 20px;" class="fa fa-search"></i>
+		</button>
+	</div>
+	<div class="col-md-6">
+		<p ng-repeat="service in servicedata" ng-if="servicedata.length > 0" class="inline">
+			<button ng-style="{'background-color': '{{service.SERVICE_COLOR}}'}" style="height: 20px;width: 20px;"></button>
+			<span> {{service.SERVICE_NAME}}  </span>
+		<p>
 	</div>
 </div>
 <br/>
 <div class="row">
-	<div class="col-md-4 col-sm-4 col-lg-4">
-		<div class="portlet blue-hoki box re_boder_none">
+	<div class="col-md-6 col-sm-6 col-lg-6">
+		<div class="portlet re_bg_white box re_boder_none">
 	        <div class="portlet-title re_bg_color_E0EFFF" >
 	            <div class="caption ">
-	                <span class="caption-subject re_color_005A59">Upcoming</span>
+	                <span class="caption-subject re_color_005A59 bold">Upcoming</span>
 	            </div>
 	        </div>
-	        <div class="portlet-body">
-	        	<div ng-if="upcomingAppt.length == 0">
+	        <div class="portlet-body re_padding_0">
+	        	<div style="padding: 10px;" ng-if="upcomingAppt.length == 0 && injuryAppt.length == 0">
 	        		<div style="text-align: center;">
                         <span style="font-size: 15px; font-style: italic;font-weight: bold;">      
                             Empty Data
                         </span>
                     </div>
 	        	</div>
-           		<div ng-if="upcomingAppt.length > 0" style="margin-bottom: 0px !important; margin-top: 0px ! important;" class="portlet" ng-repeat="appt in upcomingAppt">
-           			<div class="portlet-title" style="min-height: 0px !important;">
+           		<div ng-if="upcomingAppt.length > 0" style="margin-bottom: 0px !important; margin-top: 5px ! important;" class="portlet" >
+           			<div class="portlet-title re_portlet_title" style="min-height: 0px !important;">
            				<div class="caption">
-           					<span class="caption-subject">
-       							{{appt.time | moment: 'utc' | moment: 'format': 'hh:mm A'}}
+           					<span style="font-size: 15px;" class="caption-subject">
+       							Appointment
    							</span>
            				</div>
            				<div class="tools">
-           					<a href="javascript:;" class="collapse"></a>
+           					<a style="font-size: 15px;" href="javascript:;" class="collapse"></a>
            				</div>
            			</div>
+           			
            			<div class="portlet-body">
-       					<div style="color: black; border-color: #7FA8CB; cursor: pointer;" 
-       						class="well appt-profile" 
-       						ng-repeat="a in appt.appointment"
+       					<div ng-style="{background:a.SERVICE_COLOR}" 
+       						style="color: black; border-color: #7FA8CB; cursor: pointer;" 
+       						class="re_bg_info appt-profile col-md-6 col-sm-6" 
+       						ng-repeat="a in upcomingAppt"
        						data-drag="{{a.appt_status != 'Cancelled' ? true : false}}" 
        						data-jqyoui-options="{revert: 'invalid'}" 
        						jqyoui-draggable="{ animate:true, onStart: 'dragAppt(a)'}">
@@ -69,9 +100,12 @@
        							<kiss-timer start-session-time="a.checkedin_start_time" return-value="timerDisplay"></kiss-timer>
        							<div class="corner" dropdown>
        								<span class="dropdown-toggle" data-toggle>
-	       								<i class="glyphicon glyphicon-collapse-down"></i>
+	       								<i style="color:black" class="fa fa-caret-down"></i>
 	       							</span>
 	       							<ul ng-if="a.appt_status != 'Cancelled'" class="dropdown-menu" role="menu">
+	       								<li>
+									    	<a ui-sref="loggedIn.patient.consult({patient_id: a.Patient_id, cal_id: a.CAL_ID})" href="javascript:;">Details</a>
+								    	</li>
 	       								<li ng-if="a.appt_status == 'Booking'">
 									    	<a ng-click="changeAppt(a,'checked')" href="javascript:;">Checked In</a>
 								    	</li>
@@ -85,8 +119,8 @@
    									<img width="100%" height="100%" class="img-circle" ng-src="{{(a.avatar == null || a.avatar == '') ? 'theme/assets/icon.png' : a.avatar}}">
 			                    </div>
 			                    <div class="media-body">
-			                    	<h4 style="font-size: 21px;" class="media-heading">{{a.patient_name}}{{a.appt_status == 'Checked In' ?' - '+timerDisplay : ''}}</h4>
-			                    	<div class="row">
+			                    	<span style="font-size: 15px;" class="media-heading bold">{{a.patient_name}}{{a.appt_status == 'Checked In' ?' - '+timerDisplay : ''}}</span>
+			                    	<div class="row" style="font-size: 10px;color: #585757;">
 			                    		<span class="col-md-6 col-sm-6">
 				                    		<i class="fa fa-calendar"></i>
 				                    		{{(a.DOB == null ? 'N/A' : a.DOB) | date:'dd/MM/yyyy'}}
@@ -96,22 +130,28 @@
 				                    		{{a.Company_name == null ? 'N/A' : a.Company_name}}
 				                    	</span>
 			                    	</div>
-			                    	<div class="row" style="margin-top: 10px;">
+			                    	<div class="row" style="font-size: 10px;color: #585757;">
 			                    		<span class="col-md-6 col-sm-6">
 			                    			<i class="fa fa-user-md"></i>
 				                    		{{a.doctor_name == null ? 'N/A' : a.doctor_name}}
 			                    		</span>
 				                    	<span class="col-md-6 col-sm-6 ">
-				                    		<label ng-if="a.appt_status == 'Checked In'" class="label label-md label-success ">
+				                    		<span class="re_booking label-success" ng-if="a.appt_status == 'Checked In'">
 				                    			{{a.appt_status}}
-			                    			</label>
-			                    			<label ng-if="a.appt_status == 'Cancelled'" class="label label-md label-danger ">
+			                    			</span>
+			                    			<span class="re_booking label-danger" ng-if="a.appt_status == 'Cancelled'">
 				                    			{{a.appt_status}}
-			                    			</label>
-			                    			<label ng-if="a.appt_status == 'Booking'" class="label label-md label-warning ">
+			                    			</span>
+			                    			<span class="re_booking label-warning" ng-if="a.appt_status == 'Booking'" >
 				                    			{{a.appt_status}}
-			                    			</label>
+			                    			</span>
 				                    	</span>
+			                    	</div>
+			                    	<div class="row" style="font-size: 10px;color: #585757;">
+			                    		<span class="col-md-12 col-sm-12">
+			                    			<i class="fa fa-clock-o"></i>
+				                    		<span style="color: rgb(0, 102, 102);" class="bold">{{a.FROM_TIME | moment: 'utc' | moment: 'format': 'DD/MM/YYYY - hh:mm A'}}</span>
+			                    		</span>
 			                    	</div>
 			                    </div>
        						</div>
@@ -119,14 +159,83 @@
        					
            			</div>
            		</div>
+           		<div ng-if="injuryAppt.length > 0" style="margin-bottom: 0px !important; margin-top: 5px ! important;" class="portlet" >
+           			<div class="portlet-title re_portlet_title" style="min-height: 0px !important;">
+           				<div class="caption">
+           					<span style="font-size: 15px;" class="caption-subject">
+       							Emergency
+   							</span>
+           				</div>
+           				<div class="tools">
+           					<a style="font-size: 15px;" href="javascript:;" class="collapse"></a>
+           				</div>
+           			</div>
+           			
+           			<div class="portlet-body">
+	   					<div style="color: white !important; border-color: #7FA8CB; cursor: pointer;"
+							ng-style="{background:a.SERVICE_COLOR}"  
+	   						class="re_bg_info appt-profile col-md-6 col-sm-6" 
+	   						ng-repeat="a in injuryAppt"
+	   						data-drag="{{a.appt_status != 'Cancelled' ? true : false}}" 
+	   						data-jqyoui-options="{revert: 'invalid'}" 
+	   						jqyoui-draggable="{ animate:true, onStart: 'dragAppt(a)'}">
+	   						<div class="media">
+	   							<div class="corner" dropdown>
+	   								<span class="dropdown-toggle" data-toggle>
+	       								<i style="color:black" class="fa fa-caret-down"></i>
+	       							</span>
+	       							<ul ng-if="a.appt_status != 'Cancelled'" class="dropdown-menu" role="menu">
+	       								<li>
+									    	<a ui-sref="loggedIn.patient.consult({patient_id: a.Patient_id, cal_id: a.CAL_ID})" href="javascript:;">Details</a>
+								    	</li>
+									</ul>
+	   							</div>
+	   							
+	   							<div style="width: 50px; height: 50px;" class="pull-left">
+										<img width="100%" height="100%" class="img-circle" ng-src="{{(a.avatar == null || a.avatar == '') ? 'theme/assets/icon.png' : a.avatar}}">
+			                    </div>
+			                    <div class="media-body">
+			                    	<span style="font-size: 15px;" class="media-heading bold">{{a.patient_name}}</span>
+			                    	<div class="row" style="font-size: 10px;color: white;">
+			                    		<span class="col-md-6 col-sm-6">
+				                    		<i class="fa fa-calendar"></i>
+				                    		{{(a.DOB == null ? 'N/A' : a.DOB) | date:'dd/MM/yyyy'}}
+				                    	</span>
+				                    	<span class="col-md-6 col-sm-6">
+				                    		<i class="fa fa-building-o"></i>
+				                    		{{a.Company_name == null ? 'N/A' : a.Company_name}}
+				                    	</span>
+			                    	</div>
+			                    	<div class="row" style="font-size: 10px;color: white;">
+			                    		<span class="col-md-6 col-sm-6">
+			                    			<i class="fa fa-user-md"></i>
+				                    		{{a.doctor_name == null ? 'N/A' : a.doctor_name}}
+			                    		</span>
+				                    	<span class="col-md-6 col-sm-6 ">
+			                    			<span class="re_booking label-danger">
+				                    			{{a.appt_status}}
+			                    			</span>
+				                    	</span>
+			                    	</div>
+			                    	<div class="row" style="font-size: 10px;color: white;">
+			                    		<span class="col-md-12 col-sm-12">
+			                    			<i class="fa fa-clock-o"></i>
+				                    		<span style="color: white;" class="bold">{{a.Creation_date | moment: 'format': 'DD/MM/YYYY - hh:mm A'}}</span>
+			                    		</span>
+			                    	</div>
+			                    </div>
+	   						</div>
+	   					</div>
+   					</div>
+           		</div>
 	        </div>
         </div>
 	</div>
-	<div class="col-md-4 col-sm-4 col-lg-4">
+	<div class="col-md-3 col-sm-3 col-lg-3">
 		<div class="portlet blue-hoki box re_boder_none">
 	        <div class="portlet-title re_bg_color_E0EFFF">
 	            <div class="caption">
-	                <span class="caption-subject re_color_005A59">In Progress</span>
+	                <span class="caption-subject re_color_005A59 bold">In Consult</span>
 	            </div>
 	            <div class="actions">
 	            	<button class="btn btn-md grey" ng-click="undoAction()" ng-disabled="undoArr.length == 0">
@@ -134,83 +243,101 @@
 	            	</button>
 	            </div>
 	        </div>
-	        <div class="portlet-body">
-	        	<div ng-if="progressAppt.length == 0 && doctors.length == 0">
+	        <div class="portlet-body re_padding_0">
+	        	<div style="padding: 10px;" ng-if="progressAppt.length == 0 && doctors.length == 0">
 	        		<div style="text-align: center;">
                         <span style="font-size: 15px; font-style: italic; font-weight: bold;">      
                             Empty Data
                         </span>
                     </div>
 	        	</div>
-           		<div ng-if="progressAppt.length > 0" style="margin-bottom: 0px !important;margin-top: 0px ! important;" class="portlet" ng-repeat="appt in progressAppt">
-           			<div class="portlet-title" style="min-height: 0px !important;">
+           		<div ng-if="progressAppt.length > 0" style="margin-bottom: 0px !important;margin-top: 0px ! important;" class="portlet" ng-repeat="appt in progressAppt" >
+           			<div class="portlet-title re_portlet_title" style="min-height: 0px !important;">
            				<div class="caption">
-           					<span class="caption-subject">
+           					<span style="font-size: 15px;" class="caption-subject">
        							{{appt.doctor}}
    							</span>
            				</div>
            				<div class="tools">
-           					<a href="javascript:;" class="collapse"></a>
+           					<a style="font-size: 15px;" href="javascript:;" class="collapse"></a>
            				</div>
            			</div>
            			<div class="portlet-body">
-       					<div style=" color: black; border-color: #7FA8CB" 
-       						class="well appt-profile" ng-repeat="a in appt.appointment">
-       						<div class="media">
-       							<div style="width: 50px; height: 50px;border-radius: 5px !important;" class="pull-left">
-   									<img width="100%" height="100%" class="img-circle" ng-src="{{(a.avatar == null || a.avatar == '') ? 'theme/assets/icon.png' : a.avatar}}">
-			                    </div>
-			                    <div class="media-body">
-			                    	<h4 style="font-size: 21px;" class="media-heading">{{a.patient_name}}</h4>
-			                    	<div class="row">
-			                    		<span class="col-md-6 col-sm-6">
-				                    		<i class="fa fa-calendar"></i>
-				                    		{{(a.DOB == null ? 'N/A' : a.DOB) | date:'dd/MM/yyyy'}}
-				                    	</span>
-			                    		<span class="col-md-6 col-sm-6">
-				                    		<i class="fa fa-building-o"></i>
-				                    		{{a.Company_name == null ? 'N/A' : a.Company_name}}
-				                    	</span>
-			                    	</div>
-			                    	<div class="row" style="margin-top: 10px;">
-			                    		<span class="col-md-6 col-sm-6">
-			                    			<i class="fa fa-clock-o"></i>
-				                    		{{a.FROM_TIME | moment: 'utc' | moment: 'format': 'hh:mm:ss A'}}
-			                    		</span>
-			                    		<span class="col-md-6 col-sm-6 ">
-			                    			<label ng-if="a.appt_status == 'Pre-progress'" class="label label-md label-success ">
-				                    			{{a.appt_status}}
-			                    			</label>
-			                    			<label ng-if="a.appt_status == 'Work In Progress'" class="label label-md label-warning ">
-				                    			{{a.appt_status}}
-			                    			</label>
-				                    	</span>
-			                    	</div>
-			                    </div>
-       						</div>
-       					</div>
+           				<div ng-repeat="a in appt.appointment" >
+	       					<div ng-style="{background:a.SERVICE_COLOR}" 
+	       					    style=" color: black; border-color: #7FA8CB" 
+	       						class="re_bg_info appt-profile" ng-if="!a.isEmpty && a.numsOfRoom > 0">
+	       						<div class="media">
+	       							<div style="width: 50px; height: 50px;border-radius: 5px !important;" class="pull-left">
+	   									<img width="100%" height="100%" class="img-circle" ng-src="{{(a.avatar == null || a.avatar == '') ? 'theme/assets/icon.png' : a.avatar}}">
+				                    </div>
+				                    <div class="media-body">
+				                    	<span style="font-size: 15px;" class="media-heading bold" ui-sref="loggedIn.patient.consult({patient_id: a.Patient_id, cal_id: a.CAL_ID})">{{a.patient_name}}</span>
+				                    	<div class="row" style="font-size: 10px;color: #585757;">
+				                    		<span class="col-md-6 col-sm-6">
+					                    		<i class="fa fa-calendar"></i>
+					                    		{{(a.DOB == null ? 'N/A' : a.DOB) | date:'dd/MM/yyyy'}}
+					                    	</span>
+				                    		<span class="col-md-6 col-sm-6">
+					                    		<i class="fa fa-building-o"></i>
+					                    		{{a.Company_name == null ? 'N/A' : a.Company_name}}
+					                    	</span>
+				                    	</div>
+				                    	<div class="row" style="font-size: 10px;color: #585757;">
+				                    		<span class="col-md-6 col-sm-6">
+				                    			<i class="fa fa-clock-o"></i>
+					                    		{{a.FROM_TIME | moment: 'format': 'hh:mm A'}}
+				                    		</span>
+				                    		<span class="col-md-6 col-sm-6 ">
+				                    			<span class="re_booking label-success" ng-if="a.appt_status == 'Waiting'">
+					                    			{{a.appt_status}}
+				                    			</span>
+				                    			<span class="re_booking label-danger" ng-if="a.appt_status == 'Urgent'">
+					                    			{{a.appt_status}}
+				                    			</span>
+				                    			<span class="re_booking label-warning" ng-if="a.appt_status == 'In Consult'">
+					                    			{{a.appt_status}}
+				                    			</span>
+					                    	</span>
+				                    	</div>
+				                    </div>
+	       						</div>
+	       					</div>
+	       					<div style="padding: 20px !important;" class="well appt-profile re_boder_crop_item re_margin_bottom_5" ng-if="a.isEmpty">
+	       						<div style="text-align: center;"
+	   							  	data-drop="true"
+							  		data-jqyoui-options
+	   							  	jqyoui-droppable="{onDrop: 'dropAppt(a)'}">
+
+	   							  	<span style="font-size: 15px; font-style: italic;">
+	   							  		Drop item here
+	   							  	</span>
+	       								
+	       						</div>
+	   						</div>
+   						</div>
            			</div>
            		</div>
-           		<div ng-if="doctors.length > 0" style="margin-bottom: 0px !important;margin-top: 0px ! important;" class="portlet" ng-repeat="d in doctors">
-           			<div class="portlet-title" style="min-height: 0px !important;">
+           		<div ng-if="doctors.length > 0 && d.isRender" style="margin-bottom: 0px !important;margin-top: 0px ! important;" class="portlet" ng-repeat="d in doctors">
+           			<div class="portlet-title re_portlet_title" style="min-height: 0px !important;">
            				<div class="caption">
-           					<span class="caption-subject">
-       							{{d.NAME}}
+           					<span style="font-size: 15px;" class="caption-subject">
+       							{{d.doctor}}
    							</span>
            				</div>
            				<div class="tools">
-           					<a href="javascript:;" class="collapse"></a>
+           					<a style="font-size: 15px;" href="javascript:;" class="collapse"></a>
            				</div>
            			</div>
            			<div class="portlet-body">
-       					<div style="padding: 20px !important;" class="well appt-profile re_boder_crop_item">
+       					<div style="padding: 20px !important;" class="well appt-profile re_boder_crop_item re_margin_bottom_5" ng-repeat="a in d.appointment">
        						<div style="text-align: center;"
    							  	data-drop="true"
 						  		data-jqyoui-options
    							  	jqyoui-droppable="{onDrop: 'dropAppt(d)'}">
 
    							  	<span style="font-size: 15px; font-style: italic;">
-   							  		Crop item here
+   							  		Drop item here
    							  	</span>
        								
        						</div>
@@ -220,15 +347,15 @@
 	        </div>
         </div>
 	</div>
-	<div class="col-md-4 col-sm-4 col-lg-4">
+	<div class="col-md-3 col-sm-3 col-lg-3">
 		<div class="portlet blue-hoki box re_boder_none">
 	        <div class="portlet-title re_bg_color_E0EFFF">
 	            <div class="caption ">
-	                <span class="caption-subject re_color_005A59">Completed</span>
+	                <span class="caption-subject re_color_005A59 bold">Completed</span>
 	            </div>
 	        </div>
-	        <div class="portlet-body" >
-	        	<div ng-if="completeAppt.length == 0">
+	        <div class="portlet-body re_padding_0">
+	        	<div style="padding: 10px;" ng-if="completeAppt.length == 0">
 	        		<div style="text-align: center;">
                         <span style="font-size: 15px; font-style: italic; font-weight: bold;">      
                             Empty Data
@@ -236,15 +363,16 @@
                     </div>
 	        	</div>
            		<div ng-if="completeAppt.length > 0">
-   					<div style="color: black; border-color: #7FA8CB" 
-   						class="well appt-profile" ng-repeat="a in completeAppt">
+   					<div ng-style="{background:a.SERVICE_COLOR}"
+   					     style="color: black; border-color: #7FA8CB" 
+   						class="re_bg_info appt-profile" ng-repeat="a in completeAppt">
    						<div class="media">
-   							<div style="width: 70px; height: 70px;" class="pull-left">
+   							<div style="width: 50px; height: 50px;" class="pull-left">
 								<img width="100%" height="100%" class="img-circle" ng-src="{{(a.avatar == null || a.avatar == '') ? 'theme/assets/icon.png' : a.avatar}}">
 		                    </div>
 		                    <div class="media-body">
-		                    	<h4 style="font-size: 21px;" class="media-heading">{{a.patient_name}}</h4>
-		                    	<div class="row">
+		                    	<span style="font-size: 15px;" class="media-heading bold" ui-sref="loggedIn.patient.consult({patient_id: a.Patient_id, cal_id: a.CAL_ID})">{{a.patient_name}}</span>
+		                    	<div class="row" style="font-size: 10px;color: #585757;">
 		                    		<span class="col-md-6 col-sm-6">
 			                    		<i class="fa fa-calendar"></i>
 			                    		{{(a.DOB == null ? 'N/A' : a.DOB) | date:'dd/MM/yyyy'}}
@@ -254,14 +382,14 @@
 			                    		{{a.Company_name == null ? 'N/A' : a.Company_name}}
 			                    	</span>
 		                    	</div>
-		                    	<div class="row" style="margin-top: 10px;">
+		                    	<div class="row" style="font-size: 10px;color: #585757;">
 		                    		<span class="col-md-6 col-sm-6">
 		                    			<i class="fa fa-user-md"></i>
 			                    		{{a.doctor_name == null ? 'N/A' : a.doctor_name}}
 		                    		</span>
 			                    	<span class="col-md-6 col-sm-6">
 		                    			<i class="fa fa-clock-o"></i>
-			                    		{{a.FROM_TIME | moment: 'utc' | moment: 'format': 'hh:mm:ss A'}}
+			                    		{{a.FROM_TIME | moment: 'utc' | moment: 'format': 'hh:mm A'}}
 		                    		</span>
 		                    	</div>
 		                    </div>

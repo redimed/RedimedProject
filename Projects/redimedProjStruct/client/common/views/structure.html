@@ -195,7 +195,8 @@
         <!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
         <div class="page-sidebar navbar-collapse collapse un-backbar-side">
             <div class="page-logo un-header-left" style="background: rgb(15, 26, 52); padding-right: 0 !important;">
-            <img src="img/icon/icon2_10.png" class="un-icon-drop sidebar-toggler" ng-click="toggleMenu()" />
+            <img src="img/icon/icon2_11.png" class="un-icon-drop sidebar-toggler" ng-click="toggleMenu()" ng-model="change_menu" ng-show="change_menu == true" />
+            <img src="img/icon/icon2_10.png" class="un-icon-drop sidebar-toggler" ng-click="toggleMenu()" ng-model="change_menu" ng-show="change_menu == false" />
         </div>
             <!-- BEGIN SIDEBAR MENU -->
             <ul style="margin-bottom: 0px; margin-top: 40px;" class="page-sidebar-menu page-sidebar-menu-hover-submenu " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
@@ -205,22 +206,47 @@
                         <span class="title">Home</span>
                     </a>
                 </li>
-                <li ng-repeat="menu in loggedInMenus" class="m-add-hover-color">
+                <li ng-repeat="menu in loggedInMenus" class="m-add-hover-color" ng-class="{'change_menus': change_menu===true &&(menu.parent.menu_id===159||menu.parent.menu_id===160||menu.parent.menu_id===162)}" >
 
-                    <a href="javascript:;" ng-click="menuParentClick(menu.parent.definition)" ng-if="menu.parent.icon!==undefined&&menu.parent.icon!==null&&menu.parent.icon.length!==0">
+                    <a href="javascript:;" ng-click="menuParentClick(menu.parent.definition)" ng-if="menu.parent.icon!==undefined&&menu.parent.icon!==null&&menu.parent.icon.length!==0&&menu.parent.menu_id!==163&&menu.parent.menu_id!==164" ng-class="{'edit_sub_menu': change_menu===true &&(menu.parent.menu_id===159||menu.parent.menu_id===160||menu.parent.menu_id===162) }" >
                         <i><img ng-src="{{menu.parent.icon}}" ng-if="menu.parent.icon!==undefined&&menu.parent.icon!==null&&menu.parent.icon.length!==0"></i>
                         <span class="title" style="margin-top:-25px;margin-left:38px">{{menu.parent.name}}</span>
-                        <span class="title" ng-if="menu.parent.menu_id===163" style="margin-top:-5px;margin-left:38px;font-size:10px">Electronic Medical Record</span>
-                        <span class="title" ng-if="menu.parent.menu_id===164" style="margin-top:-5px;margin-left:38px;font-size:10px">Enterprise Resource Planning</span>
 
                     </a>
-
-                    <a href="javascript:;" ng-click="menuParentClick(menu.parent.definition)" ng-if="menu.parent.icon===undefined||menu.parent.icon===null||menu.parent.icon.length===0" >
+                    <a href="javascript:;" ng-click="menuParentClick(menu.parent.definition)" ng-if="(menu.parent.icon===undefined||menu.parent.icon===null||menu.parent.icon.length===0)&&(menu.parent.menu_id!==163||menu.parent.menu_id!==164)" ng-class="{'edit_sub_menu': change_menu===true &&(menu.parent.menu_id===159||menu.parent.menu_id===160||menu.parent.menu_id===162) }" >
                         <i class="glyphicon glyphicon-star-empty"></i>
                         <span class="title">{{menu.parent.name}}</span>
                     </a>
 
-                    <ul ng-if="menu.parent.childs.length > 0&&menu.parent.name!=='e-Timesheets'" class="sub-menu">
+                    <!-- EMR -->
+                    <a href="#" ng-if="(menu.parent.icon===undefined||menu.parent.icon===null||menu.parent.icon.length===0)&& menu.parent.menu_id===163 ">
+                        <i class="glyphicon glyphicon-star-empty"></i>
+                        <span class="title span_title">{{menu.parent.name}}</span>
+                        <span class="title span_menus" ng-if="menu.parent.menu_id===163" >Electronic Medical Record</span>
+                    </a>
+
+                    <a href="#" ng-if="menu.parent.icon!==undefined && menu.parent.icon!==null &&menu.parent.icon.length!==0 && menu.parent.menu_id===163 ">
+                        <i><img ng-src="{{menu.parent.icon}}" ng-if="menu.parent.icon!==undefined&&menu.parent.icon!==null&&menu.parent.icon.length!==0"></i>
+                        <span class="title span_title">{{menu.parent.name}}</span>
+                        <span class="title span_menus" ng-if="menu.parent.menu_id===163" >Electronic Medical Record</span>
+                    </a>
+                    <!-- END EMR -->
+
+                    <!-- ERP -->
+                    <a ng-href="{{menu.parent.definition}}" target="_blank" ng-if="(menu.parent.icon===undefined||menu.parent.icon===null||menu.parent.icon.length===0)&& menu.parent.menu_id===164 ">
+                        <i class="glyphicon glyphicon-star-empty"></i>
+                        <span class="title span_title" >{{menu.parent.name}}</span>
+                        <span class="title span_menus" ng-if="menu.parent.menu_id===164">Enterprise Resource Planning</span>
+                    </a>
+
+                    <a ng-href="{{menu.parent.definition}}" target="_blank" ng-if="(menu.parent.icon!==undefined&&menu.parent.icon!==null&&menu.parent.icon.length!==0)&& menu.parent.menu_id===164 ">
+                        <i><img ng-src="{{menu.parent.icon}}" ng-if="menu.parent.icon!==undefined&&menu.parent.icon!==null&&menu.parent.icon.length!==0"></i>
+                        <span class="title span_title">{{menu.parent.name}}</span>
+                        <span class="title span_menus" ng-if="menu.parent.menu_id===164">Enterprise Resource Planning</span>
+                    </a>
+                    <!-- END ERP -->
+
+                    <ul ng-if="menu.parent.childs.length > 0&&menu.parent.name!=='e-Timesheets'" class="sub-menu" ng-class="{'menu_change2':change_menu===true, 'menu_change1':change_menu===false}">
                         <li ng-repeat="submenu in menu.parent.childs">
                             <a ui-sref="{{submenu.definition}}">
                                 <i class="fa fa-angle-right"></i> {{submenu.name}}
@@ -228,21 +254,21 @@
                         </li>
                     </ul>
                     <!-- FOR EMPLOYEE -->
-                    <ul class="sub-menu" ng-if="menu.parent.menu_id===159" style="width:250px;">
+                    <ul class="sub-menu " ng-if="menu.parent.menu_id===159" ng-class="{'edit_sub_menu2_change':change_menu===true, 'edit_sub_menu2_not_change':change_menu===false}" >
                         <!-- LEAVE FORM -->
                         <li>
                             <a ui-sref="#" class="title">
                                 <i class="fa fa-angle-right"></i> Leave Management
                             </a>
-                            <ul class="sub-menu">
+                            <ul class="sub-menu" style=" margin-left: 100.3%">
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.LeaveHistory">
+                                    <a ui-sref="loggedIn.timesheetHome.leaveHistory">
                                         <i class="fa fa-angle-right"></i>My Leave History
                                     </a>
                                 </li>
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.CreateLeave">
-                                        <i class="fa fa-angle-right"></i>Apply a Leave Form
+                                    <a ui-sref="loggedIn.timesheetHome.leaveCreate">
+                                        <i class="fa fa-angle-right"></i>Apply Leave Form
                                     </a>
                                 </li>
                             </ul>
@@ -250,12 +276,12 @@
                         <!-- END LEAVE FORM -->
                         <!--E-TIMESHEET -->
                         <li>
-                            <a ui-sref="loggedIn.TimeSheetHome.view">
-                                <i class="fa fa-angle-right"></i>View Timesheet History
+                            <a ui-sref="loggedIn.timesheetHome.timesheetHistory">
+                                <i class="fa fa-angle-right"></i>View Timesheets History
                             </a>
                         </li>
                         <li>
-                            <a ui-sref="loggedIn.TimeSheetHome.create">
+                            <a ui-sref="loggedIn.timesheetHome.timesheetCreate">
                                 <i class="fa fa-angle-right"></i>Create New Timesheet
                             </a>
                         </li>
@@ -265,19 +291,19 @@
                             <a ui-sref="#">
                                 <i class="fa fa-angle-right"></i>Timesheet Reporting System
                             </a>
-                            <ul class="sub-menu" style="width: 360px;">
+                            <ul class="sub-menu" style="width: 360px; margin-left: 100.3%">
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.Report2TimeSheet">
+                                    <a ui-sref="loggedIn.timesheetHome.timesheetReport2">
                                         <i class="fa fa-angle-right"></i>Report on Utilization Ratio - View by Detail Activites
                                     </a>
                                 </li>
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.Report3TimeSheet">
+                                    <a ui-sref="loggedIn.timesheetHome.timesheetReport3">
                                         <i class="fa fa-angle-right"></i>Report on Utilization Ratio - View by Summary Activites
                                     </a>
                                 </li>
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.Report6TimeSheet">
+                                    <a ui-sref="loggedIn.timesheetHome.timesheetReport6">
                                         <i class="fa fa-angle-right"></i>Report on Item Numbers
                                     </a>
                                 </li>
@@ -287,25 +313,25 @@
                     </ul>
                     <!-- END FOR EMPLOYEE -->
                     <!-- FOR MANAGE -->
-                    <ul class="sub-menu" ng-if="menu.parent.menu_id===160" style="width:250px;">
+                    <ul class="sub-menu" ng-if="menu.parent.menu_id===160" ng-class="{'edit_sub_menu2_change':change_menu===true, 'edit_sub_menu2_not_change':change_menu===false}">
                         <!-- LEAVE FORM -->
                         <li>
                             <a ui-sref="#">
                                 <i class="fa fa-angle-right"></i> Leave Management
                             </a>
-                            <ul class="sub-menu">
+                            <ul class="sub-menu" style="margin-left: 100.3%; width: 230px;">
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.LeaveHistory">
+                                    <a ui-sref="loggedIn.timesheetHome.leaveHistory">
                                         <i class="fa fa-angle-right"></i>My Leave History
                                     </a>
                                 </li>
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.CreateLeave">
-                                        <i class="fa fa-angle-right"></i>Apply a Leave Form
+                                    <a ui-sref="loggedIn.timesheetHome.leaveCreate">
+                                        <i class="fa fa-angle-right"></i>Apply Leave Form
                                     </a>
                                 </li>
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.ApproveLeave">
+                                    <a ui-sref="loggedIn.timesheetHome.leaveApprove">
                                         <i class="fa fa-angle-right"></i>Approve and Manage Leave
                                     </a>
                                 </li>
@@ -314,17 +340,17 @@
                         <!-- END LEAVE FORM -->
                         <!--E-TIMESHEET -->
                         <li>
-                            <a ui-sref="loggedIn.TimeSheetHome.view">
-                                <i class="fa fa-angle-right"></i>View Timesheet History
+                            <a ui-sref="loggedIn.timesheetHome.timesheetHistory">
+                                <i class="fa fa-angle-right"></i>View Timesheets History
                             </a>
                         </li>
                         <li>
-                            <a ui-sref="loggedIn.TimeSheetHome.create">
+                            <a ui-sref="loggedIn.timesheetHome.timesheetCreate">
                                 <i class="fa fa-angle-right"></i>Create New Timesheet
                             </a>
                         </li>
                         <li>
-                            <a ui-sref="loggedIn.TimeSheetHome.ApproveTask">
+                            <a ui-sref="loggedIn.timesheetHome.timesheetApprove">
                                 <i class="fa fa-angle-right"></i>Approve and Manage Timesheets
                             </a>
                         </li>
@@ -334,39 +360,39 @@
                             <a ui-sref="#">
                                 <i class="fa fa-angle-right"></i>Timesheet Reporting System
                             </a>
-                            <ul class="sub-menu" style="width:360px;">
+                            <ul class="sub-menu" style="width:360px; margin-left: 100.3%">
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.Report1TimeSheet">
+                                    <a ui-sref="loggedIn.timesheetHome.timesheetReport1">
                                         <i class="fa fa-angle-right"></i>Report on Time In Lieu
                                     </a>
                                 </li>
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.Report2TimeSheet">
+                                    <a ui-sref="loggedIn.timesheetHome.timesheetReport2">
                                         <i class="fa fa-angle-right"></i>Report on Utilization Ratio - View by Detail Activites
                                     </a>
                                 </li>
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.Report3TimeSheet">
+                                    <a ui-sref="loggedIn.timesheetHome.timesheetReport3">
                                         <i class="fa fa-angle-right"></i>Report on Utilization Ratio - View by Summary Activites
                                     </a>
                                 </li>
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.Report4TimeSheet">
+                                    <a ui-sref="loggedIn.timesheetHome.timesheetReport4">
                                         <i class="fa fa-angle-right"></i>Report on Actual Working Hours
                                     </a>
                                 </li>
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.Report5TimeSheet">
+                                    <a ui-sref="loggedIn.timesheetHome.timesheetReport5">
                                         <i class="fa fa-angle-right"></i>Report on Actual Working Ratio
                                     </a>
                                 </li>
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.Report6TimeSheet">
+                                    <a ui-sref="loggedIn.timesheetHome.timesheetReport6">
                                         <i class="fa fa-angle-right"></i>Report on Item Numbers
                                     </a>
                                 </li>
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.ReportOweLeave">
+                                    <a ui-sref="loggedIn.timesheetHome.leaveReportOwe">
                                         <i class="fa fa-angle-right"></i>List of Employee on Unsubmitted Leave Form
                                     </a>
                                 </li>
@@ -377,15 +403,15 @@
                     <!-- END FOR MANAGE -->
                     <!-- FOR DIRECTOR -->
         
-                    <ul class="sub-menu" ng-if="menu.parent.menu_id===162" style="width:250px;">
+                    <ul class="sub-menu" ng-if="menu.parent.menu_id===162" ng-class="{'edit_sub_menu2_change':change_menu===true, 'edit_sub_menu2_not_change':change_menu===false}">
                         <!-- LEAVE FORM -->
                         <li>
                             <a ui-sref="#">
                                 <i class="fa fa-angle-right"></i> Leave Management System
                             </a>
-                            <ul class="sub-menu">
+                            <ul class="sub-menu" style="margin-left: 100.3%; width: 230px;">
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.ApproveLeave">
+                                    <a ui-sref="loggedIn.timesheetHome.leaveApprove">
                                         <i class="fa fa-angle-right"></i>Approve and Manage Leave
                                     </a>
                                 </li>
@@ -394,7 +420,7 @@
                         <!-- END LEAVE FORM -->
                         <!--E-TIMESHEET -->
                         <li>
-                            <a ui-sref="loggedIn.TimeSheetHome.ApproveTask">
+                            <a ui-sref="loggedIn.timesheetHome.timesheetApprove">
                                 <i class="fa fa-angle-right"></i>Approve and Manage Timesheets
                             </a>
                         </li>
@@ -404,39 +430,39 @@
                             <a ui-sref="#">
                                 <i class="fa fa-angle-right"></i> Utilization Time Reporting System
                             </a>
-                            <ul class="sub-menu" style="width:360px;">
+                            <ul class="sub-menu" style="width:360px; margin-left: 100.3%">
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.Report1TimeSheet">
+                                    <a ui-sref="loggedIn.timesheetHome.timesheetReport1">
                                         <i class="fa fa-angle-right"></i>Report on Time In Lieu
                                     </a>
                                 </li>
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.Report2TimeSheet">
+                                    <a ui-sref="loggedIn.timesheetHome.timesheetReport2">
                                         <i class="fa fa-angle-right"></i>Report on Utilization Ratio - View by Detail Activites
                                     </a>
                                 </li>
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.Report3TimeSheet">
+                                    <a ui-sref="loggedIn.timesheetHome.timesheetReport3">
                                         <i class="fa fa-angle-right"></i>Report on Utilization Ratio - View by Summary Activites
                                     </a>
                                 </li>
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.Report4TimeSheet">
+                                    <a ui-sref="loggedIn.timesheetHome.timesheetReport4">
                                         <i class="fa fa-angle-right"></i>Report on Actual Working Hours
                                     </a>
                                 </li>
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.Report5TimeSheet">
+                                    <a ui-sref="loggedIn.timesheetHome.timesheetReport5">
                                         <i class="fa fa-angle-right"></i>Report on Actual Working Ratio
                                     </a>
                                 </li>
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.Report6TimeSheet">
+                                    <a ui-sref="loggedIn.timesheetHome.timesheetReport6">
                                         <i class="fa fa-angle-right"></i>Report on Item Numbers
                                     </a>
                                 </li>
                                 <li>
-                                    <a ui-sref="loggedIn.TimeSheetHome.ReportOweLeave">
+                                    <a ui-sref="loggedIn.timesheetHome.leaveReportOwe">
                                         <i class="fa fa-angle-right"></i>List of Employee on Unsubmitted Leave Form
                                     </a>
                                 </li>
@@ -445,21 +471,7 @@
                         <!-- END REPORT -->
                     </ul>
                     <!-- END FOR DIRECTOR -->
-                    <!-- FOR ADMIN -->
-                    <ul class="sub-menu" ng-if="menu.parent.menu_id===161">
-                        <li>
-                            <a ui-sref="loggedIn.TimeSheetHome.TimeSheetTree">
-                                <i class="fa fa-angle-right"></i>Manager Users
-                            </a>
-                        </li>
-                        <li>
-                            <a ui-sref="loggedIn.TimeSheetHome.TimeSheetDept">
-                                <i class="fa fa-angle-right"></i>Manage Departments
-                            </a>
-                        </li>
-                    </ul>
-                    <!-- END FOR DIRECTOR -->
-                    <!-- END FOR ADMIN -->
+
                     <!-- <a href="javascript:;" ng-click="menuParentClick(menu.parent.definition)" ng-if="menu.parent.name==='e-Timesheets'">
                         <i><img src="{{menu.parent.icon}}"></i>
                         <span class="title">{{menu.parent.name}}</span>

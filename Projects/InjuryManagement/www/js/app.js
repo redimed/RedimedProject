@@ -26,7 +26,7 @@ angular.module('starter', ['ionic',
     'ion-google-place',
     'ngAutocomplete',
     'starter.bluetooth',
-    'starter.model'
+    'ngInputDate'
 ])
 
     .factory(("ionPlatform"), function( $q ){
@@ -69,7 +69,12 @@ angular.module('starter', ['ionic',
                                 {
                                     $state.go('app.driver.list');
                                 } else {
-                                    $state.go('app.injury.info');
+                                    if(localStorageService.get("userInfo").UserType.user_type == "Patient"){
+                                            $state.go('app.injury.desInjury');
+                                    }else{
+                                          $state.go('app.injury.info');
+                                    }
+                                  
                                 }
                             }, 1000);
                         }
@@ -78,21 +83,14 @@ angular.module('starter', ['ionic',
             })
     })
 
-    .run(function($state, $rootScope,localStorageService, $ionicSideMenuDelegate, $cordovaPush, ionPlatform, signaling, $ionicModal, $ionicPopup, $interval) {
+    .run(function($state, $rootScope,localStorageService, $ionicSideMenuDelegate, $cordovaPush,
+                  ionPlatform, signaling, $ionicModal, $ionicPopup, SecurityService, HOST_CONFIG) {
 
         signaling.on('reconnect',function(){
             if (localStorageService.get("userInfo") != null) {
                 signaling.emit('reconnected', localStorageService.get("userInfo").id);
             }
         })
-
-        $interval(function() {
-            if (localStorageService.get("userInfo") != null) {
-                signaling.emit('checkApp', localStorageService.get("userInfo").id);
-            }
-        }, 3 * 1000);
-
-
         signaling.on('reconnect_failed',function(){
             localStorageService.removeAll();
             $state.go("security.login",null,{location: "replace", reload: true});
@@ -104,7 +102,7 @@ angular.module('starter', ['ionic',
         $rootScope.$on("$stateChangeSuccess", function (e, toState,toParams, fromState, fromParams) {
             localStorageService.set("fromState",{fromState:fromState,fromParams:fromParams});
             if(!localStorageService.get("userInfo")){
-                if(toState.name !== "security.forgot" && toState.name !== "security.login" && toState.name !== "security.register") {
+                if(toState.name !== "security.forgot" && toState.name !== "security.login" && toState.name !== "security.register.info1"  && toState.name !== "security.register.info2"  && toState.name !== "security.register.info3") {
                     e.preventDefault();
                     $state.go("security.login");
                 }
@@ -126,19 +124,37 @@ angular.module('starter', ['ionic',
                     config = {
                         "senderID": "137912318312"
                     };
-                }
-                else if (ionic.Platform.isIOS()) {
+                } else if (ionic.Platform.isIOS()) {
                     config = {
-                        "badge": "true",
-                        "sound": "true",
-                        "alert": "true"
+                        "badge": true,
+                        "sound": "receive_phone.mp3",
+                        "alert": true,
+                    };
+                }
+
+                $cordovaPush.register(config).then(function (result) {
+                    console.log("Success Push: " + result)
+                    if (ionic.Platform.isIOS()){
+                        alert(result);
+                        SecurityService.setIosToken(result);
+                    }
+                }, function (err) {
+                    console.log("Error Push: " + err)
+                });
+
+                $rootScope.$on('$cordovaPush:notificationReceived', function (event, notification) {
+                    localStorageService.set("notificationLS", notification);
+                    if (ionic.Platform.isAndroid()) {
+                        handleAndroid(notification);
+                    }
+                });
+
+                //Android.
+                function handleAndroid(notification) {
+                    if (notification.event == "registered") {
+                        SecurityService.setIosToken(notification.regid);
                     }
                 }
-                $cordovaPush.register(config).then(function (result) {
-                    console.log("Register Push Notification Status: " + result)
-                }, function (err) {
-                    console.log("Register Push Notification Status: " + err)
-                });
                 AudioToggle.setAudioMode(AudioToggle.SPEAKER);
             });
         });
@@ -148,6 +164,9 @@ angular.module('starter', ['ionic',
             $rootScope.$on("$stateChangeSuccess", function () {
                 checkConnection();
             });
+            if (window.device.platform === 'iOS' && parseFloat(window.device.version) >= 7.0) {
+                StatusBar.hide();
+            }
         });
 
         function checkConnection() {
@@ -167,9 +186,21 @@ angular.module('starter', ['ionic',
                     templateUrl: 'modules/popup/PopUpError.html',
                     scope: $rootScope,
                     buttons: [
-                        { text: "Ok" },
+                        {
+                            text: "Ok",
+                            onTap: function() {
+                                window.plugins.SettingOpener.Open("ACTION_SETTINGS");
+                            }
+
+                        },
                     ]
                 });
             }
         }
-    });
+    })
+
+    .filter('currentDate',['$filter',  function($filter) {
+        return function() {
+            return  $filter('date')(new Date(), 'yyyy-MM-dd');
+        };
+    }])

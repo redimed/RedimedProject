@@ -19,7 +19,7 @@ angular.module("app.loggedIn.treeApprove.AddSystem.directive", [])
                                 scope.info = response.result;
                                 scope.info.oldName = scope.info.TYPE_NAME;
                             } else if (response.status === "fail") {
-                                $state.go("loggedIn.listSystem", null, {
+                                $state.go("loggedIn.treeApprove.ListFunction", null, {
                                     "reload": true
                                 });
                                 toastr.error("Loading fail!", "Error");

@@ -4,8 +4,20 @@ var ApptItemsModel = require('../v1_models/Cln_appt_items.js');
 var kiss=require('./kissUtilsController');
 
 module.exports = {
+
+    /**
+     * created by: unknown
+     * tannv.dts mark
+     * co the tiep tuc su dung
+     */
     postDeptItems: function(req,res){
-        var dept_id = req.body.id;
+        var dept_id = kiss.checkData(req.body.id)?req.body.id:'';
+        if(!kiss.checkListData(dept_id))
+        {
+            res.json({status:'error',data:'loi data truyen den'});
+            return;
+        }
+
            db.Department.find({
             where: {CLINICAL_DEPT_ID: dept_id},
             attributes: ['CLINICAL_DEPT_ID', 'CLINICAL_DEPT_NAME'],
@@ -16,20 +28,33 @@ module.exports = {
                     include: [
                         {
                             model: db.InvItem,  as: 'Items',
-                            attributes: ['ITEM_ID', 'ITEM_NAME', 'ITEM_CODE']
+                            attributes: ['ITEM_ID', 'ITEM_NAME', 'ITEM_CODE','TAX_ID','TAX_RATE','TAX_CODE']
                         }
                     ],
                     order: ['POPULAR_HEADER_ID']
                 },
             ]
         }).success(function(data){
-            res.json({status:'success', data:data.itemLists});
+            if(data.itemLists)
+            {
+                res.json({status:'success', data:data.itemLists});
+            }
+            else
+            {
+                res.json({status:'error',data:'loi khong co du lieu'});
+            }
+            
+        })
+        .error(function(err){
+            res.json({status:'error',data:err});
         })
 	},
     
     /**
      * created by: unknown
      * tannv.dts@gmail.com mark
+     * client: patientService->saveItemSheet
+     * loai bo, khong su dung nua
      */
     postInsertDeptItems: function(req,res){
         var insert_arr = req.body.list;

@@ -392,7 +392,10 @@ angular.module('app.loggedIn.document.services', [])
             var updateNewFA = api.all("document/updateNewFA");
             return updateNewFA.post({updateData: updateData, patient_id: patient_id, cal_id:cal_id});
          }
-
+         documentService.getDoctor = function(appt_info){
+            var getDoctor = api.all("document/getDoctorFA");
+            return getDoctor.post(appt_info);
+         }
          
          // end new Functional Assessment
 
@@ -694,6 +697,7 @@ angular.module('app.loggedIn.document.services', [])
                 columns: [
                     {field: 'CAL_ID' , is_hide: true },
                     {field: 'FA_ID' , is_hide: true },
+                    {field: 'TYPE' , label:'Type'},
                     {field: 'FA_NAME', label:'Name'},
                     {field: 'Creation_date', label: 'Created Date', type: 'custom', fn: function(item){
                         return ConfigService.getCommonDateDefault(item.Creation_date);
@@ -705,7 +709,10 @@ angular.module('app.loggedIn.document.services', [])
                 actions: [
                     { class:'fa fa-pencil', title: 'Edit', callback: function(item) {
                         $state.go('loggedIn.FA', {patient_id: patient_id, cal_id: item.CAL_ID, fa_id: item.FA_ID})
-                    } }
+                    }},
+                    { class:'fa fa-print', title: 'Print', callback: function(item) {
+                          window.open("http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/FA/"+item.FA_ID+"/"+item.CAL_ID+"/"+patient_id);
+                    }},
                 ]
             };
         }

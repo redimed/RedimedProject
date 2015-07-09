@@ -97,18 +97,32 @@ module.exports = {
 		var patient_gender = req.body.patient_gender;
 		var valueToRate = req.body.valueToRate;
 		var rating_id = req.body.rating_id;
-
-		knex.raw("select `RATE`, `VALUE` from `sys_rankings` where `HEADER_ID` = ? and ? between `FROM_AGE` and `TO_AGE` and `GENDER` like ? and ? between `FROM_VALUE` and `TO_VALUE`",[rating_id, patient_age, patient_gender,valueToRate])
-		.then(function(result){
-			console.log('this is result.length', result);
-			if(result[0].length===0){
-				res.json({status:'unrated'});
-			}
-			else res.json({status:'success', data:result[0]});
-		})
-		.error(function(err){
-			res.json({status:'error'});
-		})
+		if(rating_id === 16 || rating_id === 17){
+			knex.raw("select `RATE`, `VALUE`, `FROM_VALUE`, `TO_VALUE` from `sys_rankings` where `HEADER_ID` = ? and ? between `FROM_AGE` and `TO_AGE` and `GENDER` like ?",[rating_id, patient_age, patient_gender])
+			.then(function(result){
+				console.log('this is result.length', result);
+				if(result[0].length===0){
+					res.json({status:'unrated'});
+				}
+				else res.json({status:'success', data:result[0]});
+			})
+			.error(function(err){
+				res.json({status:'error'});
+			})
+		}
+		else{
+			knex.raw("select `RATE`, `VALUE` from `sys_rankings` where `HEADER_ID` = ? and ? between `FROM_AGE` and `TO_AGE` and `GENDER` like ? and ? between `FROM_VALUE` and `TO_VALUE`",[rating_id, patient_age, patient_gender,valueToRate])
+			.then(function(result){
+				console.log('this is result.length', result);
+				if(result[0].length===0){
+					res.json({status:'unrated'});
+				}
+				else res.json({status:'success', data:result[0]});
+			})
+			.error(function(err){
+				res.json({status:'error'});
+			})
+		}	
 	},
 
 	checkExistFA: function(req,res){
@@ -258,8 +272,8 @@ module.exports = {
 		.then(function(result){
 			res.json({status:'success'});
 		})
-		.error(function(err){
-			res.json(500, {status:'error', error:err});
+		.error(function(err,sqldata){
+			res.json(500, {status:'error', error:err, sql:sqldata});
 		})
 	},
 
@@ -369,57 +383,18 @@ module.exports = {
 		}
 
 		updateNewHeader();
+	},
 
+	getDoctor: function(req,res){
+		var user_id = req.body.user_id;
 
-		// knex.transaction(function(trx){
-		// 	return trx
-		// 	.table('cln_fa_df_headers')
-		// 	.update(updateHeader)
-		// 	.where({PATIENT_ID:patient_id, CAL_ID: cal_id, FA_ID:updateHeader.FA_ID})
-		// 	.then(function(res1){
-		// 		for(var i=0; i<updateSections.length; i++){
-		// 			return trx
-		// 			.table('cln_fa_df_sections')
-		// 			.update(updateSections[i])
-		// 			.where({PATIENT_ID:patient_id, CAL_ID: cal_id, SECTION_ID: updateSections.SECTION_ID})
-		// 			.then(function(res1){
-		// 				if(i===updateSections.length-1){
-		// 					for(var j=0; j<updateLines.length; j++){
-		// 						return trx
-		// 						.table('cln_fa_df_lines')
-		// 						.update(updateLines[j])
-		// 						.where({PATIENT_ID:patient_id, CAL_ID: cal_id, LINE_ID: updateLines.LINE_ID})
-		// 						.then(function(res2){
-		// 							if(j===updateLines.length-1){
-		// 								for(var k=0; k<updateDetails.length; k++){
-		// 									return trx
-		// 									.table('cln_fa_df_line_details')
-		// 									.update(updateDetails[k])
-		// 									.where({PATIENT_ID:patient_id, CAL_ID: cal_id, DETAIL_ID: updateDetails.DETAIL_ID})
-		// 									.then(function(res3){
-		// 										if(k===updateDetails.length-1){
-		// 											for(var m=0; m<updateComments.length; m++){
-		// 												return trx
-		// 												.table('cln_fa_df_comments')
-		// 												.updat e(updateComments[m])
-		// 												.where({PATIENT_ID:patient_id, CAL_ID: cal_id, FA_COMMENT_ID: updateComments.FA_COMMENT_ID})
-		// 											}
-		// 										}
-		// 									})
-		// 								};
-		// 							}
-		// 						})
-		// 					};
-		// 				}
-		// 			})
-		// 		};
-		// 	})
-		// })
-		// .then(function(result){
-		// 	res.json({status:'success'});
-		// })
-		// .error(function(err){
-		// 	res.json(500, {status:'error', error:err});
-		// })
+		knex.raw("select user.`Booking_Person`, doc.* from `users` user inner join `doctors` doc on doc.`User_id` = user.`id` where user.`id` = ?",[user_id])
+		.then(function(result){
+			if(result.length === 0) res.json({status:"no doctor"});
+			else res.json({status:'success', data:result[0]});
+		})
+		.error(function(err){
+			res.json(500,{status:'error'})
+		})
 	}
 }

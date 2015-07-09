@@ -2,8 +2,8 @@ angular.module("starter.menu.controller",[])
     .controller("menuController",function($scope, $rootScope, localStorageService, $state, UserService,
                                           $ionicPopover, SecurityService, $ionicPopup, $cordovaDialogs,
                                           $ionicLoading, $timeout, $cordovaMedia, phoneCallService, signaling,
-                                          $cordovaGeolocation, $interval, $ionicPlatform, DriverServices,
-                                          HOST_CONFIG, $ionicModal){
+                                          $cordovaGeolocation, $interval, $ionicPlatform,
+                                          DriverServices, $ionicModal, $cordovaPush, HOST_CONFIG){
         signaling.removeAllListeners();
 
         var userInfo= localStorageService.get("userInfo");
@@ -17,15 +17,17 @@ angular.module("starter.menu.controller",[])
         var stopInterval;
 
         var mediaSource = null;
-        var src = "/android_asset/www/receive_phone.mp3";
+
+        var src = "https://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port + "/api/sound/receive";
         var media = null;
+        var snd = null;
         var loop = function (status) {
-            //if (status === Media.MEDIA_STOPPED) {
-            //     media.play();
-            //}
-            //else if (status === Media.MEDIA_PAUSED) {
-            //     media.pause();
-            //}
+            if (status === Media.MEDIA_STOPPED) {
+                media.play();
+            }
+            else if (status === Media.MEDIA_PAUSED) {
+                media.pause();
+            }
         };
 
 
@@ -54,24 +56,49 @@ angular.module("starter.menu.controller",[])
         $scope.userInfoLS = [];
 
         var loadMenu = function() {
-            UserService.menu(userInfo.id).then(function(response){
-                var i = 0;
-                angular.forEach(response, function(menu){
-                    if(menu.Parent_Id === -1)
-                        $scope.Injurymenu.push({"parent": {"name": menu.Description, "definition":menu.Definition , "menu_id": menu.Menu_Id, "childs":[]}});
-                    else{
-                        var j = 0;
-                        angular.forEach($scope.Injurymenu, function(lmenu){
-                            if(lmenu.parent.menu_id === menu.Parent_Id){
-                                $scope.Injurymenu[j].parent.childs.push({"name": menu.Description, "definition":menu.Definition, "id": menu.Menu_Id});
-                            }
-                            j++;
-                        })
-                    }
-                    i++;
+
+            if(userInfo.UserType.user_type == "Patient"){
+                var menuPatient = [];
+                UserService.getPatientMenu().then(function(response){
+                    angular.forEach(response,function(menu){
+                        if(menu.Description=="Submit Injury")
+                            menu.Definition = "app.injury.desInjury";
+
+
+                    })
+                    var evens = _.remove(response, function(n) {
+                        return  n.Description !== "Add Worker" && n.Description !== "Injury History";
+                    });
+                    console.log("event---",evens);
+
+                    renderMenu(evens);
+
+                })
+            }else
+            {
+                // console.log(userInfo)
+                UserService.menu(userInfo.id).then(function(response){
+                    renderMenu(response);
                 });
-            });
+            }
             // END MENU
+        }
+        var renderMenu = function(response){
+            var i = 0;
+            angular.forEach(response, function(menu){
+                if(menu.Parent_Id === -1)
+                    $scope.Injurymenu.push({"parent": {"name": menu.Description, "definition":menu.Definition , "menu_id": menu.Menu_Id, "childs":[]}});
+                else{
+                    var j = 0;
+                    angular.forEach($scope.Injurymenu, function(lmenu){
+                        if(lmenu.parent.menu_id === menu.Parent_Id){
+                            $scope.Injurymenu[j].parent.childs.push({"name": menu.Description, "definition":menu.Definition, "id": menu.Menu_Id});
+                        }
+                        j++;
+                    })
+                }
+                i++;
+            });
         }
 
         loadMenu();
@@ -84,11 +111,21 @@ angular.module("starter.menu.controller",[])
         $scope.logoutApp = function() {
             $interval.cancel(stopInterval);
             stopInterval = undefined;
-            $scope.userInfoLS.push({
-                platform: ionic.Platform.platform(),
-                info: userInfo,
-                token: notificationLS.regid
-            });
+            document.addEventListener("deviceready", function () {
+                if(ionic.Platform.isAndroid()) {
+                    $scope.userInfoLS.push({
+                        platform: ionic.Platform.platform(),
+                        info: userInfo,
+                        token: notificationLS.regid
+                    });
+                } else if(ionic.Platform.isIOS()) {
+                    $scope.userInfoLS.push({
+                        platform: ionic.Platform.platform(),
+                        info: userInfo,
+                        token: SecurityService.getIosToken()
+                    });
+                }
+            })
             $scope.popupMessage = {message: "Do you want log out?" };
             $ionicPopup.show({
                 templateUrl: 'modules/popup/PopUpConfirm.html',
@@ -96,27 +133,31 @@ angular.module("starter.menu.controller",[])
                 buttons : [
                     {
                         text: "Yes, I do!",
-                        type: 'button button-assertive',
                         onTap: function(e) {
-                            signaling.emit('logout', userInfo.user_name, userInfo.id, userInfo.UserType.user_type, $scope.userInfoLS);
-                            $ionicLoading.show({
-                                template: "<div class='icon ion-ios7-reloading'></div>"+
-                                "<br />"+
-                                "<span>Logout...</span>",
-                                animation: 'fade-in',
-                                showBackdrop: true,
-                                maxWidth: 200,
-                                showDelay: 0
-                            });
-                            signaling.on('logoutSuccess', function(){
-                                signaling.removeAllListeners();
-                                localStorageService.clearAll();
-                                $state.go("security.login", null, {reload: true});
-                                $ionicLoading.hide();
-                            })
+                            if($scope.userInfoLS.length > 0) {
+                                signaling.emit('logout', userInfo.user_name, userInfo.id, userInfo.UserType.user_type, $scope.userInfoLS);
+                                $ionicLoading.show({
+                                    templateUrl: "modules/loadingTemplate.html",
+                                    animation: 'fade-in',
+                                    scope: $scope,
+                                    maxWidth: 500,
+                                    showDelay: 0
+                                });
+                                signaling.on('logoutSuccess', function () {
+                                    signaling.removeAllListeners();
+                                    localStorageService.clearAll();
+                                    $state.go("security.login", null, {reload: true});
+                                    $ionicLoading.hide();
+                                })
+                            } else {
+                                alert("You are using app on browser.");
+                            }
                         }
                     },
-                    { text: "Cancel" }
+                    {
+                        text: "Cancel",
+                        type: 'btn-cancel-popUp'
+                    }
                 ]
             })
         }
@@ -133,14 +174,14 @@ angular.module("starter.menu.controller",[])
                 handleAndroid(notification);
             }
             else if (ionic.Platform.isIOS()) {
-                handleIOS(notification);
+                handleIOS(event, notification);
             }
         });
 
         //Android.
         function handleAndroid(notification) {
             if (notification.event == "message") {
-                mediaSource = new Media("https://testapp.redimed.com.au:3000/api/im/pushSound");
+                mediaSource = new Media("https://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port + "/api/im/notification");
                 mediaSource.play();
 
                 $cordovaDialogs.alert(notification.message, "Emergency").then(function (){
@@ -151,66 +192,75 @@ angular.module("starter.menu.controller",[])
                     if(userInfo.UserType.user_type == "Driver") {
                         $state.go('app.driver.detailInjury', {}, {reload: true});
                     }
-                    else {
-                        alert(JSON.stringify(notification));
-                    }
                 })
             }
         }
 
-        //iOS.
-        function handleIOS(notification) {
-            if (notification.foreground == "1") {
-                if (notification.sound) {
-                    var mediaSrc = $cordovaMedia.newMedia(notification.sound);
-                    mediaSrc.promise.then($cordovaMedia.play(mediaSrc.media));
-                }
-
-                if (notification.body && notification.messageFrom) {
-                    $cordovaDialogs.alert(notification.body, notification.messageFrom);
-                }
-                else $cordovaDialogs.alert(notification.alert, "Push Notification Received");
-
-                if (notification.badge) {
-                    $cordovaPush.setBadgeNumber(notification.badge).then(function (result) {
-                        console.log("Set badge success " + result)
-                    }, function (err) {
-                        console.log("Set badge error " + err)
+        //iOS
+        function handleIOS(event, notification) {
+            console.log(event, '----', notification);
+            switch (notification.type) {
+                case 'call':
+                    UserService.getUserInfo(localStorageService.get('fromId')).then( function(data) {
+                        if(data.img == null) {
+                            $scope.avatarCaller = 'img/avatar.png';
+                        } else {
+                            $scope.avatarCaller = data.img;
+                        }
+                        $scope.fromUsername = fromUsername;
                     });
-                }
-            }
-            else {
-                if (notification.body && notification.messageFrom) {
-                    $cordovaDialogs.alert(notification.body, "(RECEIVED WHEN APP IN BACKGROUND) " + notification.messageFrom);
-                }
-                else $cordovaDialogs.alert(notification.alert, "(RECEIVED WHEN APP IN BACKGROUND) Push Notification Received");
+                    $scope.modalreceivePhone.show();
+                    snd = new Media("https://" + HOST_CONFIG.host + ":" + HOST_CONFIG.port + "/api/sound/receive");
+                    snd.play();
+                    $scope.acceptCall = function() {
+                        $scope.modalreceivePhone.hide();
+                        snd.stop();
+                        $state.go('app.phoneCall', { callUser: localStorageService.get('fromId'), apiKey: localStorageService.get('message').apiKey, sessionID: localStorageService.get('message').sessionId,
+                            tokenID: localStorageService.get('message').token, isCaller: false }, {reload: true});
+                    }
+                    $scope.ignoreCall = function() {
+                        $scope.modalreceivePhone.hide();
+                        snd.stop();
+                        signaling.emit('sendMessage', localStorageService.get('userInfo').id, localStorageService.get('fromId'), { type: 'ignore' });
+                    }
+                    break;
+                default :
+                    $cordovaDialogs.alert(notification.alert, "Emergency").then(function (){
+                        mediaSource.pause();
+                        localStorageService.set("idpatient_notice", notification.payload.injury_id);
+                        DriverServices.notifi = notification;
+                        if(userInfo.UserType.user_type == "Driver") {
+                            $state.go('app.driver.detailInjury', {}, {reload: true});
+                        }
+                    })
             }
         }
 
         function getLocation() {
-            if(localStorageService.get("userInfo")) {
-                if(localStorageService.get("userInfo").UserType.user_type == 'Driver') {
-                    var posOptions = {maximumAge: 0, timeout: 10000, enableHighAccuracy: true};
-                    $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
-                            var driverLocation = [];
-                            lat = position.coords.latitude
-                            long = position.coords.longitude
+            var posOptions = {maximumAge: 0, timeout: 10000, enableHighAccuracy: true};
+            $cordovaGeolocation.getCurrentPosition(posOptions).then(function (position) {
+                var driverLocation = [];
+                lat = position.coords.latitude
+                long = position.coords.longitude
 
-                            driverLocation.push({
-                                id: localStorageService.get("userInfo").id,
-                                latitude: lat,
-                                longitude: long,
-                                userName: localStorageService.get("userInfo").user_name,
-                                userType: localStorageService.get("userInfo").UserType.user_type
-                            });
-                            signaling.emit('location', driverLocation);
-                        }, function (err) {
-                            $interval.cancel(stopInterval);
-                            stopInterval = undefined;
-                            alert("Could not get the current position. Either GPS signals are weak or GPS has been switched off");
-                        });
+                driverLocation.push({
+                    id: localStorageService.get("userInfo").id,
+                    latitude: lat,
+                    longitude: long,
+                    userName: localStorageService.get("userInfo").user_name,
+                    userType: localStorageService.get("userInfo").UserType.user_type
+                });
+                signaling.emit('location', driverLocation);
+            }, function (err) {
+                $interval.cancel(stopInterval);
+                stopInterval = undefined;
+                alert("Could not get the current position. Either GPS signals are weak or GPS has been switched off");
+                if(device.platform === 'iOS' && device.version > 8) {
+                    OpenSettings.settings();
+                } else if(ionic.Platform.isAndroid()) {
+                    window.plugins.SettingOpener.Open("ACTION_LOCATION_SOURCE_SETTINGS");
                 }
-            }
+            });
         }
 
         $scope.doRefreshListUserOnline = function() {
@@ -241,9 +291,7 @@ angular.module("starter.menu.controller",[])
                 var apikey = opentokRoom.apiKey;
                 var sessionid = opentokRoom.sessionId;
                 var token = opentokRoom.token;
-
                 $state.go('app.phoneCall', { callUser: id, apiKey: apikey, sessionID: sessionid, tokenID: token, isCaller: true }, {reload: true});
-
             });
         };
 
@@ -259,11 +307,14 @@ angular.module("starter.menu.controller",[])
 
         signaling.removeListener('messageReceived');
         signaling.on('messageReceived', function (fromId, fromUsername, message) {
+            localStorageService.set('fromId', fromId);
+            localStorageService.set('fromUsername', fromUsername);
+            localStorageService.set('message', message);
             UserService.getUserInfo(fromId).then( function(data) {
                 if(data.img == null) {
-                    $scope.avatarCaller = 'img/avatar.png'
+                    $scope.avatarCaller = 'img/avatar.png';
                 } else {
-                    $scope.avatarCaller = data.img
+                    $scope.avatarCaller = data.img;
                 }
                 $scope.fromUsername = fromUsername;
             });
@@ -273,20 +324,23 @@ angular.module("starter.menu.controller",[])
                     media.play();
                     $scope.modalreceivePhone.show();
                     $scope.acceptCall = function() {
-                        $scope.modalreceivePhone.hide();
                         media.pause();
+                        $scope.modalreceivePhone.hide();
                         $state.go('app.phoneCall', { callUser: fromId, apiKey: message.apiKey, sessionID: message.sessionId,
                             tokenID: message.token, isCaller: false }, {reload: true});
                     }
                     $scope.ignoreCall = function() {
                         $scope.modalreceivePhone.hide();
-                        media.pause();
+                        if(!ionic.Platform.isIOS()) {
+                            media.pause();
+                        }
                         signaling.emit('sendMessage', localStorageService.get('userInfo').id, fromId, { type: 'ignore' });
                     }
                     break;
-                case 'cancel':
+                case 'ignore':
                     if($scope.modalreceivePhone.isShown()) {
                         media.pause();
+                        snd.stop();
                         $scope.modalreceivePhone.hide();
                     }
                     break;
@@ -297,7 +351,12 @@ angular.module("starter.menu.controller",[])
             $scope.popupMessage = { message: "Some is logged into your account!"};
             $ionicPopup.show({
                 templateUrl: 'modules/popup/PopUpError.html',
-                scope: $scope
+                scope: $scope,
+                buttons: [
+                    {
+                        text: "Ok",
+                    }
+                ]
             });
             localStorageService.clearAll();
             $state.go("security.login", null, {location: "replace", reload: true});
@@ -311,11 +370,13 @@ angular.module("starter.menu.controller",[])
                     }
                 }
             });
-            if(localStorageService.get("userInfo").UserType.user_type == 'Driver')
-            {
-                getLocation();
-                if(stopInterval != undefined) {
-                    stopInterval = $interval(function () { getLocation()}, 10 * 1000);
+            if(localStorageService.get("userInfo") != null) {
+                if(localStorageService.get("userInfo").UserType.user_type == 'Driver')
+                {
+                    getLocation();
+                    if(stopInterval != undefined) {
+                        stopInterval = $interval(function () { getLocation()}, 10 * 1000);
+                    }
                 }
             }
         });

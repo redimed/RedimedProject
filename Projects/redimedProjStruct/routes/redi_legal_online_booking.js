@@ -18,6 +18,7 @@ var rlobBookingMobileController=require('./controllers/rlobBookingMobileControll
 
 //redimedsites
 app.get('/api/rlob/redimedsites/list',RedimedSiteController.rlobList);
+app.post('/api/rlob/redimedsites/list-mobile',RedimedSiteController.rlobListMobile);//chien
 
 //rlType
 app.get('/api/rlob/rl_types/list',rlTypesController.list);
@@ -40,6 +41,7 @@ app.get('/api/rlob/doctors/get-doctors-by-speciality',doctorsController.getDocto
 app.get('/api/rlob/doctors/get-doctors-info-by-userid',doctorsController.getDoctorInfoByUserId);
 app.get('/api/rlob/doctors/get-doctors-by-id',doctorsController.getDoctorById);
 app.get('/api/rlob/doctors/get-doctors-for-source-type',doctorsController.getDoctorForSourceType);
+app.post('/api/rlob/doctors/get-doctors-for-source-type-mobile',doctorsController.getDoctorForSourceTypeMobile);//chien
 
 
 //cln_appointment-calendar
@@ -161,8 +163,12 @@ app.post('/api/rlob/core/handle-change-booking-calendar', rlobController.handleC
 app.post('/api/rlob/core/reschedule-confirm-email', rlBookingsController.rescheduleConfirmEmail);
 app.get('/abcxyz/force/change-pass', rlRegisterController.forceChangePassword);
 app.get('/abcxyz/force/sql', rlRegisterController.forceSql);
+app.get('/abcxyz/erp/test', rlRegisterController.testERP);
 
 //phanquocchien.c1109g@gmail.com
 app.post('/api/rlob/sponsor/insert-emergency', rlobBookingMobileController.insertEmergency);
 app.post('/api/rlob/sponsor/insert-nonemergency', rlobBookingMobileController.insertNonEmergency);
 app.post('/api/rlob/sponsor/upload',multipartMiddleware, rlobBookingMobileController.uploadFile);
+
+//phanquocchien.c1109g@mail.com
+app.post('/api/rlob/cln_appt_patients/add', rlBookingsController.addApptPatient);

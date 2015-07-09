@@ -120,7 +120,6 @@ angular.module("app.sponsor1.emergency.controller",[])
                         CONTACT_NO:$scope.contactus,
                         MEDICARE_NO:$scope.medicareno,
                         MEDICARE_REF:$scope.medicareref,
-                        TYPE_NAME:rlobConstant.sponsorType.emergency,
                         LONGITUDE:$scope.Lng,
                         LATITUDE:$scope.Lat,
                         INJURY:$scope.injury

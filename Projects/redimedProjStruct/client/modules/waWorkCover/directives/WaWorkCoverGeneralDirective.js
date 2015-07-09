@@ -1,5 +1,5 @@
 angular.module('app.loggedIn.waworkcover.general.directive',[])
-    .directive('workCoverGeneral',function(PatientService, InsurerService, ReceptionistService, WaWorkCoverService, DoctorService, ConfigService, $state, $cookieStore, toastr,CompanyService){
+    .directive('workCoverGeneral',function(DocumentService, PatientService, InsurerService, ReceptionistService, WaWorkCoverService, DoctorService, ConfigService, $state, $cookieStore, toastr,CompanyService){
         return{
             restrict: 'EA',
             scope: {
@@ -51,15 +51,26 @@ angular.module('app.loggedIn.waworkcover.general.directive',[])
                     });
                     
                     //get appointment info
-                    ReceptionistService.apptDetail(scope.params.apptInfo).then(function (res) {
-                        if (res.data !== undefined && res.data !== null && res.data !== '') {
-                            if (res.data.DOCTOR_ID !== undefined && res.data.DOCTOR_ID !== null && res.data.DOCTOR_ID !== '') {
-                                DoctorService.getById(res.data.DOCTOR_ID).then(function (res2) {
-                                    if (res2 !== null && res2 !== undefined && res2 !== '') {
-                                        scope.doctor = res2;
-                                    }
-                                })
-                            }
+                    // ReceptionistService.apptDetail(scope.params.apptInfo).then(function (res) {
+                    //     if (res.data !== undefined && res.data !== null && res.data !== '') {
+                    //         if (res.data.DOCTOR_ID !== undefined && res.data.DOCTOR_ID !== null && res.data.DOCTOR_ID !== '') {
+                    //             DoctorService.getById(res.data.DOCTOR_ID).then(function (res2) {
+                    //                 if (res2 !== null && res2 !== undefined && res2 !== '') {
+                    //                     scope.doctor = res2;
+                    //                 }
+                    //             })
+                    //         }
+                    //     }
+                    // })
+
+                    var userInfo = $cookieStore.get('userInfo');
+                    var apptInfo = {user_id: userInfo.id};
+                    DocumentService.getDoctor(apptInfo).then(function(result){
+                        if(result.status === "error") toastr.error("Unexpected error!","Error");
+                        else if(result.status === "no doctor") toastr.error("The account treating this workcover have no doctor link with it", "Error!");
+                        else {
+                            console.log('this is doctor', result);
+                            scope.doctor = result.data[0];
                         }
                     })
                     if(scope.params.edit === true && scope.params.workcover){
@@ -92,6 +103,7 @@ angular.module('app.loggedIn.waworkcover.general.directive',[])
                         } //end for
                         
                         if(scope.params.edit === false){
+                            postData.Created_by = $cookieStore.get('userInfo').id;
                             WaWorkCoverService.generaladd(postData).then(function(result){
                                 if(result.status === 'success'){
                                     toastr.success('Add successfully!','Success!');

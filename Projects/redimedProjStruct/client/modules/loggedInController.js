@@ -2,7 +2,7 @@ angular.module("app.loggedIn.controller",[
 ])
 
 
-.controller("callDialogController",function($scope,callModal, $state,$modalInstance,$modal, UserService,socket,toastr ,userInfo,$cookieStore,notify, opentokRoom,patientId){
+.controller("callDialogController",function($scope, $state,$modalInstance,$modal, UserService,socket,toastr ,userInfo,$cookieStore,notify, opentokRoom,patientId){
 
         var audio = new Audio('theme/assets/notification.mp3');
         audio.loop = true;
@@ -39,7 +39,9 @@ angular.module("app.loggedIn.controller",[
 
             $modalInstance.close();
 
-            popup($state.href("call",{apiKey:opentokRoom.apiKey,sessionId:opentokRoom.sessionId,token:opentokRoom.token,callUser: userInfo.id, isCaller: 0, patientId: patientId}));
+            popup($state.href("make_call",{apiKey:opentokRoom.apiKey,sessionId:opentokRoom.sessionId,token:opentokRoom.token,callUser: userInfo.id, isCaller: 0, patientId: patientId}));
+
+            // popup($state.href('test_call',{apiKey:opentokRoom.apiKey, clientId:opentokRoom.clientId, callUser: userInfo.id, isCaller: 0, patientId:patientId}));
         }
 
         var newwin = null;
@@ -50,13 +52,13 @@ angular.module("app.loggedIn.controller",[
              params += ', top=0, left=0';
              params += ', fullscreen=yes';
 
-            if ((newwin == null) || (newwin.closed))
+            if ((window.calling_screen == null) || (window.calling_screen.closed))
             {
-                newwin=window.open(url,'RedimedCallingWindow', params);
-                newwin.focus();
+                window.calling_screen = window.open(url,'RedimedCallingWindow', params);
+                window.calling_screen.focus();
             }
 
-            if(newwin != null && !newwin.closed)
+            if(window.calling_screen != null && !window.calling_screen.closed)
                 window.open('','RedimedCallingWindow','');
             return false;
         }
@@ -66,6 +68,27 @@ angular.module("app.loggedIn.controller",[
 .controller("loggedInController", function(beforeUnload,$scope,$window,$timeout,localStorageService, $state, $cookieStore,$modal,$filter, UserService,$http,$interval,$q, ConfigService,rlobService,$timeout,socket,toastr){
 
     $scope.isShow = true;
+
+    socket.removeAllListeners();
+
+    socket.on('reconnect', function() {
+        if ($cookieStore.get("userInfo"))
+            socket.emit("reconnected", $cookieStore.get("userInfo").id);
+    })
+
+    socket.on('reconnect_failed', function() {
+        toastr.error("Disconnect From Server! Please Login Again!");
+        closeWindow();
+        $cookieStore.remove("userInfo");
+        $cookieStore.remove("companyInfo");
+        $cookieStore.remove("doctorInfo");
+        $cookieStore.remove("fromState");
+        $cookieStore.remove("toState");
+        $cookieStore.remove("isRemember");
+
+        $state.go("security.login",null,{location: "replace", reload: true});
+    })
+
 
     $scope.$on('onBeforeUnload', function (e, confirmation) {
         confirmation.message = "Your sure want to leave this page!";
@@ -79,25 +102,33 @@ angular.module("app.loggedIn.controller",[
         }
     });
 
+    function closeWindow(){
+        var callingWindow= window.open('','RedimedCallingWindow', '');
+        callingWindow.focus();
+        callingWindow.close();
+
+        var whiteboardWindow = window.open('','RedimedWhiteboard', '');
+        whiteboardWindow.focus();
+        whiteboardWindow.close();
+    }
 
     socket.on("forceLogout",function(){
-
-        toastr.error("Someone Is Logged Into Your Account!");
-
+        closeWindow();
+        toastr.error("Please Login Again!");
         $cookieStore.remove("userInfo");
         $cookieStore.remove("companyInfo");
         $cookieStore.remove("doctorInfo");
         $cookieStore.remove("fromState");
+        $cookieStore.remove("isRemember");
         $state.go("security.login",null,{location: "replace", reload: true});
 
-        socket.removeAllListeners();
     })
 
     function cancelListenerHandler(){
         console.log("Remove Success");
     }
 
-    socket.removeListener('messageReceived', cancelListenerHandler());
+    socket.removeListener('messageReceived',cancelListenerHandler);
 
     socket.on("messageReceived",function(fromId,fromUser,message){
         if(message.type == 'call')
@@ -119,7 +150,7 @@ angular.module("app.loggedIn.controller",[
                             }
 
                             var modalInstance = $modal.open({
-                            templateUrl: 'common/views/dialog/callDialog.html',
+                            templateUrl: 'modules/makeCall/views/dialogs/callDialog.html',
                             controller: 'callDialogController',
                             size: 'sm',
                             resolve:{
@@ -135,6 +166,11 @@ angular.module("app.loggedIn.controller",[
                                             sessionId: message.sessionId,
                                             token: message.token
                                         }
+
+                                    // var opentokRoom = {
+                                    //     apiKey: message.apiKey,
+                                    //     clientId: message.clientId
+                                    // }
                                     return opentokRoom;
                                 },
                                 patientId: function(){
@@ -361,6 +397,8 @@ angular.module("app.loggedIn.controller",[
 
             localStorageService.clearAll();
 
+            closeWindow();
+
             $state.go("security.login",null,{location: "replace", reload: true});
 
             socket.removeAllListeners();
@@ -370,16 +408,21 @@ angular.module("app.loggedIn.controller",[
 
     // Toggle Menu
     $scope.toggle = false;
-
+    $scope.change_menu = false;
     $scope.toggleMenu = function(){
+        
         $scope.toggle = !$scope.toggle;
 
         if($scope.toggle){
             angular.element("#main-page").addClass("page-sidebar-closed");
             angular.element("#main-menu").addClass("page-sidebar-menu-closed");
+            $scope.change_menu = true;
+            console.log($scope.change_menu);
         }else{
             angular.element("#main-page").removeClass("page-sidebar-closed");
             angular.element("#main-menu").removeClass("page-sidebar-menu-closed");
+            $scope.change_menu = false;
+            console.log($scope.change_menu);
         }
     }
     $scope.$on('$idleTimeout', function() {

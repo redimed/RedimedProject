@@ -29,6 +29,8 @@ app.post("/api/meditek/v1/patient/claim/add", mdtClaimController.postAdd);
 
 //MODULE APPOINTMENT
 app.get("/api/meditek/v1/appointment/byId", mdtAppointmentController.postById);
+//phu
+app.post("/api/meditek/v1/patient/appt_add", mdtPatientController.postAddAppt);
 
 //MODULE COMPANY
 app.post("/api/meditek/v1/company/search", mdtCompanyController.postSearch);
@@ -231,4 +233,10 @@ app.post('/api/meditek/v1/script/add', ScriptController.postAdd);
 app.post('/api/meditek/v1/script/edit', ScriptController.postEdit);
 app.post('/api/meditek/v1/script/disable', ScriptController.postDisable);
 app.post('/api/meditek/v1/script/remove', ScriptController.postRemove);
+app.post('/api/meditek/v1/script/signature', ScriptController.postSing);
+app.post('/api/meditek/v1/script/addScriptHead', ScriptController.postAddScriptHead);
+app.post('/api/meditek/v1/script/listscriptHead', ScriptController.postListScriptHead);
+app.post('/api/meditek/v1/script/editcriptHead', ScriptController.postEditScriptHead);
+//app.post('/api/meditek/v1/script/updatescriptHead', ScriptController.postUpdateScriptHead);
+//app.post('/api/meditek/v1/script/removescriptHead', ScriptController.postRemoveScriptHead);
 /* END SCRIPT */

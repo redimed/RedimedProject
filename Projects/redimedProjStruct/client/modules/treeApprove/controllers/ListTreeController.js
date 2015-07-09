@@ -78,7 +78,7 @@ angular.module("app.loggedIn.treeApprove.listDepartment.controller", [])
 
         $scope.goTotreeApproveDetail = function(IdTree) {
             localStorageService.set("IdTree", IdTree);
-            $state.go("loggedIn.DetailTree");
+            $state.go("loggedIn.treeApprove.DetailTree");
         };
 
         $scope.DeleteTree = function(groupId) {

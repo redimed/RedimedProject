@@ -10,13 +10,9 @@ angular.module('starter.user.services',[])
 
         userService.menu = function(id){
             var menuApi = userApi.all("menu/side");
-
             return menuApi.post({id:id,isWeb:false});
-
             return menuApi.post({id:id, isWeb:false});
-
         }
-
         userService.getFunction = function(id){
             var a = userApi.all('function/id');
             return a.post({id:id});
@@ -36,6 +32,11 @@ angular.module('starter.user.services',[])
             var info = userApi.all('users/id');
             return info.post({id:id});
         }
+         userService.getPatientMenu = function(id){
+            var info = userApi.one('im/menu');
+            return info.get();
+        }
+      
 
         return userService;
     })

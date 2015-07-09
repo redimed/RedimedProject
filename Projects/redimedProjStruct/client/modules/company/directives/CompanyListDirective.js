@@ -21,10 +21,12 @@ angular.module('app.loggedIn.company.directives.list', [])
 				Company_name:'',
 				Industry:'',
 				Addr:'',
-				country:''
+				from_date:'',
+				to_date:''
 			}
 			scope.onRowClick = function(row){
 				scope.updateCompany.id = row.id;
+				scope.updateCompany.to_date = null;
 				// scope.updateCompany.patient_id =$stateParams.patientId;// tannv.dts@gmail.com comment
 				scope.updateCompany.patient_id =$stateParams.patient_id; // tannv.dts@gmail.com add
 				var postData = angular.copy(scope.updateCompany);
@@ -96,7 +98,7 @@ angular.module('app.loggedIn.company.directives.list', [])
 			      }
 			    })
 			    .result.then(function(row){
-					
+					scope.company.load();
 					
 				})
 			}
@@ -125,6 +127,7 @@ angular.module('app.loggedIn.company.directives.list', [])
 				scope.company.load();
 			}
 			scope.disableCompany = function(row){
+
 				var postData ={
 					// patient_id :$stateParams.patientId,//tannv.dts@gmail.com comment
 					patient_id :$stateParams.patient_id,// tannv.dts@gmail.com add
@@ -140,10 +143,10 @@ angular.module('app.loggedIn.company.directives.list', [])
 			}
 			scope.Select = function(){
 				var modalInstance = $modal.open({
-			      templateUrl: 'modules/company/dialogs/templates/listNotFollowPatient.html',
-			      controller: 'CompanyListNoFollowDialog',
-			      size :'',
-			      resolve: {
+			      	templateUrl: 'modules/company/dialogs/templates/listNotFollowPatient.html',
+			      	controller: 'CompanyListNoFollowDialog',
+			      	size :'',
+			      	resolve: {
 						listId: function(){
 							return scope.company.list;
 						}

@@ -6,7 +6,7 @@
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
-            <a ui-sref="#">View Timesheets History</a>
+            <a ui-sref="loggedIn.timesheetHome.timesheetHistory">View Timesheets History</a>
             <i class="fa fa-angle-right"></i>
         </li>
     </ul>
@@ -25,17 +25,20 @@
             <table class="responsive table table-bordered" ng-show="!list.loading">
                 <thead ng-show="list.result!==null">
                     <tr>
-                        <th style="width:200px;">
+                        <th style="width:15%;">
                             <div class="th">
-                                For The Week
+                                <span class="glyphicon glyphicon-chevron-up" ng-click="clickAsc()" ng-class="{'active': searchObjectMap.order[0]==='ASC'}">
+                            </span>
+                                <span class="glyphicon glyphicon-chevron-down" ng-click="clickDesc()" ng-class="{ 'active': searchObjectMap.order[0]==='DESC' } ">
+                            </span> For The Week
                             </div>
                         </th>
-                        <th style="width:150px;">
+                        <th style="width:13%;">
                             <div class="th">
                                 Total Worked Hours
                             </div>
                         </th>
-                        <th style="width:200px;">
+                        <th style="width:16%;">
                             <div class="th">
                                 Status
                             </div>
@@ -49,12 +52,12 @@
                 </thead>
                 <tbody>
                     <tr ng-show="list.result!==null || (list.result.length!==0 && list.result!==null)" style="font-size:14px;">
-                        <td style="width:200px;">
-                            <input class="week-picker form-control input-sm " ng-model="dateWeekFrom" ng-change="changeDate(dateWeekFrom)" style="text-align:center;">
+                        <td style="width:15%;">
+                            <input class="week-picker form-control input-sm " ng-model="dateWeekFrom" ng-change="changeDate(dateWeekFrom)" style="text-align:left;">
                         </td>
-                        <td style="width:150px;">
+                        <td style="width:13%;">
                         </td>
-                        <td style="width:200px;">
+                        <td style="width:16%;">
                             <select class="form-control input-sm" ng-options="stt.code as stt.name for stt in listStatus" ng-model="searchObjectMap.select['time_tasks_week.task_status_id']" ng-change="loadList()"></select>
                         </td>
                         <td></td>
@@ -65,9 +68,9 @@
                         </td>
                     </tr>
                     <tr ng-repeat="l in list.result track by $index" style="cursor: pointer; " ng-dblclick="view(l)">
-                        <td style="text-align:left;width:200px;"><span class="text-info">{{l.start_date | date: "dd/MM/yyyy"}}</span> to <span class="text-info">{{l.end_date | date: "dd/MM/yyyy"}}</span></td>
-                        <td style="text-align:center;width:150px;">{{getFortMatTimeCharge(l.time_charge)}}</td>
-                        <td style="text-align:left; width:200px;"><span ng-class="{'reject':l.name==='Rejected','submited':l.name==='Submitted', 'approved':l.name==='Approved', 'pending':l.name==='Awaiting for Submit',
+                        <td style="text-align:left;width:15%;"><span class="text-info">{{l.start_date | date: "dd/MM/yyyy"}}</span> to <span class="text-info">{{l.end_date | date: "dd/MM/yyyy"}}</span></td>
+                        <td style="text-align:center;width:13%;">{{getFortMatTimeCharge(l.time_charge)}}</td>
+                        <td style="text-align:left; width:16%;"><span ng-class="{'reject':l.name==='Rejected','submited':l.name==='Submitted', 'approved':l.name==='Approved', 'pending':l.name==='Awaiting for Submit',
                             're-submitted':l.name==='Re-submitted'}">{{l.name}}</td>
                         <td style="text-align:left;">{{(l.comments===null||l.comments==="")?"":l.comments}}</span></td>
                     </tr>

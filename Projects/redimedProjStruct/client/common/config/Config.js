@@ -507,16 +507,24 @@ angular.module('app.config', [])
             {code:"bottle", label:"bottle"}
         ])
     .constant("SCORE_TYPE", [
-            {id:3,label:'Upper Limb Grip Strength'},
-            {id:10,label:'Auto Max score and Rating'},
-            {id:11, label:'Hamstring Flexibility'},
-            {id:4,label:'Cardiovascular Fitness'},
-            {id:6,label:'Core Strength'},
-            {id:8,label:'Functional Task Rating'},
-            {id:7,label:'Weight Test Rating'},
-            {id:9,label:'Weight Test Rating (has managed weight info)'},
-            {id:12,label:'Lower Limb Function'},
-            {id:5,label:'Summary Rating and Score'},
+            {id:3,label:'Upper Limb Grip Strength',section:'Section 2: General Physical Capacity Assessment'},
+            {id:11, label:'Hamstring Flexibility',section:'Section 2: General Physical Capacity Assessment'},
+            {id:4,label:'Cardiovascular Fitness',section:'Section 2: General Physical Capacity Assessment'},
+            {id:6,label:'Core Strength',section:'Section 2: General Physical Capacity Assessment'},
+            {id:12,label:'Lower Limb Function',section:'Section 2: General Physical Capacity Assessment'},
+            {id:10,label:'Auto Max score and Rating',section:'Section 2: General Physical Capacity Assessment'},
+
+            {id:13,label:'Ability Test with description',section:'Section 3: Job-Specific Functional Task Assessment'},
+            {id:16,label:'Ability Test without description',section:'Section 3: Job-Specific Functional Task Assessment'},
+            {id:7,label:'Weight Test Rating',section:'Section 3: Job-Specific Functional Task Assessment'},
+            {id:9,label:'Weight Test Rating (has managed weight info)',section:'Section 3: Job-Specific Functional Task Assessment'},
+            {id:18,label:'Comfortable Weight Test Rating (has comfortable managed weight info)',section:'Section 3: Job-Specific Functional Task Assessment'},
+            {id:17,label:'Height Test Rating (has managed height info)',section:'Section 3: Job-Specific Functional Task Assessment'},
+            {id:19,label:'Comfortable Height Test Rating (has comfortable managed height info)',section:'Section 3: Job-Specific Functional Task Assessment'},
+            {id:15,label:'Other Job-Specific Functional Task Assessment (No Job Demand)',section:'Section 3: Job-Specific Functional Task Assessment'},
+            {id:8,label:'Functional Task Rating',section:'Section 3: Job-Specific Functional Task Assessment'},
+
+            {id:5,label:'Summary Rating and Score',section:'Summary section'},
         ])
     .constant("COMMENT_TYPE", [
             {id:1,label:'Checkbox'},
@@ -532,9 +540,19 @@ angular.module('app.config', [])
             {id:2,label:'Normal Unable/Partial/Able'},
             {id:4,label:'Unable=Partial=0, Able=1'},
             {id:5,label:'Unable=0, Partial=1, Able=2'},
-            {id:3,label:'Yes/No'}
+            {id:3,label:'Yes/No'},
+            {id:11,label:'Normal/Abnormal'},
+            {id:6,label:'Dominant Hand'},
+            {id:7,label:'Job Demand (weight in kg)'},
+            {id:8,label:'Job Demand (distance in m)'},
+            {id:9,label:'Job Demand (height in mm)'},
+            {id:10,label:'Job Demand (weight in g)'},
         ])
-.factory('ConfigService', function(VALUE_TYPE, SCORE_TYPE, COMMENT_TYPE, TIMETABLE_DAY_OF_WEEK, PRIORITY_OPTION, DAY_OF_WEEK, NUMBER_OF_WEEK, SEX_LIST, YES_NO_OPT, ACC_TYPE, APP_TYPE, APPT_STATUS, MONTH_IN_YEAR, INVOICE_STATUS, RECALL_PERIOD, RECALL_REMIND, MEDICINE_UNIT, Restangular) {
+    .constant('SECTION_DISPLAY_TYPE', [
+            {id:0, label:'Table'},
+            {id:1, label:'Other style (due to score type options)'},
+        ])
+.factory('ConfigService', function(SECTION_DISPLAY_TYPE, VALUE_TYPE, SCORE_TYPE, COMMENT_TYPE, TIMETABLE_DAY_OF_WEEK, PRIORITY_OPTION, DAY_OF_WEEK, NUMBER_OF_WEEK, SEX_LIST, YES_NO_OPT, ACC_TYPE, APP_TYPE, APPT_STATUS, MONTH_IN_YEAR, INVOICE_STATUS, RECALL_PERIOD, RECALL_REMIND, MEDICINE_UNIT, Restangular) {
     var configService = {};
     var configApi = Restangular.all("api/erm");
     var mdtApi = Restangular.all("api/meditek/v1");
@@ -550,6 +568,10 @@ angular.module('app.config', [])
 
     configService.value_type_option = function(){
         return VALUE_TYPE;
+    }
+
+    configService.section_display_type_option = function(){
+        return SECTION_DISPLAY_TYPE;
     }
 
     configService.rank_type_option = function(){
@@ -1029,7 +1051,7 @@ angular.module('app.config', [])
             return '';
 
         var k = string.slice(0,10).split('-');
-        console.log(k);
+        //console.log(k);
 
         return k[2]+'/'+k[1]+'/'+k[0];
     };

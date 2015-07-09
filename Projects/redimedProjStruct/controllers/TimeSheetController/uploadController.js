@@ -16,10 +16,21 @@
              var tmp_path = req.files.file.path;
              var taget_path = tagetFolder + "\\" + req.files.file.name;
              fs.rename(tmp_path, taget_path, function(err) {
-                 if (err) throw err;
+                 if (err) {
+                     throw err;
+                     res.json({
+                         status: "error"
+                     });
+                     return;
+                 }
                  fs.unlink(tmp_path, function() {
-                     if (err) throw err;
-                     else {
+                     if (err) {
+                         throw err;
+                         res.json({
+                             status: "error"
+                         });
+                         return;
+                     } else {
                          //INSERT PATH FILE
                          db.time_task_file.max('file_id')
                              .success(function(maxId) {

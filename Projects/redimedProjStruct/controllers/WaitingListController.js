@@ -86,5 +86,21 @@ module.exports = {
 		.error(function(error){
 			res.json(500, {error: error,sql:sql});	
 		})
+	},
+	postGetPatientFromId : function(req,res){
+		var postData = req.body.data;
+		var sql = knex()
+				.select('*')
+				.from('cln_patients')
+				.where('Patient_id',postData)
+				.toString();
+
+		db.sequelize.query(sql)
+		.success(function(data){
+			res.json({data: data,sql:sql});
+		})
+		.error(function(error){
+			res.json(500, {error: error,sql: sql});
+		})
 	}
 }

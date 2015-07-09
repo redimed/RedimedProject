@@ -1,0 +1,91 @@
+<div id="appointment" style="overflow-x: scroll;">
+	<div class="row">
+		<!-- DATEPICKER -->
+		<div class="col-md-4">
+			<div class="form-group">
+				<label class="un-label-header un-bgWhite">Datepicker</label>
+				<div class="un-div-content un-bgWhite-boxshadow-bottom">
+					<input custom-date ng-model="appointment.search.datepicker" ng-change="appointment.load()" style="width: 100%; border: 0;" class="form-control un-padding-right-top-bottom-10-left-15">
+				</div>
+			</div>
+		</div>
+		<style type="text/css">
+			.un_group_black_header{
+				z-index: 0;
+			}
+		</style>
+		<!-- END DATEPICKER -->
+
+		<!-- REDIMEDSITE -->
+		<div class="col-md-4">
+			<div class="form-group">
+				<label class="un-label-header un-bgWhite">Redimed Site</label>
+				<div class="un-div-content un-bgWhite-boxshadow-bottom">
+		        	<select ng-options="s.id as s.Site_name for s in site.list" ng-model="appointment.search.site_id"
+					ng-change="appointment.load()" style="width: 100%; border: 0;" class="form-control un-padding-right-top-bottom-10-left-15">
+					</select>	
+		        </div>
+			</div>
+		</div>
+		<!-- END REDIMEDSITE -->
+
+		<!-- CLINICAL DEPT -->
+		<div class="col-md-4">
+			<div class="form-group">
+				<label class="un-label-header un-bgWhite">Clinical Dept</label>
+				<div class="un-div-content un-bgWhite-boxshadow-bottom">
+					<select ng-options="c.CLINICAL_DEPT_ID as c.CLINICAL_DEPT_NAME for c in clinicalDept.list" 
+					ng-model="appointment.search.clinical_dept_id"
+					class="form-control"
+					ng-change="appointment.load()" style="width: 100%; border: 0;" class="form-control un-padding-right-top-bottom-10-left-15">
+						<option value="">All</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<!-- END CLINICAL DEPT -->
+	</div>
+	<div class="appointment" style="width: 140%;">
+		<div class="appointment-row">
+			<div class="appointment-block-times" style="background: rgb(96, 99, 94)">
+				<label style="color: #ffffff; font-weight: bold;">Times</label>
+			</div>
+			<div class="appointment-block-header" ng-repeat="doctor in doctor.headers">
+					<label style="color: #ffffff; margin-bottom: 0; padding-top: 10px; padding-bottom: 15px; padding-left: 10px; padding-right: 10px; font-weight: bold; background: rgb(96, 99, 94)"
+						ng-click="goToCalendarDetail(doctor)">
+						{{doctor.NAME}}
+					</label>
+			</div>
+		</div>
+		<div class="appointment-row" ng-repeat="app in appointment.list">
+			<div class="appointment-block-time">{{app.FROM_TIME}}</div>
+			<div class="appointment-block" ng-repeat="col in app.doctors" ng-class="{'block-active': col.PATIENTS !== '###'}"
+				id="appointment-{{col.CAL_ID}}"
+				ng-style="{'background-color': '{{col.SERVICE_COLOR}}', 'margin-bottom': col.margin === 'yes' ? '3px': '0px', 'height': col.height, 'border-top': col.border === 'yes' ? '1px solid rgb(96, 99, 94)': '0px'}">
+				<span ng-if="col.PATIENTS === 'MESS_SYS_010'">
+					<a ng-click="appointment.onOrder(col.CAL_ID)">No Patient {{col.CAL_ID}}</a>
+				</span>
+				<span ng-if="col.PATIENTS === '###'">
+					
+				</span>
+				<span ng-if="col.PATIENTS === 'ok'">
+					<span ng-repeat="patient in col.patients">
+						<a ng-click="goToAppDetail(col.CAL_ID, patient.Patient_id)"
+							ng-right-click="appointment.onRightClick($event, app, col, patient)">
+							<span>
+								{{patient.First_name}} {{patient.Sur_name}}
+							</span>
+							&nbsp;
+							<a ng-click="showDropdown(patient, col)">
+								<i class="fa fa-caret-right"></i>
+							</a>
+						</a>
+						<span ng-if="col.patients.length > 1 && $index < col.patients.length-1">
+							<br/>
+						</span>
+					</span>
+				</span>
+			</div>
+		</div>
+	</div> <!-- END APPOINTMENT -->
+</div>

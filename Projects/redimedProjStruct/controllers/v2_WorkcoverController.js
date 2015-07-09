@@ -69,14 +69,16 @@ module.exports = {
 			where: {patient_id: patient_id},
 			include: [
 				{ 
-					model: db.Appointment , as: 'Appointment',
-					attributes: ['CAL_ID', 'FROM_TIME', 'TO_TIME'],
-					include: [
-						{ 
-							model: db.Doctor , as: 'Doctor',
-							attributes: ['doctor_id', 'NAME']
-						}
-					]
+					// model: db.Appointment , as: 'Appointment',
+					// attributes: ['CAL_ID', 'FROM_TIME', 'TO_TIME'],
+					// include: [
+					// 	{ 
+					// 		model: db.Doctor , as: 'Doctor',
+					// 		attributes: ['doctor_id', 'NAME']
+					// 	}
+					// ]
+					model: db.User, as:'User',
+					attributes:['Booking_Person']
 				},
 			],
 			// offset: offset,

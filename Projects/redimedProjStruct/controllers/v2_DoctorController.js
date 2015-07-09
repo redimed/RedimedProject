@@ -97,7 +97,7 @@ module.exports = {
 			" WHERE calendar.`DOCTOR_ID`=? AND DATE(calendar.`FROM_TIME`)>=? AND DATE(calendar.`FROM_TIME`)<=?    "+
 			" AND `apptPatient`.`appt_status`=?                                                                   ";
 
-		kiss.executeQuery(req,sql,[doctor_id,fromDate,toDate,invoiceUtil.apptStatus.workInProgress.value],function(rows){
+		kiss.executeQuery(req,sql,[doctor_id,fromDate,toDate,invoiceUtil.apptStatus.inConsult.value],function(rows){
 			res.json({status:'success',data:rows});
 		},function(err){
 			kiss.exlog(fHeader,"Loi truy van lay data",err);
@@ -178,4 +178,32 @@ module.exports = {
 			res.json(500, {"status": "error", "message": error});
 		});
 	},
+	postDoctorInfoByUserId:function(req,res){
+		var user_id = kiss.checkData(req.body.user_id)?req.body.user_id:'';
+		if (!kiss.checkListData(user_id)) {
+			kiss.exlog('postDoctorInfoByUserId','loi data truyen den');
+			res.json({status:'fail'});
+			return;
+		}; 
+		var sql = "SELECT * FROM `doctors` WHERE `User_id` = ?";
+		req.getConnection(function(err,connection)
+        {
+            var query = connection.query(sql,[user_id],function(err,rows)
+            {
+                if(err)
+                {
+                    kiss.exlog("postDoctorInfoByUserId",err,query.sql);
+                    res.json({status:'error'});
+                }
+                else
+                {
+                	if (rows.length>0) {
+                    	res.json({status:'success',data:rows[0]});    
+                	}else{
+                    	res.json({status:'fail'});    
+                	};
+                }
+            });
+        }); 
+	}
 }

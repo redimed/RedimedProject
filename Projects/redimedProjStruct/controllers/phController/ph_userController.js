@@ -402,7 +402,7 @@ module.exports = {
 		db.sequelize.query(sql, null, {raw:true}, [patientId])
 			.success(function(data){
 				console.log("__________",data[0]);
-                if(typeof data[0] == 'undefined' || data[0].user_img == null){
+                if(typeof data[0] == 'undefined'){
             		console.log("------not data avatar");
                 }
                 else{
@@ -426,7 +426,8 @@ module.exports = {
 				"INNER JOIN `ph_phamacists` p ON pc.`phamacist_id` = p.`phamacist_id` " +
 				"INNER JOIN `ph_posts` po ON pc.`post_id` = po.`post_id` " + 
 				"INNER JOIN `ph_company_shops` cs ON pc.`shop_id` = cs.`shop_id` " +
-				"WHERE p.`user_id` = ? ";
+				"WHERE p.`user_id` = ? " +
+				"ORDER BY po.`post_id` DESC ";
 		db.sequelize.query(sql, null, {raw:true}, [req.body.user_id])
 			.success(function(rows){
 				console.log("---------------success", rows);
@@ -437,37 +438,37 @@ module.exports = {
 			})
 	},
 
-	searchPost: function(req, res){
-		var data = req.body;
-		console.log("----------data", data);
+	// searchPost: function(req, res){
+	// 	var data = req.body;
+	// 	console.log("----------data", data);
 
-		// console.log("----------Keyword", data.key);
-		// console.log("----------Company", data.company);
-		// console.log("----------Start_Date", data.start_date);
+	// 	// console.log("----------Keyword", data.key);
+	// 	// console.log("----------Company", data.company);
+	// 	// console.log("----------Start_Date", data.start_date);
 
-		var sql = {};
-				if(data.selected === 'com') {
-					sql = 	"SELECT * FROM `ph_posts` p " +
-				  	"INNER JOIN `ph_companies` c ON p.`company_id` = c.`company_id` " + 
-				  	"WHERE c.`company_name` LIKE ? " ;
-	            }
-	            if (data.selected === 'key') {
-	            	sql = 	"SELECT * FROM `ph_posts` p " +
-				  	"INNER JOIN `ph_companies` c ON p.`company_id` = c.`company_id` " + 
-				  	"WHERE p.`job_description` LIKE ?  ";
-	            };
-	            console.log("----------------sql", sql);
-		db.sequelize.query(sql, null, {raw:true}, ["%" + data.data_post + "%"])
-			.success(function(rows){
-				console.log("---------------success", rows);
-				res.json({status:'success', data:rows});
-			})
-			.error(function(err){
-				res.json({status:'error', err:err});
-			})
-	},
+	// 	var sql = {};
+	// 			if(data.selected === 'com') {
+	// 				sql = 	"SELECT * FROM `ph_posts` p " +
+	// 			  	"INNER JOIN `ph_companies` c ON p.`company_id` = c.`company_id` " + 
+	// 			  	"WHERE c.`company_name` LIKE ? " ;
+	//             }
+	//             if (data.selected === 'key') {
+	//             	sql = 	"SELECT * FROM `ph_posts` p " +
+	// 			  	"INNER JOIN `ph_companies` c ON p.`company_id` = c.`company_id` " + 
+	// 			  	"WHERE p.`job_description` LIKE ?  ";
+	//             };
+	//             console.log("----------------sql", sql);
+	// 	db.sequelize.query(sql, null, {raw:true}, ["%" + data.data_post + "%"])
+	// 		.success(function(rows){
+	// 			console.log("---------------success", rows);
+	// 			res.json({status:'success', data:rows});
+	// 		})
+	// 		.error(function(err){
+	// 			res.json({status:'error', err:err});
+	// 		})
+	// },
 
-	getDistance: function(req, res){
+	getDistanceData: function(req, res){
 		var user = req.body.user;
 
 		if (user.user_type == "Company") {
@@ -490,7 +491,7 @@ module.exports = {
 
 	getJobTitle: function(req, res){
 		var title = req.body.title;
-
+		console.log(title);
 		var sql = 	"SELECT * FROM `ph_shops_post` sp " +
 					"INNER JOIN `ph_posts` po ON sp.`post_id` = po.`post_id` " +
 					"INNER JOIN `ph_company_shops` cs ON sp.`shop_id` = cs.`shop_id` " +
@@ -498,7 +499,7 @@ module.exports = {
 
 		db.sequelize.query(sql, null, {raw:true}, ["%" + title + "%"])
 			.success(function(rows){
-				console.log("---------------title", rows);
+				// console.log("---------------title", rows);
 				res.json({status:'success', title:rows});
 			})
 			.error(function(err){
@@ -541,6 +542,64 @@ module.exports = {
 			})
 			.error(function(err){
 				console.log("errorDistance", err);
+			})
+	},
+
+	insertTokenId: function(req, res){
+		var tokenID = req.body.tokenID;
+		var userID = req.body.userID;
+		console.log(tokenID);
+		var sql = "UPDATE `ph_users` u SET u.tokenID = ? WHERE u.`user_id` = ?"
+		db.sequelize.query(sql, null, {raw:true}, [tokenID, userID])
+			.success(function(rows){
+				console.log("---------------success");
+				// res.json({status:'success', data:rows});
+			})
+			.error(function(err){
+				console.log("errorinsertTokenId", err);
+			})
+	},
+
+	delTokenId: function(req, res){
+		// var tokenID = req.body.tokenID;
+		var userID = req.body.userID;
+		console.log(tokenID);
+		var sql = "UPDATE `ph_users` u SET u.tokenID = ? WHERE u.`user_id` = ?"
+		db.sequelize.query(sql, null, {raw:true}, [null, userID])
+			.success(function(rows){
+				console.log("---------------success");
+			})
+			.error(function(err){
+				console.log("errordelTokenId", err);
+			})
+	},
+
+	postIsSelect: function(req, res){
+		var user_id = req.body.user_id;
+		// var sql = "SELECT ph.`phamacist_id` FROM `ph_phamacists` ph " +
+		// "WHERE ph.`user_id` = ? ";
+		var sql = "SELECT * FROM `ph_post_cadidates` pc " +
+		"INNER JOIN `ph_phamacists` p ON pc.`phamacist_id` = p.`phamacist_id` " +
+		"INNER JOIN `ph_posts` po ON pc.`post_id` = po.`post_id` " + 
+		"INNER JOIN `ph_company_shops` cs ON pc.`shop_id` = cs.`shop_id` " +
+		"WHERE p.`user_id` = ? ";
+		db.sequelize.query(sql, null, {raw:true}, [user_id])
+			.success(function(rows){
+				console.log(rows);
+				// var sql = "SELECT * FROM `ph_post_cadidates` pc " +
+				// "WHERE pc.`phamacist_id` = ? " + 
+				// "AND pc.`isSelect` = 0 ";
+				// db.sequelize.query(sql, null, {raw:true}, [rows[0].phamacist_id, 0])
+				// 	.success(function(rows){
+				// 		console.log("-------postIdSelect", rows)
+						res.json({status:'success', dataApply:rows});
+				// 	})
+				// 	.error(function(err){
+				// 		console.log("postIsSelect", err);
+				// 	})
+			})
+			.error(function(err){
+				console.log("postIsSelect", err);
 			})
 	},
 }

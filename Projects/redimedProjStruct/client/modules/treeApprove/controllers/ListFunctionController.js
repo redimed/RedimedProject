@@ -40,7 +40,7 @@ angular.module("app.loggedIn.treeApprove.listSystem.controller", [])
         //FUNCTION SET SYSTEMTEMP LOCALSTORE
         $scope.goToTree = function(IdFunction) {
             localStorageService.set("IdFunction", IdFunction);
-            $state.go("loggedIn.ListTree");
+            $state.go("loggedIn.treeApprove.ListTree");
         };
         //END FUNCTION SET SYSTEMTEMP LOCALSTORE
 
@@ -168,7 +168,7 @@ angular.module("app.loggedIn.treeApprove.listSystem.controller", [])
                                     toastr.error("Add function fail!", "Error");
                                 } else if (responsive.status === "success") {
                                     $modalInstance.close();
-                                    $state.go("loggedIn.ListFunction", null, {
+                                    $state.go("loggedIn.treeApprove.ListFunction", null, {
                                         "reload": true
                                     });
                                     toastr.success("Add function success!", "success");
@@ -190,7 +190,7 @@ angular.module("app.loggedIn.treeApprove.listSystem.controller", [])
                                     toastr.error("Update function fail!", "Error");
                                 } else if (responsive.status === "success") {
                                     $modalInstance.close();
-                                    $state.go("loggedIn.ListFunction", null, {
+                                    $state.go("loggedIn.treeApprove.ListFunction", null, {
                                         "reload": true
                                     });
                                     toastr.success("Update function success!", "success");
@@ -209,13 +209,10 @@ angular.module("app.loggedIn.treeApprove.listSystem.controller", [])
                 },
                 size: "md"
             });
-            // modalInstance.result.then(function(data) {
-            //     //promise modal
-            //     if (data.status === "success") {
-            //     }
-            //     $scope.loadList();
-            // });
             // END MODULE ADD FUNCTION
+            modalInstance.result.then(function(data) {
+                $scope.loadList();
+            });
         };
 
     });

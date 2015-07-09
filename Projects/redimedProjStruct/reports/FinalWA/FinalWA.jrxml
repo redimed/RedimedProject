@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FinalWA" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="65ddcd00-ad5f-408f-b9e4-cdd2bd5fe60c">
 	<property name="ireport.zoom" value="1.5394743546921197"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="845"/>
+	<property name="ireport.y" value="953"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<parameter name="real_path" class="java.lang.String">
@@ -22,14 +22,16 @@ p.`First_name`, p.`Sur_name`, p.`DOB`, p.`Email`, p.`Mobile`, p.`Home_phone`, CO
 
 c.`Company_name`, c.`Addr`, c.`Phone` AS cPhone, c.`Industry`,
 
-d.`ABN_no`, d.`Address` AS docAddress, d.`Email` AS docEmail, d.`Phone`, SUBSTRING_INDEX(d.`Signature`, ',', -1) AS docSign, d.`NAME` AS FullName
+d.`ABN_no`, d.`Address` AS docAddress, d.`Email` AS docEmail, d.`Phone`, SUBSTRING_INDEX(d.`Signature`, ',', -1) AS docSign, d.`NAME` AS FullName,
+u.`Booking_Person`
 
 FROM `th_final_assessment` f
 INNER JOIN `cln_appointment_calendar` a ON f.`cal_id` = a.`CAL_ID`
 INNER JOIN `cln_appt_patients` ap on ap.`CAL_ID` = a.`CAL_ID`
 INNER JOIN `cln_patients` p ON ap.`Patient_id` = p.`Patient_id`
 INNER JOIN `companies` c ON p.`company_id` = c.`id`
-INNER JOIN `doctors` d ON a.`DOCTOR_ID` = d.`doctor_id`
+INNER JOIN `users` u ON f.`Created_by` = u.`id`
+INNER JOIN `doctors` d ON u.`id` = d.`User_id`
 WHERE f.`id`=$P{id}]]>
 	</queryString>
 	<field name="examDate" class="java.sql.Timestamp">
@@ -80,7 +82,7 @@ WHERE f.`id`=$P{id}]]>
 	<field name="capaCmt" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="signature" class="java.lang.Object">
+	<field name="signature" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="Creation_date" class="java.sql.Timestamp">
@@ -146,6 +148,9 @@ WHERE f.`id`=$P{id}]]>
 	</field>
 	<field name="docSign" class="java.lang.String"/>
 	<field name="FullName" class="java.lang.String"/>
+	<field name="Booking_Person" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -264,7 +269,7 @@ WHERE f.`id`=$P{id}]]>
 				<textElement verticalAlignment="Middle">
 					<paragraph leftIndent="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{FullName}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{Booking_Person}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="80" y="691" width="191" height="39" uuid="d454fca9-b200-49b6-8f65-a10af5acbdf3"/>

@@ -2,6 +2,7 @@ angular.module('starter.security.services',[])
     .factory("SecurityService", function(Restangular){
         var securityService = {};
         var securityApi = Restangular.all("api");
+        var iosToken = null;
 
         securityService.login = function(options){
             var loginApi = securityApi.all("users/login");
@@ -28,10 +29,19 @@ angular.module('starter.security.services',[])
             var forgotMail = securityApi.one('users/forgotPassword');
             return forgotMail.get({email:email});
         }
-        securityService.signup = function(userInfo) {
+        securityService.signup = function(userInfo, patientInfo) {
             var signUpApi = securityApi.all('im/register');
-            return signUpApi.post({user:userInfo});
+            return signUpApi.post({user:userInfo, patient:patientInfo});
         }
+
+        securityService.getIosToken = function() {
+            return iosToken
+        }
+
+        securityService.setIosToken = function(token) {
+            iosToken = token;
+        }
+
 
         return securityService;
     })

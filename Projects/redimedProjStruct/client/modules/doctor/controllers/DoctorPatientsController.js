@@ -1,19 +1,14 @@
 angular.module("app.loggedIn.doctor.patients.controller", [
     "app.loggedIn.doctor.patients.detail.controller"
 ])
-        .controller("DoctorPatientsController", function ($scope, $state, $cookieStore, DoctorService, localStorageService) {
+        .controller("DoctorPatientsController", function ($scope, $state, $cookieStore, DoctorService, localStorageService,CompanyModel) {
 			var userInfo = $cookieStore.get("userInfo");
 
             var doctorInfo = $cookieStore.get("doctorInfo");
 
+            $scope.isFilterBelowDoctor=1;
+
             if(!doctorInfo) $state.go('loggedIn.home') ;
-            // LOAD DOCTOR DETAIL
-            var loadDoctorDetail = function () {
-                DoctorService.getByUserId(userInfo.id).then(function (data) {
-                    $scope.searchObjectMap.doctor_id = data.doctor_id;
-                })
-            }
-            // END LOAD DOCTOR DETAIL
 
 
             $scope.reset = function () {
@@ -24,7 +19,15 @@ angular.module("app.loggedIn.doctor.patients.controller", [
             //LOAD SEARCH
             $scope.loadList = function () {
                 DoctorService.getByUserId(userInfo.id).then(function (data) {
-                    $scope.searchObjectMap.doctor_id = data.doctor_id;
+                    if($scope.isFilterBelowDoctor==1)
+                    {
+                        $scope.searchObjectMap.doctor_id = data.doctor_id;
+                    }
+                    else
+                    {
+                        delete $scope.searchObjectMap.doctor_id;
+                    }
+                    
                     DoctorService.listPatients($scope.searchObjectMap).then(function (response) {
 						console.log(response);
                         $scope.list = response;
@@ -43,7 +46,27 @@ angular.module("app.loggedIn.doctor.patients.controller", [
             //GO TO DETAIL
             $scope.goToTimetableDetail = function (list) {
 				localStorageService.set("patientTempInfo", list);
-                $state.go("loggedIn.doctor.patients.detail");
+                //$state.go("loggedIn.doctor.patients.detail");//tan rem
+
+
+                //tan: begin add
+                var postData = {
+                    datetime : moment().format('YYYY-MM-DD hh:mm:ss'),
+                    patient_id :list.Patient_id
+                }
+                ////exlog.alert(postData)
+                CompanyModel.getFromTime(postData)
+                .then(function(response){
+                    if (response.data == -1 ) {
+                       $state.go("loggedIn.patient.appointment", {patient_id: list.Patient_id, cal_id: -1}); 
+                    }else{
+                        $state.go("loggedIn.patient.appointment", {patient_id: list.Patient_id, cal_id: response.data.CAL_ID});
+                    }
+                    
+                }, function(error){
+
+                })
+                //tan: end add
             }
             //END GO TO DETAIL
 

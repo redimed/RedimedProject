@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.document.newFA.controllers",[])
-.controller('newFAController', function($scope, $stateParams, DocumentService, PatientService, toastr, moment){
+.controller('newFAController', function($scope, $stateParams, $cookieStore, DocumentService, PatientService, toastr, moment){
 	//Init params
 	$scope.editMode = null;
 	// var fa_id=11;
@@ -7,10 +7,17 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 	// var patient_id= 677;
 	var patient_id = $stateParams.patient_id*1;
 	var cal_id = $stateParams.cal_id*1;
+	$scope.print_fa_id = fa_id;
+	$scope.print_patient_id = patient_id;
+	$scope.print_cal_id = cal_id;
+
 	$scope.patient_age = null;
 	$scope.header = {};
+	$scope.header.Comments = "Met all manual handling requirements with good technique."
+	$scope.header.ASSESSED_DATE = moment().format("YYYY-MM-DD hh:mm:ss");
 	$scope.patient_info = {};
 	$scope.isSignatureShow = false;
+	$scope.clickedValidation = false;
 
 	
 	//End Init params
@@ -24,6 +31,10 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 				$scope.header = headerAndSectionRes.data;
 				$scope.header.PATIENT_ID = patient_id;
 				$scope.header.CAL_ID = cal_id;
+				$scope.header.ASSESSED_SIGN = '';
+				$scope.header.ASSESSED_DATE = moment().format("YYYY-MM-DD hh:mm:ss");
+				$scope.header.Comments = "Met all manual handling requirements with good technique."
+				getDoctorInfo(cal_id, patient_id);
 				//get lines of section
 				$scope.header.sections.forEach(function(section){
 					section.PATIENT_ID = patient_id;
@@ -60,11 +71,13 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 												var fileName = strarr[strarr.length-1];
 												detail.previewPath = "https://"+location.host+"/document/fa/images/"+fileName;
 											}
+											if(line.SCORE_TYPE1===7 || line.SCORE_TYPE1===9){
+												$scope.autoCalculationVal1(line, detail);
+											}
 										})
 										line.comments.forEach(function(comment){
 											comment.PATIENT_ID = patient_id;
 											comment.CAL_ID = cal_id;
-											console.log($scope.header);
 										})
 									}
 								})
@@ -82,6 +95,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 			if(headerAndSectionRes.status === 'error') toastr.error('Unexpected error', 'Error!');
 			else{
 				$scope.header = headerAndSectionRes.data;
+				$scope.header.ASSESSED_DATE = moment($scope.header.ASSESSED_DATE).format("YYYY-MM-DD hh:mm:ss");
 				//get lines of section
 				$scope.header.sections.forEach(function(section){
 					DocumentService.loadExistLines(section.SECTION_ID, getHeaderId, patient_id, cal_id).then(function(lineRes){
@@ -126,10 +140,26 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 	var getPatientInfo = function(patient_id){
 		PatientService.getById(patient_id).then(function(result){
 			if(result!== null) {
+				console.log("this is patient info", result);
 				//tmp fix for patient gender
-				if(result.Sex !=="Female" && result.Sex !=="Male") result.Sex="Male";
+				if(result.Sex==="0") result.Sex = "Male";
+				else result.Sex = "Female";
 				$scope.patient_info= result;
+				
 				getPatientAge($scope.patient_info.DOB);
+			}
+		})
+	}
+
+	var getDoctorInfo = function(cal_id, patient_id){1
+		var userInfo = $cookieStore.get('userInfo');
+		var apptInfo = {user_id: userInfo.id};
+		DocumentService.getDoctor(apptInfo).then(function(result){
+			if(result.status === "error") toastr.error("Unexpected error!","Error");
+			else if(result.status === "no doctor") toastr.error("The account treating this assessment have no doctor link with it", "Error!");
+			else {
+				$scope.header.ASSESSED_NAME = result.data[0].Booking_Person;
+				$scope.header.ASSESSED_SIGN = result.data[0].Signature;
 			}
 		})
 	}
@@ -143,6 +173,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
         {
             age--;
         }
+        console.log('this is patient age', age);
         $scope.patient_age = age;
 	}
 
@@ -210,7 +241,6 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 	}
 
 	$scope.autoCalculationVal1 = function(line,detail){
-		console.log(detail);
 		if(detail!==undefined){
 			if(detail.VAL1_ISCHECKBOX === 4 || detail.VAL1_ISCHECKBOX === 5){
 				line.RATING_VALUE1 = 0;
@@ -253,7 +283,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 				autoSummary(line);
 			}
 		}	
-		if(line.SCORE_TYPE1 === 9 && detail.QUESTION.toLowerCase() === 'job demand (kgs)'){
+		if(line.SCORE_TYPE1 === 9 && (detail.VAL1_ISVALUE===7 || detail.VAL1_ISVALUE===8 || detail.VAL1_ISVALUE===9 || detail.VAL1_ISVALUE===10)){
 			var default_details_value = line.details[0].VAL1_VALUE;
 			var start_value = 5;
 			if(line.details === 2){
@@ -266,10 +296,10 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 				}
 			}
 		}
-		else if(line.SCORE_TYPE1 === 7 && detail.QUESTION.toLowerCase() === 'job demand'){
+		else if(line.SCORE_TYPE1 === 7 && (detail.VAL1_ISVALUE===7 || detail.VAL1_ISVALUE===8 || detail.VAL1_ISVALUE===9 || detail.VAL1_ISVALUE===10)){
 			var default_details_value = line.details[0].VAL1_VALUE;
 			var start_value = 5;
-			if(line.details[0].QUESTION.toLowerCase() === "job demand" && line.details.length === 2){
+			if((line.details[0].VAL1_ISVALUE===7 || line.details[0].VAL1_ISVALUE===8 || line.details[0].VAL1_ISVALUE===9 || line.details[0].VAL1_ISVALUE===10) && line.details.length === 2){
 				line.details[1].VAL1_VALUE = angular.copy(default_details_value);
 			}
 		}
@@ -285,6 +315,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 							break;
 				case 8: autoRatingVal1(line, line.SCORE1*1, 0);
 							break;
+				case 12: 	break;
 				default: line.SCORE1= line.details[line.details.length-1].VAL1_VALUE;
 						autoRatingVal1(line, line.SCORE1, 0);
 							break;
@@ -371,10 +402,19 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 						}
 					}
 					else{
-						line.RATE1 = result.data[0].RATE;
-						if(totalMode!==1){ 
-							line.RATING_VALUE1 = result.data[0].VALUE;
-							autoSummary(line);
+						if(line.SCORE_TYPE1 === 3){
+							console.log('rating result', result);
+							line.RATE1 = result.data[0].RATE;
+							if(line.SCORE1<result.data[0].FROM_VALUE) line.RATING_VALUE1=1;
+							else if(line.SCORE1>result.data[0].TO_VALUE) line.RATING_VALUE1=3;
+							else line.RATING_VALUE1 = 2;
+						}
+						else{
+							line.RATE1 = result.data[0].RATE;
+							if(totalMode!==1){ 
+								line.RATING_VALUE1 = result.data[0].VALUE;
+								autoSummary(line);
+							}
 						}
 					}
 				}
@@ -420,8 +460,18 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 						line.RATING_VALUE2 = null;
 					}
 					else{
-						line.RATE2 = result.data[0].RATE;
-						line.RATING_VALUE2 = result.data[0].VALUE;
+						if(line.SCORE_TYPE1 === 3){
+							console.log('rating result', result);
+							line.RATE2 = result.data[0].RATE;
+							if(line.SCORE2<result.data[0].FROM_VALUE) line.RATING_VALUE2 = 1;
+							else if(line.SCORE2>result.data[0].TO_VALUE) line.RATING_VALUE2 = 3;
+							else line.RATING_VALUE2 = 2;
+						}
+						else{
+							line.RATE2 = result.data[0].RATE;
+							line.RATING_VALUE2 = result.data[0].VALUE;
+						}
+						
 					}
 				}
 			});
@@ -501,28 +551,43 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
         $scope.isSignatureShow = false;
     }
     $scope.clearClick = function () {
-        $scope.header.ASSESSED_SIGN = '';
+        $scope.header.PATIENT_SIGN = '';
     }
     $scope.newFASubmit = function(){
-    	var insertInfo = getInsertInformation($scope.header);
-    	DocumentService.insertNewFA(insertInfo).then(function(result){
-    		if(result.status==='success') {
-    			$scope.editMode=true;
-    			toastr.success('Functional Assessment Submitted!','Success!');
-    			init();
-    		}
-    		else toastr.error('Failed to submit functional assessment!','Error!');
-    	})
+    	$scope.clickedValidation = true;
+    	if($scope.FAForm.$invalid){
+    		toastr.error('Invalid fields!','Error!');
+    	}
+    	else{
+    		var insertInfo = getInsertInformation($scope.header);
+    		console.log('this is insert info', insertInfo);
+	    	DocumentService.insertNewFA(insertInfo).then(function(result){
+	    		if(result.status==='success') {
+	    			$scope.editMode=true;
+	    			toastr.success('Functional Assessment Submitted!','Success!');
+	    			init();
+	    		}
+	    		else toastr.error('Failed to submit functional assessment!','Error!');
+	    	})
+    	}
+    	
     }
     $scope.faUpdate = function(){
-    	var updateInfo = getInsertInformation($scope.header);
-    	DocumentService.updateNewFA(updateInfo, patient_id, cal_id).then(function(result){
-    		if(result.status==='success') {
-    			toastr.success('Functional assessment updated!','Success!');
+    	$scope.clickedValidation = true;
+    	if($scope.FAForm.$invalid){
+    		toastr.error('Invalid fields!','Error!');
+    	}
+    	else{
+    		var updateInfo = getInsertInformation($scope.header);
+	    	DocumentService.updateNewFA(updateInfo, patient_id, cal_id).then(function(result){
+	    		if(result.status==='success') {
+	    			toastr.success('Functional assessment updated!','Success!');
 
-    		}
-    		else toastr.error('Failed to update functional assessment!','Error!');
-    	})
+	    		}
+	    		else toastr.error('Failed to update functional assessment!','Error!');
+	    	})
+    	}
+	    	
     }
 
     var getInsertInformation = function(header){

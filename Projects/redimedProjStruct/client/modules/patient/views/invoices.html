@@ -15,13 +15,16 @@
 <!--<h3 class="page-title"> Invoices </h3>-->
 
 <!--POPUP FORM ADD INVOICE -->
-<div class="mdt-search" style="display: block; width: 100%" ng-if="addFormInvoice.is_show">
-    <div class="pull-right text-center ng-scope">
-        <button class="btn btn-sm btn-block red" ng-click="addFormInvoice.close()">
-            <i class="fa fa-times"></i>
-        </button>
-    </div>
-    <div class="clearfix" style="margin-bottom: 10px"></div>
-    <invoice-add options="options" patient="patient_id" calendar="cal_id" params="invoiceParams" onsuccess="addFormInvoice.success" />
-</div>
+<script type="text/ng-template" id="popupAddInvoice">
+  <style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+    </style>
+  <div class="modal-body">  
+    <label class="un-label-popup-header-m un-bg-label-B41E46-m">Add Invoice</label>
+    <invoice-add options="options" patient="patient_id" calendar="cal_id" params="invoiceParams" onsuccess="success" />
+  </div>
+</script>
+
 <!--END POPUP FORM ADD INVOICE -->

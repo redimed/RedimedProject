@@ -14,7 +14,7 @@ module.exports = function(sequelize, DataTypes){
 		SITE_ID: DataTypes.INTEGER(11),
 		DEPT_ID: DataTypes.INTEGER(11),
 		SERVICE_ID: DataTypes.INTEGER(11),
-		INVOICE_NUMBER: DataTypes.INTEGER(11),
+		INVOICE_NUMBER: DataTypes.STRING(20),
 		INVOICE_DATE: DataTypes.DATE,
 		CURRENCY_CODE: DataTypes.STRING(45),
 		RATE_TYPE: DataTypes.STRING(45),

@@ -34,14 +34,14 @@
 			<div data-field-span="1">
 				<label>From Time</label>
 				<!-- <input readonly ui-date="{dateFormat: 'dd/mm/yy'}" placeholder="From time" name="from_time" ng-model="mdtAppointmentMap.FROM_TIME" class="form-control" id="from_time" float-label> -->
-				<label class="form-control">{{mdtAppointmentMap.FROM_TIME | date:'dd/MM/yyyy - hh:mm:ss'}}</label>
+				<label class="form-control">{{mdtAppointmentMap.FROM_TIME  | moment: 'utc' | moment: 'format': 'DD/MM/YYYY hh:mm A'}}</label>
 			</div>
 			<!-- END FROM TIME -->
 			<!-- TO TIME -->
 			<div data-field-span="1">
 				<label>To Time</label>
 				<!-- <input readonly ui-date="{dateFormat: 'dd/mm/yy'}" placeholder="To time" name="to_time" ng-model="mdtAppointmentMap.TO_TIME" class="form-control" id="to_time" float-label> -->
-				<label class="form-control">{{mdtAppointmentMap.TO_TIME | date:'dd/MM/yyyy - hh:mm:ss'}}</label>
+				<label class="form-control">{{mdtAppointmentMap.TO_TIME  | moment: 'utc' | moment: 'format': 'DD/MM/YYYY hh:mm A'}}</label>
 			</div>
 			<!-- END TO TIME -->
 		</div>

@@ -10,6 +10,8 @@ var db = require('../models');
 var kiss=require('./kissUtilsController');
 var rlobUtil=require('./rlobUtilsController');
 var rlobEmailController=require('./rlobEmailController');
+var mkdirp = require('mkdirp');
+var fs = require('fs');
 
 module.exports = {
     list: function(req,res){
@@ -21,6 +23,45 @@ module.exports = {
             .error(function(err){
                 res.json({status:'error',error:err});
             })
+    },
+
+    uploadUserImage: function(req,res){
+        var user_id = req.body.userID;
+
+        if(typeof user_id !== 'undefined')
+        {
+              var prefix=__dirname.substring(0,__dirname.indexOf('controllers'));
+              var targetFolder=prefix+'uploadFile\\'+'User\\'+'ID_'+user_id;
+              var targetFolderForSave='.\\uploadFile\\'+'User\\'+'ID_'+user_id;
+
+              mkdirp(targetFolder, function(err) {
+                  if(req.files)
+                  {
+                    var tmp_path = req.files.file.path;
+                    var target_path =targetFolder+ "\\" + req.files.file.name;
+                    var target_path_for_save=targetFolderForSave+ "\\" + req.files.file.name
+                    fs.rename(tmp_path, target_path, function(err) {
+                        if (err) throw err;
+                        fs.unlink(tmp_path, function() {
+                            if (err) throw err;
+                        });
+                    });
+
+                    db.User.update({
+                        img: target_path_for_save,
+                    },{id: user_id})
+                        .success(function(data){
+                            res.json({status:'success'});
+                        })
+                        .error(function(err){
+                            res.json({status:'error'});
+                            console.log(err);
+                        })
+                  }
+              });
+        }
+        else
+            res.json({status:'error'});
     },
 
     userByCompany: function(req,res){
@@ -164,20 +205,21 @@ module.exports = {
 
         db.User.find({where:{id:id}},{raw:true})
             .success(function(data){
-                if(bcrypt.compareSync(oldPass,data.password) == true)
+                if(data)
                 {
-                    var hashPass = bcrypt.hashSync(newPass);
-                    db.User.update({password:hashPass},{id:id},{raw:true})
-                        .success(function(data){
-                            res.json({status:'success'});
-                        })
-                        .error(function(err){
-                            res.json({status:'error'});
-                        })
-                }
-                else
-                {
-                    res.json({status:'error'});
+                    if(bcrypt.compareSync(oldPass,data.password) == true)
+                    {
+                        var hashPass = bcrypt.hashSync(newPass);
+                        db.User.update({password:hashPass},{id:id},{raw:true})
+                            .success(function(data){
+                                res.json({status:'success'});
+                            })
+                            .error(function(err){
+                                res.json({status:'error'});
+                            })
+                    }
+                    else
+                        res.json({status:'error'});
                 }
             })
             .error(function(err){
@@ -289,14 +331,27 @@ module.exports = {
             })
     },
     getUserImg: function(req,res){
-        var id = req.body.id;
+        var user_id = req.param('id');
 
-        db.User.find({where:{id:id}},{raw:true})
+        db.User.find({where: {id: user_id}}, {raw: true})
             .success(function(data){
-                res.json(data.img);
+              if(data)
+              {
+                if(data.img !== null && data.img !== '')
+                {
+                    fs.exists(String(data.img),function(exists){
+                      if (exists) 
+                        res.sendfile(data.img);
+                      else
+                        res.sendfile("./uploadFile/no-image.png");
+                    })
+                }
+                else
+                    res.sendfile("./uploadFile/user.png");
+              }
             })
             .error(function(err){
-                res.json({status:'error'});
+                res.json({status:'error',error:err})
             })
     },
     forgotPassword:function(req,res){

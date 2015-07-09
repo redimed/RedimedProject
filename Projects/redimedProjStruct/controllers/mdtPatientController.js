@@ -274,5 +274,24 @@ module.exports = {
 		.error(function(error){
 			res.json(500, {"status": "error", "message": error});
 		})
+	},
+	//phu
+	postAddAppt: function(req, res){
+
+		var postData = req.body.data;
+
+		var sql = knex('cln_appt_patients')
+		.insert({
+			'Patient_id': postData.Patient_id,
+			'CAL_ID': postData.CAL_ID
+		})
+		.toString();
+		db.sequelize.query(sql)
+		.success(function(data){
+			res.json({data: data});
+		})
+		.error(function(error){
+			res.json(500, {"status": "error", "message": error});
+		})
 	}
 }

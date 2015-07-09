@@ -747,7 +747,22 @@ angular.module("app.model", [])
 	ASSESSED_ID: null,
 	ASSESSED_SIGN: '',
 	ASSESSED_DATE: null,
-	ASSESSED_NAME: ''
+	ASSESSED_NAME: '',
+	PATIENT_SIGN: '',
+	can_perform_today: null,
+	met_all_req: null,
+	not_met_all_req: null,
+	improve_comment: '',
+	not_met_all_reason: '',
+	Build:'',
+	is_have_resting_measurement: null,
+	height:'',
+	weight:'',
+	bmi:'',
+	waist_girth:'',
+	hip_girth:'',
+	w_h_Raito:'',
+	colour_vision:null,
 })
 // END FA HEADER
 
@@ -810,6 +825,7 @@ angular.module("app.model", [])
 	DETAIL_ID: null,
 	LINE_ID: null,
 	QUESTION: '',
+	DESCRIPTION: '',
 	VAL1_NAME: '',
 	VAL1_ISVALUE: null,
 	VAL1_VALUE: '',

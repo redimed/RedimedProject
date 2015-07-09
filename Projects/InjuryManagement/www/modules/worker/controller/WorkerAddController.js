@@ -251,13 +251,12 @@ angular.module('starter.worker.add.controller',[])
             else
             {
                 WorkerServices.insertWorker({patient: $scope.worker}).then(function (data) {
+                    $scope.messageLoading = {message: "Waiting..."};
                     $ionicLoading.show({
-                        template: "<div class='icon ion-ios7-reloading'></div>"+
-                        "<br />"+
-                        "<span>Waiting...</span>",
+                        templateUrl: "modules/loadingTemplate.html",
                         animation: 'fade-in',
-                        showBackdrop: true,
-                        maxWidth: 200,
+                        scope: $scope,
+                        maxWidth: 500,
                         showDelay: 0
                     });
                     console.log(data);
@@ -289,7 +288,7 @@ angular.module('starter.worker.add.controller',[])
                                     },
                                     {
                                         text: "Yes, I do",
-                                        type: "button button-assertive",
+                                        type: "btn-black",
                                         onTap: function(e) {
                                             $scope.nfcInfo = data;
                                             $state.go('app.worker.writeNFC');

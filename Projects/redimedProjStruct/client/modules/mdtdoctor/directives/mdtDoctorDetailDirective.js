@@ -70,6 +70,8 @@ angular.module('app.loggedIn.mdtdoctor.detail.directive', [])
 					}//end for
 
 					postData.Last_update_date = ConfigService.getCommonDatetime(new Date());
+					if(postData.numsOfRoom == null || postData.numsOfRoom == '')
+						postData.numsOfRoom = 0;
 
 					if(scope.params.permission.edit === true){
 						mdtDoctorService.edit(scope.params.id, postData).then(function(response){

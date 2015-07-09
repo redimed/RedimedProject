@@ -18,7 +18,7 @@
 			<div class="row">
 			  <div class="col-md-3">
 			  	<div class="form-group">
-				    <label for="company.form.Company_name" class="un_tn_form_label un_tn_form_label_gray" style="width:100px" >Company name</label>
+				    <label for="company.form.Company_name" class="un_tn_form_label un_tn_form_label_gray" style="width:115px" >Company name &nbsp *</label>
 				    <input type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="company.form.Company_name" name="CompanyName" id="Company_name">
 				 </div>
 			  </div>
@@ -30,8 +30,8 @@
 			  </div>
 			   <div class="col-md-3">
 			  	<div class="form-group">
-				    <label for="company.form.Addr" class="un_tn_form_label un_tn_form_label_gray" style="width:100px">Addr</label>
-				    <input type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="company.form.Addr">
+				    <label for="company.form.Addr" class="un_tn_form_label un_tn_form_label_gray" style="width:100px">Address &nbsp *</label>
+				    <input type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="company.form.Addr" name="Addr" id="Addr">
 				 </div>
 			  </div>
 			  <div class="col-md-3">
@@ -45,7 +45,7 @@
 			<div class="row">
 			<div class="col-md-3">
 			  	<div class="form-group">
-				    <label for="company.form.country" class="un_tn_form_label un_tn_form_label_gray" style="width:100px" >Country</label>
+				    <label for="company.form.country" class="un_tn_form_label un_tn_form_label_gray" style="width:115px" >Country</label>
 				    <input type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="company.form.country">
 				 </div>
 			  </div>
@@ -71,7 +71,7 @@
 			<div class="row">
 			  <div class="col-md-3">
 			  	<div class="form-group">
-				    <label for="company.form.latitude" class="un_tn_form_label un_tn_form_label_gray" style="width:100px" >Latitude</label>
+				    <label for="company.form.latitude" class="un_tn_form_label un_tn_form_label_gray" style="width:115px" >Latitude</label>
 				    <input type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="company.form.latitude" id="latitude" name="latitude">
 				 </div>
 			  </div>
@@ -206,24 +206,25 @@
 				  </div>
 			    <div class="col-md-3">
 			  	<div class="form-group">
-				    <label for="company.form.result_email" class="un_tn_form_label un_tn_form_label_gray" style="width:120px">Result Email</label>
+				    <label for="company.form.result_email" class="un_tn_form_label un_tn_form_label_gray" style="width:125px">Result Email</label>
 				    <input type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="company.form.result_email" name="result_email" id="result_email">
 				 </div>
 			    </div>
 			</div>
 			<div class="row">
-			 <div class="col-md-3">
+				<div class="col-md-3">
+				  	<div class="form-group">
+					    <label for="company.form.from_date" class="un_tn_form_label un_tn_form_label_gray" style="width:100px" >From Date</label>
+					    <input type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="company.form.from_date" custom-date readonly>
+					 </div>
+				  </div>
+				 <div class="col-md-3">
 			  	<div class="form-group">
-				    <label for="company.form.Site_medic" class="un_tn_form_label un_tn_form_label_gray" style="width:100px" >Site Medic</label>
-				    <input type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="company.form.Site_medic">
+				    <label for="company.form.to_date" class="un_tn_form_label un_tn_form_label_gray" style="width:100px" >To Date</label>
+				    <input type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="company.form.to_date" custom-date readonly>
 				 </div>
 			  </div>
-			  <div class="col-md-3">
-			  	<div class="form-group">
-				    <label for="company.form.IMA" class="un_tn_form_label un_tn_form_label_gray" style="width:110px">IMA</label>
-				    <input type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="company.form.IMA">
-				 </div>
-			  </div>
+			  
 			  <div class="col-md-3">
 			  	<div class="form-group">
 				    <label for="company.form.Site_name" class="un_tn_form_label un_tn_form_label_gray" style="width:100px">Site Name</label>
@@ -232,17 +233,23 @@
 			  </div>
 			  <div class="col-md-3">
 			  	<div class="form-group">
-				    <label for="company.form.Medic_contact_no" class="un_tn_form_label un_tn_form_label_gray" style="width:120px">Medic Contact No</label>
-				    <input type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="company.form.Medic_contact_no">
+				    <label for="company.form.Medic_contact_no" class="un_tn_form_label un_tn_form_label_gray" style="width:125px">Medic Contact No &nbsp*</label>
+				    <input type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="company.form.Medic_contact_no" name="Medic_contact_no" id="Medic_contact_no">
 				 </div>
 			  </div>
 			</div>
 
 			<div class="row">
-			<div class="col-md-3">
+			  <div class="col-md-3">
 			  	<div class="form-group">
-				    <label for="company.form.default_status" class="un_tn_form_label un_tn_form_label_gray" style="width:100px" >Default Status</label>
-				    <input type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="company.form.default_status">
+				    <label for="company.form.IMA" class="un_tn_form_label un_tn_form_label_gray" style="width:110px">IMA</label>
+				    <input type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="company.form.IMA">
+				 </div>
+			  </div>
+			  <div class="col-md-3">
+			  	<div class="form-group">
+				    <label for="company.form.Site_medic" class="un_tn_form_label un_tn_form_label_gray" style="width:100px" >Company Rep</label>
+				    <button class="form-control un_tn_btn_rect un_tn_btn_black" ng-click="company.showListCompanyRep()">Select Company Rep</button>
 				 </div>
 			  </div>
 			  
@@ -263,6 +270,20 @@
 				   <button class="form-control un_tn_btn_rect un_tn_btn_black"  ng-model="company.form.Insurer" ng-click="company.addInsurer()">Select Insurer</button>
 				 </div>
 			  </div>
+			</div>
+			<div class="row">
+				<div class="col-md-3">
+				  	<div class="form-group">
+					    <label for="company.form.default_status" class="un_tn_form_label un_tn_form_label_gray" style="width:100px" >Default Status</label>
+					    <input type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="company.form.default_status">
+					 </div>
+			  	</div>
+			  	<div class="col-md-3">
+			  		<div class="form-group">
+					    <label for="company.form.default_status" class="un_tn_form_label un_tn_form_label_gray" style="width:100px" >Suburb</label>
+					    <input type="text" class="form-control un_tn_form_control un_tn_form_control_gray" ng-model="company.form.suburb">
+					</div>
+			  	</div>
 			</div>
 
 			<div class="un_tn_panel_lg un_tn_panel_gray">
