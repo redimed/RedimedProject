@@ -109,7 +109,7 @@
     </div>
 </div>
 </div>
-<div id="appointment" style="overflow-x: scroll;">
+<div id="appointment" style="overflow-x: scroll;" ng-right-click="isshiftRight($event)">
 	<div class="row">
 		<!-- DATEPICKER -->
 		<div class="col-md-4">
@@ -172,7 +172,7 @@
 			<div class="appointment-block-time">{{app.FROM_TIME}}</div>
 			<div class="appointment-block" ng-repeat="col in app.doctors" ng-class="{'block-active': col.PATIENTS !== '###'}"
 				id="appointment-{{col.CAL_ID}}"
-				ng-style="{'background-color': '{{col.SERVICE_COLOR}}', 'margin-bottom': col.margin === 'yes' ? '3px': '0px', 'height': col.height, 'border-top': col.border === 'yes' ? '1px solid rgb(96, 99, 94)': '0px'}">
+				ng-style="{'background-color': '{{col.SERVICE_COLOR}}', 'margin-bottom': col.margin === 'yes' ? '3px': '0px', 'height': col.height, 'border-top': col.border === 'yes' ? '1px solid rgb(96, 99, 94)': '0px'}" ng-click="isKeyPressed($event)">
 				<span ng-if="col.PATIENTS === 'MESS_SYS_010'">
 					<a ng-click="appointment.dialog.add(app, col)">No Patient {{col.CAL_ID}}</a>
 				</span>
@@ -183,7 +183,8 @@
 					<span ng-repeat="patient in col.patients">
 						<a ng-click="goToAppDetail(col.CAL_ID, patient.Patient_id)"
 							ng-right-click="appointment.onRightClick($event, app, col, patient)">
-							<span>
+							<span class="appid" style="display:none">{{col.CAL_ID}}</span>
+							<span class="patienttest">
 								{{patient.First_name}} {{patient.Sur_name}}
 							</span>
 							&nbsp;

@@ -8,7 +8,32 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 			options: '='
 		},
 		link: function(scope, elem, attrs){
-
+			scope.arrayAppid=[];
+			scope.isKeyPressed = function($event){
+				e = event || window.event;
+				 if (e.shiftKey) {
+			       var id = $(event.target).find('.appid').text();
+			       if (id > 0) {
+			       	var count = 0;
+			       	for (var i = 0; i < scope.arrayAppid.length; i++) {
+			       		if(scope.arrayAppid[i] == id){
+			       			count ++;
+			       		}
+			       	};
+			       	if (count == 0) {
+			       		scope.arrayAppid.push(id);
+			       		 event.target.style.backgroundColor = "rgb(199, 197, 196)";
+			       	};
+			       };
+			       console.log(scope.arrayAppid);
+			    }
+			}
+			scope.isshiftRight = function($event){
+				e = event || window.event;
+				if (e.shiftKey == true) {
+					console.log('-----');
+				};
+			}
 			scope.servicedata ={};
 			scope.getServiceColor = function(){
 				AppointmentModel.getServiceColor('data')
