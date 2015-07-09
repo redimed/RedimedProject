@@ -507,15 +507,19 @@ angular.module('app.config', [])
             {code:"bottle", label:"bottle"}
         ])
     .constant("SCORE_TYPE", [
-            {id:3,label:'Upper Limb Grip Strength',section:'Section 2: General Physical Capacity Assessment'},
+            {id:3,label:'Upper Limb with Normal Range and Ablility Rating',section:'Section 2: General Physical Capacity Assessment'},
+            {id:20,label:'Upper Limb with Normal/Abnormal Rating (no Normal Range)',section:'Section 2: General Physical Capacity Assessment'},
             {id:11, label:'Hamstring Flexibility',section:'Section 2: General Physical Capacity Assessment'},
             {id:4,label:'Cardiovascular Fitness',section:'Section 2: General Physical Capacity Assessment'},
             {id:6,label:'Core Strength',section:'Section 2: General Physical Capacity Assessment'},
             {id:12,label:'Lower Limb Function',section:'Section 2: General Physical Capacity Assessment'},
             {id:10,label:'Auto Max score and Rating',section:'Section 2: General Physical Capacity Assessment'},
+            {id:21,label:'Ability Test without description (one comment for all details)', section:'Section 2: General Physical Capacity Assessment'},
 
-            {id:13,label:'Ability Test with description',section:'Section 3: Job-Specific Functional Task Assessment'},
-            {id:16,label:'Ability Test without description',section:'Section 3: Job-Specific Functional Task Assessment'},
+            {id:13,label:'Ability Test with description (each detail has it own comment)',section:'Section 3: Job-Specific Functional Task Assessment'},
+            {id:16,label:'Ability Test without description (each detail has it own comment)',section:'Section 3: Job-Specific Functional Task Assessment'},
+            {id:22,label:'Ability Test with description (one comment for all details)',section:'Section 3: Job-Specific Functional Task Assessment'},
+            {id:23,label:'Ability Test without description (one comment for all details)',section:'Section 3: Job-Specific Functional Task Assessment'},
             {id:7,label:'Weight Test Rating',section:'Section 3: Job-Specific Functional Task Assessment'},
             {id:9,label:'Weight Test Rating (has managed weight info)',section:'Section 3: Job-Specific Functional Task Assessment'},
             {id:18,label:'Comfortable Weight Test Rating (has comfortable managed weight info)',section:'Section 3: Job-Specific Functional Task Assessment'},
@@ -542,6 +546,7 @@ angular.module('app.config', [])
             {id:5,label:'Unable=0, Partial=1, Able=2'},
             {id:3,label:'Yes/No'},
             {id:11,label:'Normal/Abnormal'},
+            {id:12,label:'Satisfactory/Unsatisfactory'},
             {id:6,label:'Dominant Hand'},
             {id:7,label:'Job Demand (weight in kg)'},
             {id:8,label:'Job Demand (distance in m)'},

@@ -214,7 +214,9 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 				}	
 			}
 			line.SCORE1 = sum/numberOfValue;
-			autoRatingVal1(line, line.SCORE1, 0);
+			if(line.SCORE_TYPE1!==20){
+				autoRatingVal1(line, line.SCORE1, 0);
+			}
 		},
 
 		calMax: function(line){
@@ -305,6 +307,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 		}
 		if(line.ISSCORE1===1){
 			switch(line.SCORE_TYPE1){
+				case 20:
 				case 3: calculateFunctionsVal1.calAvg(line);
 						break;
 				case 9: line.SCORE1= line.details[line.details.length-1].VAL1_VALUE;
@@ -334,7 +337,9 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 				}	
 			}
 			line.SCORE2 = sum/numberOfValue;
-			autoRatingVal2(line, line.SCORE2);
+			if(line.SCORE_TYPE2 !== 20){
+				autoRatingVal2(line, line.SCORE2);
+			}
 		},
 
 		calMax: function(line){
@@ -362,7 +367,8 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 
 	$scope.autoCalculationVal2 = function(line){
 		if(line.ISSCORE2===1){
-			switch(line.SCORE_TYPE1){
+			switch(line.SCORE_TYPE2){
+				case 20:
 				case 3: calculateFunctionsVal2.calAvg(line);
 						break;
 				case 9: line.SCORE2= line.details[line.details.length-1].VAL2_VALUE;

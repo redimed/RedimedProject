@@ -219,10 +219,10 @@
 							<!-- end yes/no checkbox with detail comment -->
 
 							<!-- Normal/Abnormal checkbox with detail comment -->
-								<div class="col-md-1 col-sm-1 col-xs-1" ng-if="detail.VAL1_ISCHECKBOX===3">
+								<div class="col-md-1 col-sm-1 col-xs-1" ng-if="detail.VAL1_ISCHECKBOX===11">
 									<label class="control-label pull-right" style="margin-top:10px;">{{detail.VAL1_NAME}}</label>
 								</div>
-								<div class="col-md-2 col-sm-2 col-xs-2 btn-group" ng-if="detail.VAL1_ISCHECKBOX===3">
+								<div class="col-md-2 col-sm-2 col-xs-2 btn-group" ng-if="detail.VAL1_ISCHECKBOX===11">
 									<label class="btn">
 										<input type="radio" ng-model="detail.VAL1.CHECKBOX" value="0"> Normal
 									</label>
@@ -230,10 +230,10 @@
 										<input type="radio" ng-model="detail.VAL1.CHECKBOX" value="1"> Abnormal
 									</label>
 								</div>
-								<div class="col-md-1 col-sm-1 col-xs-1" ng-if="detail.VAL2_ISCHECKBOX===3">
+								<div class="col-md-1 col-sm-1 col-xs-1" ng-if="detail.VAL2_ISCHECKBOX===11">
 									<label class="control-label pull-right" style="margin-top:10px;">{{detail.VAL2_NAME}}</label>
 								</div>
-								<div class="col-md-2 col-sm-2 col-xs-2 btn-group" ng-if="detail.VAL2_ISCHECKBOX===3">
+								<div class="col-md-2 col-sm-2 col-xs-2 btn-group" ng-if="detail.VAL2_ISCHECKBOX===11">
 									<label class="btn">
 										<input type="radio" ng-model="detail.VAL2.CHECKBOX" value="0"> Normal
 									</label>
@@ -242,6 +242,31 @@
 									</label>
 								</div>
 							<!-- end Normal/Abnormal checkbox with detail comment -->
+
+							<!-- Satisfactory/Unsatisfactory checkbox with detail comment -->
+								<div class="col-md-1 col-sm-1 col-xs-1" ng-if="detail.VAL1_ISCHECKBOX===12">
+									<label class="control-label pull-right" style="margin-top:10px;">{{detail.VAL1_NAME}}</label>
+								</div>
+								<div class="col-md-2 col-sm-2 col-xs-2 btn-group" ng-if="detail.VAL1_ISCHECKBOX===12">
+									<label class="btn">
+										<input type="radio" ng-model="detail.VAL1.CHECKBOX" value="1"> Satisfactory
+									</label>
+									<label class="btn">
+										<input type="radio" ng-model="detail.VAL1.CHECKBOX" value="0"> Unsatisfactory
+									</label>
+								</div>
+								<div class="col-md-1 col-sm-1 col-xs-1" ng-if="detail.VAL2_ISCHECKBOX===12">
+									<label class="control-label pull-right" style="margin-top:10px;">{{detail.VAL2_NAME}}</label>
+								</div>
+								<div class="col-md-2 col-sm-2 col-xs-2 btn-group" ng-if="detail.VAL2_ISCHECKBOX===12">
+									<label class="btn">
+										<input type="radio" ng-model="detail.VAL2.CHECKBOX" value="1"> Satisfactory
+									</label>
+									<label class="btn">
+										<input type="radio" ng-model="detail.VAL2.CHECKBOX" value="0"> Unsatisfactory
+									</label>
+								</div>
+							<!-- end Satisfactory/Unsatisfactory checkbox with detail comment -->
 
 							<!-- Unable/Partial/Able checkbox with detail comment-->
 								<div class="col-md-1 col-sm-1 col-xs-1" ng-if="detail.VAL1_ISCHECKBOX===2">
@@ -300,16 +325,16 @@
 					<!-- Detail Score -->
 					<div class="row" ng-if="line.ISSCORE1 === 1 || line.ISSCORE2 === 1">
 						<!-- AVG Score -->
-						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISSCORE1 === 1 && line.SCORE_TYPE1 === 3">
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISSCORE1 === 1 && (line.SCORE_TYPE1 === 3 || line.SCORE_TYPE1 === 20)">
 							<label class="control-label pull-right" style="margin-top:15px;">Score (AVG): </label>
 						</div>
-						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISSCORE1 === 1 && line.SCORE_TYPE1 === 3">
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISSCORE1 === 1 && (line.SCORE_TYPE1 === 3 || line.SCORE_TYPE1 === 20)">
 							<label class="control-label" style="margin-top:10px;" ><b style="font-size:16pt;">{{line.SCORE1}}</b> </label>
 						</div>
-						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISSCORE2 === 1 && line.SCORE_TYPE2 === 3">
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISSCORE2 === 1 && (line.SCORE_TYPE2 === 3 || line.SCORE_TYPE2 === 20)">
 							<label class="control-label pull-right" style="margin-top:15px;">Score (AVG): </label>
 						</div>
-						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISSCORE2 === 1 && line.SCORE_TYPE2 === 3">
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISSCORE2 === 1 && (line.SCORE_TYPE2 === 3 || line.SCORE_TYPE2 === 20)">
 							<label class="control-label" style="margin-top:10px;" ><b style="font-size:16pt;">{{line.SCORE2}}</b></label>
 						</div>
 						<!-- end AVG Score -->
@@ -376,14 +401,34 @@
 								<label ng-switch-when="2" class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">Within NR</b></label>
 								<label ng-switch-when="3" class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">Above NR</b></label>
 							</div>
+
+							<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING1 === 1 && line.SCORE_TYPE1 === 20">
+								<label class="control-label pull-right" style="margin-top:15px;">Rating: </label>
+							</div>
+							<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING1 === 1 && line.SCORE_TYPE1 === 20">
+								<label class="btn">
+									<input type="radio" ng-model="line.RATING_VALUE1" value="0" ng-change="autoCalculationVal1(line)"> Normal 
+								</label>
+								<label class="btn">
+									<input type="radio" ng-model="line.RATING_VALUE1" value="1" ng-change="autoCalculationVal1(line)"> Abnormal 
+								</label>
+							</div>
+
 							<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING2 === 1 && line.SCORE_TYPE2 === 3">
 								<label class="control-label pull-right" style="margin-top:15px;">Result: </label>
 							</div>
-							<div ng-switch on="line.RATING_VALUE2" class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING2 === 1 && line.SCORE_TYPE2 === 3">
-								<label ng-switch-when="1" class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">Below NR</b></label>
-								<label ng-switch-when="2" class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">Within NR</b></label>
-								<label ng-switch-when="3" class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">Above NR</b></label>
+							<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING1 === 1 && line.SCORE_TYPE2 === 20">
+								<label class="control-label pull-right" style="margin-top:15px;">Rating: </label>
 							</div>
+							<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING1 === 1 && line.SCORE_TYPE2 === 20">
+								<label class="btn">
+									<input type="radio" ng-model="line.RATING_VALUE2" value="0" ng-change="autoCalculationVal1(line)"> Normal 
+								</label>
+								<label class="btn">
+									<input type="radio" ng-model="line.RATING_VALUE2" value="1" ng-change="autoCalculationVal1(line)"> Abnormal 
+								</label>
+							</div>
+
 						</div>
 						<!-- End Normal Rate -->
 						<!-- MAX Score, MIN Score, Recovery and Simple Rating-->
