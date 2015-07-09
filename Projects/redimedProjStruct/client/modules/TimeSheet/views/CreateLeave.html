@@ -45,7 +45,7 @@
                         </tr>
                         <tr>
                             <td style="width:20%;">
-                                <label style="margin-top:3px;">Leave Application Date:</label>
+                                <label class='control-label' style="margin-top:3px;">Leave Application Date</label>
                             </td>
                             <td style="width:90%;">
                                 <div ng-class="{'error-input':isRequired===1 && formLeave.application_date.$error.required===true}" style="width:202px;">
@@ -55,35 +55,35 @@
                         </tr>
                         <tr>
                             <td style="width:20%;">
-                                <span>Employee Name:</span>
+                                <label class='control-label' style="margin-top:3px;">Employee Name</label>
                             </td>
                             <td style="width:90%;">
-                                <span class="text-info" style="margin-left:7px;">{{((info.FirstName!==null && info.Firstname!=="")?(info.FirstName):"") +" "+((info.LastName!==null && info.LastName!=="")?(info.LastName):"") }}</span>
+                                <label class="text-info control-label" style="margin-left:7px; margin-top:3px;">{{((info.FirstName!==null && info.Firstname!=="")?(info.FirstName):"") +" "+((info.LastName!==null && info.LastName!=="")?(info.LastName):"") }}</label>
                             </td>
                         </tr>
                         <tr>
                             <td style="width:20%;">
-                                <span>Department</span>
+                                <label class='control-label' style="margin-top:3px;">Department</label>
                             </td>
                             <td style="width:90%;">
-                                <span class=" text-info" style="margin-left:7px;">
-                                {{(info.departmentName!==null && info.departmentName!=="")?info.departmentName:""}}
-                            </span>
+                                <label class=" text-info control-label" style="margin-left:7px; margin-top:3px;">
+                                    {{(info.departmentName!==null && info.departmentName!=="")?info.departmentName:""}}
+                                </label>
                             </td>
                         </tr>
                         <tr>
                             <td style="width:20%;">
-                                <span>Employee Status (FT/PT)</span>
+                                <label class='control-label' style="margin-top:3px;">Employee Status (FT/PT)</label>
                             </td>
                             <td style="width:90%;">
-                                <span class=" text-info" style="margin-left:7px;">
-                                {{(info.TypeOfContruct!==null && info.TypeOfContruct!=="")?info.TypeOfContruct:""}}
-                            </span>
+                                <label class=" text-info control-label" style="margin-left:7px; margin-top:3px;">
+                                    {{(info.TypeOfContruct!==null && info.TypeOfContruct!=="")?info.TypeOfContruct:""}}
+                                </label>
                             </td>
                         </tr>
                         <tr>
                             <td style="width:20%;">
-                                <label style="margin-top:3px;">Leave Start Date:</label>
+                                <label class='control-label' style="margin-top:3px;">Leave Start Date</label>
                             </td>
                             <td style="width:90%;">
                                 <div ng-class="{'error-input':isRequired===1 && formLeave.start_date.$error.required}" style="width:202px;">
@@ -93,7 +93,7 @@
                         </tr>
                         <tr>
                             <td style="width:20%;">
-                                <label style="margin-top:3px;">Leave Finish Date:</label>
+                                <label class='control-label' style="margin-top:3px;">Leave Finish Date</label>
                             </td>
                             <td style="width:90%;">
                                 <div ng-class="{'error-input':isRequired===1 && formLeave.finish_date.$error.required}" style="width:202px;">
@@ -103,7 +103,7 @@
                         </tr>
                         <tr>
                             <td style="width:20%;">
-                                <label style="margin-top:3px;">Return to Work Date:</label>
+                                <label style="margin-top:3px;" class='control-label'>Return to Work Date</label>
                             </td>
                             <td style="width:90%;">
                                 <div ng-class="{'error-input':isRequired===1 && formLeave.work_date.$error.required}" style="width:202px;">
@@ -114,16 +114,28 @@
                     </tbody>
                 </table>
             </div>
-            <div>
-                <label class="btn bold">
-                    <input type="radio" ng-model="info.standard" ng-value="1" ng-click="clickStandardChange(1)" />&nbsp;STANDARD LEAVE REQUEST
+            <!-- STANDARD - NON-STANDARD -->
+            <div class='row'>
+                <label for='idStandard' class='col-md-6 col-sm-6' style='width:270px; margin-left:-15px;'>
+                    <div class='col-md-1' style='width:5px;'>
+                        <input type='radio' name="standard" id='idStandard' ng-model="info.standard" ng-value="1" ng-click="clickStandardChange(1)" />
+                    </div>
+                    <div class='col-md-11 col-sm-11' style='margin-left:-10px;'>
+                        <span class='control-label bold'>STANDARD LEAVE REQUEST</span>
+                    </div>
                 </label>
-                <label class="btn bold">
-                    <input type="radio" ng-model="info.standard" ng-value="0" ng-click="clickStandardChange(0)" />&nbsp;NON-STANDARD LEAVE REQUEST
+                <label for='idNonStandard' class='col-md-6 col-sm-6'>
+                    <div class='col-md-1' style='width:5px;'>
+                        <input type='radio' name="nonStandard" id='idNonStandard' ng-model="info.standard" ng-value="0" ng-click="clickStandardChange(0)" />
+                    </div>
+                    <div class='col-md-11 col-sm-11' style='margin-left:-10px;'>
+                        <span class='control-label bold' for='idNonStandard'>NON-STANDARD LEAVE REQUEST</span>
+                    </div>
                 </label>
             </div>
+            <!-- END -->
             <div>
-                <span class="bold">Note:</span><span> When taking Personal Leave, for absences of 1 day or more, a medical certificate or statutory declaration is required. Please ensure this is submitted along with completed Leave Form.</span>
+                <span class="bold">Note:</span><span> When taking Personal Leave (Sick Leave), for absences of 1 day or more, a medical certificate or statutory declaration is required. Please ensure this is submitted along with completed Leave Form.</span>
             </div>
         </div>
         <!-- STANDARD LEAVE REQUEST -->
@@ -149,7 +161,7 @@
                         <!-- BODY -->
                         <tr ng-repeat="l in info.infoTypeLeave" ng-form="formRepeat">
                             <td style="width:50%; ">
-                                <label style="margin-top:3px;" ng-if="l.leave_type_id!==5">{{l.leave_name}}</label>
+                                <label style="margin-top:3px;" class='control-label' ng-if="l.leave_type_id!==5">{{l.leave_name}}</label>
                                 <div class='col-md-3' style="width:auto;margin-left:-15px;" ng-if="l.leave_type_id===5">
                                     <label style="margin-top:3px;">{{l.leave_name}}</label>
                                 </div>
@@ -168,7 +180,7 @@
                         </tr>
                         <tr>
                             <td style="width:50%;">
-                                <label style="margin-top:3px;">Total Number of Hours Taken:</label>
+                                <label class='control-label' style="margin-top:5px;">Total Number of Hours Taken</label>
                             </td>
                             <td style="width:10%;">
                                 <label disabled class="form-control input-sm" style="text-align:center;">

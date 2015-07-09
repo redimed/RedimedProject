@@ -435,8 +435,7 @@ module.exports = {
 
 	getUserByCompany:function(req,res){
 		var data = req.body;
-		var sql = 
-			"SELECT u.`user_id`,u.`username`,u.`user_type`,u.`firstname`,u.`surname`,u.`mobile`,u.`email` FROM ph_users u "+
+		var sql = "SELECT u.`user_id`,u.`username`,u.`user_type`,u.`firstname`,u.`surname`,u.`mobile`,u.`email` FROM ph_users u "+
 			"INNER JOIN ph_company_users cu "+
 			"ON  cu.`user_id` = u.`user_id` "+
 			"WHERE cu.`company_id` = ? ";
@@ -475,6 +474,20 @@ module.exports = {
 					"LIMIT ?,? ";
 		db.sequelize.query(sql, null, {raw:true}, [records,5])
 		// db.sequelize.query(sql, null, {raw:true})
+			.success(function(rows){
+				res.json({status:'success', data:rows});
+			})
+			.error(function(err){
+				res.json({status:'error', err:err});
+			})
+	},
+
+	getAllShopPostDistance:function(req, res) {
+		var sql = 	"SELECT * FROM `ph_shops_post` sp " +
+					"INNER JOIN `ph_posts` po ON sp.`post_id` = po.`post_id` " +
+					"INNER JOIN `ph_company_shops` cs ON sp.`shop_id` = cs.`shop_id` " +
+					"ORDER BY po.`post_id` DESC "
+		db.sequelize.query(sql, null, {raw:true})
 			.success(function(rows){
 				res.json({status:'success', data:rows});
 			})
@@ -525,11 +538,10 @@ module.exports = {
 
 	getPostForShopId: function(req, res){
 		var shop_id = req.body.shop_id;
-		var sql = "SELECT * " +
-				"FROM `ph_shops_post` sp " +
-				"INNER JOIN `ph_posts` p ON sp.`post_id` = p.`post_id` " +
-				"INNER JOIN `ph_company_shops` cs ON sp.`shop_id` = cs.`shop_id` " +
-				"WHERE cs.`shop_id` = ? ";
+		var sql = "SELECT * FROM `ph_shops_post` sp " +
+		"INNER JOIN `ph_posts` p ON sp.`post_id` = p.`post_id` " +
+		"INNER JOIN `ph_company_shops` cs ON sp.`shop_id` = cs.`shop_id` " +
+		"WHERE cs.`shop_id` = ? ORDER BY p.`post_id` DESC";
 		db.sequelize.query(sql, null, {raw:true}, [shop_id])
 			.success(function(rows){
 				res.json({status:'success', data:rows});

@@ -548,7 +548,11 @@ angular.module('app.config', [])
             {id:9,label:'Job Demand (height in mm)'},
             {id:10,label:'Job Demand (weight in g)'},
         ])
-.factory('ConfigService', function(VALUE_TYPE, SCORE_TYPE, COMMENT_TYPE, TIMETABLE_DAY_OF_WEEK, PRIORITY_OPTION, DAY_OF_WEEK, NUMBER_OF_WEEK, SEX_LIST, YES_NO_OPT, ACC_TYPE, APP_TYPE, APPT_STATUS, MONTH_IN_YEAR, INVOICE_STATUS, RECALL_PERIOD, RECALL_REMIND, MEDICINE_UNIT, Restangular) {
+    .constant('SECTION_DISPLAY_TYPE', [
+            {id:0, label:'Table'},
+            {id:1, label:'Other style (due to score type options)'},
+        ])
+.factory('ConfigService', function(SECTION_DISPLAY_TYPE, VALUE_TYPE, SCORE_TYPE, COMMENT_TYPE, TIMETABLE_DAY_OF_WEEK, PRIORITY_OPTION, DAY_OF_WEEK, NUMBER_OF_WEEK, SEX_LIST, YES_NO_OPT, ACC_TYPE, APP_TYPE, APPT_STATUS, MONTH_IN_YEAR, INVOICE_STATUS, RECALL_PERIOD, RECALL_REMIND, MEDICINE_UNIT, Restangular) {
     var configService = {};
     var configApi = Restangular.all("api/erm");
     var mdtApi = Restangular.all("api/meditek/v1");
@@ -564,6 +568,10 @@ angular.module('app.config', [])
 
     configService.value_type_option = function(){
         return VALUE_TYPE;
+    }
+
+    configService.section_display_type_option = function(){
+        return SECTION_DISPLAY_TYPE;
     }
 
     configService.rank_type_option = function(){

@@ -1,6 +1,5 @@
 angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 .controller("FaDefineDetailController", function($scope, $stateParams, $state, $modal, ConfigService, FaHeaderModel, FaSectionModel, FaLineModel, FaLineDetailModel, FaCommentModel, FaDefineService, toastr, moment){
-
 	//init action
 	if($stateParams.action==='edit'){
 		$scope.isEdit = true;
@@ -35,6 +34,7 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 	$scope.score_type_opt = ConfigService.score_type_option();
 	$scope.comment_type_opt = ConfigService.comment_type_option();
 	$scope.value_type_opt = ConfigService.value_type_option();
+	$scope.section_display_type_opt = ConfigService.section_display_type_option();
 	ConfigService.rank_type_option().then(function(result){
 		$scope.rating_type_opt = result.list;
 	});

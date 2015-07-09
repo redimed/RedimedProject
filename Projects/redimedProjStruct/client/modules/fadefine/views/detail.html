@@ -2,12 +2,31 @@
     New Functional Assessment Definition</h3>
 <form name="wafirstform" novalidate>
 		<!-- This is for header -->
+
 		<div class="row" align="center">
 			<div class="col-md-10 col-sm-10 col-xs-10">
 				<input type="text" style="font-size: 18pt; font-weight: bolder; text-align: center;" class="form-control" value="Untitled Functional Assessment Header" ng-model="header.FA_NAME"/>
 			</div>
 			<div class="col-md-2 col-sm-2 col-xs-2">
 				<input type="text" style="font-size: 18pt; font-weight: bolder; text-align: center;" class="form-control" value="Untitled Functional Assessment Header" placeholder="FA Type" ng-model="header.TYPE"/>
+			</div>
+		</div>
+
+		<!-- This is for header general settings -->
+		<div class="panel panel-primary">
+			<div class="panel-heading" style="font-size: 16pt; color:white;">
+				Header General Settings
+			</div>
+			<div class="panel-body">
+				<h3 class="form-section">Additional Information Settings</h3>
+				<div class="row">
+					<div class="col-md-4 col-sm-4 col-xs-4">
+						<label>
+							<input type="checkbox" ng-model="header.is_have_resting_measurement" ng-checked="header.is_have_resting_measurement === 1">
+							Have Resting Measurements
+						</label>
+					</div>
+				</div>
 			</div>
 		</div>
 
@@ -22,7 +41,13 @@
 						<i class="fa fa-align-justify fa-3x"></i>
 					</div>
 					<div class="caption" style="width:50%;">
-						<input color="white" class="form-control" type="text" value="Untitled section" style="background:none; color:white; border:none; border-bottom:1px solid; font-size:18pt;" width="100%" ng-model="section.SECTION_NAME">
+						<input class="form-control" type="text" value="Untitled section" style="background:none; color:white; border:none; border-bottom:1px solid; font-size:18pt;" width="100%" ng-model="section.SECTION_NAME">
+					</div>
+					<div class="caption" style="width:30%">
+						<select style="background:none; color:black; border:none; border-bottom:1px solid; font-size:18pt; width:100%; margin-top:4px;" ng-model="section.SECTION_TYPE" ng-options="secdis.id as secdis.label for secdis in section_display_type_opt">
+
+							<option value="" disabled selected>-Select display type-</option>
+						</select>
 					</div>
 					<div class="tools">
 						<a href="javascript:;" class="collapse" data-original-title="" title=""> 
