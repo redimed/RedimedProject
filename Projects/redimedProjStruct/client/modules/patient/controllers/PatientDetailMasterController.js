@@ -105,6 +105,9 @@ angular.module("app.loggedIn.patient.detail.master.controller", [])
 	        	if (arr.length == 4) {
 	            $scope.modelObjectMap.Surburb = (arr[1]).trim();
 	            $scope.modelObjectMap.State = (arr[2]).trim();
+	            if (!$scope.modelObjectMap.Country) {
+	            	$scope.modelObjectMap.Country = "Australia";
+	            };
 	        }
         };
     };
