@@ -151,7 +151,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 			}
 
 			scope.goToAppDetail = function(CAL_ID, Patient_id){
-				$state.go('loggedIn.patient.appointment', {cal_id: CAL_ID, patient_id: Patient_id});
+				$state.go('loggedIn.patient.consult', {cal_id: CAL_ID, patient_id: Patient_id});
 
 				$cookieStore.put('appointment', scope.appointment.search);
 			}
