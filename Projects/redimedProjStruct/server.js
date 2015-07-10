@@ -40,7 +40,7 @@ var clientDir = path.join(__dirname, 'client');
 var uploadedFile = path.join(__dirname, 'uploadFile/PatientPicture/');
 var documentImage = path.join(__dirname, 'download/documentImage/');
 
-app.set('port', process.env.PORT || 443);
+app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.enable('trust proxy');

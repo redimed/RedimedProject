@@ -191,7 +191,7 @@
 													</div>
 												</td>
 												<td>
-													<div class="col-md-7 col-xs-7 col-sm-7" ng-show="(line.LineType!==1 && line.LineType!=='1') || ((line.LineType===1 || line.LineType==='1') && line.SCORE_TYPE1!==5)">
+													<div class="col-md-7 col-xs-7 col-sm-7" ng-show="(line.LineType!==1 && line.LineType!=='1') || ((line.LineType===1 || line.LineType==='1') && (line.SCORE_TYPE1!==5 && line.SCORE_TYPE1!==24 && line.SCORE_TYPE1!==25 && line.SCORE_TYPE1!==26))">
 														<div>
 															<label>
 																<select class="form-control" ng-options="vl.id as vl.label for vl in value_type_opt" ng-model="val1_type" ng-change="value1TypeWatch(detail, val1_type)" ng-init="val1_type=value1TypeInit(detail)">
@@ -225,7 +225,7 @@
 															</label>
 														</div>
 													</div>
-													<div class="col-md-5 col-xs-5 col-sm-5" ng-show="(line.LineType!==1 && line.LineType!=='1') || ((line.LineType===1 || line.LineType==='1') && line.SCORE_TYPE1!==5)">
+													<div class="col-md-5 col-xs-5 col-sm-5" ng-show="(line.LineType!==1 && line.LineType!=='1') || ((line.LineType===1 || line.LineType==='1') && (line.SCORE_TYPE1!==5 && line.SCORE_TYPE1!==24 && line.SCORE_TYPE1!==25 && line.SCORE_TYPE1!==26))">
 														<div>
 															<label>
 																<span><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="detail.IsCommentText===1 || detail.IsCommentText==='1'" ng-model="detail.IsCommentText" ng-change="IsCommentTextWatch(detail, detail.IsCommentText)"></span> Comment
@@ -249,10 +249,10 @@
 															</label>
 														</div>
 													</div>
-													<div class="col-md-2 col-xs-2 col-sm-2" ng-show="(line.LineType===1 || line.LineType==='1') && line.SCORE_TYPE1===5 && isEdit ">
+													<div class="col-md-2 col-xs-2 col-sm-2" ng-show="(line.LineType===1 || line.LineType==='1') && (line.SCORE_TYPE1===5 || line.SCORE_TYPE1===24 || line.SCORE_TYPE1===25 || line.SCORE_TYPE1===26) && isEdit ">
 														<label class="control-label">Summary for</label>
 													</div>
-													<div class="col-md-5 col-xs-5 col-sm-5" ng-show="(line.LineType===1 || line.LineType==='1') && line.SCORE_TYPE1===5 && isEdit ">
+													<div class="col-md-5 col-xs-5 col-sm-5" ng-show="(line.LineType===1 || line.LineType==='1') && (line.SCORE_TYPE1===5 || line.SCORE_TYPE1===24 || line.SCORE_TYPE1===25 || line.SCORE_TYPE1===26) && isEdit ">
 														<select class="form-control" ng-options="lineOpt.LINE_ID as lineOpt.QUESTION for lineOpt in section.lines" ng-model="detail.LineTestRefer">
 														
 														</select>

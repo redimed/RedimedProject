@@ -372,8 +372,22 @@
 						</div>
 						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISSCORE2 === 1 && line.SCORE_TYPE2 === 11">
 							<label class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">{{line.SCORE2}}</b></label>
-						<!-- end MIN Score -->
 						</div>
+						<!-- end MIN Score -->
+						<!-- SUM Score -->
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISSCORE1 === 1 && line.SCORE_TYPE1 === 28">
+							<label class="control-label pull-right" style="margin-top:15px;">Total: </label>
+						</div>
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISSCORE1 === 1 && line.SCORE_TYPE1 === 28">
+							<label class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">{{line.SCORE1}}</b> </label>
+						</div>
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISSCORE2 === 1 && line.SCORE_TYPE2 === 28">
+							<label class="control-label pull-right" style="margin-top:15px;">Total: </label>
+						</div>
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISSCORE2 === 1 && line.SCORE_TYPE2 === 28">
+							<label class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">{{line.SCORE2}}</b></label>
+						</div>
+						<!-- end SUM Score -->
 					</div>
 					<!-- End Detail Score -->
 					<div class="row" ng-if="line.ISRATING1 === 1 || line.ISRATING2 === 1">
@@ -432,16 +446,16 @@
 						</div>
 						<!-- End Normal Rate -->
 						<!-- MAX Score, MIN Score, Recovery and Simple Rating-->
-						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING1 === 1 && (line.SCORE_TYPE1 === 10 || line.SCORE_TYPE1 === 4 || line.SCORE_TYPE1 === 6 || line.SCORE_TYPE1 === 11)">
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING1 === 1 && (line.SCORE_TYPE1 === 10 || line.SCORE_TYPE1 === 4 || line.SCORE_TYPE1 === 6 || line.SCORE_TYPE1 === 11 || line.SCORE_TYPE1 === 28)">
 							<label class="control-label pull-right" style="margin-top:15px;">Rating: </label>
 						</div>
-						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING1 === 1 && (line.SCORE_TYPE1 === 10 || line.SCORE_TYPE1 === 4 || line.SCORE_TYPE1 === 6 || line.SCORE_TYPE1 === 11)">
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING1 === 1 && (line.SCORE_TYPE1 === 10 || line.SCORE_TYPE1 === 4 || line.SCORE_TYPE1 === 6 || line.SCORE_TYPE1 === 11 || line.SCORE_TYPE1 === 28)">
 							<label class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">{{line.RATE1}}</b></label>
 						</div>
-						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING2 === 1 && (line.SCORE_TYPE2 === 10 || line.SCORE_TYPE2 === 4 || line.SCORE_TYPE2 === 6 || line.SCORE_TYPE2 === 11)">
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING2 === 1 && (line.SCORE_TYPE2 === 10 || line.SCORE_TYPE2 === 4 || line.SCORE_TYPE2 === 6 || line.SCORE_TYPE2 === 11 || line.SCORE_TYPE2 === 28)">
 							<label class="control-label pull-right" style="margin-top:15px;">Rating: </label>
 						</div>
-						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING2 === 1 && (line.SCORE_TYPE2 === 10 || line.SCORE_TYPE2 === 4 || line.SCORE_TYPE2 === 6 || line.SCORE_TYPE2 === 11)">
+						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING2 === 1 && (line.SCORE_TYPE2 === 10 || line.SCORE_TYPE2 === 4 || line.SCORE_TYPE2 === 6 || line.SCORE_TYPE2 === 11 || line.SCORE_TYPE2 === 28)">
 							<label class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">{{line.RATE2}}</b></label>
 						</div>
 						<!-- End MAX Score, MIN Score, Recovery and Simple Rating-->
