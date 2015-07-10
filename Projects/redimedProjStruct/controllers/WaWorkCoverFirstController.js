@@ -114,7 +114,7 @@ module.exports = {
         knex
         .raw('select inj.* from `im_injury` inj inner join `cln_appt_patients` appt on inj.`injury_id` = appt.`injury_id` where  appt.`CAL_ID` = ? and appt.`Patient_id` = ?',[cal_id,patient_id])
         .then(function(result){
-            res.json({status:'success',data:result});
+            res.json({status:'success',data:result[0]});
         })
         .error(function(err){
             res.json(500,{status:'error',error:err});

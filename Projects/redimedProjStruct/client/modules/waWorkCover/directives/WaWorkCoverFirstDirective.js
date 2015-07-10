@@ -40,6 +40,7 @@ angular.module('app.loggedIn.waworkcover.first.directive', [])
                     //get injury info
                     console.log(scope.params);
                     WaWorkCoverService.firstGetInjury(scope.params.patientInfo, scope.params.apptInfo).then(function(result){
+                        console.log('this is result', result);
                         if(result.data.length !== 0){
                             scope.isTakeSignatureFromInjury = true;
                             scope.wafirst.signature = result.data[0].signature;
