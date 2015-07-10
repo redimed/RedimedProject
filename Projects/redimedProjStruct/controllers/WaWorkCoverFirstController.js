@@ -1,5 +1,6 @@
 var db = require('../models');
 var mdt_functions = require('../mdt-functions.js');
+var knex = require("../knex-connect.js");
 
 
 module.exports = {
@@ -105,4 +106,24 @@ module.exports = {
             });
 
     },
+
+    postGetInjuryInfo: function(req,res){
+        var patient_id = req.body.patient_id;
+        var cal_id = req.body.cal_id;
+
+        knex
+        .select()
+        .from('im_injury')
+        .where({
+            patient_id:patient_id,
+            cal_id: cal_id
+        })
+        .then(function(result){
+            res.json({status:'success',data:result});
+        })
+        .error(function(err){
+            res.json(500,{status:'error',error:err});
+        })
+    }
+
 }

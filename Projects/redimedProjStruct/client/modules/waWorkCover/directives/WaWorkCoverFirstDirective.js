@@ -11,7 +11,7 @@ angular.module('app.loggedIn.waworkcover.first.directive', [])
             },
             templateUrl: "modules/waWorkCover/directives/templates/first.html",
             link: function (scope, element, attrs) {
-
+                scope.isTakeSignatureFromInjury = false;
                 var init = function () {
                     scope.oneAtATime = false;
                     scope.isSubmit = false;
@@ -36,6 +36,16 @@ angular.module('app.loggedIn.waworkcover.first.directive', [])
                             }
                         }
                     });
+
+                    //get injury info
+                    console.log(scope.params);
+                    WaWorkCoverService.firstGetInjury(scope.params.patientInfo, scope.params.apptInfo).then(function(result){
+                        if(result.data.length !== 0){
+                            scope.isTakeSignatureFromInjury = true;
+                            scope.wafirst.signature = result.data[0].signature;
+                        }
+                    })
+
                     //get doctor info
                     // ReceptionistService.apptDetail(scope.params.apptInfo).then(function (res) {
                     //     if (res.data !== undefined && res.data !== null && res.data !== '') {

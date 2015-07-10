@@ -100,11 +100,14 @@
             <div class="break-row"></div>
             <div class="row">
                 <div class="col-md-12 col-sm-12">
-                    <div class="col-md-6 col-sm-6">
+                    <div class="col-md-6 col-sm-6" ng-show="isTakeSignatureFromInjury === false">
                         <canvas width="400" height="300" id="canvas" style="background-color: grey;" signature ng-model="wafirst.signature">
                         </canvas>
                         <div class="brreak-row"></div>
                         <button class="un-bg-XamDen-custom" ng-click="clearSignature()">Clear</button>
+                    </div>
+                    <div class="col-md-6 col-sm-6" ng-show="isTakeSignatureFromInjury === true">
+                        <img ng-src="{{wafirst.signature}}" width="400" height="300" />
                     </div>
                     <div class="col-md-6 col-sm-6">
                         <div class="row">
