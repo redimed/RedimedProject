@@ -25,7 +25,7 @@ FROM `th_first_assessment` f
 INNER JOIN `cln_appointment_calendar` a ON f.`cal_id` = a.`CAL_ID`
 INNER JOIN `cln_appt_patients` ap on ap.`CAL_ID` = a.`CAL_ID`
 INNER JOIN `cln_patients` p ON ap.`Patient_id` = p.`Patient_id`
-INNER JOIN `companies` c ON p.`company_id` = c.`id`
+LEFT JOIN `companies` c ON p.`company_id` = c.`id`
 INNER JOIN `users` u ON f.`Created_by` = u.`id`
 INNER JOIN `doctors` d ON u.`id` = d.`User_id`
 WHERE f.`Ass_id` = $P{id}]]>
