@@ -30,12 +30,20 @@ angular.module("app.loggedIn.patient.invoices.controller", [])
             	if(item.company) return item.company.Company_name;
             }},
             {field: 'cal_id', label: 'From Time', type: 'custom', fn: function(item){
-                if(item.appointment.FROM_TIME)
+                if(item.appointment){
                     return ConfigService.getCommonDatetime(item.appointment.FROM_TIME);
+                }
+                else{
+                    return null;
+                }
             }},
             {field: 'cal_id', label: 'To Time', type: 'custom', fn: function(item){
-                if(item.appointment.TO_TIME)
+                if(item.appointment){
                     return ConfigService.getCommonDatetime(item.appointment.TO_TIME);
+                }
+                else{
+                    return null;
+                }
             }},
             {field: 'Insurer_id', label: 'Insurer', type: 'custom', fn: function(item){
             	if(item.insurer) return item.insurer.insurer_name;

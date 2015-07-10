@@ -53,7 +53,7 @@
 		</div>
 	</div>
 	<div class="un_body_panel">
-		<div class="un_body_top un-padding-left-right-20-top-15-bottom-10">
+		<div class="un_padding_1">
 			<div ng-show="patientBarVer.version=='full'" class="row">
 				<div class="col-lg-12">
 					<div class="un-bgXam-colBlack un-padding-top-10 un-padding-bottom-10 un-div-width-90">
@@ -96,10 +96,10 @@
 												<button class="btn un-btn-black-label-60" type="button">Allergy</button>
 												</span>
 												<label type="text" class="form-control un-input-xam-fig-60">
-													<label ng-if="listAllergyinPAtient.length <= 0">No Allergy</label>
-													<label ng-repeat="item in listAllergyinPAtient">
-														<label ng-if="!$last">{{item.allergy_name}},&nbsp</label>
-														<label ng-if="$last">{{item.allergy_name}}</label>
+													<label class="pt_margin_bottom_0" ng-if="listAllergyinPAtient.length <= 0">No Allergy</label>
+													<label class="pt_margin_bottom_0" ng-repeat="item in listAllergyinPAtient">
+														<label class="pt_margin_bottom_0" ng-if="!$last">{{item.allergy_name}},&nbsp</label>
+														<label class="pt_margin_bottom_0" ng-if="$last">{{item.allergy_name}}</label>
 													</label>
 												</label>
 											</div>
@@ -165,52 +165,53 @@
 					</div>
 				</div>
 			</div>
-			<div ng-show="patientBarVer.version=='zip'" class="row">
-				<div class="col-lg-12 col-md-12 col-sm-12">
-					<div class="un-bgXam-colBlack un-padding-top-10">
-						<div class="row">
-							<div class="col-lg-12 col-md-12 col-sm-12">
-								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 un-padding-right-0 un-padding-left-10">
-									<div class="input-group un-padding-bottom-10">
+			<div ng-show="patientBarVer.version=='zip'" class="row un_margin_left_right_0">
+				<div class="col-lg-12 col-md-12 col-sm-12 un_box_shadow">
+					<div class="un-bgXam-colBlack un-padding-top-10 un_margin_left_right_15 un-padding-bottom-10">
+						<div class="row un_margin_left_right_0">
+							<div class="col-lg-12 col-md-12 col-sm-12 un-padding-left-0 un-padding-right-0">
+								<div style="width: 25%;float: left;" class="un-padding-right-0 un-padding-left-5">
+									<div class="input-group un_box_shadow">
 										<span class="input-group-btn ">
-										<button class="btn un-btn-black-label" type="button">Patient Name</button>
+										<button class="btn un-btn-black-label" type="button">Name</button>
 										</span>
 										<label type="text" class="form-control un-input-xam-fig">{{current_patient.First_name}}&nbsp{{current_patient.Middle_name}}&nbsp{{current_patient.Sur_name}}</label>
 									</div>
 								</div>
-								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 un-padding-left-10 un-padding-right-0">
-									<div class="input-group">
+								<div style="width: 12%;float: left;" class="un-padding-left-5 un-padding-right-0">
+									<div class="input-group un_box_shadow">
 										<span class="input-group-btn ">
 										<button class="btn un-btn-black-label" type="button">DOB</button>
 										</span>
 										<label type="text" class="form-control un-input-xam-fig">{{current_patient.DOB | date:'dd-MM-yyyy'}}</label>
 									</div>
 								</div>
-								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 un-padding-left-10 un-padding-right-0">
-									<div class="input-group">
+								<div style="width: 12%;float: left;" class="un-padding-left-5 un-padding-right-0">
+									<div class="input-group un_box_shadow">
 										<span class="input-group-btn ">
 										<button class="btn un-btn-black-label" type="button">Gender</button>
 										</span>
 										<label type="text" class="form-control un-input-xam-fig" ng-show="current_patient.Sex==0">Male</label>
 										<label type="text" class="form-control un-input-xam-fig" ng-show="current_patient.Sex==1">Female</label>
+										<label type="text" class="form-control un-input-xam-fig" ng-show="current_patient.Sex!=1 && current_patient.Sex!=0">{{current_patient.Sex}}</label>
 									</div>
 								</div>
-								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 un-padding-left-10 un-padding-right-0">
-									<div class="input-group">
+								<div style="width: 21%;float: left;" class="un-padding-left-5 un-padding-right-0">
+									<div class="input-group un_box_shadow">
 										<span class="input-group-btn ">
 										<button class="btn un-btn-black-label" type="button">Allergy</button>
 										</span>
 										<label type="text" class="form-control un-input-xam-fig">
-											<label ng-if="listAllergyinPAtient.length <= 0">No Allergy</label>
-											<label ng-repeat="item in listAllergyinPAtient">
-												<label ng-if="!$last">{{item.allergy_name}},&nbsp</label>
-												<label ng-if="$last">{{item.allergy_name}}</label>
+											<label class="pt_margin_bottom_0" ng-if="listAllergyinPAtient.length <= 0">No Allergy</label>
+											<label class="pt_margin_bottom_0" ng-repeat="item in listAllergyinPAtient">
+												<label class="pt_margin_bottom_0" ng-if="!$last">{{item.allergy_name}},&nbsp</label>
+												<label class="pt_margin_bottom_0" ng-if="$last">{{item.allergy_name}}</label>
 											</label>
 										</label>
 									</div>
 								</div>
-								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 un-padding-left-10">
-									<div class="input-group">
+								<div style="width: 16%;float: left;" class="un-padding-left-5 un-padding-right-0">
+									<div class="input-group un_box_shadow">
 										<span class="input-group-btn ">
 										<button class="btn un-btn-black-label" type="button">Time</button>
 										</span>
@@ -218,8 +219,46 @@
 										<label type="text" class="form-control un-input-xam-fig" ng-if="cal_id == -1"></label>
 									</div>
 								</div>
+								<div style="width: 14%;float: left;" class="un-padding-left-5 un-padding-right-5">
+									<button style="width: 70%;" type="button" class="btn un_box_shadow un_marign_right_0 un-btn-black-label pull-left" ng-click="newAppoint()">New Appt</button>
+									<div style="width: 30%;height: 26px;" class="btn-group un_box_shadow pull-right" dropdown="">
+										<button type="button" class="btn btn-default un-input-xam-fig dropdown-toggle un_bar_button" ng-disabled="disabled" aria-haspopup="true" aria-expanded="false">
+												<i style="color:white" class="fa fa-calendar"></i> <span class="caret"></span>
+										</button>
+
+										<ul class="dropdown-menu" role="menu">
+											<li ng-repeat="appt in list_appt" 
+												ng-class="{'list-group-item-success': appt.CAL_ID == cal_id}" 
+												ng-click="changeAppt(appt)">
+												<a>
+												<strong>{{appt.FROM_TIME | moment: 'utc' | moment: 'format': 'DD/MM/YYYY'}}</strong> {{appt.FROM_TIME | moment: 'utc' | moment: 'format': 'hh:mm A'}} - {{appt.TO_TIME | moment: 'utc' | moment: 'format': 'hh:mm A'}} <span class="badge" ng-class="classAppt(appt)"  style="position: relative; right: -5px"> {{appt.APP_TYPE}} </span>
+												</a>
+											</li>
+										</ul>
+									</div>
+								</div>
 							</div>
 						</div>
+					</div>
+				</div>
+			</div>
+			<div ng-show="patientBarVer.version=='null'" class="row un_margin_left_right_0">
+				<div class="col-md-2 col-sm-2 col-xs-2 col-lg-2 pull-right un-padding-right-0">
+					<button style="width: 70%;" type="button" class="btn un_box_shadow un_marign_right_0 un-btn-black-label pull-left" ng-click="newAppoint()">New Appt</button>
+					<div style="width: 30%;height: 26px;" class="btn-group un_box_shadow pull-right" dropdown="">
+						<button type="button" class="btn btn-default un-input-xam-fig dropdown-toggle un_bar_button" ng-disabled="disabled" aria-haspopup="true" aria-expanded="false">
+								<i style="color:white" class="fa fa-calendar"></i> <span class="caret"></span>
+						</button>
+
+						<ul class="dropdown-menu" role="menu">
+							<li ng-repeat="appt in list_appt" 
+								ng-class="{'list-group-item-success': appt.CAL_ID == cal_id}" 
+								ng-click="changeAppt(appt)">
+								<a>
+								<strong>{{appt.FROM_TIME | moment: 'utc' | moment: 'format': 'DD/MM/YYYY'}}</strong> {{appt.FROM_TIME | moment: 'utc' | moment: 'format': 'hh:mm A'}} - {{appt.TO_TIME | moment: 'utc' | moment: 'format': 'hh:mm A'}} <span class="badge" ng-class="classAppt(appt)"  style="position: relative; right: -5px"> {{appt.APP_TYPE}} </span>
+								</a>
+							</li>
+						</ul>
 					</div>
 				</div>
 			</div>
@@ -235,4 +274,88 @@
 	</div>
 </div>
 	</div>
+</div>
+<!-- phan quoc chien -->
+<!-- Modal add new apptoiment -->
+<style type="text/css">
+    .has-error .form-control {
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        border: 1px solid red;
+    }
+    .has-error .form-control:focus {
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        border: 1px solid red;
+    }
+    .ui-datepicker{
+    	z-index:999999 !important
+    }
+</style>
+<div class="modal fade" id="popupNewAppoint" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<form name="appointForm" novalidate>
+	    <div style="z-index: 10;margin-top: 60px;" class="modal-dialog modal-md">
+	        <div class="modal-content">
+	            <h4 class="modal-title un-label-popup-header-m un-bg-label-B41E46-m" id="myModalLabel">Add Appointment</h4>
+	            <div class="modal-body">
+	                <div class="row">
+		                <div class="col-md-6 col-sm-6">
+		                	<div ng-class="{'has-error': appointForm.apptDate.$invalid && isSubmit}">
+		                        <div class="form-group">
+		                    		<label class="un-label-forms-custom">Date</label>
+		                    		<input ui-date="{dateFormat: 'dd/mm/yy', defaultDate: '01/01/1990', changeMonth: true, changeYear: true}" id="apptDate" class="form-control input-sm un_label_popup_history" name="apptDate" required ng-model="apptDate" placeholder="DD/MM/YYYY">
+		                        </div>
+		                    </div>
+		                </div>
+		            </div>
+		            <div class="row">
+		                <div class="col-md-6 col-sm-6">
+		                	<div ng-class="{'has-error': appointForm.from_time.$invalid && isSubmit}">
+		                        <div class="form-group">
+		                    		<label class="un-label-forms-custom">From Time</label>
+		                    		<input type="text" ui-mask="99:99" ng-model="from_time" class="form-control input-sm un_label_popup_history" id="from_time" name="from_time" ng-change="changeCalendar({'data':l})" required>
+		                        </div>
+		                    </div>
+		                </div>
+		                <div class="col-md-6 col-sm-6">
+		                	<div ng-class="{'has-error': appointForm.to_time.$invalid && isSubmit}">
+		                        <div class="form-group">
+		                    		<label class="un-label-forms-custom">To Time</label>
+		                    		<input type="text" ui-mask="99:99" ng-model="to_time" class="form-control input-sm un_label_popup_history" id="to_time" name="to_time" ng-change="changeCalendar({'data':l})" required>
+		                        </div>
+		                    </div>
+		                   	
+		                </div>
+		            </div>
+	                <div class="row">
+		                <div class="col-md-6 col-sm-6">
+		                	<div ng-class="{'has-error': appointForm.service_Id.$invalid && isSubmit}">
+		                        <div class="form-group">
+		                    		<label class="un-label-forms-custom">Service</label>
+		                    		<select ng-model="service_Id" ng-options="service.SERVICE_ID as service.SERVICE_NAME for service in options.clinical_depts" class="form-control input-sm un_label_popup_history" required id="service_Id" name="service_Id">
+	                        		</select>
+		                        </div>
+		                    </div>
+		                </div>
+		                <div class="col-md-6 col-sm-6">
+		                	<div ng-class="{'has-error': appointForm.site_id.$invalid && isSubmit}">
+		                        <div class="form-group">
+		                    		<label class="un-label-forms-custom">Site</label>
+		                    		<select ng-model="site_id" ng-options="site.id as site.Site_name for site in options.redimedsites" class="form-control input-sm un_label_popup_history" id="site_id" name="site_id" required>
+	                        		</select>
+		                        </div>
+		                    </div>
+		                   	
+		                </div>
+		            </div>
+	            </div>
+	            <div class="modal-footer">
+	            	<button style="margin-right: 0;" type="button" class="un-button un-bgBlack" ng-click="submitCalendar()">
+				        Submit
+				    </button>
+	                <button type="button" class="un-button un-bgXam-colBlack" data-dismiss="modal">Close</button>
+	            </div>
+	        </div>
+	    </div>
+	</form>
 </div>

@@ -257,7 +257,7 @@ angular.module('app.loggedIn.invoice.add.directive', [])
 					
 
 
-					console.log(response)
+					// console.log(response)
 				})
 			
 			}//end clickAction

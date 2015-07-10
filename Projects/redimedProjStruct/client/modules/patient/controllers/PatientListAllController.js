@@ -70,9 +70,9 @@ angular.module('app.loggedIn.patient.listall.controller',[])
             CompanyModel.getFromTime(postData)
             .then(function(response){
                 if (response.data == -1 ) {
-                   $state.go("loggedIn.patient.appointment", {patient_id: item.Patient_id, cal_id: -1}); 
+                   $state.go("loggedIn.patient.detail", {patient_id: item.Patient_id, cal_id: -1}); 
                 }else{
-                    $state.go("loggedIn.patient.appointment", {patient_id: item.Patient_id, cal_id: response.data.CAL_ID});
+                    $state.go("loggedIn.patient.consult", {patient_id: item.Patient_id, cal_id: response.data.CAL_ID});
                 }
                 
             }, function(error){

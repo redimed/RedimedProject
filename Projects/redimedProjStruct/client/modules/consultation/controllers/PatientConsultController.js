@@ -841,8 +841,8 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			ConsultationService.submitConsult(consultInfoTemp).then(function(res){
 				if(res.status == 'success')
 				{
-				 	toastr.success('Submit Consultation Success!');
 					$scope.loadConsultationInfo();
+                    $scope.setListConsultationOfPatient();
 					var insertArr = []; 
             
 		            var fnInsertArr = function(item) {
@@ -889,7 +889,6 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		            		/*phanquocchien.c1109g@gmail.com
 							* load data consultation history
 		                    */
-		                    $scope.setListConsultationOfPatient();
 							$scope.getImgDrawingHistory();
 		            	}
 		            	else if(data.status='non-data')
@@ -903,6 +902,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		            },function(err){
 		            	toastr.error('Save invoice item error.');
 		            });
+				 	toastr.success('Submit Consultation Success!');
 				}
 				else
 					toastr.success("Submit Consultation Failed!");

@@ -96,8 +96,18 @@ angular.module("app.loggedIn.patient.detail.master.controller", [])
 				});
 			}//end medicare length
 		}//end isNaN
-	}
+	};
 
+	$scope.changeAdd = function() {
+        var string = $scope.modelObjectMap.Address1;
+        if (string != null) {
+        	var arr = string.split(",");
+	        	if (arr.length == 4) {
+	            $scope.modelObjectMap.Surburb = (arr[1]).trim();
+	            $scope.modelObjectMap.State = (arr[2]).trim();
+	        }
+        };
+    };
 	//END VERIFIED MEDICARE
 
 	var initObject = function(){
@@ -294,7 +304,6 @@ angular.module("app.loggedIn.patient.detail.master.controller", [])
 					else
 					{
 						if (data.status == 'fail') {
-							console.log('aaaaaaaaa',data);
 							if(uploader.queue.length > 0){
 								var upload_file_name = (new Date()).getTime() + "-" +uploader.queue[0].file.name;
 								postData.avatar = "img/patient/avt/" + upload_file_name;
@@ -363,4 +372,36 @@ angular.module("app.loggedIn.patient.detail.master.controller", [])
 	$scope.removeUpload = function(){
 		uploader.queue = [];
 	}
+})
+.directive('googleplace', function() {
+    return {
+        require: 'ngModel',
+        restrict: "A",
+        scope: {
+           
+        },
+        link: function(scope, element, attrs, model) {
+            var componentForm = {
+                street_number: '',
+                route: '',
+                locality: '',
+                administrative_area_level_1: '',
+                country: '',
+                postal_code: ''
+            };
+            var options = {
+                types: [],
+                componentRestrictions: {
+                    country: 'au'
+                }
+            };
+            scope.gPlace = new google.maps.places.Autocomplete(element[0], options);
+            google.maps.event.addListener(scope.gPlace, 'place_changed', function() {
+                scope.Place = scope.gPlace.getPlace();
+                scope.$apply(function() {
+                    model.$setViewValue(element.val());
+                });
+            });
+        }
+    };
 })
