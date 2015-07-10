@@ -8,10 +8,11 @@
 			<attribute name="owner.project.facets" value="jst.web"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.8.0_45">
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre1.8.0_45">
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="F:/MEDITEK/SOURCECODE/RedimedProject/Projects/RedimedErpRestful/WebContent/WEB-INF/lib/org.springframework.web-3.0.1.RELEASE.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

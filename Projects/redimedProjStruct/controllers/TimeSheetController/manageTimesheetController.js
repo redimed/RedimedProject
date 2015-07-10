@@ -13,7 +13,7 @@ module.exports = {
 
         // QUERY 
         var strQuery =
-            "SELECT SUM(time_tasks.time_charge) AS sumDATE, time_tasks.date, time_tasks.tasks_id, " + //SELECT
+            "SELECT SUM(DISTINCT time_tasks.time_charge) AS sumDATE, time_tasks.date, time_tasks.tasks_id, " + //SELECT
             "time_tasks.activity_id, time_tasks_week.start_date, time_tasks_week.end_date, " + //SELECT
             "time_tasks_week.user_id, time_tasks_week.task_week_id, time_tasks_week.time_in_lieu, " + //SELECT
             "time_item_task.item_id, " + //SELECT
@@ -22,7 +22,7 @@ module.exports = {
             "hr_employee.FirstName, hr_employee.LastName " + //SELECT
             "FROM time_tasks " + //FORM
             "INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = time_tasks.tasks_week_id " + //JOIN
-            "INNER JOIN time_item_task ON time_tasks.tasks_id = time_item_task.task_id " + //JOIN
+            "LEFT JOIN time_item_task ON time_tasks.tasks_id = time_item_task.task_id " + //JOIN
             "INNER JOIN time_task_status ON time_task_status.task_status_id = time_tasks_week.task_status_id " + //JOIN
             "INNER JOIN users ON time_tasks_week.user_id = users.id " + //JOIN
             "LEFT JOIN time_activity ON time_activity.activity_id = time_tasks.activity_id " + //JOIN
@@ -75,6 +75,7 @@ module.exports = {
                                         valueResult.item_id == 16 ||
                                         valueResult.item_id == 17 ||
                                         valueResult.item_id == 19 ||
+                                        valueResult.item_id == 24 ||
                                         valueResult.item_id == 25) &&
                                     (date < startDate || date > finishDate)) {
                                     forPermission = false;
@@ -587,6 +588,7 @@ module.exports = {
                 idTaskWeek: idTaskWeek
             })
             .success(function(result) {
+                // FOR CHOOSE TIME IN LIEU
                 if (result[0] !== undefined &&
                     result[0] !== null &&
                     result[0].time_in_lieuChoose > 0) {
@@ -700,10 +702,59 @@ module.exports = {
                                             });
                                             chainer.runSerially()
                                                 .success(function(resultSuccess) {
-                                                    res.json({
-                                                        status: "success"
-                                                    });
-                                                    return;
+                                                    //SET APPROVE
+                                                    info.date = moment().format("YYYY-MM-DD HH:mm:ss");
+                                                    info.status = 3;
+                                                    var timeType = "";
+                                                    if (info.time_rest !== 0 && info.time_rest !== null && info.time_rest !== undefined) {
+                                                        if (info.time_in_lieuFull !== undefined && info.time_in_lieuFull !== null) {
+                                                            timeType += ", time_in_lieu = " + info.time_in_lieuFull;
+                                                        }
+                                                        if (info.over_timeFull !== undefined && info.over_timeFull !== null) {
+                                                            timeType += ", over_time = " + info.over_timeFull;
+                                                        }
+                                                    }
+                                                    var query =
+                                                        "UPDATE time_tasks_week " + //UPDATE
+                                                        "SET task_status_id = 3, approved_date = '" + info.date + "'" + timeType + " " + //SET
+                                                        "WHERE task_week_id = :idTaskWeek"; //WHERE
+                                                    db.sequelize.query(query, null, {
+                                                            raw: true
+                                                        }, {
+                                                            idTaskWeek: idTaskWeek
+                                                        })
+                                                        .success(function(result) {
+                                                            // //TRACKER
+                                                            // var tracKer = {
+                                                            //     statusID: 3,
+                                                            //     USER_ID: info.USER_ID,
+                                                            //     idTaskWeek: info.idTaskWeek,
+                                                            //     date: info.date
+                                                            // };
+
+                                                            // //CALL FUNCTION TRACKER
+                                                            // functionForTimesheet.TracKerTimeSheet(tracKer);
+                                                            // //END
+
+                                                            // // SEND MAIL
+                                                            // functionForTimesheet.SendMailTimeSheet(req, res, info);
+                                                            // // ENE MAIL
+
+                                                            // //END TRACKER
+                                                            // res.json({
+                                                            //     status: "success"
+                                                            // });
+                                                            // return;
+                                                        })
+                                                        .error(function(err) {
+                                                            console.log("*****ERROR:" + err + "*****");
+                                                            res.json({
+                                                                status: "error"
+                                                            });
+                                                            return;
+                                                        });
+
+                                                    //END
                                                 })
                                                 .error(function(err) {
 
@@ -740,6 +791,7 @@ module.exports = {
                         });
                     //END
                 }
+                //FOR NOT CHOOSE TIME IN LIEU
                 //SET APPROVE
                 info.date = moment().format("YYYY-MM-DD HH:mm:ss");
                 info.status = 3;
@@ -762,27 +814,131 @@ module.exports = {
                         idTaskWeek: idTaskWeek
                     })
                     .success(function(result) {
-                        //TRACKER
-                        var tracKer = {
-                            statusID: 3,
-                            USER_ID: info.USER_ID,
-                            idTaskWeek: info.idTaskWeek,
-                            date: info.date
-                        };
+                        //TRANSFER DATA TO ERP
+                        var queryGetInfoTimeWeek =
+                            "SELECT DISTINCT hr_employee.Employee_ID, " + //SELECT
+                            "time_tasks_week.start_date, time_tasks_week.end_date, time_tasks_week.over_time, " + //SELECT
+                            "time_tasks_week.week_no, time_item_task.time_charge as time_charge_item, time_item_task.item_id, " + //SELECT
+                            "time_item_code.item_name, time_tasks.time_charge as time_charge_task " + //SELECT
+                            "FROM hr_employee " + //FROM
+                            "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //JOIN
+                            "INNER JOIN time_tasks_week ON time_tasks_week.user_id = users.id " + //JOIN
+                            "INNER JOIN time_tasks ON time_tasks.tasks_week_id = time_tasks_week.task_week_id " + //JOIN
+                            "LEFT JOIN time_item_task ON time_item_task.task_id = time_tasks.tasks_id " + //JOIN
+                            "LEFT JOIN time_item_code ON time_item_task.item_id = time_item_code.item_id " + //JOIN
+                            "WHERE time_tasks_week.task_status_id = 3 AND time_tasks_week.task_week_id = :taskWeekId";
+                        db.sequelize.query(queryGetInfoTimeWeek, null, {
+                                raw: true
+                            }, {
+                                taskWeekId: idTaskWeek
+                            })
+                            .success(function(resultInfoTimeWeek) {
+                                if (resultInfoTimeWeek !== undefined &&
+                                    resultInfoTimeWeek !== null &&
+                                    resultInfoTimeWeek.length !== 0) {
+                                    var painHour = 0,
+                                        publicHoliday = 0,
+                                        carerPersonal = 0,
+                                        annualLeave = 0,
+                                        overTime = 0,
+                                        nonPain = 0;
+                                    resultInfoTimeWeek.forEach(function(valueResultInfoTimeWeek, indexResultInfoTimeWeek) {
+                                        //SUM FOR PUBLIC HOLIDAY
+                                        if (valueResultInfoTimeWeek !== undefined &&
+                                            valueResultInfoTimeWeek !== null &&
+                                            valueResultInfoTimeWeek.item_id == 26) {
+                                            publicHoliday += valueResultInfoTimeWeek.time_charge_item;
+                                        }
+                                        //END
 
-                        //CALL FUNCTION TRACKER
-                        functionForTimesheet.TracKerTimeSheet(tracKer);
-                        //END
+                                        // SUM FOR CARER/PERSONAL
+                                        else if (valueResultInfoTimeWeek !== undefined &&
+                                            valueResultInfoTimeWeek !== null &&
+                                            (valueResultInfoTimeWeek.item_id == 15 ||
+                                                valueResultInfoTimeWeek.item_id == 16 ||
+                                                valueResultInfoTimeWeek.item_id == 24)) {
+                                            carerPersonal += valueResultInfoTimeWeek.time_charge_item;
+                                        }
+                                        //END
 
-                        // SEND MAIL
-                        functionForTimesheet.SendMailTimeSheet(req, res, info);
-                        // ENE MAIL
+                                        //SUM FOR ANNUAL LEAVE
+                                        else if (valueResultInfoTimeWeek !== undefined &&
+                                            valueResultInfoTimeWeek !== null &&
+                                            (valueResultInfoTimeWeek.item_id == 17)) {
+                                            annualLeave += valueResultInfoTimeWeek.time_charge_item;
+                                        }
+                                        //END
 
-                        //END TRACKER
-                        res.json({
-                            status: "success"
-                        });
-                        return;
+                                        //SUM FOR NON-PAIN
+                                        else if (valueResultInfoTimeWeek !== undefined &&
+                                            valueResultInfoTimeWeek !== null &&
+                                            (valueResultInfoTimeWeek.item_id == 19)) {
+                                            nonPain += valueResultInfoTimeWeek.time_charge_item;
+                                        }
+                                        //END
+
+                                        //SUM FOR PAIN-HOUR
+                                        else if (valueResultInfoTimeWeek !== undefined &&
+                                            valueResultInfoTimeWeek !== null) {
+                                            if (valueResultInfoTimeWeek.item_id !== undefined &&
+                                                valueResultInfoTimeWeek.item_id !== null &&
+                                                valueResultInfoTimeWeek.item_id !== "") {
+                                                painHour += valueResultInfoTimeWeek.time_charge_item;
+                                            } else {
+                                                painHour += valueResultInfoTimeWeek.time_charge_task;
+                                            }
+                                        }
+                                        //END
+                                    });
+                                    var objectTranfer = {
+                                        pEMPLOYEE_ID: resultInfoTimeWeek[0].Employee_ID,
+                                        pWEEKNO: resultInfoTimeWeek[0].week_no,
+                                        pFROMDATE: resultInfoTimeWeek[0].start_date,
+                                        pTODATE: resultInfoTimeWeek[0].end_date,
+                                        pPAIN_HOUR: painHour,
+                                        pNON_PAIN: nonPain,
+                                        pOVER_TIME: resultInfoTimeWeek[0].over_time,
+                                        pPUBLIC_HOLIDAY: publicHoliday,
+                                        pANNUAL_LEAVE: annualLeave,
+                                        pCARER_PERSIONAL: carerPersonal
+                                    };
+                                    console.log(objectTranfer);
+                                } else {
+                                    res.json({
+                                        status: "error"
+                                    });
+                                    return;
+                                }
+                            })
+                            .error(function(err) {
+                                console.log("*****ERROR:" + err + "*****");
+                                res.json({
+                                    status: "error"
+                                });
+                                return;
+                            });
+                        //END TRANSFER
+                        // //TRACKER
+                        // var tracKer = {
+                        //     statusID: 3,
+                        //     USER_ID: info.USER_ID,
+                        //     idTaskWeek: info.idTaskWeek,
+                        //     date: info.date
+                        // };
+
+                        // //CALL FUNCTION TRACKER
+                        // functionForTimesheet.TracKerTimeSheet(tracKer);
+                        // //END
+
+                        // // SEND MAIL
+                        // functionForTimesheet.SendMailTimeSheet(req, res, info);
+                        // // ENE MAIL
+
+                        // //END TRACKER
+                        // res.json({
+                        //     status: "success"
+                        // });
+                        // return;
                     })
                     .error(function(err) {
                         console.log("*****ERROR:" + err + "*****");
