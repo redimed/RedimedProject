@@ -3,6 +3,7 @@ var db = require("../../models");
 var moment = require('moment');
 var chainer = new db.Sequelize.Utils.QueryChainer;
 var functionForTimesheet = require("./functionForTimesheet");
+var ServiceErp = require('../../helper/ERP_rest');
 //END
 module.exports = {
     ViewApproved: function(req, res) {
@@ -836,12 +837,12 @@ module.exports = {
                                 if (resultInfoTimeWeek !== undefined &&
                                     resultInfoTimeWeek !== null &&
                                     resultInfoTimeWeek.length !== 0) {
-                                    var painHour = 0,
+                                    var paidHour = 0,
                                         publicHoliday = 0,
                                         carerPersonal = 0,
                                         annualLeave = 0,
                                         overTime = 0,
-                                        nonPain = 0;
+                                        nonPaid = 0;
                                     resultInfoTimeWeek.forEach(function(valueResultInfoTimeWeek, indexResultInfoTimeWeek) {
                                         //SUM FOR PUBLIC HOLIDAY
                                         if (valueResultInfoTimeWeek !== undefined &&
@@ -873,7 +874,7 @@ module.exports = {
                                         else if (valueResultInfoTimeWeek !== undefined &&
                                             valueResultInfoTimeWeek !== null &&
                                             (valueResultInfoTimeWeek.item_id == 19)) {
-                                            nonPain += valueResultInfoTimeWeek.time_charge_item;
+                                            nonPaid += valueResultInfoTimeWeek.time_charge_item;
                                         }
                                         //END
 
@@ -883,9 +884,9 @@ module.exports = {
                                             if (valueResultInfoTimeWeek.item_id !== undefined &&
                                                 valueResultInfoTimeWeek.item_id !== null &&
                                                 valueResultInfoTimeWeek.item_id !== "") {
-                                                painHour += valueResultInfoTimeWeek.time_charge_item;
+                                                paidHour += valueResultInfoTimeWeek.time_charge_item;
                                             } else {
-                                                painHour += valueResultInfoTimeWeek.time_charge_task;
+                                                paidHour += valueResultInfoTimeWeek.time_charge_task;
                                             }
                                         }
                                         //END
@@ -893,16 +894,29 @@ module.exports = {
                                     var objectTranfer = {
                                         pEMPLOYEE_ID: resultInfoTimeWeek[0].Employee_ID,
                                         pWEEKNO: resultInfoTimeWeek[0].week_no,
-                                        pFROMDATE: resultInfoTimeWeek[0].start_date,
-                                        pTODATE: resultInfoTimeWeek[0].end_date,
-                                        pPAIN_HOUR: painHour,
-                                        pNON_PAIN: nonPain,
+                                        pFROMDATE: moment(resultInfoTimeWeek[0].start_date).format("YYYY-MM-DD"),
+                                        pTODATE: moment(resultInfoTimeWeek[0].end_date).format("YYYY-MM-DD"),
+                                        pPAID_HOUR: paidHour,
+                                        pNON_PAID: nonPaid,
                                         pOVER_TIME: resultInfoTimeWeek[0].over_time,
                                         pPUBLIC_HOLIDAY: publicHoliday,
                                         pANNUAL_LEAVE: annualLeave,
-                                        pCARER_PERSIONAL: carerPersonal
+                                        pCARER_PERSONAL: carerPersonal
                                     };
-                                    console.log(objectTranfer);
+                                    //CALL ERP SERVICE
+                                    ServiceErp.transferTimeWeek(objectTranfer).then(function(resultErp) {
+                                        if (resultErp.data === true) {
+                                            res.json({
+                                                status: "success"
+                                            });
+                                            return;
+                                        } else {
+                                            //CAL ROLLBACK
+                                            
+                                            //END
+                                        }
+                                    });
+                                    //END
                                 } else {
                                     res.json({
                                         status: "error"

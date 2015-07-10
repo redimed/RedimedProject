@@ -1,0 +1,87 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install',
+1 verbose cli   'gulp-g' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.32
+4 verbose node symlink C:\Program Files\nodejs\\node.exe
+5 warn package.json util@0.10.3 util is also the name of a node core module.
+6 verbose readDependencies using package.json deps
+7 verbose cache add [ 'gulp-g', null ]
+8 verbose cache add name=undefined spec="gulp-g" args=["gulp-g",null]
+9 verbose parsed url { protocol: null,
+9 verbose parsed url   slashes: null,
+9 verbose parsed url   auth: null,
+9 verbose parsed url   host: null,
+9 verbose parsed url   port: null,
+9 verbose parsed url   hostname: null,
+9 verbose parsed url   hash: null,
+9 verbose parsed url   search: null,
+9 verbose parsed url   query: null,
+9 verbose parsed url   pathname: 'gulp-g',
+9 verbose parsed url   path: 'gulp-g',
+9 verbose parsed url   href: 'gulp-g' }
+10 silly lockFile d21743c0-gulp-g gulp-g
+11 verbose lock gulp-g C:\Users\thanh1101681\AppData\Roaming\npm-cache\d21743c0-gulp-g.lock
+12 silly lockFile d21743c0-gulp-g gulp-g
+13 silly lockFile d21743c0-gulp-g gulp-g
+14 verbose addNamed [ 'gulp-g', '' ]
+15 verbose addNamed [ null, '*' ]
+16 silly lockFile d25b4510-gulp-g gulp-g@
+17 verbose lock gulp-g@ C:\Users\thanh1101681\AppData\Roaming\npm-cache\d25b4510-gulp-g.lock
+18 silly addNameRange { name: 'gulp-g', range: '*', hasData: false }
+19 verbose request where is /gulp-g
+20 verbose request registry https://registry.npmjs.org/
+21 verbose request id 81f994fbe39bf4c3
+22 verbose url raw /gulp-g
+23 verbose url resolving [ 'https://registry.npmjs.org/', './gulp-g' ]
+24 verbose url resolved https://registry.npmjs.org/gulp-g
+25 verbose request where is https://registry.npmjs.org/gulp-g
+26 info trying registry request attempt 1 at 18:05:06
+27 http GET https://registry.npmjs.org/gulp-g
+28 http 404 https://registry.npmjs.org/gulp-g
+29 verbose headers { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+29 verbose headers   'content-type': 'application/json',
+29 verbose headers   'cache-control': 'max-age=0',
+29 verbose headers   'content-length': '51',
+29 verbose headers   'accept-ranges': 'bytes',
+29 verbose headers   date: 'Fri, 10 Jul 2015 11:05:05 GMT',
+29 verbose headers   via: '1.1 varnish',
+29 verbose headers   age: '0',
+29 verbose headers   connection: 'keep-alive',
+29 verbose headers   'x-served-by': 'cache-lax1424-LAX',
+29 verbose headers   'x-cache': 'MISS',
+29 verbose headers   'x-cache-hits': '0',
+29 verbose headers   'x-timer': 'S1436526305.237357,VS0,VE183' }
+30 silly registry.get cb [ 404,
+30 silly registry.get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+30 silly registry.get     'content-type': 'application/json',
+30 silly registry.get     'cache-control': 'max-age=0',
+30 silly registry.get     'content-length': '51',
+30 silly registry.get     'accept-ranges': 'bytes',
+30 silly registry.get     date: 'Fri, 10 Jul 2015 11:05:05 GMT',
+30 silly registry.get     via: '1.1 varnish',
+30 silly registry.get     age: '0',
+30 silly registry.get     connection: 'keep-alive',
+30 silly registry.get     'x-served-by': 'cache-lax1424-LAX',
+30 silly registry.get     'x-cache': 'MISS',
+30 silly registry.get     'x-cache-hits': '0',
+30 silly registry.get     'x-timer': 'S1436526305.237357,VS0,VE183' } ]
+31 silly lockFile d25b4510-gulp-g gulp-g@
+32 silly lockFile d25b4510-gulp-g gulp-g@
+33 error 404 404 Not Found: gulp-g
+33 error 404
+33 error 404 'gulp-g' is not in the npm registry.
+33 error 404 You should bug the author to publish it
+33 error 404 It was specified as a dependency of 'redimedProjStruct'
+33 error 404
+33 error 404 Note that you can also install from a
+33 error 404 tarball, folder, or http url, or git url.
+34 error System Windows_NT 6.2.9200
+35 error command "C:\\Program Files\\nodejs\\\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "gulp-g"
+36 error cwd F:\MEDITEK\SOURCECODE\RedimedProject\Projects\redimedProjStruct
+37 error node -v v0.10.32
+38 error npm -v 1.4.28
+39 error code E404
+40 verbose exit [ 1, true ]

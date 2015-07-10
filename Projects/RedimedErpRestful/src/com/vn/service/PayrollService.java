@@ -25,22 +25,20 @@ public class PayrollService {
 	try{
 		//connection success and transfer timesheet
 		Connection connection = connectionProvider.getConnection();
-//		for(int i=1;i<=4;i++){
-			CallableStatement cs=(CallableStatement) connection.prepareCall("{ call HRS.HRTIMEWEEK.InsertInterFace(?,?,?,?,?,?,?,?) }");
-			cs.setString(1, dataTimeWeek.getpEMPLOYEE_ID());
+			CallableStatement cs=(CallableStatement) connection.prepareCall("{ call HRS.HRTIMEWEEK.InsertInterFace(?,?,?,?,?,?,?,?,?,?,?) }");
+			cs.setInt(1, dataTimeWeek.getpEMPLOYEE_ID());
 			cs.setString(2, dataTimeWeek.getpWEEKNO());
-			cs.setString(3, dataTimeWeek.getpFROMDATE());
-			cs.setString(4, dataTimeWeek.getpTODATE());
-			cs.setString(5, dataTimeWeek.getpWAGE_CODE());
-			cs.setString(6, dataTimeWeek.getpWAGE_NAME());
-			cs.setString(7, dataTimeWeek.getpTIME_WEEK());
-			cs.registerOutParameter(8, java.sql.Types.VARCHAR);
+			cs.setDate(3, dataTimeWeek.getpFROMDATE());
+			cs.setDate(4, dataTimeWeek.getpTODATE());
+			cs.setInt(5, dataTimeWeek.getpPAID_HOUR());
+			cs.setInt(6, dataTimeWeek.getpNON_PAID());
+			cs.setInt(7, dataTimeWeek.getpOVER_TIME());
+			cs.setInt(8, dataTimeWeek.getpPUBLIC_HOLIDAY());
+			cs.setInt(9, dataTimeWeek.getpNON_PAID());
+			cs.setInt(10, dataTimeWeek.getpCARER_PERSONAL());
+			cs.registerOutParameter(11, java.sql.Types.VARCHAR);
 			cs.executeUpdate();
-			result = cs.getString(8);
-//			if(!result.equals("Completed")){
-//				break;
-//			}
-//		}
+			result = cs.getString(11);
 	}
 	catch(SQLException e){
 		e.printStackTrace();
