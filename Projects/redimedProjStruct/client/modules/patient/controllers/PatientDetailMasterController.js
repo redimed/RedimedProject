@@ -105,9 +105,6 @@ angular.module("app.loggedIn.patient.detail.master.controller", [])
 	        	if (arr.length == 4) {
 	            $scope.modelObjectMap.Surburb = (arr[1]).trim();
 	            $scope.modelObjectMap.State = (arr[2]).trim();
-	            if (!$scope.modelObjectMap.Country) {
-	            	$scope.modelObjectMap.Country = "Australia";
-	            };
 	        }
         };
     };
@@ -158,10 +155,8 @@ angular.module("app.loggedIn.patient.detail.master.controller", [])
 					console.log('this is init avt_path', $scope.avt_path);
 
 					$scope.verifiedMedicare();
+					$scope.modelObjectMap.Country = "Australia";
 					$scope.loadState();
-					//INT
-					$scope.modelObjectMap.State = parseInt($scope.modelObjectMap.State);
-					$scope.modelObjectMap.Title = parseInt($scope.modelObjectMap.Title);
 					//END INT
 					angular.extend($scope.selectedCompany, response.company);
 					$scope.selectedCompany.insurer = response.insurer;
@@ -170,11 +165,9 @@ angular.module("app.loggedIn.patient.detail.master.controller", [])
 		}
 		if ($scope.params.permission.create === true) {
 			//phan quoc chien  set country and state form add new patient
-			
 			$scope.modelObjectMap.Country = "Australia";
 			$scope.modelObjectMap.Sex = 0;
 			$scope.loadState();
-			$scope.modelObjectMap.State = 20;
 		};
 	} // end initObject
 

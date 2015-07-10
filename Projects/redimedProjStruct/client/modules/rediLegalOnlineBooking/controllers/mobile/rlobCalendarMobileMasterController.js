@@ -136,31 +136,20 @@ angular.module("app.calendar.mobile.controller",[])
 
     $scope.updateAppoinmentsList();
     $scope.CAL_ID = null;
-    var selectCalendar = null;
     $scope.selectAppointmentCalendar=function(appointmentCalendar)
     {
         $scope.selectedAppointmentCalendar=appointmentCalendar;
         $scope.CAL_ID = appointmentCalendar.CAL_ID;
         $scope.updateAppoinmentsList();
-        selectCalendar = $scope.selectedAppointmentCalendar;
     } 
     $scope.submitCalendar = function(){
         if ($scope.patientInfoCalendar.Patient_id) {
             if ($scope.selectedAppointmentCalendar) {
-                console.log("hehe",selectCalendar);
                 rlobService.addApptPatient($scope.patientInfoCalendar.Patient_id,$scope.selectedAppointmentCalendar.CAL_ID).then(function(data){
                     if (data.status == 'success') {
                         socket.emit('notifyReceptionist');
-                        socket.emit('notifyDoctor',selectCalendar.DOCTOR_ID);
-                        var modalInstance = $modal.open({
-                            templateUrl: 'notifyid',
-                            controller: function($scope, $modalInstance,$state){
-                                console.log("zooooooo",selectCalendar);
-                                $scope.selectCalendar = selectCalendar;
-                            },
-                            size: 'sm',
-                            backdrop : 'static'
-                        });
+                        socket.emit('notifyDoctor',$scope.selectedAppointmentCalendar.DOCTOR_ID);
+                        angular.element('#popupBookingSuccess').modal('show');
                     }
                     else{
                         toastr.error("Booking fail!", "Error");
@@ -172,6 +161,12 @@ angular.module("app.calendar.mobile.controller",[])
         }else{
             toastr.error("No information available on the patient", "Error");
         };
+    }
+    $scope.closePopupBookingSuccess = function(){
+        angular.element('#popupBookingSuccess').modal('hide');
+        angular.element('#popupBookingSuccess').on('hidden.bs.modal', function (e) {
+            $state.go('security.portalPatient');
+        });
     }
 })
 

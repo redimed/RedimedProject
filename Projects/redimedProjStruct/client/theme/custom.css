@@ -3791,6 +3791,7 @@ label{
 .pt_padding_20_test_center{
     padding: 20px;
     text-align: center;
+    color: black;
 }
 .pt_display_table_margin_auto{
     display: table;
