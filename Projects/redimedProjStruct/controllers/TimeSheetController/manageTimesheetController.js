@@ -786,7 +786,8 @@ module.exports = {
                                                                                     valueResultInfoTimeWeek !== null) {
                                                                                     if (valueResultInfoTimeWeek.item_id !== undefined &&
                                                                                         valueResultInfoTimeWeek.item_id !== null &&
-                                                                                        valueResultInfoTimeWeek.item_id !== "") {
+                                                                                        valueResultInfoTimeWeek.item_id !== "" &&
+                                                                                        valueResultInfoTimeWeek.item_id != 18) {
                                                                                         paidHour += valueResultInfoTimeWeek.time_charge_item;
                                                                                     } else {
                                                                                         paidHour += valueResultInfoTimeWeek.time_charge_task;
@@ -1005,7 +1006,8 @@ module.exports = {
                                                 valueResultInfoTimeWeek !== null) {
                                                 if (valueResultInfoTimeWeek.item_id !== undefined &&
                                                     valueResultInfoTimeWeek.item_id !== null &&
-                                                    valueResultInfoTimeWeek.item_id !== "") {
+                                                    valueResultInfoTimeWeek.item_id !== "" &&
+                                                    valueResultInfoTimeWeek.item_id != 18) {
                                                     paidHour += valueResultInfoTimeWeek.time_charge_item;
                                                 } else {
                                                     paidHour += valueResultInfoTimeWeek.time_charge_task;
