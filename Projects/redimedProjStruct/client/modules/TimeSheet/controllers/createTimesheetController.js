@@ -539,7 +539,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
         } else if (formValid.$invalid) {
             toastr.error("Please Input All Required Information!", "Error");
         } else {
-            if (!$scope.isEdit) {
+            if ($scope.isEdit === false) {
                 //ADD NEW TIMESHEET
                 startWeek = $filter('date')($scope.viewWeek.startWeek, 'yyyy-MM-dd');
                 endWeek = $filter('date')($scope.viewWeek.endWeek, 'yyyy-MM-dd');
@@ -558,18 +558,18 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                         toastr.error("Error", "Error");
                     }
                 });
-            } else {
+            } else if ($scope.isEdit === true) {
                 //EDIT TIMESHEET
-                $scope.info.idWeek = $scope.idWeek;
+                $scope.info.idWeek = $stateParams.id;
                 $scope.info.statusID = status;
                 StaffService.editTask($scope.tasks, $scope.info).then(function(response) {
                     if (response['status'] == 'success') {
-                        toastr.success("Edit Success");
+                        toastr.success("Update Timesheet success!", "Success");
                         $state.go('loggedIn.timesheetHome.timesheetHistory', null, {
                             "reload": true
                         });
                     } else {
-                        toastr.error("Error", "Error");
+                        toastr.error("Update Timesheet fail!", "Error");
                     }
                 });
             }
