@@ -9,31 +9,124 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 		},
 		link: function(scope, elem, attrs){
 			scope.arrayAppid=[];
+			scope.oldColor=[];
 			scope.isKeyPressed = function($event){
 				e = event || window.event;
-				 if (e.shiftKey) {
+				 if (e.ctrlKey) {
 			       var id = $(event.target).find('.appid').text();
+			       var patient_name  = $(event.target).find('.patient_name').text();
 			       if (id > 0) {
 			       	var count = 0;
 			       	for (var i = 0; i < scope.arrayAppid.length; i++) {
-			       		if(scope.arrayAppid[i] == id){
+			       		if(scope.arrayAppid[i].CAL_ID == id){
 			       			count ++;
 			       		}
 			       	};
 			       	if (count == 0) {
-			       		scope.arrayAppid.push(id);
-			       		 event.target.style.backgroundColor = "rgb(199, 197, 196)";
+			       		postData = {
+			       			CAL_ID : id
+			       		}
+			       		AppointmentModel.getOneApptPatient(postData)
+			       		.then(function(response){
+			       			var object = {CAL_ID:id,patient_name:patient_name,appt_status:response.data.appt_status};
+			       			scope.arrayAppid.push(object);
+			       			console.log(scope.arrayAppid);
+			       		})
+			       		var objectColor = {CAL_ID:id,color_old:event.target.style.backgroundColor};
+			       		scope.oldColor.push(objectColor);
+			       		event.target.style.backgroundColor = "rgb(199, 197, 196)";
 			       	};
 			       };
-			       console.log(scope.arrayAppid);
+
+			    }
+			    if(e.altKey)
+			    {
+			    	 var id = $(event.target).find('.appid').text();
+			    	 for (var i = 0; i < scope.arrayAppid.length; i++) {
+			    	 	if (id == scope.arrayAppid[i].CAL_ID) {
+			    	 		for (var j = 0; j < scope.oldColor.length; j++) {
+			    	 			if (id == scope.oldColor[j].CAL_ID ) {
+			    	 				event.target.style.backgroundColor = scope.oldColor[j].color_old;
+			    	 				scope.oldColor.splice(j,1);
+			    	 			};
+			    	 			scope.arrayAppid.splice(i,1);
+			    	 		};
+			    	 	};
+			    	 };
 			    }
 			}
+			scope.changeService = function(SERVICE_ID){
+				setTimeout(scope.changeServiceFor(SERVICE_ID),5000);
+			    scope.arrayAppid=[];
+				scope.appointment.load();
+				scope.alertCenter.load();
+			}
+			scope.changeServiceFor = function(SERVICE_ID){
+				for (var i = 0; i < scope.arrayAppid.length; i++) {
+			       		postData ={
+							SERVICE_ID:SERVICE_ID,
+							CAL_ID: scope.arrayAppid[i].CAL_ID
+						}
+						AppointmentModel.changeService(postData)
+						.then(function(response){
+						})
+			       	};
+			}
 			scope.isshiftRight = function($event){
+				angular.element("#changeStatus").css({'display':'none'});
 				e = event || window.event;
-				if (e.shiftKey == true) {
-					console.log('-----');
+				if (e.ctrlKey == true) {
+					angular.element("#calMenu").css({
+						'display': 'block',
+						'top': $event.pageY-68,
+						'left': $event.pageX-20
+					});
 				};
 			}
+			scope.changeStatusFor = function(status){
+				for (var i = 0; i < scope.arrayAppid.length; i++) {
+			       		postData = {
+							STATUS:status,
+							CAL_ID: scope.arrayAppid[i].CAL_ID
+						}
+						AppointmentModel.changeStatus(postData)
+						.then(function(response){
+						})
+			       	};
+			}
+			scope.cancelCalMenu = function($event){
+				angular.element("#calMenu").css({'display':'none'});
+				scope.arrayAppid=[];
+				scope.appointment.load();
+				scope.alertCenter.load();
+			}
+			scope.changeStatus = function(status){
+				setTimeout(scope.changeStatusFor(status),2000);
+				toastr.success('Changes Appointment Status Successfully');
+				angular.element("#changeStatus").css({'display':'none'});
+				scope.arrayAppid=[];
+				scope.appointment.load();
+				scope.alertCenter.load();
+			}
+			scope.showChangeStatus = function($event){
+				angular.element("#calMenu").css({'display':'none'});
+				angular.element("#changeStatus").css({
+						'display': 'block',
+						'top': $event.pageY-68,
+						'left': $event.pageX-20
+					});
+			}
+			scope.cancel = function($event){
+				angular.element("#changeStatus").css({'display':'none'});
+				angular.element("#calMenu").css({
+						'display': 'block'
+					});
+			}
+			angular.element("#appointment").on("click", function(){
+				angular.element("#popupMenu").css({'display':'none'});
+				angular.element("#calMenu").css({'display':'none'});
+				angular.element("#changeStatus").css({'display':'none'});
+			})
 			scope.servicedata ={};
 			scope.getServiceColor = function(){
 				AppointmentModel.getServiceColor('data')
@@ -776,9 +869,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 				scope.appointment.selectedPatient = angular.copy(patient);
 			}
 
-			angular.element("#appointment").on("click", function(){
-				angular.element("#popupMenu").css({'display':'none'});
-			})
+			
 
 			scope.appointment = {
 				selectedAppointment: {},
