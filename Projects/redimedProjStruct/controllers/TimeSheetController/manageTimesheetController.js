@@ -797,7 +797,7 @@ module.exports = {
                                                                             });
                                                                             var objectTranfer = {
                                                                                 pEMPLOYEE_ID: resultInfoTimeWeek[0].Employee_ID,
-                                                                                pWEEKNO: resultInfoTimeWeek[0].week_no,
+                                                                                pWEEKNO: moment(resultInfoTimeWeek[0].end_date).format("YYYY") + resultInfoTimeWeek[0].week_no,
                                                                                 pFROMDATE: moment(resultInfoTimeWeek[0].start_date).format("YYYY-MM-DD"),
                                                                                 pTODATE: moment(resultInfoTimeWeek[0].end_date).format("YYYY-MM-DD"),
                                                                                 pPAID_HOUR: paidHour,
@@ -1017,7 +1017,7 @@ module.exports = {
                                         });
                                         var objectTranfer = {
                                             pEMPLOYEE_ID: resultInfoTimeWeek[0].Employee_ID,
-                                            pWEEKNO: resultInfoTimeWeek[0].week_no,
+                                            pWEEKNO: moment(resultInfoTimeWeek[0].end_date).format("YYYY") + resultInfoTimeWeek[0].week_no,
                                             pFROMDATE: moment(resultInfoTimeWeek[0].start_date).format("YYYY-MM-DD"),
                                             pTODATE: moment(resultInfoTimeWeek[0].end_date).format("YYYY-MM-DD"),
                                             pPAID_HOUR: paidHour,
