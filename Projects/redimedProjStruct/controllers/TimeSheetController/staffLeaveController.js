@@ -1015,7 +1015,7 @@ module.exports = {
                                                                                 "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " + //JOIN
                                                                                 "INNER JOIN sys_hierarchy_nodes ON sys_hierarchy_nodes.NODE_ID = sys_hierarchies_users.NODE_ID " + //JOIN
                                                                                 "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_group.GROUP_ID " + //JOIN
-                                                                                "WHERE sys_hierarchy_group.GROUP_TYPE='Time Sheet' AND sys_hierarchy_nodes.NODE_ID = :nodeId"; //WHERE
+                                                                                "WHERE sys_hierarchy_group.GROUP_TYPE='Time Sheet' AND sys_hierarchy_nodes.NODE_ID = :nodeId " + queryAdd; //WHERE
                                                                             db.sequelize.query(getInfoLevel1, null, {
                                                                                     raw: true
                                                                                 }, {
@@ -1023,7 +1023,8 @@ module.exports = {
                                                                                         resultNodeLevel1 !== null &&
                                                                                         resultNodeLevel1[0] !== undefined &&
                                                                                         resultNodeLevel1[0] !== null &&
-                                                                                        !isNaN(resultNodeLevel1[0].TO_NODE_ID) ? resultNodeLevel1[0].TO_NODE_ID : -1)
+                                                                                        !isNaN(resultNodeLevel1[0].TO_NODE_ID) ? resultNodeLevel1[0].TO_NODE_ID : -1),
+                                                                                    deptId: resultDept[0].DEPARTMENT_CODE_ID
                                                                                 })
                                                                                 .success(function(resultInfoLevel1) {
                                                                                     var getInfoLevel2 =

@@ -181,6 +181,9 @@ angular.module("app.loggedIn.TimeSheet.ApproveTask.Controller", [])
                                                     "reload": true
                                                 });
                                                 toastr.error("Approve fail!", "Error");
+                                            } else if (response.status === "error-erp") {
+                                                modalInstance.close();
+                                                swal("Enterprise Resource Planning system not response, Please try again!");
                                             } else {
                                                 //catch exception
                                                 modalInstance.close();
@@ -208,6 +211,9 @@ angular.module("app.loggedIn.TimeSheet.ApproveTask.Controller", [])
                                             "reload": true
                                         });
                                         toastr.error("Approve fail!", "Error");
+                                    } else if (response.status === "error-erp") {
+                                        modalInstance.close();
+                                        swal("Enterprise Resource Planning system not response, Please try again!");
                                     } else {
                                         //catch exception
                                         modalInstance.close();

@@ -68,16 +68,19 @@
                                          '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
                                          '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">e-Timesheet Reporting System<br></label><br/><br/><br/>' +
                                          '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label><br/><br/><br/>' +
-                                         '<table style="font-size:9.0pt;color:#203864;"><tbody><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">1 Frederick Street, Belmont WA 6104</span>' +
+                                         '<table><tbody><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">1 Frederick Street, Belmont WA 6104</span>' +
                                          '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T:&nbsp;</b> 08 9230 0900 | F: 08 9230 0999</span><br/><span><b>W:&nbsp;</b>www.redimed.com.au</span></td></tr>' +
                                          '<tr><td><img src="cid:logoRedimed"></td></tr>' +
-                                         '<tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">&nbsp;&nbsp;&nbsp;Joondalup | Belmont | Rockingham</span></td></tr>' +
-                                         '<tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail and any attachments are intended for the addressee(s) only and may be confidential.<br/>' +
+                                         '<tr><td><span style="color:#203864;">&nbsp;&nbsp;&nbsp;Joondalup | Belmont | Rockingham</span></td></tr>' +
+                                         '<tr><td><span style="font-family:Calibri,sans-serif;font-size:9.0pt;color:#203864;">This e-mail and any attachments are intended for the addressee(s) only and may be confidential.<br/>' +
                                          'They may contain legally privileged or copyright material.You should not read, copy, use or disclose them without authorisation.<br/>' +
                                          'If you are not the intended recipient, please contact the sender as soon as possible by return e-mail and then please delete both messages.<br/>' +
                                          'Please note that any views or opinions presented in this email are solely those of the author and do not necessarily represent those of REDIMED Pty Ltd. The ' +
                                          'recipient should check this email and any attachments for the presence of viruses. REDIMED Pty Ltd accepts no liability for any damage caused by any virus ' +
-                                         'transmitted by this email.' +
+                                         'transmitted by this email.<br/><br/><br/>' +
+                                         '<p class="MsoNormal"><span style="font-size:13.5pt;font-family:Webdings;color:green">P</span>' +
+                                         '<span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:green">&nbsp;</span>' +
+                                         '<b><span style="font-size:8.0pt;color:green">Please consider our environment before printing this e - mail</span></b></p>' +
                                          '</td></tr></tbody></table>'
                                  };
 
@@ -111,7 +114,7 @@
          var DATE_OF_WEEK = arrayWeek[moment(info.dateSubmit).format('e') - 1];
          var DATE_SUBMIT = moment(info.dateSubmit).format('DD/MM/YYYY - HH:mm:ss');
          var queryGetNodeIdUserApproveFirst =
-             "SElECT hr_employee.FirstName, hr_employee.LastName, hr_employee.Email, sys_hierarchy_nodes.TO_NODE_ID,  " + //SELECT
+             "SElECT hr_employee.FirstName, hr_employee.LastName, hr_employee.Email, sys_hierarchy_nodes.TO_NODE_ID " + //SELECT
              "FROM hr_employee " + //FROM
              "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //JOIN
              "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " + //JOIN
@@ -175,16 +178,19 @@
                                                          '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
                                                          '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">e-Timesheet Reporting System<br></label><br/><br/><br/>' +
                                                          '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label><br/><br/><br/>' +
-                                                         '<table style="font-size:9.0pt;color:#203864;"><tbody><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">1 Frederick Street, Belmont WA 6104</span>' +
+                                                         '<table><tbody><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">1 Frederick Street, Belmont WA 6104</span>' +
                                                          '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T:&nbsp;</b> 08 9230 0900 | F: 08 9230 0999</span><br/><span><b>W:&nbsp;</b>www.redimed.com.au</span></td></tr>' +
                                                          '<tr><td><img src="cid:logoRedimed"></td></tr>' +
-                                                         '<tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">&nbsp;&nbsp;&nbsp;Joondalup | Belmont | Rockingham</span></td></tr>' +
-                                                         '<tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail and any attachments are intended for the addressee(s) only and may be confidential.<br/>' +
+                                                         '<tr><td><span style="color:#203864;">&nbsp;&nbsp;&nbsp;Joondalup | Belmont | Rockingham</span></td></tr>' +
+                                                         '<tr><td><span style="font-family:Calibri,sans-serif;font-size:9.0pt;color:#203864;">This e-mail and any attachments are intended for the addressee(s) only and may be confidential.<br/>' +
                                                          'They may contain legally privileged or copyright material.You should not read, copy, use or disclose them without authorisation.<br/>' +
                                                          'If you are not the intended recipient, please contact the sender as soon as possible by return e-mail and then please delete both messages.<br/>' +
                                                          'Please note that any views or opinions presented in this email are solely those of the author and do not necessarily represent those of REDIMED Pty Ltd. The ' +
                                                          'recipient should check this email and any attachments for the presence of viruses. REDIMED Pty Ltd accepts no liability for any damage caused by any virus ' +
-                                                         'transmitted by this email.' +
+                                                         'transmitted by this email.<br/><br/><br/>' +
+                                                         '<p class="MsoNormal"><span style="font-size:13.5pt;font-family:Webdings;color:green">P</span>' +
+                                                         '<span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:green">&nbsp;</span>' +
+                                                         '<b><span style="font-size:8.0pt;color:green">Please consider our environment before printing this e - mail</span></b></p>' +
                                                          '</td></tr></tbody></table>'
                                                  };
 
@@ -264,16 +270,19 @@
                              '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
                              '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">e-Timesheet Reporting System<br></label><br/><br/><br/>' +
                              '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label><br/><br/><br/>' +
-                             '<table style="font-size:9.0pt;color:#203864;"><tbody><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">1 Frederick Street, Belmont WA 6104</span>' +
+                             '<table><tbody><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">1 Frederick Street, Belmont WA 6104</span>' +
                              '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T:&nbsp;</b> 08 9230 0900 | F: 08 9230 0999</span><br/><span><b>W:&nbsp;</b>www.redimed.com.au</span></td></tr>' +
                              '<tr><td><img src="cid:logoRedimed"></td></tr>' +
-                             '<tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">&nbsp;&nbsp;&nbsp;Joondalup | Belmont | Rockingham</span></td></tr>' +
-                             '<tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail and any attachments are intended for the addressee(s) only and may be confidential.<br/>' +
+                             '<tr><td><span style="color:#203864;">&nbsp;&nbsp;&nbsp;Joondalup | Belmont | Rockingham</span></td></tr>' +
+                             '<tr><td><span style="font-family:Calibri,sans-serif;font-size:9.0pt;color:#203864;">This e-mail and any attachments are intended for the addressee(s) only and may be confidential.<br/>' +
                              'They may contain legally privileged or copyright material.You should not read, copy, use or disclose them without authorisation.<br/>' +
                              'If you are not the intended recipient, please contact the sender as soon as possible by return e-mail and then please delete both messages.<br/>' +
                              'Please note that any views or opinions presented in this email are solely those of the author and do not necessarily represent those of REDIMED Pty Ltd. The ' +
                              'recipient should check this email and any attachments for the presence of viruses. REDIMED Pty Ltd accepts no liability for any damage caused by any virus ' +
-                             'transmitted by this email.' +
+                             'transmitted by this email.<br/><br/><br/>' +
+                             '<p class="MsoNormal"><span style="font-size:13.5pt;font-family:Webdings;color:green">P</span>' +
+                             '<span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:green">&nbsp;</span>' +
+                             '<b><span style="font-size:8.0pt;color:green">Please consider our environment before printing this e - mail</span></b></p>' +
                              '</td></tr></tbody></table>'
                      };
                      queryGetPositionUserReject =
@@ -381,16 +390,19 @@
                              '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
                              '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">e-Timesheet Reporting System<label><br/><br/><br/>' +
                              '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label><br/><br/><br/>' +
-                             '<table style="font-size:9.0pt;color:#203864;"><tbody><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">1 Frederick Street, Belmont WA 6104</span>' +
+                             '<table><tbody><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">1 Frederick Street, Belmont WA 6104</span>' +
                              '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T:&nbsp;</b> 08 9230 0900 | F: 08 9230 0999</span><br/><span><b>W:&nbsp;</b>www.redimed.com.au</span></td></tr>' +
                              '<tr><td><img src="cid:logoRedimed"></td></tr>' +
-                             '<tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">&nbsp;&nbsp;&nbsp;Joondalup | Belmont | Rockingham</span></td></tr>' +
-                             '<tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail and any attachments are intended for the addressee(s) only and may be confidential.<br/>' +
+                             '<tr><td><span style="color:#203864;">&nbsp;&nbsp;&nbsp;Joondalup | Belmont | Rockingham</span></td></tr>' +
+                             '<tr><td><span style="font-family:Calibri,sans-serif;font-size:9.0pt;color:#203864;">This e-mail and any attachments are intended for the addressee(s) only and may be confidential.<br/>' +
                              'They may contain legally privileged or copyright material.You should not read, copy, use or disclose them without authorisation.<br/>' +
                              'If you are not the intended recipient, please contact the sender as soon as possible by return e-mail and then please delete both messages.<br/>' +
                              'Please note that any views or opinions presented in this email are solely those of the author and do not necessarily represent those of REDIMED Pty Ltd. The ' +
                              'recipient should check this email and any attachments for the presence of viruses. REDIMED Pty Ltd accepts no liability for any damage caused by any virus ' +
-                             'transmitted by this email.' +
+                             'transmitted by this email.<br/><br/><br/>' +
+                             '<p class="MsoNormal"><span style="font-size:13.5pt;font-family:Webdings;color:green">P</span>' +
+                             '<span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:green">&nbsp;</span>' +
+                             '<b><span style="font-size:8.0pt;color:green">Please consider our environment before printing this e - mail</span></b></p>' +
                              '</td></tr></tbody></table>'
                      };
                      // END APPROVE
@@ -481,16 +493,19 @@
                                              '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
                                              '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Timesheet Reporting System</label><br/><br/><br/>' +
                                              '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label><br/>' +
-                                             '<table style="font-size:9.0pt;color:#203864;"><tbody><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">1 Frederick Street, Belmont WA 6104</span>' +
+                                             '<table><tbody><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">1 Frederick Street, Belmont WA 6104</span>' +
                                              '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T:&nbsp;</b> 08 9230 0900 | F: 08 9230 0999</span><br/><span><b>W:&nbsp;</b>www.redimed.com.au</span></td></tr>' +
                                              '<tr><td><img src="cid:logoRedimed"></td></tr>' +
-                                             '<tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">&nbsp;&nbsp;&nbsp;Joondalup | Belmont | Rockingham</span></td></tr>' +
-                                             '<tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail and any attachments are intended for the addressee(s) only and may be confidential.<br/>' +
+                                             '<tr><td><span style="color:#203864;">&nbsp;&nbsp;&nbsp;Joondalup | Belmont | Rockingham</span></td></tr>' +
+                                             '<tr><td><span style="font-family:Calibri,sans-serif;font-size:9.0pt;color:#203864;">This e-mail and any attachments are intended for the addressee(s) only and may be confidential.<br/>' +
                                              'They may contain legally privileged or copyright material.You should not read, copy, use or disclose them without authorisation.<br/>' +
                                              'If you are not the intended recipient, please contact the sender as soon as possible by return e-mail and then please delete both messages.<br/>' +
                                              'Please note that any views or opinions presented in this email are solely those of the author and do not necessarily represent those of REDIMED Pty Ltd. The ' +
                                              'recipient should check this email and any attachments for the presence of viruses. REDIMED Pty Ltd accepts no liability for any damage caused by any virus ' +
-                                             'transmitted by this email.' +
+                                             'transmitted by this email.<br/><br/><br/>' +
+                                             '<p class="MsoNormal"><span style="font-size:13.5pt;font-family:Webdings;color:green">P</span>' +
+                                             '<span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:green">&nbsp;</span>' +
+                                             '<b><span style="font-size:8.0pt;color:green">Please consider our environment before printing this e - mail</span></b></p>' +
                                              '</td></tr></tbody></table>'
                                      };
                                      //CALL SEND MAIL
@@ -677,16 +692,19 @@
                              '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
                              '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Timesheet Reporting System<br></label><br/><br/><br/>' +
                              '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label></br/>' +
-                             '<table style="font-size:9.0pt;color:#203864;"><tbody><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">1 Frederick Street, Belmont WA 6104</span>' +
+                             '<table><tbody><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">1 Frederick Street, Belmont WA 6104</span>' +
                              '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T:&nbsp;</b> 08 9230 0900 | F: 08 9230 0999</span><br/><span><b>W:&nbsp;</b>www.redimed.com.au</span></td></tr>' +
                              '<tr><td><img src="cid:logoRedimed"></td></tr>' +
-                             '<tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">&nbsp;&nbsp;&nbsp;Joondalup | Belmont | Rockingham</span></td></tr>' +
-                             '<tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail and any attachments are intended for the addressee(s) only and may be confidential.<br/>' +
+                             '<tr><td><span style="color:#203864;">&nbsp;&nbsp;&nbsp;Joondalup | Belmont | Rockingham</span></td></tr>' +
+                             '<tr><td><span style="font-family:Calibri,sans-serif;font-size:9.0pt;color:#203864;">This e-mail and any attachments are intended for the addressee(s) only and may be confidential.<br/>' +
                              'They may contain legally privileged or copyright material.You should not read, copy, use or disclose them without authorisation.<br/>' +
                              'If you are not the intended recipient, please contact the sender as soon as possible by return e-mail and then please delete both messages.<br/>' +
                              'Please note that any views or opinions presented in this email are solely those of the author and do not necessarily represent those of REDIMED Pty Ltd. The ' +
                              'recipient should check this email and any attachments for the presence of viruses. REDIMED Pty Ltd accepts no liability for any damage caused by any virus ' +
-                             'transmitted by this email.' +
+                             'transmitted by this email.<br/><br/><br/>' +
+                             '<p class="MsoNormal"><span style="font-size:13.5pt;font-family:Webdings;color:green">P</span>' +
+                             '<span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:green">&nbsp;</span>' +
+                             '<b><span style="font-size:8.0pt;color:green">Please consider our environment before printing this e - mail</span></b></p>' +
                              '</td></tr></tbody></table>'
                      };
                      // END APPROVE
@@ -710,16 +728,19 @@
                              '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
                              '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Timesheet Reporting System<label><br/><br/><br/>' +
                              '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label<br/>' +
-                             '<table style="font-size:9.0pt;color:#203864;"><tbody><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">1 Frederick Street, Belmont WA 6104</span>' +
+                             '<table><tbody><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">1 Frederick Street, Belmont WA 6104</span>' +
                              '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T:&nbsp;</b> 08 9230 0900 | F: 08 9230 0999</span><br/><span><b>W:&nbsp;</b>www.redimed.com.au</span></td></tr>' +
                              '<tr><td><img src="cid:logoRedimed"></td></tr>' +
-                             '<tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">&nbsp;&nbsp;&nbsp;Joondalup | Belmont | Rockingham</span></td></tr>' +
-                             '<tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail and any attachments are intended for the addressee(s) only and may be confidential.<br/>' +
+                             '<tr><td><span style="color:#203864;">&nbsp;&nbsp;&nbsp;Joondalup | Belmont | Rockingham</span></td></tr>' +
+                             '<tr><td><span style="font-family:Calibri,sans-serif;font-size:9.0pt;color:#203864;">This e-mail and any attachments are intended for the addressee(s) only and may be confidential.<br/>' +
                              'They may contain legally privileged or copyright material.You should not read, copy, use or disclose them without authorisation.<br/>' +
                              'If you are not the intended recipient, please contact the sender as soon as possible by return e-mail and then please delete both messages.<br/>' +
                              'Please note that any views or opinions presented in this email are solely those of the author and do not necessarily represent those of REDIMED Pty Ltd. The ' +
                              'recipient should check this email and any attachments for the presence of viruses. REDIMED Pty Ltd accepts no liability for any damage caused by any virus ' +
-                             'transmitted by this email.' +
+                             'transmitted by this email.<br/><br/><br/>' +
+                             '<p class="MsoNormal"><span style="font-size:13.5pt;font-family:Webdings;color:green">P</span>' +
+                             '<span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:green">&nbsp;</span>' +
+                             '<b><span style="font-size:8.0pt;color:green">Please consider our environment before printing this e - mail</span></b></p>' +
                              '</td></tr></tbody></table>'
                      };
                      // END APPROVE

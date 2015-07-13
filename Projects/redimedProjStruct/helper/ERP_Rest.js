@@ -43,6 +43,12 @@ function ERP_Rest (options) {
 		}
 		return base_rest.post('erp/ar-invoice-interface/insert-lines.html',data);
 	}
+
+	//THANH
+	this.transferTimeWeek = function(dataTimeWeek) {
+            return base_rest.post('erp/array-payroll-timeweek/transfer-timeweek.html', dataTimeWeek);
+        }
+	//END THANH
 	//---------------------------------------------------------------------------------
 	//---------------------------------------------------------------------------------
 	//---------------------------------------------------------------------------------
