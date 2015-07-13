@@ -339,6 +339,10 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 							break;
 			}
 		}
+
+		if($scope.header.TYPE === "Crown"){
+			
+		}
 	}
 	//For VAL2
 	var calculateFunctionsVal2 = {

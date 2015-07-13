@@ -534,6 +534,7 @@ angular.module('app.config', [])
             {id:24,label:'Summary Rating Only (with overall)', section:'Summary section'},
             {id:25,label:'Summary Rating and Score (without overall)', section:'Summary section'},
             {id:26,label:'Summary Rating Only (without overall)', section:'Summary section'},
+            {id:28,label:'Table summary (title, checkbox and description)', section:'Summary section'},
             {id:27,label:'Other summary type', section:'Summary section'},
         ])
     .constant("COMMENT_TYPE", [
