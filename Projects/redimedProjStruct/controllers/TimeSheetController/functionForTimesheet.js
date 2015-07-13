@@ -114,7 +114,7 @@
          var DATE_OF_WEEK = arrayWeek[moment(info.dateSubmit).format('e') - 1];
          var DATE_SUBMIT = moment(info.dateSubmit).format('DD/MM/YYYY - HH:mm:ss');
          var queryGetNodeIdUserApproveFirst =
-             "SElECT hr_employee.FirstName, hr_employee.LastName, hr_employee.Email, sys_hierarchy_nodes.TO_NODE_ID,  " + //SELECT
+             "SElECT hr_employee.FirstName, hr_employee.LastName, hr_employee.Email, sys_hierarchy_nodes.TO_NODE_ID " + //SELECT
              "FROM hr_employee " + //FROM
              "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //JOIN
              "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " + //JOIN
