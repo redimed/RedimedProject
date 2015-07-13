@@ -26,7 +26,7 @@ public class PayrollService {
 		//connection success and transfer timesheet
 		Connection connection = connectionProvider.getConnection();
 			CallableStatement cs=(CallableStatement) connection.prepareCall("{ call HRS.HRTIMEWEEK.InsertInterFace(?,?,?,?,?,?,?,?,?,?,?) }");
-			cs.setInt(1, dataTimeWeek.getpEMPLOYEE_ID());
+			cs.setString(1, dataTimeWeek.getpEMPLOYEE_CODE());
 			cs.setString(2, dataTimeWeek.getpWEEKNO());
 			cs.setDate(3, dataTimeWeek.getpFROMDATE());
 			cs.setDate(4, dataTimeWeek.getpTODATE());
