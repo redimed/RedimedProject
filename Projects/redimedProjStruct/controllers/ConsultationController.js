@@ -640,7 +640,7 @@ module.exports = {
             return;
         }
         var sql=
-            " SELECT consult.*,problem.`Notes`, DATE_FORMAT(app.`FROM_TIME`, '%d/%m/%Y - %h:%i') AS a FROM `cln_patient_consults` consult       "+ 
+            " SELECT consult.*,problem.`Notes`, DATE_FORMAT(app.`FROM_TIME`, '%d/%m/%Y - %h:%i') AS form_time FROM `cln_patient_consults` consult       "+ 
             " LEFT JOIN `cln_problems` problem ON consult.`problem_id` = problem.`Problem_id`                                                   "+ 
             " inner join `cln_appointment_calendar` app on consult.`cal_id` = app.`CAL_ID`                                                      "+ 
             " WHERE consult.`patient_id` = ?                                                                                                    "; 
