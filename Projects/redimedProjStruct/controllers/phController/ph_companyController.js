@@ -12,11 +12,10 @@ module.exports = {
 	getCompany:function(req,res){
 		var user_id = req.body.user_id;
 
-		var sqlSelectCompany = 
-							"SELECT cp.`company_id`,cp.`company_name`,cp.`address`,cp.`surburb`,cp.`postcode`,cp.state,cp.`country`,cp.`contact_name`,cp.`contact_number`,cp.`email`,cp.`phone`,cp.`mobile`,cp.`email`,cp.`isCompouding`,cp.`isCPOP`,cp.`Dispensing_software`,cp.`isMutiShops` FROM ph_companies cp "+
-							"INNER JOIN  `ph_company_users` cu ON cp.`company_id` = cu.`company_id` "+
-							"INNER JOIN ph_users u ON cu.`user_id` = u.`user_id` "+
-							"WHERE u.`user_id` = ?" ;
+		var sqlSelectCompany = "SELECT cp.`company_id`,cp.`company_name`,cp.`address`,cp.`surburb`,cp.`postcode`,cp.state,cp.`country`,cp.`contact_name`,cp.`contact_number`,cp.`email`,cp.`phone`,cp.`mobile`,cp.`email`,cp.`isCompouding`,cp.`isCPOP`,cp.`Dispensing_software`,cp.`isMutiShops` FROM ph_companies cp "+
+		"INNER JOIN  `ph_company_users` cu ON cp.`company_id` = cu.`company_id` "+
+		"INNER JOIN ph_users u ON cu.`user_id` = u.`user_id` "+
+		"WHERE u.`user_id` = ?" ;
 		 req.getConnection(function(err,connection){
 				var query = connection.query(sqlSelectCompany,user_id,function(err,rows){
 							if(err){
@@ -805,6 +804,39 @@ module.exports = {
 			})
 			.error(function(err){
 				console.log("------------selTokenIdCo", err);
+			})
+	},
+
+	delPostById:function(req, res){
+		var data = req.body.data;
+		var sql = "SELECT COUNT(sp.`post_id`) AS TotalPost FROM `ph_shops_post` sp " +
+		"WHERE sp.`post_id` = ? ";
+		db.sequelize.query(sql, null, {raw:true}, [data.post_id])
+			.success(function(rows){
+				var totalPost = rows[0].TotalPost;
+				console.log(totalPost);
+				var sqlDel = "DELETE FROM `ph_shops_post` WHERE `post_id` = ? AND `shop_id` = ? ";
+				db.sequelize.query(sqlDel, null, {raw:true}, [data.post_id, data.shop_id])
+					.success(function(rows){
+						if (totalPost <= 1) {
+							// console.log("hghghghgh");
+							var sqlDelPost = "DELETE FROM `ph_posts` WHERE `post_id` =  ?";
+							db.sequelize.query(sqlDelPost, null, {raw:true}, [data.post_id])
+								.success(function(rows){
+									res.json({status:'success'});
+								})
+								.error(function(err){
+									console.log("-------delPost", err);
+								})
+						};
+						res.json({status:'success'});
+					})
+					.error(function(err){
+						console.log("-------delPost", err);
+					})
+			})
+			.error(function(err){
+				console.log("-------countPost", err);
 			})
 	},
 }
