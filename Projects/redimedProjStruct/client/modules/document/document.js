@@ -22,7 +22,12 @@ angular.module("app.loggedIn.document", [
     "app.loggedIn.document.detail.controllers",
     "app.loggedIn.document.addPatient.controllers",
     "app.loggedIn.document.form18.controllers",
-    "app.loggedIn.document.newFA.controllers"
+    "app.loggedIn.document.newFA.controllers",
+    "app.loggedIn.document.QANTAScustomerservice.controllers",
+    "app.loggedIn.document.QANTASfleet.controllers",
+    "app.loggedIn.document.QANTASgroundsupport.controllers",
+    "app.loggedIn.document.QANTASrampbaggage.controllers",
+    "app.loggedIn.document.gorgonFCA.controllers"
 ])
     .config(function ($stateProvider) {
         $stateProvider
@@ -162,6 +167,32 @@ angular.module("app.loggedIn.document", [
                 templateUrl: "modules/document/views/functionAssessment.html",
                 controller: 'FAController'
 
+            })
+
+            .state("loggedIn.QANTAScustomerservice", {
+                url: "/QANTAS_CS/:patient_id/:cal_id",
+                templateUrl: "modules/document/views/QANTASCustomerService.html",
+                controller : 'CSController'
+            })
+            .state("loggedIn.QANTASfleet", {
+                url: "/QANTAS_fleet/:patient_id/:cal_id",
+                templateUrl: "modules/document/views/QANTASFleet.html",
+                controller : 'FleetController'
+            })
+            .state("loggedIn.QANTASgroundsupport", {
+                url: "/QANTAS_groundsupport/:patient_id/:cal_id",
+                templateUrl: "modules/document/views/QANTASGroundSupport.html",
+                controller : 'GroundSupportController'
+            })
+            .state("loggedIn.QANTASrampbaggage", {
+                url: "/QANTAS_rampbaggage/:patient_id/:cal_id",
+                templateUrl: "modules/document/views/QANTASRampBaggage.html",
+                controller : 'RampBaggageController'
+            })
+            .state("loggedIn.gorgonFCA", {
+                url: "/gorgonFCA/:patient_id/:cal_id",
+                templateUrl: "modules/document/views/gorgonFCA.html",
+                controller : 'gorgonFCAController'
             })
 
 

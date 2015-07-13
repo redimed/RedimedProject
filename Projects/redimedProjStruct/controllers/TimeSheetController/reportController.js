@@ -515,7 +515,7 @@ module.exports = {
                                                 }
                                             }
                                             for(var j = 0; j <data_1.length; j++){
-                                                if(data_1[j].isReject==1){
+                                                if(data_1[j].isReject==0){
                                                     listleave.push(data_1[j]);
                                                 }
                                             }

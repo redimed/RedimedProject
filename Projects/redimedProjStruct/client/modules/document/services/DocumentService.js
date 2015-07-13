@@ -737,8 +737,59 @@ angular.module('app.loggedIn.document.services', [])
                 ]
             };
         }
+        //*********************QANTAS_CS***************************************** 
+        documentService.insertQANTAS_CS = function(obj){
+            var insertQANTAS_CSapi = api.all('document/insertQANTAS_CS');
+            return insertQANTAS_CSapi.post({info: obj});
+        }
+        documentService.checkQANTAS_CS = function(Patient_ID,CalID){
+            var checkQANTAS_CSapi = api.all("document/checkQANTAS_CS");
+            return checkQANTAS_CSapi.post({Patient_ID:Patient_ID,CalID:CalID});
+        }
+        documentService.updateQANTAS_CS = function(obj){
+            var updateQANTAS_CSapi = api.all("document/updateQANTAS_CS");
+            return updateQANTAS_CSapi.post({info: obj});
+        }
 
+        //********************end QANTAS_CS**************************************
 
+        //***********************QANTAS_Fleet************************************
+
+        documentService.checkQANTAS_Fleet = function(Patient_ID,CalID){
+            var checkQANTAS_Fleetapi = api.all('document/checkQANTAS_Fleet');
+            return checkQANTAS_Fleetapi.post({Patient_ID:Patient_ID,CalID:CalID});
+        }
+
+        documentService.insertQANTAS_Fleet = function(obj){
+            var insertQANTAS_Fleetapi = api.all('document/insertQANTAS_Fleet');
+            return insertQANTAS_Fleetapi.post({info: obj});
+        }
+
+        documentService.updateQANTAS_Fleet = function(obj){
+            var updateQANTAS_Fleetapi = api.all("document/updateQANTAS_Fleet");
+            return updateQANTAS_Fleetapi.post({info: obj});
+        }
+
+        //*******************end QANTAS_Fleet************************************
+
+        //******************QANTAS_groundsupport*********************************
+
+        documentService.checkQANTAS_groundsupport = function(Patient_ID,CalID){
+            var checkQANTAS_groundsupportapi = api.all('document/checkQANTAS_groundsupport');
+            return checkQANTAS_groundsupportapi.post({Patient_ID:Patient_ID,CalID:CalID});
+        }
+
+        documentService.insertQANTAS_groundsupport = function(obj){
+            var insertQANTAS_groundsupportapi = api.all('document/insertQANTAS_groundsupport');
+            return insertQANTAS_groundsupportapi.post({info:obj});
+        }
+
+        documentService.updateQANTAS_groundsupport = function(obj){
+            var updateQANTAS_groundsupportapi = api.all('document/updateQANTAS_groundsupport');
+            return updateQANTAS_groundsupportapi.post({info:obj});
+        }
+
+        //******************end QANTAS_groundsupport*****************************
 
         return documentService;
 
