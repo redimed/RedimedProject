@@ -33,6 +33,8 @@ app.post('/api/consultation/byidCor',ConsultationController.postById);
 //phanquocchien.c1109g@gmail.com
 //11-06-2015
 app.post('/api/consultation/listconsultofpatient',ConsultationController.getListConsultOfPatient);
+app.post('/api/consultation/listconsultofpatientmobile',ConsultationController.getListConsultOfPatientMobile);
+app.post('/api/consultation/detailhistoryanddrawing',ConsultationController.getdetailHistoryAndDrawing);
 
 // manh
 app.post('/api/consultation/listExercise',ConsultationController.listExercise);

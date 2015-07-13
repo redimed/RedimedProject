@@ -655,6 +655,66 @@ module.exports = {
             }
         })
     },
+    getListConsultOfPatientMobile:function(req,res)
+    {
+        var patientId=kiss.checkData(req.body.patient_id)?req.body.patient_id:'';
+        if(!kiss.checkListData(patientId))
+        {
+            kiss.exlog("getListConsultOfPatientMobile Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
+        var sql=
+            " SELECT consult.consult_id,app.`FROM_TIME` FROM `cln_patient_consults` consult       "+ 
+            " inner join `cln_appointment_calendar` app on consult.`cal_id` = app.`CAL_ID`        "+ 
+            " WHERE consult.`patient_id` = ?                                                      "; 
+        kiss.executeQuery(req,sql,patientId,function(rows){
+            if(rows.length>0)
+            {
+                res.json({status:'success',data:rows});
+            }
+            else
+            {
+                res.json({status:'fail'});
+            }
+        })
+    },
+    getdetailHistoryAndDrawing:function(req,res)
+    {
+        var consult_id=kiss.checkData(req.body.consult_id)?req.body.consult_id:'';
+        if(!kiss.checkListData(consult_id))
+        {
+            kiss.exlog("getdetailHistoryAndDrawing Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
+        var sql=
+            " SELECT * FROM `cln_patient_consults` WHERE `consult_id` = ?"; 
+        var data = {};
+        kiss.executeQuery(req,sql,consult_id,function(rows){
+            if(rows.length>0)
+            {
+                data.history = rows[0];
+                var sql2=
+                    " SELECT id,cal_id FROM `cln_patient_drawings` WHERE `consult_id` = ?"; 
+                kiss.executeQuery(req,sql2,consult_id,function(rows){
+                    if(rows.length>0)
+                    {
+                        data.drawing = rows;
+                        res.json({status:'success',data:data});
+                    }
+                    else
+                    {
+                        res.json({status:'success',data:data});
+                    }
+                })
+            }
+            else
+            {
+                res.json({status:'fail'});
+            }
+        })
+    },
     /*
     * phanquocchien.c1109g@gmail.com
     * check consultation

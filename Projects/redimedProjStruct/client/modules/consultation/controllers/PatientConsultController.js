@@ -38,7 +38,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			                	$modalInstance.close();
 			                }
 
-					         $scope.viewImage = function(img){
+					        $scope.viewImage = function(img){
 					            var modalInstance = $modal.open({
 					                templateUrl: "modules/injuryManagement/views/imageModal.html",
 					                size: 'md',
