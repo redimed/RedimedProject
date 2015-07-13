@@ -720,7 +720,7 @@ module.exports = {
                                                             .success(function(result) {
                                                                 //TRANSFER DATA TO ERP
                                                                 var queryGetInfoTimeWeek =
-                                                                    "SELECT DISTINCT hr_employee.Employee_ID, " + //SELECT
+                                                                    "SELECT DISTINCT hr_employee.Employee_Code, " + //SELECT
                                                                     "time_tasks_week.start_date, time_tasks_week.end_date, time_tasks_week.over_time, " + //SELECT
                                                                     "time_tasks_week.week_no, time_item_task.time_charge as time_charge_item, time_item_task.item_id, " + //SELECT
                                                                     "time_item_code.item_name, time_tasks.time_charge as time_charge_task " + //SELECT
@@ -796,8 +796,8 @@ module.exports = {
                                                                                 //END
                                                                             });
                                                                             var objectTranfer = {
-                                                                                pEMPLOYEE_ID: resultInfoTimeWeek[0].Employee_ID,
-                                                                                pWEEKNO: resultInfoTimeWeek[0].week_no,
+                                                                                pEMPLOYEE_CODE: resultInfoTimeWeek[0].Employee_Code,
+                                                                                pWEEKNO: moment(resultInfoTimeWeek[0].end_date).format("YYYY") + resultInfoTimeWeek[0].week_no,
                                                                                 pFROMDATE: moment(resultInfoTimeWeek[0].start_date).format("YYYY-MM-DD"),
                                                                                 pTODATE: moment(resultInfoTimeWeek[0].end_date).format("YYYY-MM-DD"),
                                                                                 pPAID_HOUR: paidHour,
@@ -940,7 +940,7 @@ module.exports = {
                         .success(function(result) {
                             //TRANSFER DATA TO ERP
                             var queryGetInfoTimeWeek =
-                                "SELECT DISTINCT hr_employee.Employee_ID, " + //SELECT
+                                "SELECT DISTINCT hr_employee.Employee_Code, " + //SELECT
                                 "time_tasks_week.start_date, time_tasks_week.end_date, time_tasks_week.over_time, " + //SELECT
                                 "time_tasks_week.week_no, time_item_task.time_charge as time_charge_item, time_item_task.item_id, " + //SELECT
                                 "time_item_code.item_name, time_tasks.time_charge as time_charge_task " + //SELECT
@@ -1016,8 +1016,8 @@ module.exports = {
                                             //END
                                         });
                                         var objectTranfer = {
-                                            pEMPLOYEE_ID: resultInfoTimeWeek[0].Employee_ID,
-                                            pWEEKNO: resultInfoTimeWeek[0].week_no,
+                                            pEMPLOYEE_CODE: resultInfoTimeWeek[0].Employee_Code,
+                                            pWEEKNO: moment(resultInfoTimeWeek[0].end_date).format("YYYY") + resultInfoTimeWeek[0].week_no,
                                             pFROMDATE: moment(resultInfoTimeWeek[0].start_date).format("YYYY-MM-DD"),
                                             pTODATE: moment(resultInfoTimeWeek[0].end_date).format("YYYY-MM-DD"),
                                             pPAID_HOUR: paidHour,

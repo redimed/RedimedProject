@@ -3,7 +3,7 @@ package com.vn.json;
 import java.sql.Date;
 
 public class PayrollTimeWeekJson {
-private int pEMPLOYEE_ID;
+private String pEMPLOYEE_CODE;
 private String pWEEKNO;
 private Date pFROMDATE;
 private Date pTODATE;
@@ -13,12 +13,7 @@ private int pOVER_TIME;
 private int pPUBLIC_HOLIDAY;
 private int pANNUAL_LEAVE;
 private int pCARER_PERSONAL;
-public int getpEMPLOYEE_ID() {
-	return pEMPLOYEE_ID;
-}
-public void setpEMPLOYEE_ID(int pEMPLOYEE_ID) {
-	this.pEMPLOYEE_ID = pEMPLOYEE_ID;
-}
+
 public String getpWEEKNO() {
 	return pWEEKNO;
 }
@@ -72,6 +67,12 @@ public int getpCARER_PERSONAL() {
 }
 public void setpCARER_PERSONAL(int pCARER_PERSONAL) {
 	this.pCARER_PERSONAL = pCARER_PERSONAL;
+}
+public String getpEMPLOYEE_CODE() {
+	return pEMPLOYEE_CODE;
+}
+public void setpEMPLOYEE_CODE(String pEMPLOYEE_CODE) {
+	this.pEMPLOYEE_CODE = pEMPLOYEE_CODE;
 }
 
 }
