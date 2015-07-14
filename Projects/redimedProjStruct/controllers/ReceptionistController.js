@@ -21,6 +21,7 @@ module.exports = {
 				var apptUpcoming = [];
 				var apptComplete = [];
 				var apptInjury = [];
+				var apptChecked = [];
 				var resultUpcoming = [];
 
 				if(data.length > 0)
@@ -38,7 +39,11 @@ module.exports = {
 							status = item.appt_status.toLowerCase();
 
 						if(item.appt_id != null 
-						   && (status == 'checked in' || status == 'booking' || status == 'cancelled' || item.appt_status == null))
+						   && (status == 'checked in'))
+							apptChecked.push(item);
+
+						if(item.appt_id != null 
+						   && (status == 'booking' || status == 'cancelled' || item.appt_status == null))
 							apptUpcoming.push(item);
 					
 						if(item.appt_id != null && status == 'completed')
@@ -58,6 +63,7 @@ module.exports = {
 				}
 
 				res.json({status:'success',
+						  checkedIn: apptChecked,
 						  injury: apptInjury,
 						  upcoming: apptUpcoming,
 						  completed: apptComplete});

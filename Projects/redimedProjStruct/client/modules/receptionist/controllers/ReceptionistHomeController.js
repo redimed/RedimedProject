@@ -9,6 +9,7 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 	$scope.progressAppt = [];
 	$scope.completeAppt = [];
 	$scope.injuryAppt = [];
+	$scope.checkedAppt = [];
 	$scope.doctors = [];
 
 	$scope.undoArr= [];
@@ -135,6 +136,7 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 			$scope.progressAppt = [];
 			$scope.completeAppt = [];
 			$scope.injuryAppt = [];
+			$scope.checkedAppt = [];
 			$scope.doctors = [];
 		}
 		else
@@ -147,6 +149,7 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 		$scope.progressAppt = [];
 		$scope.completeAppt = [];
 		$scope.injuryAppt = [];
+		$scope.checkedAppt = [];
 		$scope.doctors = [];
 		loadAlertCenter(site);
 		ReceptionistService.getAppointmentByDate(d,site).then(function(rs){
@@ -155,6 +158,7 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 				$scope.upcomingAppt = rs.upcoming;
 				$scope.completeAppt = rs.completed;
 				$scope.injuryAppt = rs.injury;
+				$scope.checkedAppt = rs.checkedIn;
 				ReceptionistService.getProgressAppt(d,site).then(function(rs){
 					if(rs.status.toLowerCase() == 'success')
 					{
