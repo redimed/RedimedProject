@@ -641,9 +641,11 @@ module.exports = {
         }
         var sql=
             " SELECT consult.*,problem.`Notes`, DATE_FORMAT(app.`FROM_TIME`, '%d/%m/%Y - %h:%i') AS form_time FROM `cln_patient_consults` consult       "+ 
-            " LEFT JOIN `cln_problems` problem ON consult.`problem_id` = problem.`Problem_id`                                                   "+ 
-            " inner join `cln_appointment_calendar` app on consult.`cal_id` = app.`CAL_ID`                                                      "+ 
-            " WHERE consult.`patient_id` = ?                                                                                                    "; 
+            " LEFT JOIN `cln_problems` problem ON consult.`problem_id` = problem.`Problem_id`                                                           "+ 
+            " inner join `cln_appointment_calendar` app on consult.`cal_id` = app.`CAL_ID`                                                              "+ 
+            " WHERE consult.`patient_id` = ?                                                                                                            "+ 
+            " ORDER BY app.`FROM_TIME` DESC                                                                                                             "; 
+
         kiss.executeQuery(req,sql,patientId,function(rows){
             if(rows.length>0)
             {
@@ -667,7 +669,8 @@ module.exports = {
         var sql=
             " SELECT consult.consult_id,app.`FROM_TIME` FROM `cln_patient_consults` consult       "+ 
             " inner join `cln_appointment_calendar` app on consult.`cal_id` = app.`CAL_ID`        "+ 
-            " WHERE consult.`patient_id` = ?                                                      "; 
+            " WHERE consult.`patient_id` = ?                                                      "+
+            " ORDER BY app.`FROM_TIME` DESC                                                       "; 
         kiss.executeQuery(req,sql,patientId,function(rows){
             if(rows.length>0)
             {
