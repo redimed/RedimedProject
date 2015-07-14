@@ -63,8 +63,8 @@
 </style>
 <div class="row">
 	<div class="col-md-10">
-		<p ng-repeat="service in servicedata" ng-if="servicedata.length > 0" class="inline">
-		<!-- <p ng-repeat="service in servicedata" ng-if="servicedata.length > 0" class="inline" ng-click="changeService(service.SERVICE_ID)"> -->
+		<!--<p ng-repeat="service in servicedata" ng-if="servicedata.length > 0" class="inline">-->
+		<p ng-repeat="service in servicedata" ng-if="servicedata.length > 0" class="inline" ng-click="changeService(service.SERVICE_ID)"> 
 			<button ng-style="{'background-color': '{{service.SERVICE_COLOR}}'}" style="height: 20px;width: 20px;"></button>
 			<span> {{service.SERVICE_NAME}}  </span>
 		<p>
@@ -109,8 +109,7 @@
     </div>
 </div>
 </div>
-<!-- <div id="appointment" style="overflow-x: scroll;" ng-right-click="isshiftRight($event)"> -->
-<div id="appointment" style="overflow-x: scroll;">
+<div id="appointment" style="overflow-x: scroll;" ng-right-click="isshiftRight($event)"> 
 	<div class="row">
 		<!-- DATEPICKER -->
 		<div class="col-md-4">
@@ -171,12 +170,10 @@
 		</div>
 		<div class="appointment-row" ng-repeat="app in appointment.list">
 			<div class="appointment-block-time">{{app.FROM_TIME}}</div>
+
 			<div class="appointment-block" ng-repeat="col in app.doctors" ng-class="{'block-active': col.PATIENTS !== '###'}"
 				id="appointment-{{col.CAL_ID}}"
-				ng-style="{'background-color': '{{col.SERVICE_COLOR}}', 'margin-bottom': col.margin === 'yes' ? '3px': '0px', 'height': col.height, 'border-top': col.border === 'yes' ? '1px solid rgb(96, 99, 94)': '0px'}">
-<!-- 			<div class="appointment-block" ng-repeat="col in app.doctors" ng-class="{'block-active': col.PATIENTS !== '###'}"
-				id="appointment-{{col.CAL_ID}}"
-				ng-style="{'background-color': '{{col.SERVICE_COLOR}}', 'margin-bottom': col.margin === 'yes' ? '3px': '0px', 'height': col.height, 'border-top': col.border === 'yes' ? '1px solid rgb(96, 99, 94)': '0px'}" ng-click="isKeyPressed($event)"> -->
+				ng-style="{'background-color': '{{col.SERVICE_COLOR}}', 'margin-bottom': col.margin === 'yes' ? '3px': '0px', 'height': col.height, 'border-top': col.border === 'yes' ? '1px solid rgb(96, 99, 94)': '0px'}" ng-click="isKeyPressed($event)"> 
 				<span ng-if="col.PATIENTS === 'MESS_SYS_010'">
 					<a ng-click="appointment.dialog.add(app, col)">No Patient {{col.CAL_ID}}</a>
 				</span>
