@@ -667,10 +667,10 @@ module.exports = {
             return;
         }
         var sql=
-            " SELECT consult.consult_id,app.`FROM_TIME` FROM `cln_patient_consults` consult       "+ 
-            " inner join `cln_appointment_calendar` app on consult.`cal_id` = app.`CAL_ID`        "+ 
-            " WHERE consult.`patient_id` = ?                                                      "+
-            " ORDER BY app.`FROM_TIME` DESC                                                       "; 
+            " SELECT consult.`cal_id`, consult.`patient_id` ,app.`FROM_TIME` FROM `cln_patient_consults` consult       "+ 
+            " inner join `cln_appointment_calendar` app on consult.`cal_id` = app.`CAL_ID`                             "+ 
+            " WHERE consult.`patient_id` = ?                                                                           "+
+            " ORDER BY app.`FROM_TIME` DESC                                                                            "; 
         kiss.executeQuery(req,sql,patientId,function(rows){
             if(rows.length>0)
             {
@@ -684,23 +684,24 @@ module.exports = {
     },
     getdetailHistoryAndDrawing:function(req,res)
     {
-        var consult_id=kiss.checkData(req.body.consult_id)?req.body.consult_id:'';
-        if(!kiss.checkListData(consult_id))
+        var cal_id=kiss.checkData(req.body.cal_id)?req.body.cal_id:'';
+        var patient_id=kiss.checkData(req.body.patient_id)?req.body.patient_id:'';
+        if(!kiss.checkListData(cal_id,patient_id))
         {
             kiss.exlog("getdetailHistoryAndDrawing Loi data truyen den");
             res.json({status:'fail'});
             return;
         }
         var sql=
-            " SELECT * FROM `cln_patient_consults` WHERE `consult_id` = ?"; 
+            " SELECT * FROM `cln_patient_consults` WHERE `cal_id` = ? AND `patient_id` = ? "; 
         var data = {};
-        kiss.executeQuery(req,sql,consult_id,function(rows){
+        kiss.executeQuery(req,sql,[cal_id,patient_id],function(rows){
             if(rows.length>0)
             {
                 data.history = rows[0];
                 var sql2=
-                    " SELECT id,cal_id FROM `cln_patient_drawings` WHERE `consult_id` = ?"; 
-                kiss.executeQuery(req,sql2,consult_id,function(rows){
+                    " SELECT id FROM `cln_patient_drawings` WHERE `patient_id` = ? AND `cal_id` = ?"; 
+                kiss.executeQuery(req,sql2,[patient_id,cal_id],function(rows){
                     if(rows.length>0)
                     {
                         data.drawing = rows;
