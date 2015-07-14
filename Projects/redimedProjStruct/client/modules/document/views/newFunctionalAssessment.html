@@ -249,10 +249,10 @@
 								</div>
 								<div class="col-md-2 col-sm-2 col-xs-2 btn-group" ng-if="detail.VAL1_ISCHECKBOX===12">
 									<label class="btn">
-										<input type="radio" ng-model="detail.VAL1.CHECKBOX" value="1"> Satisfactory
+										<input type="radio" ng-model="detail.VAL1_CHECKBOX" value="1" ng-change="autoCalculationVal1(line,detail)"> Satisfactory
 									</label>
 									<label class="btn">
-										<input type="radio" ng-model="detail.VAL1.CHECKBOX" value="0"> Unsatisfactory
+										<input type="radio" ng-model="detail.VAL1_CHECKBOX" value="0" ng-change="autoCalculationVal1(line,detail)"> Unsatisfactory
 									</label>
 								</div>
 								<div class="col-md-1 col-sm-1 col-xs-1" ng-if="detail.VAL2_ISCHECKBOX===12">
@@ -260,10 +260,10 @@
 								</div>
 								<div class="col-md-2 col-sm-2 col-xs-2 btn-group" ng-if="detail.VAL2_ISCHECKBOX===12">
 									<label class="btn">
-										<input type="radio" ng-model="detail.VAL2.CHECKBOX" value="1"> Satisfactory
+										<input type="radio" ng-model="detail.VAL2_CHECKBOX" value="1"> Satisfactory
 									</label>
 									<label class="btn">
-										<input type="radio" ng-model="detail.VAL2.CHECKBOX" value="0"> Unsatisfactory
+										<input type="radio" ng-model="detail.VAL2_CHECKBOX" value="0"> Unsatisfactory
 									</label>
 								</div>
 							<!-- end Satisfactory/Unsatisfactory checkbox with detail comment -->

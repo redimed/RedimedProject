@@ -297,6 +297,18 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 				}
 				autoSummary(line);
 			}
+			else if($scope.header.TYPE = "Crown" && detail.VAL1_ISCHECKBOX === 12){
+				console.log('this is line details index',line.details.indexOf(detail));
+				console.log('this is line details length',line.details.length);
+				if(line.details.indexOf(detail) === line.details.length - 1){
+					if(detail.VAL1_CHECKBOX==='1'){
+						line.RATE1 = "Satisfactory";
+					}
+					else line.RATE1 = "Unsatisfactory";
+					autoSummary(line);
+				}
+				
+			}
 		}	
 		if(line.SCORE_TYPE1 === 9 && (detail.VAL1_ISVALUE===7 || detail.VAL1_ISVALUE===8 || detail.VAL1_ISVALUE===9 || detail.VAL1_ISVALUE===10)){
 			var default_details_value = line.details[0].VAL1_VALUE;
@@ -340,9 +352,9 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 			}
 		}
 
-		if($scope.header.TYPE === "Crown"){
+		// if($scope.header.TYPE === "Crown"){
 			
-		}
+		// }
 	}
 	//For VAL2
 	var calculateFunctionsVal2 = {
@@ -538,6 +550,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 
 	// Auto summary functions
 	var autoSummary = function(line){
+		console.log('this is line satis', line);
 		var sectionId = line.SECTION_ID;
 		var lineId = line.LINE_ID;
 		var detailNeedChanged = {};

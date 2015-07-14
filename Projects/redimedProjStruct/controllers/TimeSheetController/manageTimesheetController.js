@@ -3,7 +3,7 @@ var db = require("../../models");
 var moment = require('moment');
 var chainer = new db.Sequelize.Utils.QueryChainer;
 var functionForTimesheet = require("./functionForTimesheet");
-var ServiceErp = require('../../helper/ERP_rest');
+var ServiceErp = require('../../helper/ERP_Rest');
 //END
 module.exports = {
     ViewApproved: function(req, res) {
