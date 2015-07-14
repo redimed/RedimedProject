@@ -6,6 +6,8 @@ var item_model = require('../v1_models/Inv_items.js');
 var item_fees_model = require('../v1_models/Cln_item_fees.js');
 var parseString = require('xml2js').parseString;
 
+var kiss=require('./kissUtilsController');// tan add
+
 var general_process = function(req, res){
 
 	var UPLOAD_FOLDER = db.FeeGroup.getUploadPath();
@@ -206,6 +208,7 @@ var general_process = function(req, res){
 					}
 					timeData.endReadXML = Date.now();
 					source_arr = xml_result.MBS_XML.Data;  // ASSIGN GLOBAL
+					kiss.exFileJSON(source_arr,'source_arr.txt');
 					process_data.total_num =  source_arr.length; // ASSIGN GLOBAL
 					process_data.left_num = source_arr.length; // ASSIGN GLOBAL
 
