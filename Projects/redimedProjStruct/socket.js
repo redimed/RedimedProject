@@ -135,7 +135,8 @@ module.exports = function(io,cookie,cookieParser) {
                         {
                             db.User.find({where:{id: doctor.User_id}},{raw:true})
                                 .success(function(user){
-                                    socket.to(user.user_name.toLowerCase()+'--'+user.id).emit('receiveNotifyDoctor');
+                                    if(user)
+                                        socket.to(user.user_name.toLowerCase()+'--'+user.id).emit('receiveNotifyDoctor');
                                 })
                                 .error(function(err){
                                     console.log(err);

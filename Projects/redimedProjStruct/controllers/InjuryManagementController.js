@@ -227,10 +227,8 @@ module.exports = {
                                               transport.sendMail(mailOptions, function(error, response){  //callback
                                                   if(error){
                                                       console.log(error);
-                                                      res.json({status:"fail"});
                                                   }else{
                                                       console.log("Message sent: " + response.message);
-                                                      res.json({status:"success"});
                                                   }
                                                   transport.close(); // shut down the connection pool, no more messages.  Comment this line out to continue sending emails.
                                               });
@@ -240,7 +238,18 @@ module.exports = {
                                               console.log(err);
                                           })
 
-                                          res.json({status:'success',injury_id:rs.injury_id});
+                                          db.ApptPatient.create({
+                                              Patient_id: pId,
+                                              CAL_ID: aId,
+                                              appt_status: 'Booking'
+                                          })
+                                          .success(function(){
+                                              res.json({status:'success',injury_id:rs.injury_id});
+                                          })
+                                          .error(function(err){
+                                              res.json({status:'error'});
+                                              console.log(err);
+                                          })
                                       }
                                       
                                   })
@@ -747,58 +756,80 @@ module.exports = {
           })
     },
     getInjuryConsultation: function(req,res){
-      var injuryId = req.body.injury_id;
+      var injurySQL = "SELECT c.*, d.id AS DrawingId, f.`Ass_id` AS FirstAssId, f.examDate AS FirstAssDate , p.`progress_id` AS ProgressAssId, p.examDate AS ProgressAssDate , fi.`id` AS FinalAssId, fi.examDate AS FinalAssDate , g.`id` AS GeneralAssId, g.examDate AS GeneralAssDate "+
+                      "FROM cln_patient_consults c "+
+                      "LEFT JOIN th_first_assessment f ON c.`patient_id` = f.`patient_id` AND c.`cal_id` = f.`cal_id` "+
+                      "LEFT JOIN th_progress_assessment p ON c.`patient_id` = p.`patient_id` AND c.`cal_id` = p.`cal_id` "+
+                      "LEFT JOIN th_final_assessment fi ON c.`patient_id` = fi.`patient_id` AND c.`cal_id` = fi.`cal_id` "+
+                      "LEFT JOIN th_general_assessment g ON c.`patient_id` = g.`patient_id` AND c.`cal_id` = g.`cal_id` "+
+                      "LEFT JOIN cln_patient_drawings d ON c.`patient_id` = d.`patient_id` AND c.`cal_id` = d.`cal_id` "+
+                      "WHERE c.`cal_id` = (SELECT p.`CAL_ID` FROM cln_appt_patients p WHERE p.`injury_id` = ?) "+
+                      "AND c.`patient_id` = (SELECT p.`Patient_id` FROM cln_appt_patients p WHERE p.`injury_id` = ?)";
+
+      var bookingSQL = "SELECT c.*, d.id AS DrawingId, f.`Ass_id` AS FirstAssId, f.examDate AS FirstAssDate , p.`progress_id` AS ProgressAssId, p.examDate AS ProgressAssDate , fi.`id` AS FinalAssId, fi.examDate AS FinalAssDate , g.`id` AS GeneralAssId, g.examDate AS GeneralAssDate "+
+                      "FROM cln_patient_consults c "+
+                      "LEFT JOIN th_first_assessment f ON c.`patient_id` = f.`patient_id` AND c.`cal_id` = f.`cal_id` "+
+                      "LEFT JOIN th_progress_assessment p ON c.`patient_id` = p.`patient_id` AND c.`cal_id` = p.`cal_id` "+
+                      "LEFT JOIN th_final_assessment fi ON c.`patient_id` = fi.`patient_id` AND c.`cal_id` = fi.`cal_id` "+
+                      "LEFT JOIN th_general_assessment g ON c.`patient_id` = g.`patient_id` AND c.`cal_id` = g.`cal_id` "+
+                      "LEFT JOIN cln_patient_drawings d ON c.`patient_id` = d.`patient_id` AND c.`cal_id` = d.`cal_id` "+
+                      "WHERE c.`cal_id` = ? "+
+                      "AND c.`patient_id` = ?";
+
+       var injuryId = req.body.injury_id !== 'undefined' ? req.body.injury_id : null;
+       var patientId = req.body.patient_id !== 'undefined' ? req.body.patient_id : null;
+       var calId = req.body.cal_id !== 'undefined' ? req.body.cal_id : null;
+
+       db.sequelize.query(injuryId == null ? bookingSQL : injurySQL , null , {raw:true} , injuryId == null ? [calId,patientId] : [injuryId, injuryId])
+        .success(function(data){
+            if(data.length > 0)
+            {
+                var result = {
+                  consultData: data[0],
+                  firstArr: [],
+                  progressArr: [],
+                  finalArr: [],
+                  generalArr: [],
+                  drawingArr: []
+                };
+
+                var tempFirst = [], tempProgress = [], tempFinal = [], tempGeneral = [], tempDrawing = [];
+                for(var i=0; i< data.length; i++)
+                {
+                    if(data[i].FirstAssId != null)
+                      tempFirst.push({id:data[i].FirstAssId, date:data[i].FirstAssDate});
+                    if(data[i].ProgressAssId != null)
+                      tempProgress.push({id:data[i].ProgressAssId, date:data[i].ProgressAssDate});
+                    if(data[i].FinalAssId != null)
+                      tempFinal.push({id:data[i].FinalAssId, date:data[i].FinalAssDate});
+                    if(data[i].GeneralAssId != null)
+                      tempGeneral.push({id:data[i].GeneralAssId, date:data[i].GeneralAssDate});
+                    if(data[i].DrawingId != null)
+                      tempDrawing.push({id:data[i].DrawingId});
+                }
+
+                if(tempFirst.length > 0)
+                  result.firstArr = _.uniq(tempFirst,function(item){return JSON.stringify(item);});
+                if(tempProgress.length > 0)
+                  result.progressArr = _.uniq(tempProgress,function(item){return JSON.stringify(item);});
+                if(tempFinal.length > 0)
+                  result.finalArr = _.uniq(tempFinal,function(item){return JSON.stringify(item);});
+                if(tempGeneral.length > 0)
+                  result.generalArr = _.uniq(tempGeneral,function(item){return JSON.stringify(item);});
+                if(tempDrawing.length > 0)
+                  result.drawingArr = _.uniq(tempDrawing,function(item){return JSON.stringify(item);});
+
+                res.json({status:'success', data: result});
+            }
+            else
+                res.json({status:'error'});
+        })
+        .error(function(err){
+            res.josn({status:'error'});
+            console.log(err);
+        })
       
-      db.sequelize.query("SELECT c.*, f.`Ass_id` AS FirstAssId, f.examDate AS FirstAssDate , p.`progress_id` AS ProgressAssId, p.examDate AS ProgressAssDate , fi.`id` AS FinalAssId, fi.examDate AS FinalAssDate , g.`id` AS GeneralAssId, g.examDate AS GeneralAssDate "+
-                          "FROM cln_patient_consults c "+
-                          "LEFT JOIN th_first_assessment f ON c.`patient_id` = f.`patient_id` AND c.`cal_id` = f.`cal_id` "+
-                          "LEFT JOIN th_progress_assessment p ON c.`patient_id` = p.`patient_id` AND c.`cal_id` = p.`cal_id` "+
-                          "LEFT JOIN th_final_assessment fi ON c.`patient_id` = fi.`patient_id` AND c.`cal_id` = fi.`cal_id` "+
-                          "LEFT JOIN th_general_assessment g ON c.`patient_id` = g.`patient_id` AND c.`cal_id` = g.`cal_id` "+
-                          "WHERE c.`cal_id` = (SELECT p.`CAL_ID` FROM cln_appt_patients p WHERE p.`injury_id` = ?) "+
-                          "AND c.`patient_id` = (SELECT p.`Patient_id` FROM cln_appt_patients p WHERE p.`injury_id` = ?)",null,{raw:true},[injuryId, injuryId])
-          .success(function(data){
-              if(data.length > 0)
-              {
-                  var result = {
-                    consultData: data[0],
-                    firstArr: [],
-                    progressArr: [],
-                    finalArr: [],
-                    generalArr: []
-                  };
-
-                  var tempFirst = [], tempProgress = [], tempFinal = [], tempGeneral = [];
-                  for(var i=0; i< data.length; i++)
-                  {
-                      if(data[i].FirstAssId != null)
-                        tempFirst.push({id:data[i].FirstAssId, date:data[i].FirstAssDate});
-                      if(data[i].ProgressAssId != null)
-                        tempProgress.push({id:data[i].ProgressAssId, date:data[i].ProgressAssDate});
-                      if(data[i].FinalAssId != null)
-                        tempFinal.push({id:data[i].FinalAssId, date:data[i].FinalAssDate});
-                      if(data[i].GeneralAssId != null)
-                        tempGeneral.push({id:data[i].GeneralAssId, date:data[i].GeneralAssDate});
-                  }
-
-                  if(tempFirst.length > 0)
-                    result.firstArr = _.uniq(tempFirst,function(item){return JSON.stringify(item);});
-                  if(tempProgress.length > 0)
-                    result.progressArr = _.uniq(tempProgress,function(item){return JSON.stringify(item);});
-                  if(tempFinal.length > 0)
-                    result.finalArr = _.uniq(tempFinal,function(item){return JSON.stringify(item);});
-                  if(tempGeneral.length > 0)
-                    result.generalArr = _.uniq(tempGeneral,function(item){return JSON.stringify(item);});
-
-                  res.json({status:'success', data: result});
-              }
-              else
-                  res.json({status:'error'});
-          })
-          .error(function(err){
-              res.josn({status:'error'});
-              console.log(err);
-          })
+     
     }
 };
 
