@@ -1,4 +1,4 @@
-<form name="QANTAS_rampbaggage" ng-submit="submitQANTAS_rampbaggage(QANTAS_rampbaggage)" accessible-form method="post" novalidate>
+<form name="QANTAS_rampbaggage" accessible-form method="post" novalidate>
 	<!-- tittle -->
 	<div class="caption">
 		<div class="row">
@@ -30,24 +30,24 @@
 						<span style="font-size:120%; text-align:center">Sur Name :</span>
 					</div>
 					<div class="col-md-2  col-sm-2">
-						<input name="surname" type="text" ng-model="info.Sur_name"  class="form-control">
+						<input name="surname" type="text" ng-model="patientInfo.Sur_name"  class="form-control">
 					</div>
 					<div class="col-md-2  col-sm-2">
 						<span style="font-size:120%;">First Name :</span>
 					</div>
 					<div class="col-md-2  col-sm-2">
-						<input name="firstname" type="text" ng-model="info.First_name"  class="form-control">
+						<input name="firstname" type="text" ng-model="patientInfo.First_name"  class="form-control">
 					</div>
 					<div class="col-md-1  col-sm-1">
 						&nbsp
 					</div>
 					<div class="col-md-2  col-sm-2">
 						<label class="btn">
-							<input type="radio" ng-model="info.Sex" value="1" />
+							<input type="radio" ng-model="patientInfo.Sex" value="1" />
 							<span style="font-size:120%;">Female</span>
 						</label>
 						<label class="btn">
-							<input type="radio" ng-model="info.Sex" value="0" />
+							<input type="radio" ng-model="patientInfo.Sex" value="0" />
 							<span style="font-size:120%;">Male</span>
 						</label>
 					</div>
@@ -59,13 +59,13 @@
 						<span style="font-size:120%;">Andress</span>
 					</div>
 					<div class="col-md-2  col-sm-2">
-						<input name="andress" type="text" ng-model="info.Address1"  class="form-control">
+						<input name="andress" type="text" ng-model="patientInfo.Address1"  class="form-control">
 					</div>
 					<div class="col-md-2  col-sm-2">
 						<span style="font-size:120%;">DOB :</span>
 					</div>
 					<div class="col-md-2  col-sm-2">
-						<input name="DOB" type="text" ng-model="info.DOB"  class="form-control">
+						<input name="DOB" type="text" ng-model="patientInfo.DOB"  class="form-control">
 					</div>
 				</div>
 			</div>
@@ -75,19 +75,19 @@
 						<span style="font-size:120%;">Contact details</span>
 					</div>
 					<div class="col-md-2  col-sm-2">
-						<input name="contact_1" type="text" placeholder="(H)" ng-model="info.Home_phone"  class="form-control">
+						<input name="contact_1" type="text" placeholder="(H)" ng-model="patientInfo.Home_phone"  class="form-control">
 					</div>
 					<div class="col-md-2  col-sm-2">
 						&nbsp
 					</div>
 					<div class="col-md-2  col-sm-2">
-						<input name="contact_2" type="text" placeholder="(M)" ng-model="info.Mobile"  class="form-control">
+						<input name="contact_2" type="text" placeholder="(M)" ng-model="patientInfo.Mobile"  class="form-control">
 					</div>
 					<div class="col-md-1  col-sm-1">
 						&nbsp
 					</div>
 					<div class="col-md-2  col-sm-2">
-						<input name="contact_3" type="text" placeholder="(Email)" ng-model="info.Email"  class="form-control">
+						<input name="contact_3" type="text" placeholder="(Email)" ng-model="patientInfo.Email"  class="form-control">
 					</div>
 				</div>
 			</div>
@@ -97,13 +97,13 @@
 						<span style="font-size:120%;">Position Applied for </span>
 					</div>
 					<div class="col-md-2  col-sm-2">
-						<input name="position_Applied" type="text" ng-model="info.PA"  class="form-control">
+						<input name="position_Applied" type="text" ng-model="patientInfo.PA"  class="form-control">
 					</div>
 					<div class="col-md-2  col-sm-2">
 						<span style="font-size:120%;">Site of assessment :</span>
 					</div>
 					<div class="col-md-2  col-sm-2">
-						<input name="site_assessment" type="text" ng-model="info.SA"  class="form-control">
+						<input name="site_assessment" type="text" ng-model="patientInfo.SA"  class="form-control">
 					</div>
 				</div>
 			</div>
@@ -556,14 +556,6 @@
 	        </div>
 	        <div class="row">&nbsp</div>
 	        <div class="row">
-	        	<label class="col-lg-2 col-md-2 col-sm-3 bold">Signature</label>
-	        	<label class="col-lg-3 col-md-4 col-sm-3">aaa</label>
-	        	<label class="col-lg-2 col-md-2 col-sm-3 bold">Date</label>
-	        	<div class="col-lg-3 col-md-4 col-sm-3">
-	        		<input ng-model="dateChose1" type="text" class="form-control input-sm" name="dob1" datepicker-popup="dd/MM/yyyy" is-open="openDOB1" ng-click="openDOB1 = true" datepicker-options="dateOptions1" close-text="Close" style="text-align:center;font-weight:bold;color:blue;">
-	        	</div>
-	        </div>
-	        <div class="row">
 	        	<div class="col-md-12 col-sm-12">
 			        <div class="portlet-title">
 			            <div class="caption">
@@ -575,17 +567,42 @@
 	        <div class="row">
 	        	<div class="col-md-12 col-sm-12">
 	        		<label>
-	        			I  <input name="name" type="text" ng-model="info.group2_comment1" style="width:20%"> of the above stated address consent to the release of the results of my medical examination to Qantas Airport Operations management and relevant medical personnel.
+	        			I {{patientInfo.First_name}} {{patientInfo.Middle_name}} {{patientInfo.Sur_name}} of the above stated address consent to the release of the results of my medical examination to Qantas Airport Operations management and relevant medical personnel.
 	        		</label>
 	        	</div>
 	        </div>
 	        <div class="row">
-	        	<label class="col-lg-2 col-md-2 col-sm-3 bold">Signature</label>
-	        	<label class="col-lg-3 col-md-4 col-sm-3">aaa</label>
-	        	<label class="col-lg-2 col-md-2 col-sm-3 bold">Date</label>
+				<div class="col-md-2 col-sm-2 col-xs-2">
+					<button class="btn btn-default green" ng-click="showSignature()">Signature</button>
+				</div>
+				<div class="col-md-4 col-sm-3"
+                     ng-show="info.PATIENT_SIGN!==null && info.PATIENT_SIGN!==undefined && info.PATIENT_SIGN!=='' && isSignatureShow===false">
+                    <img ng-src="{{info.PATIENT_SIGN}}" alt=""
+                         style="width: 200px;height: 150px;"/>
+                </div>
+                <div class="col-md-4 col-sm-3" ng-hide="info.PATIENT_SIGN!==null && info.PATIENT_SIGN!==undefined && info.PATIENT_SIGN!=='' && isSignatureShow===false">&nbsp;</div>
+                <label class="col-lg-2 col-md-2 col-sm-3 bold">Date</label>
 	        	<div class="col-lg-3 col-md-4 col-sm-3">
-	        		<input ng-model="dateChose2" type="text" class="form-control input-sm" name="dob2" datepicker-popup="dd/MM/yyyy" is-open="openDOB2" ng-click="openDOB2 = true" datepicker-options="dateOptions2" close-text="Close" style="text-align:center;font-weight:bold;color:blue;">
+	        		<input ng-model="dateChose" type="text" class="form-control input-sm" name="dob1" datepicker-popup="dd/MM/yyyy" is-open="openDOB2" ng-click="openDOB2 = true" datepicker-options="dateOptions2" close-text="Close" style="text-align:center;font-weight:bold;color:blue;">
 	        	</div>
+			</div>
+			<div class="row" style="text-align: center;" ng-show="isSignatureShow">
+	            <div class="col-md-12 col-sm-12">
+	                <canvas width="500" height="400" id="canvas"
+	                        signature ng-model="info.PATIENT_SIGN" style="background-color: #8eece8">
+	                </canvas>
+	            </div>
+	            <div class="col-md-12 col-sm-12">
+	                <div class="break-row"></div>
+	                <div class="btn-group">
+	                    <button type="button" ng-click="cancelClick()" class="btn btn-danger btn-sm">
+	                        Cancel
+	                    </button>
+	                    <button type="button" ng-click="clearClick()" class="btn btn-warning btn-sm">Clear
+	                    </button>
+	                    <button type="button" ng-click="okClick()" class="btn green btn-sm">Ok</button>
+	                </div>
+	            </div>
 	        </div>
         </div>
 	</div>
@@ -639,10 +656,10 @@
 	        	</div>
 	        	<div class="col-md-12 col-sm-12">
 	        		<div class="col-md-1 col-sm-1">
-	        			<div>Systolic</div>
+	        			<div><label>Systolic</label></div>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
-	        			<div>< 150 mmHg</div>
+	        			<div><label>< 150 mmHg</label></div>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
 	        			<input name="group3_sec1_value1" type="text" placeholder="mmHg" ng-model="info.group3_sec1_value1"  class="form-control" style="height:4%;">
@@ -669,10 +686,10 @@
 	        	</div>
 	        	<div class="col-md-12 col-sm-12">
 	        		<div class="col-md-1 col-sm-1">
-	        			<div>Diastolic</div>
+	        			<div><label>Diastolic</label></div>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
-	        			<div>< 95 mmHg</div>
+	        			<div><label>< 95 mmHg</label></div>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
 	        			<input name="group3_sec1_value2" type="text" placeholder="mmHg" ng-model="info.group3_sec1_value2"  class="form-control" style="height:4%;">
@@ -724,13 +741,13 @@
 		        			&nbsp
 		        		</div>
 		        		<div class="col-md-1 col-sm-1">
-		        			General :
+		        			<label>General :</label>
 		        		</div>
 		        		<div class="col-md-2 col-sm-2">
 		        			<input name="group3_sec2_comment1" type="text" ng-model="info.group3_sec2_comment1"  class="form-control" style="height:4%;">
 		        		</div>
 		        		<div class="col-md-1 col-sm-1">
-		        			Feet :
+		        			<label>Feet :</label>
 		        		</div>
 		        		<div class="col-md-2 col-sm-2">
 		        			<input name="group3_sec2_comment2" type="text" ng-model="info.group3_sec2_comment2"  class="form-control" style="height:4%;">
@@ -743,13 +760,13 @@
 		        			&nbsp
 		        		</div>
 		        		<div class="col-md-1 col-sm-1">
-		        			Sit :
+		        			<label>Sit :</label>
 		        		</div>
 		        		<div class="col-md-2 col-sm-2">
 		        			<input name="group3_sec2_comment3" type="text" ng-model="info.group3_sec2_comment3"  class="form-control" style="height:4%;">
 		        		</div>
 		        		<div class="col-md-1 col-sm-1">
-		        			Gait :
+		        			<label>Gait :</label>
 		        		</div>
 		        		<div class="col-md-2 col-sm-2">
 		        			<input name="group3_sec2_comment4" type="text" ng-model="info.group3_sec2_comment4"  class="form-control" style="height:4%;">
@@ -762,13 +779,13 @@
 		        			&nbsp
 		        		</div>
 		        		<div class="col-md-1 col-sm-1">
-		        			Stand :
+		        			<label>Stand :</label>
 		        		</div>
 		        		<div class="col-md-2 col-sm-2">
 		        			<input name="group3_sec2_comment5" type="text" ng-model="info.group3_sec2_comment5"  class="form-control" style="height:4%;">
 		        		</div>
 		        		<div class="col-md-1 col-sm-1">
-		        			Other :
+		        			<label>Other :</label>
 		        		</div>
 		        		<div class="col-md-2 col-sm-2">
 		        			<input name="group3_sec2_comment6" type="text" ng-model="info.group3_sec2_comment6"  class="form-control" style="height:4%;">
@@ -785,16 +802,16 @@
 	        	<div class="col-md-12 col-sm-12">
 	        		<div class="col-md-1 col-sm-1">&nbsp</div>
 	        		<div class="col-md-2 col-sm-2">
-	        			<label>Maximal HR: &nbsp <input name="group3_sec2_value1" placeholder="bpm" type="text" ng-model="info.group3_sec2_value1" style="width:20%"> &nbsp bpm</label>
+	        			<label>Maximal HR: &nbsp <input name="group3_sec2_value1" placeholder="bpm" type="text" ng-model="info.group3_sec2_value1" ng-disabled="true" style="width:20%"> &nbsp bpm</label>
 	        		</div>
 	        		<div class="col-md-5 col-sm-5">
-	        			Step test cadence: 24 cycles/min (1 cycle= 4 steps)
+	        			<label>Step test cadence: 24 cycles/min (1 cycle= 4 steps)</label>
 	        		</div>
 	        	</div>
 	        	<div class="col-md-12 col-sm-12">
 	        		<div class="col-md-1 col-sm-1">&nbsp</div>
 	        		<div class="col-md-6 col-sm-6">
-	        			3 Minute Step test for Male / Female
+	        			<label>3 Minute Step test for Male / Female</label>
 	        		</div>
 	        	</div>
 	        	<div class="col-md-12 col-sm-12">
@@ -820,14 +837,14 @@
 		        			<label class="bold" style="font-size:120%;"> Heart rate 1 minute post 3 min test</label>
 		        		</div>
 		        		<div class="col-md-3 col-sm-3">
-		        			<div>Male :103‐117 bpm (average)</div>
-		        			<div>Female 128‐142 bpm (average)</div>
+		        			<div><label>Male :103‐117 bpm (average)</label></div>
+		        			<div><label>Female 128‐142 bpm (average)</label></div>
 		        		</div>
 		        		<div class="col-md-2 col-sm-2">
-		        			<input name="group3_sec2_value2" type="text" placeholder="bpm" ng-model="info.group3_sec2_value2"  class="form-control" style="height:4%;">
+		        			<input name="group3_sec2_value2" type="text" placeholder="bpm" ng-model="info.group3_sec2_value2" ng-change="mathBPM(info.group3_sec2_value2)" class="form-control" style="height:4%;">
 		        		</div>
 		        		<div class="col-md-1 col-sm-1">
-		        			<input name="group3_sec2_rate" type="text" placeholder="RATE" ng-model="info.group3_sec2_rate"  class="form-control" style="height:4%;">
+		        			<input name="group3_sec2_rate" type="text" placeholder="RATE" ng-model="info.group3_sec2_rate" ng-disabled="true" class="form-control" style="height:4%;">
 		        		</div>
 		        		<div class="col-md-2 col-sm-2">
 		        			<label class="btn">
@@ -915,8 +932,8 @@
 	        	<!-- line detail -->
 	        	<div class="col-md-12 col-sm-12">
 	        		<div class="col-md-1 col-sm-1">&nbsp</div>
-	        		<div class="col-md-2 col-sm-2">Slump</div>
-	        		<div class="col-md-2 col-sm-2">negative</div>
+	        		<div class="col-md-2 col-sm-2"><label>Slump</label></div>
+	        		<div class="col-md-2 col-sm-2"><label>negative</label></div>
 	        		<div class="col-md-1 col-sm-1">
 						<div style="float:left;">L: &nbsp</div>
 						<div><input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkL_1" style="width:40%;height: 3%;"></div>
@@ -941,8 +958,8 @@
 	        	</div>
 	        	<div class="col-md-12 col-sm-12">
 	        		<div class="col-md-1 col-sm-1">&nbsp</div>
-	        		<div class="col-md-2 col-sm-2">Prone knee bend</div>
-	        		<div class="col-md-2 col-sm-2">100° min with Nil neural Sx </div>
+	        		<div class="col-md-2 col-sm-2"><label>Prone knee bend</label></div>
+	        		<div class="col-md-2 col-sm-2"><label>100° min with Nil neural Sx </label></div>
 	        		<div class="col-md-1 col-sm-1">
 						<div style="float:left;">L: &nbsp</div>
 						<div><input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkL_2" style="width:40%;height: 3%;"></div>
@@ -967,8 +984,8 @@
 	        	</div>
 	        	<div class="col-md-12 col-sm-12">
 	        		<div class="col-md-1 col-sm-1">&nbsp</div>
-	        		<div class="col-md-2 col-sm-2">SLR</div>
-	        		<div class="col-md-2 col-sm-2">60°‐80° with nil neuro Sx</div>
+	        		<div class="col-md-2 col-sm-2"><label>SLR</label></div>
+	        		<div class="col-md-2 col-sm-2"><label>60°‐80° with nil neuro Sx</label></div>
 	        		<div class="col-md-1 col-sm-1">
 						<div style="float:left;">L: &nbsp</div>
 						<div><input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkL_3" style="width:40%;height: 3%;"></div>
@@ -993,8 +1010,8 @@
 	        	</div>
 	        	<div class="col-md-12 col-sm-12">
 	        		<div class="col-md-1 col-sm-1">&nbsp</div>
-	        		<div class="col-md-2 col-sm-2">ULTT (medial bias + radial bias)</div>
-	        		<div class="col-md-2 col-sm-2">WNL with nil neuro Sx</div>
+	        		<div class="col-md-2 col-sm-2"><label>ULTT (medial bias + radial bias)</label></div>
+	        		<div class="col-md-2 col-sm-2"><label>WNL with nil neuro Sx</label></div>
 	        		<div class="col-md-1 col-sm-1">
 						<div style="float:left;">L: &nbsp</div>
 						<div><input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkL_4" style="width:40%;height: 3%;"></div>
@@ -1019,8 +1036,8 @@
 	        	</div>
 	        	<div class="col-md-12 col-sm-12">
 	        		<div class="col-md-1 col-sm-1">&nbsp</div>
-	        		<div class="col-md-2 col-sm-2">Multi directional shoulder stability </div>
-	        		<div class="col-md-2 col-sm-2">Normal</div>
+	        		<div class="col-md-2 col-sm-2"><label>Multi directional shoulder stability </label></div>
+	        		<div class="col-md-2 col-sm-2"><label>Normal</label></div>
 	        		<div class="col-md-1 col-sm-1">
 						<div style="float:left;">L: &nbsp</div>
 						<div><input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkL_5" style="width:40%;height: 3%;"></div>
@@ -1045,8 +1062,8 @@
 	        	</div>
 	        	<div class="col-md-12 col-sm-12">
 	        		<div class="col-md-1 col-sm-1">&nbsp</div>
-	        		<div class="col-md-2 col-sm-2">McMurray’s Cartilage</div>
-	        		<div class="col-md-2 col-sm-2">WNL – no pain/catching</div>
+	        		<div class="col-md-2 col-sm-2"><label>McMurray’s Cartilage</label></div>
+	        		<div class="col-md-2 col-sm-2"><label>WNL – no pain/catching</label></div>
 	        		<div class="col-md-1 col-sm-1">
 						<div style="float:left;">L: &nbsp</div>
 						<div><input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkL_6" style="width:40%;height: 3%;"></div>
@@ -1071,8 +1088,8 @@
 	        	</div>
 	        	<div class="col-md-12 col-sm-12">
 	        		<div class="col-md-1 col-sm-1">&nbsp</div>
-	        		<div class="col-md-2 col-sm-2">Side lying resited external rotation</div>
-	        		<div class="col-md-2 col-sm-2">5kgs x 10 reps in 60sec</div>
+	        		<div class="col-md-2 col-sm-2"><label>Side lying resited external rotation</label></div>
+	        		<div class="col-md-2 col-sm-2"><label>5kgs x 10 reps in 60sec</label></div>
 	        		<div class="col-md-1 col-sm-1">
 						<div style="float:left;">L: &nbsp</div>
 						<div><input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkL_7" style="width:40%;height: 3%;"></div>
@@ -1097,8 +1114,8 @@
 	        	</div>
 	        	<div class="col-md-12 col-sm-12">
 	        		<div class="col-md-1 col-sm-1">&nbsp</div>
-	        		<div class="col-md-2 col-sm-2">Impingement test (internal rotation)</div>
-	        		<div class="col-md-2 col-sm-2">Nil Impingement</div>
+	        		<div class="col-md-2 col-sm-2"><label>Impingement test (internal rotation)</label></div>
+	        		<div class="col-md-2 col-sm-2"><label>Nil Impingement</label></div>
 	        		<div class="col-md-1 col-sm-1">
 						<div style="float:left;">L: &nbsp</div>
 						<div><input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkL_8" style="width:40%;height: 3%;"></div>
@@ -1123,8 +1140,8 @@
 	        	</div>
 	        	<div class="col-md-12 col-sm-12">
 	        		<div class="col-md-1 col-sm-1">&nbsp</div>
-	        		<div class="col-md-2 col-sm-2">Supraspinatus test</div>
-	        		<div class="col-md-2 col-sm-2">Nil pain with resistance</div>
+	        		<div class="col-md-2 col-sm-2"><label>Supraspinatus test</label></div>
+	        		<div class="col-md-2 col-sm-2"><label>Nil pain with resistance</label></div>
 	        		<div class="col-md-1 col-sm-1">
 						<div style="float:left;">L: &nbsp</div>
 						<div><input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkL_9" style="width:40%;height: 3%;"></div>
@@ -1149,8 +1166,8 @@
 	        	</div>
 	        	<div class="col-md-12 col-sm-12">
 	        		<div class="col-md-1 col-sm-1">&nbsp</div>
-	        		<div class="col-md-2 col-sm-2">Gripping: 2 x grip tests: min 15 sec rest between.</div>
-	        		<div class="col-md-2 col-sm-2">Females >25kg, Males >40kg and both require < 12% variance L vs R </div>
+	        		<div class="col-md-2 col-sm-2"><label>Gripping: 2 x grip tests: min 15 sec rest between.</label></div>
+	        		<div class="col-md-2 col-sm-2"><label>Females >25kg, Males >40kg and both require < 12% variance L vs R </label></div>
 	        		<div class="col-md-1 col-sm-1">
 						<div style="float:left;">L: &nbsp</div>
 						<div><input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkL_10" style="width:40%;height: 3%;"></div>
@@ -1175,8 +1192,8 @@
 	        	</div>
 	        	<div class="col-md-12 col-sm-12">
 	        		<div class="col-md-1 col-sm-1">&nbsp</div>
-	        		<div class="col-md-2 col-sm-2">Overhead press (bar or dumbbell)</div>
-	        		<div class="col-md-2 col-sm-2">10x24kg within 60 sec</div>
+	        		<div class="col-md-2 col-sm-2"><label>Overhead press (bar or dumbbell)</label></div>
+	        		<div class="col-md-2 col-sm-2"><label>10x24kg within 60 sec</label></div>
 	        		<div class="col-md-1 col-sm-1">
 						<div style="float:left;">L: &nbsp</div>
 						<div><input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkL_11" style="width:40%;height: 3%;"></div>
@@ -1201,8 +1218,8 @@
 	        	</div>
 	        	<div class="col-md-12 col-sm-12">
 	        		<div class="col-md-1 col-sm-1">&nbsp</div>
-	        		<div class="col-md-2 col-sm-2">Step down test</div>
-	        		<div class="col-md-2 col-sm-2">Good pelvic/knee control:L=R and WNL</div>
+	        		<div class="col-md-2 col-sm-2"><label>Step down test</label></div>
+	        		<div class="col-md-2 col-sm-2"><label>Good pelvic/knee control:L=R and WNL</label></div>
 	        		<div class="col-md-1 col-sm-1">
 						<div style="float:left;">L: &nbsp</div>
 						<div><input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkL_12" style="width:40%;height: 3%;"></div>
@@ -1266,18 +1283,17 @@
 	        	<!-- line detail -->
 	        	<div class="col-md-12 col-sm-12">
 	        		<div class="col-md-2 col-sm-2">
-	        			1.Floor to waist lift
+	        			<label>1.Floor to waist lift
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
-	        			Standing: With Tables at the sides of the person.
+	        			<label>Standing: With Tables at the sides of the person.
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
-	        			Ability to lift –simulating baggage room conditions. 
-
-						Start with 15kg as warm up on first task.
+	        			<label>Ability to lift –simulating baggage room conditions.
+								Start with 15kg as warm up on first task.</label>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
-	        			Lift 15 kg from floor to R side (70cm) and back 4 times in 30 sec. Then 23 kg 4 times. Then 32kg 2 times.
+	        			<label>Lift 15 kg from floor to R side (70cm) and back 4 times in 30 sec. Then 23 kg 4 times. Then 32kg 2 times.</label>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
 	        			<select ng-model="info.group3_sec4_rate1" ng-options="rate.id as rate.name for rate in rates" class="form-control"></select>
@@ -1296,18 +1312,18 @@
 	        	<div class="col-md-12 col-sm-12">&nbsp</div>
 	        	<div class="col-md-12 col-sm-12">
 	        		<div class="col-md-2 col-sm-2">
-	        			2. Waist to waist lift
+	        			<label>2. Waist to waist lift</label>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
-	        			Standing: With Tables at the sides of the person.
+	        			<label>Standing: With Tables at the sides of the person.</label>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
-	        			Ability to lift –simulating baggage room conditions. 
+	        			<label>Ability to lift –simulating baggage room conditions. 
 	        			
-						Start with 15kg as warm up on first task.
+						Start with 15kg as warm up on first task.</label>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
-	        			Lift 23 kg from one side to the other (70cm tables) 10 times in 1 min. Then 32kg 2 times.
+	        			<label>Lift 23 kg from one side to the other (70cm tables) 10 times in 1 min. Then 32kg 2 times.</label>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
 	        			<select ng-model="info.group3_sec4_rate2" ng-options="rate.id as rate.name for rate in rates" class="form-control"></select>
@@ -1326,18 +1342,18 @@
 	        	<div class="col-md-12 col-sm-12">&nbsp</div>
 	        	<div class="col-md-12 col-sm-12">
 	        		<div class="col-md-2 col-sm-2">
-	        			3.Waist to shoulder lift
+	        			<label>3.Waist to shoulder lift</label>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
-	        			Standing: With Tables at the sides of the person.
+	        			<label>Standing: With Tables at the sides of the person.</label>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
-	        			Ability to lift –simulating baggage room conditions. 
+	        			<label>Ability to lift –simulating baggage room conditions. 
 	        			
-						Start with 15kg as warm up on first task.
+						Start with 15kg as warm up on first task.</label>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
-	        			Lift 23 kg from R side (70cm) to L side (150cm) and back 5 times in 1 min. Then 32kg 2 times. 
+	        			<label>Lift 23 kg from R side (70cm) to L side (150cm) and back 5 times in 1 min. Then 32kg 2 times. </label>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
 	        			<select ng-model="info.group3_sec4_rate3" ng-options="rate.id as rate.name for rate in rates" class="form-control"></select>
@@ -1356,18 +1372,18 @@
 	        	<div class="col-md-12 col-sm-12">&nbsp</div>
 	        	<div class="col-md-12 col-sm-12">
 	        		<div class="col-md-2 col-sm-2">
-	        			4.Bilateral carry
+	        			<label>4.Bilateral carry</label>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
-	        			Standing: With Tables at the sides of the person.
+	        			<label>Standing: With Tables at the sides of the person.</label>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
-	        			Ability to lift –simulating baggage room conditions. 
+	        			<label>Ability to lift –simulating baggage room conditions. 
 	        			
-						Start with 15kg as warm up on first task.
+						Start with 15kg as warm up on first task.</label>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
-	        			Lift 23 kg over 10m distance, 2 times in 1 min.(Tot =30m)
+	        			<label>Lift 23 kg over 10m distance, 2 times in 1 min.(Tot =30m)</label>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
 	        			<select ng-model="info.group3_sec4_rate4" ng-options="rate.id as rate.name for rate in rates" class="form-control"></select>
@@ -1386,16 +1402,16 @@
 	        	<div class="col-md-12 col-sm-12">&nbsp</div>
 	        	<div class="col-md-12 col-sm-12">
 	        		<div class="col-md-2 col-sm-2">
-	        			5.Kneeling weight transfer (1)
+	        			<label>5.Kneeling weight transfer (1)</label>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
-	        			Kneeling: Floor to L side floor
+	        			<label>Kneeling: Floor to L side floor</label>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
-	        			Ability to lift–simulating aircraft hold
+	        			<label>Ability to lift–simulating aircraft hold</label>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
-	        			Move 23 kg from front floor to L side floor and back 5 times in 1 min. Then 32kg 2 times
+	        			<label>Move 23 kg from front floor to L side floor and back 5 times in 1 min. Then 32kg 2 times</label>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
 	        			<select ng-model="info.group3_sec4_rate5" ng-options="rate.id as rate.name for rate in rates" class="form-control"></select>
@@ -1414,16 +1430,16 @@
 	        	<div class="col-md-12 col-sm-12">&nbsp</div>
 	        	<div class="col-md-12 col-sm-12">
 	        		<div class="col-md-2 col-sm-2">
-	        			6.Kneeling weight transfer (2)
+	        			<label>6.Kneeling weight transfer (2)</label>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
-	        			Kneeling: Floor to R side floor
+	        			<label>Kneeling: Floor to R side floor</label>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
-	        			Ability to lift–stack higher in aircraft hold
+	        			<label>Ability to lift–stack higher in aircraft hold</label>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
-	        			Move 23 kg from front floor to R side table (70cm) and back 5 times in 1 min. Then 32kg 2 times
+	        			<label>Move 23 kg from front floor to R side table (70cm) and back 5 times in 1 min. Then 32kg 2 times</label>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
 	        			<select ng-model="info.group3_sec4_rate6" ng-options="rate.id as rate.name for rate in rates" class="form-control"></select>
@@ -1442,16 +1458,16 @@
 	        	<div class="col-md-12 col-sm-12">&nbsp</div>
 	        	<div class="col-md-12 col-sm-12">
 	        		<div class="col-md-2 col-sm-2">
-	        			7.Push/ Pull 
+	        			<label>7.Push/ Pull </label>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
-	        			Standing 
+	        			<label>Standing </label>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
-	        			Push /pulling tolerance: containers
+	        			<label>Push /pulling tolerance: containers</label>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
-	        			Pull 50kg trolley 10m then push 50kg trolley 10m to starting position in 1 min.
+	        			<label>Pull 50kg trolley 10m then push 50kg trolley 10m to starting position in 1 min.</label>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
 	        			<select ng-model="info.group3_sec4_rate7" ng-options="rate.id as rate.name for rate in rates" class="form-control"></select>
@@ -1470,16 +1486,16 @@
 	        	<div class="col-md-12 col-sm-12">&nbsp</div>
 	        	<div class="col-md-12 col-sm-12">
 	        		<div class="col-md-2 col-sm-2">
-	        			8.Full squat 
+	        			<label>8.Full squat </label>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
-	        			Standing 
+	        			<label>Standing </label>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
-	        			Knee ROM and strength
+	        			<label>Knee ROM and strength</label>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
-	        			Full squat x 10 in 1minute
+	        			<label>Full squat x 10 in 1minute</label>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
 	        			<select ng-model="info.group3_sec4_rate8" ng-options="rate.id as rate.name for rate in rates" class="form-control"></select>
@@ -1497,7 +1513,7 @@
 	        	</div>
 	        	<div class="col-md-12 col-sm-12">&nbsp</div>
 	        	<div class="col-md-12 col-sm-12">
-	        		<div class="col-md-3 col-sm-3">* Manual handling technique used: (circle)</div>
+	        		<div class="col-md-3 col-sm-3"><label>* Manual handling technique used: (circle)</label></div>
 	        		<div class="col-md-1 col-sm-1">Poor</div>
 	        		<div class="col-md-1 col-sm-1">Average</div>
 	        		<div class="col-md-1 col-sm-1">Good</div>
@@ -1507,7 +1523,7 @@
 	        	<div class="col-md-12 col-sm-12">&nbsp</div>
 	        	<div class="col-md-12 col-sm-12">
 	        		<div class="col-md-2 col-sm-2">
-	        			Relevant Observations
+	        			<label>Relevant Observations</label>
 	        		</div>
 	        		<div class="col-md-10 col-sm-10">
 	        			<textarea rows="4" class="form-control" ng-model="info.group3_sec4_comment1"></textarea>
@@ -1548,15 +1564,15 @@
 	        	<div class="col-md-12 col-sm-12">
 	        		<div class="col-md-12 col-sm-12">
 		        		<div class="col-md-2 col-sm-2">
-		        			Extension (Biering‐Sorenson)
+		        			<label style="margin-top: 3%;">Extension (Biering‐Sorenson)</label>
 		        		</div>
 		        		<div class="col-md-2 col-sm-2">
-		        			90 sec Minimal tremor 
+		        			<label style="margin-top: 3%;">90 sec Minimal tremor </label>
 		        		</div>
 		        		<div class="col-md-1 col-sm-1">
 		        			<div style="float:left;"><input name="group3_sec5_value1" type="text" ng-model="info.group3_sec5_value1"  class="form-control" style="width:40;"></div>
 		        			<div style="float:left;">&nbsp &nbsp &nbsp</div>
-		        			<div style="text-align: center;float: left;">sec</div>
+		        			<div style="text-align: center;float: left;margin-top: 7%;">sec</div>
 		        		</div>
 		        		<div class="col-md-4 col-sm-4">
 		        			<input name="group3_sec5_comment1" type="text" ng-model="info.group3_sec5_comment1"  class="form-control">
@@ -1577,15 +1593,15 @@
 	        	<div class="col-md-12 col-sm-12">
 	        		<div class="col-md-12 col-sm-12">
 		        		<div class="col-md-2 col-sm-2">
-		        			Flexion (55° incline start)
+		        			<label style="margin-top: 3%;">Flexion (55° incline start)</label>
 		        		</div>
 		        		<div class="col-md-2 col-sm-2">
-		        			90 sec Minimal tremor 
+		        			<label style="margin-top: 3%;">90 sec Minimal tremor </label>
 		        		</div>
 		        		<div class="col-md-1 col-sm-1">
 		        			<div style="float:left;"><input name="group3_sec5_value2" type="text" ng-model="info.group3_sec5_value2"  class="form-control" style="width:40;"></div>
 		        			<div style="float:left;">&nbsp &nbsp &nbsp</div>
-		        			<div style="text-align: center;float: left;">sec</div>
+		        			<div style="text-align: center;float: left;margin-top: 7%;">sec</div>
 		        		</div>
 		        		<div class="col-md-4 col-sm-4">
 		        			<input name="group3_sec5_comment2" type="text" ng-model="info.group3_sec5_comment2"  class="form-control">
@@ -1606,15 +1622,15 @@
 	        	<div class="col-md-12 col-sm-12">
 	        		<div class="col-md-12 col-sm-12">
 		        		<div class="col-md-2 col-sm-2">
-		        			Left Lateral Side Bridge
+		        			<label style="margin-top: 3%;">Left Lateral Side Bridge</label>
 		        		</div>
 		        		<div class="col-md-2 col-sm-2">
-		        			90 sec Minimal tremor 
+		        			<label style="margin-top: 3%;">90 sec Minimal tremor </label>
 		        		</div>
 		        		<div class="col-md-1 col-sm-1">
 		        			<div style="float:left;"><input name="group3_sec5_value3" type="text" ng-model="info.group3_sec5_value3"  class="form-control" style="width:40;"></div>
 		        			<div style="float:left;">&nbsp &nbsp &nbsp</div>
-		        			<div style="text-align: center;float: left;">sec</div>
+		        			<div style="text-align: center;float: left;margin-top: 7%;">sec</div>
 		        		</div>
 		        		<div class="col-md-4 col-sm-4">
 		        			<input name="group3_sec5_comment3" type="text" ng-model="info.group3_sec5_comment3"  class="form-control">
@@ -1635,15 +1651,15 @@
 	        	<div class="col-md-12 col-sm-12">
 	        		<div class="col-md-12 col-sm-12">
 		        		<div class="col-md-2 col-sm-2">
-		        			Right Lateral Side Bridge
+		        			<label style="margin-top: 3%;">Right Lateral Side Bridge</label>
 		        		</div>
 		        		<div class="col-md-2 col-sm-2">
-		        			90 sec Minimal tremor 
+		        			<label style="margin-top: 3%;">90 sec Minimal tremor </label>
 		        		</div>
 		        		<div class="col-md-1 col-sm-1">
 		        			<div style="float:left;"><input name="group3_sec5_value4" type="text" ng-model="info.group3_sec5_value4"  class="form-control" style="width:40;"></div>
 		        			<div style="float:left;">&nbsp &nbsp &nbsp</div>
-		        			<div style="text-align: center;float: left;">sec</div>
+		        			<div style="text-align: center;float: left;margin-top: 7%;">sec</div>
 		        		</div>
 		        		<div class="col-md-4 col-sm-4">
 		        			<input name="group3_sec5_comment4" type="text" ng-model="info.group3_sec5_comment4"  class="form-control">
@@ -1678,7 +1694,7 @@
 	        </div>
 	        <div class="row">
 	        	<div class="col-md-12 col-sm-12">
-	        		<textarea rows="7" class="form-control" ng-model="info.group3_sec6_comment"></textarea>
+	        		<textarea rows="7" class="form-control" ng-model="info.group3_sec6_comment1"></textarea>
 	        	</div>
 	        	<div class="col-md-12 col-sm-12">
 	        		<div class="col-md-3 col-sm-3">
@@ -1717,7 +1733,7 @@
         	<div class="row">
         		<div class="col-md-12 col-sm-12">
         			<div class="bold" style="font-size:105%;">
-	        			Based on the results of the PFA only, Mr/ Mrs  <input name="name" type="text" ng-model="info.First_name" style="width:20%">  falls into the category as outlined below. 
+	        			Based on the results of the PFA only, Mr/ Mrs  {{patientInfo.First_name}} falls into the category as outlined below. 
 	        		</div>
         		</div>
         	</div>
@@ -1748,7 +1764,7 @@
 						</ul>
         			</div>
         			<div class="col-md-1 col-sm-1">
-        				<input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group4_checkbox1" style="width:40%;height: 3%;">
+        				<input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group4_checkbox1" style="width:40%;height: 3%;  margin-top: 20%;">
         			</div>
         			<div class="col-md-4 col-sm-4">
         				<textarea rows="3" class="form-control" ng-model="info.group4_comment1"></textarea>
@@ -1759,7 +1775,7 @@
         				<label class="bold"> Amber</label>
         			</div>
         			<div class="col-md-1 col-sm-1">
-        				CAT a)
+        				<label>CAT a)</label>
         			</div>
         			<div class="col-md-4 col-sm-4">
         				<ul>
@@ -1776,10 +1792,10 @@
 						</ul>
         			</div>
         			<div class="col-md-1 col-sm-1">
-        				<input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group4_checkbox2" style="width:40%;height: 3%;">
+        				<input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group4_checkbox2" style="width:40%;height: 3%;  margin-top: 30%;">
         			</div>
         			<div class="col-md-4 col-sm-4">
-        				<div> Recommendations: </div>
+        				<div><label> Recommendations: </label></div>
         				<div><textarea rows="3" class="form-control" ng-model="info.group4_comment2"></textarea></div>
         			</div>
         		</div>
@@ -1788,7 +1804,7 @@
         				&nbsp
         			</div>
         			<div class="col-md-1 col-sm-1">
-        				CAT b)
+        				<label>CAT b)</label>
         			</div>
         			<div class="col-md-4 col-sm-4">
         				<ul>
@@ -1801,12 +1817,12 @@
 						</ul>
         			</div>
         			<div class="col-md-1 col-sm-1">
-        				<input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group4_checkbox3" style="width:40%;height: 3%;">
+        				<input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group4_checkbox3" style="width:40%;height: 3%;  margin-top: 30%;">
         			</div>
         			<div class="col-md-4 col-sm-4">
-        				<div>Which areas:</div>
+        				<div><label>Which areas:</label></div>
         				<div><textarea rows="3" class="form-control" ng-model="info.group4_comment3"></textarea></div>
-        				<div>Recommendations/ retesting timeframe:</div>
+        				<div><label>Recommendations/ retesting timeframe:</label></div>
         				<div><textarea rows="3" class="form-control" ng-model="info.group4_comment4"></textarea></div>
         			</div>
         		</div>
@@ -1821,10 +1837,10 @@
 						</ul>
         			</div>
         			<div class="col-md-1 col-sm-1">
-        				<input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group4_checkbox4" style="width:40%;height: 3%;">
+        				<input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group4_checkbox4" style="width:40%;height: 3%;  margin-top: 20%;">
         			</div>
         			<div class="col-md-4 col-sm-4">
-        				<div>Which areas:</div>
+        				<div><label>Which areas:</label></div>
         				<div><textarea rows="3" class="form-control" ng-model="info.group4_comment5"></textarea></div>
         			</div>
         		</div>
@@ -1878,8 +1894,9 @@
 	<div class="row">
         <div class="col-md-12 col-sm-12 ">
             <button type="submit"
-                    ng-disabled="!infoChanged()"
-                    class="btn green pull-right">{{isNew?"Add New":"Update"}}
+            		ng-click="submitQANTAS_rampbaggage(QANTAS_rampbaggage)"
+            		ng-disabled="infoChanged()||!infoClear()"
+                    class="btn green pull-right">{{insert?"Add New":"Update"}}
             </button>
             <!-- <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/MA/{{info.MA_ID}}"
                type="button"
@@ -1887,9 +1904,11 @@
                ng-disabled="isNew || infoChanged()"
                class="btn btn-primary blue pull-right">Print PDF
             </a> -->
-            <a ng-disabled="!infoChanged()" ng-click="resetForm()" class="btn btn-danger pull-right">Reset
+            <a ng-disabled="infoChanged()" ng-click="resetForm()" class="btn btn-info pull-right">Reset
             </a>
             <a ng-disabled="!infoClear()" ng-click="clearForm()" class="btn btn-warning pull-right">Clear
+            </a>
+            <a ng-disabled="insert" ng-click="deleteForm()" class="btn btn-danger pull-right">Delete
             </a>
         </div>
     </div>

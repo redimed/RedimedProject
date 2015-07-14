@@ -700,7 +700,7 @@
 	        			<div><label>Systolic</label></div>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
-	        			<div>< 180 mmHg</div>
+	        			<div><label>< 180 mmHg</label></div>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
 	        			<input name="group3_sec1_value1" type="text" placeholder="mmHg" ng-model="info.group3_sec1_value1"  class="form-control" style="height:4%;">
@@ -730,7 +730,7 @@
 	        			<div><label>Diastolic</label></div>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
-	        			<div>< 110 mmHg</div>
+	        			<div><label>< 110 mmHg</label></div>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
 	        			<input name="group3_sec1_value2" type="text" placeholder="mmHg" ng-model="info.group3_sec1_value2"  class="form-control" style="height:4%;">
@@ -885,7 +885,7 @@
 		        			<input name="group3_sec2_value2" type="text" placeholder="bpm" ng-model="info.group3_sec2_value2"  class="form-control" ng-change="mathBPM(info.group3_sec2_value2)" style="height:4%;">
 		        		</div>
 		        		<div class="col-md-1 col-sm-1">
-		        			<input name="group3_sec2_rate1" type="text" placeholder="RATE" ng-model="info.group3_sec2_rate1"  class="form-control" ng-disabled="true" style="height:4%;">
+		        			<input name="group3_sec2_rate" type="text" placeholder="RATE" ng-model="info.group3_sec2_rate"  class="form-control" ng-disabled="true" style="height:4%;">
 		        		</div>
 		        		<div class="col-md-2 col-sm-2">
 		        			<label class="btn">
@@ -1954,6 +1954,7 @@
         <div class="col-md-12 col-sm-12 ">
             <button type="submit"
             		ng-click="submitQANTAS_Fleet(QANTAS_Fleet)"
+            		ng-disabled="infoChanged()||!infoClear()"
                     class="btn green pull-right">{{insert?"Add New":"Update"}}
             </button>
             <!-- <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/MA/{{info.MA_ID}}"
@@ -1962,9 +1963,11 @@
                ng-disabled="isNew || infoChanged()"
                class="btn btn-primary blue pull-right">Print PDF
             </a> -->
-            <a ng-disabled="!infoChanged()" ng-click="resetForm()" class="btn btn-danger pull-right">Reset
+            <a ng-disabled="infoChanged()" ng-click="resetForm()" class="btn btn-info pull-right">Reset
             </a>
             <a ng-disabled="!infoClear()" ng-click="clearForm()" class="btn btn-warning pull-right">Clear
+            </a>
+            <a ng-disabled="insert" ng-click="deleteForm()" class="btn btn-danger pull-right">Delete
             </a>
         </div>
     </div>

@@ -1,9 +1,9 @@
 var db = require('../../models');
 module.exports = {
-	checkQANTAS_Fleet: function(req, res) {
+	checkQANTAS_RampBaggage: function(req, res) {
 		var Patient_ID = req.body.Patient_ID;
 		var CalID = req.body.CalID;
-		var query_check = "SELECT * FROM qantas_fleet "+
+		var query_check = "SELECT * FROM qantas_rampbaggage "+
 						  "WHERE PATIENT_ID = :PATIENT_ID AND CAL_ID = :CAL_ID";
 		db.sequelize.query(query_check,null,{raw:true},{
 			PATIENT_ID : Patient_ID,
@@ -33,10 +33,10 @@ module.exports = {
 		})
 	},
 
-	insertQANTAS_Fleet: function(req, res) {
+	insertQANTAS_RampBaggage: function(req, res) {
 		var info = req.body.info;
 		console.log(info);
-		db.qantas_fleet.create({
+		db.qantas_rampbaggage.create({
 			PATIENT_ID: info.PATIENT_ID,
 			CAL_ID: info.CAL_ID,
 			check1: info.check1,
@@ -89,9 +89,6 @@ module.exports = {
 			check48: info.check48,
 			check49: info.check49,
 			check50: info.check50,
-			check51: info.check51,
-			check52: info.check52,
-			check53: info.check53,
 			group3_sec1_comment1: info.group3_sec1_comment1,
 			group3_sec1_comment2: info.group3_sec1_comment2,
 			group3_sec1_value1: info.group3_sec1_value1,
@@ -150,7 +147,6 @@ module.exports = {
 			group3_sec4_rate6:info.group3_sec4_rate6,
 			group3_sec4_rate7:info.group3_sec4_rate7,
 			group3_sec4_rate8:info.group3_sec4_rate8,
-			group3_sec4_rate9:info.group3_sec4_rate9,
 			group3_sec5_comment1:info.group3_sec5_comment1,
 			group3_sec5_comment2:info.group3_sec5_comment2,
 			group3_sec5_comment3:info.group3_sec5_comment3,
@@ -189,9 +185,9 @@ module.exports = {
 		})
 	},
 
-	updateQANTAS_Fleet: function(req, res) {
+	updateQANTAS_RampBaggage: function(req, res) {
 		var info = req.body.info;
-		db.qantas_fleet.update({
+		db.qantas_rampbaggage.update({
 			check1: info.check1,
 			check2: info.check2,
 			check3: info.check3,
@@ -242,9 +238,6 @@ module.exports = {
 			check48: info.check48,
 			check49: info.check49,
 			check50: info.check50,
-			check51: info.check51,
-			check52: info.check52,
-			check53: info.check53,
 			group3_sec1_comment1: info.group3_sec1_comment1,
 			group3_sec1_comment2: info.group3_sec1_comment2,
 			group3_sec1_value1: info.group3_sec1_value1,
@@ -303,7 +296,6 @@ module.exports = {
 			group3_sec4_rate6:info.group3_sec4_rate6,
 			group3_sec4_rate7:info.group3_sec4_rate7,
 			group3_sec4_rate8:info.group3_sec4_rate8,
-			group3_sec4_rate9:info.group3_sec4_rate9,
 			group3_sec5_comment1:info.group3_sec5_comment1,
 			group3_sec5_comment2:info.group3_sec5_comment2,
 			group3_sec5_comment3:info.group3_sec5_comment3,
@@ -343,10 +335,10 @@ module.exports = {
 		})
 	},
 
-	deleteQANTAS_Fleet: function(req, res) {
+	deleteQANTAS_RampBaggage: function(req, res) {
 		var Patient_ID = req.body.Patient_ID;
 		var CalID = req.body.CalID;
-		var query_delete= "delete from qantas_fleet "+
+		var query_delete= "delete from qantas_rampbaggage "+
 						  "where PATIENT_ID = :PATIENT_ID and CAL_ID = :CAL_ID";
 		db.sequelize.query(query_delete,null,{raw : true},{
 			PATIENT_ID: Patient_ID,

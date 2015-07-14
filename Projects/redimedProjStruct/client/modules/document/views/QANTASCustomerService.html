@@ -1888,8 +1888,9 @@
 	<div class="row">
         <div class="col-md-12 col-sm-12 ">
             <button type="submit"
-                    ng-click="submitQANTAS_CS(QANTAS_CS)"
-                    class="btn green pull-right">{{insert===true?"Add":"Update"}}
+            		ng-click="submitQANTAS_CS(QANTAS_CS)"
+            		ng-disabled="infoChanged()||!infoClear()"
+                    class="btn green pull-right">{{insert?"Add New":"Update"}}
             </button>
             <!-- <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/MA/{{info.MA_ID}}"
                type="button"
@@ -1897,9 +1898,11 @@
                ng-disabled="isNew || infoChanged()"
                class="btn btn-primary blue pull-right">Print PDF
             </a> -->
-            <a ng-disabled="!infoChanged()" ng-click="resetForm()" class="btn btn-danger pull-right">Reset
+            <a ng-disabled="infoChanged()" ng-click="resetForm()" class="btn btn-info pull-right">Reset
             </a>
             <a ng-disabled="!infoClear()" ng-click="clearForm()" class="btn btn-warning pull-right">Clear
+            </a>
+            <a ng-disabled="insert" ng-click="deleteForm()" class="btn btn-danger pull-right">Delete
             </a>
         </div>
     </div>

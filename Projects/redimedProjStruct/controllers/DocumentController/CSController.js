@@ -148,6 +148,7 @@ module.exports = {
 			return;
 		})
 	},
+
 	checkQANTAS_CS: function(req, res){
 		var Patient_ID = req.body.Patient_ID;
 		var CalID = req.body.CalID;
@@ -316,6 +317,30 @@ module.exports = {
 				CAL_ID:info.CAL_ID
 		})
 		.success(function(update_success){
+			res.json({
+				status:"success"
+			});
+			return;
+		})
+		.error(function(err){
+			console.log("*****ERROR: "+err+" *****");
+			res.json({
+				status:"error"
+			});
+			return;
+		})
+	},
+
+	deleteQANTAS_CS: function(req, res){
+		var Patient_ID = req.body.Patient_ID;
+		var CalID = req.body.CalID;
+		var query_delete = "delete from qantas_cs "+
+						   "where PATIENT_ID = :PATIENT_ID and CAL_ID = :CAL_ID";
+		db.sequelize.query(query_delete,null,{raw:true},{
+			PATIENT_ID: Patient_ID,
+			CAL_ID: CalID
+		})
+		.success(function(delete_success){
 			res.json({
 				status:"success"
 			});

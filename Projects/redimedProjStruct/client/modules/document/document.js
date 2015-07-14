@@ -27,7 +27,7 @@ angular.module("app.loggedIn.document", [
     "app.loggedIn.document.QANTASfleet.controllers",
     "app.loggedIn.document.QANTASgroundsupport.controllers",
     "app.loggedIn.document.QANTASrampbaggage.controllers",
-    "app.loggedIn.document.gorgonFCA.controllers"
+    "app.loggedIn.document.PEMedical.controllers"
 ])
     .config(function ($stateProvider) {
         $stateProvider
@@ -189,10 +189,11 @@ angular.module("app.loggedIn.document", [
                 templateUrl: "modules/document/views/QANTASRampBaggage.html",
                 controller : 'RampBaggageController'
             })
-            .state("loggedIn.gorgonFCA", {
-                url: "/gorgonFCA/:patient_id/:cal_id",
-                templateUrl: "modules/document/views/gorgonFCA.html",
-                controller : 'gorgonFCAController'
+            
+            .state("loggedIn.PEMedical", {
+                url: "/PEMedical/:patient_id/:cal_id",
+                templateUrl: "modules/document/views/PEMedical.html",
+                controller : 'PEMedicalController'
             })
 
 

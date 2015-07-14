@@ -65,7 +65,7 @@ module.exports = function(sequelize,DataTypes){
         group3_sec2_comment4:DataTypes.STRING(100),
         group3_sec2_comment5:DataTypes.STRING(100),
         group3_sec2_comment6:DataTypes.STRING(100),
-        group3_sec2_rate1:DataTypes.STRING(100),
+        group3_sec2_rate:DataTypes.STRING(100),
         group3_sec2_value1:DataTypes.INTEGER(11),
         group3_sec2_value2:DataTypes.INTEGER(11),
         group3_sec3_checkL_1:DataTypes.STRING(2),
@@ -133,7 +133,7 @@ module.exports = function(sequelize,DataTypes){
         group4_comment4:DataTypes.STRING(100),
         group4_comment5:DataTypes.STRING(100),
         dateChose:DataTypes.DATE,
-        PATIENT_SIGN:DataTypes.STRING(100)
+        PATIENT_SIGN:DataTypes.TEXT
     },{
         tableName: 'qantas_fleet', // đặt tên bảng
         createdAt: 'Creation_date',

@@ -98,7 +98,7 @@ module.exports = {
 			group3_sec2_comment4:info.group3_sec2_comment4,
 			group3_sec2_comment5:info.group3_sec2_comment5,
 			group3_sec2_comment6:info.group3_sec2_comment6,
-			group3_sec2_rate1:info.group3_sec2_rate1,
+			group3_sec2_rate:info.group3_sec2_rate,
 			group3_sec2_value1:info.group3_sec2_value1,
 			group3_sec2_value2:info.group3_sec2_value2,
 			group3_sec3_checkL_1:info.group3_sec3_checkL_1,
@@ -188,6 +188,7 @@ module.exports = {
 
 	updateQANTAS_groundsupport: function(req, res) {
 		var info = req.body.info;
+		console.log(info);
 		db.qantas_groundsupport.update({
 			check1: info.check1,
 			check2: info.check2,
@@ -249,7 +250,7 @@ module.exports = {
 			group3_sec2_comment4:info.group3_sec2_comment4,
 			group3_sec2_comment5:info.group3_sec2_comment5,
 			group3_sec2_comment6:info.group3_sec2_comment6,
-			group3_sec2_rate1:info.group3_sec2_rate1,
+			group3_sec2_rate:info.group3_sec2_rate,
 			group3_sec2_value1:info.group3_sec2_value1,
 			group3_sec2_value2:info.group3_sec2_value2,
 			group3_sec3_checkL_1:info.group3_sec3_checkL_1,
@@ -324,6 +325,30 @@ module.exports = {
 			CAL_ID    : info.CAL_ID
 		})
 		.success(function(update_success){
+			res.json({
+				status:"success"
+			});
+			return;
+		})
+		.error(function(err){
+			console.log("*****ERROR: "+err+" *****");
+			res.json({
+				status:"error"
+			});
+			return;
+		})
+	},
+
+	deleteQANTAS_groundsupport: function(req, res) {
+		var Patient_ID = req.body.Patient_ID;
+		var CalID      = req.body.CalID;
+		var query_delete ="delete from qantas_groundsupport "+
+						  "where PATIENT_ID = :Patient_ID and CAL_ID = :CalID";
+		db.sequelize.query(query_delete,null,{raw:true},{
+			Patient_ID:Patient_ID,
+			CalID:CalID
+		})
+		.success(function(delete_success){
 			res.json({
 				status:"success"
 			});

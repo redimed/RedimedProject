@@ -1,5 +1,5 @@
 module.exports = function(sequelize,DataTypes){
-    var qantas_groundsupport = sequelize.define('qantas_groundsupport',{
+    var qantas_rampbaggage = sequelize.define('qantas_rampbaggage',{
         PATIENT_ID:{type:DataTypes.INTEGER(11), primaryKey:true},
         CAL_ID:DataTypes.INTEGER(11),
         check1:DataTypes.STRING(2),
@@ -52,7 +52,6 @@ module.exports = function(sequelize,DataTypes){
         check48:DataTypes.STRING(2),
         check49:DataTypes.STRING(2),
         check50:DataTypes.STRING(2),
-        group2_comment1:DataTypes.STRING(100),
         group3_sec1_comment1:DataTypes.STRING(100),
         group3_sec1_comment2:DataTypes.STRING(100),
         group3_sec1_value1:DataTypes.INTEGER(11),
@@ -78,7 +77,6 @@ module.exports = function(sequelize,DataTypes){
         group3_sec3_checkL_10:DataTypes.STRING(2),
         group3_sec3_checkL_11:DataTypes.STRING(2),
         group3_sec3_checkL_12:DataTypes.STRING(2),
-        group3_sec3_checkL_13:DataTypes.STRING(2),
         group3_sec3_checkR_1:DataTypes.STRING(2),
         group3_sec3_checkR_2:DataTypes.STRING(2),
         group3_sec3_checkR_3:DataTypes.STRING(2),
@@ -91,7 +89,6 @@ module.exports = function(sequelize,DataTypes){
         group3_sec3_checkR_10:DataTypes.STRING(2),
         group3_sec3_checkR_11:DataTypes.STRING(2),
         group3_sec3_checkR_12:DataTypes.STRING(2),
-        group3_sec3_checkR_13:DataTypes.STRING(2),
         group3_sec3_comment1:DataTypes.STRING(100),
         group3_sec3_comment2:DataTypes.STRING(100),
         group3_sec3_comment3:DataTypes.STRING(100),
@@ -104,7 +101,6 @@ module.exports = function(sequelize,DataTypes){
         group3_sec3_comment10:DataTypes.STRING(100),
         group3_sec3_comment11:DataTypes.STRING(100),
         group3_sec3_comment12:DataTypes.STRING(100),
-        group3_sec3_comment13:DataTypes.STRING(100),
         group3_sec4_comment1:DataTypes.STRING(100),
         group3_sec4_rate1:DataTypes.STRING(2),
         group3_sec4_rate2:DataTypes.STRING(2),
@@ -113,6 +109,7 @@ module.exports = function(sequelize,DataTypes){
         group3_sec4_rate5:DataTypes.STRING(2),
         group3_sec4_rate6:DataTypes.STRING(2),
         group3_sec4_rate7:DataTypes.STRING(2),
+        group3_sec4_rate8:DataTypes.STRING(2),
         group3_sec5_comment1:DataTypes.STRING(100),
         group3_sec5_comment2:DataTypes.STRING(100),
         group3_sec5_comment3:DataTypes.STRING(100),
@@ -134,10 +131,10 @@ module.exports = function(sequelize,DataTypes){
         dateChose:DataTypes.DATE,
         PATIENT_SIGN:DataTypes.STRING(100)
     },{
-        tableName: 'qantas_groundsupport', // đặt tên bảng
+        tableName: 'qantas_rampbaggage', // đặt tên bảng
         createdAt: 'Creation_date',
         updatedAt: 'Last_update_date'
     });
 
-    return qantas_groundsupport;
+    return qantas_rampbaggage;
 };
