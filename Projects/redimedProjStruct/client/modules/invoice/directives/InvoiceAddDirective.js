@@ -132,7 +132,10 @@ angular.module('app.loggedIn.invoice.add.directive', [])
 				                columns: [
 				                    {field: 'ITEM_ID', is_hide: true},
 				                    {field: 'ITEM_CODE', label: 'Item Code', width:"10%"},
-				                    {field: 'ITEM_NAME', label: 'Item Name'},    
+				                    {field: 'ITEM_NAME', label: 'Item Name'},  
+				                    {field: 'TAX_ID', label: 'Tax Id', is_hide: true},    
+				                    {field: 'TAX_CODE', label: 'Tax Code'},    
+				                    {field: 'TAX_RATE', label: 'Tax Rate'},      
 				            	],
 				                use_filters:true,
 				                filters:{
@@ -155,9 +158,8 @@ angular.module('app.loggedIn.invoice.add.directive', [])
 						data.item.QUANTITY = 1;
 						data.item.TIME_SPENT = 0;
 						data.item.IS_ENABLE = 1;
-						
-						$scope.InvoiceMap.lines.push(data.item);
 
+						$scope.InvoiceMap.lines.push(data.item);
 						ReceptionistService.itemFeeAppt($scope.InvoiceMap.SERVICE_ID,[data.item.ITEM_ID]).then(function(response){
 		                    if(response.list.length > 0) {
 		                        data.item.PRICE = response.list[0].SCHEDULE_FEE
@@ -207,7 +209,11 @@ angular.module('app.loggedIn.invoice.add.directive', [])
 		},
 		link: function(scope, element, attrs){
 			
-
+			scope.removeInvoiceLine = function(item){
+				scope.InvoiceMap.lines = _.remove(scope.InvoiceMap.lines, function(n) {
+				  	return n != item;
+				});
+			}
 			scope.clickAction = function(){
 				if(!scope.isHeaderOk('alert'))
 					return;  
@@ -228,6 +234,7 @@ angular.module('app.loggedIn.invoice.add.directive', [])
 	                    PRICE: postData.lines[i].PRICE,
 	                    TIME_SPENT: !postData.lines[i].TIME_SPENT ? 0: postData.lines[i].TIME_SPENT,
 	                    QUANTITY: postData.lines[i].QUANTITY,
+
 	                    is_enable: 1
 	                }
 	                insertArr.push(t);
@@ -257,7 +264,7 @@ angular.module('app.loggedIn.invoice.add.directive', [])
 					
 
 
-					console.log(response)
+					// console.log(response)
 				})
 			
 			}//end clickAction

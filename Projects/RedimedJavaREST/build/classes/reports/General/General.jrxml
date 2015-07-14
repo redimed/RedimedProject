@@ -65,8 +65,8 @@
 
 from `th_general_assessment` g
 inner join `cln_patients` p on g.`patient_id` = p.`Patient_id`
-inner join `companies` c on p.`company_id` = c.`id`
-inner join `cln_insurers` i on c.`Insurer` = i.`id`
+left join `companies` c on p.`company_id` = c.`id`
+left join `cln_insurers` i on c.`Insurer` = i.`id`
 inner join `cln_appointment_calendar` a on g.`cal_id` = a.`CAL_ID`
 INNER JOIN `users` u ON g.`Created_by` = u.`id`
 INNER JOIN `doctors` d ON u.`id` = d.`User_id`

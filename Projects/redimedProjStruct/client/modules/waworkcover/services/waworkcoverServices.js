@@ -27,6 +27,15 @@ angular.module('app.loggedIn.waworkcover.service', [])
                 edit_id: id
             });
         };
+
+        mdtService.firstGetInjury = function(patient_id, cal_id){
+            var funcApi = mdtApi.all('wa/workcover/first/getinjury');
+            return funcApi.post({
+                patient_id:patient_id,
+                cal_id: cal_id
+            })
+        }
+
         mdtService.firstprint = function (id) {
             var funcApi = mdtApi.one('wa/workcover/first/print/' + id);
             return funcApi.get();

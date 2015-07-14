@@ -1,25 +1,9 @@
 <div class="row">
-	<div class="col-md-12 col-sm-12 re_margin_bottom_5">
-		<button type="button" class="un-button un-bgBlack pull-right" ng-click="newAppoint()">New Appointment</button>
-	</div>
+	
 	<div class="col-md-12 col-sm-12">
 		<div class="un-bgXam-colBlack un-padding-left-right-20-top-10-bottom-10">
 			<div class="pull-right navbar-right">
-				<div class="btn-group" dropdown="">
-					<button style="margin-right: 0;" type="button" class="btn btn-default dropdown-toggle" ng-disabled="disabled" aria-haspopup="true" aria-expanded="false">
-							<i class="fa fa-calendar"></i> <span class="caret"></span>
-					</button>
-
-					<ul class="dropdown-menu" role="menu">
-						<li ng-repeat="appt in list_appt" 
-							ng-class="{'list-group-item-success': appt.CAL_ID == cal_id}" 
-							ng-click="changeAppt(appt)" >
-							<a>
-							<strong>{{appt.FROM_TIME | moment: 'utc' | moment: 'format': 'DD/MM/YYYY'}}</strong> {{appt.FROM_TIME | moment: 'utc' | moment: 'format': 'hh:mm A'}} - {{appt.TO_TIME | moment: 'utc' | moment: 'format': 'hh:mm A'}} <span class="badge" ng-class="classAppt(appt)"  style="position: relative; right: -5px"> {{appt.APP_TYPE}} </span>
-							</a>
-						</li>
-					</ul>
-				</div>
+				
 			</div>
 			<!-- APPOINTMENT INFO -->
 			<mdt-appointment-detail params="appt_params" options="options"></mdt-appointment-detail>
@@ -42,74 +26,4 @@
 	</div>
 </div>
 
-<!-- phan quoc chien -->
-<!-- Modal drawing -->
-<style type="text/css">
-    .has-error .form-control {
-        -webkit-box-shadow: none;
-        box-shadow: none;
-        border: 1px solid red;
-    }
-    .has-error .form-control:focus {
-        -webkit-box-shadow: none;
-        box-shadow: none;
-        border: 1px solid red;
-    }
-</style>
-<div class="modal fade" id="popupNewAppoint" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<form name="appointForm" novalidate>
-	    <div style="z-index: 10;margin-top: 60px;" class="modal-dialog modal-md">
-	        <div class="modal-content">
-	            <h4 class="modal-title un-label-popup-header-m un-bg-label-B41E46-m" id="myModalLabel">Add Appointment</h4>
-	            <div class="modal-body">
-	                <div class="row">
-		                <div class="col-md-6 col-sm-6">
-		                	<div ng-class="{'has-error': appointForm.from_time.$invalid && isSubmit}">
-		                        <div class="form-group">
-		                    		<label class="un-label-forms-custom">From Time</label>
-		                    		<input type="text" ui-mask="99:99" ng-model="from_time" class="form-control input-sm un_label_popup_history" id="from_time" name="from_time" ng-change="changeCalendar({'data':l})" required>
-		                        </div>
-		                    </div>
-		                </div>
-		                <div class="col-md-6 col-sm-6">
-		                	<div ng-class="{'has-error': appointForm.from_time.$invalid && isSubmit}">
-		                        <div class="form-group">
-		                    		<label class="un-label-forms-custom">To Time</label>
-		                    		<input type="text" ui-mask="99:99" ng-model="to_time" class="form-control input-sm un_label_popup_history" id="to_time" name="to_time" ng-change="changeCalendar({'data':l})" required>
-		                        </div>
-		                    </div>
-		                   	
-		                </div>
-		            </div>
-	                <div class="row">
-		                <div class="col-md-6 col-sm-6">
-		                	<div ng-class="{'has-error': appointForm.service_Id.$invalid && isSubmit}">
-		                        <div class="form-group">
-		                    		<label class="un-label-forms-custom">Service</label>
-		                    		<select ng-model="service_Id" ng-options="service.SERVICE_ID as service.SERVICE_NAME for service in options.clinical_depts" class="form-control input-sm un_label_popup_history" required id="service_Id" name="service_Id">
-	                        		</select>
-		                        </div>
-		                    </div>
-		                </div>
-		                <div class="col-md-6 col-sm-6">
-		                	<div ng-class="{'has-error': appointForm.site_id.$invalid && isSubmit}">
-		                        <div class="form-group">
-		                    		<label class="un-label-forms-custom">Site</label>
-		                    		<select ng-model="site_id" ng-options="site.id as site.Site_name for site in options.redimedsites" class="form-control input-sm un_label_popup_history" id="site_id" name="site_id" required>
-	                        		</select>
-		                        </div>
-		                    </div>
-		                   	
-		                </div>
-		            </div>
-	            </div>
-	            <div class="modal-footer">
-	            	<button style="margin-right: 0;" type="button" class="un-button un-bgBlack" ng-click="submitCalendar()">
-				        Submit
-				    </button>
-	                <button type="button" class="un-button un-bgXam-colBlack" data-dismiss="modal">Close</button>
-	            </div>
-	        </div>
-	    </div>
-	</form>
-</div>
+

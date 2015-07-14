@@ -60,11 +60,11 @@
 	    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
 	    background-color: #555;
 	}
-
 </style>
 <div class="row">
 	<div class="col-md-10">
 		<p ng-repeat="service in servicedata" ng-if="servicedata.length > 0" class="inline">
+		<!-- <p ng-repeat="service in servicedata" ng-if="servicedata.length > 0" class="inline" ng-click="changeService(service.SERVICE_ID)"> -->
 			<button ng-style="{'background-color': '{{service.SERVICE_COLOR}}'}" style="height: 20px;width: 20px;"></button>
 			<span> {{service.SERVICE_NAME}}  </span>
 		<p>
@@ -109,6 +109,7 @@
     </div>
 </div>
 </div>
+<!-- <div id="appointment" style="overflow-x: scroll;" ng-right-click="isshiftRight($event)"> -->
 <div id="appointment" style="overflow-x: scroll;">
 	<div class="row">
 		<!-- DATEPICKER -->
@@ -173,6 +174,9 @@
 			<div class="appointment-block" ng-repeat="col in app.doctors" ng-class="{'block-active': col.PATIENTS !== '###'}"
 				id="appointment-{{col.CAL_ID}}"
 				ng-style="{'background-color': '{{col.SERVICE_COLOR}}', 'margin-bottom': col.margin === 'yes' ? '3px': '0px', 'height': col.height, 'border-top': col.border === 'yes' ? '1px solid rgb(96, 99, 94)': '0px'}">
+<!-- 			<div class="appointment-block" ng-repeat="col in app.doctors" ng-class="{'block-active': col.PATIENTS !== '###'}"
+				id="appointment-{{col.CAL_ID}}"
+				ng-style="{'background-color': '{{col.SERVICE_COLOR}}', 'margin-bottom': col.margin === 'yes' ? '3px': '0px', 'height': col.height, 'border-top': col.border === 'yes' ? '1px solid rgb(96, 99, 94)': '0px'}" ng-click="isKeyPressed($event)"> -->
 				<span ng-if="col.PATIENTS === 'MESS_SYS_010'">
 					<a ng-click="appointment.dialog.add(app, col)">No Patient {{col.CAL_ID}}</a>
 				</span>
@@ -184,9 +188,7 @@
 						<a ng-click="goToAppDetail(col.CAL_ID, patient.Patient_id)"
 							ng-right-click="appointment.onRightClick($event, app, col, patient)">
 							<span class="appid" style="display:none">{{col.CAL_ID}}</span>
-							<span class="patienttest">
-								{{patient.First_name}} {{patient.Sur_name}}
-							</span>
+							<span class="patient_name">{{patient.First_name}} {{patient.Sur_name}}</span>
 							&nbsp;
 							<a ng-click="showDropdown(patient, col)">
 								<i class="fa fa-caret-right"></i>
@@ -201,7 +203,92 @@
 		</div>
 	</div> <!-- END APPOINTMENT -->
 </div>
+<!-- RIGHT CLICK DROPDOWN MENU -->
+<!-- <ul class="dropdown-menu" style="display: none; z-index: 9998; position: absolute; top: 0; left: 0;" id="calMenu">
+	<div>
+        <table class="responsive table table-bordered" style="margin-bottom: 0px !important;">
+            <thead>
+                <tr>
+                    <th class="un_table_tab_bg">
+                        <div class="th">
+                            <span style="color: white;">Name</span>
+                        </div>
+                    </th>
+                    <th class="un_table_tab_bg">
+                        <div class="th">
+                            <span style="color: white;">Calendar id</span>
+                        </div>
+                    </th>
+                    <th class="un_table_tab_bg">
+                        <div class="th">
+                            <span style="color: white;">Appointment status</span>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="background-color: white;" class="bold" ng-repeat="list in arrayAppid">
+                    <td style="vertical-align: middle; padding: 5px;">
+                        <label style="max-width: 110px;min-width: 110px;">
+                            {{list.patient_name}}
+                        </label>
+                    </td>
+                    <td style="vertical-align: middle; padding: 5px;">
+                        <label style="height: 20px;overflow: hidden; max-width: 325px;">
+                            {{list.CAL_ID}}
+                        </label>
+                    </td>
+                    <td style="vertical-align: middle; padding: 5px;">
+                        <label style="height: 20px;overflow: hidden; max-width: 325px;">
+                            {{list.appt_status}}
+                        </label>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</ul> -->
+<!-- END RIGHT CLICK DROPDOWN MENU -->
+<ul class="dropdown-menu" style="display: none; z-index: 9998; position: absolute; top: 0; left: 0;" id="calMenu">
+	<li>
+	<i class="fa fa-times" style="margin-left: 100% !important;margin-top: -7%;" ng-click="cancelCalMenu($event)"></i>
+		<a ng-click="showChangeStatus($event)">
+			ChangeStatus
+		</a>
+		<a ng-click="">
+			Other
+		</a>
+	</li>
+</ul>
+<ul class="dropdown-menu" style="display: none; z-index: 9998; position: absolute; top: 0; left: 0;" id="changeStatus">
+ <table class="responsive table table-bordered" style="margin-bottom: 0px !important;">
+    <thead>
+    	<i class="fa fa-times" style="margin-left: 100% !important;margin-top: -7%;" ng-click="cancel($event)"></i>
+        <tr>
+            <th class="un_table_tab_bg" style="background-color: black !important;">
 
+                <div class="th">
+                    <span style="color: white;">Change Status</i></span>
+                </div>
+            </th>
+        </tr>
+    </thead>
+    </table>
+	<li>
+		<a ng-click="changeStatus('Confirmed')">
+			Confirmed
+		</a>
+		<a ng-click="changeStatus('Pending')">
+			Pending
+		</a>
+		<a ng-click="changeStatus('Reschedule')">
+			Reschedule
+		</a>
+		<a ng-click="changeStatus('Cancel')">
+			Cancel
+		</a>
+	</li>
+</ul>
 <!-- RIGHT CLICK DROPDOWN MENU -->
 <ul class="dropdown-menu" style="display: none; z-index: 9998; position: absolute; top: 0; left: 0;" id="popupMenu">
 	<li>

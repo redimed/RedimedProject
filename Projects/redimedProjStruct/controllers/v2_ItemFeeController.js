@@ -260,6 +260,11 @@ module.exports = {
 		});
 	},
 
+
+	/**
+	 * created by: khanh
+	 * tannv mark 08-07-2015
+	 */
 	// UPLOAD PRICE SOURCE TO GROUP 
 	uploadUploadGroupPriceSource: function(req, res) {
 		var group_id = req.body.FEE_GROUP_ID;

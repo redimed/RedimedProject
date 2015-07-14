@@ -3,6 +3,7 @@
  */
 var squel = require('squel');
 squel.useFlavour('mysql');
+var knex = require("../knex-connect.js");
 
 var model_sql = {
 
@@ -166,5 +167,7 @@ module.exports = {
     postTest: function(req, res){
         console.log('Test success 1!');
         res.end();
-    }
+    },
+    
+    
 };

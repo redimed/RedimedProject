@@ -38,7 +38,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			                	$modalInstance.close();
 			                }
 
-					         $scope.viewImage = function(img){
+					        $scope.viewImage = function(img){
 					            var modalInstance = $modal.open({
 					                templateUrl: "modules/injuryManagement/views/imageModal.html",
 					                size: 'md',
@@ -841,8 +841,18 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			ConsultationService.submitConsult(consultInfoTemp).then(function(res){
 				if(res.status == 'success')
 				{
-				 	toastr.success('Submit Consultation Success!');
+					/*phanquocchien.c1109g@gmail.com
+					* load data consultation info
+                    */
 					$scope.loadConsultationInfo();
+					/*phanquocchien.c1109g@gmail.com
+					* load data consultation history
+                    */
+                    $scope.setListConsultationOfPatient();
+                    /*phanquocchien.c1109g@gmail.com
+					* load data drawing history
+                    */
+					$scope.getImgDrawingHistory();
 					var insertArr = []; 
             
 		            var fnInsertArr = function(item) {
@@ -886,11 +896,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		            	if(data.status=='success')
 		            	{
 		            		toastr.success('Save invoice item success.');
-		            		/*phanquocchien.c1109g@gmail.com
-							* load data consultation history
-		                    */
-		                    $scope.setListConsultationOfPatient();
-							$scope.getImgDrawingHistory();
+		            		
 		            	}
 		            	else if(data.status='non-data')
 		            	{
@@ -903,6 +909,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		            },function(err){
 		            	toastr.error('Save invoice item error.');
 		            });
+				 	toastr.success('Submit Consultation Success!');
 				}
 				else
 					toastr.success("Submit Consultation Failed!");

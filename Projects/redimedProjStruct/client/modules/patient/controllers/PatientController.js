@@ -21,9 +21,9 @@ angular.module("app.loggedIn.patient.controller", [
     "app.loggedIn.patient.checkin.controller",
     "app.loggedIn.patient.detail.master.controller"
 ])
-.controller("PatientController", function ($scope, $cookieStore, ConfigService, PatientService, MODE_ROW, $stateParams,mdtAppointmentService) {
-    $scope.patient_id = $stateParams.patient_id;
-    $scope.cal_id = $stateParams.cal_id;
+.controller("PatientController", function ($state, $scope, sysServiceService, DoctorService, $cookieStore, toastr, ConfigService, PatientService, MODE_ROW, $stateParams, mdtAppointmentService, rlobService) {
+    var patient_id = $scope.patient_id = $stateParams.patient_id;
+    var cal_id = $scope.cal_id = $stateParams.cal_id;
     //chien set patient id in allergy
     $scope.search = {};
     $scope.search.Patient_id = $scope.patient_id;
@@ -186,4 +186,98 @@ angular.module("app.loggedIn.patient.controller", [
     $scope.mode = 'search';
 
     // END USE FOR BOOKING
+    
+    //phanquocchien add new appoint
+    $scope.getClinicalDepts = function(){
+        var user_id = $cookieStore.get('userInfo').id;
+        PatientService.getDoctorInfoByUserId(user_id).then(function(data){
+            if (data.status == "success") {
+                $scope.doctorId = data.data.doctor_id,
+                $scope.clinicalDeptId = data.data.CLINICAL_DEPT_ID;
+                sysServiceService.byClinicalDepartment($scope.clinicalDeptId).then(function(response){
+                    $scope.options.clinical_depts = response.data;
+                })
+
+            };
+        });
+    };
+    $scope.getClinicalDepts();
+    
+    $scope.apptDate = new Date();
+    $scope.submitCalendar = function(){
+        $scope.isSubmit = true;
+        if(!$scope.appointForm.$invalid){
+            var from_time_part=moment($scope.from_time,"HHmm").format("HH:mm");
+            var to_time_part=moment($scope.to_time,"HHmm").format("HH:mm");
+
+            if (moment($scope.from_time,"HHmm").format("HH:mm") === 'Invalid date') {
+                toastr.error('From time format error');
+                return
+            }else{
+                if (moment($scope.to_time,"HHmm").format("HH:mm") === 'Invalid date') {
+                    toastr.error('To time format error');
+                    return
+                };
+            };
+            var from_time = moment($scope.apptDate).format('YYYY-MM-DD')+" "+ from_time_part +":00";
+            var to_time = moment($scope.apptDate).format('YYYY-MM-DD')+ " "+ to_time_part+":00";
+
+            var postData = {
+                FROM_TIME: from_time,
+                TO_TIME: to_time,
+                SITE_ID: $scope.site_id,
+                DOCTOR_ID: $scope.doctorId,
+                CLINICAL_DEPT_ID: $scope.clinicalDeptId,
+                SERVICE_ID: $scope.service_Id
+            }
+            DoctorService.addCalendar(postData).then(function(response){
+                toastr.success('Add successfully !!!');
+                $scope.cal_id = response.data;
+                rlobService.addApptPatient($scope.patient_id,response.data).then(function(data){
+                    if (data.status == 'success') {
+                        angular.element('#popupNewAppoint').modal('hide');
+                        angular.element('#popupNewAppoint').on('hidden.bs.modal', function (e) {
+                            initObject();
+                            $scope.changeAppt({CAL_ID:$scope.cal_id});
+                        });
+                    };
+                })
+            },function(err){
+
+            })
+        };
+    };
+
+    $scope.newAppoint = function(){
+        angular.element('#popupNewAppoint').modal('show');
+    };
+
+    $scope.changeAppt = function(item) {
+        $state.go('loggedIn.patient.consult', {patient_id: patient_id, cal_id: item.CAL_ID});
+    };
+
+    var initObject = function () {
+        $scope.appt_params = {
+            id: $scope.cal_id,
+            permission: {
+                edit: true
+            }
+        };
+
+        PatientService.getAppointments(patient_id)
+        .then(function(response){
+            $scope.list_appt = response.data.appointments;
+            var current_appt = null;
+            angular.forEach($scope.list_appt, function(item) {
+                // console.log('item',item);
+                if(item.CAL_ID == $scope.cal_id) {
+                    current_appt = item;
+                }
+            });
+        }, function(error) {
+        });
+
+    }
+
+    initObject();
 })

@@ -12,7 +12,7 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 		controller: function($scope) {
 			$scope.goToAppt = function(patient_id, cal_id) {
 				 $state.go('loggedIn.patient.appointment', {patient_id: patient_id, cal_id: cal_id});
-			}
+			};
 
 			/*
 			*	SEARCH DOCTOR
@@ -31,7 +31,7 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 						},
 						size:'md'
 					})
-					.result.then(function(){
+					.result.then(function(data){
 						$scope.InvoiceMap.DOCTOR_ID = data.item.doctor_id;
 						$scope.InvoiceMap.DEPT_ID = data.item.CLINICAL_DEPT_ID;
 						$scope.InvoiceMap.doctor = {
@@ -46,31 +46,36 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 			/*
 			*	SEARCH CLAIM
 			*/
-
 			$scope.patientClaim = {
 				open: function() {
 					$modal.open({
 						templateUrl:'popupSelectClaim',
-						controller: function($scope,$modalInstance){
+						controller: function($scope,$modalInstance,patient_id){
             				$scope.patientClaimPanel = {};
+
             				$scope.options = {
 				                api:'api/erm/v2/patients/claims',
 				                method:'post',
-				                scope: $scope.patientClaimPanel,
+				                scope:$scope.patientClaimPanel,
 				                columns: [
 				                	{field: 'Claim_id', is_hide: true},
 				                    {field: 'Injury_name', label: 'Injury'},
 				                    {field: 'Insurer'} ,
-				                    {field: 'insurer_site', is_hide: true},
-				                    {field: 'insurer_id', is_hide: true}
+				                    {field: 'insurer_id', is_hide: true}//tan add
 				                ],
-				                not_load: true
-				            };
+				                not_load: false,
+				                search: {Patient_id: patient_id}
+				            };				         
 				            $scope.rowClick = function(item){
 				            	$modalInstance.close({item:item});
 				            }
 						},
-						size:'md'
+						size:'md',
+						resolve: {
+							patient_id:function(){
+								return $scope.patientClaim.Patient_id;
+							}
+						}
 					})
 					.result.then(function(data){
 						var postData = {claim_id: data.item.Claim_id};
@@ -154,8 +159,7 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 		                    	if(data.status=='success')
 		                    	{
 		                    		toastr.success('Add item success.','Success');
-		                    		angular.copy(data.data,item);
-		                    		$scope.InvoiceMap.lines.push(item);
+		                    		$scope.InvoiceMap.lines.push(data.data);
 		                    	}
 		                    	else if(data.status="exist")
 		                    	{
@@ -173,7 +177,7 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 		                });
 					});
 				}
-			}
+			};
 
 
 			
@@ -194,7 +198,7 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 						angular.extend(scope.InvoiceMap, response.data);
 						ConfigService.autoConvertData(scope.InvoiceMap);
 
-						console.log("this is InvoiceMap", scope.InvoiceMap);
+						// console.log("this is InvoiceMap", scope.InvoiceMap);
 						// INIT FIELD 
 						scope.InvoiceMap.patient.full_name = scope.InvoiceMap.patient.Title + '. ' + scope.InvoiceMap.patient.First_name + ' ' + scope.InvoiceMap.patient.Sur_name;
 						scope.InvoiceMap.lines = scope.InvoiceMap.lines.filter(function(item){
@@ -218,13 +222,12 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 							scope.claimShow = false;
 				 		}
 
-				 		scope.patientClaim.options.search.Patient_id = scope.InvoiceMap.Patient_id;
+				 		scope.patientClaim.Patient_id = scope.InvoiceMap.Patient_id;
 
 				 		ConfigService.system_service_by_clinical(scope.InvoiceMap.doctor.CLINICAL_DEPT_ID).then(function(response){
 							scope.opt_services = [{SERVICE_ID: '', SERVICE_NAME: '-- Choose Service --'}].concat(response);
 						});
-				 		
-				 		$timeout(scope.patientClaimPanel.reload, 1000);
+				 		// $timeout(scope.patientClaimPanel.reload, 1000);
 					})
 				}
 				scope.InvoiceMap = angular.copy(InvoiceHeaderModel);
@@ -233,7 +236,7 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 			init();
 
 			scope.clickAction = function(){
-				console.log('this is edit data:', scope.InvoiceMap);
+				// console.log('this is edit data:', scope.InvoiceMap);
 				if(scope.params.permission.edit === true)
 				{
 					if(!scope.InvoiceMap.lines || scope.InvoiceMap.lines.length===0){

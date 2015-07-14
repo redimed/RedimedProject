@@ -526,9 +526,16 @@ angular.module('app.config', [])
             {id:17,label:'Height Test Rating (has managed height info)',section:'Section 3: Job-Specific Functional Task Assessment'},
             {id:19,label:'Comfortable Height Test Rating (has comfortable managed height info)',section:'Section 3: Job-Specific Functional Task Assessment'},
             {id:15,label:'Other Job-Specific Functional Task Assessment (No Job Demand)',section:'Section 3: Job-Specific Functional Task Assessment'},
+            {id:29,label:'Other Job-Specific Functional Task Assessment (No Job Demand and Rating)',section:'Section 3: Job-Specific Functional Task Assessment'},
+            {id:28,label:'Minnesota Test', section:'Section 3: Job-Specific Functional Task Assessment'},
             {id:8,label:'Functional Task Rating',section:'Section 3: Job-Specific Functional Task Assessment'},
 
-            {id:5,label:'Summary Rating and Score',section:'Summary section'},
+            {id:5,label:'Summary Rating and Score (with overall)',section:'Summary section'},
+            {id:24,label:'Summary Rating Only (with overall)', section:'Summary section'},
+            {id:25,label:'Summary Rating and Score (without overall)', section:'Summary section'},
+            {id:26,label:'Summary Rating Only (without overall)', section:'Summary section'},
+            {id:28,label:'Table summary (title, checkbox and description)', section:'Summary section'},
+            {id:27,label:'Other summary type', section:'Summary section'},
         ])
     .constant("COMMENT_TYPE", [
             {id:1,label:'Checkbox'},

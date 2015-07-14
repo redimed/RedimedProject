@@ -239,6 +239,19 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 			}
 			line.SCORE1 = min;
 			autoRatingVal1(line, line.SCORE1, 0);
+		},
+
+		calSum: function(line){
+			var sum = 0;
+			for(var i = 0; i<line.details.length; i++){
+				if(line.details[i].VAL1_VALUE !== null && line.details[i].VAL1_VALUE !== '' && line.details[i].VAL1_VALUE_IS_NUMBER === 1){
+					sum = sum + line.details[i].VAL1_VALUE*1;
+				}	
+			}
+			line.SCORE1 = sum;
+			if(line.SCORE_TYPE1!==20){
+				autoRatingVal1(line, line.SCORE1, 0);
+			}
 		}
 	}
 
@@ -284,6 +297,18 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 				}
 				autoSummary(line);
 			}
+			else if($scope.header.TYPE = "Crown" && detail.VAL1_ISCHECKBOX === 12){
+				console.log('this is line details index',line.details.indexOf(detail));
+				console.log('this is line details length',line.details.length);
+				if(line.details.indexOf(detail) === line.details.length - 1){
+					if(detail.VAL1_CHECKBOX==='1'){
+						line.RATE1 = "Satisfactory";
+					}
+					else line.RATE1 = "Unsatisfactory";
+					autoSummary(line);
+				}
+				
+			}
 		}	
 		if(line.SCORE_TYPE1 === 9 && (detail.VAL1_ISVALUE===7 || detail.VAL1_ISVALUE===8 || detail.VAL1_ISVALUE===9 || detail.VAL1_ISVALUE===10)){
 			var default_details_value = line.details[0].VAL1_VALUE;
@@ -310,6 +335,8 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 				case 20:
 				case 3: calculateFunctionsVal1.calAvg(line);
 						break;
+				case 28: calculateFunctionsVal1.calSum(line);
+							break;
 				case 9: line.SCORE1= line.details[line.details.length-1].VAL1_VALUE;
 						break;
 				case 10: calculateFunctionsVal1.calMax(line);
@@ -324,6 +351,10 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 							break;
 			}
 		}
+
+		// if($scope.header.TYPE === "Crown"){
+			
+		// }
 	}
 	//For VAL2
 	var calculateFunctionsVal2 = {
@@ -362,7 +393,20 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 			}
 			line.SCORE2 = min;
 			autoRatingVal2(line, line.SCORE2);
-		}
+		},
+
+		calSum: function(line){
+			var sum = 0;
+			for(var i = 0; i<line.details.length; i++){
+				if(line.details[i].VAL2_VALUE !== null && line.details[i].VAL2_VALUE !== '' && line.details[i].VAL2_VALUE_IS_NUMBER === 1){
+					sum = sum + line.details[i].VAL2_VALUE*1;
+				}	
+			}
+			line.SCORE2 = sum;
+			if(line.SCORE_TYPE2 !== 20){
+				autoRatingVal2(line, line.SCORE2);
+			}
+		},
 	}
 
 	$scope.autoCalculationVal2 = function(line){
@@ -371,6 +415,8 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 				case 20:
 				case 3: calculateFunctionsVal2.calAvg(line);
 						break;
+				case 28: calculateFunctionsVal2.calSum(line);
+							break;
 				case 9: line.SCORE2= line.details[line.details.length-1].VAL2_VALUE;
 							break;
 				case 10: calculateFunctionsVal2.calMax(line);
@@ -504,6 +550,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 
 	// Auto summary functions
 	var autoSummary = function(line){
+		console.log('this is line satis', line);
 		var sectionId = line.SECTION_ID;
 		var lineId = line.LINE_ID;
 		var detailNeedChanged = {};

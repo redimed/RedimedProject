@@ -16,3 +16,6 @@ app.post(url+'beforePostLeaveCal',AppointmentController.beforePostLeaveCal);
 app.post(url+'alertCenter', AppointmentController.alertCenter);
 app.post(url+'alertSiteCenter', AppointmentController.alertSiteCenter);
 app.post(url+'getServiceColor', AppointmentController.getServiceColor);
+app.post(url+'getOneApptPatient', AppointmentController.getOneApptPatient);
+app.post(url+'changeService', AppointmentController.changeService);
+app.post(url+'changeStatus', AppointmentController.changeStatus);

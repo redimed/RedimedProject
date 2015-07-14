@@ -8,6 +8,47 @@ var kiss=require('./kissUtilsController');
 var timeTableUtil=require('./timeTableUtilController');
 
 module.exports = {
+	changeStatus:function(req,res){
+		var postData  = req.body.data;
+		var sql = knex('cln_appointment_calendar')
+				.where('CAL_ID',postData.CAL_ID)
+				.update({'STATUS':postData.STATUS})
+				.toString();
+		db.sequelize.query(sql)
+		.success(function(rows){
+			res.json({data: rows});
+		})
+		.error(function(error){
+			res.status(500).json({error: error, sql: sql});
+		})
+	},
+	changeService:function(req,res){
+		var postData  = req.body.data;
+		var sql = knex('cln_appointment_calendar')
+				.where('CAL_ID',postData.CAL_ID)
+				.update({'SERVICE_ID':postData.SERVICE_ID})
+				.toString();
+		db.sequelize.query(sql)
+		.success(function(rows){
+			res.json({data: rows});
+		})
+		.error(function(error){
+			res.status(500).json({error: error, sql: sql});
+		})
+	},
+	getOneApptPatient:function(req,res){
+		var postData  = req.body.data;
+		var sql = knex('cln_appt_patients')
+				.where('CAL_ID',postData.CAL_ID)
+				.toString();
+		db.sequelize.query(sql)
+		.success(function(rows){
+			res.json({data: rows[0]});
+		})
+		.error(function(error){
+			res.status(500).json({error: error, sql: sql});
+		})
+	},
 	getServiceColor:function(req,res){
 		var postData = req.body.data;
 		var sql = knex('sys_services')

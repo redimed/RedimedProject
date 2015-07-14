@@ -47,7 +47,7 @@
             <tr style="background-color: white;" class="bold" ng-repeat="item in actionCenter.listConsultOfPatient" ng-if="actionCenter.listConsultOfPatient" ng-click="actionCenter.showPopupHistory(item)">
                 <td style="vertical-align: middle; padding: 5px;">
                     <label>
-                        {{item.Creation_date  | date:'dd/M/yy - hh:mm'}}
+                        {{item.form_time}}
                     </label>
                 </td>
                 <td style="vertical-align: middle; padding: 5px;">

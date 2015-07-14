@@ -640,14 +640,78 @@ module.exports = {
             return;
         }
         var sql=
-            " SELECT consult.*,problem.`Notes`, DATE_FORMAT(app.`FROM_TIME`, '%d/%m/%Y - %h:%i') AS a FROM `cln_patient_consults` consult       "+ 
-            " LEFT JOIN `cln_problems` problem ON consult.`problem_id` = problem.`Problem_id`                                                   "+ 
-            " inner join `cln_appointment_calendar` app on consult.`cal_id` = app.`CAL_ID`                                                      "+ 
-            " WHERE consult.`patient_id` = ?                                                                                                    "; 
+            " SELECT consult.*,problem.`Notes`, DATE_FORMAT(app.`FROM_TIME`, '%d/%m/%Y - %h:%i') AS form_time FROM `cln_patient_consults` consult       "+ 
+            " LEFT JOIN `cln_problems` problem ON consult.`problem_id` = problem.`Problem_id`                                                           "+ 
+            " inner join `cln_appointment_calendar` app on consult.`cal_id` = app.`CAL_ID`                                                              "+ 
+            " WHERE consult.`patient_id` = ?                                                                                                            "+ 
+            " ORDER BY app.`FROM_TIME` DESC                                                                                                             "; 
+
         kiss.executeQuery(req,sql,patientId,function(rows){
             if(rows.length>0)
             {
                 res.json({status:'success',data:rows});
+            }
+            else
+            {
+                res.json({status:'fail'});
+            }
+        })
+    },
+    getListConsultOfPatientMobile:function(req,res)
+    {
+        var patientId=kiss.checkData(req.body.patient_id)?req.body.patient_id:'';
+        if(!kiss.checkListData(patientId))
+        {
+            kiss.exlog("getListConsultOfPatientMobile Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
+        var sql=
+            " SELECT consult.`cal_id`, consult.`patient_id` ,app.`FROM_TIME` FROM `cln_patient_consults` consult       "+ 
+            " inner join `cln_appointment_calendar` app on consult.`cal_id` = app.`CAL_ID`                             "+ 
+            " WHERE consult.`patient_id` = ?                                                                           "+
+            " ORDER BY app.`FROM_TIME` DESC                                                                            "; 
+        kiss.executeQuery(req,sql,patientId,function(rows){
+            if(rows.length>0)
+            {
+                res.json({status:'success',data:rows});
+            }
+            else
+            {
+                res.json({status:'fail'});
+            }
+        })
+    },
+    getdetailHistoryAndDrawing:function(req,res)
+    {
+        var cal_id=kiss.checkData(req.body.cal_id)?req.body.cal_id:'';
+        var patient_id=kiss.checkData(req.body.patient_id)?req.body.patient_id:'';
+        if(!kiss.checkListData(cal_id,patient_id))
+        {
+            kiss.exlog("getdetailHistoryAndDrawing Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
+        var sql=
+            " SELECT * FROM `cln_patient_consults` WHERE `cal_id` = ? AND `patient_id` = ? "; 
+        var data = {};
+        kiss.executeQuery(req,sql,[cal_id,patient_id],function(rows){
+            if(rows.length>0)
+            {
+                data.history = rows[0];
+                var sql2=
+                    " SELECT id FROM `cln_patient_drawings` WHERE `patient_id` = ? AND `cal_id` = ?"; 
+                kiss.executeQuery(req,sql2,[patient_id,cal_id],function(rows){
+                    if(rows.length>0)
+                    {
+                        data.drawing = rows;
+                        res.json({status:'success',data:data});
+                    }
+                    else
+                    {
+                        res.json({status:'success',data:data});
+                    }
+                })
             }
             else
             {
