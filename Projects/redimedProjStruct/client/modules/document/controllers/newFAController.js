@@ -302,9 +302,13 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 				console.log('this is line details length',line.details.length);
 				if(line.details.indexOf(detail) === line.details.length - 1){
 					if(detail.VAL1_CHECKBOX==='1'){
+						detail.VAL1_CHECKBOX = 1;
 						line.RATE1 = "Satisfactory";
 					}
-					else line.RATE1 = "Unsatisfactory";
+					else {
+						detail.VAL1_CHECKBOX = 0;
+						line.RATE1 = "Unsatisfactory";
+					}
 					autoSummary(line);
 				}
 				
@@ -345,6 +349,8 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 							break;
 				case 8: autoRatingVal1(line, line.SCORE1*1, 0);
 							break;
+				case 23:
+				case 29:
 				case 12: 	break;
 				default: line.SCORE1= line.details[line.details.length-1].VAL1_VALUE;
 						autoRatingVal1(line, line.SCORE1, 0);

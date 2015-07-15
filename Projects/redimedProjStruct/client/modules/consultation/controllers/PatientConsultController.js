@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.patient.consult.controller",[])
 
-	.controller("PatientConsultController",function(ConsultInfoService,InjuryManagementService,DoctorService,$filter,$rootScope,$interval,$window,$document,$cookieStore,$scope,$state,$modal,InsurerService,toastr,socket,OTSession,ReceptionistService,$stateParams,ConsultationService,PatientService,UserService,$interval,InvoiceService){
+	.controller("PatientConsultController",function(AlertModel,ConsultInfoService,InjuryManagementService,DoctorService,$filter,$rootScope,$interval,$window,$document,$cookieStore,$scope,$state,$modal,InsurerService,toastr,socket,OTSession,ReceptionistService,$stateParams,ConsultationService,PatientService,UserService,$interval,InvoiceService){
 
 		$scope.templates = [];
 
@@ -137,6 +137,24 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			scripts: $scope.tscripts,
 			images: []
 		}
+		$scope.getlistMedication = function(){
+			var postData = {
+				patient_id :$scope.patient_id,
+				cal_id:$scope.cal_id
+			}
+			AlertModel.insertMedication(postData).then(function(data){
+				if (data.data.length !== 0) {
+					var postDatam = {
+							consult_id :data.data[0].consult_id
+						}
+					AlertModel.getMedication(postDatam).then(function(response){
+						$scope.consultInfo.scripts = response.data;
+					})
+							
+				}
+			});
+		}
+		$scope.getlistMedication();
 		/*
 		* phanquocchien.c1109g@gmail.com
 		 */

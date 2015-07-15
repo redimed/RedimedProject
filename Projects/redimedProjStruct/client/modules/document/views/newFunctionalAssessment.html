@@ -199,10 +199,10 @@
 								</div>
 								<div class="col-md-2 col-sm-2 col-xs-2 btn-group" ng-if="detail.VAL1_ISCHECKBOX===3">
 									<label class="btn">
-										<input type="radio" ng-model="detail.VAL1.CHECKBOX" value="1"> Yes
+										<input type="radio" ng-model="detail.VAL1_CHECKBOX" value="1"> Yes
 									</label>
 									<label class="btn">
-										<input type="radio" ng-model="detail.VAL1.CHECKBOX" value="0"> No
+										<input type="radio" ng-model="detail.VAL1_CHECKBOX" value="0"> No
 									</label>
 								</div>
 								<div class="col-md-1 col-sm-1 col-xs-1" ng-if="detail.VAL2_ISCHECKBOX===3">
@@ -210,10 +210,10 @@
 								</div>
 								<div class="col-md-2 col-sm-2 col-xs-2 btn-group" ng-if="detail.VAL2_ISCHECKBOX===3">
 									<label class="btn">
-										<input type="radio" ng-model="detail.VAL2.CHECKBOX" value="1"> Yes
+										<input type="radio" ng-model="detail.VAL2_CHECKBOX" value="1"> Yes
 									</label>
 									<label class="btn">
-										<input type="radio" ng-model="detail.VAL2.CHECKBOX" value="0"> No
+										<input type="radio" ng-model="detail.VAL2_CHECKBOX" value="0"> No
 									</label>
 								</div>
 							<!-- end yes/no checkbox with detail comment -->
@@ -224,10 +224,10 @@
 								</div>
 								<div class="col-md-2 col-sm-2 col-xs-2 btn-group" ng-if="detail.VAL1_ISCHECKBOX===11">
 									<label class="btn">
-										<input type="radio" ng-model="detail.VAL1.CHECKBOX" value="0"> Normal
+										<input type="radio" ng-model="detail.VAL1_CHECKBOX" value="0"> Normal
 									</label>
 									<label class="btn">
-										<input type="radio" ng-model="detail.VAL1.CHECKBOX" value="1"> Abnormal
+										<input type="radio" ng-model="detail.VAL1_CHECKBOX" value="1"> Abnormal
 									</label>
 								</div>
 								<div class="col-md-1 col-sm-1 col-xs-1" ng-if="detail.VAL2_ISCHECKBOX===11">
@@ -235,10 +235,10 @@
 								</div>
 								<div class="col-md-2 col-sm-2 col-xs-2 btn-group" ng-if="detail.VAL2_ISCHECKBOX===11">
 									<label class="btn">
-										<input type="radio" ng-model="detail.VAL2.CHECKBOX" value="0"> Normal
+										<input type="radio" ng-model="detail.VAL2_CHECKBOX" value="0"> Normal
 									</label>
 									<label class="btn">
-										<input type="radio" ng-model="detail.VAL2.CHECKBOX" value="1"> Abnormal
+										<input type="radio" ng-model="detail.VAL2_CHECKBOX" value="1"> Abnormal
 									</label>
 								</div>
 							<!-- end Normal/Abnormal checkbox with detail comment -->
@@ -711,23 +711,22 @@
 					</div>
 				</div>
 
-				<!-- <div ng-if="line.SCORE_TYPE1 === 26">
-					<div class="row">
-						<div class="col-md-6 col-sm-6 col-xs-6">
-						</div>
+				<div ng-if="line.SCORE_TYPE1 === 28">
+					<!-- <div class="row">
+						
 						<div class="col-md-3 col-sm-3 col-xs-3">
 							<label class="control-label" style="margin-top:10px;"><b>Rating</b></label>
 						</div>
-					</div>
+					</div> -->
 					<div class="row" ng-repeat="detail in line.details">
-						<div class="col-md-6 col-sm-6 col-xs-6">
-							<label class="control-label" style="margin-top:10px;"><b>{{detail.QUESTION}}</b></label>
-						</div>
-						<div class="col-md-3 col-sm-3 col-xs-3">
-							<label class="control-label" style="margin-top:10px;" >{{detail.VAL2_VALUE}}</label>
+						<div class="col-md-12 col-sm-12 col-xs-12">
+							<label class="btn">
+								<input type="checkbox" ng-model="detail.VAL1_CHECKBOX" ng-checked="detail.VAL1_CHECKBOX === 1 || detail.VAL1_CHECKBOX === '1'" />
+								{{detail.QUESTION}} <i>({{detail.DESCRIPTION}})</i>
+							</label>
 						</div>
 					</div>
-				</div> -->
+				</div>
 			</div>
 		</div>
 	</div>
@@ -846,19 +845,19 @@
 					<label class="control-label pull-right">Ankle</label>
 				</div>
 				<div class="col-md-1 col-sm-1 col-xs-1">
-					<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="header.Att_Flexibility===1 || header.Att_Flexibility==='1'" ng-model="header.Att_Flexibility"/>
+					<input type="checkbox"  ng-checked="header.Att_Flexibility===1 || header.Att_Flexibility==='1'" ng-model="header.Att_Flexibility"/>
 				</div>
 				<div class="col-md-3 col-sm-3 col-xs-3">
 					<label class="control-label pull-right">Knee</label>
 				</div>
 				<div class="col-md-1 col-sm-1 col-xs-1">
-					<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="header.Att_Core_Stability===1 || header.Att_Core_Stability==='1'" ng-model="header.Att_Core_Stability"/>
+					<input type="checkbox"  ng-checked="header.Att_Core_Stability===1 || header.Att_Core_Stability==='1'" ng-model="header.Att_Core_Stability"/>
 				</div>
 				<div class="col-md-3 col-sm-3 col-xs-3">
 					<label class="control-label pull-right">Hip</label>
 				</div>
 				<div class="col-md-1 col-sm-1 col-xs-1">
-					<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="header.Att_Wirst_Elbow_func===1 || header.Att_Wirst_Elbow_func==='1'" ng-model="header.Att_Wirst_Elbow_func"/>
+					<input type="checkbox"  ng-checked="header.Att_Wirst_Elbow_func===1 || header.Att_Wirst_Elbow_func==='1'" ng-model="header.Att_Wirst_Elbow_func"/>
 				</div>
 			</div>
 			<div class="row">
@@ -866,19 +865,19 @@
 					<label class="control-label pull-right">Back</label>
 				</div>
 				<div class="col-md-1 col-sm-1 col-xs-1">
-					<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="header.Att_Shoulder_func===1 || header.Att_Shoulder_func==='1'" ng-model="header.Att_Shoulder_func"/>
+					<input type="checkbox" ng-checked="header.Att_Shoulder_func===1 || header.Att_Shoulder_func==='1'" ng-model="header.Att_Shoulder_func"/>
 				</div>
 				<div class="col-md-3 col-sm-3 col-xs-3">
 					<label class="control-label pull-right">Elbow/Wrist</label>
 				</div>
 				<div class="col-md-1 col-sm-1 col-xs-1">
-					<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="header.Att_Lower_Limb_func===1 || header.Att_Lower_Limb_func==='1'" ng-model="header.Att_Lower_Limb_func"/>
+					<input type="checkbox"  ng-checked="header.Att_Lower_Limb_func===1 || header.Att_Lower_Limb_func==='1'" ng-model="header.Att_Lower_Limb_func"/>
 				</div>
 				<div class="col-md-3 col-sm-3 col-xs-3">
 					<label class="control-label pull-right">Shoulder</label>
 				</div>
 				<div class="col-md-1 col-sm-1 col-xs-1">
-					<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-checked="header.Att_Balance===1 || header.Att_Balance==='1'" ng-model="header.Att_Balance"/>
+					<input type="checkbox"  ng-checked="header.Att_Balance===1 || header.Att_Balance==='1'" ng-model="header.Att_Balance"/>
 				</div>
 			</div>
 			
