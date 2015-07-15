@@ -456,6 +456,9 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 						},
 						script: function(){
 							return null;
+						},
+						arrayscript:function(){
+							return $scope.consultInfo.scripts;
 						}
 					}
 				})
@@ -494,7 +497,11 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 						},
 						script: function(){
 							return $scope.consultInfo.scripts[index];
+						},
+						arrayscript:function(){
+							return $scope.consultInfo.scripts;
 						}
+						
 					}
 				})
 

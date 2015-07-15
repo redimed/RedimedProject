@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.patient.consult.scriptController",[])
-	.controller("ScriptController",function($timeout,OutreferralModel,AppointmentModel,ConfigService,$cookieStore,$scope,$filter,$state,$modal,toastr,$modalInstance,ConsultationService,$stateParams, actual_doctor_id,script){
+	.controller("ScriptController",function(arrayscript,$timeout,OutreferralModel,AppointmentModel,ConfigService,$cookieStore,$scope,$filter,$state,$modal,toastr,$modalInstance,ConsultationService,$stateParams, actual_doctor_id,script){
 		// if (actual_doctor_id === undefined) {
 		// 	actual_doctor_id ={
 		// 		NAME :null
@@ -97,12 +97,32 @@ angular.module("app.loggedIn.patient.consult.scriptController",[])
 		}
 		
 		$scope.okClick = function(){
-			$scope.scriptInfo.start_date = moment(start_date).format('YYYY-MM-DD');
-			$scope.scriptInfo.end_date = moment(end_date).format('YYYY-MM-DD');
-			$scope.isSubmit = true;
+			var count = 0;
+			if (script !== null) {
+				for (var i = 0; i < arrayscript.length; i++) {
+				if ($scope.scriptInfo.medication_name === arrayscript[i].medication_name && $scope.scriptInfo.medication_name !== script.medication_name) {
+						count ++;
+					};
+				};
+			}else{
+				for (var i = 0; i < arrayscript.length; i++) {
+				if ($scope.scriptInfo.medication_name === arrayscript[i].medication_name) {
+						count ++;
+					};
+				};
+			};
+			
+			if (count === 0) {
+				$scope.isSubmit = true;
 				if (!$scope.medicationForm.$invalid) {
+					$scope.scriptInfo.start_date = ConfigService.convertToDB($scope.scriptInfo.start_date);
+					$scope.scriptInfo.end_date = ConfigService.convertToDB( $scope.scriptInfo.end_date);
 					$modalInstance.close({'type':'ok','value':$scope.scriptInfo});
 				};
+			}else{
+				toastr.error("Medication Name  Exits !");
+			};
+			
 		}
 
 		$scope.$watch('selectedMedication',function(val){
