@@ -206,9 +206,7 @@
     </script>
     <!-- END ANGULAR TRANSLATE -->
 
-    <!-- OCLAYZYLOAD -->
-    <script type="text/javascript" src="lib/oclazyload/dist/ocLazyLoad.js"></script>
-    <!-- END OCLAZYLOAD -->
+   
 
     <script type="text/javascript" src="lib/desktop-notify.js"></script>
     <link rel="stylesheet" href="vendor/ionicons/css/ionicons.min.css" type="text/css" media="screen">
@@ -359,8 +357,9 @@
     <script type="text/javascript" src="modules/user/controllers/UserTypeController.js"></script>
     <!-- END MODULE USER -->
     <!-- START MODULE FUNCTION -->
-    <script type="text/javascript" src="modules/function/routes.js"></script>
+    <script type="text/javascript" src="modules/function/Function.js"></script>
     <script type="text/javascript" src="modules/function/services/FunctionService.js"></script>
+    <script type="text/javascript" src="modules/function/controllers/FunctionController.js"></script>
     <!-- END MODULE FUNCTION -->
     <!-- START MODULE MENU -->
     <script type="text/javascript" src="modules/menu/Menu.js"></script>
@@ -513,7 +512,7 @@ RLOB PAPERLESS STRUCTURE -->
 
 
     <!-- -------------------------------------------------------------------------------------------------------------- -->
-    <!-- TANNV.DTS@GMAIL.COM -->
+
     <!-- HR_PAYROLL START MODULE -->
     <!-- -------------------------------------------------------------------------------------------------------------- -->
     <script src="vendor/ng-infinite-scroll/ng-infinite-scroll.min.js"></script>
@@ -529,12 +528,23 @@ RLOB PAPERLESS STRUCTURE -->
     <!-- -------------------------------------------------------------------------------------------------------------- -->
     <!--END MODULE REDI-LEGAL ONLINE BOOKING -->
     <!-- MODULE INSURER -->
-    <script src="modules/insurer/routes.js" type="text/javascript"></script>
+    <script src="modules/insurer/Insurer.js" type="text/javascript"></script>
     <script src="modules/insurer/services/InsurerServices.js" type="text/javascript"></script>
+    <script src="modules/insurer/directives/InsurerDirectives.js" type="text/javascript"></script>
+    <script src="modules/insurer/directives/InsurerDetail.js" type="text/javascript"></script>
+    <script src="modules/insurer/controllers/InsurerController.js" type="text/javascript"></script>
+    <script src="modules/insurer/controllers/InsurerListController.js" type="text/javascript"></script>
+    <script src="modules/insurer/controllers/InsurerDetailController.js" type="text/javascript"></script>
+    <script src="modules/insurer/controllers/InsurerAddController.js" type="text/javascript"></script>
     <!-- END MODULE INSURER -->
     <!-- MODULE DEPARTMENT -->
-    <script type="text/javascript" src="modules/department/routes.js"></script>
+    <script type="text/javascript" src="modules/department/Department.js"></script>
     <script type="text/javascript" src="modules/department/services/DepartmentServices.js"></script>
+    <script type="text/javascript" src="modules/department/directives/DepartmentDirectives.js"></script>
+    <script type="text/javascript" src="modules/department/directives/DepartmentDetailDirective.js"></script>
+    <script type="text/javascript" src="modules/department/directives/DepartmentSearchDirective.js"></script>
+    <script type="text/javascript" src="modules/department/controllers/DepartmentController.js"></script>
+    <script type="text/javascript" src="modules/department/controllers/DepartmentListController.js"></script>
     <!-- END MODULE DEPARTMENT -->
     <!-- MODULE DOCTOR -->
     <script type="text/javascript" src="modules/doctor/Doctor.js"></script>
@@ -663,11 +673,19 @@ RLOB PAPERLESS STRUCTURE -->
     <script type="text/javascript" src="modules/medicine/directives/MedicineDetailDirective.js"></script>
     <!-- END MEDICINE LIST -->
     <!-- ALLERGY LIST -->
-    <script type="text/javascript" src="modules/allergies/routes.js"></script>
+    <script type="text/javascript" src="modules/allergies/Allergy.js"></script>
+    <script type="text/javascript" src="modules/allergies/controllers/AllergyController.js"></script>
+    <script type="text/javascript" src="modules/allergies/controllers/AllergyListController.js"></script>
     <script type="text/javascript" src="modules/allergies/services/AllergyService.js"></script>
+    <script type="text/javascript" src="modules/allergies/directives/AllergyDirective.js"></script>
+    <script type="text/javascript" src="modules/allergies/directives/AllergyDetailDirective.js"></script>
     <!-- END ALLERGY LIST -->
     <!-- PROBLEM LIST -->
-    <script type="text/javascript" src="modules/problem/routes.js"></script>
+    <script type="text/javascript" src="modules/problem/Problem.js"></script>
+    <script type="text/javascript" src="modules/problem/controllers/ProblemController.js"></script>
+    <script type="text/javascript" src="modules/problem/controllers/ProblemListController.js"></script>
+    <script type="text/javascript" src="modules/problem/directives/ProblemDirective.js"></script>
+    <script type="text/javascript" src="modules/problem/directives/ProblemDetailDirective.js"></script>
     <script type="text/javascript" src="modules/problem/services/ProblemService.js"></script>
     <!-- END PROBLEM LIST -->
     <!-- FUNCTIONAL ASSESSMENT -->
@@ -704,10 +722,13 @@ RLOB PAPERLESS STRUCTURE -->
     <script type='text/javascript' src='modules/mdtinsurer/directives/mdtInsurerDirectives.js'></script>
     <script type='text/javascript' src='modules/mdtinsurer/directives/mdtInsurerDetailDirective.js'></script>
     <script type='text/javascript' src='modules/mdtinsurer/directives/mdtInsurerSearchDirective.js'></script>
-
-    <script type='text/javascript' src='modules/mdtoutdoctor/routes.js'></script>
+    <script type='text/javascript' src='modules/mdtoutdoctor/mdtOutdoctor.js'></script>
     <script type='text/javascript' src='modules/mdtoutdoctor/services/mdtOutdoctorServices.js'></script>
-
+    <script type='text/javascript' src='modules/mdtoutdoctor/directives/mdtOutdoctorDirectives.js'></script>
+    <script type='text/javascript' src='modules/mdtoutdoctor/directives/mdtOutdoctorDetailDirective.js'></script>
+    <script type='text/javascript' src='modules/mdtoutdoctor/directives/mdtOutdoctorSearchDirective.js'></script>
+    <script type='text/javascript' src='modules/mdtoutdoctor/directives/mdtOutdoctorAddDirective.js'></script>
+    <script type='text/javascript' src='modules/mdtoutdoctor/dialogs/MdtoutdoctorAdddialog.js'></script>
     <script type='text/javascript' src='modules/mdtoutreferral/mdtoutreferral.js'></script>
     <script type='text/javascript' src='modules/mdtoutreferral/services/mdtoutreferralServices.js'></script>
     <script type='text/javascript' src='modules/mdtoutreferral/directives/mdtoutreferralDirectives.js'></script>
@@ -765,9 +786,21 @@ RLOB PAPERLESS STRUCTURE -->
     <script type='text/javascript' src='modules/systitle/directives/sysTitleDirectives.js'></script>
     <script type='text/javascript' src='modules/systitle/directives/sysTitleDetailDirective.js'></script>
     <script type='text/javascript' src='modules/systitle/directives/sysTitleSearchDirective.js'></script>
-
-    <script type='text/javascript' src='modules/mdtdoctor/routes.js'></script>
+    <script type='text/javascript' src='modules/mdtdoctor/mdtDoctor.js'></script>
     <script type='text/javascript' src='modules/mdtdoctor/services/mdtDoctorServices.js'></script>
+    <script type='text/javascript' src='modules/mdtdoctor/directives/mdtDoctorDirectives.js'></script>
+    <script type='text/javascript' src='modules/mdtdoctor/directives/mdtDoctorDetailDirective.js'></script>
+    <script type='text/javascript' src='modules/mdtdoctor/directives/mdtDoctorSearchDirective.js'></script>
+    <script type='text/javascript' src='modules/department/Department.js'></script>
+    <script type='text/javascript' src='modules/department/services/DepartmentServices.js'></script>
+    <script type='text/javascript' src='modules/department/directives/DepartmentDirectives.js'></script>
+    <script type='text/javascript' src='modules/department/directives/DepartmentDetailDirective.js'></script>
+    <script type='text/javascript' src='modules/department/directives/DepartmentSearchDirective.js'></script>
+    <script type='text/javascript' src='modules/referral/Referral.js'></script>
+    <script type='text/javascript' src='modules/referral/services/ReferralServices.js'></script>
+    <script type='text/javascript' src='modules/referral/directives/ReferralDirectives.js'></script>
+    <script type='text/javascript' src='modules/referral/directives/ReferralDetailDirective.js'></script>
+    <script type='text/javascript' src='modules/referral/directives/ReferralSearchDirective.js'></script>
     <!-- SYS_SERVICES MODULE -->
     <script type='text/javascript' src='modules/sysservices/SysServices.js'></script>
     <script type='text/javascript' src='modules/sysservices/services/SysServicesServices.js'></script>
@@ -781,15 +814,16 @@ RLOB PAPERLESS STRUCTURE -->
     <script type="text/javascript" src="vendor/angular-bootstrap-calendar/calendar-jquery/jquery.animate.clip.js"></script>
     <script type="text/javascript" src="vendor/angular-bootstrap-calendar/calendar-jquery/jCal.js"></script>
     <link href="vendor/angular-bootstrap-calendar/calendar-jquery/jCal.css" type="text/css" rel="stylesheet" />
-    <script type="text/javascript" src="modules/TimeSheet/controllers/ViewTaskController.js"></script>
+  <!--   // <script type="text/javascript" src="modules/TimeSheet/controllers/ViewTaskController.js"></script> 
     <script type="text/javascript" src="modules/TimeSheet/controllers/StaffWeekController.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/controllers/StaffMonthController.js"></script>
+    <script type="text/javascript" src="modules/TimeSheet/controllers/StaffMonthController.js"></script>-->
     <script type="text/javascript" src="modules/TimeSheet/controllers/createTimesheetController.js"></script>
     <script type="text/javascript" src="modules/TimeSheet/controllers/viewTimesheetController.js"></script>
     <script type="text/javascript" src="modules/TimeSheet/services/StaffService.js"></script>
     <script type="text/javascript" src="modules/TimeSheet/directives/StaffCalendarDirective.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/directives/StaffMonthDirective.js"></script>
-    <script type="text/javascript" src="modules/TimeSheet/directives/StaffWeekDirective.js"></script>
+     <script type="text/javascript" src="modules/TimeSheet/directives/TimeSheetValidateDirective.js"></script>
+   <!--  // <script type="text/javascript" src="modules/TimeSheet/directives/StaffMonthDirective.js"></script>
+    // <script type="text/javascript" src="modules/TimeSheet/directives/StaffWeekDirective.js"></script> -->
     <!-- END STAFF -->
     <!--END AUTO CREATE-->
     <!--INJURY MANAGEMENT MODULE-->
@@ -869,7 +903,7 @@ RLOB PAPERLESS STRUCTURE -->
     <!-- END REPORT -->
     <script type="text/javascript" src="modules/TimeSheet/controllers/TimeSheetApproveTaskController.js">
     </script>
-    <script type="text/javascript" src="modules/TimeSheet/directives/TimeSheetViewItem.js"></script>
+   <!--  // <script type="text/javascript" src="modules/TimeSheet/directives/TimeSheetViewItem.js"></script> -->
     <script type="text/javascript" src="modules/TimeSheet/TimeSheet.js"></script>
     <!-- JQUERY MASK -->
     <script type="text/javascript" src="vendor/jquery-mask/masked.js"></script>
@@ -931,22 +965,80 @@ RLOB PAPERLESS STRUCTURE -->
     <!-- ------------------------------------------------------ VUONG TEAM ------------------------------------------------ -->
     <!-- CLAIM -->
     <script type="text/javascript" src="modules/claim/routes.js"></script>
+    <script type="text/javascript" src="modules/claim/include.js"></script>
     <script type="text/javascript" src="modules/claim/models/ClaimModel.js"></script>
+    <script type="text/javascript" src="modules/claim/directives/ClaimPatientAddDirective.js"></script>
+    <script type="text/javascript" src="modules/claim/directives/ClaimPatientEditDirective.js"></script>
+    <script type="text/javascript" src="modules/claim/directives/ClaimPatientListDirective.js"></script>
+    <script type="text/javascript" src="modules/claim/directives/ClaimPatientShowDirective.js"></script>
+    <script type="text/javascript" src="modules/claim/controllers/ClaimPatientListController.js"></script>
     <!-- END CLAIM -->
     <!-- OUTSIDE REFERRAL -->
     <script type="text/javascript" src="modules/outreferral/routes.js"></script>
+    <script type="text/javascript" src="modules/outreferral/include.js"></script>
     <script type="text/javascript" src="modules/outreferral/models/OutreferralModel.js"></script>
+    <script type="text/javascript" src="modules/outreferral/controllers/OutreferralPatientListController.js"></script>
+    <script type="text/javascript" src="modules/outreferral/directives/OutreferralPatientListDirective.js"></script>
+    <script type="text/javascript" src="modules/outreferral/directives/OutreferralPatientAddDirective.js"></script>
+    <script type="text/javascript" src="modules/outreferral/directives/OutreferralPatientShowDirective.js"></script>
+    <script type="text/javascript" src="modules/outreferral/directives/OutreferralPatientEditDirective.js"></script>
     <!-- END OUTSIDE REFERRAL -->
     <!-- MODULE ALERT -->
     <script type="text/javascript" src="modules/alert/routes.js"></script>
+    <script type="text/javascript" src="modules/alert/include.js"></script>
     <script type="text/javascript" src="modules/alert/models/AlertModel.js"></script>
+    <script type="text/javascript" src="modules/alert/controllers/AlertListController.js"></script>
+    <script type="text/javascript" src="modules/alert/controllers/AlertPatientListController.js"></script>
+    <script type="text/javascript" src="modules/alert/directives/AlertListDirective.js"></script>
+    <script type="text/javascript" src="modules/alert/directives/AlertPatientListDirective.js"></script>
+    <script type="text/javascript" src="modules/alert/directives/AlertAddDirective.js"></script>
+    <script type="text/javascript" src="modules/alert/directives/AlertEditDirective.js"></script>
     <!-- END ALERT -->
+
     <!-- MODULE TEMPLATE -->
     <script type="text/javascript" src="modules/template/routes.js"></script>
+    <script type="text/javascript" src="modules/template/include.js"></script>
     <script type="text/javascript" src="modules/template/models/TemplateModel.js"></script>
+    <script type="text/javascript" src="modules/template/controllers/TemplateListController.js"></script>
+    <script type="text/javascript" src="modules/template/directives/TemplateListDirective.js"></script>
+    <script type="text/javascript" src="modules/template/controllers/TemplatePatientListController.js"></script>
+    <script type="text/javascript" src="modules/template/directives/TemplatePatientListDirective.js"></script>
+    <script type="text/javascript" src="modules/template/controllers/TemplatePatientAddController.js"></script>
+    <script type="text/javascript" src="modules/template/directives/TemplatePatientAddDirective.js"></script>
+    <script type="text/javascript" src="modules/template/directives/TemplatePatientWriteDirective.js"></script>
+    <script type="text/javascript" src="modules/template/directives/TemplatePatientEditDirective.js"></script>
+    <script type="text/javascript" src="modules/template/controllers/TemplateAddController.js"></script>
+    <script type="text/javascript" src="modules/template/directives/TemplateAddDirective.js"></script>
+    <script type="text/javascript" src="modules/template/controllers/TemplateWriteController.js"></script>
+    <script type="text/javascript" src="modules/template/directives/TemplateWriteDirective.js"></script>
+    <script type="text/javascript" src="modules/template/controllers/TemplateEditController.js"></script>
+    <script type="text/javascript" src="modules/template/directives/TemplateEditDirective.js"></script>
+    <!-- END MODULE TEMPLATE -->
+    <!-- ------------------------------------------------------ VUONG TEAM --------------------------------------------- -->
     <!-- MODULE COMPANIES -->
     <script type="text/javascript" src="modules/company/routes.js"></script>
+    <script type="text/javascript" src="modules/company/include.js"></script>
     <script type="text/javascript" src="modules/company/models/CompanyModel.js"></script>
+    <script type="text/javascript" src="modules/company/services/CompanyServices.js"></script>
+    <script type="text/javascript" src="modules/company/directives/CompanyListDirective.js"></script>
+    <script type="text/javascript" src="modules/company/controllers/CompanyListController.js"></script>
+    <script type="text/javascript" src="modules/company/directives/CompanyListParentDirective.js"></script>
+    <script type="text/javascript" src="modules/company/controllers/CompanyListParentController.js"></script>
+    <script type="text/javascript" src="modules/company/directives/CompanyListInsurerDirective.js"></script>
+    <script type="text/javascript" src="modules/company/controllers/CompanyListInsurerController.js"></script>
+    <script type="text/javascript" src="modules/company/directives/CompanyAddNotFollowDirective.js"></script>
+    <script type="text/javascript" src="modules/company/directives/CompanyAddDirective.js"></script>
+    <script type="text/javascript" src="modules/company/controllers/CompanyAddController.js"></script>
+    <script type="text/javascript" src="modules/company/directives/CompanyEditDirective.js"></script>
+    <script type="text/javascript" src="modules/company/controllers/CompanyEditController.js"></script>
+    <script type="text/javascript" src="modules/company/directives/CompanyListNotFollowDirective.js"></script>
+    <script type="text/javascript" src="modules/company/controllers/CompanyListNotFollowController.js"></script>
+    <script type="text/javascript" src="modules/company/dialogs/CompanyAddParentDialgosController.js"></script>
+    
+    <script type="text/javascript" src="modules/company/dialogs/CompanyAddNewInsurerDialgosController.js"></script>
+    <script type="text/javascript" src="modules/company/dialogs/CompanyInsurerDialgosController.js"></script>
+    <script type="text/javascript" src="modules/company/dialogs/CompanyListNoFollowDialog.js"></script>
+    <script type="text/javascript" src="modules/company/dialogs/CompanyRemoveDialog.js"></script>
     <!-- ENd MODULE COMPANIES -->
     <!-- TIMETABLE OLD -->
     <script type="text/javascript" src="modules/mdttimetable/mdtTimetable.js"></script>
@@ -962,17 +1054,25 @@ RLOB PAPERLESS STRUCTURE -->
     <script type="text/javascript" src="modules/timetable/dialogs/TimetableCalendarEditDayDialog.js"></script>
     <script type="text/javascript" src="modules/timetable/dialogs/TimetableCalendarAddSiteDialog.js"></script>
     <script type="text/javascript" src="modules/timetable/models/TimetableModel.js"></script>
-    <!-- TANNV BEGIN -->
+        <!-- TANNV BEGIN -->
     <link rel="stylesheet" type="text/css" href="modules/timetable/css/timetable.css">
-    <!-- TANNV END -->
+        <!-- TANNV END -->
     <!-- END TIMETABLE -->
     <!-- MODULE CALLING -->
     <script type="text/javascript" src="modules/makeCall/routes.js"></script>
     <script type="text/javascript" src="modules/makeCall/controllers/callController.js"></script>
+    <script type="text/javascript" src="modules/makeCall/controllers/callController_apiRTC.js"></script>
     <!-- MODULE CALLING -->
     <!-- MODULE APPOINTMENT -->
     <script type="text/javascript" src="modules/appointment/routes.js"></script>
+    <script type="text/javascript" src="modules/appointment/include.js"></script>
     <script type="text/javascript" src="modules/appointment/models/AppointmentModel.js"></script>
+    <script type="text/javascript" src="modules/appointment/controllers/AppointmentController.js"></script>
+    <script type="text/javascript" src="modules/appointment/controllers/AppointmentDetailController.js"></script>
+    <script type="text/javascript" src="modules/appointment/controllers/AppointmentDoctorController.js"></script>
+    <script type="text/javascript" src="modules/appointment/directives/AppointmentCalendarDirective.js"></script>
+    <script type="text/javascript" src="modules/appointment/directives/AppointmentAddDirective.js"></script>
+
     <!-- MODULE WAITING LIST -->
     <script type="text/javascript" src="modules/waitingList/routes.js"></script>
     <script type="text/javascript" src="modules/waitingList/include.js"></script>
