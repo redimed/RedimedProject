@@ -858,7 +858,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			});
         }
         $scope.submitClick = function(){
-        	 $scope.deleteMedication();
+        	 // $scope.deleteMedication();
         	//tannv.dts@gmail.com
         	if(!$scope.invoiceHeaderInfo)
         	{

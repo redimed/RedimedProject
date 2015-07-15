@@ -240,36 +240,38 @@ module.exports = {
             diagnosis: info.diagnosis
         }, {consult_id: info.consult_id}, {raw: true})
         .success(function(data){
-            if(info.scripts.length > 0)
-            {
-                for(var i=0; i<info.scripts.length;i++)
-                {
-                    var s = info.scripts[i];
-                    if(s.start_date) {
-                        var start_date = s.start_date.split("/").reverse().join("-");
-                    };
-                    if(s.end_date) {
-                        var end_date = s.end_date.split("/").reverse().join("-");
-                    };
-                    chainer.add(
-                        db.ClnPatientMedication.create({
-                            patient_id: info.patient_id,
-                            consult_id: info.consult_id,
-                            medication_name: s.medication_name,
-                            unit: s.unit,
-                            qty: s.qty,
-                            dose: s.dose,
-                            frequency: s.frequency,
-                            start_date : start_date,
-                            end_date : end_date,
-                            route : s.route,
-                            doctor_id : s.doctor_id,
-                            condition_Indication : s.condition_Indication
-                        })
-                    )
-                }
-            }
-
+            db.sequelize.query('DELETE FROM cln_patient_medication_details WHERE consult_id = ?',null,{raw:true},[info.consult_id])
+                .success(function(){
+                    if(info.scripts.length > 0)
+                    {
+                        for(var i=0; i<info.scripts.length;i++)
+                        {
+                            var s = info.scripts[i];
+                            if(s.start_date) {
+                                var start_date = s.start_date.split("/").reverse().join("-");
+                            };
+                            if(s.end_date) {
+                                var end_date = s.end_date.split("/").reverse().join("-");
+                            };
+                            chainer.add(
+                                db.ClnPatientMedication.create({
+                                    patient_id: info.patient_id,
+                                    consult_id: info.consult_id,
+                                    medication_name: s.medication_name,
+                                    unit: s.unit,
+                                    qty: s.qty,
+                                    dose: s.dose,
+                                    frequency: s.frequency,
+                                    start_date : start_date,
+                                    end_date : end_date,
+                                    route : s.route,
+                                    doctor_id : s.doctor_id,
+                                    condition_Indication : s.condition_Indication
+                                })
+                            )
+                        }
+                    }
+                })
             if(info.images.length > 0)
             {
                 for(var i=0; i<info.images.length;i++)
