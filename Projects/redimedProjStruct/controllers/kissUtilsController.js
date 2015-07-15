@@ -121,13 +121,15 @@ function executeQuery(req,sql,params,functionSuccess,functionError,logQuery,logR
                         exlog("kissUtil","executeQuery success",query.sql);
                     }
                 } 
-                functionSuccess(result);
+                if(functionSuccess)
+                    functionSuccess(result);
                 return;
             }
             else
             {
                 exlog("kissUtil","executeQuery error",query.sql,err);
-                functionError(err);
+                if(functionError)
+                    functionError(err);
                 return;   
             }
         });

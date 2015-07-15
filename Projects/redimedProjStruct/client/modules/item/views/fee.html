@@ -16,7 +16,9 @@
                 <!-- FEE GROUPS  -->
                 <div ng-class="{active: (fees.tab == 1)}" class="tab-pane">
                     <div class="pull-right navbar-right">
-                        <a class="btn btn-sm blue" ng-click="addGroupForm.open()"><i class="fa fa-plus"></i> Add Group</a>
+                        <!-- <a class="btn btn-sm blue" ng-click="addGroupForm.open()"><i class="fa fa-plus"></i> Add Group</a> --><!-- tannv.dts comment -->
+
+                        <a class="btn btn-sm blue" ng-click="addGroupFee();"><i class="fa fa-plus"></i> Add Group</a> <!-- tannv.dts add -->
                     </div>
                     <my-data-table options="fee_groups.options" rowclass="fee_groups.class"></my-data-table>
                 </div>
@@ -47,14 +49,28 @@
 
 
 <!--POPUP GROUP DETAIL ADD FORM-->
-<div class="mdt-search" style="display: block;" ng-if="addGroupForm.is_show">
+<!-- <div class="mdt-search" style="display: block;" ng-if="addGroupForm.is_show">
     <div class="pull-right text-center ng-scope">
         <button class="btn btn-sm btn-block red" ng-click="addGroupForm.close()">
             <i class="fa fa-times"></i>
         </button>
     </div>
     <fee-group-detail options="options" onsuccess="addGroupForm.success" />
-</div>
+</div> --> <!-- tannv.dts comment -->
+
+<!-- tannv.dts add -->
+<script type="text/ng-template" id="addGroupFeeTemplate">
+    <div class="modal-body">
+        <fee-group-detail options="options" onsuccess="addGroupFeeSuccess" />
+        {{options}}
+        <br/>
+        {{addGroupForm}}
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary btn-xs" ng-click="ok()">OK</button>
+        <button class="btn btn-warning btn-xs" ng-click="cancel()">Cancel</button>
+    </div>
+ </script>
 <!--END POPUP GROUP DETAIL ADD FORM-->
 
 

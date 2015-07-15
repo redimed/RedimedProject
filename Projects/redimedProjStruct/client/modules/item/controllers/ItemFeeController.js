@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.item.fee.controller",[
 ])
-.controller("ItemFeeController", function($scope, $state, $timeout, toastr, FileUploader, ItemService){
+.controller("ItemFeeController", function($scope, $state, $timeout, toastr, FileUploader, ItemService, $modal){
     $scope.fee_types_panel = {};
     $scope.private_funds_panel = {};
     $scope.fee_groups_panel = {};
@@ -361,5 +361,37 @@ angular.module("app.loggedIn.item.fee.controller",[
             }
         }
 
+
+        /**
+         * tannv.dts@gmail.com
+         * ------------------------------------------------------------
+         * ------------------------------------------------------------
+         * ------------------------------------------------------------
+         */
+        $scope.addGroupFee=function()
+        {
+            var modalInstance=$modal.open({
+                templateUrl:'addGroupFeeTemplate',
+                controller:function($scope,$modalInstance,options,addGroupForm){
+                    $scope.options=options;
+                    $scope.addGroupForm=addGroupForm;
+                    $scope.cancel=function()
+                    {
+                        $modalInstance.dismiss('cancel');
+                    }
+                },
+                // size: 'sm',
+                resolve:{
+                    options:$scope.options,
+                    addGroupForm:$scope.addGroupForm
+                }
+            });
+
+            modalInstance.result.then(function(data){
+
+            },function(reason){
+                exlog.log(reason);
+            });
+        }
 
     })
