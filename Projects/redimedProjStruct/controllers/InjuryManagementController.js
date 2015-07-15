@@ -756,36 +756,32 @@ module.exports = {
           })
     },
     getInjuryConsultation: function(req,res){
-      var injurySQL = "SELECT c.*, d.id AS DrawingId, f.`Ass_id` AS FirstAssId, f.examDate AS FirstAssDate , p.`progress_id` AS ProgressAssId, p.examDate AS ProgressAssDate , fi.`id` AS FinalAssId, fi.examDate AS FinalAssDate , g.`id` AS GeneralAssId, g.examDate AS GeneralAssDate "+
-                      "FROM cln_patient_consults c "+
-                      "LEFT JOIN th_first_assessment f ON c.`patient_id` = f.`patient_id` AND c.`cal_id` = f.`cal_id` "+
-                      "LEFT JOIN th_progress_assessment p ON c.`patient_id` = p.`patient_id` AND c.`cal_id` = p.`cal_id` "+
-                      "LEFT JOIN th_final_assessment fi ON c.`patient_id` = fi.`patient_id` AND c.`cal_id` = fi.`cal_id` "+
-                      "LEFT JOIN th_general_assessment g ON c.`patient_id` = g.`patient_id` AND c.`cal_id` = g.`cal_id` "+
-                      "LEFT JOIN cln_patient_drawings d ON c.`patient_id` = d.`patient_id` AND c.`cal_id` = d.`cal_id` "+
-                      "WHERE c.`cal_id` = (SELECT p.`CAL_ID` FROM cln_appt_patients p WHERE p.`injury_id` = ?) "+
+      var injurySQL = "WHERE c.`cal_id` = (SELECT p.`CAL_ID` FROM cln_appt_patients p WHERE p.`injury_id` = ?) "+
                       "AND c.`patient_id` = (SELECT p.`Patient_id` FROM cln_appt_patients p WHERE p.`injury_id` = ?)";
 
-      var bookingSQL = "SELECT c.*, d.id AS DrawingId, f.`Ass_id` AS FirstAssId, f.examDate AS FirstAssDate , p.`progress_id` AS ProgressAssId, p.examDate AS ProgressAssDate , fi.`id` AS FinalAssId, fi.examDate AS FinalAssDate , g.`id` AS GeneralAssId, g.examDate AS GeneralAssDate "+
-                      "FROM cln_patient_consults c "+
-                      "LEFT JOIN th_first_assessment f ON c.`patient_id` = f.`patient_id` AND c.`cal_id` = f.`cal_id` "+
-                      "LEFT JOIN th_progress_assessment p ON c.`patient_id` = p.`patient_id` AND c.`cal_id` = p.`cal_id` "+
-                      "LEFT JOIN th_final_assessment fi ON c.`patient_id` = fi.`patient_id` AND c.`cal_id` = fi.`cal_id` "+
-                      "LEFT JOIN th_general_assessment g ON c.`patient_id` = g.`patient_id` AND c.`cal_id` = g.`cal_id` "+
-                      "LEFT JOIN cln_patient_drawings d ON c.`patient_id` = d.`patient_id` AND c.`cal_id` = d.`cal_id` "+
-                      "WHERE c.`cal_id` = ? "+
-                      "AND c.`patient_id` = ?";
+      var bookingSQL =  "WHERE c.`cal_id` = ? AND c.`patient_id` = ?";
+
+      var sql = "SELECT c.*, d.id AS DrawingId, "+
+                "f.`Ass_id` AS FirstAssId, f.examDate AS FirstAssDate , p.`progress_id` AS ProgressAssId, p.examDate AS ProgressAssDate , fi.`id` AS FinalAssId, fi.examDate AS FinalAssDate , g.`id` AS GeneralAssId, g.examDate AS GeneralAssDate "+
+                "FROM cln_patient_consults c "+
+                "LEFT JOIN th_first_assessment f ON c.`patient_id` = f.`patient_id` AND c.`cal_id` = f.`cal_id` "+
+                "LEFT JOIN th_progress_assessment p ON c.`patient_id` = p.`patient_id` AND c.`cal_id` = p.`cal_id` "+
+                "LEFT JOIN th_final_assessment fi ON c.`patient_id` = fi.`patient_id` AND c.`cal_id` = fi.`cal_id` "+
+                "LEFT JOIN th_general_assessment g ON c.`patient_id` = g.`patient_id` AND c.`cal_id` = g.`cal_id` "+
+                "LEFT JOIN cln_patient_drawings d ON c.`patient_id` = d.`patient_id` AND c.`cal_id` = d.`cal_id` "+
+                "LEFT JOIN cln_patient_medication_details m ON c.consult_id = m.consult_id AND c.patient_id = m.patient_id ";
 
        var injuryId = req.body.injury_id !== 'undefined' ? req.body.injury_id : null;
        var patientId = req.body.patient_id !== 'undefined' ? req.body.patient_id : null;
        var calId = req.body.cal_id !== 'undefined' ? req.body.cal_id : null;
 
-       db.sequelize.query(injuryId == null ? bookingSQL : injurySQL , null , {raw:true} , injuryId == null ? [calId,patientId] : [injuryId, injuryId])
+       db.sequelize.query(sql + (injuryId == null ? bookingSQL : injurySQL) , null , {raw:true} , injuryId == null ? [calId,patientId] : [injuryId, injuryId])
         .success(function(data){
             if(data.length > 0)
             {
                 var result = {
                   consultData: data[0],
+                  medications: [],
                   firstArr: [],
                   progressArr: [],
                   finalArr: [],
@@ -819,7 +815,26 @@ module.exports = {
                 if(tempDrawing.length > 0)
                   result.drawingArr = _.uniq(tempDrawing,function(item){return JSON.stringify(item);});
 
-                res.json({status:'success', data: result});
+                var medicationBooking = "SELECT m.* FROM cln_patient_medication_details m "+
+                                        "WHERE m.`patient_id`= ? "+
+                                        "AND m.`consult_id` = (SELECT c.`consult_id` FROM cln_patient_consults c WHERE c.`patient_id` = ? AND c.`cal_id` = ?)";
+
+                var medicationInjury = "SELECT m.* "+
+                                        "FROM cln_patient_medication_details m "+
+                                        "WHERE m.`patient_id`= (SELECT p.`Patient_id` FROM cln_appt_patients p WHERE p.`injury_id` = ?) "+
+                                        "AND m.`consult_id` = (SELECT c.`consult_id` FROM cln_patient_consults c "+
+                                        "WHERE c.`patient_id` = (SELECT p.`Patient_id` FROM cln_appt_patients p WHERE p.`injury_id` = ?) "+
+                                        "AND c.`cal_id` = (SELECT p.`CAL_ID` FROM cln_appt_patients p WHERE p.`injury_id` = ?))";
+                
+                db.sequelize.query(injuryId == null ? medicationBooking : medicationInjury , null , {raw:true} , injuryId == null ? [patientId,patientId,calId] : [injuryId,injuryId, injuryId])
+                  .success(function(data){
+                    if(data.length > 0)
+                      result.medications = data;
+                    res.json({status:'success', data: result});
+                  })
+                  .error(function(err){
+                    console.log(err);
+                  })
             }
             else
                 res.json({status:'error'});
