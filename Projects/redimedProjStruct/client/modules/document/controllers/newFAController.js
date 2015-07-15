@@ -339,7 +339,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 				case 20:
 				case 3: calculateFunctionsVal1.calAvg(line);
 						break;
-				case 28: calculateFunctionsVal1.calSum(line);
+				case 30: calculateFunctionsVal1.calSum(line);
 							break;
 				case 9: line.SCORE1= line.details[line.details.length-1].VAL1_VALUE;
 						break;
@@ -421,7 +421,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 				case 20:
 				case 3: calculateFunctionsVal2.calAvg(line);
 						break;
-				case 28: calculateFunctionsVal2.calSum(line);
+				case 30: calculateFunctionsVal2.calSum(line);
 							break;
 				case 9: line.SCORE2= line.details[line.details.length-1].VAL2_VALUE;
 							break;
