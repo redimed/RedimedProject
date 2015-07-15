@@ -9,6 +9,11 @@ angular.module("app.loggedIn.item.feegroup.detail.directive", [])
             },
             templateUrl: "modules/item/directives/templates/fee_group_detail.html",
             link: function (scope, element, attrs) {
+                //tannv.dts@gmail.com
+                scope.feeGroupType=itemConst.feeGroupType;
+                //----------------------------------
+                //----------------------------------
+                //----------------------------------
                 var loadData = function (id) {
                     ItemService.feegroupdetail(id).then(function (data) {
                         angular.extend(scope.modelObjectMap, data.data);

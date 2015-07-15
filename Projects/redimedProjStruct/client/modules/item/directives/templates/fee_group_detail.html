@@ -20,7 +20,17 @@
         <div class="col-md-4 col-sm-6 col-xs-12">
             <span class="field" ng-class="{'has-error': mainForm.fee_group_type.$invalid && isSubmit}">
 			<label for="fee_group_type">Fee group type</label>
-			<input type="text" placeholder="Fee group type" name="fee_group_type" ng-model="modelObjectMap.FEE_GROUP_TYPE" class="form-control" id="fee_group_type" float-label required readonly="readonly">
+			
+
+            <!-- <input type="text" placeholder="Fee group type" name="fee_group_type" ng-model="modelObjectMap.FEE_GROUP_TYPE" class="form-control" id="fee_group_type" float-label required readonly="readonly"> -->
+            <select name="fee_group_type" ng-model="modelObjectMap.FEE_GROUP_TYPE" ng-option="key as value.display for (key,value) in feeGroupType"></select>
+            {{feeGroupType}}
+ 
+            <!-- <select name="fee_group_type" ng-model="modelObjectMap.FEE_GROUP_TYPE" ng-options="item.FEE_GROUP_ID as item.FEE_GROUP_NAME for item in groupOptions | filter:{FEE_GROUP_TYPE: '!item_fee_type'} | filter:{FEE_GROUP_TYPE:'!private_fund'}" float-label required>
+                <option value="" disabled selected>Fee group</option>
+            </select> -->
+
+
 			<span ng-show="mainForm.fee_group_type.$invalid && isSubmit">
                     <span class="mdt-popover above" ng-show="mainForm.fee_group_type.$error.required">
                         Group type required!
