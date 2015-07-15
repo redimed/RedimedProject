@@ -839,8 +839,26 @@ angular.module("app.loggedIn.patient.consult.controller",[])
                 this.is_show = false;
             }
         }
-        
+        $scope.deleteMedication = function(){
+        	var postData = {
+				patient_id :$scope.patient_id,
+				cal_id:$scope.cal_id
+			}
+			AlertModel.insertMedication(postData).then(function(data){
+				if (data.data.length !== 0) {
+					var postDatam = {
+							consult_id :data.data[0].consult_id
+						}
+					AlertModel.deleteMedication(postDatam)
+					.then(function(response){
+						console.log('delete');
+					})
+							
+				}
+			});
+        }
         $scope.submitClick = function(){
+        	 $scope.deleteMedication();
         	//tannv.dts@gmail.com
         	if(!$scope.invoiceHeaderInfo)
         	{

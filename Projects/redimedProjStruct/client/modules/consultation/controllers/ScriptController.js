@@ -68,7 +68,17 @@ angular.module("app.loggedIn.patient.consult.scriptController",[])
 		}
 		
 		$scope.changeValue = function(){
+			var frequency =0;
 			if($scope.scriptInfo.frequency !== null && $scope.scriptInfo.dose !== null && $scope.scriptInfo.start_date !== null && $scope.scriptInfo.end_date !== null){
+				if ($scope.scriptInfo.frequency == 'OD') {
+					 frequency = 1;
+				}else if($scope.scriptInfo.frequency == 'BD'){
+					frequency = 2;
+				}else if($scope.scriptInfo.frequency == 'OD'){
+					frequency = 3;
+				}else{
+					frequency = 4;
+				}
 				var start_date = ConfigService.convertToDB($scope.scriptInfo.start_date);
 					start_date = moment(start_date).format('YYYY-MM-DD');
 				var end_date = ConfigService.convertToDB($scope.scriptInfo.end_date);
@@ -78,7 +88,6 @@ angular.module("app.loggedIn.patient.consult.scriptController",[])
 				var diffInDays = a.diff(b, 'days'); // 1 day
 				
 				var day = diffInDays +1;
-				var frequency = $scope.scriptInfo.frequency;
 				var dose = $scope.scriptInfo.dose;
 				$scope.scriptInfo.qty = day*frequency*dose;
 			}

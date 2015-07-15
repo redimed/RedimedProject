@@ -5,6 +5,22 @@ var db = require('../models');
 var _ = require('lodash');
 
 module.exports = {
+	deleteMedication : function(req,res){
+		var postData = req.body.data;
+
+		var sub_sql = knex('cln_patient_medication_details')
+			.where('consult_id', postData.consult_id)
+			.del()
+			.toString();
+
+		db.sequelize.query(sub_sql)
+		.success(function(del){
+			res.json({data: del,sql:sub_sql});
+		})
+		.error(function(error){
+			res.json(500, {error: error});
+		})
+	},
 	insertMedication: function(req, res){
 		var postData = req.body.data;
 		var sql = knex
