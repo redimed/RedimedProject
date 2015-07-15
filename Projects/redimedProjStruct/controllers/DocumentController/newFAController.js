@@ -297,7 +297,7 @@ module.exports = {
 				})
 			})
 			.error(function(err){
-				res.json(500,{status:'error'})
+				res.json(500,{status:'error', error: err})
 			})
 		}
 
@@ -316,7 +316,7 @@ module.exports = {
 						}
 					})
 					.error(function(err){
-						resolve({status:'error'});
+						resolve({status:'error' , error: err});
 					})
 				})
 			})
@@ -337,7 +337,7 @@ module.exports = {
 						}
 					})
 					.error(function(err){
-						resolve({status:'error'});
+						resolve({status:'error' , error: err});
 					})
 				})
 			})
@@ -358,7 +358,7 @@ module.exports = {
 						}
 					})
 					.error(function(err){
-						resolve({status:'error'});
+						resolve({status:'error', error: err});
 					})
 				})
 			})
@@ -376,7 +376,7 @@ module.exports = {
 						}
 					})
 					.error(function(err){
-						resolve({status:'error'});
+						resolve({status:'error' , error: err});
 					})
 				})
 			})
