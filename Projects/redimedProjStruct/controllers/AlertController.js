@@ -5,6 +5,50 @@ var db = require('../models');
 var _ = require('lodash');
 
 module.exports = {
+	insertMedication: function(req, res){
+		var postData = req.body.data;
+		var sql = knex
+			.column('*')
+			.from('cln_patient_consults')
+			.where('patient_id',postData.patient_id)
+			.where('cal_id',postData.cal_id)
+			.toString();
+		db.sequelize.query(sql)
+		.success(function(data){
+			res.json({data: data,  sql: sql});
+		})
+		.error(function(error){
+			res.json(500, {error: error});	
+		})
+	},
+	getMedication: function(req, res){
+		var postData = req.body.data;
+
+		var sql = knex
+			.column('*')
+			.from('cln_patient_medication_details')
+			.where('consult_id',postData.consult_id)
+			.limit(postData.limit)
+			.offset(postData.offset)
+			.toString();
+				
+		var count_sql = knex('cln_patient_medication_details')
+			.count('cln_patient_medication_details.id as a')
+			.toString();
+		db.sequelize.query(sql)
+		.success(function(rows){
+			db.sequelize.query(count_sql)
+			.success(function(count){
+				res.json({data: rows, count: count[0].a, sql: sql});
+			})
+			.error(function(error){
+				res.json(500, {error: error});	
+			})
+		})
+		.error(function(error){
+			res.json(500, {error: error});
+		})
+	},
 	postListNoFollowPatient: function(req, res){
 		var postData = req.body.data;
 

@@ -61,8 +61,11 @@ angular.module("app.loggedIn.patient.consult.scriptController",[])
 			}
 		})
 
-		if(script != null)
+		if(script != null){
 			$scope.scriptInfo = angular.copy(script);
+			$scope.scriptInfo.end_date = ConfigService.convertToDate($scope.scriptInfo.end_date);
+			$scope.scriptInfo.start_date = ConfigService.convertToDate($scope.scriptInfo.start_date);
+		}
 		
 		$scope.changeValue = function(){
 			if($scope.scriptInfo.frequency !== null && $scope.scriptInfo.dose !== null && $scope.scriptInfo.start_date !== null && $scope.scriptInfo.end_date !== null){
@@ -85,17 +88,8 @@ angular.module("app.loggedIn.patient.consult.scriptController",[])
 		}
 		
 		$scope.okClick = function(){
-			// var start = new Date($scope.scriptInfo.start_date); 
-			// var end = new Date($scope.scriptInfo.end_date);
-			// if(moment(to_date).diff(moment(from_date),'days')<0){
-			// 	$scope.isSubmit = true;
-			// 	if (!$scope.medicationForm.$invalid) {
-			// 		$modalInstance.close({'type':'ok','value':$scope.scriptInfo});
-			// 	};
-			// }
-			// else{
-			// 	toastr.error('Start date must be before end date');
-			// }
+			$scope.scriptInfo.start_date = moment(start_date).format('YYYY-MM-DD');
+			$scope.scriptInfo.end_date = moment(end_date).format('YYYY-MM-DD');
 			$scope.isSubmit = true;
 				if (!$scope.medicationForm.$invalid) {
 					$modalInstance.close({'type':'ok','value':$scope.scriptInfo});
