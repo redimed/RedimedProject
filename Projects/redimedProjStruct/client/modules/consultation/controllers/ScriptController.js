@@ -25,7 +25,7 @@ angular.module("app.loggedIn.patient.consult.scriptController",[])
 			        qty:null,
 			        route:null,
 			        doctor_id:null,
-			        user_name:null,
+			        NAME:null,
 			        Provider_no :null,
 			        frequency:null,
 			        condition_Indication:null
@@ -34,7 +34,7 @@ angular.module("app.loggedIn.patient.consult.scriptController",[])
 				OutreferralModel.DotorFromUserId(user_id)
 				.then(function(response){
 					$scope.scriptInfo.doctor_id = response.data[0].doctor_id;
-					$scope.scriptInfo.user_name = response.data[0].NAME;
+					$scope.scriptInfo.NAME = response.data[0].NAME;
 					$scope.scriptInfo.Provider_no = response.data[0].Provider_no;
 				}, function(error){})
 		}
