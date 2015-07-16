@@ -38,7 +38,7 @@
         </thead>
         <tbody>
             <tr style="cursor: pointer;" ng-repeat="item in data.items" ng-click="row_click(item)" ng-class="row_class(item)" >             
-                <td ng-repeat="col in options.columns" ng-if="!col.is_hide" ng-click="col_click(item)">
+                <td ng-repeat="col in options.columns" ng-if="!col.is_hide" ng-click="col_click(item)" style="{{col.styleTd}}">
                     <!-- TYPE INPUT -->
                     <span ng-switch on="col.type">
                         <span ng-switch-when="checkbox">
@@ -51,7 +51,7 @@
                             <input ng-disabled="col.disabled" ng-model="item[col.field]" type="number" />
                         </span>
                         <span ng-switch-when="button">
-                            <button class="btn btn-sm blue-soft" ng-click="col.btnfn(item)" ng-disabled="col.disfn(item)==true"><i class="{{col.btnclass}}"></i> {{col.btnlabel}}</button>
+                            <button class="btn btn-sm blue-soft {{col.classButton}}" ng-click="col.btnfn(item)" ng-disabled="col.disfn(item)==true"><i class="{{col.btnclass}}"></i> {{col.btnlabel}}</button>
                         </span>
                         <span ng-switch-when="status">
                             <a class="btn btn-sm blue-soft" ng-click="col.disableFn($event,item)" ng-show="col.isEnable(item)===1" href=""><i class="fa fa-check"></i> Enabled</a>
