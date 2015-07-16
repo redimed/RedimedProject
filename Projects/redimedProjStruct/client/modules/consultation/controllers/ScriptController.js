@@ -7,6 +7,7 @@ angular.module("app.loggedIn.patient.consult.scriptController",[])
 		// };
 		// $scope.user_name = $cookieStore.get("userInfo").user_name;
 		var user_id = $cookieStore.get('userInfo').id;
+		console.log('$cookieStore',$cookieStore.get('userInfo'));
 		$scope.postData = {
 			CAL_ID:$stateParams.cal_id,
 			DOCTOR_ID:null,
