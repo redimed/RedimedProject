@@ -63,6 +63,10 @@ angular.module("app.loggedIn.alert.model", [])
         var detailApi = appApi.all('deleteMedication');
         return detailApi.post({data: data});
     }
+     instanceService.getdoctorid = function(data){
+        var detailApi = appApi.all('getdoctorid');
+        return detailApi.post({data: data});
+    }
 
     return instanceService;
 })

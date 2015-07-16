@@ -451,6 +451,9 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 						},
 						arrayscript:function(){
 							return $scope.consultInfo.scripts;
+						},
+						doctor_id : function(){
+							return $scope.getdoctor_id;
 						}
 					}
 				})
@@ -492,6 +495,9 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 						},
 						arrayscript:function(){
 							return $scope.consultInfo.scripts;
+						},
+						doctor_id : function(){
+							return $scope.getdoctor_id;
 						}
 						
 					}
@@ -966,7 +972,20 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		 */
 		$scope.apptPatient={};
 		$scope.actual_doctor_id={};
+		$scope.getdoctor_id=null;
 		$scope.apptStatus=ptnConst.apptStatus;
+		$scope.getdoctorid = function(){
+			var postData = {
+				patient_id : $stateParams.patient_id,
+				cal_id : $stateParams.cal_id
+			}
+			AlertModel.getdoctorid(postData)
+					.then(function(response){
+						$scope.getdoctor_id = response.data[0].DOCTOR_ID;
+						console.log(response.data[0].DOCTOR_ID);
+					})
+		}
+		$scope.getdoctorid();
 		$scope.getApptPatient=function()
 		{
 			var postData={

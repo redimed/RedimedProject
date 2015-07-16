@@ -5,6 +5,21 @@ var db = require('../models');
 var _ = require('lodash');
 
 module.exports = {
+	getdoctorid : function(req,res){
+		var postData = req.body.data;
+		var sql = knex
+			.column('*')
+			.from('cln_appointment_calendar')
+			.where('cal_id',postData.cal_id)
+			.toString();
+		db.sequelize.query(sql)
+		.success(function(data){
+			res.json({data: data,  sql: sql});
+		})
+		.error(function(error){
+			res.json(500, {error: error});	
+		})
+	},
 	deleteMedication : function(req,res){
 		var postData = req.body.data;
 		var sql = knex

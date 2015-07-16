@@ -1,12 +1,12 @@
 angular.module("app.loggedIn.patient.consult.scriptController",[])
-	.controller("ScriptController",function(AlertModel,arrayscript,$timeout,OutreferralModel,AppointmentModel,ConfigService,$cookieStore,$scope,$filter,$state,$modal,toastr,$modalInstance,ConsultationService,$stateParams, actual_doctor_id,script){
+	.controller("ScriptController",function(doctor_id,AlertModel,arrayscript,$timeout,OutreferralModel,AppointmentModel,ConfigService,$cookieStore,$scope,$filter,$state,$modal,toastr,$modalInstance,ConsultationService,$stateParams, actual_doctor_id,script){
 		// if (actual_doctor_id === undefined) {
 		// 	actual_doctor_id ={
 		// 		NAME :null
 		// 	};
 		// };
 		// $scope.user_name = $cookieStore.get("userInfo").user_name;
-		var user_id = $cookieStore.get('userInfo').id;
+		var user_id = doctor_id;
 		$scope.postData = {
 			CAL_ID:$stateParams.cal_id,
 			DOCTOR_ID:null,
@@ -33,12 +33,13 @@ angular.module("app.loggedIn.patient.consult.scriptController",[])
 		var getUsername = function(){
 				OutreferralModel.DotorFromUserId(user_id)
 				.then(function(response){
+					console.log(response);
 					$scope.scriptInfo.doctor_id = response.data[0].doctor_id;
 					$scope.scriptInfo.NAME = response.data[0].NAME;
 					$scope.scriptInfo.Provider_no = response.data[0].Provider_no;
 				}, function(error){})
 		}
-		getUsername();
+		
 		var getCalid = function(cal_id){
 			if (cal_id === 0) {
 				var postData = {
@@ -84,6 +85,7 @@ angular.module("app.loggedIn.patient.consult.scriptController",[])
 			getCalid(1);
 		}else{
 			getCalid(0);
+			getUsername();
 		}
 		
 		$scope.changeValue = function(){
