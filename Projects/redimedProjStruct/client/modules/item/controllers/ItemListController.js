@@ -60,12 +60,17 @@ angular.module("app.loggedIn.item.list.controller",[
         is_show: false,
         open: function(){
             this.is_show = true;
+            angular.element("#popupItemFee").modal('show');
         }, 
         close: function(){
             this.is_show = false;
         }, 
         panel: {}
     }
+    /*close edit item load directive edit*/
+    $('#popupItemFee').on('hidden.bs.modal', function (e) {
+        $scope.itemFees.close();
+    })
 
     /*
     *   ADD FORM
@@ -75,6 +80,7 @@ angular.module("app.loggedIn.item.list.controller",[
         is_show: false,
         open: function(){
             this.is_show = true;
+            angular.element("#popupAddItem").modal('show');
         }, 
         close: function(){
             this.is_show = false;
@@ -83,19 +89,28 @@ angular.module("app.loggedIn.item.list.controller",[
                 $scope.item_panel.reload();
         }
     }
+    /*close edit item load directive edit*/
+    $('#popupAddItem').on('hidden.bs.modal', function (e) {
+        $scope.addForm.close();
+    })
 
  	$scope.editForm = {
-            is_show: false,
-            open: function () {
-                this.is_show = true;
-            },
-            close: function () {
-                this.is_show = false;
-            },
-            success: function (response) {
-                $scope.item_panel.reload();
-            }
+        is_show: false,
+        open: function () {
+            this.is_show = true;
+            angular.element("#popupEditItem").modal('show');
+        },
+        close: function () {
+            this.is_show = false;
+        },
+        success: function (response) {
+            $scope.item_panel.reload();
         }
+    }
+    /*close edit item load directive edit*/
+    $('#popupEditItem').on('hidden.bs.modal', function (e) {
+        $scope.editForm.close();
+    })
    /*
    *    IMPORT ITEMS FROM SOURCE
    */

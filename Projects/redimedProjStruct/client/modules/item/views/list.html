@@ -27,35 +27,56 @@
 </div>
 
 <!-- POPUP ITEM ADD FORM   -->
-<div class="mdt-search" style="display: block; width: 100%" ng-if="addForm.is_show">
-    <div class="pull-right text-center ng-scope">
-        <button class="btn btn-sm btn-block red" ng-click="addForm.close()">
-            <i class="fa fa-times"></i>
-        </button>
-    </div>
-    <item-detail options="options" onsuccess="addForm.success">
-</div>
+<div class="modal fade" id="popupAddItem">
+    <div class="modal-dialog un-header-top modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h4 class="modal-title un-label-popup-header-m un-bg-label-B41E46-m" id="myModalLabel">Add Item</h4>
+                <div ng-if="addForm.is_show">
+                    <item-detail options="options" onsuccess="addForm.success">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <!-- POPUP ITEM ADD FORM -->
 
+<div class="modal fade" id="popupEditItem">
+    <div class="modal-dialog un-header-top modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h4 class="modal-title un-label-popup-header-m un-bg-label-B41E46-m" id="myModalLabel">Info Item</h4>
+                <div  ng-if="editForm.is_show">
+                    <item-detail options="options" onsuccess="editForm.success" data="{id: '{{itemInfo.ITEM_ID}}'}">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
-<!-- POPUP ITEM ADD FORM   -->
-<div class="mdt-search" style="display: block; width: 100%" ng-if="editForm.is_show">
-    <div class="pull-right text-center ng-scope">
-        <button class="btn btn-sm btn-block red" ng-click="editForm.close()">
-            <i class="fa fa-times"></i>
-        </button>
-    </div>
-    <item-detail options="options" onsuccess="editForm.success" data="{id: '{{itemInfo.ITEM_ID}}'}">
-</div>
+
 <!-- POPUP ITEM ADD FORM -->
 
 <!-- POPUP ITEM PRICE   -->
-<div class="mdt-search" style="display: block; width: 85%" ng-show="itemFees.is_show">
-    <div class="pull-right text-center ng-scope">
-        <button class="btn btn-sm btn-block red" ng-click="itemFees.close()">
-            <i class="fa fa-times"></i>
-        </button>
-    </div>
-    <item_fees  id="items.select" panel="itemFees.panel"></item_fees>
-</div>
+<div class="modal fade" id="popupItemFee">
+    <div class="modal-dialog un-header-top modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h4 class="modal-title un-label-popup-header-m un-bg-label-B41E46-m" id="myModalLabel">Item Fees</h4>
+                <div ng-show="itemFees.is_show">
+                    <item_fees  id="items.select" panel="itemFees.panel"></item_fees>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
  <!-- POPUP ITEM PRICE-->
