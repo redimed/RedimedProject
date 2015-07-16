@@ -142,17 +142,10 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 				patient_id :$scope.patient_id,
 				cal_id:$scope.cal_id
 			}
-			AlertModel.insertMedication(postData).then(function(data){
-				if (data.data.length !== 0) {
-					var postDatam = {
-							consult_id :data.data[0].consult_id
-						}
-					AlertModel.getMedication(postDatam).then(function(response){
-						$scope.consultInfo.scripts = response.data;
-					})
-							
-				}
-			});
+			AlertModel.getMedication(postData).then(function(response){
+				console.log(response.data);
+				$scope.consultInfo.scripts = response.data;
+			})
 		}
 		$scope.getlistMedication();
 		/*
@@ -162,7 +155,6 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		$scope.loadConsultationInfo = function(){
 			ConsultationService.checkConsultation($scope.patient_id,$scope.cal_id).then(function(data){
 				if (data.status == 'success') {
-					
 					$scope.consultInfo.problem_id = data.data.problem_id;					
 					$scope.consultInfo.history = data.data.history;					
 					$scope.consultInfo.examination = data.data.examination;					

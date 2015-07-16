@@ -7,18 +7,17 @@ var _ = require('lodash');
 module.exports = {
 	deleteMedication : function(req,res){
 		var postData = req.body.data;
-
-		var sub_sql = knex('cln_patient_medication_details')
-			.where('consult_id', postData.consult_id)
-			.del()
+		var sql = knex
+			.column('*')
+			.from('cln_appointment_calendar')
+			.where('cal_id',postData.cal_id)
 			.toString();
-
-		db.sequelize.query(sub_sql)
-		.success(function(del){
-			res.json({data: del,sql:sub_sql});
+		db.sequelize.query(sql)
+		.success(function(data){
+			res.json({data: data,  sql: sql});
 		})
 		.error(function(error){
-			res.json(500, {error: error});
+			res.json(500, {error: error});	
 		})
 	},
 	insertMedication: function(req, res){
@@ -41,9 +40,12 @@ module.exports = {
 		var postData = req.body.data;
 
 		var sql = knex
-			.column('*')
+			.column('cln_patient_medication_details.*','cln_patient_consults.cal_id','cln_appointment_calendar.FROM_TIME','doctors.NAME')
 			.from('cln_patient_medication_details')
-			.where('consult_id',postData.consult_id)
+			.innerJoin('cln_patient_consults', 'cln_patient_medication_details.consult_id', 'cln_patient_consults.consult_id')
+			.innerJoin('cln_appointment_calendar', 'cln_patient_consults.cal_id', 'cln_appointment_calendar.CAL_ID')
+			.leftOuterJoin('doctors', 'cln_patient_medication_details.doctor_id', 'doctors.doctor_id')
+			.where('cln_patient_medication_details.patient_id',postData.patient_id)
 			.limit(postData.limit)
 			.offset(postData.offset)
 			.toString();
