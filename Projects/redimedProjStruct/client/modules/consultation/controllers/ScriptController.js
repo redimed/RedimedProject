@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.patient.consult.scriptController",[])
-	.controller("ScriptController",function(arrayscript,$timeout,OutreferralModel,AppointmentModel,ConfigService,$cookieStore,$scope,$filter,$state,$modal,toastr,$modalInstance,ConsultationService,$stateParams, actual_doctor_id,script){
+	.controller("ScriptController",function(AlertModel,arrayscript,$timeout,OutreferralModel,AppointmentModel,ConfigService,$cookieStore,$scope,$filter,$state,$modal,toastr,$modalInstance,ConsultationService,$stateParams, actual_doctor_id,script){
 		// if (actual_doctor_id === undefined) {
 		// 	actual_doctor_id ={
 		// 		NAME :null
@@ -13,7 +13,10 @@ angular.module("app.loggedIn.patient.consult.scriptController",[])
 			user_name:null,
 			Provider_no:null
 		};
+		console.log($scope.current_patient);
 		$scope.scriptInfo = {
+					FROM_TIME:null,
+					cal_id:null,
 			        medication_name:null,
 			        start_date:null,
 			        dose:null,
@@ -28,19 +31,32 @@ angular.module("app.loggedIn.patient.consult.scriptController",[])
 			        condition_Indication:null
 		};
 		var getUsername = function(){
-			//AppointmentModel.one(user_id).then(function(response){
-				//$scope.postData.DOCTOR_ID = response.data.DOCTOR_ID;
-				//$scope.scriptInfo.doctor_id = $scope.postData.DOCTOR_ID;
-				//OutreferralModel.DotorFromUserId($scope.postData.DOCTOR_ID)
 				OutreferralModel.DotorFromUserId(user_id)
 				.then(function(response){
-					$scope.scriptInfo.doctor_id = user_id;
+					$scope.scriptInfo.doctor_id = response.data[0].doctor_id;
 					$scope.scriptInfo.user_name = response.data[0].NAME;
 					$scope.scriptInfo.Provider_no = response.data[0].Provider_no;
 				}, function(error){})
-			//}, function(error){})
 		}
-		getUsername(); 
+		getUsername();
+		var getCalid = function(cal_id){
+			if (cal_id === 0) {
+				var postData = {
+					cal_id : $stateParams.cal_id
+				}
+			}else{
+				var postData = {
+					cal_id : $scope.scriptInfo.cal_id
+				}
+			}
+			AlertModel.deleteMedication(postData)
+			.then(function(response){
+				$scope.scriptInfo.FROM_TIME = response.data[0].FROM_TIME;
+				$scope.scriptInfo.cal_id = response.data[0].cal_id;
+				console.log( response.data[0].FROM_TIME);
+			})
+		 }
+		
 		//phan quoc chien set list 
 		$scope.listUnit = ptnConst.unit;
 		$scope.listRoute = ptnConst.route;
@@ -65,6 +81,9 @@ angular.module("app.loggedIn.patient.consult.scriptController",[])
 			$scope.scriptInfo = angular.copy(script);
 			$scope.scriptInfo.end_date = ConfigService.convertToDate($scope.scriptInfo.end_date);
 			$scope.scriptInfo.start_date = ConfigService.convertToDate($scope.scriptInfo.start_date);
+			getCalid(1);
+		}else{
+			getCalid(0);
 		}
 		
 		$scope.changeValue = function(){
@@ -97,6 +116,7 @@ angular.module("app.loggedIn.patient.consult.scriptController",[])
 		}
 		
 		$scope.okClick = function(){
+			console.log($scope.scriptInfo);
 			var count = 0;
 			if (script !== null) {
 				for (var i = 0; i < arrayscript.length; i++) {
