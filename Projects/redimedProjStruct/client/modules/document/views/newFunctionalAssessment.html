@@ -436,10 +436,10 @@
 								<label ng-switch-when="2" class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">Within NR</b></label>
 								<label ng-switch-when="3" class="control-label" style="margin-top:10px;"><b style="font-size:16pt;">Above NR</b></label>
 							</div>
-							<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING1 === 1 && line.SCORE_TYPE2 === 20">
+							<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING2 === 1 && line.SCORE_TYPE2 === 20">
 								<label class="control-label pull-right" style="margin-top:15px;">Rating: </label>
 							</div>
-							<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING1 === 1 && line.SCORE_TYPE2 === 20">
+							<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING2 === 1 && line.SCORE_TYPE2 === 20">
 								<label class="btn">
 									<input type="radio" ng-model="line.RATING_VALUE2" value="0" ng-change="autoCalculationVal1(line)"> Normal 
 								</label>
