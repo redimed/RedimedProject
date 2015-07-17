@@ -110,6 +110,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		$scope.patientInfo = {};
 		$scope.companyInfo = {};
 		$scope.problemArr = [];
+		$scope.checktoasl = 0;
 		$scope.isConsult = true;
 		$scope.tscripts = ConsultInfoService.getConsultInfoScripts();
 		$scope.checkdata = ConsultInfoService.getCheckdata();
@@ -474,7 +475,9 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 						
 						
 					}
-					 $scope.submitClick();
+					$scope.checktoasl = 1;
+					$scope.submitClick();
+					toastr.success("Add Medication Successfully!");
 				})
 			}
 
@@ -507,7 +510,9 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 					{
 						$scope.consultInfo.scripts[index] = data.value;
 					}
+					 $scope.checktoasl = 1;
 					 $scope.submitClick();
+					 toastr.success("Edit Medication Successfully!");
 				})
 			}
 
@@ -523,6 +528,9 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 	                closeOnConfirm: true
 	            }, function() {
 	                $scope.consultInfo.scripts.splice(index,1);
+	                $scope.checktoasl = 1;
+	                $scope.submitClick();
+	                
 	            })
 			}
 		};
@@ -939,18 +947,24 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		            		toastr.success('Save invoice item success.');
 		            		
 		            	}
-		            	else if(data.status='non-data')
+		            	else if(data.status='non-data' && $scope.checktoasl === 0)
 		            	{
 		            		toastr.warning('No invoice item.');
 		            	}
-		            	else
+		            	else if($scope.checktoasl === 0)
 		            	{
 		            		toastr.error('Save invoice item error.');
+		            	}else{
+
 		            	}
 		            },function(err){
 		            	toastr.error('Save invoice item error.');
 		            });
-				 	toastr.success('Submit Consultation Success!');
+		            if ($scope.checktoasl === 0) {
+		            	 toastr.success('Submit Consultation Success!');
+		            };
+		          
+				 	
 				}
 				else
 					toastr.success("Submit Consultation Failed!");
