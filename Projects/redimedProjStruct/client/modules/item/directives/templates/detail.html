@@ -1,32 +1,26 @@
 <form name="mainForm" novalidate>
     <div class="row">
         <!-- ITEM CODE -->
-        <div class="break-row" style="margin-top: 15px"></div>
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-            <span class="field" ng-class="{'has-error': mainForm.ITEM_CODE.$invalid && isSubmit}">
-                <label for="ITEM_CODE">Item code</label>
-                <input type="text" id="ITEM_CODE" required
-                       name="ITEM_CODE" ng-model="modelObjectMap.ITEM_CODE" placeholder="Item Code" float-label />
-                <!-- ERROR -->
-                <span ng-show="mainForm.ITEM_CODE.$invalid && isSubmit">
-                    <span class="mdt-popover above" ng-show="mainForm.ITEM_CODE.$error.required">
-                        Item Code is required
-                    </span>
-            </span>
-            <!-- ERROR -->
-            </span>
+        <div class="break-row" style="margin-top: 20px"></div>
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-right-5 un-padding-left-10">
+            <div class="form-group">
+                <label class="un-label-group">
+                    Item code&nbsp;*
+                </label>
+                <input type="text" id="ITEM_CODE" name="ITEM_CODE" class="form-control input-sm un-input-group" ng-model="modelObjectMap.ITEM_CODE" placeholder="Item Code" required>
+            </div>
         </div>
         <!-- END ITEM CODE -->
 
         <!-- ITEM NAME -->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-            <span class="field" ng-class="{'has-error': mainForm.ITEM_NAME.$invalid && isSubmit}">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-5 un-padding-right-5">
+            <span class="un_field_custom field" ng-class="{'has-error': mainForm.ITEM_NAME.$invalid && isSubmit}">
                 <label for="ITEM_NAME">Item name</label>
                 <input type="text" id="ITEM_NAME" required
                        name="ITEM_NAME" ng-model="modelObjectMap.ITEM_NAME" placeholder="Item Name" float-label />
                 <!-- ERROR -->
                 <span ng-show="mainForm.ITEM_NAME.$invalid && isSubmit">
-                    <span class="mdt-popover above" ng-show="mainForm.ITEM_NAME.$error.required">
+                    <span class="un_mdt_popover above" ng-show="mainForm.ITEM_NAME.$error.required">
                         Item Name is required
                     </span>
             </span>
@@ -37,8 +31,8 @@
 
 
         <!-- ALT NAME -->
-        <div class="col-lg-3 col-lg-3 col-md-4 col-sm-6 col-xs-12">
-            <span class="field" ng-class="{'has-error': mainForm.ALT_NAME.$invalid && isSubmit}">
+        <div class="col-lg-3 col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-5 un-padding-right-5">
+            <span class="un_field_custom field" ng-class="{'has-error': mainForm.ALT_NAME.$invalid && isSubmit}">
                 <label for="ALT_NAME">Alt name</label>
                 <input type="text" id="ALT_NAME"
                        name="ALT_NAME" ng-model="modelObjectMap.ALT_NAME" placeholder="Alt Name" float-label />
@@ -47,9 +41,9 @@
         <!-- END ALT NAME -->
 
         <!--ITEM_TYPE-->
-        <div class="col-lg-3 col-lg-3 col-md-4 col-sm-6 col-xs-12">
-            <span class="field" ng-class="{'has-error': mainForm.ITEM_TYPE.$invalid && isSubmit}">
-				<label for="item_type">Item type</label>
+        <div class="col-lg-3 col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-5 un-padding-right-10">
+            <span class="un_field_custom field " ng-class="{'has-error': mainForm.ITEM_TYPE.$invalid && isSubmit}">
+				<label class="lblselect" for="item_type" ng-show="modelObjectMap.ITEM_TYPE !='' && modelObjectMap.ITEM_TYPE !=null">Item type</label>
 				<!-- <input type="text" placeholder="Item type" name="item_type" ng-model="modelObjectMap.ITEM_TYPE" class="form-control" id="item_type" float-label> -->
 				<select class="form-control" name="ITEM_TYPE"
 						ng-model="modelObjectMap.ITEM_TYPE"
@@ -58,12 +52,11 @@
 						<option value="">-- Select Item Type --</option>
 					</select>
 					<span ng-show="mainForm.ITEM_TYPE.$invalid && isSubmit">
-                    <span class="mdt-popover above" ng-show="mainForm.ITEM_TYPE.$error.required">
+                    <span class="un_mdt_popover above" ng-show="mainForm.ITEM_TYPE.$error.required">
                         Item Type is required
                     </span>
             </span>
             </span>
-
         </div>
 
 
@@ -88,9 +81,9 @@
         <div class="break-row"></div>
 
         <!--TAX_ID-->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-            <span class="field">
-				<label for="tax_id">Tax id</label>
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-right-5 un-padding-left-10">
+            <span class="un_field_custom field">
+				<label class="lblselect" for="tax_id" ng-show="modelObjectMap.TAX_ID !='' && modelObjectMap.TAX_ID !=null">Tax id</label>
 				<select class="form-control" name="TAX_ID"
 					ng-model="modelObjectMap.TAX_ID"
 					ng-options="type.TAX_ID as type.TAX_NAME for type in options.taxes">

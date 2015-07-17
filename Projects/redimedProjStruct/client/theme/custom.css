@@ -389,11 +389,11 @@ input[class^="mdt-checkbox"] + label {
 }
 
 .field.show-label input {
-    height: 27px;
+    height: 28px;
 }
 
 .field.show-label label {
-    height: 18px;
+    height: 16px;
 }
 /* END MEDITEK INPUT AND SELECT */
 /* MEDITEK RADIO BUTTON */
@@ -460,6 +460,33 @@ input[class^="mdt-checkbox"] + label {
 
 .mdt-popover:before {
     border-top: 7px solid rgb(239, 127, 106);
+    border-right: 7px solid transparent;
+    border-left: 7px solid transparent;
+    bottom: -7px;
+    content: '';
+    display: block;
+    left: 50%;
+    margin-left: -7px;
+    position: absolute;
+}
+
+.un_mdt_popover {
+    background-color: rgb(237, 11, 20);
+    border-radius: 5px;
+    bottom: 45px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+    color: #fff;
+    font-size: 12px;
+    font-family: 'Helvetica', sans-serif;
+    right: 0;
+    padding: 7px 10px;
+    position: absolute;
+    width: 200px;
+    z-index: 4;
+}
+
+.un_mdt_popover:before {
+    border-top: 7px solid rgb(237, 11, 20);
     border-right: 7px solid transparent;
     border-left: 7px solid transparent;
     bottom: -7px;
@@ -2110,9 +2137,6 @@ nav bar end*/
 }
 .un-padding-left-10{
     padding-left: 10px;
-}
-.un-padding-left-5{
-    padding-left: 5px;
 }
 .un-padding-right-10{
     padding-right: 10px;
@@ -4015,6 +4039,44 @@ label{
 }
 .un_marign_right_0{
     margin-right: 0px;
+}
+.un_field_custom{
+    height: 28px;
+    border: 1px solid rgb(6, 6, 6);
+}
+.lblselect{
+    background-color: white !important;
+    top: -22px;
+    font-size: 17 !important;
+    height: 20px !important;
+    color: rgb(48, 127, 155) !important;
+    padding: 0 !important;
+}
+.un_field_custom.show-label{
+    height: 28px;
+    padding: 0;
+    border: 1px solid rgb(6, 6, 6);
+    border-bottom: 1px solid rgb(6, 6, 6);
+}
+.un_field_custom.show-label label{
+    background-color: white;
+    top: -22px;
+    font-size: 17;
+    height: 20px;
+    color: rgb(48, 127, 155);
+    padding: 0;
+}
+.un_field_custom.has-error {
+    border: 1px solid rgb(237, 11, 20);
+}
+.un_field_custom input,
+.un_field_custom select,
+.un_field_custom textarea {
+    height: 26px !important;
+    outline: none;
+    font-size: 17px;
+    padding-top: 0px;
+    padding-bottom: 0px;
 }
 /*phanquocchien patient end*/
 
