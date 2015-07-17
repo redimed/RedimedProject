@@ -20,6 +20,10 @@ cln_fa_lines_type_16.jasper: for SCORE_TYPE = 16
 
 cln_fa_lines_type_23.jasper: for SCORE_TYPE = 21,23
 
+cln_fa_lines_type_30.jasper: for SCORE_TYPE = 30
+
+cln_fa_lines_type_29.jasper: for SCORE_TYPE = 29
+
 not have report: 
 
-10,22,29,30
+10,22
