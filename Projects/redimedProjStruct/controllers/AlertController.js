@@ -55,7 +55,7 @@ module.exports = {
 		var postData = req.body.data;
 
 		var sql = knex
-			.column('cln_patient_medication_details.*','cln_patient_consults.cal_id','cln_appointment_calendar.FROM_TIME','doctors.NAME')
+			.column('cln_patient_medication_details.*','cln_patient_consults.cal_id','cln_appointment_calendar.FROM_TIME','doctors.NAME','doctors.Provider_no')
 			.from('cln_patient_medication_details')
 			.innerJoin('cln_patient_consults', 'cln_patient_medication_details.consult_id', 'cln_patient_consults.consult_id')
 			.innerJoin('cln_appointment_calendar', 'cln_patient_consults.cal_id', 'cln_appointment_calendar.CAL_ID')

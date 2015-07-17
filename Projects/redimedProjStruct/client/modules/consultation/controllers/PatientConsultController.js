@@ -476,6 +476,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 						
 						
 					}
+					 $scope.submitClick();
 				})
 			}
 
@@ -508,6 +509,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 					{
 						$scope.consultInfo.scripts[index] = data.value;
 					}
+					 $scope.submitClick();
 				})
 			}
 

@@ -120,28 +120,29 @@ angular.module("app.loggedIn.patient.consult.scriptController",[])
 		
 		$scope.okClick = function(){
 			console.log($scope.scriptInfo);
-			var count = 0;
-			if (script !== null) {
-				for (var i = 0; i < arrayscript.length; i++) {
-				if ($scope.scriptInfo.medication_name === arrayscript[i].medication_name && $scope.scriptInfo.medication_name !== script.medication_name) {
-						count ++;
-					};
-				};
-			}else{
-				for (var i = 0; i < arrayscript.length; i++) {
-				if ($scope.scriptInfo.medication_name === arrayscript[i].medication_name) {
-						count ++;
-					};
-				};
+			$scope.isSubmit = true;
+			if (!$scope.medicationForm.$invalid) {
+				$scope.scriptInfo.start_date = ConfigService.convertToDB($scope.scriptInfo.start_date);
+				$scope.scriptInfo.end_date = ConfigService.convertToDB( $scope.scriptInfo.end_date);
+				$modalInstance.close({'type':'ok','value':$scope.scriptInfo});
 			};
+			// var count = 0;
+			// if (script !== null) {
+			// 	for (var i = 0; i < arrayscript.length; i++) {
+			// 	if ($scope.scriptInfo.medication_name === arrayscript[i].medication_name && $scope.scriptInfo.medication_name !== script.medication_name) {
+			// 			count ++;
+			// 		};
+			// 	};
+			// }else{
+			// 	for (var i = 0; i < arrayscript.length; i++) {
+			// 	if ($scope.scriptInfo.medication_name === arrayscript[i].medication_name) {
+			// 			count ++;
+			// 		};
+			// 	};
+			// };
 			
 			if (count === 0) {
-				$scope.isSubmit = true;
-				if (!$scope.medicationForm.$invalid) {
-					$scope.scriptInfo.start_date = ConfigService.convertToDB($scope.scriptInfo.start_date);
-					$scope.scriptInfo.end_date = ConfigService.convertToDB( $scope.scriptInfo.end_date);
-					$modalInstance.close({'type':'ok','value':$scope.scriptInfo});
-				};
+				
 			}else{
 				toastr.error("Medication Name  Exits !");
 			};
