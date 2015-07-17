@@ -34,7 +34,8 @@
                 <!-- FEE TYPES  -->
                 <div ng-class="{active: (fees.tab == 2)}" class="tab-pane">
                     <div class="pull-right navbar-right">
-                        <a class="btn btn-sm blue" ng-click="addTypeForm.open()"><i class="fa fa-plus"></i> Add Fee Type</a>
+                       <!--  <a class="btn btn-sm blue" ng-click="addTypeForm.open()"><i class="fa fa-plus"></i> Add Fee Type</a> -->
+                        <a class="btn btn-sm blue" ng-click="addTypeFormopen()"><i class="fa fa-plus"></i> Add Fee Type</a>
                     </div>
                     <my-data-table options="fee_types.options" rowclass="fee_types.class"></my-data-table>
                 </div>
@@ -147,3 +148,30 @@
     <private-funds-detail options="options" onsuccess="editPrivateFundsForm.success" data="{id: '{{pf.id}}'}" />
 </div>
 <!--END POPUP PRIVATE FUNDS DETAIL EDIT FORM-->
+<script type="text/ng-template" id="addTypeForm">
+    <style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+    </style>
+    <div class="modal-body">
+       <fee-type-detail options="options" success="addTypeFormopen.success"/>
+    </div>
+    <div class="modal-footer" style="height: 47px">
+        <button class="un-button-submit-m ng-scope" style="margin-top: -5px;" ng-click="cancel()">Cancel</button>
+    </div>
+ </script>
+
+ <script type="text/ng-template" id="editTypeForm">
+    <style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+    </style>
+    <div class="modal-body">
+       <fee-type-detail options="options" success="editTypeFormopen.success" data="{id: '{{editTypeFormopen.id}}'}"/>
+    </div>
+    <div class="modal-footer" style="height: 47px">
+        <button class="un-button-submit-m ng-scope" style="margin-top: -5px;" ng-click="cancel()">Cancel</button>
+    </div>
+ </script>

@@ -178,7 +178,7 @@ angular.module("app.loggedIn.item.fee.controller",[
             use_actions: true, 
             action_show: function(item) {
                 if(item.feeGroup == null) return true;
-                if(item.feeGroup.FEE_GROUP_TYPE != 'item_fee_type') return true;
+                if(item.feeGroup.FEE_GROUP_TYPE != '') return true;
                 return false;
             },
             actions: [
@@ -187,7 +187,7 @@ angular.module("app.loggedIn.item.fee.controller",[
                     callback: function(item){
                         console.log(item)
                             $scope.feeType.id = item.FEE_TYPE_ID;
-                            $scope.editTypeForm.open();
+                            $scope.editTypeFormopen();
                     }
                 },   
                 {
@@ -302,7 +302,76 @@ angular.module("app.loggedIn.item.fee.controller",[
                 $scope.fee_types_panel.reload();
             }
         }
-
+        $scope.addTypeFormopen = function(){
+            var modalInstance=$modal.open({
+                templateUrl:'addTypeForm',
+                controller:function($scope,$modalInstance,options,addTypeForm){
+                   $scope.options = options;
+                     $scope.cancel=function()
+                    {
+                        $modalInstance.dismiss('cancel');
+                    }
+                   $scope.addTypeFormopen = {
+                        success: false
+                    }
+                    $scope.$watch('addTypeFormopen.success', function(success){
+                        if(success){
+                            $modalInstance.close('success');
+                        }
+                    })
+                },
+                resolve:{
+                   options : function(){
+                     return $scope.addTypeForm.options;
+                   },
+                    addTypeForm : function(){
+                     return $scope.addTypeForm;
+                   }
+                }
+            })
+            .result.then(function(response){
+                if(response === 'success'){
+                     $scope.fee_types_panel.reload();
+                }
+            })
+        }
+        $scope.editTypeFormopen = function(){
+            var modalInstance=$modal.open({
+                templateUrl:'editTypeForm',
+                controller:function($scope,$modalInstance,options,editTypeForm,id){
+                   $scope.options = options;
+                     $scope.cancel=function()
+                    {
+                        $modalInstance.dismiss('cancel');
+                    }
+                   $scope.editTypeFormopen = {
+                        id:id,
+                        success: false
+                    }
+                    $scope.$watch('editTypeFormopen.success', function(success){
+                        if(success){
+                            $modalInstance.close('success');
+                        }
+                    })
+                },
+                resolve:{
+                   options : function(){
+                     return $scope.editTypeForm.options;
+                   },
+                    editTypeForm : function(){
+                     return $scope.editTypeForm;
+                   },
+                   id : function(){
+                    return $scope.feeType.id;
+                   }
+                }
+            })
+            .result.then(function(response){
+                if(response === 'success'){
+                     $scope.fee_types_panel.reload();
+                }
+            })
+        }
         $scope.addTypeForm = {
             options: {
                 groupSelect: $scope.fee_groups_panel
@@ -328,6 +397,7 @@ angular.module("app.loggedIn.item.fee.controller",[
             is_show: false,
             open: function () {
                 this.is_show = true;
+                 
             },
             close: function () {
                 this.is_show = false;
