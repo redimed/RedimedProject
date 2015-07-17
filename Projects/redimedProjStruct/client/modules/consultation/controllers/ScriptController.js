@@ -141,11 +141,11 @@ angular.module("app.loggedIn.patient.consult.scriptController",[])
 			// 	};
 			// };
 			
-			if (count === 0) {
+			// if (count === 0) {
 				
-			}else{
-				toastr.error("Medication Name  Exits !");
-			};
+			// }else{
+			// 	toastr.error("Medication Name  Exits !");
+			// };
 			
 		}
 

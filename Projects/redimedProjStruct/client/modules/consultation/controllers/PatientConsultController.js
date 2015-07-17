@@ -469,9 +469,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 									count ++;
 								}
 							};
-							if (count === 0) {
-								$scope.consultInfo.scripts.push(data.value);
-							};
+							$scope.consultInfo.scripts.push(data.value);
 						};
 						
 						
