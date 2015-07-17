@@ -17,9 +17,17 @@
                 <div ng-class="{active: (fees.tab == 1)}" class="tab-pane">
                     <div class="pull-right navbar-right">
                         <!-- <a class="btn btn-sm blue" ng-click="addGroupForm.open()"><i class="fa fa-plus"></i> Add Group</a> --><!-- tannv.dts comment -->
-
+                        <span>
+                            <input type="checkbox"
+                               ng-model="fee_groups.options.search.SHOW_ALL"
+                               ng-true-value="1"
+                               ng-false-value="0"
+                               ng-change="fee_groups_panel.reload();"> Show all invisible groups
+                        </span>
                         <a class="btn btn-sm blue" ng-click="addGroupFee();"><i class="fa fa-plus"></i> Add Group</a> <!-- tannv.dts add -->
+
                     </div>
+
                     <my-data-table options="fee_groups.options" rowclass="fee_groups.class"></my-data-table>
                 </div>
                 <!-- END GROUPS  -->
@@ -61,7 +69,7 @@
 <!-- tannv.dts add -->
 <script type="text/ng-template" id="addGroupFeeTemplate">
     <div class="modal-body">
-        <fee-group-detail options="options" onsuccess="addGroupFeeSuccess" />
+        <fee-group-detail options="options" onsuccess="onSuccess" />
     </div>
     <div class="modal-footer">
         <button class="btn btn-warning btn-xs" ng-click="cancel()">Cancel</button>
@@ -71,14 +79,25 @@
 
 
 <!--POPUP GROUP DETAIL EDIT FORM-->
-<div class="mdt-search" style="display: block;" ng-if="editGroupForm.is_show">
+<!-- <div class="mdt-search" style="display: block;" ng-if="editGroupForm.is_show">
     <div class="pull-right text-center ng-scope">
         <button class="btn btn-sm btn-block red" ng-click="editGroupForm.close()">
             <i class="fa fa-times"></i>
         </button>
     </div>
     <fee-group-detail options="options" onsuccess="editGroupForm.success" data="{id: '{{feeGroup.id}}'}" />
-</div>
+</div> --> <!-- tannv.dts comment -->
+
+<script type="text/ng-template" id="editGroupFeeTemplate">
+    <div class="modal-body">
+        
+        <fee-group-detail options="options" onsuccess="onSuccess" data="{id: '{{feeGroup.id}}'}" />
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-warning btn-xs" ng-click="cancel()">Cancel</button>
+    </div>
+ </script><!-- tannv.dts add -->
+
 <!--END POPUP GROUP EDIT FORM-->
 
 

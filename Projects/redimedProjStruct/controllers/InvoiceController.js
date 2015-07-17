@@ -1,6 +1,6 @@
 /**
  * created by: tan, manh
- * creation date: 16-6-2015
+ * creatiovar kiss=require('./kissUtilsController');n date: 16-6-2015
  */
 var kiss=require('./kissUtilsController');
 var moment=require('moment');

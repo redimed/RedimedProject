@@ -32,7 +32,7 @@ angular.module("app.loggedIn.item.feegroup.detail.directive", [])
                         loadData(data.id);
                         scope.mode = {
                             type: 'edit',
-                            text: 'Edit Fee Group'
+                            text: 'Save Fee Group'
                         };
                     }
                 }

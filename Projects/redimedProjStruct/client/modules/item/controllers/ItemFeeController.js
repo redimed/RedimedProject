@@ -88,11 +88,15 @@ angular.module("app.loggedIn.item.fee.controller",[
             scope: $scope.fee_groups_panel,
             not_paging: true,
             method: 'post',
+            search:{
+                // SHOW_ALL:0
+            },
             columns: [
                 {field: 'FEE_GROUP_ID', is_hide: true},
                 {field: 'FEE_GROUP_NAME', label: 'Group name'},
-                {field: 'FEE_GROUP_TYPE', label: 'Type'},
+                {field: 'FEE_GROUP_TYPE', label: 'Code'},
                 {field: 'PRICE_SOURCE', label: 'Price Source'},            
+                {field: 'ISENABLE'},            
             ],
                 use_actions: true,
                 actions: [
@@ -102,7 +106,8 @@ angular.module("app.loggedIn.item.fee.controller",[
                         callback: function (item) {
                             console.log(item);
                             $scope.feeGroup.id = item.FEE_GROUP_ID;
-                            $scope.editGroupForm.open();
+                            // $scope.editGroupForm.open();// tannv.dts comment
+                            $scope.editGroupFee();
                         }
                 },
                     {
@@ -368,30 +373,91 @@ angular.module("app.loggedIn.item.fee.controller",[
          * ------------------------------------------------------------
          * ------------------------------------------------------------
          */
+        /**
+         * add group fee
+         * created by:tannv.dts@gmail.com
+         * creation date: 16-7-2015
+         */
         $scope.addGroupFee=function()
         {
+            var fee_groups_panel=$scope.fee_groups_panel;
             var modalInstance=$modal.open({
                 templateUrl:'addGroupFeeTemplate',
-                controller:function($scope,$modalInstance,options,addGroupForm){
+                controller:function($scope,$modalInstance,options){
                     $scope.options=options;
-                    $scope.addGroupForm=addGroupForm;
                     $scope.cancel=function()
                     {
                         $modalInstance.dismiss('cancel');
                     }
+                    $scope.onSuccess=function(response)
+                    {
+                        if (response.status == 'success')
+                        {
+                            fee_groups_panel.reload();
+                            $modalInstance.close("success");
+                        }
+                        else
+                        {
+                            //
+                        }
+                            
+                    }
                 },
                 // size: 'sm',
                 resolve:{
-                    options:$scope.options,
-                    addGroupForm:$scope.addGroupForm
+                    options:function(){return $scope.options}
                 }
             });
 
             modalInstance.result.then(function(data){
-
+                exlog.log(data);
             },function(reason){
                 exlog.log(reason);
             });
         }
+
+        $scope.editGroupFee=function()
+        {
+            var fHeader="item->ItemFeeController->editGroupFee";
+            var fee_groups_panel=$scope.fee_groups_panel;
+            var fee_types_panel=$scope.fee_types_panel;
+            var modalInstance=$modal.open({
+                templateUrl:"editGroupFeeTemplate",
+                controller:function($scope,$modalInstance,options,feeGroup)
+                {
+                    $scope.options=options;
+                    $scope.feeGroup=feeGroup;
+                    $scope.onSuccess=function(response)
+                    {
+                        if (response.status == 'success')
+                        {
+                            fee_groups_panel.reload();
+                            fee_types_panel.reload();
+                            $modalInstance.close('success');
+                        }
+                        else
+                        {
+                            //
+                        }
+                            
+                    }
+                    $scope.cancel=function(){
+                        $modalInstance.dismiss('cancel');
+                    }
+                },
+                resolve:{
+                    options:function(){return $scope.options},
+                    feeGroup:function(){return $scope.feeGroup}
+                }
+            });
+
+            modalInstance.result.then(function(data){
+                exlog.log(fHeader,data);
+            },function(reason){
+                exlog.log(fHeader,reason);
+            });
+
+        }
+
 
     })
