@@ -11,7 +11,9 @@ angular.module("app.loggedIn.insurer.detail.directive", [])
         },
         templateUrl: "modules/insurer/directives/templates/detail.html",
         link: function (scope, element, attrs) {
+            scope.feeGroupType=itemConst.feeGroupType;
             var loadData = function (id) {
+
                 InsurerService.detail(id).then(function (data) {
                     angular.extend(scope.modelObjectMap, data.row);
                     scope.modelObjectMap.isenable += '';
@@ -56,6 +58,7 @@ angular.module("app.loggedIn.insurer.detail.directive", [])
                             if (response.status === 'success') {
                                 toastr.success("Edit Insurer Successfully", "Success");
                                 scope.isSubmit = false;
+                                scope.success = true;
                                 if (scope.on_success) {
                                     scope.on_success(response);
                                 }

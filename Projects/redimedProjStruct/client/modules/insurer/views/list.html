@@ -18,7 +18,14 @@
             <i class="fa fa-medkit"></i> Insurer Companies
         </div>
         <div class="pull-right navbar-right">
-            <a class="btn blue" ng-click="add_form.open()"><i class="fa fa-plus"></i> New Insurer</a>
+            <span>
+                <input type="checkbox"
+                   ng-model="data_options.search.SHOW_ALL"
+                   ng-true-value="1"
+                   ng-false-value="0"
+                   ng-change="reload();"> Show all insurer
+            </span>
+            <a class="btn blue" ng-click="add_forminsurer()"><i class="fa fa-plus"></i> New Insurer</a>
         </div>
     </div>
     <div class="portlet-body">
@@ -46,5 +53,30 @@
     <div class="break-row" style="margin-bottom: 15px;"></div>
     <insurer-detail data="{}" onsuccess="add_form.success"></insurer-detail>
 </div>
-
+<script type="text/ng-template" id="add_forminsurer">
+    <style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+    </style>
+    <div class="modal-body">
+       <insurer-detail data="{}" success="add_form.success"></insurer-detail>
+    </div>
+    <div class="modal-footer" style="height: 47px">
+        <button class="un-button-submit-m ng-scope" style="margin-top: -5px;" ng-click="cancel()">Cancel</button>
+    </div>
+ </script>
+ <script type="text/ng-template" id="edit_forminsurer">
+    <style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+    </style>
+    <div class="modal-body">
+        <insurer-detail data="{id: '{{edit_form.id}}'}" success="edit_form.success"></insurer-detail>
+    </div>                         
+    <div class="modal-footer" style="height: 47px">
+        <button class="un-button-submit-m ng-scope" style="margin-top: -5px;" ng-click="cancel()">Cancel</button>
+    </div>
+ </script>
 
