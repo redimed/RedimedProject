@@ -293,5 +293,22 @@ module.exports = {
 		.error(function(error){
 			res.json(500, {"status": "error", "message": error});
 		})
+	},
+	getByID: function(req, res) {
+
+		var postData = req.body.patient_id;
+		var sql = knex('cln_patients')
+		.where({
+			Patient_id: postData
+		})
+		.toString();
+		db.sequelize.query(sql)
+		.success(function(data){
+			res.json({data: data});
+		})
+		.error(function(error){
+			res.json(500, {"status": "error", "message": error});
+		})
+
 	}
 }
