@@ -26,10 +26,11 @@ angular.module('app.loggedIn.template.directives.write', [])
 
 			/* PATIENT LOAD */
 			var patientLoad = function(patient_id){
-				PatientService.get(patient_id)
+				PatientService.getP(patient_id)
 				.then(function(response){
 					scope.patient.one = response.data;
 					loadTemplate();
+					console.log('**************** ', scope.patient.one);
 				}, function(error){})
 			}
 
@@ -48,6 +49,7 @@ angular.module('app.loggedIn.template.directives.write', [])
 			/* END PATIENT LOAD */
 
 			var loadTemplate = function(){
+				console.log('%%%%%%%%%%%%%%%%% ', scope.patient.one);
 				TemplateModel.one({id: $stateParams.id})
 				.then(function(response){
 					scope.template.one = response.data[0];
@@ -100,6 +102,7 @@ angular.module('app.loggedIn.template.directives.write', [])
 			scope.template = {
 				one: null
 			}
+			scope.patient.load();
 		}
 	}
 })
