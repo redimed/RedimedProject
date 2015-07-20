@@ -479,5 +479,7 @@ module.exports = {
 		.error(function(error){
 			res.json(500, {"status": "error", "message": error});
 		});
-	}
+	},
+
+	
 }

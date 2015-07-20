@@ -529,5 +529,16 @@ angular.module("app.loggedIn.item.fee.controller",[
 
         }
 
+        $scope.importMedicareFeeFromSource=function()
+        {
+            ItemService.importMedicareFeeFromSource({feeGroupId:4})
+            .then(function(data){
+                exlog.alert(data);
+            },function(err){
+
+            });
+
+        }
+
 
     })
