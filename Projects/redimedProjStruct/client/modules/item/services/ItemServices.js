@@ -174,6 +174,13 @@ angular.module("app.loggedIn.item.services", [])
         var detailApi = appApi.all("v2/fees/group/import_medicare_fee_from_source");
         return detailApi.post({postData:postData});
     }
+    
+
+    instanceService.importFeeFromTxtSource=function(postData)
+    {
+        var detailApi = appApi.all("v2/fees/group/import_fee_from_txt_source");
+        return detailApi.post({postData:postData});
+    }
 
     return instanceService;
 })

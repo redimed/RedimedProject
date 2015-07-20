@@ -94,7 +94,46 @@ module.exports = {
             return;
         }
 
+        var sql="SELECT * FROM cln_fee_group WHERE `FEE_GROUP_ID`=? AND ISENABLE=1";
+        kiss.executeQuery(req,sql,[feeGroupId],function(rows){
+            if(rows.length>0)
+            {
+                var groupFee=rows[0];
+                //duong dan chua file source
+                var filePath=itemUtil.sourceFolderPath+groupFee.PRICE_SOURCE;
+                var parseTxtSourceToArr=function(filePath,functionSuccess,functionError)
+                {
+                    var dataArr=[];
+                    fs.readFile(filePath,"utf8", function(err, data) {
+                        if(!err)
+                        {
+                            var listLine=data.split('\r');
+                            // for(var i=0;i<listL)
+                            functionSuccess(listLine);
+                        }
+                        else
+                        {
+                            functionError(err);
+                        }
+                    });
+                }
 
+                parseTxtSourceToArr(filePath,function(data){
+                    kiss.exFileJSON(data,'txtToArray.txt')
+                    res.json({status:'success',data:data});
+                },function(err){
+                    res.json(err);
+                })
+            }
+            else
+            {
+                kiss.exlog(fHeader,'Khong co fee group nao tuong ung voi id');
+                res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN002')});
+            }
+        },function(err){
+            kiss.exlog(fHeader,'Loi truy van lay thong tin fee group theo id',err);
+            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
+        });
     },
 
 

@@ -540,5 +540,15 @@ angular.module("app.loggedIn.item.fee.controller",[
 
         }
 
+        $scope.importFeeFromTxtSource=function()
+        {
+            ItemService.importFeeFromTxtSource({feeGroupId:3})
+            .then(function(data){
+                exlog.alert(data);
+            },function(err){
+                exlog.alert(err);
+            });
+        }
+
 
     })
