@@ -88,7 +88,15 @@ angular.module("app.loggedIn.item.detail.directive", [])
                         scope.isSubmit = true;
                         if (!scope.mainForm.$invalid) {
                             var postData = angular.copy(scope.modelObjectMap);
-
+                            if (postData.TAX_ID) {
+                                _.filter(scope.options.taxes, function(n) {
+                                    if (n.TAX_ID == postData.TAX_ID) {
+                                        console.log('postData',postData);
+                                        postData.TAX_CODE = n.TAX_CODE;
+                                        postData.TAX_RATE = n.TAX_RATE;
+                                    };
+                                });
+                            };
                             // DATE
                             for (var key in postData) {
                                 if (postData[key] instanceof Date) {

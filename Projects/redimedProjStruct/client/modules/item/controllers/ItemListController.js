@@ -75,7 +75,7 @@ angular.module("app.loggedIn.item.list.controller",[
     /*
     *   ADD FORM
     */
-
+    console.log("options.taxes",$scope.options);
     $scope.addForm = {
         is_show: false,
         open: function(){
