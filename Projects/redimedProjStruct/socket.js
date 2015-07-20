@@ -45,6 +45,7 @@ apnsConnection.on('completed',log('completed'));
 module.exports = function(io,cookie,cookieParser) {
     var userList = [];
     var ua = null;
+    var driverArr = [];
 
     io.use(parser);
 
@@ -77,6 +78,8 @@ module.exports = function(io,cookie,cookieParser) {
                     }
                 })
         })
+
+        socket.removeAllListeners();
 
         socket.on('disconnect',function(){
             var roomObj = io.sockets.adapter.rooms;
@@ -267,12 +270,7 @@ module.exports = function(io,cookie,cookieParser) {
                                                 })
                                         }
                                         else
-                                        {
-                                            // io.to(contact.socket)
-                                                // .emit('messageReceived',currentUser.id ,currentUser.user_name, message);
-
                                             socket.to(contact.user_name.toLowerCase()+'--'+contact.id).emit('messageReceived',currentUser.id ,currentUser.user_name, message);
-                                        }
                                     }
 
                                 }
@@ -291,18 +289,21 @@ module.exports = function(io,cookie,cookieParser) {
         socket.on('forceLogin',function(username){
             db.User.find({where:{user_name: username}},{raw:true})
                 .success(function(user){
-                    if(user.socket != null)
+                    if(user)
                     {
-                        socket.to(user.user_name.toLowerCase()+'--'+user.id).emit('forceLogout');
-                        db.User.update({
-                            socket: null
-                        },{id: user.id})
-                            .success(function(){
-                                getOnlineUser();
-                            })
-                            .error(function(err){
-                                console.log(err);
-                            })
+                        if(user.socket != null)
+                        {
+                            socket.to(user.user_name.toLowerCase()+'--'+user.id).emit('forceLogout');
+                            db.User.update({
+                                socket: null
+                            },{id: user.id})
+                                .success(function(){
+                                    getOnlineUser();
+                                })
+                                .error(function(err){
+                                    console.log(err);
+                                })
+                        }
                     }
                 })
                 .error(function(err){
@@ -362,7 +363,11 @@ module.exports = function(io,cookie,cookieParser) {
                            },{user_id:data.info.id})
                                .success(function(){
                                    if(userType != null && userType == 'Driver')
-                                       io.sockets.emit('driverLogout',id);
+                                   {
+                                       var index = _.findIndex(driverArr,'id',id);
+                                       driverArr.splice(index,1);
+                                       io.sockets.emit('driverLocation',driverArr);
+                                   }
 
                                    socket.emit('logoutSuccess');
                                    getOnlineUser();
@@ -400,22 +405,30 @@ module.exports = function(io,cookie,cookieParser) {
                     console.log(err);
                 })
         });
-
+        
+        
         socket.on('location',function(data){
-            var arr = {};
-
             db.sequelize.query("SELECT d.*,CONCAT(IFNULL(p.Title,''), ' . ', IFNULL(p.`First_name`,''),' ',IFNULL(p.`Sur_name`,''),' ',IFNULL(p.`Middle_name`,'')) as FullName " +
                                 "FROM driverInjury d INNER JOIN cln_patients p ON d.patient_id = p.Patient_id " +
                                 "WHERE d.driver_id = ? AND d.STATUS = 'Picking' AND DATE(d.pickup_date) = DATE(CURDATE())",null,{raw:true},[data[0].id])
                 .success(function(rs){
-                    arr.location = data[0];
-                    arr.patientList = rs;
+                    data[0].patientList = rs;
 
-                    io.sockets.emit('driverLocation',arr);
+                    var index = _.findIndex(driverArr,'id',data[0].id);
+                    if(index == -1)
+                        driverArr.push(data[0])
+                    else
+                    {
+                        driverArr[index].latitude = data[0].latitude;
+                        driverArr[index].longitude = data[0].longitude;
+                        driverArr[index].patientList = data[0].patientList;
+                    }
+                    io.sockets.emit('driverLocation',driverArr);
                 })
                 .error(function(err){
                     console.log(err);
                 })
+
         })
 
         socket.on("onlineMeasureData",function(id,info){
@@ -449,6 +462,7 @@ module.exports = function(io,cookie,cookieParser) {
                         });
                     }
                     io.sockets.emit('online', userList);
+                    io.sockets.emit('driverLocation',driverArr);
                 })
                 .error(function(err){
                     console.log(err);

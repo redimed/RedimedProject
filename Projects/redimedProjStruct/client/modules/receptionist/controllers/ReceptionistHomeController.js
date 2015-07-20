@@ -173,6 +173,14 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 	//load data change state
 	getAppt($scope.apptDate,$scope.apptSite);
 
+	$scope.openMap = function(){
+		var modalInstance = $modal.open({
+                templateUrl:'modules/receptionist/views/modals/modalMap.html',
+                controller:'InjuryMapController',
+                size:'lg'
+            });
+	}
+
 	$scope.changeAppt = function(appt,status){
 		swal({
             title: "Are You Sure To Update This Appointment?",
@@ -236,7 +244,6 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
     // socket.removeListener('receiveNotifyReceptionist', cancelListenerHandler());
 
 	socket.on('receiveNotifyReceptionist',function(){
-		console.log("=======aaaaaaaaaaaaa========");
 		getAppt($scope.apptDate,$scope.apptSite);
 	})
 

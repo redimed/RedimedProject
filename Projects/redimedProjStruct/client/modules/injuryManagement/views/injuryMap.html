@@ -36,11 +36,7 @@
                 <i class="icon-map"></i> &nbsp;&nbsp;&nbsp;
                 Injury Map </a>
         </li>
-        <li>
-            <a href="injuryMap.html#tab_1_1_2" data-toggle="tab">
-                <i class="icon-list"></i>&nbsp;&nbsp;&nbsp;
-                Injury List</a>
-        </li>
+       
     </ul>
     <div class="un-tabs-content">
         <div class="un-tab-content active" id="tab_1_1_1">
@@ -88,14 +84,15 @@
                                 <div class="col-md-3"> <label class="bold">Status</label></div>
                                 <div class="col-md-9">
                                     <span ng-show="im.status == 'New'" class="label label-md label-success">New </span>
-                                    <span ng-show="im.status == 'Waiting'" class="label label-md label-warning">Waiting </span>
+                                    <span ng-show="im.status == 'Picking'" class="label label-md label-info">Waiting For Driver</span>
+                                    <span ng-show="im.status == 'Picked'" class="label label-md label-warning">Heading To REDiMED</span>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-3"> <label class="bold">Driver</label></div>
                                 <div class="col-md-9">
-                                    <label ng-show="im.status == 'Waiting'">{{im.driverUser}}</label>
-                                    <select ng-model="map.driverId" ng-show="im.status == 'New'" ng-options="a.id as a.user_name for a in driverListTemp | unique:'id'">
+                                    <label ng-show="im.status == 'Picking' || im.status == 'Picked'">{{im.driverUser}}</label>
+                                    <select ng-model="selectedDriver.driverId" ng-show="im.status == 'New'" ng-options="a.driverId as a.username for a in driverMarker | unique:'driverId'">
                                         <option value="">--Select Driver--</option>
                                     </select>
 
@@ -103,7 +100,7 @@
                             </div>
                                 <br/>
                             <div class="clearfix">
-                                <a  ng-class="{disabled:map.driverId == null}" ng-show="im.status == 'New'"  ng-click="allocateDriver(im)"  href="javascript:;" class="btn blue btn-block">
+                                <a  ng-class="{disabled:selectedDriver.driverId == null}" ng-show="im.status == 'New'"  ng-click="allocateDriver(im)"  href="javascript:;" class="btn blue btn-block">
                                     Send Notification </a>
                                 </div>
                             </div>
@@ -142,88 +139,7 @@
             </map>
 
         </div>
-        <div class="un-tab-content" id="tab_1_1_2">
-            <div style="margin-bottom: 0 !important;" class="panel panel-default">
-                <table class="table table-condensed" >
-                    <tr>
-                        <th width="100px">
-                           <!--  <a href="javascript:;" ng-click="refreshList()" class="btn un-submit green">
-                                Refresh &nbsp;<i class="fa fa-refresh"></i>
-                            </a> -->
-                        </th>
-                        <th>
-                            <label style="font-size: 17px;">Patient Name</label>
-                        </th>
-                        <th style="text-align:center">
-                            <label style="font-size: 17px;">Injury Date</label>
-                        </th>
-                        <th style="text-align:center">
-                            <label style="font-size: 17px;">Driver</label>
-                        </th>
-                        <th style="text-align:center">
-                            <label style="font-size: 17px;">Status</label>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th width="100px">
-                            <a href="javascript:;" ng-click="refreshList()" class="btn un-submit green">
-                                Refresh &nbsp;<i class="fa fa-refresh"></i>
-                            </a>
-                        </th>
-                        <th>
-                            <input ng-change="searchInjury(search)" ng-model="search.patient" class="form-control" type="text" />
-                        </th>
-                        <th style="text-align:center">
-                            <date-range-picker style="width:200px;" ng-model="search.dateRange" ranged="true" callback="getDateRange(search.dateRange)"></date-range-picker>
-                            <!--<input class="form-control" type="text" />-->
-                        </th>
-                        <th style="text-align:center">
-                            <input ng-model="search.driver" ng-change="searchInjury(search)" class="form-control" type="text" />
-                        </th>
-                        <th style="text-align:center">
-                            <!--<input type="checkbox" ng-change="searchInjury(search)" ng-model="search.isNew"/> New-->
-                            <!--<input type="checkbox" ng-change="searchInjury(search)" ng-model="search.isWaiting"/> Waiting-->
-                            <!--<input type="checkbox" ng-change="searchInjury(search)" ng-model="search.isDone" /> Done-->
-                        </th>
-                    </tr>
-                </table>
-            </div>
-            <div  style="background-color: white;" class="div-table-content">
-                <table class="table table-hover table-condensed">
-                    <tbody>
-                        <tr style="white-space: nowrap; cursor: pointer;" ng-click="showDetails(im.injury_id)"  ng-repeat="im in injuryList" ng-class="{rowWaiting : im.STATUS == 'Waiting', rowDone : im.STATUS == 'Done'}">
-                            <td width="100px"  style="vertical-align:middle" align="center">
-                                <div class="img-image-name" ng-style={"background-color":im.background} >
-                                    {{im.First_name | limitTo: 1 | uppercase}}
-                                </div>
-                            </td>
-                            <td style="vertical-align:middle" >
-                                <label class="bold">
-                                    {{im.FullName}}
-                                </label>
-                            </td>
-                            <td style="vertical-align:middle" align="center">
-                                {{im.injury_date | date:'dd/MM/yyyy'}}
-                            </td>
-                            <td style="vertical-align:middle" align="center">
-                                <label class="bold">{{im.driverUser}}</label>
-                            </td>
-                            <td style="vertical-align:middle" align="center">
-                                <a ng-show="im.STATUS == 'New'" href="javascript:;" class="btn blue un-submit" style="width:100px">
-                                    {{im.STATUS}}
-                                </a>
-                                <a ng-show="im.STATUS == 'Waiting'" href="javascript:;" class="btn un-submit" style="width:100px">
-                                    {{im.STATUS}}
-                                </a>
-                                <a ng-show="im.STATUS == 'Done'" href="javascript:;" class="btn green un-submit" style="width:100px">
-                                    {{im.STATUS}}
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        
     </div>
 </div>
 

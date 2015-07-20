@@ -358,11 +358,12 @@ module.exports = {
         
     },
     injuryList: function(req,res){
-        db.sequelize.query("SELECT i.*,p.*, u.user_name as driverUser, u.Booking_Person as driverName, CONCAT(IFNULL(p.Title,''), ' . ', IFNULL(p.`First_name`,''),' ',IFNULL(p.`Sur_name`,''),' ',IFNULL(p.`Middle_name`,'')) as FullName " +
+        db.sequelize.query("SELECT i.*, a.isPickUp ,p.*, u.user_name as driverUser, u.Booking_Person as driverName, CONCAT(IFNULL(p.Title,''), ' . ', IFNULL(p.`First_name`,''),' ',IFNULL(p.`Sur_name`,''),' ',IFNULL(p.`Middle_name`,'')) as FullName " +
                             "FROM `im_injury` i " +
                             "INNER JOIN `cln_patients` p ON i.`patient_id` = p.`Patient_id` " +
                             "LEFT JOIN users u ON u.id = i.driver_id " +
-                            "WHERE i.`cal_id` IS NULL ORDER BY  i.`STATUS` = 'New' DESC, i.`STATUS` = 'Waiting' DESC, i.`STATUS` = 'Done' DESC, i.`injury_date` DESC",null,{raw:true})
+                            "LEFT JOIN cln_appt_patients a ON i.injury_id = a.injury_id "+
+                            "WHERE i.`cal_id` IS NULL ORDER BY  i.`STATUS` = 'New' DESC, i.`STATUS` = 'Picking' DESC, i.`STATUS` = 'Picked' DESC, i.`STATUS` = 'Done' DESC, i.`injury_date` DESC",null,{raw:true})
             .success(function(data){
                 res.json({status:'success',data:data})
             })
@@ -372,18 +373,34 @@ module.exports = {
     },
     injuryListByPatient: function(req,res){
       var patient_id = req.body.patient_id;
-        db.sequelize.query("SELECT i.*,p.*, u.user_name as driverUser, u.Booking_Person as driverName " +
+        db.sequelize.query("SELECT i.*, a.isPickUp,p.*, u.user_name as driverUser, u.Booking_Person as driverName " +
                             "FROM `im_injury` i " +
                             "INNER JOIN `cln_patients` p ON i.`patient_id` = p.`Patient_id` " +
                             "LEFT JOIN users u ON u.id = i.driver_id " +
+                            "LEFT JOIN cln_appt_patients a ON i.injury_id = a.injury_id "+
                             "WHERE i.`cal_id` IS NULL AND i.patient_id = ? "+
-                            "ORDER BY  i.`STATUS` = 'New' DESC, i.`STATUS` = 'Waiting' DESC, i.`STATUS` = 'Done' DESC, i.`injury_date` DESC",null,{raw:true},[patient_id])
+                            "ORDER BY  i.`STATUS` = 'New' DESC, i.`STATUS` = 'Picking' DESC, i.`STATUS` = 'Picked' DESC, i.`STATUS` = 'Done' DESC, i.`injury_date` DESC",null,{raw:true},[patient_id])
             .success(function(data){
                 res.json({status:'success',data:data})
             })
             .error(function(err){
                 res.json({status:'error',error:err})
             })
+    },
+    injuryListByDriver: function(req,res){
+      var driver_id = req.body.driver_id;
+      db.sequelize.query("SELECT i.*, a.isPickUp,p.* " +
+                          "FROM `im_injury` i " +
+                          "INNER JOIN `cln_patients` p ON i.`patient_id` = p.`Patient_id` " +
+                          "LEFT JOIN cln_appt_patients a ON i.injury_id = a.injury_id "+
+                          "WHERE i.driver_id = ? "+
+                          "ORDER BY  i.`STATUS` = 'New' DESC, i.`STATUS` = 'Picking' DESC, i.`STATUS` = 'Picked' DESC, i.`STATUS` = 'Done' DESC, i.`injury_date` DESC",null,{raw:true},[driver_id])
+          .success(function(data){
+              res.json({status:'success',data:data})
+          })
+          .error(function(err){
+              res.json({status:'error',error:err})
+          })
     },
     searchByDate: function(req,res){
         var from = req.body.from;
@@ -393,7 +410,7 @@ module.exports = {
         "FROM `im_injury` i " +
         "INNER JOIN `cln_patients` p ON i.`patient_id` = p.`Patient_id` " +
         "LEFT JOIN users u ON u.id = i.driver_id " +
-        "WHERE i.`cal_id` IS NULL AND i.injury_date BETWEEN ? AND ? ORDER BY  i.`STATUS` = 'New' DESC, i.`STATUS` = 'Waiting' DESC, i.`STATUS` = 'Done' DESC, i.`injury_date` DESC",null,{raw:true},[from,to])
+        "WHERE i.`cal_id` IS NULL AND i.injury_date BETWEEN ? AND ? ORDER BY  i.`STATUS` = 'New' DESC,i.`STATUS` = 'Picking' DESC, i.`STATUS` = 'Picked' DESC, i.`STATUS` = 'Done' DESC, i.`injury_date` DESC",null,{raw:true},[from,to])
             .success(function(data){
                 res.json({status:'success',data:data})
             })
@@ -410,7 +427,7 @@ module.exports = {
         "FROM `im_injury` i " +
         "INNER JOIN `cln_patients` p ON i.`patient_id` = p.`Patient_id` " +
         "LEFT JOIN users u ON u.id = i.driver_id " +
-        "WHERE i.`cal_id` IS NULL AND i.patient_id = ? AND i.injury_date BETWEEN ? AND ? ORDER BY  i.`STATUS` = 'New' DESC, i.`STATUS` = 'Waiting' DESC, i.`STATUS` = 'Done' DESC, i.`injury_date` DESC",null,{raw:true},[patient_id,from,to])
+        "WHERE i.`cal_id` IS NULL AND i.patient_id = ? AND i.injury_date BETWEEN ? AND ? ORDER BY  i.`STATUS` = 'New' DESC,i.`STATUS` = 'Picking' DESC, i.`STATUS` = 'Picked' DESC, i.`STATUS` = 'Done' DESC, i.`injury_date` DESC",null,{raw:true},[patient_id,from,to])
             .success(function(data){
                 res.json({status:'success',data:data})
             })
@@ -482,27 +499,12 @@ module.exports = {
 
         db.IMInjury.update(info,{injury_id:id})
             .success(function(){
-                if(info.STATUS == 'Done'){
-                    db.IMInjury.find({where:{injury_id:id}},{raw:true})
-                        .success(function(im){
-                            db.DriverInjury.update({
-                                STATUS:'Done'
-                            },{driver_id: im.driver_id, patient_id:im.patient_id})
-                                .success(function(){
-                                })
-                                .error(function(err){
-                                    res.json({status:'error'});
-                                    console.log(err);
-                                })
-                        })
-                        .error(function(err){
-                            res.json({status:'error'});
-                            console.log(err);
-                        })
-                }
-                if(info.STATUS == 'Waiting')
+                if(info.STATUS.toLowerCase() == 'picking')
                 {
-                    db.IMInjury.find({where:{injury_id:id}},{raw:true})
+                    db.sequelize.query("UPDATE im_injury_appt_status SET appt_status='Heading To Patient', picking_start_time=? "+
+                           "WHERE appt_id = (SELECT id FROM cln_appt_patients WHERE injury_id = ?)",null,{raw:true},[moment().format('YYYY-MM-DD HH:mm:ss'),id])
+                      .success(function(){
+                        db.IMInjury.find({where:{injury_id:id}},{raw:true})
                         .success(function(im){
 
                             db.sequelize.query("SELECT p.*,CONCAT(IFNULL(p.Title,''), '.', IFNULL(p.`First_name`,''),' ',IFNULL(p.`Sur_name`,''),' ',IFNULL(p.`Middle_name`,'')) as FullName FROM `cln_patients` p WHERE p.`Patient_id` = ?",null,{raw:true},[im.patient_id])
@@ -581,26 +583,63 @@ module.exports = {
                             res.json({status:'error'});
                             console.log(err);
                         })
+                      })
+                      .error(function(err){
+                          res.json({status:'error'});
+                          console.log(err);
+                      })
                 }
-
+                if(info.STATUS.toLowerCase() == 'picked')
+                {
+                    db.sequelize.query("UPDATE im_injury_appt_status SET appt_status='Heading To REDiMED', picking_end_time=? , picked_start_time =? "+
+                           "WHERE appt_id = (SELECT id FROM cln_appt_patients WHERE injury_id = ?)",null,{raw:true},[moment().format('YYYY-MM-DD HH:mm:ss'),moment().format('YYYY-MM-DD HH:mm:ss'),id])
+                      .success(function(){
+                        db.IMInjury.find({where:{injury_id:id}},{raw:true})
+                          .success(function(im){
+                              db.DriverInjury.update({
+                                  STATUS:'Picked'
+                              },{driver_id: im.driver_id, patient_id:im.patient_id})
+                                  .success(function(){
+                                  })
+                                  .error(function(err){
+                                      res.json({status:'error'});
+                                      console.log(err);
+                                  })
+                          })
+                          .error(function(err){
+                              res.json({status:'error'});
+                              console.log(err);
+                          })
+                      })
+                }
+                if(info.STATUS.toLowerCase() == 'done')
+                {
+                    db.sequelize.query("UPDATE im_injury_appt_status SET appt_status='Picked Up', picked_end_time =? "+
+                           "WHERE appt_id = (SELECT id FROM cln_appt_patients WHERE injury_id = ?)",null,{raw:true},[moment().format('YYYY-MM-DD HH:mm:ss'),id])
+                      .success(function(){
+                        db.IMInjury.find({where:{injury_id:id}},{raw:true})
+                          .success(function(im){
+                              db.DriverInjury.update({
+                                  STATUS:'Done'
+                              },{driver_id: im.driver_id, patient_id:im.patient_id})
+                                  .success(function(){
+                                  })
+                                  .error(function(err){
+                                      res.json({status:'error'});
+                                      console.log(err);
+                                  })
+                          })
+                          .error(function(err){
+                              res.json({status:'error'});
+                              console.log(err);
+                          })
+                      })
+                      .error(function(err){
+                          res.json({status:'error'});
+                          console.log(err);
+                      })
+                }
                 res.json({status:'success'});
-            })
-            .error(function(err){
-                res.json({status:'error'});
-                console.log(err);
-            })
-    },
-    getListDriverOnline: function(req,res){
-        db.UserType.find({where:{user_type:'Driver'}},{raw:true})
-            .success(function(rs){
-                db.User.findAll({where:["socket IS NOT NULL and user_type = ?",rs.ID],attributes:['id','user_name','Booking_Person']},{raw:true})
-                    .success(function(data){
-                        res.json({data:data});
-                    })
-                    .error(function(err){
-                        res.json({status:'error'});
-                        console.log(err);
-                    })
             })
             .error(function(err){
                 res.json({status:'error'});
@@ -612,59 +651,77 @@ module.exports = {
         var patientId = req.body.patientId;
         var injuryId = req.body.injuryId;
 
-        db.IMInjury.find({where:{injury_id: injuryId}},{raw:true})
-            .success(function(injury){
+        db.IMInjury.update({
+          driver_id: driverId
+        },{injury_id: injuryId})
+          .success(function(){
+              db.sequelize.query("UPDATE im_injury_appt_status SET appt_status='Driver Allocated', waiting_end_time=? "+
+                                 "WHERE appt_id = (SELECT id FROM cln_appt_patients WHERE injury_id = ?)",null,{raw:true},[moment().format('YYYY-MM-DD HH:mm:ss'),injuryId])
+                .success(function(){
+                  db.IMInjury.find({where:{injury_id: injuryId}},{raw:true})
+                    .success(function(injury){
 
-                //=====GCM Push=======
-                var message = new gcm.Message();
-                message.addData('title','EMERGENCY');
-                message.addData('message','You have new patient to pickup!');
-                message.addData('injury_id',injuryId);
+                        //=====GCM Push=======
+                        var message = new gcm.Message();
+                        message.addData('title','EMERGENCY');
+                        message.addData('message','You have new patient to pickup!');
+                        message.addData('injury_id',injuryId);
 
-                if(injury.latitude != null)
-                    message.addData('lat',injury.latitude);
-                if(injury.longitude != null)
-                    message.addData('lng',injury.longitude);
+                        if(injury.latitude != null)
+                            message.addData('lat',injury.latitude);
+                        if(injury.longitude != null)
+                            message.addData('lng',injury.longitude);
 
-                message.addData('soundname','beep.wav');
-                message.collapseKey = 'EMERGENCY';
-                message.delayWhileIdle = true;
-                message.timeToLive = 3;
+                        message.addData('soundname','beep.wav');
+                        message.collapseKey = 'EMERGENCY';
+                        message.delayWhileIdle = true;
+                        message.timeToLive = 3;
 
-                // =============APN PUSH=============
-                var notify = new apns.Notification();
-                notify.expiry = Math.floor(Date.now() / 1000) + 3600; 
-                notify.badge = 1;
-                notify.sound = 'beep.wav';
-                notify.alert = "You have new patient to pickup!";
-                notify.payload = {'messageFrom': 'REDiMED'}; 
+                        // =============APN PUSH=============
+                        var notify = new apns.Notification();
+                        notify.expiry = Math.floor(Date.now() / 1000) + 3600; 
+                        notify.badge = 1;
+                        notify.sound = 'beep.wav';
+                        notify.alert = "You have new patient to pickup!";
+                        notify.payload = {'messageFrom': 'REDiMED'}; 
 
-                var androidToken = [];
-                var iosToken = [];
-                db.UserType.find({where:{user_type:'Driver'}},{raw:true})
-                    .success(function(type){
-                        db.UserToken.find({where: {user_type: type.ID,user_id:driverId}}, {raw: true})
-                            .success(function (data) {
-                                if(data)
-                                {
-                                    if (data.android_token != null)
-                                        androidToken.push(data.android_token);
-                                    if (data.ios_token != null)
-                                        iosToken.push(data.ios_token);
+                        var androidToken = [];
+                        var iosToken = [];
+                        db.UserType.find({where:{user_type:'Driver'}},{raw:true})
+                            .success(function(type){
+                                db.UserToken.find({where: {user_type: type.ID,user_id:driverId}}, {raw: true})
+                                    .success(function (data) {
+                                        if(data)
+                                        {
+                                            if (data.android_token != null)
+                                                androidToken.push(data.android_token);
+                                            if (data.ios_token != null)
+                                                iosToken.push(data.ios_token);
+                                        }
 
-                                    if(androidToken.length > 0)
-                                    {
-                                      sender.send(message, androidToken, 4, function (err,result) {
-                                          if(err)
-                                              console.log("ERROR:",err);
-                                          else
-                                              console.log("SUCCESS:",result);
-                                      });
-                                    }
-                                    
-                                    if(iosToken.length > 0)
-                                       apnsConnection.pushNotification(notify, iosToken);
-                                }
+                                        if(androidToken.length > 0 || iosToken.length > 0)
+                                        {
+                                          if(androidToken.length > 0)
+                                          {
+                                            sender.send(message, androidToken, 4, function (err,result) {
+                                                if(err)
+                                                    console.log("ERROR:",err);
+                                                else
+                                                    console.log("SUCCESS:",result);
+                                            });
+                                          }
+                                          if(iosToken.length > 0)
+                                            apnsConnection.pushNotification(notify, iosToken);
+
+                                          res.json({status:'success'})
+                                          
+                                        }
+                                        else
+                                          res.json({status:'error'});
+                                    })
+                                    .error(function (err) {
+                                        console.log(err);
+                                    })
                             })
                             .error(function (err) {
                                 console.log(err);
@@ -673,10 +730,16 @@ module.exports = {
                     .error(function (err) {
                         console.log(err);
                     })
-            })
-            .error(function (err) {
-                console.log(err);
-            })
+                })
+                .error(function(err){
+                  res.json({status:'error'});
+                  console.log(err);
+                })
+          })
+          .error(function(err){
+            res.json({status:'error'});
+            console.log(err);
+          })
     },
     getOnlineUsers: function(req,res){
         var userList = [];
@@ -815,11 +878,11 @@ module.exports = {
                 if(tempDrawing.length > 0)
                   result.drawingArr = _.uniq(tempDrawing,function(item){return JSON.stringify(item);});
 
-                var medicationBooking = "SELECT m.* FROM cln_patient_medication_details m "+
+                var medicationBooking = "SELECT m.*, d.NAME FROM cln_patient_medication_details m INNER JOIN doctors d ON m.doctor_id = d.doctor_id "+
                                         "WHERE m.`patient_id`= ? "+
                                         "AND m.`consult_id` = (SELECT c.`consult_id` FROM cln_patient_consults c WHERE c.`patient_id` = ? AND c.`cal_id` = ?)";
 
-                var medicationInjury = "SELECT m.* "+
+                var medicationInjury = "SELECT m.*, d.NAME FROM cln_patient_medication_details m INNER JOIN doctors d ON m.doctor_id = d.doctor_id "+
                                         "FROM cln_patient_medication_details m "+
                                         "WHERE m.`patient_id`= (SELECT p.`Patient_id` FROM cln_appt_patients p WHERE p.`injury_id` = ?) "+
                                         "AND m.`consult_id` = (SELECT c.`consult_id` FROM cln_patient_consults c "+

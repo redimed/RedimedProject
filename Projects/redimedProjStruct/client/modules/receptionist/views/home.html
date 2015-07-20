@@ -98,28 +98,6 @@
 	    </div>
     </div>
 </div>
-<!-- <div id="alert-center" class="bv-right-list-reception un_box_shadow">
-    <div class="un_header_notification_list">
-        <label>Notification List</label><i class="fa fa-caret-right"></i>
-    </div>
-    <div class="un_body_notification_list" ng-repeat="list in alertCenter.list" ng-if="list.test !== 0 || list.alert.length !== 0">
-    	<div>
-    		<label ng-if="list.alert.length > 0 || list.cal.length > 0" style="font-size: 16px;font-weight: bold;">
-            {{list.First_name}} {{list.Sur_name}}
-	        </label>
-	        <ul ng-repeat="alert in list.alert" ng-if="list.alert.length > 0">
-	            <li>{{alert.name}}</li>
-	        </ul>
-	        <p ng-repeat="cal in list.cal" ng-if="list.cal.length > 0 && list.test === 1">
-	            <span ng-if="cal.IS_REFERRAL && cal.OUTREFERRAL === 'no'" style="margin-left: 10px;">
-	                {{cal.FROM_TIME}}-{{cal.TO_TIME}}:&nbsp
-	                There is no referral
-	            </span>
-	        </p>
-    	</div>
-    </div>
-</div> -->
-<!-- <div class="un_arrow" ng-click="clickArrow()" style="top:90px"></div> -->
 <div class="row">
 	<div class="col-md-4 col-sm-4">
 
@@ -168,6 +146,10 @@
            					<span style="font-size: 15px;" class="caption-subject">
        							Emergency
    							</span>
+		                    &nbsp;&nbsp;
+		                    <a href="javascript:;" ng-click="openMap()" class="btn btn-sm blue">
+		                    	Injury Map
+		                    </a>
            				</div>
            				<div class="tools">
            					<a style="font-size: 15px;" href="javascript:;" class="collapse"></a>
@@ -192,6 +174,13 @@
 	       								<li>
 									    	<a ui-sref="loggedIn.patient.consult({patient_id: a.Patient_id, cal_id: a.CAL_ID})" href="javascript:;">Details</a>
 								    	</li>
+								    	<li ng-if="a.isPickUp == null">
+									    	<a ng-click="changeAppt(a,'consult')" href="javascript:;">Online Consultation</a>
+								    	</li>
+								    	<li ng-if="a.isPickUp == null">
+									    	<a ng-click="changeAppt(a,'pickup')" href="javascript:;">Pick Up</a>
+								    	</li>
+
 									</ul>
 	   							</div>
 	   							
@@ -222,9 +211,17 @@
 				                    	</span>
 			                    	</div>
 			                    	<div class="row" style="font-size: 10px;color: white;">
-			                    		<span class="col-md-12 col-sm-12">
+			                    		<span class="col-md-5 col-sm-5">
 			                    			<i class="fa fa-clock-o"></i>
 				                    		<span style="color: white;" class="bold">{{a.Creation_date | moment: 'format': 'hh:mm A'}}</span>
+			                    		</span>
+			                    		<span class="col-md-7 col-sm-7">
+			                    			<span ng-if="a.isPickUp == 1" class="re_booking label-info">
+				                    			{{a.injury_status == null || a.injury_status == '' ? 'Pick Up' : a.injury_status}}
+			                    			</span>
+			                    			<span ng-if="a.isPickUp == 0" class="re_booking label-info">
+				                    			Online Consultation
+			                    			</span>
 			                    		</span>
 			                    	</div>
 			                    </div>

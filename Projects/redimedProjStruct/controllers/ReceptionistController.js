@@ -9,10 +9,12 @@ module.exports = {
 
 		db.sequelize.query("SELECT d.NAME AS doctor_name,a.id AS appt_id, a.`appt_status` , "+
 							"c.`CAL_ID`,e.SERVICE_COLOR, c.`DOCTOR_ID`,c.`SITE_ID`,p.`Patient_id`,c.`FROM_TIME`,c.`TO_TIME`, "+
-							"a.checkedin_start_time, p.`Title`,p.`First_name`,p.`Sur_name`,p.`Middle_name`, p.`DOB`,co.`Company_name`,p.avatar,a.`Creation_date` "+
+							"a.checkedin_start_time, p.`Title`,p.`First_name`,p.`Sur_name`,p.`Middle_name`, p.`DOB`,co.`Company_name`,p.avatar,a.`Creation_date`,a.isPickUp, "+
+							"s.appt_status AS injury_status, s.waiting_start_time, s.picking_start_time, s.picked_start_time "+
 							"FROM cln_appt_patients a "+
 							"INNER JOIN cln_appointment_calendar c ON c.`CAL_ID` = a.`cal_id` "+
 							"LEFT JOIN doctors d ON c.`DOCTOR_ID` = d.`doctor_id` "+
+							"LEFT JOIN im_injury_appt_status s ON s.appt_id = a.id "+
 							"INNER JOIN sys_services e ON e.`SERVICE_ID` = c.`SERVICE_ID` "+
 							"LEFT JOIN `cln_patients` p ON a.`Patient_id` = p.`Patient_id` LEFT JOIN companies co ON p.`company_id` = co.id "+
 							"WHERE c.FROM_TIME BETWEEN ? AND DATE_ADD(?, INTERVAL 1 DAY) AND c.`SITE_ID` = ? "+
@@ -209,7 +211,35 @@ module.exports = {
 		var toAppt = req.body.toAppt;
 		var state = req.body.state;
 
-		if(state.toLowerCase() == 'checked')
+		if(state.toLowerCase() == 'consult' || state.toLowerCase() == 'pickup')
+		{
+			var isPickUp = state.toLowerCase() == 'consult' ? 0 : 1;
+			db.sequelize.query("UPDATE cln_appt_patients SET isPickUp = ? WHERE id = ?",
+						null,{raw:true},[isPickUp, fromAppt.appt_id])
+				.success(function(){
+					if(state.toLowerCase() == 'pickup')
+					{
+						db.sequelize.query("INSERT INTO im_injury_appt_status(appt_id,appt_status,waiting_start_time) "+
+										   "VALUES(?,?,?)",null,{raw:true},[fromAppt.appt_id,'Wating For Picking',moment().format('YYYY-MM-DD HH:mm:ss')])
+						.success(function(){
+							res.json({status:'success'});
+						})
+						.error(function(err){
+							res.json({status:'error'});
+							console.log(err);
+						})
+					}
+					else
+						res.json({status:'success'});
+					
+				})
+				.error(function(err){
+					res.json({status:'error'});
+					console.log(err);
+				})
+		}
+
+		else if(state.toLowerCase() == 'checked')
 		{
 			db.sequelize.query("UPDATE cln_appt_patients SET CAL_ID = ?, appt_status = ?, checkedin_start_time = ? WHERE id = ?",
 						null,{raw:true},[toAppt.CAL_ID, 'Checked In', moment().format('YYYY-MM-DD HH:mm:ss'), fromAppt.appt_id])

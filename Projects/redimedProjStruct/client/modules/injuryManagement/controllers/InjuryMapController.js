@@ -2,194 +2,134 @@
  * Created by Luan Nguyen on 1/11/2015.
  */
 angular.module("app.loggedIn.patient.injuryManagement.map.controller",[])
-    .controller("InjuryMapController",function($scope,$filter,$state,InjuryManagementService,UserService,toastr,socket,$interval){
+    .controller("InjuryMapController",function($scope,$filter,$state,InjuryManagementService,UserService,toastr,socket,$interval,$modal,$modalInstance){
         $scope.injuryMarker = [];
         $scope.driverMarker = [];
-        $scope.driverListTemp = [];
-        $scope.injuryList = [];
-        $scope.injuryListTemp = [];
-
 
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
         };
 
-        $scope.map = {
+        $scope.selectedDriver = {
             driverId: null
-        }
-
-        $scope.search = {
-            patient: "",
-            driver: "",
-            isNew: true,
-            isWaiting: true,
-            isDone: true,
-            dateRange: null
-        }
-
-        $scope.searchInjury = function(s){
-
-            $scope.injuryList = $filter('filter')($scope.injuryListTemp, {
-                driverUser: s.driver,
-                FullName: s.patient
-            });
-
-        }
-
-        $scope.getDateRange = function(range){
-            filterDate($filter('date')(range.start.toDate(),'yyyy-MM-dd'), $filter('date')(range.end.toDate(),'yyyy-MM-dd'));
-            $scope.search.patient = "";
-            $scope.search.driver = "";
         };
 
-        getOnlineDriver();
-
-        var colors = ['#FF5E3A','#FF9500','#FFDB4C','#87FC70','#52EDC7','#1AD6FD','#C644FC','#898C90'];
-
-        InjuryManagementService.getInjuryList().then(function(rs){
-            if(rs.status == 'success'){
-                for(var j=0;j<rs.data.length;j++){
-                    rs.data[j].background = colors[Math.floor(Math.random() * colors.length)];
-                    if(rs.data[j].driverUser == null || typeof rs.data[j].driverUser === 'undefined')
-                        rs.data[j].driverUser = '';
-                }
-                $scope.injuryListTemp = rs.data;
-
-                $scope.injuryList = $scope.injuryListTemp;
-
-                for(var i=0; i<rs.data.length; i++){
-                    if(rs.data[i].STATUS == 'New' || rs.data[i].STATUS == 'Waiting')
-                    {
-                        var patient = rs.data[i];
-                        var positionArr = [];
-                        var icon;
-                        if(patient.latitude != null)
-                            positionArr.push(patient.latitude);
-                        if(patient.longitude != null)
-                            positionArr.push(patient.longitude);
-
-                        if(patient.STATUS == 'Waiting')
-                            icon = 'modules/injuryManagement/icons/icon-orange.png';
-                        else if(patient.STATUS == 'New')
-                            icon = 'modules/injuryManagement/icons/icon-blue.png';
-
-                        $scope.patientData = {id:patient.injury_id,
-                            patientId: patient.Patient_id,
-                            position:positionArr,
-                            pickupAddr:patient.pickup_address,
-                            FullName: patient.FullName,
-                            gender: patient.Sex,
-                            injuryDesc: patient.injury_description,
-                            status:patient.STATUS,
-                            icon: icon,
-                            driverUser: patient.driverUser ,
-                            driverName: patient.driverName
-                        };
-
-                        $scope.injuryMarker.push($scope.patientData);
-                    }
-
-                }
-
-            }
-        })
-
-        socket.on('driverLocation',function(data){
-
-            var driverInfo = data.location;
-            $scope.driverList = [];
-
-            if(driverInfo.userType == 'Driver')
+        refreshMap();
+        
+        socket.on('driverLocation',function(driverArr){
+            if(driverArr.length == 0)
+                $scope.driverMarker = [];
+            else
             {
-                var addNewMarker = true;
-                var positionArr = [];
                 var icon = 'modules/injuryManagement/icons/ambulance.png';
+                for(var i=0 ; i<driverArr.length; i++)
+                {
+                    var driver = driverArr[i];
+                    $scope.driverData = {
+                        driverId: driver.id,
+                        position: [driver.latitude,driver.longitude],
+                        username: driver.userName,
+                        icon: icon,
+                        patientList: driver.patientList
+                    };
 
-                positionArr.push(driverInfo.latitude);
-                positionArr.push(driverInfo.longitude);
-
-                $scope.driverData = {
-                    driverId: driverInfo.id,
-                    position: positionArr,
-                    username: driverInfo.userName,
-                    icon: icon,
-                    patientList: data.patientList
-                };
-
-                $scope.$apply(function(){
-                    if($scope.driverMarker.length > 0)
+                    var index = _.findIndex($scope.driverMarker,'driverId',$scope.driverData.driverId);
+                    if(index == -1)
+                         $scope.driverMarker.push($scope.driverData);
+                    else
                     {
-                        for(var i=0; i<$scope.driverMarker.length;i++){
-                            if($scope.driverMarker[i].driverId == $scope.driverData.driverId)
-                            {
-                                addNewMarker = false;
-                                $scope.driverMarker.splice(i,1);
-                                $scope.driverMarker.push($scope.driverData);
-                            }
-                        }
-                    }
-
-                    if(addNewMarker == true)
-                    {
-                        $scope.driverMarker.push($scope.driverData);
-                    }
-
-
-                });
-            }
-
-        })
-
-        socket.on('driverLogout',function(userId){
-            $scope.$apply(function(){
-                for(var i=0; i<$scope.driverMarker.length;i++){
-                    if($scope.driverMarker[i].driverId == userId)
-                    {
-                        $scope.driverMarker.splice(i,1);
+                        $scope.driverMarker[index].position = $scope.driverData.position;
+                        $scope.driverMarker[index].patientList = $scope.driverData.patientList;
                     }
                 }
-            })
+            }
+            
         })
+
 
         $scope.showDetails = function(id){
-            $state.go('loggedIn.patient.im_Detail',{id:id});
+            InjuryManagementService.getInjuryById(id).then(function(rs){
+                if(rs.status == 'success')
+                {
+                    $modal.open({
+                        templateUrl: 'modules/consultation/dialogs/dialog_injury_details.html',
+                        size: 'md',
+                        resolve: {
+                            injuryInfo:function(){
+                                return  rs.data;
+                            }
+                        },
+                        controller: function($scope,$modalInstance,$stateParams,injuryInfo,InjuryManagementService){
+                            $scope.info = injuryInfo;
+                            $scope.loadedImage = false;
+                            $scope.injuryImages = [];
+                            $scope.imgArr = [];
+
+                            $scope.info.injury_date = moment.utc($scope.info.injury_date).format('DD/MM/YYYY - hh:mm:ss');
+
+                            if(typeof injuryInfo.injuryImg !== 'undefined' && injuryInfo.injuryImg.length > 0)
+                            {
+                                $scope.loadedImage = true;
+                                for(var i=0; i< injuryInfo.injuryImg.length; i++)
+                                {
+                                    $scope.imgArr.push({url: location.origin+"/api/im/image/"+ injuryInfo.injuryImg[i].id, img: injuryInfo.injuryImg[i]});
+                                }
+                            }
+
+                            $scope.cancelClick = function(){
+                                $modalInstance.close();
+                            }
+
+                            $scope.viewImage = function(img){
+                                var modalInstance = $modal.open({
+                                    templateUrl: "modules/injuryManagement/views/imageModal.html",
+                                    size: 'md',
+                                    resolve: {
+                                        imgObj: function(){
+                                            return img;
+                                        }
+                                    },
+                                    controller: function($scope, $state,$modalInstance, UserService,socket,toastr,imgObj){
+                                        $scope.img = {
+                                            image: location.origin+"/api/im/image/"+imgObj.id,
+                                            description: imgObj.desc
+                                        }
+                                    }
+                                })
+                            }
+
+                        }
+                    })
+                }
+            })
         }
 
         $scope.allocateDriver = function(injury){
-            InjuryManagementService.allocateDriver($scope.map.driverId,injury.patientId,injury.id).then(function(rs){
-                if(rs.status == 'success'){
-                    toastr.success("Send Notification Successfully!","Success");
-
-                    $scope.map.driverId = null;
-                   
-                }
+            InjuryManagementService.allocateDriver($scope.selectedDriver.driverId,injury.patientId,injury.id).then(function(rs){
+                if(rs.status == 'error')
+                    toastr.error("Send Notification Failed!","Error");
                 else
                 {
-                    toastr.error("Send Notification Failed!","Error");
+                    toastr.success("Send Notification Successfully!","Success");
+                    $scope.selectedDriver.driverId = null;
+                    refreshMap();
                 }
             })
         }
 
         $scope.refreshMap = function(){
             refreshMap();
-            getOnlineDriver();
         }
 
-        $scope.refreshList = function(){
-            refreshList();
-        }
-
-    
         setInterval(refreshMap,60 * 1000);
-        setInterval(getOnlineDriver,60 * 1000);
 
         function refreshMap(){
             $scope.injuryMarker = [];
             InjuryManagementService.getInjuryList().then(function(rs){
                 if(rs.status == 'success'){
                     for(var i=0; i<rs.data.length; i++){
-                        if(rs.data[i].STATUS == 'New' || rs.data[i].STATUS == 'Waiting')
+                        if(rs.data[i].isPickUp == 1 && (rs.data[i].STATUS == 'New' || rs.data[i].STATUS == 'Picking' || rs.data[i].STATUS == 'Picked'))
                         {
                             var patient = rs.data[i];
                             var positionArr = [];
@@ -199,7 +139,7 @@ angular.module("app.loggedIn.patient.injuryManagement.map.controller",[])
                             if(patient.longitude != null)
                                 positionArr.push(patient.longitude);
 
-                            if(patient.STATUS == 'Waiting')
+                            if(patient.STATUS == 'Picking' || patient.STATUS == 'Picked')
                                 icon = 'modules/injuryManagement/icons/icon-orange.png';
                             else if(patient.STATUS == 'New')
                                 icon = 'modules/injuryManagement/icons/icon-blue.png';
@@ -225,49 +165,6 @@ angular.module("app.loggedIn.patient.injuryManagement.map.controller",[])
             })
         };
 
-        function refreshList(){
-            $scope.search.patient = "";
-            $scope.search.driver = "";
-            $scope.search.dateRange = null;
-            
-            InjuryManagementService.getInjuryList().then(function(rs) {
-                if (rs.status == 'success') {
-                    for(var j=0;j<rs.data.length;j++){
-                        rs.data[j].background = colors[Math.floor(Math.random() * colors.length)];
-                        if(rs.data[j].driverUser == null || typeof rs.data[j].driverUser === 'undefined')
-                            rs.data[j].driverUser = '';
-                    }
-                    $scope.injuryListTemp = rs.data;
-                    $scope.injuryList = $scope.injuryListTemp;
 
-                }
-            })
-        }
-
-        function getOnlineDriver(){
-            InjuryManagementService.listDriver().then(function(rs){
-                $scope.driverListTemp = [];
-                if(rs.data){
-                    $scope.driverListTemp = rs.data;
-                }
-            })
-        }
-
-        function filterDate(from,to){
-            $scope.injuryList = [];
-            $scope.injuryListTemp = [];
-            InjuryManagementService.searchByDate(from,to).then(function(rs){
-                if(rs.status == 'success'){
-                    for(var j=0;j<rs.data.length;j++){
-                        rs.data[j].background = colors[Math.floor(Math.random() * colors.length)];
-                        if(rs.data[j].driverUser == null || typeof rs.data[j].driverUser === 'undefined')
-                            rs.data[j].driverUser = '';
-                    }
-                    $scope.injuryListTemp = rs.data;
-                    $scope.injuryList = $scope.injuryListTemp;
-
-                }
-            })
-        }
     })
 
