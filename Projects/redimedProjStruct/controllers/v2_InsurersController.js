@@ -79,26 +79,44 @@ module.exports = {
         var offset = (req.body.offset) ? req.body.offset : 0;
         var fields = req.body.fields;
 
-        var search_data = req.body.search;
-
-        if(search_data) {
-            ClnInsurersModel._callback.search = function(query_builder){
- 
-            };
+       var searchs=req.body.search?req.body.search:{};
+        searchs.isenable=1;
+        if(searchs.SHOW_ALL && searchs.SHOW_ALL==1)
+        {
+            delete searchs.isenable;
         }
-
-        var sql_count = ClnInsurersModel.sql_search_count();
-        var sql_data = ClnInsurersModel.sql_search_data(limit, offset, fields);
-
-        var k_sql = req.k_sql;
-        var result = null;
-        k_sql.exec(sql_data).then(function(data){
-            result = data;
-            return k_sql.exec_row(sql_count);
-        }).then(function(row){
-            res.json({list: result, count: row.count});
-        }).catch(function(err){
-            console.log(err);
+        delete searchs.SHOW_ALL;
+        db.Insurer.findAndCountAll({
+            attributes: fields,
+            where:searchs
+        }).success(function(result){
+            res.json({"status": "success", "list": result.rows, "count": result.count});
         })
+        .error(function(error){
+            res.json(500, {"status": "error", "message": error});
+        });
+        // var search_data = req.body.search;
+        // console.log(search_data);
+        // if(search_data) {
+        //     ClnInsurersModel._callback.search = function(query_builder){
+ 
+        //     };
+        // }
+
+        // var sql_count = ClnInsurersModel.sql_search_count();
+        // var sql_data = ClnInsurersModel.sql_search_data(limit, offset, fields);
+
+        // var k_sql = req.k_sql;
+
+        // var result = null;
+        // k_sql.exec(sql_data).then(function(data){
+        //     console.log('--------------',data);
+        //     result = data;
+        //     return k_sql.exec_row(sql_count);
+        // }).then(function(row){
+        //     res.json({list: result, count: row.count});
+        // }).catch(function(err){
+        //     console.log(err);
+        // })
     },
 }

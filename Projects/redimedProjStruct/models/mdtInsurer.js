@@ -21,7 +21,7 @@ var mdtInstance = sequelize.define("Insurer", {
     type: DataTypes.STRING(100),  
             },
             'isenable': { 
-    type: DataTypes.BOOLEAN,  
+    type: DataTypes.INTEGER(11),  
             },
             'created_by': { 
     type: DataTypes.INTEGER(11),  
