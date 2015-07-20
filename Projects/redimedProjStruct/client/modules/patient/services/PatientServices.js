@@ -14,6 +14,11 @@ angular.module("app.loggedIn.patient.services", [])
     */
     // RESTFUL
 
+    instanceService.getP = function(patient_id) {
+        var fP =  mdtApi.all('getID');
+        return fP.post({patient_id: patient_id});
+    }
+
     instanceService.get = function(patient_id) {
         return restfulAPI.one('Patient/' + patient_id).get();
     }

@@ -502,6 +502,11 @@
                                 <tr>
                                     <th>
                                         <div class="th">
+                                            <span style="color: white;">Appt Date</span>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="th">
                                             <span style="color: white;">Name</span>
                                         </div>
                                     </th>
@@ -522,7 +527,7 @@
                                     </th>
                                     <th>
                                         <div class="th">
-                                            <span style="color: white;">Frequency</span>
+                                            <span style="color: white;">Freq</span>
                                         </div>
                                     </th>
                                     <th>
@@ -537,14 +542,14 @@
                                     </th>
                                     <th>
                                         <div class="th">
-                                            <span style="color: white;">Quanlity</span>
+                                            <span style="color: white;">Qty</span>
                                         </div>
                                     </th>
-                                   <!--  <th>
+                                    <th>
                                         <div class="th">
                                             <span style="color: white;">Doctor</span>
                                         </div>
-                                    </th> -->
+                                    </th>
                                      <th>
                                         <div class="th">
                                             <span style="color: white;">Condition/Indication</span>
@@ -569,6 +574,9 @@
                                 </tr>
                                 <tr style="background-color: white;" class="bold" ng-if="consultInfo.scripts.length > 0" ng-repeat="m in consultInfo.scripts">
                                     <td style="vertical-align: middle">
+                                        {{m.FROM_TIME | filterdate: 'DD/MM/YYYY'}}
+                                    </td>
+                                    <td style="vertical-align: middle">
                                         {{m.medication_name}}
                                     </td>
                                     <td style="vertical-align: middle">
@@ -592,12 +600,12 @@
                                      <td style="vertical-align: middle">
                                         {{m.qty}}
                                     </td>
-<!--                                      <td style="vertical-align: middle" ng-if="!m.Provider_no">
-                                        {{m.user_name}}
+                                     <td style="vertical-align: middle" ng-if="!m.Provider_no">
+                                        {{m.NAME}}
                                     </td>
                                     <td style="vertical-align: middle" ng-if="m.Provider_no">
-                                        {{m.user_name}} , {{m.Provider_no}}
-                                    </td> -->
+                                        {{m.NAME}} , {{m.Provider_no}}
+                                    </td>
                                     <td style="vertical-align: middle">
                                         {{m.condition_Indication}}
                                     </td>

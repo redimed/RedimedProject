@@ -16,3 +16,4 @@ app.post(url+'disablePatientAlert',AlertController.postUpdateEnablePatient);
 app.post(url+'getMedication',AlertController.getMedication);
 app.post(url+'insertMedication',AlertController.insertMedication);
 app.post(url+'deleteMedication',AlertController.deleteMedication);
+app.post(url+'getdoctorid',AlertController.getdoctorid);

@@ -4047,7 +4047,11 @@ label{
     color: HighlightText;
     background-color: Highlight;
 }
-
+.wysiwyg-editor {
+    max-height: 465px;
+    overflow: auto;
+    border: 0;
+}
 
 
 

@@ -25,7 +25,8 @@ where detail.PATIENT_ID =  $P{patient_id}
 and detail.CAL_ID =  $P{cal_id}
 and detail.LINE_ID =  $P{line_id}
 and detail.ISENABLE = 1
-and detail.ORD = 1]]>
+and detail.ORD = 1
+and detail.VAL1_ISCHECKBOX = 6]]>
 	</queryString>
 	<field name="PATIENT_ID" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -40,6 +41,9 @@ and detail.ORD = 1]]>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="QUESTION" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DESCRIPTION" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="VAL1_NAME" class="java.lang.String">

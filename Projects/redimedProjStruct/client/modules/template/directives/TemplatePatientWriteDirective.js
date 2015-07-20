@@ -34,7 +34,7 @@ angular.module('app.loggedIn.template.directives.patient_write', [])
 
 			/* PATIENT LOAD */
 			var patientLoad = function(patient_id){
-				PatientService.get(patient_id)
+				PatientService.getP(patient_id)
 				.then(function(response){
 					scope.patient.one = response.data;
 					loadTemplate(scope.id);
@@ -60,7 +60,6 @@ angular.module('app.loggedIn.template.directives.patient_write', [])
 				TemplateModel.one({id: id})
 				.then(function(response){
 					scope.template.one = response.data[0];
-
 					var content = scope.template.one.content;
 					var new_content = '';
 					var index_first_new = 0;
@@ -77,13 +76,32 @@ angular.module('app.loggedIn.template.directives.patient_write', [])
 							new_string_change = '<input class="custom-input-template" value="" placeholder="Please fill in">&nbsp;&nbsp;';
 						}else{
 							var field = split_string_change[1];
-
-							for(var key in scope.patient.one){
-								if(key === field){
-									new_string_change = scope.patient.one[key];
-									break;
+							console.log('field: ', field);
+							for(var i = 0; i < scope.patient.one.length; i++) {
+								for( var key in scope.patient.one[i] ){
+									//for( var k = 0; k < key.length; k++){
+										console.log('key: ', key);
+										if(key === field){
+											new_string_change = scope.patient.one[i][key];
+											break;
+										}
+									//}
 								}
 							}
+							// for(var key in scope.patient.one){
+							// 	console.log('############ ', key);
+							// 	for(var prop in key){
+							// 		if(key.hasOwnProperty(prop)){
+							// 			if(key[prop] === field){
+							// 				console.log('Prop ',key[prop]);
+							// 			}
+							// 		}
+							// 		// if(key === field){
+							// 		// 	new_string_change = scope.patient.one[key];
+							// 		// 	break;
+							// 		// }
+							// 	}
+							// }
 						}
 
 						new_content += content.substring(0, index_last+2);
@@ -92,6 +110,7 @@ angular.module('app.loggedIn.template.directives.patient_write', [])
 					}
 
 					new_content += content;
+					console.log('new content: ', new_content);
 
 					$('#writeTemplate').html(new_content);
 					$('.custom-input-template').on('input', function(e){
@@ -104,6 +123,7 @@ angular.module('app.loggedIn.template.directives.patient_write', [])
 			scope.template = {
 				one: null
 			}
+			scope.patient.load();
 		}
 	}
 })

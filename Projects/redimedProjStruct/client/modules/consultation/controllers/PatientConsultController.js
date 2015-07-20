@@ -110,6 +110,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		$scope.patientInfo = {};
 		$scope.companyInfo = {};
 		$scope.problemArr = [];
+		$scope.checktoasl = 0;
 		$scope.isConsult = true;
 		$scope.tscripts = ConsultInfoService.getConsultInfoScripts();
 		$scope.checkdata = ConsultInfoService.getCheckdata();
@@ -142,17 +143,10 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 				patient_id :$scope.patient_id,
 				cal_id:$scope.cal_id
 			}
-			AlertModel.insertMedication(postData).then(function(data){
-				if (data.data.length !== 0) {
-					var postDatam = {
-							consult_id :data.data[0].consult_id
-						}
-					AlertModel.getMedication(postDatam).then(function(response){
-						$scope.consultInfo.scripts = response.data;
-					})
-							
-				}
-			});
+			AlertModel.getMedication(postData).then(function(response){
+				console.log(response.data);
+				$scope.consultInfo.scripts = response.data;
+			})
 		}
 		$scope.getlistMedication();
 		/*
@@ -162,7 +156,6 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		$scope.loadConsultationInfo = function(){
 			ConsultationService.checkConsultation($scope.patient_id,$scope.cal_id).then(function(data){
 				if (data.status == 'success') {
-					
 					$scope.consultInfo.problem_id = data.data.problem_id;					
 					$scope.consultInfo.history = data.data.history;					
 					$scope.consultInfo.examination = data.data.examination;					
@@ -459,6 +452,9 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 						},
 						arrayscript:function(){
 							return $scope.consultInfo.scripts;
+						},
+						doctor_id : function(){
+							return $scope.getdoctor_id;
 						}
 					}
 				})
@@ -474,13 +470,14 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 									count ++;
 								}
 							};
-							if (count === 0) {
-								$scope.consultInfo.scripts.push(data.value);
-							};
+							$scope.consultInfo.scripts.push(data.value);
 						};
 						
 						
 					}
+					$scope.checktoasl = 1;
+					$scope.submitClick();
+					toastr.success("Add Medication Successfully!");
 				})
 			}
 
@@ -500,6 +497,9 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 						},
 						arrayscript:function(){
 							return $scope.consultInfo.scripts;
+						},
+						doctor_id : function(){
+							return $scope.getdoctor_id;
 						}
 						
 					}
@@ -510,6 +510,9 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 					{
 						$scope.consultInfo.scripts[index] = data.value;
 					}
+					 $scope.checktoasl = 1;
+					 $scope.submitClick();
+					 toastr.success("Edit Medication Successfully!");
 				})
 			}
 
@@ -525,6 +528,9 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 	                closeOnConfirm: true
 	            }, function() {
 	                $scope.consultInfo.scripts.splice(index,1);
+	                $scope.checktoasl = 1;
+	                $scope.submitClick();
+	                
 	            })
 			}
 		};
@@ -941,18 +947,24 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		            		toastr.success('Save invoice item success.');
 		            		
 		            	}
-		            	else if(data.status='non-data')
+		            	else if(data.status='non-data' && $scope.checktoasl === 0)
 		            	{
 		            		toastr.warning('No invoice item.');
 		            	}
-		            	else
+		            	else if($scope.checktoasl === 0)
 		            	{
 		            		toastr.error('Save invoice item error.');
+		            	}else{
+
 		            	}
 		            },function(err){
 		            	toastr.error('Save invoice item error.');
 		            });
-				 	toastr.success('Submit Consultation Success!');
+		            if ($scope.checktoasl === 0) {
+		            	 toastr.success('Submit Consultation Success!');
+		            };
+		          
+				 	
 				}
 				else
 					toastr.success("Submit Consultation Failed!");
@@ -974,7 +986,20 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		 */
 		$scope.apptPatient={};
 		$scope.actual_doctor_id={};
+		$scope.getdoctor_id=null;
 		$scope.apptStatus=ptnConst.apptStatus;
+		$scope.getdoctorid = function(){
+			var postData = {
+				patient_id : $stateParams.patient_id,
+				cal_id : $stateParams.cal_id
+			}
+			AlertModel.getdoctorid(postData)
+					.then(function(response){
+						$scope.getdoctor_id = response.data[0].DOCTOR_ID;
+						console.log(response.data[0].DOCTOR_ID);
+					})
+		}
+		$scope.getdoctorid();
 		$scope.getApptPatient=function()
 		{
 			var postData={

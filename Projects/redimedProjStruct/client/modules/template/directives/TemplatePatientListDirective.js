@@ -103,6 +103,30 @@ angular.module('app.loggedIn.template.directives.patient_list', [])
 					}
 				})
 			}
+			
+			scope.removeList = function(list){
+				var modalInstance = $modal.open({
+					templateUrl: 'removeTemplate',
+					controller: function($scope, $modalInstance){
+						$scope.clickNo = function(){
+							$modalInstance.dismiss('cancel');
+						}
+
+						$scope.clickYes = function(){
+							$modalInstance.close('success');
+						}
+					}
+				});
+
+				modalInstance.result.then(function(response){
+					if(response){
+						TemplateModel.delete({id: list.id})
+						.then(function(){
+							load();
+						})
+					}
+				})
+			}
 
 			var load = function(){
 				TemplateModel.list({})

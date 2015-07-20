@@ -143,7 +143,6 @@ and line.SCORE_TYPE1=11]]>
 		<band height="83">
 			<image>
 				<reportElement x="92" y="0" width="390" height="83" uuid="0092b55f-f9e1-4e0b-9ee2-16003942f1c4"/>
-				<imageExpression><![CDATA[$P{real_path}+$F{PICTURE_REPORT}]]></imageExpression>
 			</image>
 		</band>
 		<band height="30">

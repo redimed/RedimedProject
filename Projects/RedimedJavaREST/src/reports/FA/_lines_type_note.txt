@@ -1,0 +1,29 @@
+cln_fa_lines_type_11.jasper: for SCORE_TYPE = 11
+
+cln_fa_lines_type_4.jasper: for SCORE_TYPE = 4
+
+cln_fa_lines_type_3.jasper: for SCORE_TYPE = 3, 20
+
+cln_fa_lines_type_6.jasper: for SCORE_TYPE = 6
+
+cln_fa_lines_type_7_9.jasper: for SCORE_TYPE = 7, 9, 17, 18, 19
+
+cln_fa_lines_type_8.jasper: for SCORE_TYPE = 8
+
+cln_fa_lines_type_12.jasper: for SCORE_TYPE = 12
+
+cln_fa_lines_type_13.jasper: for SCORE_TYPE = 13
+
+cln_fa_lines_type_15.jasper: for SCORE_TYPE = 15
+
+cln_fa_lines_type_16.jasper: for SCORE_TYPE = 16
+
+cln_fa_lines_type_23.jasper: for SCORE_TYPE = 21,23
+
+cln_fa_lines_type_30.jasper: for SCORE_TYPE = 30
+
+cln_fa_lines_type_29.jasper: for SCORE_TYPE = 29
+
+not have report: 
+
+10,22

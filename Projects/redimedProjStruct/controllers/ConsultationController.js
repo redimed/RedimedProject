@@ -240,7 +240,7 @@ module.exports = {
             diagnosis: info.diagnosis
         }, {consult_id: info.consult_id}, {raw: true})
         .success(function(data){
-            db.sequelize.query('DELETE FROM cln_patient_medication_details WHERE consult_id = ?',null,{raw:true},[info.consult_id])
+            db.sequelize.query('DELETE FROM cln_patient_medication_details WHERE patient_id = ?',null,{raw:true},[info.patient_id])
                 .success(function(){
                     if(info.scripts.length > 0)
                     {

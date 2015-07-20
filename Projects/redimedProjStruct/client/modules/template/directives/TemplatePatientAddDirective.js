@@ -177,13 +177,32 @@ angular.module('app.loggedIn.template.directives.patient_add', [])
 	                title: 'Submit',
 	                image: '\uf00c' // <img src="path/to/image.png" width="16" height="16" alt="" />
 	            },
-	            onAutocomplete: function( typed, key, character, shiftKey, altKey, ctrlKey, metaKey ) {
-                    if( typed.indexOf('.') == 0 ) // startswith '@'
+	            onAutocomplete: function( tyed, key, character, shiftKey, altKey, ctrlKey, metaKey ) {
+                    if( tyed.indexOf('<') == 0 ) // startswith '@'
                     {
-                    	var fields = [];
+                    	//var fields = [];
 
-                    	for(var key in scope.patient.one){
-							fields.push(key);
+                    	//for(var key in scope.patient.one){
+						//	fields.push(key);
+						//}
+						var fields = {
+								'First_name': 'First_name',
+								'Sur_name': 'Sur_name',
+								'Middle_name': 'Middle_name',
+								'Address1': 'Address1',
+								'Surburb': 'Surburb',
+								'Post_code': 'Post_code',
+								'Home_phone': 'Home_phone',
+								'Work_phone': 'Work_phone',
+								'Mobile': 'Mobile',
+								'Phone_ext': 'Phone_ext',
+								'Medicare_no': 'Medicare_no',
+								'Ref': 'Ref',
+								'Exp_medicare': 'Exp_medicare'
+							};
+						var field_r = [];
+						for(var key in fields){
+							field_r.push(key);
 						}
 
                         var $list = $('<div/>').addClass('wysiwyg-plugin-list')
@@ -193,11 +212,11 @@ angular.module('app.loggedIn.template.directives.patient_add', [])
                         	var $link = $('<a/>').attr('href','javascript:void(0)')
 		                                .text(field)
 		                                .click(function(event) {
-		                                    var html = '.'+field;
+		                                    var html = '.' + field;
 
 		                                    var editor = $(element).wysiwyg('shell');
 		                                    // Expand selection and set inject HTML
-		                                    editor.expandSelection( typed.length, 0 ).insertHTML( html );
+		                                    editor.expandSelection( tyed.length, 0 ).insertHTML( html );
 		                                    editor.closePopup().getElement().focus();
 		                                    // prevent link-href-#
 		                                    event.stopPropagation();
@@ -221,6 +240,52 @@ angular.module('app.loggedIn.template.directives.patient_add', [])
                     }
                 }
 			});
+	  //           onAutocomplete: function( tyed, key, character, shiftKey, altKey, ctrlKey, metaKey ) {
+	  //           	console.log('sasas');
+   //                  if( tyed.indexOf('.') == 0 ) // startswith '@'
+   //                  {
+   //                  	console.log('@@@@@@@@@@@@@', tyed);
+   //                  	var fields = [];
+
+   //                  	for(var key in scope.patient.one){
+			// 				fields.push(key);
+			// 			}
+
+   //                      var $list = $('<div/>').addClass('wysiwyg-plugin-list')
+   //                                             .attr('unselectable','on');
+
+   //                      $.each(fields, function(index, field){
+   //                      	var $link = $('<a/>').attr('href','javascript:void(0)')
+		 //                                .text(field)
+		 //                                .click(function(event) {
+		 //                                    var html = '.'+field;
+
+		 //                                    var editor = $(element).wysiwyg('shell');
+		 //                                    // Expand selection and set inject HTML
+		 //                                    editor.expandSelection( tyed.length, 0 ).insertHTML( html );
+		 //                                    editor.closePopup().getElement().focus();
+		 //                                    // prevent link-href-#
+		 //                                    event.stopPropagation();
+		 //                                    event.preventDefault();
+		 //                                    return false;
+		 //                                });
+		 //                    $list.append( $link );
+   //                      });
+
+   //                      if( $list.children().length )
+   //                      {
+   //                          if( key == 13 )
+   //                          {
+   //                              $list.children(':first').click();
+   //                              return false; // swallow enter
+   //                          }
+   //                          // Show popup
+   //                          else if( character || key == 8 )
+   //                              return $list;
+   //                      }//endif
+   //                  }
+   //              }
+			// });
 			
 
 			scope.form = {
