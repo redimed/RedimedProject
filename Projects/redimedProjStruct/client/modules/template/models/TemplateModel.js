@@ -27,7 +27,7 @@ angular.module("app.loggedIn.template.model", [])
 
     instanceService.delete = function(data){
         var detailApi = appApi.all("delete");
-        return detailApi.post({data: data});
+        return detailApi.post({data: data, name: name});
     }
 
     instanceService.write = function(data){
@@ -37,7 +37,7 @@ angular.module("app.loggedIn.template.model", [])
 
     instanceService.download = function(data){
         //return "https://localhost:3000/"+uploadUrl+"download/"+data.id+"/"+data.patient_id+"/"+data.cal_id;
-        return "https://testapp.redimed.com.au:3003/RedimedJavaREST/"+uploadUrl+"download/"+data.id+"/"+data.patient_id+"/"+data.cal_id;
+        return "http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/template/" + data.id;
     }
 
     return instanceService;

@@ -120,7 +120,7 @@ angular.module('app.loggedIn.template.directives.patient_list', [])
 
 				modalInstance.result.then(function(response){
 					if(response){
-						TemplateModel.delete({id: list.id})
+						TemplateModel.delete({id: list.id, name: list.name})
 						.then(function(){
 							load();
 						})
