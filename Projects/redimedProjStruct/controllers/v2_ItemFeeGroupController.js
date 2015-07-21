@@ -9,6 +9,33 @@ var fs = require('fs');//tannv add
 var xml2js = require('xml2js');//tannv add
 var moment = require('moment');//tannv add
 
+var parseTxtSourceToArr=function(filePath,functionSuccess,functionError)
+{
+    var dataArr=[];
+    fs.readFile(filePath,"utf8", function(err, data) {
+        if(!err)
+        {
+            var listLine=data.split('\r');
+            for(var i=0;i<listLine.length;i++)
+            {
+                var item=listLine[i].split('\t');
+                //nhung item trong thi khong push vao mang
+                if(item.length==1 && !kiss.checkData(item[0]))
+                    continue;
+                {
+                    dataArr.push(item);
+                }
+                
+            }
+            functionSuccess(dataArr);
+        }
+        else
+        {
+            functionError(err);
+        }
+    });
+}
+
 module.exports = {
     postInsert: function (req, res) {
         var postData = req.body;
@@ -100,24 +127,7 @@ module.exports = {
             {
                 var groupFee=rows[0];
                 //duong dan chua file source
-                var filePath=itemUtil.sourceFolderPath+groupFee.PRICE_SOURCE;
-                var parseTxtSourceToArr=function(filePath,functionSuccess,functionError)
-                {
-                    var dataArr=[];
-                    fs.readFile(filePath,"utf8", function(err, data) {
-                        if(!err)
-                        {
-                            var listLine=data.split('\r');
-                            // for(var i=0;i<listL)
-                            functionSuccess(listLine);
-                        }
-                        else
-                        {
-                            functionError(err);
-                        }
-                    });
-                }
-
+                var filePath=itemUtil.sourceFolderPath+groupFee.PRICE_SOURCE;                
                 parseTxtSourceToArr(filePath,function(data){
                     kiss.exFileJSON(data,'txtToArray.txt')
                     res.json({status:'success',data:data});
