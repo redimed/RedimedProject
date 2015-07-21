@@ -36,7 +36,8 @@ angular.module("app.loggedIn.template.model", [])
     }
 
     instanceService.download = function(data){
-        return "https://localhost:3000/"+uploadUrl+"download/"+data.id+"/"+data.patient_id+"/"+data.cal_id;
+        //return "https://localhost:3000/"+uploadUrl+"download/"+data.id+"/"+data.patient_id+"/"+data.cal_id;
+        return "https://testapp.redimed.com.au:3003/RedimedJavaREST/"+uploadUrl+"download/"+data.id+"/"+data.patient_id+"/"+data.cal_id;
     }
 
     return instanceService;
