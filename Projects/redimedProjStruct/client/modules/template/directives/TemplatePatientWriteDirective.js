@@ -17,14 +17,16 @@ angular.module('app.loggedIn.template.directives.patient_write', [])
 
 				content = content.replace(/&nbsp;&nbsp;/g, '</input>');
 				content = content.replace(/test/g, '</img>');
-
 				content = content.replace(/<br>/g, '<br/>');
 
-				console.log(content);
+				var content_temp = content.replace(/>/g, "/>")
 
-				TemplateModel.write({name: scope.template.one.name, content: content})
+				console.log(content_temp);
+
+				TemplateModel.write({name: scope.template.one.name, content: content_temp})
 				.then(function(response){
-					$window.open(TemplateModel.download({id: response.data.id, cal_id: $stateParams.cal_id, patient_id: $stateParams.patient_id}));
+					$window.open(TemplateModel.download({id: response.data.id}));
+					//$window.open(TemplateModel.download({id: response.data.id, cal_id: $stateParams.cal_id, patient_id: $stateParams.patient_id}));
 					/*TemplateModel.download({id: response.data.id, cal_id: $stateParams.cal_id, patient_id: $stateParams.patient_id})
 					.then(function(result){
 						scope.success = {template_temp_id: response.data.id, template_temp_name: response.data.name};

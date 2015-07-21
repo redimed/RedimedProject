@@ -12,14 +12,25 @@ var mkdirp = require('mkdirp');
 module.exports = {
 	postDelete: function(req, res){
 		var data = req.body.data;
+		var data_name = req.body.name;
 
 		var sql = knex('template')
 					.where({id: data.id})
-					.del().toString();
-
+					.del().toString();					
 		db.sequelize.query(sql)
 		.success(function(rows){
-			res.json({data: rows});
+			var sub_sql = knex('cln_template_temp')
+							.where({name: data_name})
+							.del.toString();
+
+			db.sequelize.query(sub_sql)
+			.success(function(rows_n){
+				res.json({data: row_n});
+			})
+			.error(function(error){
+				res.json(500, {error: error});
+			})
+			
 		})
 		.error(function(error){
 			res.json(500, {error: error});

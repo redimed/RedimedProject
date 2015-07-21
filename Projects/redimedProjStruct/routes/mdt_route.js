@@ -18,6 +18,7 @@ app.post("/api/meditek/v1/patient/search", mdtPatientController.postSearch);
 app.post("/api/meditek/v1/patient/add", mdtPatientController.postAdd);
 app.post("/api/meditek/v1/patient/edit", mdtPatientController.postEdit);
 app.post("/api/meditek/v1/patient/byId", mdtPatientController.postById);
+app.post("/api/meditek/v1/patient/getID", mdtPatientController.getByID);
 
 //MODULE WAITING LIST
 app.post("/api/meditek/v1/patient/waiting_list/add", mdtWaitingListController.postAdd);
