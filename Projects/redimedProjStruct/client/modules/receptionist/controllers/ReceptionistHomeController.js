@@ -179,6 +179,10 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
                 controller:'InjuryMapController',
                 size:'lg'
             });
+
+		modalInstance.result.then(function(){
+			getAppt($scope.apptDate,$scope.apptSite);
+		})
 	}
 
 	$scope.changeAppt = function(appt,status){

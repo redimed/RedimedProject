@@ -566,12 +566,12 @@ module.exports = {
                                     res.json({status:'error',error:err})
                                 })
 
-                            db.DriverInjury.create({
-                                driver_id: im.driver_id,
-                                patient_id: im.patient_id,
-                                STATUS : 'Picking',
-                                pickup_date: new Date()
-                            })
+                                db.DriverInjury.create({
+                                    driver_id: im.driver_id,
+                                    patient_id: im.patient_id,
+                                    STATUS : 'Picking',
+                                    pickup_date: new Date()
+                                })
                                 .success(function(){
                                 })
                                 .error(function(err){
