@@ -1,13 +1,13 @@
 var db = require('../models');
 var fs = require('fs');
 var mdt_functions = require('../mdt-functions.js');
-
+var errorCode=require('./errorCode');
 var item_model = require('../v1_models/Inv_items.js');
 var item_fees_model = require('../v1_models/Cln_item_fees.js');
 var parseString = require('xml2js').parseString;
 
 var kiss=require('./kissUtilsController');// tan add
-
+var controllerCode="RED_CONSULT";
 var general_process = function(req, res){
 
 	var UPLOAD_FOLDER = db.FeeGroup.getUploadPath();
@@ -479,6 +479,29 @@ module.exports = {
 		.error(function(error){
 			res.json(500, {"status": "error", "message": error});
 		});
+	},
+	postShowHistory: function(req, res) {
+		var fHeader="V2_ItemController->postShowHistory";
+        var functionCode="M001";
+        var id = kiss.checkData(req.body.id)?req.body.id:'';
+        if(!kiss.checkListData(id))
+        {
+        	kiss.exlog(fHeader,'Loi param truyen den');
+        	res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'M001')});
+        	return;
+        }
+        console.log(id);
+        var sql =   "SELECT `cln_item_fees`.* ,cln_fee_types.`FEE_TYPE_NAME`                                "+
+					"FROM `cln_item_fees`                                                                   "+
+					"INNER JOIN `cln_fee_types`  ON cln_fee_types.`FEE_TYPE_ID`= cln_item_fees.`FEE_TYPE_ID`"+ 
+					"WHERE CLN_ITEM_ID = ?                                                                  "+
+					"ORDER BY `cln_item_fees`.FEE_START_DATE DESC                                           ";
+        kiss.executeQuery(req,sql,id,function(result){
+        	res.json({status:'success',data:result});
+        },function(err){
+            kiss.exlog(fHeader,"Loi truy van lay.",err);
+            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'M003')});
+        },true);
 	},
 
 	

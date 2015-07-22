@@ -413,6 +413,7 @@ gulp.task('item', function(){
 					 './client/modules/item/directives/ItemHeaderDetailDirective.js',
 					 './client/modules/item/directives/ItemFeeGroupDetailDirective.js',
 					 './client/modules/item/directives/ItemFeeTypeDirective.js',
+					 './client/modules/item/directives/ItemShowHistoryDirective.js',
 					 './client/modules/item/directives/ItemPrivateFundsDirective.js',
 					 './client/modules/item/controllers/ItemController.js',
 					 './client/modules/item/controllers/ItemListController.js',

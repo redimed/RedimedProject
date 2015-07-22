@@ -182,5 +182,10 @@ angular.module("app.loggedIn.item.services", [])
         return detailApi.post({postData:postData});
     }
 
+    instanceService.showHistory = function(data) {
+        var detailApi = appApi.all("v2/items/show_history");
+        return detailApi.post(data);
+    }
+
     return instanceService;
 })

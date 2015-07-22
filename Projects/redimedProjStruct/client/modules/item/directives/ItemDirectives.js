@@ -5,5 +5,6 @@ angular.module("app.loggedIn.item.directives", [
     "app.loggedIn.item.item_fees.directive",
     "app.loggedIn.item.feegroup.detail.directive",
     "app.loggedIn.item.feetype.detail.directive",
-    "app.loggedIn.item.privatefunds.detail.directive"
+    "app.loggedIn.item.privatefunds.detail.directive",
+    "app.loggedIn.item.showhistory.detail.directive"
 ])
