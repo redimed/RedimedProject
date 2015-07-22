@@ -23,6 +23,8 @@ var CSController = require('./controllers/DocumentController/CSController');
 var FleetController = require('./controllers/DocumentController/FleetController');
 var GroundSupportController = require('./controllers/DocumentController/GroundSupportController');
 var RampBaggageController = require('./controllers/DocumentController/RampBaggageController');
+var PEMedicalController = require('./controllers/DocumentController/PEMedicalController');
+var multipartMiddleware = multipart();
 
 app.post('/api/document/loadPatient', demoController.loadPatient);
 
@@ -191,6 +193,15 @@ app.post('/api/document/insertQANTAS_RampBaggage', RampBaggageController.insertQ
 app.post('/api/document/checkQANTAS_RampBaggage', RampBaggageController.checkQANTAS_RampBaggage);
 app.post('/api/document/updateQANTAS_RampBaggage',RampBaggageController.updateQANTAS_RampBaggage);
 app.post('/api/document/deleteQANTAS_RampBaggage', RampBaggageController.deleteQANTAS_RampBaggage);
+// End
+
+// Begin PEMedical
+app.post('/api/document/checkPEMedical', PEMedicalController.checkPEMedical);
+app.post('/api/document/insertPEMedical', PEMedicalController.insertPEMedical);
+app.post('/api/document/updatePEMedical',PEMedicalController.updatePEMedical);
+app.post('/api/document/deletePEMedical', PEMedicalController.deletePEMedical);
+app.post('/api/document/post-upload-file', multipartMiddleware, PEMedicalController.UploadFile);
+app.post('/api/document/DeleteFile',PEMedicalController.DeleteFile);
 // End
 
 //=================================== State WA  ========================================

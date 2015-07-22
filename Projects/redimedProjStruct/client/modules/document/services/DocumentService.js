@@ -833,6 +833,33 @@ angular.module('app.loggedIn.document.services', [])
 
         //******************end QANTAS_RampBaggage*******************************
 
+        //******************PEMedical********************************************
+        documentService.checkPEMedical = function(Patient_ID,CalID){
+            var checkPEMedical_api = api.all('document/checkPEMedical');
+            return checkPEMedical_api.post({Patient_ID:Patient_ID,CalID:CalID});
+        }
+
+        documentService.insertPEMedical = function(obj){
+            var insertPEMedical_api = api.all('document/insertPEMedical');
+            return insertPEMedical_api.post({info:obj});
+        }
+
+        documentService.updatePEMedical = function(obj){
+            var updatePEMedical_api = api.all('document/updatePEMedical');
+            return updatePEMedical_api.post({info:obj});
+        }
+
+        documentService.deletePEMedical = function(Patient_ID,CalID){
+            var deletePEMedical_api = api.all('document/deletePEMedical');
+            return deletePEMedical_api.post({Patient_ID:Patient_ID,CalID:CalID});
+        }
+
+        documentService.DeleteFile = function(id){
+            var DeleteFile_api = api.all('document/DeleteFile');
+            return DeleteFile_api.post({id:id});
+        }
+        //******************end PEMedical****************************************
+
         return documentService;
 
 

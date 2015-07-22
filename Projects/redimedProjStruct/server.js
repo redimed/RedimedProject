@@ -39,6 +39,7 @@ var httpsServer = https.createServer(ssl_options,app);
 var clientDir = path.join(__dirname, 'client');
 var uploadedFile = path.join(__dirname, 'uploadFile/PatientPicture/');
 var documentImage = path.join(__dirname, 'download/documentImage/');
+var allPEMedicalFileUpload= path.join(__dirname,'uploadFile/allPEMedicalFileUpload/');
 
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
@@ -76,6 +77,7 @@ app.use(busboy());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/img/patient/avt', express.static(uploadedFile));
 app.use('/document/fa/images', express.static(documentImage));
+app.use('/document/pemedical/images',express.static(allPEMedicalFileUpload));
 /**
  * K Library
  */
