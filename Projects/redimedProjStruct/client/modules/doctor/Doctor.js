@@ -56,6 +56,17 @@ angular.module("app.loggedIn.doctor", [
             }
         }
     })
+
+    //DOCTOR SETTINGS
+    .state('loggedIn.doctor.setting',{
+        url:"/doctor/setting",
+        views:{
+            "main-content":{
+                templateUrl:"modules/doctor/views/docSetting.html",
+                controller:'DoctorSettingController'
+            }
+        }
+    })
     
     // TIMETABLE
     .state("loggedIn.doctor.timetable", {

@@ -89,6 +89,12 @@ module.exports = function(io,cookie,cookieParser) {
                     arrUser.push(key.split('--')[1]);
             }
 
+            if(driverArr.length > 0)
+	   		{
+	   		   driverArr = [];
+	           io.sockets.emit('driverLocation',driverArr);
+	   		}
+
             if(arrUser.length > 0)
             {
                 db.sequelize.query("UPDATE users SET socket = null WHERE id NOT IN (?)",null,{raw:true},[arrUser])
@@ -364,9 +370,12 @@ module.exports = function(io,cookie,cookieParser) {
                                .success(function(){
                                    if(userType != null && userType == 'Driver')
                                    {
-                                       var index = _.findIndex(driverArr,'id',id);
-                                       driverArr.splice(index,1);
-                                       io.sockets.emit('driverLocation',driverArr);
+                                   		if(driverArr.length > 0)
+                                   		{
+                                   		   var index = _.findIndex(driverArr,{'id':id});
+	                                       driverArr.splice(index,1);
+	                                       io.sockets.emit('driverLocation',driverArr);
+                                   		}
                                    }
 
                                    socket.emit('logoutSuccess');
@@ -415,15 +424,20 @@ module.exports = function(io,cookie,cookieParser) {
                                 "WHERE d.driver_id = ? AND d.STATUS = 'Picking' AND DATE(d.pickup_date) = DATE(CURDATE())",null,{raw:true},[data[0].id])
                 .success(function(rs){
                     data[0].patientList = _.uniq(rs,'patient_id');
-                    var index = _.findIndex(driverArr,'id',data[0].id);
-                    if(index == -1)
-                        driverArr.push(data[0])
-                    else
+                    if(driverArr.length > 0)
                     {
-                        driverArr[index].latitude = data[0].latitude;
-                        driverArr[index].longitude = data[0].longitude;
-                        driverArr[index].patientList = data[0].patientList;
+                    	var index = _.findIndex(driverArr,{'id':data[0].id});
+                    	if(index == -1)
+                    		driverArr.push(data[0])
+                    	else
+	                    {
+	                        driverArr[index].latitude = data[0].latitude;
+	                        driverArr[index].longitude = data[0].longitude;
+	                        driverArr[index].patientList = data[0].patientList;
+	                    }
                     }
+                    else
+                        driverArr.push(data[0])
                     io.sockets.emit('driverLocation',driverArr);
                 })
                 .error(function(err){

@@ -18,9 +18,8 @@ angular.module("app.loggedIn.patient.injuryManagement.map.controller",[])
         refreshMap();
         
         socket.on('driverLocation',function(driverArr){
-            if(driverArr.length == 0)
-                $scope.driverMarker = [];
-            else
+            $scope.driverMarker = [];
+            if(driverArr.length > 0)
             {
                 var icon = 'modules/injuryManagement/icons/ambulance.png';
                 for(var i=0 ; i<driverArr.length; i++)
@@ -34,14 +33,21 @@ angular.module("app.loggedIn.patient.injuryManagement.map.controller",[])
                         patientList: driver.patientList
                     };
 
-                    var index = _.findIndex($scope.driverMarker,'driverId',$scope.driverData.driverId);
-                    if(index == -1)
-                         $scope.driverMarker.push($scope.driverData);
-                    else
+                    if($scope.driverMarker.length > 0)
                     {
-                        $scope.driverMarker[index].position = $scope.driverData.position;
-                        $scope.driverMarker[index].patientList = $scope.driverData.patientList;
+                        var index = _.findIndex($scope.driverMarker,{'driverId':driver.id});
+                        if(index == -1)
+                             $scope.driverMarker.push($scope.driverData);
+                        else
+                        {
+                            $scope.driverMarker[index].position = $scope.driverData.position;
+                            $scope.driverMarker[index].patientList = $scope.driverData.patientList;
+                        }
                     }
+                    else
+                        $scope.driverMarker.push($scope.driverData);
+
+                    console.log("====Driver Marker====: ",$scope.driverMarker);
                 }
             }
             

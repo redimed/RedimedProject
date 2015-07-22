@@ -248,6 +248,7 @@ gulp.task('doctor', function(){
 					 './client/modules/doctor/controllers/DoctorController.js',
 					 './client/modules/doctor/controllers/DoctorHomeController.js',
 					 './client/modules/doctor/controllers/DoctorListController.js',
+					 './client/modules/doctor/controllers/DoctorSettingController.js',
 					 './client/modules/doctor/controllers/DoctorAddController.js',
 					 './client/modules/doctor/controllers/DoctorTimetableController.js',
 					 './client/modules/doctor/controllers/DoctorTimetableDetailController.js',
