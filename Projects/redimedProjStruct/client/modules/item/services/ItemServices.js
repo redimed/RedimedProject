@@ -169,16 +169,31 @@ angular.module("app.loggedIn.item.services", [])
         return detailApi.post();
     }
 
+    /**
+     * tannv.dts@gmail.com
+     */
     instanceService.importMedicareFeeFromSource=function(postData)
     {
         var detailApi = appApi.all("v2/fees/group/import_medicare_fee_from_source");
         return detailApi.post({postData:postData});
     }
     
-
+    /**
+     * tannv.dts@gmail.com
+     */
     instanceService.importFeeFromTxtSource=function(postData)
     {
         var detailApi = appApi.all("v2/fees/group/import_fee_from_txt_source");
+        return detailApi.post({postData:postData});
+    }
+
+    /**
+     * tannv.dts@gmail.com
+     * 21-07-2015
+     */
+    instanceService.importDvaFeeFromSource=function(postData)
+    {
+        var detailApi = appApi.all("v2/fees/group/import_dva_fee_from_source");
         return detailApi.post({postData:postData});
     }
 

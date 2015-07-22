@@ -529,6 +529,9 @@ angular.module("app.loggedIn.item.fee.controller",[
 
         }
 
+        /**
+         * tannv.dts@gmail.com
+         */
         $scope.importMedicareFeeFromSource=function()
         {
             ItemService.importMedicareFeeFromSource({feeGroupId:4})
@@ -540,9 +543,26 @@ angular.module("app.loggedIn.item.fee.controller",[
 
         }
 
+        /**
+         * tannv.dts@gmail.com
+         */
         $scope.importFeeFromTxtSource=function()
         {
             ItemService.importFeeFromTxtSource({feeGroupId:3})
+            .then(function(data){
+                exlog.alert(data);
+            },function(err){
+                exlog.alert(err);
+            });
+        }
+
+        /**
+         * tannv.dts@gmail.com
+         * 21-07-2015
+         */
+        $scope.importDvaFeeFromSource=function()
+        {
+            ItemService.importDvaFeeFromSource({feeGroupId:3})
             .then(function(data){
                 exlog.alert(data);
             },function(err){

@@ -123,7 +123,7 @@ var general_process = function(req, res){
 
 		
 		var processPriceSource = function(file){
-			fs.readFile(file, "utf-8", function(err, data){
+			fs.readFile(file, "utf-16", function(err, data){
 				if(err){
 					console.log(err)
 					res.json(500, {"status": "error"});
