@@ -152,7 +152,7 @@ angular.module("app.loggedIn.item.fee.controller",[
                             }
                         });
                     }
-                },
+                }
             ]
         }
     }

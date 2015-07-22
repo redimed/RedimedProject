@@ -195,6 +195,15 @@ angular.module("app.loggedIn.item.services", [])
     {
         var detailApi = appApi.all("v2/fees/group/import_dva_fee_from_source");
         return detailApi.post({postData:postData});
+	}
+	
+	/**
+     * Duc Manh
+     * 21-07-2015
+     */
+    instanceService.showHistory = function(data) {
+        var detailApi = appApi.all("v2/items/show_history");
+        return detailApi.post(data);
     }
 
     return instanceService;

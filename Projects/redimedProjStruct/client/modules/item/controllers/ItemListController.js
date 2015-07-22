@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.item.list.controller",[
 ])
-.controller("ItemListController", function($scope, $state, toastr, ItemService){
+.controller("ItemListController", function($scope, $state, toastr, ItemService,$modal){
 
         $scope.item_panel = {};
         $scope.itemInfo = {};
@@ -47,6 +47,39 @@ angular.module("app.loggedIn.item.list.controller",[
                         $scope.items.select = item.ITEM_ID;
                         $scope.itemFees.panel.reload(item.ITEM_ID);
                         $scope.itemFees.open();
+                    }
+                },
+                {
+                    class: 'fa fa-history', title: 'Show History',
+                    callback: function(item){
+                         var modalInstance=$modal.open({
+                            templateUrl:'ShowHistory',
+                            controller:function($scope,$modalInstance,id){
+                                 $scope.cancel=function()
+                                {
+                                    $modalInstance.dismiss('cancel');
+                                }
+                               $scope.ShowHistory = {
+                                    success: false,
+                                    id:id
+                                }
+                                $scope.$watch('ShowHistory.success', function(success){
+                                    if(success){
+                                        $modalInstance.close('success');
+                                    }
+                                })
+                            },
+                            resolve:{
+                               id : function(){
+                                 return item.ITEM_CODE;
+                               }
+                            }
+                        })
+                        .result.then(function(response){
+                            if(response === 'success'){
+                                 $scope.fee_types_panel.reload();
+                            }
+                        })
                     }
                 },
             ],
