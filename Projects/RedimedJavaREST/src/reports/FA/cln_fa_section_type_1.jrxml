@@ -12,7 +12,7 @@
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="125"/>
+	<property name="ireport.y" value="105"/>
 	<parameter name="patient_id" class="java.lang.String"/>
 	<parameter name="cal_id" class="java.lang.String"/>
 	<parameter name="fa_id" class="java.lang.String"/>

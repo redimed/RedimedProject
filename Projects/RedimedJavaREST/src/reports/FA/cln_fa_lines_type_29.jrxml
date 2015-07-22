@@ -219,7 +219,7 @@ and line.SCORE_TYPE1=29]]>
 						<subreportParameterExpression><![CDATA[$P{sub_report_dir}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "cln_fa_lines_type_29_detail.jasper"]]></subreportExpression>
+					<subreportExpression><![CDATA[$P{real_path} + "cln_fa_lines_type_29_detail.jasper"]]></subreportExpression>
 				</subreport>
 			</frame>
 			<frame>
@@ -249,7 +249,7 @@ and line.SCORE_TYPE1=29]]>
 						<subreportParameterExpression><![CDATA[$P{sub_report_dir}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "cln_fa_comments.jasper"]]></subreportExpression>
+					<subreportExpression><![CDATA[$P{real_path} + "cln_fa_comments.jasper"]]></subreportExpression>
 				</subreport>
 			</frame>
 		</band>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cln_fa_lines_type_30" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e069ed90-4237-4624-bfc6-ee0fff03b281">
-	<property name="ireport.zoom" value="1.3310000000000008"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cln_fa_summary_line_type_26" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="2b763b72-974c-4a1d-8c98-ec7f9a38623c">
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="patient_id" class="java.lang.String">
@@ -19,17 +19,15 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["/LocalData/RedimedProject/Projects/RedimedJavaREST/src/reports/FA/"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["E:\\RedimedProject\\Projects\\RedimedJavaREST\\src\\reports\\FA\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select  *
+		<![CDATA[select line.*
 from `cln_fa_df_lines` line
 where line.ISENABLE = 1
 and line.PATIENT_ID =  $P{patient_id}
-and line.CAL_ID = $P{cal_id}
-and line.LINE_ID = $P{line_id}
-and line.LineType !=18
-and line.SCORE_TYPE1=30]]>
+and line.CAL_ID =  $P{cal_id}
+and line.LINE_ID =  $P{line_id}]]>
 	</queryString>
 	<field name="PATIENT_ID" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -136,39 +134,11 @@ and line.SCORE_TYPE1=30]]>
 	<field name="IS_SHOW_RANKING_TABLE" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<group name="cln_fa_type_30_group">
-		<groupHeader>
-			<band height="50">
-				<textField>
-					<reportElement x="0" y="28" width="555" height="22" uuid="a33a5131-529e-4bf3-8ff9-55066e4a50a6"/>
-					<textElement verticalAlignment="Middle">
-						<font isBold="true" isUnderline="false"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{QUESTION}]]></textFieldExpression>
-				</textField>
-			</band>
-		</groupHeader>
-	</group>
 	<detail>
-		<band height="48">
+		<band height="33">
 			<staticText>
-				<reportElement x="0" y="0" width="94" height="16" uuid="315ce555-681b-4e71-b2e7-d7a21c6eb757"/>
+				<reportElement x="160" y="0" width="140" height="16" uuid="89aa6641-7823-492f-8e55-f9a02e5bad78"/>
 				<box>
-					<pen lineWidth="0.3"/>
-					<topPen lineWidth="0.3"/>
-					<leftPen lineWidth="0.3"/>
-					<bottomPen lineWidth="0.3"/>
-					<rightPen lineWidth="0.3"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[TEST]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="361" y="0" width="194" height="16" uuid="baa17869-e640-4282-9351-ec8161e490d0"/>
-				<box>
-					<pen lineWidth="0.3"/>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
 					<bottomPen lineWidth="0.3"/>
@@ -176,14 +146,12 @@ and line.SCORE_TYPE1=30]]>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
-					<paragraph leftIndent="10"/>
 				</textElement>
-				<text><![CDATA[COMMENTS]]></text>
+				<text><![CDATA[Rating]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="94" y="0" width="70" height="16" uuid="db28af73-f761-4231-95d6-1355514d197b"/>
+				<reportElement x="0" y="0" width="160" height="16" uuid="3a601a9b-5e75-424a-8901-366fda658b99"/>
 				<box>
-					<pen lineWidth="0.3"/>
 					<topPen lineWidth="0.3"/>
 					<leftPen lineWidth="0.3"/>
 					<bottomPen lineWidth="0.3"/>
@@ -191,112 +159,11 @@ and line.SCORE_TYPE1=30]]>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
-					<paragraph leftIndent="10"/>
 				</textElement>
-				<text><![CDATA[TRIAL 1]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="164" y="0" width="70" height="16" uuid="ff203230-0eed-481f-8c8b-87117d1ef9d1"/>
-				<box>
-					<pen lineWidth="0.3"/>
-					<topPen lineWidth="0.3"/>
-					<leftPen lineWidth="0.3"/>
-					<bottomPen lineWidth="0.3"/>
-					<rightPen lineWidth="0.3"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-					<paragraph leftIndent="10"/>
-				</textElement>
-				<text><![CDATA[TRIAL 2]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="234" y="0" width="127" height="16" uuid="9e0b88ca-8c15-479f-bd89-81c156b4deb5"/>
-				<box>
-					<pen lineWidth="0.3"/>
-					<topPen lineWidth="0.3"/>
-					<leftPen lineWidth="0.3"/>
-					<bottomPen lineWidth="0.3"/>
-					<rightPen lineWidth="0.3"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-					<paragraph leftIndent="10"/>
-				</textElement>
-				<text><![CDATA[OVERALL]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="16" width="94" height="16" uuid="4904f193-84d8-4322-8453-d1ec4a1a57d5"/>
-				<box>
-					<pen lineWidth="0.3"/>
-					<topPen lineWidth="0.3"/>
-					<leftPen lineWidth="0.3"/>
-					<bottomPen lineWidth="0.3"/>
-					<rightPen lineWidth="0.3"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Placing]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="32" width="94" height="16" uuid="37368d6e-7743-493b-b4cd-ce47feb56902"/>
-				<box>
-					<pen lineWidth="0.3"/>
-					<topPen lineWidth="0.3"/>
-					<leftPen lineWidth="0.3"/>
-					<bottomPen lineWidth="0.3"/>
-					<rightPen lineWidth="0.3"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Turning]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="234" y="16" width="127" height="16" uuid="21a6ba7d-22f6-4e00-b1b9-d3111270939f"/>
-				<box>
-					<pen lineWidth="0.3"/>
-					<topPen lineWidth="0.3"/>
-					<leftPen lineWidth="0.3"/>
-					<bottomPen lineWidth="0.3"/>
-					<rightPen lineWidth="0.3"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-					<font isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{RATE1}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="234" y="32" width="127" height="16" uuid="c383632f-3043-4281-90da-0aba96f94caa"/>
-				<box>
-					<pen lineWidth="0.3"/>
-					<topPen lineWidth="0.3"/>
-					<leftPen lineWidth="0.3"/>
-					<bottomPen lineWidth="0.3"/>
-					<rightPen lineWidth="0.3"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-					<font isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{RATE2}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="361" y="16" width="194" height="32" uuid="1292b09d-f0ff-4334-a7e9-aefb8c1faf01"/>
-				<box>
-					<pen lineWidth="0.3"/>
-					<topPen lineWidth="0.3"/>
-					<leftPen lineWidth="0.3"/>
-					<bottomPen lineWidth="0.3"/>
-					<rightPen lineWidth="0.3"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-					<font isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{COMMENTS}]]></textFieldExpression>
-			</textField>
 			<frame>
-				<reportElement x="94" y="16" width="140" height="32" uuid="eaf61c44-e337-47f8-874e-03aead864296"/>
+				<reportElement x="0" y="16" width="300" height="16" uuid="363e9627-c4c7-439c-8644-11bcf0bc67cb"/>
 				<box>
 					<pen lineWidth="0.3"/>
 					<topPen lineWidth="0.3"/>
@@ -305,7 +172,7 @@ and line.SCORE_TYPE1=30]]>
 					<rightPen lineWidth="0.3"/>
 				</box>
 				<subreport>
-					<reportElement x="0" y="0" width="140" height="32" uuid="1ed086a6-7898-4625-9f5b-b1dd4aca8894"/>
+					<reportElement x="0" y="0" width="300" height="16" uuid="dc2c5ae1-5660-41b9-b898-3c4a2dd82486"/>
 					<subreportParameter name="real_path">
 						<subreportParameterExpression><![CDATA[$P{real_path}]]></subreportParameterExpression>
 					</subreportParameter>
@@ -322,25 +189,7 @@ and line.SCORE_TYPE1=30]]>
 						<subreportParameterExpression><![CDATA[$P{sub_report_dir}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA[$P{real_path} + "cln_fa_lines_type_30_details.jasper"]]></subreportExpression>
-				</subreport>
-			</frame>
-		</band>
-		<band height="12"/>
-		<band height="82">
-			<frame>
-				<reportElement x="0" y="0" width="280" height="80" uuid="45687fda-882b-4180-aa92-f5d5b00e0ef3"/>
-				<box>
-					<pen lineWidth="0.0"/>
-					<topPen lineWidth="0.0"/>
-					<leftPen lineWidth="0.0"/>
-					<bottomPen lineWidth="0.0"/>
-					<rightPen lineWidth="0.0"/>
-				</box>
-				<subreport>
-					<reportElement x="0" y="0" width="280" height="80" uuid="eb257dd9-6ebd-425a-8bc6-0bc8bbfa185e"/>
-					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA[$P{real_path} + "cln_placing_turning_ranking.jasper"]]></subreportExpression>
+					<subreportExpression><![CDATA[$P{real_path} + "cln_fa_summary_line_type_26_details.jasper"]]></subreportExpression>
 				</subreport>
 			</frame>
 		</band>

@@ -18,6 +18,9 @@
 	<parameter name="real_path" class="java.lang.String"/>
 	<parameter name="sub_report_dir" class="java.lang.String"/>
 	<parameter name="fa_id" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["E:\\RedimedProject\\Projects\\RedimedJavaREST\\src\\reports\\FA\\"]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[select * from `cln_fa_df_lines` line
 where line.ISENABLE = 1
@@ -147,7 +150,7 @@ and line.LineType = 1]]>
 	</group>
 	<detail>
 		<band height="50">
-			<printWhenExpression><![CDATA[$F{SCORE_TYPE1}!= 5]]></printWhenExpression>
+			<printWhenExpression><![CDATA[$F{SCORE_TYPE1}!= 5 && $F{SCORE_TYPE1}!= 26 && $F{SCORE_TYPE1}!= 28]]></printWhenExpression>
 			<subreport>
 				<reportElement x="0" y="0" width="555" height="50" uuid="346c6a21-9782-4625-9a6f-1020892ee063"/>
 				<subreportParameter name="patient_id">
@@ -190,6 +193,52 @@ and line.LineType = 1]]>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{real_path}+"cln_fa_summary_line_type_5.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="50">
+			<printWhenExpression><![CDATA[$F{SCORE_TYPE1} == 26]]></printWhenExpression>
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="50" uuid="cddc872e-7037-457e-a00f-247097fa8304"/>
+				<subreportParameter name="real_path">
+					<subreportParameterExpression><![CDATA[$P{real_path}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="line_id">
+					<subreportParameterExpression><![CDATA[$F{LINE_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="cal_id">
+					<subreportParameterExpression><![CDATA[$P{cal_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="patient_id">
+					<subreportParameterExpression><![CDATA[$P{patient_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="sub_report_dir">
+					<subreportParameterExpression><![CDATA[$P{sub_report_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{real_path} + "cln_fa_summary_line_type_26.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="50">
+			<printWhenExpression><![CDATA[$F{SCORE_TYPE1} == 28]]></printWhenExpression>
+			<subreport>
+				<reportElement x="0" y="0" width="556" height="50" uuid="0209eaf2-6285-4eb1-8c6d-ed4a6551bb9a"/>
+				<subreportParameter name="real_path">
+					<subreportParameterExpression><![CDATA[$P{real_path}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="line_id">
+					<subreportParameterExpression><![CDATA[$F{LINE_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="cal_id">
+					<subreportParameterExpression><![CDATA[$P{cal_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="patient_id">
+					<subreportParameterExpression><![CDATA[$P{patient_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="sub_report_dir">
+					<subreportParameterExpression><![CDATA[$P{sub_report_dir}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{real_path} + "cln_fa_summary_line_type_28.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>
