@@ -18,7 +18,10 @@ angular.module("app.loggedIn.TimeSheet.formValidate.Directive", [])
 
                 //LISENT MODEL
                 scope.$watch('modelValidate', function(newModel, oldModel) {
-                    if (newModel !== undefined && newModel !== null && newModel.length !== 0) {
+                    if (newModel !== undefined &&
+                        newModel !== null && 
+                        newModel.length !== 0 &&
+                        newModel !== " ") {
                         attrs.$set("required", true);
                     } else {
                         attrs.$set("required", false);

@@ -320,7 +320,10 @@ angular.module("app.loggedIn.TimeSheet.Time.Directive", [])
                 });
                 //WATCH MODEL REQUIRE
                 scope.$watch('requireValidate', function(newModelRequired, oldModelRequired) {
-                    if (newModelRequired !== undefined && newModelRequired !== null && newModelRequired.length !== 0) {
+                    if (newModelRequired !== undefined && 
+                        newModelRequired !== null && 
+                        newModelRequired.length !== 0 &&
+                        newModelRequired !=== " ") {
                         attrs.$set("required", true);
                     } else {
                         attrs.$set("required", false);
