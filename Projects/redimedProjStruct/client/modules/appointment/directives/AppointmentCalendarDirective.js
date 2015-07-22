@@ -5,7 +5,8 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 		restrict: 'EA',
 		templateUrl: 'modules/appointment/directives/templates/calendar.html',
 		scope: {
-			options: '='
+			options: '=',
+			search: '=',
 		},
 		link: function(scope, elem, attrs){
 			scope.arrayAppid=[];
@@ -600,14 +601,14 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 			var dialogAdd = function(app, col){
 				var modalInstance = $modal.open({
 					templateUrl: 'appointmentAdd',
-					controller: function($scope, $modalInstance, app, options){
+					controller: function($scope, $modalInstance, app, options, search){
 						$scope.appointment = {
 							app: app,
 							col: col
 						}
 
 						$scope.options = options;
-
+						$scope.search = search;
 						//PARAMS
 						$scope.params = {
 							permission: {
@@ -635,6 +636,9 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 						},
 						options: function(){
 							return scope.options;
+						},
+						search: function(){
+							return scope.appointment.search;
 						}
 					}
 				});

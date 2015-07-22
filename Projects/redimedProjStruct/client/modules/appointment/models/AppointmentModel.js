@@ -55,6 +55,10 @@ angular.module('app.loggedIn.appointment.models', [])
 		var instanceApi = mainApi.all('changeStatus');
 		return instanceApi.post({data:data});
 	}
+	mainModel.ApptG = function(data){
+		var instanceApi = mainApi.all('Getappt');
+		return instanceApi.post({data: data});
+	}
 
 	return mainModel;
 })

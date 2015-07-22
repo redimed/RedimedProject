@@ -307,7 +307,7 @@
 
 <script type="text/ng-template" id="appointmentAdd">
 	<div class="modal-body">
-		<appointment-add params="appointment" patient="patient" options="options"></appointment-add>
+		<appointment-add params="appointment" search="search" patient="patient" options="options"></appointment-add>
 	</div>
 </script>
 
@@ -448,4 +448,15 @@
 	        $this.removeClass('glyphicon-plus').addClass('glyphicon-minus');
 	    }
 	});
+</script>
+<script type="text/ng-template" id="CheckAlert">
+	<div class="modal-body">
+	    <p>
+	    	Have already ???
+	    </p>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-primary btn-xs" ng-click="clickYes()">Yes</button>
+	    <button class="btn btn-warning btn-xs" ng-click="clickNo()">No</button>
+	</div>
 </script>
