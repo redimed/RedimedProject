@@ -24,17 +24,11 @@ module.exports = {
 	},
 	changeService:function(req,res){
 		var postData  = req.body.data;
-		var sql = knex('cln_appointment_calendar')
-				.where('CAL_ID',postData.CAL_ID)
-				.update({'SERVICE_ID':postData.SERVICE_ID})
-				.toString();
-		db.sequelize.query(sql)
-		.success(function(rows){
-			res.json({data: rows});
-		})
-		.error(function(error){
-			res.status(500).json({error: error, sql: sql});
-		})
+		kiss.executeInsertIfDupKeyUpdate(req,'cln_appointment_calendar',postData,['SERVICE_ID'],function(result){
+			res.json({data: result});
+		},function(err){
+			res.status(500).json({error: err});
+		});
 	},
 	getOneApptPatient:function(req,res){
 		var postData  = req.body.data;
@@ -43,7 +37,12 @@ module.exports = {
 				.toString();
 		db.sequelize.query(sql)
 		.success(function(rows){
-			res.json({data: rows[0]});
+			if (rows.length !== 0) {
+				res.json({data: rows[0]});
+			}else{
+				res.json({data: -1});
+			};
+			
 		})
 		.error(function(error){
 			res.status(500).json({error: error, sql: sql});

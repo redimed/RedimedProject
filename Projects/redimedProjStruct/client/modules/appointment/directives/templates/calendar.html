@@ -109,7 +109,8 @@
     </div>
 </div>
 </div>
-<div id="appointment" style="overflow-x: scroll;" ng-right-click="isshiftRight($event)"> 
+<!-- <div id="appointment" style="overflow-x: scroll;" ng-right-click="isshiftRight($event)"> -->
+<div id="appointment" style="overflow-x: scroll;"> 
 	<div class="row">
 		<!-- DATEPICKER -->
 		<div class="col-md-4">
@@ -174,8 +175,7 @@
 			<div class="appointment-block" ng-repeat="col in app.doctors" ng-class="{'block-active': col.PATIENTS !== '###'}"
 				id="appointment-{{col.CAL_ID}}"
 				ng-style="{'background-color': '{{col.SERVICE_COLOR}}', 'margin-bottom': col.margin === 'yes' ? '3px': '0px', 'height': col.height, 'border-top': col.border === 'yes' ? '1px solid rgb(96, 99, 94)': '0px'}" ng-click="isKeyPressed($event)"> 
-				<span ng-if="col.PATIENTS === 'MESS_SYS_010'">
-					<a ng-click="appointment.dialog.add(app, col)">No Patient {{col.CAL_ID}}</a>
+				<span ng-if="col.PATIENTS === 'MESS_SYS_010'" ><a ng-click="appointment.dialog.add(app, col)">No Patient <span class="appid">{{col.CAL_ID}}</span></a>
 				</span>
 				<span ng-if="col.PATIENTS === '###'">
 					
