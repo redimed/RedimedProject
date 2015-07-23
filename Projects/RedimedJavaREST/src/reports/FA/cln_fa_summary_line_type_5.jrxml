@@ -178,7 +178,7 @@ and line.LINE_ID =  $P{line_id}]]>
 				<text><![CDATA[Rating]]></text>
 			</staticText>
 			<subreport>
-				<reportElement x="0" y="16" width="300" height="16" uuid="8b97a4dc-89f8-4006-859d-b30d24bc560d"/>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="16" width="300" height="16" uuid="8b97a4dc-89f8-4006-859d-b30d24bc560d"/>
 				<subreportParameter name="patient_id">
 					<subreportParameterExpression><![CDATA[$P{patient_id}]]></subreportParameterExpression>
 				</subreportParameter>

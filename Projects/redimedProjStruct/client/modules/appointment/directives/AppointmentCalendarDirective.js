@@ -5,7 +5,8 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 		restrict: 'EA',
 		templateUrl: 'modules/appointment/directives/templates/calendar.html',
 		scope: {
-			options: '='
+			options: '=',
+			search: '=',
 		},
 		link: function(scope, elem, attrs){
 			scope.arrayAppid=[];
@@ -28,12 +29,18 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 			       		}
 			       		AppointmentModel.getOneApptPatient(postData)
 			       		.then(function(response){
-			       			var object = {CAL_ID:id,patient_name:patient_name,appt_status:response.data.appt_status};
-			       			scope.arrayAppid.push(object);
-			       			console.log(scope.arrayAppid);
+			       			if (response.data == -1) {
+			       				var object = {CAL_ID:id};
+			       				scope.arrayAppid.push(object);
+			       			}else{
+			       				var object = {CAL_ID:id,patient_name:patient_name,appt_status:response.data.appt_status};
+			       				scope.arrayAppid.push(object);
+			       			};
+			       			
 			       		})
 			       		var objectColor = {CAL_ID:id,color_old:event.target.style.backgroundColor};
 			       		scope.oldColor.push(objectColor);
+			       		console.log(objectColor);
 			       		event.target.style.backgroundColor = "rgb(199, 197, 196)";
 			       	};
 			       };
@@ -56,21 +63,20 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 			    }
 			}
 			scope.changeService = function(SERVICE_ID){
-				setTimeout(scope.changeServiceFor(SERVICE_ID),5000);
-			    scope.arrayAppid=[];
-				scope.appointment.load();
-				scope.alertCenter.load();
-			}
-			scope.changeServiceFor = function(SERVICE_ID){
+				var postData=[]
 				for (var i = 0; i < scope.arrayAppid.length; i++) {
-			       		postData ={
+			       		object ={
 							SERVICE_ID:SERVICE_ID,
 							CAL_ID: scope.arrayAppid[i].CAL_ID
 						}
-						AppointmentModel.changeService(postData)
-						.then(function(response){
-						})
-			       	};
+						postData.push(object);
+			     	};
+					AppointmentModel.changeService(postData)
+					.then(function(response){
+						scope.arrayAppid=[];
+						scope.appointment.load();
+						scope.alertCenter.load();
+					})
 			}
 			scope.isshiftRight = function($event){
 				angular.element("#changeStatus").css({'display':'none'});
@@ -85,14 +91,14 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 			}
 			scope.changeStatusFor = function(status){
 				for (var i = 0; i < scope.arrayAppid.length; i++) {
-			       		postData = {
-							STATUS:status,
-							CAL_ID: scope.arrayAppid[i].CAL_ID
-						}
-						AppointmentModel.changeStatus(postData)
-						.then(function(response){
-						})
-			       	};
+		       		postData = {
+						STATUS:status,
+						CAL_ID: scope.arrayAppid[i].CAL_ID
+					}
+					AppointmentModel.changeStatus(postData)
+					.then(function(response){
+					},function(error){})
+		       	}
 			}
 			scope.cancelCalMenu = function($event){
 				angular.element("#calMenu").css({'display':'none'});
@@ -595,14 +601,14 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 			var dialogAdd = function(app, col){
 				var modalInstance = $modal.open({
 					templateUrl: 'appointmentAdd',
-					controller: function($scope, $modalInstance, app, options){
+					controller: function($scope, $modalInstance, app, options, search){
 						$scope.appointment = {
 							app: app,
 							col: col
 						}
 
 						$scope.options = options;
-
+						$scope.search = search;
 						//PARAMS
 						$scope.params = {
 							permission: {
@@ -630,6 +636,9 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 						},
 						options: function(){
 							return scope.options;
+						},
+						search: function(){
+							return scope.appointment.search;
 						}
 					}
 				});

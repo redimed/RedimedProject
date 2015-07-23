@@ -65,7 +65,7 @@ function checkListData()
     {
         if(arguments[i]===undefined || arguments[i]===null || arguments[i]==='' ||arguments[i]=={})
         {
-            exlog(">>>>>>>> Vi tri data truyen den bi loi:",i);
+            console.log(">>>>>>>> Vi tri data truyen den bi trong:",i);
             return false;
         }
             
@@ -121,13 +121,15 @@ function executeQuery(req,sql,params,functionSuccess,functionError,logQuery,logR
                         exlog("kissUtil","executeQuery success",query.sql);
                     }
                 } 
-                functionSuccess(result);
+                if(functionSuccess)
+                    functionSuccess(result);
                 return;
             }
             else
             {
                 exlog("kissUtil","executeQuery error",query.sql,err);
-                functionError(err);
+                if(functionError)
+                    functionError(err);
                 return;   
             }
         });
@@ -313,6 +315,11 @@ module.exports =
      */
     executeQuery:executeQuery,
 
+
+    /**
+     * tannv.dts@gmail.com
+     * Insert list row (list json) vao database
+     */
     executeInsert:function(req,tableName,listData,functionSuccess,functionError,logQuery,logResult)
     {
         if(checkData(req.kissConnection))
@@ -371,11 +378,11 @@ module.exports =
                         {
                             if(logResult===true)
                             {
-                                exlog("kissUtil","executeQuery success",query.sql,result);
+                                exlog("kissUtil","executeInsert success",query.sql,result);
                             }
                             else
                             {
-                                exlog("kissUtil","executeQuery success",query.sql);
+                                exlog("kissUtil","executeInsert success",query.sql);
                             }
                         } 
                         functionSuccess(result);
@@ -383,7 +390,135 @@ module.exports =
                     }
                     else
                     {
-                        exlog("kissUtil","executeQuery error",query.sql,err);
+                        exlog("kissUtil","executeInsert error",query.sql,err);
+                        functionError(err);
+                        return;   
+                    }
+                });
+            }
+            else
+            {
+                functionError({msg:'Data rong'});
+            }
+            
+            
+        }
+    },
+
+    /**
+     * tannv.dts@gmail.com
+     * 17-07-2015
+     * Insert va su ly update khi trung key 
+     *  ON DUPLICATE KEY UPDATE
+     *  note:
+     *  limitCols=null->update toan bo cols neu dup key
+     *  limitCols=[]->khong update bat ki cols nao neu dup key
+     *  limitCols.length>0-> update cac col nam trong limitCols neu dupkey
+     */
+    executeInsertIfDupKeyUpdate:function(req,tableName,listData,limitCols,functionSuccess,functionError,logQuery,logResult)
+    {
+        if(checkData(req.kissConnection))
+        {
+            execute();
+        }
+        else
+        {
+            req.getConnection(function(err,connection)
+            {
+                if(!err)
+                {
+                    req.kissConnection=connection;
+                    execute();
+                }
+                else
+                {
+                    exlog("kissUtil","executeInsertIfDupKeyUpdate error","Err","Khong lay duoc connection");
+                    functionError(err);
+                    return;
+                }
+            });
+        }
+
+        function execute()
+        {
+            var getKeys = function(obj){
+                var keys = [];
+                for(var key in obj){
+                    keys.push(key);
+                }
+                return keys;
+            }
+            var getValues=function(obj){
+                var values = [];
+                for(var key in obj){
+                    values.push(obj[key]);
+                }
+                return values;
+            }
+            if(listData.length>0)
+            {
+                var columns=getKeys(listData[0]);
+                var values=[];
+                for(var i=0;i<listData.length;i++)
+                {
+                    values.push(getValues(listData[i]));
+                }
+
+                var updateStr=" ON DUPLICATE KEY UPDATE ";
+                if(limitCols===null)
+                {
+                    for(var i=0;i<columns.length;i++)
+                    {
+                        updateStr=updateStr+" "+columns[i]+"=VALUES("+columns[i]+")";
+                        if(i<columns.length-1)
+                            updateStr+=',';
+                        else
+                            updateStr+=';';
+                    }
+                }
+                else if(limitCols.length>0)
+                {
+                    for(var i=0;i<limitCols.length;i++)
+                    {
+                        updateStr=updateStr+" "+limitCols[i]+"=VALUES("+limitCols[i]+")";
+                        if(i<limitCols.length-1)
+                            updateStr+=',';
+                        else
+                            updateStr+=';';
+                    }
+                }
+                else
+                {
+                    updateStr=null;
+                }
+
+                if(updateStr!==null)
+                    var sql="insert into ?? (??) values ?"+updateStr;
+                else
+                    var sql="insert ignore into ?? (??) values ?";
+                //xuat ra cau sql bang file
+                //exFileJSON(sql,'insertHandleDup.txt');
+                var query = req.kissConnection.query(sql,[tableName,columns,values],function(err,result)
+                {
+                    if(!err)
+                    {
+                        if(logQuery===true)
+                        {
+                            if(logResult===true)
+                            {
+                                exlog("kissUtil","executeInsertIfDupKeyUpdate success",query.sql,result);
+                            }
+                            else
+                            {
+                                exlog("kissUtil","executeInsertIfDupKeyUpdate success",query.sql);
+                            }
+                        } 
+                        functionSuccess(result);
+                        return;
+                    }
+                    else
+                    {
+                        exlog("kissUtil","executeInsertIfDupKeyUpdate error",query.sql,err);
                         functionError(err);
                         return;   
                     }

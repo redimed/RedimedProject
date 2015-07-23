@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cln_placing_turning_ranking" language="groovy" pageWidth="280" pageHeight="802" columnWidth="280" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="84ca77e3-a8e3-4169-bea9-d4be6c14f085">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<queryString>
+		<![CDATA[SELECT
+     concat(ranking.`FROM_VALUE`,'-',ranking.`TO_VALUE`) AS RATING_VALUE,
+     ranking.`RATE`,
+     ranking.`HEADER_ID`,
+     ranking.`VALUE`
+FROM
+     `sys_rankings` ranking
+WHERE
+     ranking.`HEADER_ID` = 19
+     or `HEADER_ID` = 20
+ORDER BY
+     ranking.`VALUE` DESC,
+     ranking.`HEADER_ID` ASC]]>
+	</queryString>
+	<field name="RATING_VALUE" class="java.lang.String"/>
+	<field name="RATE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="HEADER_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="VALUE" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<summary>
+		<band height="128">
+			<crosstab>
+				<reportElement x="0" y="0" width="280" height="127" uuid="47132d23-3722-4274-8c67-58dffb11cd15"/>
+				<crosstabDataset isDataPreSorted="true"/>
+				<rowGroup name="RATE" width="70">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{RATE}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#FFFFFF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="25" uuid="df7b6b61-d0a7-4f19-8596-8832ff4f1ea0"/>
+								<textElement verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{RATE}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents/>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="HEADER_ID" height="30">
+					<bucket class="java.lang.Integer">
+						<bucketExpression><![CDATA[$F{HEADER_ID}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#FFFFFF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="30" uuid="295f21a1-b559-46cb-a525-86d98c241f9f"/>
+								<textElement verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{HEADER_ID} == 19?"Placing":"Turning"]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents/>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="RATING_VALUEMeasure" class="java.lang.String">
+					<measureExpression><![CDATA[$F{RATING_VALUE}]]></measureExpression>
+				</measure>
+				<crosstabCell width="50" height="25">
+					<cellContents>
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="ee8bca70-7f7b-45ee-916d-c45d261cde7b"/>
+							<textElement verticalAlignment="Middle"/>
+							<textFieldExpression><![CDATA[$V{RATING_VALUEMeasure}.indexOf("65536")!= -1?$V{RATING_VALUEMeasure}.replace("-65536","+"):$V{RATING_VALUEMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell height="25" rowTotalGroup="RATE">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="986fa80e-752c-4134-9800-638958189345"/>
+							<textFieldExpression><![CDATA[$V{RATING_VALUEMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="50" columnTotalGroup="HEADER_ID">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="c3c7b81f-9f82-4fa4-8d3f-52cfe15b5018"/>
+							<textFieldExpression><![CDATA[$V{RATING_VALUEMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell rowTotalGroup="RATE" columnTotalGroup="HEADER_ID">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="ce59e1fa-a6bf-46cc-8c7c-a0f35925046b"/>
+							<textFieldExpression><![CDATA[$V{RATING_VALUEMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+			<staticText>
+				<reportElement x="0" y="0" width="70" height="30" uuid="41e02e7e-b7db-4a34-9430-7648266df694"/>
+				<box>
+					<pen lineWidth="0.3"/>
+					<topPen lineWidth="0.3"/>
+					<leftPen lineWidth="0.3"/>
+					<bottomPen lineWidth="0.3"/>
+					<rightPen lineWidth="0.3"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[RATING]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>
