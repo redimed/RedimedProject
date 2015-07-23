@@ -11,15 +11,19 @@ angular.module("app.loggedIn.item.feegroup.detail.directive", [])
             link: function (scope, element, attrs) {
                 //tannv.dts@gmail.com
                 scope.feeGroupType=itemConst.feeGroupType;
+                scope.feeMapping = {};
                 //----------------------------------
                 //----------------------------------
                 //----------------------------------
                 var loadData = function (id) {
                     ItemService.feegroupdetail(id).then(function (data) {
-
                         angular.extend(scope.modelObjectMap, data.data);
                         ConfigService.autoConvertData(scope.modelObjectMap);
-                        console.log(scope.modelObjectMap);
+                        scope.modelObjectMap.COLUMN_MAPPING = JSON.parse(scope.modelObjectMap.COLUMN_MAPPING);
+                        var feeMapping = scope.modelObjectMap.COLUMN_MAPPING;
+                        scope.modelObjectMap.itemCode = feeMapping.itemCode;
+                        scope.feeMapping = feeMapping.feeMapping;
+
                     });
                 };
                 scope.modelObjectMap = angular.copy(FeeGroupModel);
@@ -65,7 +69,36 @@ angular.module("app.loggedIn.item.feegroup.detail.directive", [])
                         }
                     })
                 }
-                scope.feeMapping = {};
+                scope.deleteFeeMapping = function(key){
+                    var modalInstance=$modal.open({
+                        templateUrl:'deleteFeeMapping',
+                        controller:function($scope,$modalInstance,feeMapping,key){
+                            $scope.Ok = function(){
+                                for (keys in feeMapping) {
+                                    if(keys === key){
+                                        delete feeMapping[key]; 
+                                    }
+                                };
+                                console.log(feeMapping,key);
+                                $modalInstance.close(feeMapping);
+                            }
+                            $scope.cancel=function(){
+                                $modalInstance.dismiss('cancel');
+                            }
+                        },
+                        resolve:{
+                           feeMapping : function(){
+                             return scope.feeMapping;
+                           },
+                           key : function(){
+                            return key;
+                           }
+                        }
+                    })
+                    .result.then(function(response){
+                       scope.feeMapping = response;
+                    })
+                }
                 scope.addFeeMapping = function(){
                      var modalInstance=$modal.open({
                         templateUrl:'addFeeMapping',
@@ -76,12 +109,110 @@ angular.module("app.loggedIn.item.feegroup.detail.directive", [])
                                 uom: ''
                             }
                             $scope.saveFeeMapping = function(){
+                                 $scope.isSubmitFee = true;
+                                if (!$scope.FeeMappingForm.$invalid){
+
+                                var countkey=0;
+                                var countcol = 0;
                                  var object = {
                                     col:$scope.FeeMapping.col,
                                     uom:$scope.FeeMapping.uom
                                  }
-                                 feeMapping[$scope.FeeMapping.FEE_TYPE_ORDER] =object;
-                                 $modalInstance.close(feeMapping);
+                                for (key in feeMapping) {
+                                     if (key === $scope.FeeMapping.FEE_TYPE_ORDER) {
+                                        countkey ++;
+                                     };
+                                 };
+                                for (key in feeMapping) {
+                                     if (feeMapping[key].col === $scope.FeeMapping.col) {
+                                        countcol ++;
+                                     };
+                                 };
+                                 console.log(countkey);
+                                 if (countkey === 0) {
+                                    if (countcol === 0) {
+                                        feeMapping[$scope.FeeMapping.FEE_TYPE_ORDER] =object;
+                                        $modalInstance.close(feeMapping);
+                                    }else{
+                                        toastr.error("Colum Index exits");
+                                    };
+                                    
+                                 }else{
+                                    toastr.error("Fee Type Order exits");
+                                 };
+                                }
+                            }
+                            $scope.cancel=function(){
+                                $modalInstance.dismiss('cancel');
+                            }
+                        },
+                        resolve:{
+                           feeMapping : function(){
+                             return scope.feeMapping;
+                           }
+                        }
+                    })
+                    .result.then(function(response){
+                       scope.feeMapping = response;
+                    })
+                }
+
+                scope.editFeeMapping = function(key){
+                   
+                     var modalInstance=$modal.open({
+                        templateUrl:'addFeeMapping',
+                        controller:function($scope,$modalInstance,feeMapping){
+                            var keyroot ='';
+                            var colroot ='';
+                            for (keys in feeMapping) {
+                                if (keys == key) {
+                                    keyroot = keys;
+                                    colroot = feeMapping[keys].col;
+                                     $scope.FeeMapping ={
+                                        FEE_TYPE_ORDER:keys,
+                                        col:feeMapping[keys].col,
+                                        uom:feeMapping[keys].uom
+                                     }
+
+                                };
+                            };
+                            $scope.saveFeeMapping = function(){
+                                $scope.isSubmitFee = true;
+                                if (!$scope.FeeMappingForm.$invalid){
+                                 var countkey = 0;
+                                 var countcol = 0;
+                                 var object = {
+                                    col:$scope.FeeMapping.col,
+                                    uom:$scope.FeeMapping.uom
+                                 }
+                                 for (key in feeMapping) {
+                                     if (key === $scope.FeeMapping.FEE_TYPE_ORDER && key !== keyroot) {
+                                        countkey ++;
+                                     };
+                                 };
+                                 for (key in feeMapping) {
+                                     if (feeMapping[key].col === $scope.FeeMapping.col && feeMapping[key].col !== colroot) {
+                                        countcol ++;
+                                     };
+                                 };
+                                 console.log(countkey);
+                                 if (countkey === 0) {
+                                    if (countcol === 0) {
+                                        if (keyroot !== $scope.FeeMapping.FEE_TYPE_ORDER) {
+                                            delete feeMapping[keyroot];
+                                            feeMapping[$scope.FeeMapping.FEE_TYPE_ORDER] =object; 
+                                        }else{
+                                            feeMapping[$scope.FeeMapping.FEE_TYPE_ORDER] =object; 
+                                        };
+                                        $modalInstance.close(feeMapping);
+                                    }else{
+                                        toastr.error("Colum Index exits");
+                                    };
+                                     
+                                 }else{
+                                    toastr.error("Fee Type Order exits");
+                                 };
+                                }
                             }
                             $scope.cancel=function(){
                                 $modalInstance.dismiss('cancel');
@@ -102,21 +233,12 @@ angular.module("app.loggedIn.item.feegroup.detail.directive", [])
                     if (option.type != 'view') {
                         scope.isSubmit = true;
                         if (!scope.mainForm.$invalid) {
-                            var postDataC = angular.copy(scope.modelObjectMap);
-                            console.log(postDataC);
+                            var postData = angular.copy(scope.modelObjectMap);
                             var columnMapping = {
-                                itemCode:postDataC.itemCode,
+                                itemCode:scope.modelObjectMap.itemCode,
                                 feeMapping:scope.feeMapping
                             }
-                            columnMapping = JSON.stringify(columnMapping);
-                            console.log(columnMapping);
-                            var postData = {
-                                FEE_GROUP_NAME:postDataC.FEE_GROUP_NAME,
-                                FEE_GROUP_TYPE:postDataC.FEE_GROUP_TYPE,
-                                ISENABLE:postDataC.ISENABLE,
-                                COLUMN_MAPPING:columnMapping
-                            }
-                            // DATE
+                           postData.COLUMN_MAPPING =columnMapping;
                             for (var key in postData) {
                                 if (postData[key] instanceof Date) {
                                     postData[key] = ConfigService.getCommonDate(postData[key]);

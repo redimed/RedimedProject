@@ -47,22 +47,34 @@
         </div>
         <!--ISENABLE-->
          <div class="clearfix"></div>
+
         <!--Item Code-->
-        <div class="col-md-12">
-            <span class="field" ng-class="{'has-error': mainForm.itemCode.$invalid && isSubmit}">
-            <label for="itemCode">Item Code</label>
-            <input type="text" placeholder="Item Code" name="itemCode" ng-model="modelObjectMap.itemCode" class="form-control" id="itemCode" float-label >
-            </span>
-        </div>
-        <!--Item Code-->
+        <hr>
+            <div class="col-sm-8 col-xs-6">
+                <span class="field" ng-class="{'has-error': mainForm.itemCode.$invalid && isSubmit}">
+                <label for="itemCode">Column index of Item code</label>
+                <input type="number" placeholder="Column index of Item code" name="itemCode" ng-model="modelObjectMap.itemCode" class="form-control" id="itemCode" float-label required>
+                 <span ng-show="mainForm.itemCode.$invalid && isSubmit">
+                    <span class="mdt-popover above" ng-show="mainForm.itemCode.$error.required">
+                        Column index of Item code required!
+                    </span>
+                 </span>
+                </span>
+            </div>
+            <div class="col-sm-4 col-xs-6" style="margin-top: 17px;">
+                <button class="btn btn-sm btn-block green" ng-click="addFeeMapping()">Add Fee Mapping</button>
+            </div>
+            <!--Item Code-->
         <!--Table-->
-        <div class="col-md-12" style="margin-bottom: 14px;">
-            <table class="mdt-table">
+        <div class="col-md-12" style="margin-bottom: 14px; margin-top: 6px;">
+            <table class="mdt-table" style="margin-top: -15px;">
                 <thead>
                     <tr>
                         <th>Fee Type Order</th>
                         <th>Colum Index</th>
-                        <th>UOM</th>
+                        <th>Uom</th>
+                        <th>Action</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -70,14 +82,16 @@
                         <td>{{key}}</td>
                         <td>{{vaule.col}}</td>
                         <td>{{vaule.uom}}</td>
+                        <td align="center">
+                            <i class="fa fa-pencil-square-o" ng-click="editFeeMapping(key)"></i>
+                            <i class="fa fa-times" style="margin-left: 7px;" ng-click="deleteFeeMapping(key)"></i>
+                        </td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <!-- Table -->
-        <div class="col-sm-4 col-xs-6">
-            <button class="btn btn-sm btn-block green" ng-click="addFeeMapping()">Add Fee Type</button>
-        </div>
+       
         <!-- ACTION -->
         <div class="col-sm-4 col-xs-6">
             <button class="btn btn-sm btn-block green" ng-click="clickAction({type: mode.type})">
@@ -95,39 +109,67 @@
           }
     </style>
     <div class="modal-body">
-        <form name="FeeMappingForm">
+        <form name="FeeMappingForm" novalidate>
            <div class="row">
                 <div class="col-sm-4 col-xs-6">
-                    <span class="field" ng-class="{'has-error': FeeMappingForm.FEE_TYPE_ORDER.$invalid && isSubmit}">
+                    <span class="field" ng-class="{'has-error': FeeMappingForm.FEE_TYPE_ORDER.$invalid && isSubmitFee}">
                     <label for="FEE_TYPE_ORDER"> Fee Type Order</label>
-                    <input type="text" placeholder="Fee Type Order" name="FEE_TYPE_ORDER" ng-model="FeeMapping.FEE_TYPE_ORDER" class="form-control" id="FEE_TYPE_ORDER" float-label >
+                    <input type="text" placeholder="Fee Type Order" name="FEE_TYPE_ORDER" ng-model="FeeMapping.FEE_TYPE_ORDER" class="form-control" id="FEE_TYPE_ORDER" float-label required>
+                     <span ng-show="FeeMappingForm.FEE_TYPE_ORDER.$invalid && isSubmitFee">
+                        <span class="mdt-popover above" ng-show="FeeMappingForm.FEE_TYPE_ORDER.$error.required">
+                            Fee Type Order required!
+                        </span>
+                    </span>
                     </span>
                 </div>
                  <div class="col-sm-4 col-xs-6">
-                    <span class="field" ng-class="{'has-error': FeeMappingForm.col.$invalid && isSubmit}">
+                    <span class="field" ng-class="{'has-error': FeeMappingForm.col.$invalid && isSubmitFee}">
                     <label for="col"> Colum Index</label>
-                    <input type="text" placeholder="Colum Index" name="col" ng-model="FeeMapping.col" class="form-control" id="col" float-label >
+                    <input type="text" placeholder="Colum Index" name="col" ng-model="FeeMapping.col" class="form-control" id="col" float-label required>
+                    <span ng-show="FeeMappingForm.col.$invalid && isSubmitFee">
+                        <span class="mdt-popover above" ng-show="FeeMappingForm.col.$error.required">
+                            Colum Index required!
+                        </span>
+                    </span>
                     </span>
                 </div>
                  <div class="col-sm-4 col-xs-6">
-                    <span class="field" ng-class="{'has-error': FeeMappingForm.uom.$invalid && isSubmit}">
+                    <span class="field" ng-class="{'has-error': FeeMappingForm.uom.$invalid && isSubmitFee}">
                     <label for="uom"> UOM</label>
-                    <select type="text" placeholder="uom" name="uom" ng-model="FeeMapping.uom" class="form-control" id="uom" float-label >
-                         <option value=''>--- Select---</option>
+                    <select type="text" placeholder="uom" name="uom" ng-model="FeeMapping.uom" class="form-control" id="uom" float-label required>
+                        <option value="" disabled="" selected="" class="">--- Select---</option>
                         <option value="Currency">Currency</option>
                         <option value="Percent">Percent</option>
                     </select>
+                      <span ng-show="FeeMappingForm.uom.$invalid && isSubmitFee">
+                        <span class="mdt-popover above" ng-show="FeeMappingForm.uom.$error.required">
+                            Uom required!
+                        </span>
                     </span>
                 </div>
             </select>
                 <div class="clearfix"></div>
                  <div class="col-sm-4 col-xs-6">
-                    <button class="btn btn-sm btn-block green" ng-click="saveFeeMapping()">Add</button>
+                    <button class="btn btn-sm btn-block green" ng-click="saveFeeMapping()" style="height: 30px;"><i class="fa fa-save ng-scope">Save</i></button>
                 </div>
            </div>
         </form>
     </div>
     <div class="modal-footer" style="height: 47px">
+        <button class="un-button-submit-m ng-scope" style="margin-top: -5px;" ng-click="cancel()">Cancel</button>
+    </div>
+ </script>
+<script type="text/ng-template" id="deleteFeeMapping">
+    <style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+    </style>
+    <div class="modal-body">
+        <div align="center">Do you want delete FeeMapping</div>
+    </div>
+    <div class="modal-footer" style="height: 47px">
+        <button class="un-button-submit-m btn-warning btn-xs" style="margin-top: -5px;" ng-click="Ok()">Ok</button>
         <button class="un-button-submit-m ng-scope" style="margin-top: -5px;" ng-click="cancel()">Cancel</button>
     </div>
  </script>

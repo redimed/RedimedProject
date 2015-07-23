@@ -173,6 +173,7 @@ module.exports = {
     postInsert: function (req, res) {
         var postData = req.body;
         delete postData.FEE_GROUP_ID;
+        postData.COLUMN_MAPPING = JSON.stringify(postData.COLUMN_MAPPING);
         db.FeeGroup.create(postData)
             .success(function (created) {
                 if (!created) res.json(500, {
@@ -212,25 +213,25 @@ module.exports = {
 
     postUpdate: function (req, res) {
         var postData = req.body;
-        console.log('this is post data', postData);
         var item_id = postData.FEE_GROUP_ID;
-        delete postData.FEE_GROUP_ID;
+        postData.COLUMN_MAPPING=JSON.stringify(postData.COLUMN_MAPPING);
+        kiss.exlog(postData,item_id);
 
         db.FeeGroup.update(postData, {
             FEE_GROUP_ID: item_id
         })
-            .success(function (data) {
-                res.json({
-                    "status": "success",
-                    "data": data
-                });
-            })
-            .error(function (error) {
-                res.json(500, {
-                    "status": "error",
-                    "message": error
-                });
-            })
+        .success(function (data) {
+            res.json({
+                "status": "success",
+                "data": data
+            });
+        })
+        .error(function (error) {
+            res.json(500, {
+                "status": "error",
+                "message": error
+            });
+        })
     },
 
 
