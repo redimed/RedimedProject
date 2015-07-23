@@ -27,7 +27,7 @@ angular.module("app.loggedIn.template.model", [])
 
     instanceService.delete = function(data){
         var detailApi = appApi.all("delete");
-        return detailApi.post({data: data, name: name});
+        return detailApi.post({data: data});
     }
 
     instanceService.write = function(data){

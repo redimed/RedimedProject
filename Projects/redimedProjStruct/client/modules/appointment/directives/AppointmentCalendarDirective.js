@@ -91,14 +91,14 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 			}
 			scope.changeStatusFor = function(status){
 				for (var i = 0; i < scope.arrayAppid.length; i++) {
-			       		postData = {
-							STATUS:status,
-							CAL_ID: scope.arrayAppid[i].CAL_ID
-						}
-						AppointmentModel.changeStatus(postData)
-						.then(function(response){
-						}),function(error){})
-			       	};
+		       		postData = {
+						STATUS:status,
+						CAL_ID: scope.arrayAppid[i].CAL_ID
+					}
+					AppointmentModel.changeStatus(postData)
+					.then(function(response){
+					},function(error){})
+		       	}
 			}
 			scope.cancelCalMenu = function($event){
 				angular.element("#calMenu").css({'display':'none'});

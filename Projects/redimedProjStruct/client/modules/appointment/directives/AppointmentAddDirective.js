@@ -188,7 +188,7 @@ angular.module('app.loggedIn.appointment.directives.add', [])
 								})
 								.result.then(function(success){
 									if(success === 'success'){
-										console.log('3');
+										// console.log('3');
 										if(row){
 											var postData = {
 												form: {},
@@ -210,7 +210,7 @@ angular.module('app.loggedIn.appointment.directives.add', [])
 								
 							angular.forEach(arr_push, function(value, index){
 								if (flag == true) {
-									console.log('************************: ', arr_push[index]);
+									// console.log('************************: ', arr_push[index]);
 								}
 									$modal.open({
 										templateUrl: 'CheckAlert',
@@ -240,7 +240,7 @@ angular.module('app.loggedIn.appointment.directives.add', [])
 											})
 											.result.then(function(success){
 												if(success === 'success'){
-													console.log('2');
+													// console.log('2');
 													if(row){
 														var postData = {
 															form: {},
@@ -276,7 +276,7 @@ angular.module('app.loggedIn.appointment.directives.add', [])
 							})
 							.result.then(function(success){
 								if(success === 'success'){
-									console.log('4');
+									// console.log('4');
 									if(row){
 										var postData = {
 											form: {},

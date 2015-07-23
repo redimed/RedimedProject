@@ -19,7 +19,7 @@ angular.module('app.loggedIn.template.directives.patient_write', [])
 				content = content.replace(/test/g, '</img>');
 				content = content.replace(/<br>/g, '<br/>');
 
-				var content_temp = content.replace(/>/g, "/>")
+				var content_temp = content.replace(/>/g, "/>");
 
 				console.log(content_temp);
 
