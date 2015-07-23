@@ -529,7 +529,7 @@ module.exports = {
                                     notify.badge = 1;
                                     notify.sound = 'notification.wav';
                                     notify.alert = data[0].FullName+" will be picked up in "+ time +" minutes.";
-                                    notify.payload = {'messageFrom': 'REDiMED'}; 
+                                    notify.payload = {'messageFrom': 'REDiMED','injury_id':id,'time':time}; 
 
                                     var androidToken = [];
                                     var iosToken = [];
@@ -683,7 +683,7 @@ module.exports = {
                         notify.badge = 1;
                         notify.sound = 'beep.wav';
                         notify.alert = "You have new patient to pickup!";
-                        notify.payload = {'messageFrom': 'REDiMED'}; 
+                        notify.payload = {'messageFrom': 'REDiMED','injury_id':injuryId}; 
 
                         var androidToken = [];
                         var iosToken = [];
