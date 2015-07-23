@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.item.feegroup.detail.directive", [])
-    .directive("feeGroupDetail", function (FeeGroupModel, ItemService, ConfigService, toastr) {
+    .directive("feeGroupDetail", function (FeeGroupModel, ItemService, ConfigService, toastr,$modal) {
         return {
             restrict: "EA",
             scope: {
@@ -16,14 +16,16 @@ angular.module("app.loggedIn.item.feegroup.detail.directive", [])
                 //----------------------------------
                 var loadData = function (id) {
                     ItemService.feegroupdetail(id).then(function (data) {
+
                         angular.extend(scope.modelObjectMap, data.data);
                         ConfigService.autoConvertData(scope.modelObjectMap);
+                        console.log(scope.modelObjectMap);
                     });
                 };
                 scope.modelObjectMap = angular.copy(FeeGroupModel);
                 scope.mode = {
                     type: 'add',
-                    text: 'Add Fee Group'
+                    text: 'Save Fee Group'
                 };
 
                 if (scope.data) {
@@ -63,13 +65,57 @@ angular.module("app.loggedIn.item.feegroup.detail.directive", [])
                         }
                     })
                 }
+                scope.feeMapping = {};
+                scope.addFeeMapping = function(){
+                     var modalInstance=$modal.open({
+                        templateUrl:'addFeeMapping',
+                        controller:function($scope,$modalInstance,feeMapping){
+                           $scope.FeeMapping = {
+                                FEE_TYPE_ORDER: '',
+                                col: '',
+                                uom: ''
+                            }
+                            $scope.saveFeeMapping = function(){
+                                 var object = {
+                                    col:$scope.FeeMapping.col,
+                                    uom:$scope.FeeMapping.uom
+                                 }
+                                 feeMapping[$scope.FeeMapping.FEE_TYPE_ORDER] =object;
+                                 $modalInstance.close(feeMapping);
+                            }
+                            $scope.cancel=function(){
+                                $modalInstance.dismiss('cancel');
+                            }
+                        },
+                        resolve:{
+                           feeMapping : function(){
+                             return scope.feeMapping;
+                           }
+                        }
+                    })
+                    .result.then(function(response){
+                       scope.feeMapping = response;
+                    })
+                }
 
                 scope.clickAction = function (option) {
                     if (option.type != 'view') {
                         scope.isSubmit = true;
                         if (!scope.mainForm.$invalid) {
-                            var postData = angular.copy(scope.modelObjectMap);
-
+                            var postDataC = angular.copy(scope.modelObjectMap);
+                            console.log(postDataC);
+                            var columnMapping = {
+                                itemCode:postDataC.itemCode,
+                                feeMapping:scope.feeMapping
+                            }
+                            columnMapping = JSON.stringify(columnMapping);
+                            console.log(columnMapping);
+                            var postData = {
+                                FEE_GROUP_NAME:postDataC.FEE_GROUP_NAME,
+                                FEE_GROUP_TYPE:postDataC.FEE_GROUP_TYPE,
+                                ISENABLE:postDataC.ISENABLE,
+                                COLUMN_MAPPING:columnMapping
+                            }
                             // DATE
                             for (var key in postData) {
                                 if (postData[key] instanceof Date) {

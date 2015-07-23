@@ -72,6 +72,7 @@ angular.module('app.loggedIn.company.directives.list', [])
 					scope.company.loading = false;
 					scope.company.error = '';
 					scope.company.list = response.data;
+					console.log(scope.company.list);
 					scope.company.count = response.count;
 					scope.company.search.page = 1;
 					scope.company.company_idActive = response.data1[0].company_id;

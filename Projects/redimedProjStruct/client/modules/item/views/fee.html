@@ -72,6 +72,11 @@
 
 <!-- tannv.dts add -->
 <script type="text/ng-template" id="addGroupFeeTemplate">
+     <style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+    </style>
     <div class="modal-body">
         <fee-group-detail options="options" onsuccess="onSuccess" />
     </div>
@@ -93,6 +98,11 @@
 </div> --> <!-- tannv.dts comment -->
 
 <script type="text/ng-template" id="editGroupFeeTemplate">
+     <style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+    </style>
     <div class="modal-body">
         
         <fee-group-detail options="options" onsuccess="onSuccess" data="{id: '{{feeGroup.id}}'}" />
