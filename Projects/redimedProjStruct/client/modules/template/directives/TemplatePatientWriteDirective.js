@@ -18,12 +18,9 @@ angular.module('app.loggedIn.template.directives.patient_write', [])
 				content = content.replace(/&nbsp;&nbsp;/g, '</input>');
 				content = content.replace(/test/g, '</img>');
 				content = content.replace(/<br>/g, '<br/>');
+				console.log('%%%%%%%%%%%%%%%%%%%%%%: ', content);
 
-				var content_temp = content.replace(/>/g, "/>");
-
-				console.log(content_temp);
-
-				TemplateModel.write({name: scope.template.one.name, content: content_temp})
+				TemplateModel.write({name: scope.template.one.name, content: content})
 				.then(function(response){
 					$window.open(TemplateModel.download({id: response.data.id}));
 					//$window.open(TemplateModel.download({id: response.data.id, cal_id: $stateParams.cal_id, patient_id: $stateParams.patient_id}));
@@ -78,11 +75,11 @@ angular.module('app.loggedIn.template.directives.patient_write', [])
 							new_string_change = '<input class="custom-input-template" value="" placeholder="Please fill in">&nbsp;&nbsp;';
 						}else{
 							var field = split_string_change[1];
-							console.log('field: ', field);
+							//console.log('field: ', field);
 							for(var i = 0; i < scope.patient.one.length; i++) {
 								for( var key in scope.patient.one[i] ){
 									//for( var k = 0; k < key.length; k++){
-										console.log('key: ', key);
+										//console.log('key: ', key);
 										if(key === field){
 											new_string_change = scope.patient.one[i][key];
 											break;
@@ -112,7 +109,7 @@ angular.module('app.loggedIn.template.directives.patient_write', [])
 					}
 
 					new_content += content;
-					console.log('new content: ', new_content);
+					//console.log('new content: ', new_content);
 
 					$('#writeTemplate').html(new_content);
 					$('.custom-input-template').on('input', function(e){

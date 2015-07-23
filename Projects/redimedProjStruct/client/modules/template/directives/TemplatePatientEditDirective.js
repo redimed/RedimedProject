@@ -38,6 +38,10 @@ angular.module('app.loggedIn.template.directives.patient_edit', [])
 
 			element.wysiwyg({
 				toolbar: 'top',
+				forceImageUpload: true,
+				onImageUpload: function( insert_image ) { 
+					console.log('###############: ', insert_image );
+				},
 				buttons: {
 					bold: {
 	                    title: 'Bold (Ctrl+B)',
