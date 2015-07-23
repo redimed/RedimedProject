@@ -140,7 +140,7 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                     //SAVE LEAVE FORM IN SERVER
                     TimeSheetService.UpLeaveServer($scope.info).then(function(response) {
                         if (response.status === "success") {
-                            toastr.success("Apply for leave success!", "Success");
+                            toastr.success("Apply leave success!", "Success");
                             $state.go("loggedIn.timesheetHome.leaveHistory", null, {
                                 "reload": true
                             });
@@ -148,7 +148,7 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                             $state.go("loggedIn.home", null, {
                                 "reload": true
                             });
-                            toastr.error("Apply for leave fail!", "Error");
+                            toastr.error("Apply leave fail!", "Error");
                         } else {
                             $state.go("loggedIn.home", null, {
                                 "reload": true

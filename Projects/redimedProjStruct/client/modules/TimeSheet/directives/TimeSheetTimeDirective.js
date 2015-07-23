@@ -37,7 +37,7 @@ angular.module("app.loggedIn.TimeSheet.Time.Directive", [])
                     //SET TOOLTIPLE FOR INPUT
                     var ObjectError = {
                         "required": "Field is required!",
-                        "mask": "Filed is invalid!"
+                        "mask": "Field is invalid!"
                     };
                     var isError = false;
                     var keyErrorOut = "";
@@ -114,16 +114,17 @@ angular.module("app.loggedIn.TimeSheet.Time.Directive", [])
                     if (newModel !== undefined &&
                         newModel !== null &&
                         newModel !== "" &&
+                        newModel.length !== 0 &&
                         parseInt(newModel.toString().substr(newModel.toString().length - 2, 2)) > 59) {
                         scope.ngModel = StaffService.convertFromFullToShow(StaffService.convertShowToFull(newModel)).toString();
                     }
-                    if (scope.ngModel !== undefined &&
-                        scope.ngModel !== null &&
-                        scope.ngModel !== "" &&
-                        scope.ngModel !== 0 &&
-                        scope.ngModel.length !== 0) {
+                    if (newModel !== undefined &&
+                        newModel !== null &&
+                        newModel !== "" &&
+                        newModel.length !== 0 &&
+                        newModel !== 0) {
                         var result = "";
-                        for (var i = 0; i < scope.ngModel.toString().length - 2; i++) {
+                        for (var i = 0; i < newModel.toString().length - 2; i++) {
                             result += "9";
                         }
                         result += ":99";
@@ -135,10 +136,19 @@ angular.module("app.loggedIn.TimeSheet.Time.Directive", [])
                         }
                         //END
                     }
+                    //UPDATE REQUIRED
+                    if (scope.requireValidate !== undefined &&
+                        scope.requireValidate !== null &&
+                        scope.requireValidate !== "" &&
+                        scope.requireValidate.length !== 0) {
+                        attrs.$set("required", true);
+                    }
+                    //END
+
                     //SET TOOLTIPLE FOR INPUT
                     var ObjectError = {
                         "required": "Field is required!",
-                        "mask": "Filed is invalid!"
+                        "mask": "Field is invalid!"
                     };
                     var isError = false;
                     var keyErrorOut = "";
@@ -182,8 +192,12 @@ angular.module("app.loggedIn.TimeSheet.Time.Directive", [])
                 });
                 //WATCH MODEL REQUIRE
                 scope.$watch('requireValidate', function(newModelRequired, oldModelRequired) {
-                    if (newModelRequired !== undefined && newModelRequired !== null && newModelRequired.length !== 0) {
-                        attrs.$set("required", true);
+                    if (newModelRequired !== undefined &&
+                        newModelRequired !== null &&
+                        newModelRequired.length !== 0) {
+                        if (attrs.required !== true) {
+                            attrs.$set("required", true);
+                        }
                     } else {
                         attrs.$set("required", false);
                     }
@@ -191,7 +205,7 @@ angular.module("app.loggedIn.TimeSheet.Time.Directive", [])
                     //SET TOOLTIPLE FOR INPUT
                     var ObjectError = {
                         "required": "Field is required!",
-                        "mask": "Filed is invalid!"
+                        "mask": "Field is invalid!"
                     };
                     var isError = false;
                     var keyErrorOut = "";
@@ -252,6 +266,7 @@ angular.module("app.loggedIn.TimeSheet.Time.Directive", [])
                     if (newModel !== undefined &&
                         newModel !== null &&
                         newModel !== "" &&
+                        newModel !== " " &&
                         parseInt(newModel.toString().substr(newModel.toString().length - 2, 2)) > 59) {
                         scope.ngModel = StaffService.convertFromFullToShow(StaffService.convertShowToFull(newModel)).toString();
                     }
@@ -259,7 +274,8 @@ angular.module("app.loggedIn.TimeSheet.Time.Directive", [])
                         scope.ngModel !== null &&
                         scope.ngModel !== "" &&
                         scope.ngModel !== 0 &&
-                        scope.ngModel.length !== 0) {
+                        scope.ngModel.length !== 0 &&
+                        scope.ngModel !== " ") {
                         var result = "";
                         for (var i = 0; i < scope.ngModel.toString().length - 2; i++) {
                             result += "9";
@@ -273,10 +289,20 @@ angular.module("app.loggedIn.TimeSheet.Time.Directive", [])
                         }
                         //END
                     }
+
+                    //UPDATE REQUIRED
+                    if (scope.requireValidate !== undefined &&
+                        scope.requireValidate !== null &&
+                        scope.requireValidate !== "" &&
+                        scope.requireValidate.length !== 0) {
+                        attrs.$set("required", true);
+                    }
+                    //END
+
                     //SET TOOLTIPLE FOR INPUT
                     var ObjectError = {
                         "required": "Field is required!",
-                        "mask": "Filed is invalid!"
+                        "mask": "Field is invalid!"
                     };
                     var isError = false;
                     var keyErrorOut = "";
@@ -320,8 +346,12 @@ angular.module("app.loggedIn.TimeSheet.Time.Directive", [])
                 });
                 //WATCH MODEL REQUIRE
                 scope.$watch('requireValidate', function(newModelRequired, oldModelRequired) {
-                    if (newModelRequired !== undefined && newModelRequired !== null && newModelRequired.length !== 0) {
-                        attrs.$set("required", true);
+                    if (newModelRequired !== undefined &&
+                        newModelRequired !== null &&
+                        newModelRequired.length !== 0) {
+                        if(attrs.required !== true){
+                            attrs.$set("required", true);
+                        }
                     } else {
                         attrs.$set("required", false);
                     }
@@ -329,7 +359,7 @@ angular.module("app.loggedIn.TimeSheet.Time.Directive", [])
                     //SET TOOLTIPLE FOR INPUT
                     var ObjectError = {
                         "required": "Field is required!",
-                        "mask": "Filed is invalid!"
+                        "mask": "Field is invalid!"
                     };
                     var isError = false;
                     var keyErrorOut = "";

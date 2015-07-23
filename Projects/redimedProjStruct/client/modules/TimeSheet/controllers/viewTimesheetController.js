@@ -143,7 +143,6 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
     };
 
     $scope.chooseItem = function(task) {
-        console.log(task);
         var modalInstance = $modal.open({
             templateUrl: "modules/TimeSheet/views/itemModal.html",
             controller: 'ItemController',

@@ -149,13 +149,13 @@ module.exports = {
                     if (allTask[i].isAction == 'update') {
                         chainer.add(
                             db.timeTasks.update({
-                                "order": allTask[i].order,
-                                "department_code_id": allTask[i].department_code_id,
-                                "task": allTask[i].task,
-                                "date": allTask[i].date,
-                                "location_id": allTask[i].location_id,
-                                "activity_id": allTask[i].activity_id,
-                                "time_charge": allTask[i].time_temp
+                                order: allTask[i].order,
+                                department_code_id: allTask[i].department_code_id,
+                                task: allTask[i].task,
+                                date: allTask[i].date,
+                                location_id: allTask[i].location_id,
+                                activity_id: allTask[i].activity_id,
+                                time_charge: allTask[i].time_temp
                             }, {
                                 tasks_id: allTask[i].tasks_id
                             })
@@ -165,36 +165,7 @@ module.exports = {
                         if (allTask[i].item.length > 0) {
                             for (var j = 0; j < allTask[i].item.length; j++) {
                                 var a = allTask[i].item[j];
-                                if (a.isAction == 'insert') {
-                                    chainer.add(
-                                        db.TimeItemTask.create({
-                                            task_id: taskId,
-                                            item_id: a.ITEM_ID,
-                                            units: a.totalUnits,
-                                            ratio: a.ratio,
-                                            time_charge: a.time_temp,
-                                            comment: a.comment,
-                                        })
-                                    )
-
-                                    //PROCESS FILE
-                                    if (a.fileUpload !== undefined &&
-                                        a.fileUpload.length > 0) {
-                                        for (var keyFile = 0; keyFile < a.fileUpload.length; keyFile++) {
-                                            if (a.fileUpload[keyFile].isAction === "insert") {
-                                                chainer.add(
-                                                    db.time_item_file.create({
-                                                        task_id: taskId,
-                                                        item_id: a.ITEM_ID,
-                                                        file_id: a.fileUpload[keyFile].file_id,
-                                                        created_by: info.userID
-                                                    })
-                                                )
-                                            }
-                                        }
-                                    }
-                                    //END
-                                } else if (a.isAction == 'update') {
+                                if (a.isAction == 'update') {
                                     chainer.add(
                                             db.TimeItemTask.update({
                                                 units: a.totalUnits,
@@ -210,7 +181,7 @@ module.exports = {
                                     if (a.fileUpload !== undefined &&
                                         a.fileUpload.length > 0) {
                                         for (var keyFile = 0; keyFile < a.fileUpload.length; keyFile++) {
-                                            if (a.fileUpload[keyFile].isAction === "insert") {
+                                            if (a.fileUpload[keyFile].isAction == "insert") {
                                                 chainer.add(
                                                     db.time_item_file.create({
                                                         task_id: taskId,
@@ -232,10 +203,112 @@ module.exports = {
                                             task_id: taskId
                                         })
                                     )
+                                    if (a.fileUpload !== undefined &&
+                                        a.fileUpload.length > 0) {
+                                        for (var keyFileS = 0; keyFileS < a.fileUpload.length; keyFileS++) {
+                                            //DELETE TIME_TASK_FILE
+                                            chainer.add(
+                                                    db.sequelize.query("DELETE FROM time_task_file WHERE time_task_file.file_id = :fileId", null, {
+                                                        raw: true
+                                                    }, {
+                                                        fileId: a.fileUpload[keyFileS].file_id
+                                                    })
+                                                )
+                                                //END
+
+                                            //DELETE TIME_ITEM_FILE
+                                            chainer.add(
+                                                    db.sequelize.query("DELETE FROM time_item_file WHERE time_item_file.task_id = :taskId AND time_item_file.item_id = :itemId", null, {
+                                                        raw: true
+                                                    }, {
+                                                        taskId: taskId,
+                                                        itemId: a.ITEM_ID
+                                                    })
+                                                )
+                                                //END
+                                        }
+                                    }
+                                } else if (a.isAction == 'insert') {
+                                    chainer.add(
+                                        db.TimeItemTask.create({
+                                            task_id: taskId,
+                                            item_id: a.ITEM_ID,
+                                            units: a.totalUnits,
+                                            ratio: a.ratio,
+                                            time_charge: a.time_temp,
+                                            comment: a.comment,
+                                        })
+                                    )
+
+                                    //PROCESS FILE
+                                    if (a.fileUpload !== undefined &&
+                                        a.fileUpload.length > 0) {
+                                        for (var keyFile = 0; keyFile < a.fileUpload.length; keyFile++) {
+                                            if (a.fileUpload[keyFile].isAction == "insert") {
+                                                chainer.add(
+                                                    db.time_item_file.create({
+                                                        task_id: taskId,
+                                                        item_id: a.ITEM_ID,
+                                                        file_id: a.fileUpload[keyFile].file_id,
+                                                        created_by: info.userID
+                                                    })
+                                                )
+                                            }
+                                        }
+                                    }
+                                    //END
                                 }
                             }
                         }
+                    } else if (allTask[i].isAction == 'delete') {
+                        chainer.add(
+                            db.timeTasks.update({
+                                "deleted": 1
+                            }, {
+                                tasks_id: allTask[i].tasks_id
+                            })
+                        )
 
+                        var taskId = allTask[i].tasks_id;
+                        if (allTask[i].item.length > 0) {
+                            for (var j = 0; j < allTask[i].item.length; j++) {
+                                var a = allTask[i].item[j];
+                                chainer.add(
+                                    db.TimeItemTask.update({
+                                        'deleted': 1
+                                    }, {
+                                        item_id: a.ITEM_ID,
+                                        task_id: taskId
+                                    })
+                                )
+                                if (a.fileUpload !== undefined &&
+                                        a.fileUpload.length > 0) {
+                                        for (var keyFileS = 0; keyFileS < a.fileUpload.length; keyFileS++) {
+                                            //DELETE TIME_TASK_FILE
+                                            chainer.add(
+                                                    db.sequelize.query("DELETE FROM time_task_file WHERE time_task_file.file_id = :fileId", null, {
+                                                        raw: true
+                                                    }, {
+                                                        fileId: a.fileUpload[keyFileS].file_id
+                                                    })
+                                                )
+                                                //END
+
+                                            //DELETE TIME_ITEM_FILE
+                                            chainer.add(
+                                                    db.sequelize.query("DELETE FROM time_item_file WHERE time_item_file.task_id = :taskId AND time_item_file.item_id = :itemId", null, {
+                                                        raw: true
+                                                    }, {
+                                                        taskId: taskId,
+                                                        itemId: a.ITEM_ID
+                                                    })
+                                                )
+                                                //END
+                                        }
+                                    }
+
+                            }
+                        }
                     } else if (allTask[i].isAction == 'insert') {
                         chainer.add(
                             db.timeTasks.create({
@@ -268,7 +341,7 @@ module.exports = {
                                 if (a.fileUpload !== undefined &&
                                     a.fileUpload.length > 0) {
                                     for (var keyFileL = 0; keyFileL < a.fileUpload.length; keyFileL++) {
-                                        if (a.fileUpload[keyFileL].isAction === "insert") {
+                                        if (a.fileUpload[keyFileL].isAction == "insert") {
                                             chainer.add(
                                                 db.time_item_file.create({
                                                     task_id: tId,
@@ -281,58 +354,6 @@ module.exports = {
                                     }
                                 }
                                 //END
-
-                            }
-                        }
-
-                    } else if (allTask[i].isAction == 'delete') {
-                        chainer.add(
-                            db.timeTasks.update({
-                                "deleted": 1
-                            }, {
-                                tasks_id: allTask[i].tasks_id
-                            })
-                        )
-
-                        var taskId = allTask[i].tasks_id;
-
-                        //DELETE
-                        if (allTask[i].FileUploader !== undefined &&
-                            allTask[i].fileUpload.length > 0) {
-                            //DELETE TIME_TASK_FILE
-                            chainer.add(
-                                    db.sequelize.query("DELETE FROM time_task_file WHERE time_task_file.file_id = :fileId", null, {
-                                        raw: true
-                                    }, {
-                                        fileId: allTask[i].fileUpload[keyFileS].file_id
-                                    })
-                                )
-                                //END
-
-                            //DELETE TIME_ITEM_FILE
-                            chainer.add(
-                                    db.sequelize.query("DELETE FROM time_item_file WHERE time_item_file.task_id = :taskId AND time_item_file.item_id = :itemId", null, {
-                                        raw: true
-                                    }, {
-                                        taskId: taskId,
-                                        itemId: allTask[i].fileUpload[keyFileS].item_id
-                                    })
-                                )
-                                //END
-                        }
-                        //END
-                        if (allTask[i].item.length > 0) {
-                            for (var j = 0; j < allTask[i].item.length; j++) {
-                                var a = allTask[i].item[j];
-
-                                chainer.add(
-                                    db.TimeItemTask.update({
-                                        'deleted': 1
-                                    }, {
-                                        item_id: a.ITEM_ID,
-                                        task_id: taskId
-                                    })
-                                )
 
                             }
                         }

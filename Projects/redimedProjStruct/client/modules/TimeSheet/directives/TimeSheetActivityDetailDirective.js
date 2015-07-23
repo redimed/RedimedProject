@@ -232,8 +232,7 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                 scope.uploader.filters.push({
                     name: "limitSize",
                     fn: function(item) {
-                        // return (item.size / 1048576) < 10;
-                        return true;
+                        return (item.size / 1048576) < 10;
                     }
                 });
                 //END FILTER LIMIT FILE UPLOAD

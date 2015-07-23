@@ -87,7 +87,7 @@
                             </td>
                             <td style="width:90%;">
                                 <div ng-class="{'error-input':isRequired===1 && formLeave.start_date.$error.required}" style="width:202px;">
-                                    <input ng-model="info.start_date" type="text" name="start_date" class="form-control input-sm" datepicker-popup="dd/MM/yyyy" is-open="openDOB1" ng-click="openDOB1 = true" datepicker-options="dateOptions3" max-date="info.finish_date" close-text="Close" style="width:200px; margin-bottom:0px; color:#31708f;" ng-required="info.start_date===undefined || info.start_date===null || info.start_date.length===0" ng-change="checkLeaveExist()" />
+                                    <input ng-model="info.start_date" type="text" name="start_date" class="form-control input-sm" datepicker-popup="dd/MM/yyyy" is-open="openDOB1" ng-click="openDOB1 = true" datepicker-options="dateOptions3" max-date="info.finish_date" close-text="Close" style="width:200px; margin-bottom:0px; color:#31708f;" ng-required="info.start_date===undefined || info.start_date===null || info.start_date.length===0" ng-change="checkLeaveExist()"/>
                                 </div>
                             </td>
                         </tr>
@@ -165,13 +165,13 @@
                                 <div class='col-md-3' style="width:auto;margin-left:-15px;" ng-if="l.leave_type_id===5">
                                     <label style="margin-top:3px;">{{l.leave_name}}</label>
                                 </div>
-                                <input ng-if="l.leave_type_id===5" name="leave_type" class="form-control input-sm" style=" width:435px; margin-bottom:0px;" ng-model="info.infoTypeLeave[$index].type_other" ng-required="false" model-validate="info.infoTypeLeave[$index].time_leave" form-validate="formRepeat.leave_type.$error" ng-maxlength="500" />
+                                <input ng-if="l.leave_type_id===5" name="leave_type" class="form-control input-sm" style=" width:435px; margin-bottom:0px;" ng-model="info.infoTypeLeave[$index].type_other" model-validate="info.infoTypeLeave[$index].time_leave" form-validate="formRepeat.leave_type.$error" ng-maxlength="500" ng-required="false"/>
                             </td>
                             <td style="width:10%;">
-                                <input type="text" ui-mask="999:99" name="time_leave_nonStandard" ng-if="info.standard===0 && l.leave_type_id===1" class='form-control input-sm' ng-model="info.infoTypeLeave[$index].time_leave" ng-change="changeTime()" style="text-align:center; margin-bottom:0px;width:100%;" time-chargenon form-validate="formRepeat.time_leave_nonStandard.$error" require-validate="info.infoTypeLeave[$index].reason_leave" />
+                                <input type="text" ui-mask="999:99" name="time_leave_nonStandard" ng-if="info.standard===0 && l.leave_type_id===1" class='form-control input-sm' ng-model="info.infoTypeLeave[$index].time_leave" ng-change="changeTime()" style="text-align:center; margin-bottom:0px;width:100%;" time-chargenon form-validate="formRepeat.time_leave_nonStandard.$error" require-validate="info.infoTypeLeave[$index].reason_leave" ng-required="false"/>
                                 <!-- END -->
                                 <!-- WHEN STANDARD -->
-                                <input type="text" ui-mask="99:99" name="time_leave_standard" ng-if="(info.standard===1 || (info.standard===0 && l.leave_type_id!==1))" class='form-control input-sm' ng-model="info.infoTypeLeave[$index].time_leave" ng-change="changeTime()" style="text-align:center; margin-bottom:0px;width:100%;" ng-required="false" time-chargeleave form-validate="formRepeat.time_leave_standard.$error" require-validate="info.infoTypeLeave[$index].reason_leave" />
+                                <input type="text" ui-mask="99:99" name="time_leave_standard" ng-if="(info.standard===1 || (info.standard===0 && l.leave_type_id!==1))" class='form-control input-sm' ng-model="info.infoTypeLeave[$index].time_leave" ng-change="changeTime()" style="text-align:center; margin-bottom:0px;width:100%;" time-chargeleave form-validate="formRepeat.time_leave_standard.$error" require-validate="info.infoTypeLeave[$index].reason_leave" ng-required="false"/>
                                 <!-- END -->
                             </td>
                             <td style="width:40%; text-align:center; ">
