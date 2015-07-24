@@ -10,6 +10,9 @@ angular.module("app.loggedIn.user.services", [])
         return funcApi.get();
     }
 
+    userService.doctorAssistant = function(){
+        return userApi.one('users/assistant').get();
+    }
 
     userService.detail = function(username){
         var detailApi = userApi.one("users/loggedin");

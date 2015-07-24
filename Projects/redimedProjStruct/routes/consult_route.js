@@ -9,6 +9,8 @@ app.post('/api/consultation/getPatientProblem',ConsultationController.getPatient
 app.get('/api/consultation/draw/templates',ConsultationController.getDrawTemplate);
 app.get('/api/consultation/draw/template/:id',ConsultationController.getTemplateImg);
 app.post('/api/consultation/submit',ConsultationController.submitConsult);
+app.post('/api/consultation/submit-measurements',ConsultationController.submitMeasurements);
+app.post('/api/consultation/submit-medication',ConsultationController.submitMedication);
 app.post('/api/consultation/draw/saveImage',ConsultationController.saveImage);
 app.get('/api/consultation/draw/getImage/:id',ConsultationController.getImage);
 app.post('/api/consultation/patient/company',ConsultationController.getPatientCompany);
@@ -24,6 +26,10 @@ app.post('/api/consultation/beforeFinishSession',ConsultationController.beforeFi
 app.post('/api/consultation/finishSession',ConsultationController.finishSession);
 app.post('/api/consultation/getApptPatient',ConsultationController.getApptPatient);
 app.post('/api/consultation/check-consultation-patientID-calID',ConsultationController.checkConsultation);
+app.post('/api/consultation/list-measurements',ConsultationController.getListMeasurements);
+app.post('/api/consultation/list-medication',ConsultationController.getListMedication);
+app.post('/api/consultation/set-isenable-measurements',ConsultationController.setIsEnableMeasurements);
+app.post('/api/consultation/set-isenable-medication',ConsultationController.setIsEnableMedication);
 app.post('/api/consultation/get-img-drawing-history',ConsultationController.getImgDrawingHistory);
 app.get('/api/consultation/drawing/image/:imageId',ConsultationController.drawingImageById);
 app.post('/api/consultation/listCor',ConsultationController.postListCor);

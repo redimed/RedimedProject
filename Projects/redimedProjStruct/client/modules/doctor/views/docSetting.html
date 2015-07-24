@@ -6,8 +6,61 @@
                 Doctor Settings
             </span>
         </div>
+        <div class="actions">
+            <a href="javascript:;" ng-class="{'disabled': doctorInfo == null}" ng-click="submitClick()" style="width: 120px;  background-color: #030303;margin-left: -126px;" class="btn pull-left un-submit">
+                Save
+            </a>        
+        </div>
     </div>
     <div class="portlet-body">
-        
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <span>
+                    <label style="font-weight: bold;">Select Doctor: </label>
+                    &nbsp;&nbsp;
+                    <ui-select on-select="changeDoctor($item)" ng-model="doctor.selected" theme="select2" ng-disabled="disabled"  style="min-width: 500px;">
+                        <ui-select-match placeholder="Select doctor in the list or search his name...">{{$select.selected.NAME}}</ui-select-match>
+                        <ui-select-choices repeat="doc in doctors | propsFilter: {NAME: $select.search}">
+                          <div ng-bind-html="doc.NAME | highlight: $select.search"></div>
+                          <small>
+                            <b>Email:</b> {{(doc.Email == null || doc.Email == '') ? 'N/A' : doc.Email}}
+                            <br/>
+                            <b>Specialities:</b> {{(doc.Specialities_name == null || doc.Specialities_name == '') ? 'N/A' : doc.Specialities_name}}
+                          </small>
+                        </ui-select-choices>
+                    </ui-select>
+                </span>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-3">
+                <label for="currSite" class="un-label-form-3 un-label-whidth-130">Current Site</label>
+                <select ng-options="s.id as s.Site_name for s in siteList" 
+                    name="currSite" ng-model="doctorInfo.currentSite" id="currSite" class="form-control input-sm select-outside ng-pristine ng-valid">
+                    <option value="" disabled selected>--Select Site--</option>
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <label for="currSite" class="un-label-form-3 un-label-whidth-130">Assistant</label>
+                <select ng-options="s.id as s.user_name for s in userList" 
+                     ng-model="doctorInfo.assist_user" class="form-control input-sm select-outside ng-pristine ng-valid">
+                    <option value="" disabled selected>--Select User--</option>
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <label class="un-label-form-3 un-label-whidth-130">Numbers Of Room</label>
+                <input type="text" numbers-only placeholder="Numbers Of Room" name="numOfRoom" ng-model="doctorInfo.numsOfRoom" class="form-control input-sm select-outside ng-pristine ng-valid" id="sur_name">
+            </div>
+
+            <div class="col-md-3">
+                <label class="un-label-form-3 un-label-whidth-130">Is Online</label>
+                <br/>
+                <input type="checkbox" name="isonline" id="isonline" class="mdt-checkbox" ng-model="doctorInfo.isOnline" ng-true-value="1" ng-false-value="0">
+                <label for="isonline" class="un-label-isenable form-control un-input-m-custom">Is Online</label>
+            </div>
+        </div>
     </div>
 </div>

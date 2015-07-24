@@ -1,9 +1,10 @@
 angular.module("app.loggedIn.doctor.home.controller",[])
 
 .controller("DoctorHomeController", function($scope,socket, $state, $cookieStore, DoctorService, ConfigService, localStorageService, toastr, moment,$modal){
-	var nowtime = moment();
-
-	$scope.selectDate = moment().range(moment().subtract(1, 'days'), moment());
+	$scope.selectDate = moment().range(moment(), moment());
+	$scope.doctorInfo = null;
+	$scope.userInfo = $cookieStore.get('userInfo');
+	$scope.list_appts = [];
 
 	/**
 	 * create by: unknown
@@ -12,8 +13,10 @@ angular.module("app.loggedIn.doctor.home.controller",[])
 	$scope.loadCalendar = function(){
 		var fromDate = moment(($scope.selectDate.start).format("YYYY-MM-DD"));
 		var toDate = moment(($scope.selectDate.end).format("YYYY-MM-DD"));
-		var doctor_id = $scope.doctorInfo.doctor_id;
-		DoctorService.doctor_calendar_by_date(doctor_id, fromDate._i, toDate._i)
+		var doctor_id = $scope.doctorInfo != null? $scope.doctorInfo.doctor_id : null;
+		var user_id = $scope.userInfo.id;
+
+		DoctorService.doctor_calendar_by_date(doctor_id,user_id, fromDate._i, toDate._i)
 		.then(function(data){
 			if(data.status=='success')
 			{
@@ -85,48 +88,34 @@ angular.module("app.loggedIn.doctor.home.controller",[])
 		})*/
     }
 
-
-	var init = function(){
-		$scope.loadCalendar();
-	}
-
-	//tannv.dts@gmail.com
-	function getDoctorInfo()
-	{
-		$scope.doctorInfo = $cookieStore.get('doctorInfo');
-        console.log("Doctor Info: ",$scope.doctorInfo);
-        if(!$scope.doctorInfo || !$scope.doctorInfo.doctor_id) {
-			alert('Not Doctor Information !!!')
-		}
-        init();
-	}
-
     /**
 	 * tannv.dts@gmail.com
 	 * Kiem tra doctor Info co ton tai chua
 	 */
 	$scope.checkIsDoctor=function(){
-		$scope.userInfo=$cookieStore.get('userInfo');
 		if($cookieStore.get('doctorInfo') && $cookieStore.get('doctorInfo').doctor_id)
-		{
-			getDoctorInfo();
-		}
+			$scope.doctorInfo = $cookieStore.get('doctorInfo');
 		else
 		{
 			DoctorService.getByUserId($scope.userInfo.id).then(function (data) {
 		        if (data) 
 		        {
-		            $cookieStore.put('doctorInfo', {
-		                doctor_id: data.doctor_id,
-		                NAME: data.NAME,
-		                Provider_no: data.Provider_no,
-		                CLINICAL_DEPT_ID: data.CLINICAL_DEPT_ID
-		            });
-		            getDoctorInfo();
+		        	if(data.status != 'fail')
+		        	{
+		        		$cookieStore.put('doctorInfo', {
+			                doctor_id: data.doctor_id,
+			                NAME: data.NAME,
+			                Provider_no: data.Provider_no,
+			                CLINICAL_DEPT_ID: data.CLINICAL_DEPT_ID
+			            });
+			            $scope.doctorInfo = $cookieStore.get('doctorInfo');
+		        	}
 		        }
 		    });
 		}
+		$scope.loadCalendar();
 	}
+
 	$scope.checkIsDoctor();
 	socket.on('receiveNotifyDoctor', function() {
         $scope.checkIsDoctor();

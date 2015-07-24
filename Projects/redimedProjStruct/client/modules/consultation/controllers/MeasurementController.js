@@ -3,7 +3,8 @@ angular.module("app.loggedIn.patient.consult.measurementController",[])
 		$scope.today = $filter('date')(new Date(),'dd/MM/yyyy');
 
 		$scope.measurementInfo = {
-			measure_date: new Date(),
+			measure_id:null,
+			measure_date: moment().format('DD-MM-YYYY'),
 			bp1: 0,
 			bp2: 0,
 			rate: 0,
@@ -41,8 +42,12 @@ angular.module("app.loggedIn.patient.consult.measurementController",[])
 			left_corrected: 0
 		};
 
-		if(measure != null)
+		if(measure != null){
 			$scope.measurementInfo = angular.copy(measure);
+			$scope.measurementInfo.measure_date = moment($scope.measurementInfo.measure_date).format('DD-MM-YYYY');
+			console.log('$scope.measurementInfo',$scope.measurementInfo);
+		}
+		console.log('$scope.measurementInfo',$scope.measurementInfo);
 
 		$scope.cancelClick = function(){
 			$modalInstance.close({'type':'cancel'});

@@ -21,12 +21,25 @@
     </div>
 
     <div id="tab_1">
-       <map style="height: 100%; width: 100%" center="current-location" zoom="15">
+       <map style="height: 100%; width: 100%" center="current-location" zoom="7">
             <custom-control  id="refresh" position="TOP_RIGHT" index="1" on-click="refreshMap()">
                 <div style="width: 75px;background-color: white;border-style: solid;border-width: 2px;cursor: pointer;text-align: center; margin-top: 5px">
                     Refresh Map
                 </div>
             </custom-control>
+            
+            <div ng-repeat="d in driverMarker">
+                <div ng-repeat="p in d.patientList">
+                    <directions 
+                        panel="directions-panel"
+                        travel-mode="DRIVING"
+                        origin="{{d.position}}"
+                        destination="{{p.position}}">
+                    </directions>
+                </div>
+            </div>
+            
+            
             <marker data-position="{{im.position}}" icon="{{im.icon}}" ng-repeat="im in injuryMarker" data-on-click="showInfoWindow(event, 'info')">
                 <info-window max-width="500" id="info">
                     <div class="portlet grey-cascade box">
@@ -66,7 +79,6 @@
                             <div class="col-md-9">
                                 <span ng-show="im.status == 'New'" class="label label-md label-success">New </span>
                                 <span ng-show="im.status == 'Picking'" class="label label-md label-info">Waiting For Driver</span>
-                                <span ng-show="im.status == 'Picked'" class="label label-md label-warning">Heading To REDiMED</span>
                             </div>
                         </div>
                         <div class="row">

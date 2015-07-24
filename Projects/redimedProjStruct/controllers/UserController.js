@@ -544,6 +544,18 @@ module.exports = {
                 res.json({status:'error'})
                 console.log(err);
             })
+    },
+    getAssistant: function(req,res){
+        db.sequelize.query("SELECT u.* "+
+                            "FROM users u "+
+                            "WHERE u.`user_type` != (SELECT t.`ID` FROM user_type t WHERE t.`user_type` LIKE 'doctor')",null,{raw:true})
+            .success(function(data){
+                res.json(data);
+            })
+            .error(function(err){
+                res.json({status:'error'})
+                console.log(err);
+            })
     }
 
 }

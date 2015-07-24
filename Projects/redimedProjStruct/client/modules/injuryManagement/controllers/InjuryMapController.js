@@ -46,11 +46,24 @@ angular.module("app.loggedIn.patient.injuryManagement.map.controller",[])
                     }
                     else
                         $scope.driverMarker.push($scope.driverData);
+                }
 
-                    console.log("====Driver Marker====: ",$scope.driverMarker);
+                for(var i=0; i<$scope.driverMarker.length; i++)
+                {
+                    if($scope.driverMarker[i].patientList.length > 0)
+                    {
+                        for(var j=0; j<$scope.driverMarker[i].patientList.length; j++)
+                        {
+                            $scope.driverMarker[i].patientList[j].position = [$scope.driverMarker[i].patientList[j].latitude,$scope.driverMarker[i].patientList[j].longitude];
+                        }
+                    }
                 }
             }
-            
+
+        })
+
+        socket.on('receiveNotifyReceptionist',function(){
+            refreshMap();
         })
 
 
@@ -135,7 +148,7 @@ angular.module("app.loggedIn.patient.injuryManagement.map.controller",[])
             InjuryManagementService.getInjuryList().then(function(rs){
                 if(rs.status == 'success'){
                     for(var i=0; i<rs.data.length; i++){
-                        if(rs.data[i].isPickUp == 1 && (rs.data[i].STATUS == 'New' || rs.data[i].STATUS == 'Picking' || rs.data[i].STATUS == 'Picked'))
+                        if(rs.data[i].isPickUp == 1 && (rs.data[i].STATUS == 'New' || rs.data[i].STATUS == 'Picking' ))
                         {
                             var patient = rs.data[i];
                             var positionArr = [];
@@ -145,7 +158,7 @@ angular.module("app.loggedIn.patient.injuryManagement.map.controller",[])
                             if(patient.longitude != null)
                                 positionArr.push(patient.longitude);
 
-                            if(patient.STATUS == 'Picking' || patient.STATUS == 'Picked')
+                            if(patient.STATUS == 'Picking')
                                 icon = 'modules/injuryManagement/icons/icon-orange.png';
                             else if(patient.STATUS == 'New')
                                 icon = 'modules/injuryManagement/icons/icon-blue.png';

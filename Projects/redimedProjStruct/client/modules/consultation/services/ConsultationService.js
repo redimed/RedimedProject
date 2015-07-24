@@ -1,22 +1,4 @@
 angular.module("app.loggedIn.patient.consult.services",[])
-	.service('ConsultInfoService', function(){
-	    var consultInfoScripts=[];
-	    var checkdata=[];
-	    this.getCheckdata=function(){
-	        return checkdata;
-	    }
-	    this.setCheckdata=function(list)
-	    {
-	        checkdata=angular.copy(list);
-	    }
-	    this.getConsultInfoScripts=function(){
-	        return consultInfoScripts;
-	    }
-	    this.setConsultInfoScripts=function(list)
-	    {
-	        consultInfoScripts=angular.copy(list);
-	    }
-	})
 	.factory("ConsultationService",function(Restangular){
 		var services = {};
 		var api = Restangular.all("api");
@@ -43,6 +25,16 @@ angular.module("app.loggedIn.patient.consult.services",[])
 
 		services.submitConsult = function(info){
 			return api.all('consultation/submit').post({'info': info});
+		}
+		//phanquocchien.c1109g@gmail.com
+		// add measurements
+		services.submitMeasurements = function(info){
+			return api.all('consultation/submit-measurements').post({'info': info});
+		}
+		//phanquocchien.c1109g@gmail.com
+		// add medication
+		services.submitMedication = function(info){
+			return api.all('consultation/submit-medication').post({'info': info});
 		}
 
 		services.getPatientCompany = function(patientId){
@@ -119,6 +111,30 @@ angular.module("app.loggedIn.patient.consult.services",[])
 		*/
 		services.checkConsultation = function(patient_id,cal_id){
 			return api.all('consultation/check-consultation-patientID-calID').post({patient_id:patient_id,cal_id:cal_id});
+		}
+		/*phanquocchien.c1109g@gmail.com
+		*get list measurements
+		*/
+		services.getListMeasurements = function(patient_id){
+			return api.all('consultation/list-measurements').post({patient_id:patient_id});
+		}
+		/*phanquocchien.c1109g@gmail.com
+		*get list medication
+		*/
+		services.getListMedication = function(patient_id){
+			return api.all('consultation/list-medication').post({patient_id:patient_id});
+		}
+		/*phanquocchien.c1109g@gmail.com
+		*set Is Enable Measurements
+		*/
+		services.setIsEnableMeasurements = function(measure_id,isEnable){
+			return api.all('consultation/set-isenable-measurements').post({measure_id:measure_id,isEnable:isEnable});
+		}
+		/*phanquocchien.c1109g@gmail.com
+		*set Is Enable medication
+		*/
+		services.setIsEnableMedication = function(id,isEnable){
+			return api.all('consultation/set-isenable-medication').post({id:id,isEnable:isEnable});
 		}
 		/*phanquocchien.c1109g@gmail.com
 		*get img drawing history

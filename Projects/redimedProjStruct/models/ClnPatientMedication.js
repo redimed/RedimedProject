@@ -25,7 +25,8 @@ module.exports = function(sequelize,DataTypes){
 	   start_date: DataTypes.DATE,
 	   end_date: DataTypes.DATE,
 	   doctor_id: DataTypes.INTEGER(11),
-	   condition_Indication: DataTypes.STRING(200)
+	   condition_Indication: DataTypes.STRING(200),
+	   isEnable: DataTypes.INTEGER(11)
 },{
 	 tableName: 'cln_patient_medication_details', // đặt tên bảng
 	  createdAt: 'Creation_date',

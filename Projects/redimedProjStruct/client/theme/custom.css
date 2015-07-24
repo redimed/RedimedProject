@@ -1534,7 +1534,13 @@ table.timetable-table td:last-child {
 .un-bg-black{
     background-color: rgb(96, 95, 95)!important;
      /*chien edit*/
-    color: white;
+    color: white !important;
+    /*height: 390px;*/
+}
+.un-bg-black:hover{
+    background-color: rgb(96, 95, 95)!important;
+     /*chien edit*/
+    color: white !importanti;
     /*height: 390px;*/
 }
 .un-title-label{
@@ -1785,6 +1791,9 @@ table.timetable-table td:last-child {
     outline: none;
 }
 .un-submit:hover{
+    color: white !important;
+}
+.un-submit:focus{
     color: white !important;
 }
 .un-select-p{
@@ -4015,6 +4024,10 @@ label{
 }
 .un_marign_right_0{
     margin-right: 0px;
+}
+.un_bottom_consualtation{
+    text-align: center;
+    margin-top: 30px;
 }
 /*phanquocchien patient end*/
 

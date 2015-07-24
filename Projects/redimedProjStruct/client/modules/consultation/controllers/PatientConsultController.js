@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.patient.consult.controller",[])
 
-	.controller("PatientConsultController",function(AlertModel,ConsultInfoService,InjuryManagementService,DoctorService,$filter,$rootScope,$interval,$window,$document,$cookieStore,$scope,$state,$modal,InsurerService,toastr,socket,OTSession,ReceptionistService,$stateParams,ConsultationService,PatientService,UserService,$interval,InvoiceService){
+	.controller("PatientConsultController",function(InjuryManagementService,DoctorService,$filter,$rootScope,$interval,$window,$document,$cookieStore,$scope,$state,$modal,InsurerService,toastr,socket,OTSession,ReceptionistService,$stateParams,ConsultationService,PatientService,UserService,$interval,InvoiceService){
 
 		$scope.templates = [];
 
@@ -112,15 +112,6 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		$scope.problemArr = [];
 		$scope.checktoasl = 0;
 		$scope.isConsult = true;
-		$scope.tscripts = ConsultInfoService.getConsultInfoScripts();
-		$scope.checkdata = ConsultInfoService.getCheckdata();
-		if ($scope.checkdata.cal_id == $stateParams.cal_id && $scope.checkdata.patient_id == $stateParams.patient_id) {
-			$scope.tscripts = ConsultInfoService.getConsultInfoScripts();
-			$scope.checkdata = ConsultInfoService.getCheckdata();
-		}else{
-		    $scope.tscripts = [];
-		    $scope.checkdata = [];
-		};
 		$scope.consultInfo = {
 			patient_id: $scope.patient_id,
 			cal_id: $scope.cal_id,
@@ -134,21 +125,11 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			progress_note: null,
 			attendance_record: null,
 			communication_record: null,
-			measurements: [],
-			scripts: $scope.tscripts,
-			images: []
+			measurements: null,
+			medication: null,
+			images: [],
+			consult_id: null
 		}
-		$scope.getlistMedication = function(){
-			var postData = {
-				patient_id :$scope.patient_id,
-				cal_id:$scope.cal_id
-			}
-			AlertModel.getMedication(postData).then(function(response){
-				console.log(response.data);
-				$scope.consultInfo.scripts = response.data;
-			})
-		}
-		$scope.getlistMedication();
 		/*
 		* phanquocchien.c1109g@gmail.com
 		 */
@@ -167,11 +148,44 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 					$scope.consultInfo.attendance_record = data.data.attendance_record;		
 					$scope.consultInfo.communication_record = data.data.communication_record;		
 					$scope.consultInfo.consult_id = data.data.consult_id;		
+				}else{
+					ConsultationService.submitConsult($scope.consultInfo).then(function(res){
+						if(res.status == 'success')
+						{
+							$scope.consultInfo.consult_id = res.data.insertId;
+						}
+					})
 				}
 			});
 		}
 		$scope.loadConsultationInfo();
 		//end
+		/*
+		*phanquocchien.c1109g@gmail.com
+		*load list measurements
+		*/
+		$scope.loadListMeasurements = function () {
+			ConsultationService.getListMeasurements($scope.patient_id).then(function(data){
+				if (data.status == 'success') {
+					console.log('measurements',data.data);
+					$scope.consultInfo.measurements = data.data;
+				}
+			});
+		}
+		$scope.loadListMeasurements();
+		/*
+		*phanquocchien.c1109g@gmail.com
+		*load list medication
+		*/
+		$scope.loadListMedication = function () {
+			ConsultationService.getListMedication($scope.patient_id).then(function(data){
+				if (data.status == 'success') {
+					console.log('medication',data.data);
+					$scope.consultInfo.medication = data.data;
+				}
+			});
+		}
+		$scope.loadListMedication();
 		//set actionCenter popup consultation history
 		$scope.actionCenter = {};
 		$scope.setListConsultationOfPatient = function(){
@@ -192,8 +206,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 						return data;
 					}
 				}
-			})
-			
+			})	
 		}
 		$scope.actionCenter.showPopupHistoryPhysiotherapist = function(data){
 			var modalInstance = $modal.open({
@@ -241,6 +254,9 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		$scope.popupNewDrawing = function(){
 			angular.element('#popupNewDrawing').modal('show');
 		}
+		$scope.showChooseItem = function() {
+			angular.element('#popupChooseItem').modal('show');
+		}
 		//set actionCenterDrawing 
 		$scope.actionCenterDrawing = {
 			runWhenFinish:function(){
@@ -253,16 +269,6 @@ angular.module("app.loggedIn.patient.consult.controller",[])
         
 		$scope.currDate = $filter('date')(new Date(),'dd/MM/yyyy hh:mm a');
 
-		// $scope.consultInfo.scripts = ConsultInfoService.getConsultInfoScripts();
-		$scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
-			$scope.checkdata = {
-				cal_id:$stateParams.cal_id,
-				patient_id:$stateParams.patient_id,
-			}
-			console.log($scope.checkdata);
-		   ConsultInfoService.setConsultInfoScripts($scope.consultInfo.scripts);
-		   ConsultInfoService.setCheckdata($scope.checkdata);
-		})
 		//tannv.dts@gmail.com
 		$scope.timerDisplay=null;
 		//-------------------------------------------------
@@ -380,7 +386,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 				$scope.problemArr = [];
 		};
 
-		$scope.measureAction = function(type,index){
+		$scope.measureAction = function(type,info){
 			if(type == 'new')
 			{
 				var modalInstance = $modal.open({
@@ -393,10 +399,24 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 						}
 					}
 				})
-
 				modalInstance.result.then(function(data){
-					if(data.type == 'ok')
-						$scope.consultInfo.measurements.push(data.value);
+					if(data.type == 'ok'){
+						data.value.patient_id = $scope.patient_id;
+						data.value.cal_id = $scope.cal_id;
+						console.log(data.value.measure_date);
+						data.value.measure_date = moment(data.value.measure_date,'DD-MM-YYYY').format('YYYY-MM-DD');
+						console.log(data.value.measure_date);
+						ConsultationService.submitMeasurements(data.value).then(function(data){
+							if(data.status == 'success')
+							{
+								$scope.loadListMeasurements();
+					            toastr.success('Submit Measurements Success!');
+							}
+							else{
+								toastr.error("Submit Measurements Failed!");
+							}
+						});
+					}
 				})
 			}
 
@@ -408,14 +428,25 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 					controller: "MeasurementController",
 					resolve:{
 						measure: function(){
-							return $scope.consultInfo.measurements[index];
+							return info;
 						}
 					}
 				})
-
 				modalInstance.result.then(function(data){
-					if(data.type == 'ok')
-						$scope.consultInfo.measurements[index] = data.value;
+					if(data.type == 'ok'){
+						data.value.measure_date = moment(data.value.measure_date,'DD-MM-YYYY').format('YYYY-MM-DD');
+						console.log('data.value',data.value.measure_date);
+						ConsultationService.submitMeasurements(data.value).then(function(data){
+							if(data.status == 'success')
+							{
+								$scope.loadListMeasurements();
+					            toastr.success('Edit Measurements Success!');
+							}
+							else{
+								toastr.error("Edit Measurements Failed!");
+							}
+						});
+					}
 				})
 			}
 
@@ -430,89 +461,87 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 	                confirmButtonText: "Yes",
 	                closeOnConfirm: true
 	            }, function() {
-	                $scope.consultInfo.measurements.splice(index,1);
+	                ConsultationService.setIsEnableMeasurements(info,0).then(function(data) {
+	                	if(data.status == 'success')
+						{
+							$scope.loadListMeasurements();
+				            toastr.success('Delete Measurements Success!');
+						}
+						else{
+							toastr.error("Delete Measurements Failed!");
+						}
+	                })
 	            })
 			}
 		};
 
-		$scope.scriptAction = function(type,index){
+		$scope.medicationAction = function(type,info){
 			if(type == 'new')
 			{
 				var modalInstance = $modal.open({
 					templateUrl:'modules/consultation/views/modal/scriptModal.html',
 					windowClass: "consult-modal-window",
 					controller:'ScriptController',
-					resolve: {
-
-						actual_doctor_id: function(){
-							return $scope.actual_doctor_id;
-						},
-						script: function(){
+					resolve:{
+						medica:function() {
 							return null;
-						},
-						arrayscript:function(){
-							return $scope.consultInfo.scripts;
-						},
-						doctor_id : function(){
-							return $scope.getdoctor_id;
 						}
 					}
 				})
-
 				modalInstance.result.then(function(data){
 					if(data.type == 'ok')
 					{
-						if (data.value.medication_name !== null) {
-							var count = 0;
-							for (var i = 0; i < $scope.consultInfo.scripts.length; i++) {
-								if($scope.consultInfo.scripts[i].medication_name === data.value.medication_name)
-								{
-									count ++;
-								}
-							};
-							$scope.consultInfo.scripts.push(data.value);
-						};
-						
-						
+						data.value.patient_id = $scope.patient_id;
+						data.value.consult_id = $scope.consultInfo.consult_id;
+						data.value.cal_id = $scope.cal_id;
+						data.value.end_date = moment(data.value.end_date,'DD-MM-YYYY').format('YYYY-MM-DD');
+						data.value.start_date = moment(data.value.start_date,'DD-MM-YYYY').format('YYYY-MM-DD');
+						ConsultationService.submitMedication(data.value).then(function(data){
+							if(data.status == 'success')
+							{
+								$scope.loadListMedication();
+					            toastr.success('Submit Medication Success!');
+							}
+							else{
+								toastr.error("Submit Medication Failed!");
+							}
+						});
 					}
-					$scope.checktoasl = 1;
-					$scope.submitClick();
-					toastr.success("Add Medication Successfully!");
+					
 				})
 			}
 
 			if(type == 'edit')
 			{
-
 				var modalInstance = $modal.open({
 					templateUrl:'modules/consultation/views/modal/scriptModal.html',
 					windowClass: "consult-modal-window",
 					controller:'ScriptController',
-					resolve: {
-						actual_doctor_id: function(){
-							return $scope.actual_doctor_id;
-						},
-						script: function(){
-							return $scope.consultInfo.scripts[index];
-						},
-						arrayscript:function(){
-							return $scope.consultInfo.scripts;
-						},
-						doctor_id : function(){
-							return $scope.getdoctor_id;
+					resolve:{
+						medica:function() {
+							return info;
 						}
-						
 					}
 				})
 
 				modalInstance.result.then(function(data){
 					if(data.type == 'ok')
 					{
-						$scope.consultInfo.scripts[index] = data.value;
+						data.value.end_date = moment(data.value.end_date,'DD-MM-YYYY').format('YYYY-MM-DD');
+						data.value.start_date = moment(data.value.start_date,'DD-MM-YYYY').format('YYYY-MM-DD');
+						console.log('data.value',data.value);
+						ConsultationService.submitMedication(data.value).then(function(data){
+							if(data.status == 'success')
+							{
+								$scope.loadListMedication();
+					            toastr.success('Edit Medication Success!');
+							}
+							else{
+								toastr.error("Edit Medication Failed!");
+							}
+						});
 					}
-					 $scope.checktoasl = 1;
-					 $scope.submitClick();
-					 toastr.success("Edit Medication Successfully!");
+					
 				})
 			}
 
@@ -520,19 +549,27 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			{
 				swal({
 	                title: "Confirm Delete",
-	                text: "Are You Sure Want To Delete This Script?",
+	                text: "Are You Sure Want To Delete This Medication?",
 	                type: "warning",
 	                showCancelButton: true,
 	                confirmButtonColor: "#DD6B55",
 	                confirmButtonText: "Yes",
 	                closeOnConfirm: true
 	            }, function() {
-	                $scope.consultInfo.scripts.splice(index,1);
-	                $scope.checktoasl = 1;
-	                $scope.submitClick();
-	                
+	            	ConsultationService.setIsEnableMedication(info,0).then(function(data) {
+	                	if(data.status == 'success')
+						{
+							$scope.loadListMedication();
+				            toastr.success('Delete Medication Success!');
+						}
+						else{
+							toastr.error("Delete Medication Failed!");
+						}
+	                })
 	            })
 			}
+
+			
 		};
 
 		$scope.backClick = function(){
@@ -847,44 +884,17 @@ angular.module("app.loggedIn.patient.consult.controller",[])
             is_show: false,
             open: function(){
                 this.is_show=true;
+                angular.element('#popupSreachItem').modal('show');
             },
             close:function(){
                 this.is_show = false;
+                angular.element('#popupSreachItem').modal('hide');
             }
         }
-        $scope.deleteMedication = function(){
-        	var postData = {
-				patient_id :$scope.patient_id,
-				cal_id:$scope.cal_id
-			}
-			AlertModel.insertMedication(postData).then(function(data){
-				if (data.data.length !== 0) {
-					var postDatam = {
-							consult_id :data.data[0].consult_id
-						}
-					AlertModel.deleteMedication(postDatam)
-					.then(function(response){
-						console.log('delete');
-					})
-							
-				}
-			});
-        }
+        $('#popupSreachItem').on('hidden.bs.modal', function (e) {
+  			$scope.itemSearch.is_show = false;
+		})
         $scope.submitClick = function(){
-        	 // $scope.deleteMedication();
-        	//tannv.dts@gmail.com
-        	if(!$scope.invoiceHeaderInfo)
-        	{
-        		alert("Error.Invoice Header Not Exist.");
-        		return;
-        	}
-
-        	for(var i=0 ; i< $scope.consultInfo.measurements.length ; i++)
-			{
-				$scope.consultInfo.measurements[i].patient_id = $scope.patient_id;
-				$scope.consultInfo.measurements[i].cal_id = $scope.cal_id;
-			}
-
 			var consultInfoTemp = angular.copy($scope.consultInfo);
 			consultInfoTemp.templates = $scope.templates;
 			ConsultationService.submitConsult(consultInfoTemp).then(function(res){
@@ -902,75 +912,84 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 					* load data drawing history
                     */
 					$scope.getImgDrawingHistory();
-					var insertArr = []; 
-            
-		            var fnInsertArr = function(item) {
-		                 var t = {
-		                 	HEADER_ID:$scope.invoiceHeaderInfo.header_id,
-		                    ITEM_ID: item.ITEM_ID,
-		                    PRICE: item.PRICE,
-		                    QUANTITY: item.QUANTITY,
-		                    AMOUNT:item.PRICE*item.QUANTITY,
-		                    TAX_ID:item.TAX_ID,
-		                    TAX_CODE:item.TAX_CODE,
-		                    TAX_RATE:item.TAX_RATE,
-		                    TAX_AMOUNT:item.PRICE*item.QUANTITY*(item.TAX_RATE?item.TAX_RATE:0.0),
-		                    TIME_SPENT: !item.TIME_SPENT ? 0: item.TIME_SPENT,
-		                    IS_ENABLE: item.checked == '1' ? 1 : 0
-		                }
-		                insertArr.push(t);
-		            }
-		            
-		            if($scope.deptItems)
-		            {
-	            		angular.forEach($scope.deptItems, function(cat, key) {
-			                angular.forEach(cat.items, fnInsertArr);
-			            });
-		            }
-		            
-		            if($scope.extraItems)
-		            {
-		            	angular.forEach($scope.extraItems, fnInsertArr);
-		            }
-		            
-		            //tannv.dts
-		            //add
-		            //modify
-		            var postData={
-		            	invoiceHeaderId:$scope.invoiceHeaderInfo.header_id,
-		            	listLine:insertArr
-		            }
-		            InvoiceService.saveInvoiceLineSheet(postData)
-		            .then(function(data){
-		            	if(data.status=='success')
-		            	{
-		            		toastr.success('Save invoice item success.');
-		            		
-		            	}
-		            	else if(data.status='non-data' && $scope.checktoasl === 0)
-		            	{
-		            		toastr.warning('No invoice item.');
-		            	}
-		            	else if($scope.checktoasl === 0)
-		            	{
-		            		toastr.error('Save invoice item error.');
-		            	}else{
-
-		            	}
-		            },function(err){
-		            	toastr.error('Save invoice item error.');
-		            });
 		            if ($scope.checktoasl === 0) {
 		            	 toastr.success('Submit Consultation Success!');
 		            };
-		          
-				 	
 				}
-				else
+				else{
 					toastr.success("Submit Consultation Failed!");
+				}
 			})
         }
+        console.log('extraItems',$scope.extraItems);
+        // save item info
+        //phanquocchien.c1109g@gmail.com
+        $scope.saveItemInfo = function () {
+        	//tannv.dts@gmail.com
+        	if(!$scope.invoiceHeaderInfo)
+        	{
+        		alert("Error.Invoice Header Not Exist.");
+        		return;
+        	}
+			var insertArr = []; 
+    
+            var fnInsertArr = function(item) {
+                 var t = {
+                 	HEADER_ID:$scope.invoiceHeaderInfo.header_id,
+                    ITEM_ID: item.ITEM_ID,
+                    PRICE: item.PRICE,
+                    QUANTITY: item.QUANTITY,
+                    AMOUNT:item.PRICE*item.QUANTITY,
+                    TAX_ID:item.TAX_ID,
+                    TAX_CODE:item.TAX_CODE,
+                    TAX_RATE:item.TAX_RATE,
+                    TAX_AMOUNT:item.PRICE*item.QUANTITY*(item.TAX_RATE?item.TAX_RATE:0.0),
+                    TIME_SPENT: !item.TIME_SPENT ? 0: item.TIME_SPENT,
+                    IS_ENABLE: item.checked == '1' ? 1 : 0
+                }
+                insertArr.push(t);
+            }
+            
+            if($scope.deptItems)
+            {
+        		angular.forEach($scope.deptItems, function(cat, key) {
+	                angular.forEach(cat.items, fnInsertArr);
+	            });
+            }
+            
+            if($scope.extraItems)
+            {
+            	angular.forEach($scope.extraItems, fnInsertArr);
+            }
+            
+            //tannv.dts
+            //add
+            //modify
+            var postData={
+            	invoiceHeaderId:$scope.invoiceHeaderInfo.header_id,
+            	listLine:insertArr
+            }
+            InvoiceService.saveInvoiceLineSheet(postData)
+            .then(function(data){
+            	if(data.status=='success')
+            	{
+            		toastr.success('Save invoice item success.');
+					angular.element('#popupChooseItem').modal('hide');
+            	}
+            	else if(data.status='non-data' && $scope.checktoasl === 0)
+            	{
+            		toastr.warning('No invoice item.');
+            	}
+            	else if($scope.checktoasl === 0)
+            	{
+            		toastr.error('Save invoice item error.');
+            	}else{
 
+            	}
+            },function(err){
+            	toastr.error('Save invoice item error.');
+            });
+        }
         /**
          * tannv.dts@gmail.com
          * -----------------------------------------------------------
@@ -986,20 +1005,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		 */
 		$scope.apptPatient={};
 		$scope.actual_doctor_id={};
-		$scope.getdoctor_id=null;
 		$scope.apptStatus=ptnConst.apptStatus;
-		$scope.getdoctorid = function(){
-			var postData = {
-				patient_id : $stateParams.patient_id,
-				cal_id : $stateParams.cal_id
-			}
-			AlertModel.getdoctorid(postData)
-					.then(function(response){
-						$scope.getdoctor_id = response.data[0].DOCTOR_ID;
-						console.log(response.data[0].DOCTOR_ID);
-					})
-		}
-		$scope.getdoctorid();
 		$scope.getApptPatient=function()
 		{
 			var postData={

@@ -29,6 +29,7 @@ app.post('/api/users/type/menu',UserController.getUserTypeMenuById);
 app.post('/api/users/type/menu/edit',UserController.editUserTypeMenu);
 app.post('/api/users/type/menu/delete',UserController.deleteUserTypeMenu);
 app.post('/api/users/type/menu/insert',UserController.insertUserTypeMenu);
+app.get('/api/users/assistant',UserController.getAssistant);
 
 app.post('/api/users/uploadAvatar',multipartMiddleware,UserController.uploadUserImage);
 app.get('/api/users/image/:id',UserController.getUserImg);

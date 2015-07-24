@@ -18,15 +18,17 @@ module.exports = {
 		var functionCode="FN001";
 		var fromDate = kiss.checkData(req.body.fromDate)?req.body.fromDate:null;
 		var toDate = kiss.checkData(req.body.toDate)?req.body.toDate:null;
-		var doctor_id = kiss.checkData(req.body.doctor_id)?req.body.doctor_id:''; 
-		if(!kiss.checkListData(fromDate,toDate,doctor_id))
-		{
-			kiss.exlog(fHeader,"Loi data truyen den");
-			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
-			return;
-		}
+		var doctor_id = kiss.checkData(req.body.doctor_id)?req.body.doctor_id:null;
+		var user_id = kiss.checkData(req.body.user_id)?req.body.user_id:null;
 
-		var sql=
+		// if(!kiss.checkListData(fromDate,toDate,doctor_id,user_id))
+		// {
+		// 	kiss.exlog(fHeader,"Loi data truyen den");
+		// 	res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
+		// 	return;
+		// }
+
+		var doctorSql=
 			" SELECT patient.*,`apptPatient`.`appt_status`, calendar.`FROM_TIME`,calendar.`TO_TIME`,          "+     
 			" calendar.`SERVICE_ID`,calendar.CAL_ID,calendar.DOCTOR_ID                                        "+     
 			" FROM `cln_patients` patient                                                                     "+     
@@ -46,8 +48,34 @@ module.exports = {
 			" AND DATE(calendar.`FROM_TIME`)>=? AND DATE(calendar.`FROM_TIME`)<=?                             "+
 			"                                                                                                 "+
 			" ORDER BY `FROM_TIME` ASC                                                                        ";
+
+
+		var assistantSql=
+			" SELECT patient.*,`apptPatient`.`appt_status`, calendar.`FROM_TIME`,calendar.`TO_TIME`,          "+     
+			" calendar.`SERVICE_ID`,calendar.CAL_ID,calendar.DOCTOR_ID, doc.NAME as DoctorName                                       "+     
+			" FROM `cln_patients` patient                                                                     "+     
+			" INNER JOIN `cln_appt_patients` apptPatient ON patient.`Patient_id`=apptPatient.`Patient_id`     "+     
+			" INNER JOIN `cln_appointment_calendar` calendar ON apptPatient.`CAL_ID`=calendar.`CAL_ID`        "+  
+			" INNER JOIN doctors doc ON doc.doctor_id = calendar.DOCTOR_ID "+   
+			" WHERE calendar.`DOCTOR_ID` IN (SELECT d.doctor_id FROM doctors d WHERE d.assist_user = ?) AND apptPatient.actual_doctor_id IS NULL "+
+			" AND DATE(calendar.`FROM_TIME`)>=? AND DATE(calendar.`FROM_TIME`)<=?                             "+
+			"                                                                                                 "+
+			" UNION                                                                                           "+
+			"                                                                                                 "+
+			" SELECT patient.*,`apptPatient`.`appt_status`, calendar.`FROM_TIME`,calendar.`TO_TIME`,          "+     
+			" calendar.`SERVICE_ID`,calendar.CAL_ID,calendar.DOCTOR_ID, doc.NAME as DoctorName                                        "+     
+			" FROM `cln_patients` patient                                                                     "+     
+			" INNER JOIN `cln_appt_patients` apptPatient ON patient.`Patient_id`=apptPatient.`Patient_id`     "+     
+			" INNER JOIN `cln_appointment_calendar` calendar ON apptPatient.`CAL_ID`=calendar.`CAL_ID`        "+  
+			" INNER JOIN doctors doc ON doc.doctor_id = calendar.DOCTOR_ID "+   
+			" WHERE apptPatient.actual_doctor_id IN (SELECT d.doctor_id FROM doctors d WHERE d.assist_user = ?)  "+
+			" AND DATE(calendar.`FROM_TIME`)>=? AND DATE(calendar.`FROM_TIME`)<=?                             "+
+			"                                                                                                 "+
+			" ORDER BY `FROM_TIME` ASC                                                                        ";
+
+		console.log(doctor_id==null?'========Assistant=======':'========Doctor========');
 		
-		kiss.executeQuery(req,sql,[doctor_id,fromDate,toDate,doctor_id,fromDate,toDate],function(rows){
+		kiss.executeQuery(req,(doctor_id==null?assistantSql:doctorSql),[(doctor_id==null?user_id:doctor_id),fromDate,toDate,(doctor_id==null?user_id:doctor_id),fromDate,toDate],function(rows){
 			res.json({status:'success',data:rows});
 		},function(err){
 			kiss.exlog(fHeader,"Loi truy van lay data",err);
