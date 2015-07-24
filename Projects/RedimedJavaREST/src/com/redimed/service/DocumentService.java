@@ -152,6 +152,16 @@ public class DocumentService {
         		return downloadReport("/reports/TIMESHEET/ReportActualHours/Report_hr_leave_owe.jasper", params, "ReportOweLeave.pdf");
         	}
         	
+        	//ORACLE REPORT
+        	if(report.equalsIgnoreCase("ERPSystem"))
+        	{
+        		params.put("id", id);
+        		params.put("realPath", "/reports/ORACLE/");
+        		
+        		return downloadReport("/reports/ORACLE/ORACLE.jasper", params, "ORACLE.pdf");
+        	}
+        	//ORACLE REPORT
+        	
         	//TimeinLieu
         	if(report.equalsIgnoreCase("timeSheetTimeInLieu"))
         	{

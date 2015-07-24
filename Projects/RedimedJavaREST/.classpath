@@ -2,6 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src">
 		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="RedimedJavaREST/WebContent/WEB-INF/lib"/>
 			<attribute name="ignore_optional_problems" value="true"/>
 		</attributes>
 	</classpathentry>
@@ -56,5 +57,7 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="F:/MEDITEK/SOURCECODE/RedimedProject/Projects/RedimedJavaREST/WebContent/WEB-INF/lib/ojdbc7.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/ojdbc14.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

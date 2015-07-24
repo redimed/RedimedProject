@@ -2,6 +2,8 @@ package util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.Scanner;
  
 public class Database {
  
@@ -12,7 +14,7 @@ public class Database {
                     "hr", "hr");
             return con;
         } catch (Exception ex) {
-            System.out.println("Database.getConnection() Error -->" + ex.getMessage());
+            System.out.println(ex.getMessage());
             return null;
         }
     }

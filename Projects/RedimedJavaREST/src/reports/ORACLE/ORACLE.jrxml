@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ORACLE" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5103e5c9-b8a2-471a-b37e-743659bc742e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="48"/>
+	<parameter name="id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="realPath" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT * FROM gl.GL_GENERAL_LEDGERS WHERE TRANSACTION_ID = $P{id}]]>
+	</queryString>
+	<field name="CLIENT" class="java.math.BigDecimal"/>
+	<field name="OU_ID" class="java.math.BigDecimal"/>
+	<field name="ORGANIZATION_ID" class="java.math.BigDecimal"/>
+	<field name="TRANSACTION_ID" class="java.math.BigDecimal"/>
+	<field name="TRANSACTION_SOURCE" class="java.lang.String"/>
+	<field name="TRANSACTION_SOURCE_TABLE" class="java.lang.String"/>
+	<field name="TRANSACTION_SOURCE_COLUMN" class="java.lang.String"/>
+	<field name="TRANSACTION_SOURCE_HEADER_ID" class="java.math.BigDecimal"/>
+	<field name="TRANSACTION_SOURCE_LINE_ID" class="java.math.BigDecimal"/>
+	<field name="SET_OF_BOOKS_ID" class="java.math.BigDecimal"/>
+	<field name="COMPANY_CODE" class="java.lang.String"/>
+	<field name="VOUCHER_NUMBER" class="java.lang.String"/>
+	<field name="VOUCHER_DATE" class="java.sql.Timestamp"/>
+	<field name="INVOICE_NUMBER" class="java.lang.String"/>
+	<field name="INVOICE_DATE" class="java.sql.Timestamp"/>
+	<field name="INVOICE_TYPE" class="java.lang.String"/>
+	<field name="INVOICE_SYMBOL" class="java.lang.String"/>
+	<field name="DESCRIPTION" class="java.lang.String"/>
+	<field name="DESCRIPTION_LINE" class="java.lang.String"/>
+	<field name="TRANSACTION_DATE" class="java.sql.Timestamp"/>
+	<field name="ACCOUNTING_DATE" class="java.sql.Timestamp"/>
+	<field name="PERIOD_ID" class="java.math.BigDecimal"/>
+	<field name="PERIOD_NAME" class="java.lang.String"/>
+	<field name="DB_ACCOUNT_ID" class="java.math.BigDecimal"/>
+	<field name="CD_ACCOUNT_ID" class="java.math.BigDecimal"/>
+	<field name="DISTRIBUTION_TYPE" class="java.lang.String"/>
+	<field name="CURRENCY_CODE" class="java.lang.String"/>
+	<field name="EXCHANGE_DATE" class="java.sql.Timestamp"/>
+	<field name="EXCHANGE_RATE_TYPE" class="java.lang.String"/>
+	<field name="EXCHANGE_RATE" class="java.math.BigDecimal"/>
+	<field name="ENTERED_AMOUNT" class="java.math.BigDecimal"/>
+	<field name="ACCOUNT_AMOUNT" class="java.math.BigDecimal"/>
+	<field name="STATUS" class="java.lang.String"/>
+	<field name="GL_POSTED_DATE" class="java.sql.Timestamp"/>
+	<field name="VS_ID" class="java.math.BigDecimal"/>
+	<field name="VS_SITE_ID" class="java.math.BigDecimal"/>
+	<field name="KHOAN_MUC_PHI" class="java.lang.String"/>
+	<field name="CONG_TRINH" class="java.lang.String"/>
+	<field name="HAN_MUC" class="java.lang.String"/>
+	<field name="NGUON_VON" class="java.lang.String"/>
+	<field name="TENNCC" class="java.lang.String"/>
+	<field name="ATTRIBUTE1" class="java.lang.String"/>
+	<field name="ATTRIBUTE2" class="java.lang.String"/>
+	<field name="ATTRIBUTE3" class="java.lang.String"/>
+	<field name="ATTRIBUTE4" class="java.lang.String"/>
+	<field name="ATTRIBUTE5" class="java.lang.String"/>
+	<field name="ATTRIBUTE6" class="java.lang.String"/>
+	<field name="ATTRIBUTE7" class="java.lang.String"/>
+	<field name="ATTRIBUTE8" class="java.lang.String"/>
+	<field name="ATTRIBUTE9" class="java.lang.String"/>
+	<field name="ATTRIBUTE10" class="java.lang.String"/>
+	<field name="ATTRIBUTE11" class="java.lang.String"/>
+	<field name="ATTRIBUTE12" class="java.lang.String"/>
+	<field name="ATTRIBUTE13" class="java.lang.String"/>
+	<field name="ATTRIBUTE14" class="java.lang.String"/>
+	<field name="ATTRIBUTE15" class="java.lang.String"/>
+	<field name="ATTRIBUTE16" class="java.lang.String"/>
+	<field name="ATTRIBUTE17" class="java.lang.String"/>
+	<field name="ATTRIBUTE18" class="java.lang.String"/>
+	<field name="ATTRIBUTE19" class="java.lang.String"/>
+	<field name="ATTRIBUTE20" class="java.lang.String"/>
+	<field name="ATTRIBUTE21" class="java.lang.String"/>
+	<field name="ATTRIBUTE22" class="java.lang.String"/>
+	<field name="ATTRIBUTE23" class="java.lang.String"/>
+	<field name="ATTRIBUTE24" class="java.lang.String"/>
+	<field name="ATTRIBUTE25" class="java.lang.String"/>
+	<field name="CREATION_DATE" class="java.sql.Timestamp"/>
+	<field name="CREATED_BY" class="java.math.BigDecimal"/>
+	<field name="LAST_UPDATE_DATE" class="java.sql.Timestamp"/>
+	<field name="LAST_UPDATED_BY" class="java.math.BigDecimal"/>
+	<field name="LAST_UPDATE_LOGIN" class="java.math.BigDecimal"/>
+	<field name="POSTED_FLAG" class="java.lang.String"/>
+	<field name="VS_ID_DB" class="java.math.BigDecimal"/>
+	<field name="VS_SITE_ID_DB" class="java.math.BigDecimal"/>
+	<field name="VS_ID_CD" class="java.math.BigDecimal"/>
+	<field name="VS_SITE_ID_CD" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="58" y="41" width="100" height="20" uuid="39da8985-ed5d-40c8-92a1-750f6125fce5"/>
+				<text><![CDATA[NAME]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="58" y="0" width="100" height="20" uuid="80a95333-3e0f-4444-8c85-006b9ae4aaaf"/>
+				<textFieldExpression><![CDATA[$F{CLIENT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
