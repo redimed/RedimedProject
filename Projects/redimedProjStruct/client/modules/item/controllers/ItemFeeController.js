@@ -5,15 +5,26 @@ angular.module("app.loggedIn.item.fee.controller",[
     $scope.private_funds_panel = {};
     $scope.fee_groups_panel = {};
 
-        $scope.feeGroup = {};
-        $scope.feeType = {};
-        $scope.pf = {};
+    $scope.feeGroup = {};
+    $scope.feeType = {};
+    $scope.pf = {};
 
-        var uploader = $scope.uploader = new FileUploader({
-            url: 'api/erm/v2/fees/upload',
-            autoUpload: true,
-            removeAfterUpload: true,
-        });
+    
+
+
+
+
+    // tannv.dts: upload handle end
+    // --------------------------------------------------------
+    // --------------------------------------------------------
+
+
+    //tan comment begin 23-07-2015
+    /*var uploader = $scope.uploader = new FileUploader({
+        url: 'api/erm/v2/fees/upload',
+        autoUpload: true,
+        removeAfterUpload: true,
+    });
 
     uploader.isUploadOnGroup = function(){
         return uploader.url == 'api/erm/v2/fees/upload_group_price_source';
@@ -79,7 +90,7 @@ angular.module("app.loggedIn.item.fee.controller",[
             if(value.FEE_GROUP_ID == group_id) 
                 value.PRICE_SOURCE =  pricesource;
         });
-    };
+    }; */ //tan comment end
 
     $scope.fee_groups = {
         select_item: {},
@@ -96,7 +107,21 @@ angular.module("app.loggedIn.item.fee.controller",[
                 {field: 'FEE_GROUP_NAME', label: 'Group name'},
                 {field: 'FEE_GROUP_TYPE', label: 'Code'},
                 {field: 'PRICE_SOURCE', label: 'Price Source'},            
-                {field: 'ISENABLE'},            
+                {field: 'SOURCE_FILE_TYPE',label:'Source file type'},
+                {field: 'SOURCE_START_DATE',label:'Start date',
+                    type:'custom',
+                    fn:function(item){
+                        if(item.SOURCE_START_DATE)
+                        {
+                            return moment(new Date(item.SOURCE_START_DATE)).format("DD-MM-YYYY");
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                },
+                {field: 'ISENABLE',label:'Is enable'},            
             ],
                 use_actions: true,
                 actions: [
@@ -114,16 +139,18 @@ angular.module("app.loggedIn.item.fee.controller",[
                         class: 'fa fa-upload',
                         title: 'Upload Price Source',
                         callback: function (item) {
-                            console.log(item)
                             $scope.fee_groups.select_item = item;
-                            uploader.url = 'api/erm/v2/fees/upload_group_price_source';
+                            //tan comment begin 23-07-2015
+                            /*uploader.url = 'api/erm/v2/fees/upload_group_price_source';
                             uploader.formData[0] = {};
                             uploader.formData[0].FEE_GROUP_ID = item.FEE_GROUP_ID
 
                             $timeout(function () {
                                 $('#fee_type_upload').click();
-                            }, 100);
-
+                            }, 100);*/ //tan comment end
+                            
+                            $scope.uploadSourceFileFee(item);
+                                
                     }
                 }, 
                 {
@@ -194,13 +221,14 @@ angular.module("app.loggedIn.item.fee.controller",[
                     class: 'fa fa-upload', title: 'Upload Price Source',
                     callback: function(item){
                         $scope.fee_types.select_item = item;
-                        uploader.url = 'api/erm/v2/fees/upload_type_price_source';
+                        //tan comment begin 23-07-2015
+                        /*uploader.url = 'api/erm/v2/fees/upload_type_price_source';
                         uploader.formData[0]={};
                         uploader.formData[0].FEE_TYPE_ID = item.FEE_TYPE_ID;
                         
 						$timeout(function(){
 							$('#fee_type_upload').click();
-						}, 100);
+						}, 100);*/ //tan comment end 
                     }
                 }, 
                 {
@@ -548,7 +576,7 @@ angular.module("app.loggedIn.item.fee.controller",[
          */
         $scope.importFeeFromTxtSource=function()
         {
-            ItemService.importFeeFromTxtSource({feeGroupId:3})
+            ItemService.importFeeFromTxtSource({feeGroupId:18})
             .then(function(data){
                 exlog.alert(data);
             },function(err){
@@ -570,5 +598,80 @@ angular.module("app.loggedIn.item.fee.controller",[
             });
         }
 
+
+        $scope.uploadSourceFileFee=function(feeGroup)
+        {
+
+            var modalInstance=$modal.open({
+                templateUrl:"uploadFeeSourceTemplate",
+                controller:function($scope,$modalInstance,feeGroup)
+                {
+                    /**
+                     * tannv.dts@gmail.com
+                     * upload file handle begin
+                     * --------------------------------------------------------
+                     */
+                    var currentSourceFileType='xml';
+                    var uploader = $scope.uploader = new FileUploader({
+                        url: 'api/erm/v2/fees/group/upload_source_file_fee',
+                        autoUpload: true,
+                        // removeAfterUpload: true,
+                    });
+
+                    uploader.filters.push({
+                        name: 'checkFileType',
+                        fn: function(item) {
+                            var name = item.name;
+                            return name.toLowerCase().indexOf(feeGroup.SOURCE_FILE_TYPE)>0;
+                        }
+                    });
+
+                    uploader.onWhenAddingFileFailed = function(item, filter, options) {
+                        if(filter.name == 'checkFileType')
+                            toastr.error('Source file type invalid', 'Error');
+                    }
+
+                    uploader.onCompleteItem = function(item, response, status, headers) {
+                        if(response.status != 'success') {
+                            toastr.error('Upload fail !', 'error');
+                            return;
+                        }
+                        feeGroup.PRICE_SOURCE=response.data.PRICE_SOURCE;
+                        toastr.success('Upload successfully !', 'Success');
+                        finishUploadFeeSourceFile();
+                    }
+
+
+                    uploader.url = 'api/erm/v2/fees/group/upload_source_file_fee';
+                    uploader.formData[0] = {};
+                    uploader.formData[0].feeGroupId = feeGroup.FEE_GROUP_ID;
+
+                    $scope.cancel=function()
+                    {
+                        $modalInstance.dismiss("cancel");
+                    }
+
+                    var finishUploadFeeSourceFile=function()
+                    {
+                        // alert("OK")
+                        $modalInstance.close("success");
+                    }
+
+                },
+                resolve:{
+                    feeGroup:function(){return feeGroup}
+                }
+            });
+
+            // modalInstance.result.then(function(data){
+            //     exlog.log(fHeader,data);
+            // },function(reason){
+            //     exlog.log(fHeader,reason);
+            // });
+
+
+
+            
+        }
 
     })

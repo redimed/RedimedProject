@@ -40,14 +40,15 @@ var parseXMLToJSON=function(filePath,functionSuccess,functionErr)
  * tannv.dts@gmail.com
  * 21-07-2015
  */
-var parseTxtSourceToArr=function(filePath,functionSuccess,functionError)
+var parseTxtSource=function(filePath,functionSuccess,functionError)
 {
     var dataArr=[];
     fs.readFile(filePath,"utf8", function(err, data) {
         if(!err)
         {
             var result={};
-            var listLine=data.split('\r');
+            // CR = \r; LF = \n; CRLF = \r\n - that's what I wanted!
+            var listLine=data.split('\r\n');
             if(kiss.checkData(listLine[0]))
             {
                 result.description=listLine[0];
@@ -66,7 +67,17 @@ var parseTxtSourceToArr=function(filePath,functionSuccess,functionError)
                 functionError('File is not valid. No headers description');
                 return;
             }
+            if(kiss.checkData(listLine[2]))
+            {
+                result.startDate=listLine[2];
+            }
+            else
+            {
+                functionError('File is not valid. No start date');
+                return;
+            }
                 
+            listLine.splice(0,3);
             for(var i=0;i<listLine.length;i++)
             {
                 var item=listLine[i].split('\t');
@@ -78,7 +89,8 @@ var parseTxtSourceToArr=function(filePath,functionSuccess,functionError)
                 }
                 
             }
-            functionSuccess(dataArr);
+            result.dataArr=dataArr;
+            functionSuccess(result);
         }
         else
         {
@@ -167,6 +179,71 @@ function getAttrVal(sourceItem,attrName,type)
     }
 }
 
+/**
+ * tannv.dts@gmail.com
+ * parse value thanh cac kieu chi dinh
+ * value: gia tri tho
+ * type: kieu tra ve
+ * removeString: chuoi can xoa ra khoi value
+ * 23-07-2015
+ */
+var parseValue=function(value,type,removeStr)
+{
+    //xoa bo khoan trang truoc sau sau value
+    value=value.trim();
+    if(kiss.checkData(value))
+    {   
+        if(removeStr!=null)
+        {
+            value=value.replace(removeStr,'');
+        }
+        if(type=='date')
+        {
+            return moment(value,'DD.MM.YYYY').format("YYYY/MM/DD");
+        }
+        else if(type=='int')
+        {
+            var n=parseInt(value);
+            //kiem tra xem value co phai la so integer hay khong
+            // function isInt(n){
+            //     return Number(n) === n && n % 1 === 0;
+            // }
+            if(n === Number(n) && n % 1 === 0)
+            {
+                return n;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        else if(type=='float')
+        {
+            var n=parseFloat(value);
+            //kiem tra xem value co phai la so integer hay khong
+            // function isFloat(n){
+            //     return n === Number(n) && n % 1 !== 0;
+            // }
+            if(n === Number(n))
+            {
+                return n;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        else
+        {
+            return value;
+        }
+    }
+    else
+    {
+        return null;
+    }
+    
+}
 
 
 module.exports = {
@@ -264,6 +341,12 @@ module.exports = {
                 var groupFee=rows[0];
                 //duong dan chua file source
                 var filePath=itemUtil.sourceFolderPath+groupFee.PRICE_SOURCE;
+                if(!kiss.checkData(groupFee.PRICE_SOURCE))
+                {
+                    kiss.exlog(fHeader,'price source file khong xac dinh');
+                    res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN011')});
+                    return;
+                }
 
                 /**
                  * function parse tu item (json source) thanh item co the luu xuong database
@@ -539,9 +622,20 @@ module.exports = {
             if(rows.length>0)
             {
                 var groupFee=rows[0];
+                if(!kiss.checkData(groupFee.SOURCE_START_DATE))
+                {
+                    kiss.exlog(fHeader,'fee start date khong xac dinh');
+                    res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN007')});
+                    return;
+                }
                 //duong dan chua file source
                 var filePath=itemUtil.sourceFolderPath+groupFee.PRICE_SOURCE;
-
+                if(!kiss.checkData(groupFee.PRICE_SOURCE))
+                {
+                    kiss.exlog(fHeader,'Price source file khong xac dinh');
+                    res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN008')});
+                    return;
+                }
                 /**
                  * function parse tu item (json source) thanh item co the luu xuong database
                  * tannv.dts@gmail.com
@@ -599,7 +693,7 @@ module.exports = {
                                             attrName=feeTypeOrderMapping[ feeTypeOrder ].attr_value;
                                         var dbFee={
                                             CLN_ITEM_ID:getItemId( getAttrVal(sourceFee,'ItemNum','int') ),
-                                            FEE_START_DATE:'2015-07-21',//gan tam de test
+                                            FEE_START_DATE:moment(new Date(groupFee.SOURCE_START_DATE)).format("YYYY/MM/DD"),
                                             FEE:getAttrVal(sourceFee,attrName,'float'),
                                             ISENABLE:1,
                                             CREATED_BY:userId,
@@ -639,10 +733,10 @@ module.exports = {
                     var listSourceFee=data.TABLE.DATA;
                     parseSourceFeesToDbFees(listSourceFee,function(listDbFee){
                         //xuat file log the hien data db duoc parse source json
-                        //kiss.exFileJSON(listDbFee,'dvaDbJson.txt')
+                        kiss.exFileJSON(listDbFee,'dvaDbJson.txt')
                         if(listDbFee.length>0)
                         {
-                            var fieldUpdate=['FEE','Last_updated_by','Last_update_date'];
+                            var fieldUpdate=['!Last_updated_by','!Last_update_date'];
                             kiss.executeInsertIfDupKeyUpdate(req,'cln_item_fees',listDbFee,fieldUpdate,function(result){
                                 res.json({status:'success',data:listDbFee});
                             },function(err){
@@ -695,18 +789,157 @@ module.exports = {
             return;
         }
 
+        //Lay thong tin feeGroup tuong ung voi group Id
         var sql="SELECT * FROM cln_fee_group WHERE `FEE_GROUP_ID`=? AND ISENABLE=1";
         kiss.executeQuery(req,sql,[feeGroupId],function(rows){
             if(rows.length>0)
             {
                 var groupFee=rows[0];
                 //duong dan chua file source
-                var filePath=itemUtil.sourceFolderPath+groupFee.PRICE_SOURCE;                
-                parseTxtSourceToArr(filePath,function(data){
-                    kiss.exFileJSON(data,'txtToArray.txt')
-                    res.json({status:'success',data:data});
+                var filePath=itemUtil.sourceFolderPath+groupFee.PRICE_SOURCE;
+                //doc file txt chuyen thanh json                
+                parseTxtSource(filePath,function(result){
+                    // kiss.exFileJSON(result,'txtToJson.txt');
+                    var startDate=moment(result.startDate,'DD.MM.YYYY').format("YYYY/MM/DD");
+                    var listSourceFee=result.dataArr;
+
+                    /**
+                     * Chuyen source txt fee (array) thanh json luu xuong database
+                     * tannv.dts@gmail.com
+                     * 23-07-2015
+                     */
+                    function parseSourceFeesToDbFees(listSourceFee,functionSuccess,functionError)
+                    {
+                        var listDbFee=[];
+                        var columnMapping={
+                            itemCode:1,
+                            feeMapping:{
+                                1:{col:2,uom:'currency'},
+                                2:{col:3,uom:'currency'},
+                                3:{col:4,uom:'percent'}
+                            }
+                            
+                        }
+
+                        //lay danh sach items (item_id, item_code)
+                        var sql="SELECT item.* FROM `inv_items` item WHERE item.`ISENABLE`=1;";
+                        kiss.executeQuery(req,sql,[],function(rows){
+                            var itemsLinking={};
+                            for(var i=0;i<rows.length;i++)
+                            {
+                                itemsLinking[rows[i].ITEM_CODE]=rows[i].ITEM_ID;
+                            }
+                            //xuat ra file mapping giup item code va item id
+                            // kiss.exFileJSON(itemsLinking,'itemsLinking.txt')
+                            
+                            /**
+                             * Ham tra ve item id neu truyen vao item code
+                             * tannv.dts@gmail.com
+                             */
+                            function getItemId(itemCode){
+                                if(itemsLinking[itemCode])
+                                {
+                                    return itemsLinking[itemCode];
+                                }
+                                else
+                                {
+                                    return null;
+                                }
+                            }
+
+                            //Lay ra cac cln_fee_types tuong ung voi fee_group_id
+                            var sql="SELECT t.* FROM `cln_fee_types` t WHERE t.`ISENABLE`=1 AND t.`FEE_GROUP_ID`=?;";
+                            kiss.executeQuery(req,sql,[feeGroupId],function(rows){
+                                if(rows.length>0)
+                                {
+                                    var feeTypes=rows;
+                                    for(var i=0;i<listSourceFee.length;i++)
+                                    {
+                                        var sourceFee=listSourceFee[i];
+                                        for(var j=0;j<feeTypes.length;j++)
+                                        {
+                                            var feeTypeOrder=feeTypes[j].FEE_GROUP_ORDER;
+                                            var dbFee={
+                                                CLN_ITEM_ID:getItemId(parseValue(sourceFee[ columnMapping.itemCode-1 ],'int')),
+                                                FEE_START_DATE:startDate,//gan tam de test
+                                                FEE:null,
+                                                PERCENT:null,
+                                                ISENABLE:1,
+                                                CREATED_BY:userId,
+                                                CREATION_DATE:currentTime,
+                                                Last_updated_by:userId,
+                                                Last_update_date:currentTime,
+                                                FEE_TYPE_ID:feeTypes[j].FEE_TYPE_ID,
+                                            }
+
+                                            //kiem tra xem feeTypeOrder co duoc map voi column nao truong source hay khong
+                                            if(columnMapping.feeMapping[feeTypeOrder])
+                                            {
+                                                //kiem tra column trong source co ton tai hay khong
+                                                if(sourceFee[ columnMapping.feeMapping[feeTypeOrder].col-1 ])
+                                                {
+                                                    //column co don vi do luong la currency thi luu vao field FEE
+                                                    //column co don vi do luong la percent thi luu vao field PERCENT
+                                                    if(columnMapping.feeMapping[feeTypeOrder].uom=='currency')
+                                                    {
+                                                        dbFee.FEE=parseValue(sourceFee[ columnMapping.feeMapping[feeTypeOrder].col-1 ],'float','$');
+                                                    }
+                                                    else
+                                                    {
+                                                        dbFee.PERCENT=parseValue(sourceFee[ columnMapping.feeMapping[feeTypeOrder].col-1 ],'float');
+                
+                                                    }
+                                                }
+                                                
+                                            }
+
+                                            //CLN_ITEM_ID va FEE_START_DATE bat buoc phai co gia tri
+                                            //Mot trong 2 FEE va PERCENT bat buoc phai co gia tri
+                                            if(kiss.checkListData(dbFee.CLN_ITEM_ID , dbFee.FEE_START_DATE))
+                                            {
+                                                if(kiss.checkData(dbFee.FEE) || kiss.checkData(dbFee.PERCENT))
+                                                {
+                                                    listDbFee.push(dbFee);
+                                                }
+                                            }
+                                        }
+                                        
+                                    }
+                                    functionSuccess(listDbFee);
+                                }
+                                else
+                                {
+                                    functionSuccess(listDbFee);
+                                }
+                            },function(err){
+                                functionError(err);
+                            })
+
+
+                        },function(err){
+                            functionError(err);
+                        });
+                    }
+
+                    //parse source fees (array) thanh list cac json co the luu vao database
+                    parseSourceFeesToDbFees(listSourceFee,function(listDbFee){
+                        // kiss.exFileJSON(listDbFee,'dbFee.txt');
+                        // danh sach cac field se duoc cap nhat neu trung key
+                        var updateCols=['FEE','PERCENT','Last_update_date','Last_updated_by'];
+                        kiss.executeInsertIfDupKeyUpdate(req,'cln_item_fees',listDbFee,updateCols,function(result){
+                            res.json({status:'success',data:result});
+                        },function(err){
+                            kiss.exlog(fHeader,'Loi insert list fee',err);
+                            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN005')});
+                        }); 
+
+                    },function(err){
+                        kiss.exlog(fHeader,'Loi parse source fee (array) thanh list json co the insert vao database');
+                        res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN004')});
+                    });
                 },function(err){
-                    res.json(err);
+                    kiss.exlog(fHeader,"Loi parse txt file",err);
+                    res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN003')});
                 })
             }
             else
@@ -720,4 +953,82 @@ module.exports = {
         });
     },
     
+    /**
+     * Xu ly upload file source
+     * tannv.dts@gmail.com
+     * 23-07-2015
+     */
+    uploadUploadSourceFileFee:function(req,res)
+    {
+        var fHeader="v2_ItemFeeGroupController->uploadSourceFileFee";
+        var functionCode="FN004";
+        var feeGroupId=kiss.checkData(req.body.feeGroupId)?req.body.feeGroupId:'';
+        var userInfo=kiss.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+        var userId=kiss.checkData(userInfo.id)?userInfo.id:null;
+        var currentTime=kiss.getCurrentTimeStr();
+        if(!kiss.checkListData(userId,feeGroupId))
+        {
+            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
+            return;
+        }
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+        var sql="SELECT * FROM `cln_fee_group` g WHERE g.`FEE_GROUP_ID`=? AND g.`ISENABLE`=1;";
+        kiss.executeQuery(req,sql,[feeGroupId],function(rows){
+            if(rows.length>0)
+            {
+                var feeGroup=rows[0];
+                var fileName=Date.now() + '-' +  req.files.file.name;
+                // PROCESS FILE UPLOAD
+                var tmp_path = req.files.file.path;
+                var target_path = itemUtil.sourceFolderPath + fileName; 
+
+                // move file
+                fs.rename(tmp_path, target_path, function(err) {
+                    if(!err)
+                    {
+                        console.log('File uploaded to: ' + target_path + ' - ' + req.files.file.size + ' bytes');
+                        var sql="UPDATE `cln_fee_group` SET ? WHERE `FEE_GROUP_ID`=?";
+                        feeGroup.PRICE_SOURCE=fileName;
+                        feeGroup.LAST_UPDATED_BY=userId;
+                        feeGroup.LAST_UPDATE_DATE=currentTime;
+                        kiss.executeQuery(req,sql,[feeGroup,feeGroupId],function(result){
+                            if(result.affectedRows>0)
+                            {
+                                res.json({status:'success',data:feeGroup});
+                            }
+                            else
+                            {
+                                kiss.exlog(fHeader,'Khong co fee group nao duoc cap nhat price source field');
+                                res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN006')});
+                            }
+                        },function(err){
+                            kiss.exlog(fHeader,'Loi cap nhat price_source trong cln_fee_group',err);
+                            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN005')});
+                        });
+
+                    }
+                    else
+                    {
+                        kiss.exlog(fHeader,'Loi di chuyen file tu thu muc tam sang thu muc luu tru',err);
+                        res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN004')});
+                    }
+                    fs.unlink(tmp_path, function() { // delete 
+                        if (err)
+                        { 
+                            kiss.exlog(fHeader,'Loi xoa file upload trong thu muc tam',err);
+                            throw err;
+                        } 
+                    });
+                });
+            }
+            else
+            {
+                kiss.exlog(fHeader,'Khong co fee group nao tuong ung voi group id');
+                res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN003')});
+            }
+        },function(err){
+            kiss.exlog(fHeader,'Loi truy van lay thong tin fee group tuong ung voi group id');
+            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN002')});
+        });
+    }
 }

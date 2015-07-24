@@ -2,7 +2,7 @@ angular.module("app.loggedIn.doctor.patients.controller", [
     "app.loggedIn.doctor.patients.detail.controller"
 ])
         .controller("DoctorPatientsController", function ($scope, $state, $cookieStore, DoctorService, localStorageService,CompanyModel) {
-			var userInfo = $cookieStore.get("userInfo");
+            var userInfo = $cookieStore.get("userInfo");
 
             var doctorInfo = $cookieStore.get("doctorInfo");
 
@@ -80,6 +80,8 @@ angular.module("app.loggedIn.doctor.patients.controller", [
             }
 
             init();
+
+
 
 
         });

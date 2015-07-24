@@ -5,6 +5,12 @@ var itemConst={
 		dva:{value:'dva',display:'DVA',sourceFileTypes:{xml:{value:'xml',display:'xml'}}},//tannv: add
 		public_hospital:{value:'public_hospital',display:'Public Hospital'},//tannv: add
 		workcover:{value:'workcover',display:'Workcover'}//tan add
+	},
+	//tannv
+	sourceFileType:{
+		xml:'xml',
+		txt:'txt',
+		xls:'xls'
 	}
 }
 
