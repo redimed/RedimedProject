@@ -478,14 +478,67 @@ module.exports =
                 }
                 else if(limitCols.length>0)
                 {
+                    var listInclude=[];
+                    var listExclude=[];
                     for(var i=0;i<limitCols.length;i++)
                     {
-                        updateStr=updateStr+" "+limitCols[i]+"=VALUES("+limitCols[i]+")";
-                        if(i<limitCols.length-1)
-                            updateStr+=',';
+                        var item=limitCols[i];
+                        if(item.indexOf('!')==0)
+                        {
+                            listExclude.push(item);
+                        }
                         else
-                            updateStr+=';';
+                        {
+                            listInclude.push(item);
+                        }
                     }
+
+                    if(listInclude.length>0)
+                    {
+                        for(var i=0;i<listInclude.length;i++)
+                        {
+                            updateStr=updateStr+" "+listInclude[i]+"=VALUES("+listInclude[i]+")";
+                            if(i<listInclude.length-1)
+                                updateStr+=',';
+                            else
+                                updateStr+=';';
+                        }
+                    }
+                    else //if(listExclude.length>0)
+                    {
+                        for(var i=0;i<columns.length;i++)
+                        {
+                            var isExclude=function(item)
+                            {
+                                for(var j=0;j<listExclude.length;j++)
+                                {
+                                    if('!'+item==listExclude[j])
+                                        return true;
+                                }
+                                return false;
+                            }
+                            if(!isExclude(columns[i]))
+                            {
+                                updateStr=updateStr+" "+columns[i]+"=VALUES("+columns[i]+")";
+                                if(i<columns.length-1)
+                                    updateStr+=',';
+                                else
+                                    updateStr+=';';
+                            }
+
+                            
+                        }
+                    }
+
+                    //code cu khi chua xet truong hop exclude
+                    // for(var i=0;i<limitCols.length;i++)
+                    // {
+                    //     updateStr=updateStr+" "+limitCols[i]+"=VALUES("+limitCols[i]+")";
+                    //     if(i<limitCols.length-1)
+                    //         updateStr+=',';
+                    //     else
+                    //         updateStr+=';';
+                    // }
                 }
                 else
                 {

@@ -1163,10 +1163,11 @@ module.exports = {
 		}
 
 		var sql=
-			" SELECT line.*                                                                  "+
-			" FROM `cln_invoice_lines` line                                                  "+
-			" INNER JOIN `cln_invoice_header` header ON line.`HEADER_ID`=header.`header_id`  "+
-			" WHERE header.`Patient_id`=? AND header.`cal_id`=? AND line.`IS_ENABLE`=1       ";
+			" SELECT line.* ,item.`ITEM_NAME`,item.`ITEM_CODE`                              "+                                   
+			" FROM `cln_invoice_lines` line                                                 "+ 
+			" INNER JOIN `cln_invoice_header` header ON line.`HEADER_ID`=header.`header_id` "+
+			" INNER JOIN `inv_items` item ON  line.`ITEM_ID` = item.`ITEM_ID`               "+
+			" WHERE header.`Patient_id`=? AND header.`cal_id`=? AND line.`IS_ENABLE`=1      ";
 
 		kiss.executeQuery(req,sql,[patientId,calId],function(rows){
 			res.json({status:'success',data:rows});

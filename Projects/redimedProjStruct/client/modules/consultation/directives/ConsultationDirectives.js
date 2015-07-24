@@ -6,7 +6,8 @@
 	        	images: '=',
 	        	patient: '=',
 	        	calendar: '=',
-	        	actionCenterDrawing:'='
+	        	actionCenterDrawing:'=',
+	        	consualid: '='
 	        },
 	        templateUrl: "modules/consultation/directives/templates/drawingConsult.html",
 	        link: function (scope, element, attrs) {

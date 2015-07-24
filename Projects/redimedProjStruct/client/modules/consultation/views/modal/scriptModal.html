@@ -25,13 +25,13 @@
                 <div class="col-md-6 col-sm-6">
                     <div ng-class="{'has-error': medicationForm.name.$invalid && isSubmit}">
                         <label class="un-label-form-3 un-label-whidth-130">Name</label>
-                        <input ng-model="scriptInfo.medication_name" class="form-control input-sm select-outside ng-pristine ng-valid" required float-label id="name" name="name" />
+                        <input ng-model="medicationInfo.medication_name" class="form-control input-sm select-outside ng-pristine ng-valid" required float-label id="name" name="name" />
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-6">
                     <div ng-class="{'has-error': medicationForm.start_date.$invalid && isSubmit}">
                     <label class="un-label-form-3 un-label-whidth-130">Start Date</label>
-                    <input readonly ng-model="scriptInfo.start_date"  class="form-control input-sm select-outside" custom-date id="start_date" name="start_date" required float-label ng-change="changeValue()"/>
+                    <input readonly ng-model="medicationInfo.start_date"  class="form-control input-sm select-outside" custom-date id="start_date" name="start_date" required float-label ng-change="changeValue()"/>
                     </div>
                 </div>
             </div>
@@ -39,47 +39,47 @@
                 <div class="col-md-6 col-sm-6">
                 <div ng-class="{'has-error': medicationForm.dose.$invalid && isSubmit}">
                     <label class="un-label-form-3 un-label-whidth-130">Dose</label>
-                     <input ng-minlength='0' ng-model="scriptInfo.dose"  class="form-control input-sm select-outside ng-pristine ng-valid" ng-change="changeValue()" id="dose" name="dose" required/>
+                     <input ng-minlength='0' ng-model="medicationInfo.dose"  class="form-control input-sm select-outside ng-pristine ng-valid" ng-change="changeValue()" id="dose" name="dose" required/>
                 </div>
                 </div>
                 <div class="col-md-6 col-sm-6">
                      <div ng-class="{'has-error': medicationForm.end_date.$invalid && isSubmit}">
                     <label class="un-label-form-3 un-label-whidth-130">End Date</label>
-                     <input readonly ng-model="scriptInfo.end_date" class="form-control input-sm select-outside" custom-date required float-label name="end_date" id="end_date" ng-change="changeValue()"/>
+                     <input readonly ng-model="medicationInfo.end_date" class="form-control input-sm select-outside" custom-date required float-label name="end_date" id="end_date" ng-change="changeValue()"/>
                      </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 col-sm-6">
                     <label class="un-label-form-3 un-label-whidth-130">Unit</label>
-                    <select ng-model="scriptInfo.unit" class="form-control input-sm select-outside"
+                    <select ng-model="medicationInfo.unit" class="form-control input-sm select-outside"
                         ng-options="value.value as value.display for (key,value) in listUnit">
                         <option value=""></option>
                         </select>
                 </div>
                 <div class="col-md-6 col-sm-6">
                     <label class="un-label-form-3 un-label-whidth-130">Quanlity</label>
-                    <input ng-model="scriptInfo.qty"  class="form-control input-sm select-outside ng-pristine ng-valid" readonly/>
+                    <input ng-model="medicationInfo.qty"  class="form-control input-sm select-outside ng-pristine ng-valid" readonly/>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 col-sm-6">
                     <label class="un-label-form-3 un-label-whidth-130">Route</label>
-                     <select ng-model="scriptInfo.route" class="form-control input-sm select-outside"
+                     <select ng-model="medicationInfo.route" class="form-control input-sm select-outside"
                         ng-options="value.value as value.display for (key,value) in listRoute">
                         <option value=""></option>
                     </select>
                 </div>
                 <div class="col-md-6 col-sm-6">
                     <label class="un-label-form-3 un-label-whidth-130">Doctor</label>
-                    <input ng-model="scriptInfo.NAME"  class="form-control input-sm select-outside ng-pristine ng-valid" disabled>
+                    <input ng-model="medicationInfo.NAME"  class="form-control input-sm select-outside ng-pristine ng-valid" disabled>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 col-sm-6">
                       <div ng-class="{'has-error': medicationForm.frequency.$invalid && isSubmit}">
                         <label class="un-label-form-3 un-label-whidth-130">Frequency</label>
-                        <select ng-model="scriptInfo.frequency" class="form-control input-sm select-outside ng-pristine ng-valid"
+                        <select ng-model="medicationInfo.frequency" class="form-control input-sm select-outside ng-pristine ng-valid"
                             ng-change="changeValue()" required name="frequency" id="frequency">
                             <option value="OD">OD</option>
                             <option value="BD">BD</option>
@@ -90,7 +90,7 @@
                 </div>
                 <div class="col-md-6 col-sm-6">
                     <label class="un-label-form-3 un-label-whidth-130">Condition/Indication</label>
-                    <input ng-model="scriptInfo.condition_Indication"  class="form-control input-sm select-outside ng-pristine ng-valid" />
+                    <input ng-model="medicationInfo.condition_Indication"  class="form-control input-sm select-outside ng-pristine ng-valid" />
                 </div>
             </div>
 		</div>
