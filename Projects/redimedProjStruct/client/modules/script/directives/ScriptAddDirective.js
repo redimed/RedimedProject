@@ -29,11 +29,12 @@ angular.module('app.loggedIn.script.directive.add', [])
 				var postDatar = [];
 				angular.forEach(scope.script_s, function(value_script, index_script){
 					if (scope.script_s[index_script].Checked === "1") {
+						delete value_script.cal_id;
+						delete value_script.FROM_TIME;
 						postDatar.push(value_script);
 					};
 				});
-
-				//console.log(postDatar);
+				console.log('chiennnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn',postDatar);
 
 				/*ScriptModel.postID($stateParams.cal_id)
 				.then(function(response){
@@ -55,11 +56,12 @@ angular.module('app.loggedIn.script.directive.add', [])
 						toastr.success('Added Successfully');
 						scope.success =  true;
 						angular.forEach(postDatar, function(value_post, index_post){
-							postDatar[index_post].start_date = ConfigService.convertToDB(postDatar[index_post].start_date.toString());
-							postDatar[index_post].end_date = ConfigService.convertToDB(postDatar[index_post].end_date.toString());
+							postDatar[index_post].start_date = moment(postDatar[index_post].start_date).format('YYYY-MM-DD');
+							postDatar[index_post].end_date = moment(postDatar[index_post].end_date).format('YYYY-MM-DD');
 							postDatar[index_post].ID_SCRIPT = response.data;
 							postDatar[index_post].CAL_ID = $stateParams.cal_id;
 						});
+						console.log('postDatar',postDatar);
 						ScriptModel.postScriptHead(postDatar)
 						.then(function(responser){
 							//console.log('^^^^^^^^: ', postDatar);

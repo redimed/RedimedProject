@@ -212,20 +212,142 @@ module.exports = {
             })
 	},
 
-  submitConsult: function(req,res){
-    var info = req.body.info;
-
-    if(info.measurements.length > 0)
-    {
-        for(var i=0; i<info.measurements.length ; i++)
-        {
-            chainer.add(
-                db.ClnPatientMeasurement.create(info.measurements[i])
-            )
-        }
-    }
-    if (info.consult_id) {
-        db.ClnPatientConsult.update({
+    /*
+    *phanquocchien.c1109g@gmail.com
+    *update Measurements
+    */
+    submitMeasurements: function (req,res) {
+        var info = req.body.info;
+        var userInfo=kiss.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+        var userId=kiss.checkData(userInfo.id)?userInfo.id:null;
+        var insertRow = {
+            measure_id : info.measure_id,
+            patient_id : info.patient_id,
+            cal_id : info.cal_id,
+            measure_date: info.measure_date,
+            bp1: info.bp1,
+            bp2: info.bp2,
+            rate: info.rate,
+            height: info.height,
+            weight: info.weight,
+            waist: info.waist,
+            hips: info.hips,
+            neck: info.neck,
+            head_circ: info.head_circ,
+            fev1: info.fev1,
+            fvc: info.fvc,
+            gas_transfer: info.gas_transfer,
+            cholesterol: info.cholesterol,
+            triglycerides: info.triglycerides,
+            hdl: info.hdl,
+            ldl: info.ldl,
+            bsl: info.bsl,
+            hbA1c: info.hbA1c,
+            microalbuminuria: info.microalbuminuria,
+            potassium: info.potassium,
+            psa: info.psa,
+            creatitine: info.creatitine,
+            acr: info.acr,
+            gfr: info.gfr,
+            isMdrd: info.isMdrd,
+            isCockroft_gault: info.isCockroft_gault,
+            right_pressure: info.right_pressure,
+            left_pressure: info.left_pressure,
+            right_uncorrected: info.right_uncorrected,
+            left_uncorrected: info.left_uncorrected,
+            right_corrected: info.right_corrected,
+            left_corrected: info.left_corrected,
+            Last_update_date:moment().format("YYYY-MM-DD HH:mm:ss"),
+            Creation_date:moment().format("YYYY-MM-DD HH:mm:ss"),
+            Created_by:userId,
+            Last_updated_by:userId
+        };
+        kiss.executeInsertIfDupKeyUpdate(req,'cln_patient_measurements',[insertRow],['!Creation_date','!Created_by'],function(data) {
+            res.json({status:'success',data:data});
+        },function (error) {
+            res.json({status:'error',error:error});
+        })
+    },
+    /*
+    *phanquocchien.c1109g@gmail.com
+    *update Measurements
+    */
+    submitMedication: function (req,res) {
+        var info = req.body.info;
+        var userInfo=kiss.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+        var userId=kiss.checkData(userInfo.id)?userInfo.id:null;
+        var insertRow = {
+            id: info.id,
+            medication_name: info.medication_name,
+            dose: info.dose,
+            unit: info.unit,
+            route: info.route,
+            frequency: info.frequency,
+            start_date: info.start_date,
+            end_date: info.end_date,
+            qty: info.qty,
+            doctor_id: info.doctor_id,
+            condition_Indication: info.condition_Indication,
+            patient_id: info.patient_id,
+            consult_id: info.consult_id,
+            cal_id: info.cal_id,
+            Last_update_date:moment().format("YYYY-MM-DD HH:mm:ss"),
+            Creation_date:moment().format("YYYY-MM-DD HH:mm:ss"),
+            Created_by:userId,
+            Last_updated_by:userId
+        };
+        kiss.executeInsertIfDupKeyUpdate(req,'cln_patient_medication_details',[insertRow],['!Creation_date','!Created_by'],function(data) {
+            res.json({status:'success',data:data});
+        },function (error) {
+            res.json({status:'error',error:error});
+        })
+    },
+     /*
+    *phanquocchien.c1109g@gmail.com
+    *set Is Enable Measurements
+    */
+    setIsEnableMeasurements: function (req,res) {
+        var measure_id = req.body.measure_id;
+        var isEnable = req.body.isEnable;
+        db.ClnPatientMeasurement.update({
+            isEnable : isEnable
+        }, {measure_id : measure_id}, {raw: true})
+        .success(function(data){
+            res.json({status:'success',data:data});
+        })
+        .error(function(err){
+            res.json({status:'error'});
+            console.log(err);
+        });
+    },
+     /*
+    *phanquocchien.c1109g@gmail.com
+    *set Is Enable Measurements
+    */
+    setIsEnableMedication: function (req,res) {
+        var id = req.body.id;
+        var isEnable = req.body.isEnable;
+        db.ClnPatientMedication.update({
+            isEnable : isEnable
+        }, {id : id}, {raw: true})
+        .success(function(data){
+            res.json({status:'success',data:data});
+        })
+        .error(function(err){
+            res.json({status:'error'});
+            console.log(err);
+        });
+    },
+    /*
+    *phanquocchien.c1109g@gmail.com
+    *submit consualtation
+    */
+    submitConsult: function(req,res){
+        var info = req.body.info;
+        var userInfo=kiss.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+        var userId=kiss.checkData(userInfo.id)?userInfo.id:null;
+        var insertRow = {
+            consult_id: info.consult_id,
             patient_id: info.patient_id,
             problem_id: info.problem_id,
             cal_id: info.cal_id,
@@ -237,140 +359,18 @@ module.exports = {
             progress_note: info.progress_note,
             attendance_record: info.attendance_record,
             communication_record: info.communication_record,
-            diagnosis: info.diagnosis
-        }, {consult_id: info.consult_id}, {raw: true})
-        .success(function(data){
-            db.sequelize.query('DELETE FROM cln_patient_medication_details WHERE patient_id = ?',null,{raw:true},[info.patient_id])
-                .success(function(){
-                    if(info.scripts.length > 0)
-                    {
-                        for(var i=0; i<info.scripts.length;i++)
-                        {
-                            var s = info.scripts[i];
-                            if(s.start_date) {
-                                var start_date = s.start_date.split("/").reverse().join("-");
-                            };
-                            if(s.end_date) {
-                                var end_date = s.end_date.split("/").reverse().join("-");
-                            };
-                            chainer.add(
-                                db.ClnPatientMedication.create({
-                                    patient_id: info.patient_id,
-                                    consult_id: info.consult_id,
-                                    medication_name: s.medication_name,
-                                    unit: s.unit,
-                                    qty: s.qty,
-                                    dose: s.dose,
-                                    frequency: s.frequency,
-                                    start_date : start_date,
-                                    end_date : end_date,
-                                    route : s.route,
-                                    doctor_id : s.doctor_id,
-                                    condition_Indication : s.condition_Indication
-                                })
-                            )
-                        }
-                    }
-                })
-            if(info.images.length > 0)
-            {
-                for(var i=0; i<info.images.length;i++)
-                {
-                    chainer.add(
-                        db.ClnPatientDrawing.update({
-                            consult_id: info.consult_id
-                        },{id: info.images[i]})
-                    )
-                }
-            }
-
-            chainer.runSerially().success(function(){
-                res.json({status:'success',rs:data});
-            }).error(function(err){
-                res.json({status:'error'});
-                console.log(err);
-            })
-        })
-        .error(function(err){
-            res.json({status:'error'});
-            console.log(err);
-        })
-    }else{
-        db.ClnPatientConsult.max('consult_id')
-          .success(function(max){
-                var consultId = max + 1;
-                db.ClnPatientConsult.create({
-                    consult_id: consultId,
-                    patient_id: info.patient_id,
-                    problem_id: info.problem_id,
-                    cal_id: info.cal_id,
-                    history: info.history,
-                    examination: info.examination,
-                    treatment_plan: info.treatment,
-                    investigation: info.investigation,
-                    specialist: info.specialist,
-                    progress_note: info.progress_note,
-                    attendance_record: info.attendance_record,
-                    communication_record: info.communication_record,
-                    diagnosis: info.diagnosis
-                })
-                .success(function(data){
-                    if(info.scripts.length > 0)
-                    {
-                        for(var i=0; i<info.scripts.length;i++)
-                        {
-                            var s = info.scripts[i];
-                            if(s.start_date) {
-                                var start_date = s.start_date.split("/").reverse().join("-");
-                            };
-                            if(s.end_date) {
-                                var end_date = s.end_date.split("/").reverse().join("-");
-                            };
-                            chainer.add(
-                                db.ClnPatientMedication.create({
-                                    patient_id: info.patient_id,
-                                    consult_id: consultId,
-                                    medication_name: s.medication_name,
-                                    unit: s.unit,
-                                    qty: s.qty,
-                                    dose: s.dose,
-                                    frequency: s.frequency,
-                                    start_date : start_date,
-                                    end_date : end_date,
-                                    route : s.route,
-                                    doctor_id : s.doctor_id,
-                                    condition_Indication : s.condition_Indication
-                                })
-                            )
-                        }
-                    }
-
-                    if(info.images.length > 0)
-                    {
-                        for(var i=0; i<info.images.length;i++)
-                        {
-                            chainer.add(
-                                db.ClnPatientDrawing.update({
-                                    consult_id: consultId
-                                },{id: info.images[i]})
-                            )
-                        }
-                    }
-
-                    chainer.runSerially().success(function(){
-                        res.json({status:'success',rs:data});
-                    }).error(function(err){
-                        res.json({status:'error'});
-                        console.log(err);
-                    })
-                })
-                .error(function(err){
-                    res.json({status:'error'});
-                    console.log(err);
-                })
-          })
-    };
-  },
+            diagnosis: info.diagnosis,
+            Last_update_date:moment().format("YYYY-MM-DD HH:mm:ss"),
+            Creation_date:moment().format("YYYY-MM-DD HH:mm:ss"),
+            Created_by:userId,
+            Last_updated_by:userId
+        };
+        kiss.executeInsertIfDupKeyUpdate(req,'cln_patient_consults',[insertRow],['!Creation_date','!Created_by'],function(data) {
+            res.json({status:'success',data:data});
+        },function (error) {
+            res.json({status:'error',error:error});
+        });
+    },
 
   /**
    * create by: unknown
@@ -657,7 +657,9 @@ module.exports = {
             {
                 res.json({status:'fail'});
             }
-        })
+        },function(erro){
+            res.json({status:'error',error:err})
+        });
     },
     getListConsultOfPatientMobile:function(req,res)
     {
@@ -682,6 +684,8 @@ module.exports = {
             {
                 res.json({status:'fail'});
             }
+        },function(erro){
+            res.json({status:'error',error:err})
         })
     },
     getdetailHistoryAndDrawing:function(req,res)
@@ -713,13 +717,17 @@ module.exports = {
                     {
                         res.json({status:'success',data:data});
                     }
-                })
+                },function(erro){
+                    res.json({status:'error',error:err})
+                });
             }
             else
             {
                 res.json({status:'fail'});
             }
-        })
+        },function(erro){
+            res.json({status:'error',error:err})
+        });
     },
     /*
     * phanquocchien.c1109g@gmail.com
@@ -745,6 +753,57 @@ module.exports = {
             {
                 res.json({status:'error'});
             }
+        },function(erro){
+            res.json({status:'error',error:err})
+        })
+   },
+   /*
+    * phanquocchien.c1109g@gmail.com
+    * list Measurements
+    */
+   getListMeasurements:function(req,res){
+        var patientId=kiss.checkData(req.body.patient_id)?req.body.patient_id:'';
+        if(!kiss.checkListData(patientId))
+        {
+            kiss.exlog("getListMeasurements Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
+        var sql=
+            " SELECT mea.*,cal.`FROM_TIME` FROM `cln_patient_measurements` mea          "+
+            " INNER JOIN `cln_appointment_calendar` cal ON mea.`cal_id` = cal.`CAL_ID`  "+
+            " WHERE mea.`patient_id` = ?                                                "+
+            " AND mea.`isEnable` = 1                                                    "+
+            " ORDER BY cal.`FROM_TIME` DESC                                             "; 
+        kiss.executeQuery(req,sql,[patientId],function(rows){
+            res.json({status:'success',data:rows});
+        },function(erro){
+            res.json({status:'error',error:err})
+        })
+   },
+   /*
+    * phanquocchien.c1109g@gmail.com
+    * list Measurements
+    */
+   getListMedication:function(req,res){
+        var patientId=kiss.checkData(req.body.patient_id)?req.body.patient_id:'';
+        if(!kiss.checkListData(patientId))
+        {
+            kiss.exlog("getListMedication Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
+        var sql=
+            " SELECT medi.*, cal.`FROM_TIME`, doc.`NAME`, doc.`Provider_no`  FROM `cln_patient_medication_details` medi  "+
+            " INNER JOIN `cln_appointment_calendar` cal ON medi.`cal_id` = cal.`CAL_ID`                                  "+
+            " LEFT JOIN `doctors` doc ON medi.`doctor_id` = doc.`doctor_id`                                              "+
+            " WHERE medi.`patient_id` = ?                                                                                "+
+            " AND medi.`isEnable` = 1                                                                                    "+
+            " ORDER BY cal.`FROM_TIME` DESC                                                                              ";
+        kiss.executeQuery(req,sql,[patientId],function(rows){
+            res.json({status:'success',data:rows});
+        },function(erro){
+            res.json({status:'error',error:err})
         })
    },
     /*
@@ -776,7 +835,9 @@ module.exports = {
             {
                 res.json({status:'fail'});
             }
-        })
+        },function(erro){
+            res.json({status:'error',error:err})
+        });
     },
     drawingImageById: function(req,res) {
         var imageId = req.param('imageId');
@@ -803,7 +864,7 @@ module.exports = {
             }
         },function(erro){
             res.json({status:'error',error:err})
-        })
+        });
     },
     listExercise: function(req,res){
         var postData = req.body.data;

@@ -177,10 +177,10 @@
                                     {{ml.frequency}}
                                 </td>
                                 <td style="vertical-align: middle">
-                                    {{ml.start_date}}
-                                </td>
+                                    {{ml.start_date | filterdate: 'DD/MM/YYYY'}}
+                                </td> 
                                  <td style="vertical-align: middle">
-                                    {{ml.end_date}}
+                                    {{ml.end_date | filterdate: 'DD/MM/YYYY'}}
                                 </td>
                                  <td style="vertical-align: middle">
                                     {{ml.qty}}
