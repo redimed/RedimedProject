@@ -3,6 +3,8 @@
  */
 
 angular.module("app.loggedIn.document", [
+    "app.loggedIn.document.directives",
+    "app.loggedIn.document.fileUpload.controllers",
     "app.loggedIn.document.cat2.controllers",
     "app.loggedIn.document.cat3.controllers",
     "app.loggedIn.document.FA.controllers",
@@ -161,8 +163,12 @@ angular.module("app.loggedIn.document", [
 
                 templateUrl: "modules/document/views/functionAssessment.html",
                 controller: 'FAController'
-
             })
+            .state("loggedIn.fileUpload", {
+                url: "/upload-file",
+                templateUrl: "modules/document/views/fileUpload.html",
+                controller: "uploadController"
+            });
 
 
     });

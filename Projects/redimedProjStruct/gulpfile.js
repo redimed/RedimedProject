@@ -276,7 +276,8 @@ gulp.task('doctor', function(){
 	.pipe(gulp.dest('./client/dist/'));
 }),
 gulp.task('document', function(){
-	return gulp.src(['./client/modules/document/document.js', 
+	return gulp.src(['./client/modules/document/document.js',
+					 './client/modules/document/directives/documentDirective.js', 
 					 './client/modules/document/services/DocumentService.js',
 					 './client/modules/document/controllers/Cat2Controller.js',
 					 './client/modules/document/controllers/Cat3Controller.js',
