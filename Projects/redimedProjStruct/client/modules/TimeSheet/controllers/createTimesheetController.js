@@ -530,7 +530,6 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
 
     //ADD ALL TASK OF WEEK
     $scope.addAllTask = function(status, formValid) {
-        console.log($scope.tasks);
         //CHECK ENOUGH 38 TIME CHARGE - FULL TIME
         if ($scope.info.time_temp < (38 * 60) && $scope.TypeOfContruct === "Full-time" && status !== 1) {
             toastr.warning("Please check time charge(>=38)", "Error");
