@@ -49,7 +49,8 @@ module.exports = function(sequelize, DataTypes){
 		isNewCalendarSlot: DataTypes.INTEGER(11),
 		isOnline: DataTypes.INTEGER(11),
         currentSite: DataTypes.INTEGER(11),
-        numsOfRoom: DataTypes.INTEGER(11)
+        numsOfRoom: DataTypes.INTEGER(11),
+        assist_user: DataTypes.INTEGER(11)
 	}, {
 		tableName: 'doctors',
 		createdAt: 'Creation_date',

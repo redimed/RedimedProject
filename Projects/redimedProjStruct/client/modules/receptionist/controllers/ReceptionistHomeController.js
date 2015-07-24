@@ -182,6 +182,8 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 
 		modalInstance.result.then(function(){
 			getAppt($scope.apptDate,$scope.apptSite);
+		},function(){
+			getAppt($scope.apptDate,$scope.apptSite);
 		})
 	}
 

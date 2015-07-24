@@ -685,7 +685,11 @@ module.exports =
     {
         req.getConnection(function(err, connection){
             var query = connection.query(
-                'SELECT d.* from doctors d'
+                "SELECT d.* , GROUP_CONCAT(ds.`Specialties_id` SEPARATOR ',') AS Specialities_id, GROUP_CONCAT(s.`Specialties_name` SEPARATOR ',') AS Specialities_name "+
+                "FROM doctors d "+
+                "LEFT OUTER JOIN doctor_specialities ds ON ds.`doctor_id` = d.`doctor_id` "+
+                "LEFT OUTER JOIN cln_specialties s ON s.`Specialties_id`= ds.`Specialties_id` "+
+                "GROUP BY d.`doctor_id`"
                 ,function(err,rows)
                 {
                     if(err)

@@ -16,12 +16,12 @@ angular.module("app.loggedIn.doctor.services", []).factory("DoctorService", func
      * KHANK API
      */
 
-    doctorService.doctor_calendar_by_date = function(doctor_id, from, to) {
+    doctorService.doctor_calendar_by_date = function(doctor_id,user_id, from, to) {
 
         var instanceApi = doctorApi.all("v2/doctor/calendar_by_date");
         // return instanceApi.post({'doctor_id' : doctor_id, date: select_date});
 
-        return instanceApi.post({'doctor_id' : doctor_id, fromDate: from, toDate: to})
+        return instanceApi.post({'doctor_id' : doctor_id, 'user_id':user_id, fromDate: from, toDate: to})
     }
     /**
      * Lay cac appointment co status la Work In Progress

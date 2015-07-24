@@ -8,9 +8,6 @@ angular.module("app.loggedIn.doctor.patients.controller", [
 
             $scope.isFilterBelowDoctor=1;
 
-            if(!doctorInfo) $state.go('loggedIn.home') ;
-
-
             $scope.reset = function () {
                 $scope.searchObjectMap = angular.copy($scope.searchPatientsObject);
                 $scope.loadList();
