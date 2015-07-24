@@ -360,6 +360,7 @@ module.exports = {
             attendance_record: info.attendance_record,
             communication_record: info.communication_record,
             diagnosis: info.diagnosis,
+            hand_therapist: info.hand_therapist,
             Last_update_date:moment().format("YYYY-MM-DD HH:mm:ss"),
             Creation_date:moment().format("YYYY-MM-DD HH:mm:ss"),
             Created_by:userId,

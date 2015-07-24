@@ -125,6 +125,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			progress_note: null,
 			attendance_record: null,
 			communication_record: null,
+			hand_therapist: null,
 			measurements: null,
 			medication: null,
 			images: [],
@@ -147,7 +148,8 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 					$scope.consultInfo.progress_note = data.data.progress_note;		
 					$scope.consultInfo.attendance_record = data.data.attendance_record;		
 					$scope.consultInfo.communication_record = data.data.communication_record;		
-					$scope.consultInfo.consult_id = data.data.consult_id;		
+					$scope.consultInfo.hand_therapist = data.data.hand_therapist;		
+					$scope.consultInfo.consult_id = data.data.consult_id;	
 				}else{
 					ConsultationService.submitConsult($scope.consultInfo).then(function(res){
 						if(res.status == 'success')
@@ -211,6 +213,18 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		$scope.actionCenter.showPopupHistoryPhysiotherapist = function(data){
 			var modalInstance = $modal.open({
 				templateUrl:'modules/consultation/dialogs/dialogs_consult_history_physiotherapist.html',
+				controller: 'ConsultHistoryController',
+				resolve: {
+					consults:function(){
+						return data;
+					}
+				}
+			})
+			
+		}
+		$scope.actionCenter.showPopupHistoryHandtherapist = function(data){
+			var modalInstance = $modal.open({
+				templateUrl:'modules/consultation/dialogs/dialogs_consult_history_handtherapist.html',
 				controller: 'ConsultHistoryController',
 				resolve: {
 					consults:function(){
