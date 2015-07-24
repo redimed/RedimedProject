@@ -22,15 +22,9 @@
             <span class="field" ng-class="{'has-error': mainForm.fee_group_type.$invalid && isSubmit}">
 			<label for="fee_group_type">Fee group type</label>
 			
-            <!-- <input type="text" placeholder="Fee group type" name="fee_group_type" ng-model="modelObjectMap.FEE_GROUP_TYPE" class="form-control" id="fee_group_type" float-label required readonly="readonly"> --> <!-- tannv.dts comment -->
-
-            <select placeholder="Fee group type" name="fee_group_type" ng-model="modelObjectMap.FEE_GROUP_TYPE" ng-options="value.value as value.display for (key,value) in feeGroupType">
+            <select placeholder="Fee group type" name="fee_group_type" ng-model="modelObjectMap.FEE_GROUP_TYPE" ng-options="value.value as value.display for (key,value) in feeGroupType" ng-change="feeGroupTypeChange()">
                 <option value=''>- Fee group type -</option>
             </select>
-
-            <!-- <select name="fee_group_type" ng-model="modelObjectMap.FEE_GROUP_TYPE" ng-options="item.FEE_GROUP_ID as item.FEE_GROUP_NAME for item in groupOptions | filter:{FEE_GROUP_TYPE: '!item_fee_type'} | filter:{FEE_GROUP_TYPE:'!private_fund'}" float-label required>
-                <option value="" disabled selected>Fee group</option>
-            </select> -->  <!-- example -->
 
 			<span ng-show="mainForm.fee_group_type.$invalid && isSubmit">
                     <span class="mdt-popover above" ng-show="mainForm.fee_group_type.$error.required">
@@ -47,59 +41,93 @@
         </div>
         <!--ISENABLE-->
          <div class="clearfix"></div>
-
         <!--Item Code-->
+        <!--FEE_GROUP_NAME-->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <span class="field" ng-class="{'has-error': mainForm.SOURCE_START_DATE.$invalid && isSubmit}">
+            <label for="SOURCE_START_DATE">Source Start Date</label>
+            <input custom-date readonly placeholder="Source Start Date" name="SOURCE_START_DATE" ng-model="modelObjectMap.SOURCE_START_DATE" class="form-control" id="SOURCE_START_DATE" float-label >
+             <span ng-show="mainForm.SOURCE_START_DATE.$invalid && isSubmit">
+                    <span class="mdt-popover above" ng-show="mainForm.SOURCE_START_DATE.$error.required">
+                        Source Start Date
+                    </span>
+            </span>
+            </span>
+        </div>
+        <!--FEE_GROUP_NAME-->
+
+        <!--FEE_GROUP_TYPE-->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <span class="field" ng-class="{'has-error': mainForm.SOURCE_FILE_TYPE.$invalid && isSubmit}" ng-show="currentGroupType.sourceFileTypes">
+                <label for="SOURCE_FILE_TYPE">Source File Type</label>
+                <select placeholder="Fee group type" name="SOURCE_FILE_TYPE" ng-model="modelObjectMap.SOURCE_FILE_TYPE" ng-options="value.value as value.display for (key,value) in currentGroupType.sourceFileTypes">
+                    <option value=''>-- Source File Type --</option>
+                </select>
+                <span ng-show="mainForm.SOURCE_FILE_TYPE.$invalid && isSubmit">
+                        <span class="mdt-popover above" ng-show="mainForm.SOURCE_FILE_TYPE.$error.required">
+                            Source File Type
+                        </span>
+                </span>
+            </span>
+        </div>
+        <!--FEE_GROUP_TYPE-->
+        <div class="clearfix"></div>
         <hr>
+        <div ng-show="modelObjectMap.SOURCE_FILE_TYPE=='txt'">
             <div class="col-sm-8 col-xs-6">
                 <span class="field" ng-class="{'has-error': mainForm.itemCode.$invalid && isSubmit}">
-                <label for="itemCode">Column index of Item code</label>
-                <input type="number" placeholder="Column index of Item code" name="itemCode" ng-model="modelObjectMap.itemCode" class="form-control" id="itemCode" float-label required>
-                 <span ng-show="mainForm.itemCode.$invalid && isSubmit">
-                    <span class="mdt-popover above" ng-show="mainForm.itemCode.$error.required">
-                        Column index of Item code required!
-                    </span>
-                 </span>
+                    <label for="itemCode">Column index of Item code</label>
+                    <input type="number" placeholder="Column index of Item code" name="itemCode" ng-model="modelObjectMap.itemCode" class="form-control" id="itemCode" float-label required>
+                     <span ng-show="mainForm.itemCode.$invalid && isSubmit">
+                        <span class="mdt-popover above" ng-show="mainForm.itemCode.$error.required">
+                            Column index of Item code required!
+                        </span>
+                     </span>
                 </span>
             </div>
             <div class="col-sm-4 col-xs-6" style="margin-top: 17px;">
                 <button class="btn btn-sm btn-block green" ng-click="addFeeMapping()">Add Fee Mapping</button>
             </div>
             <!--Item Code-->
-        <!--Table-->
-        <div class="col-md-12" style="margin-bottom: 14px; margin-top: 6px;">
-            <table class="mdt-table" style="margin-top: -15px;">
-                <thead>
-                    <tr>
-                        <th>Fee Type Order</th>
-                        <th>Colum Index</th>
-                        <th>Uom</th>
-                        <th>Action</th>
+            <!--Table-->
+            <div class="col-md-12" style="margin-bottom: 14px; margin-top: 6px;">
+                <table class="mdt-table" style="margin-top: -15px;">
+                    <thead>
+                        <tr>
+                            <th>Fee Type Order</th>
+                            <th>Colum Index</th>
+                            <th>Uom</th>
+                            <th>Action</th>
 
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="(key, vaule) in feeMapping">
-                        <td>{{key}}</td>
-                        <td>{{vaule.col}}</td>
-                        <td>{{vaule.uom}}</td>
-                        <td align="center">
-                            <i class="fa fa-pencil-square-o" ng-click="editFeeMapping(key)"></i>
-                            <i class="fa fa-times" style="margin-left: 7px;" ng-click="deleteFeeMapping(key)"></i>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="(key, vaule) in feeMapping">
+                            <td>{{key}}</td>
+                            <td>{{vaule.col}}</td>
+                            <td>{{vaule.uom}}</td>
+                            <td align="center">
+                                <i class="fa fa-pencil-square-o" ng-click="editFeeMapping(key)"></i>
+                                <i class="fa fa-times" style="margin-left: 7px;" ng-click="deleteFeeMapping(key)"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Table -->
+           
+            <!-- ACTION -->
         </div>
-        <!-- Table -->
-       
-        <!-- ACTION -->
-        <div class="col-sm-4 col-xs-6">
-            <button class="btn btn-sm btn-block green" ng-click="clickAction({type: mode.type})">
-                <i ng-if="mode.type == 'add'" class="fa fa-save"></i>
-                <i ng-if="mode.type == 'edit'" class="fa fa-pencil"></i>
-                {{mode.text}}
-            </button>
+        <div class="row">
+            <div class="col-sm-4 col-xs-6" style="margin-left: 13px; margin-top: -11px;margin-bottom: -16px;">
+                <button class="btn btn-sm btn-block green" ng-click="clickAction({type: mode.type})">
+                    <i ng-if="mode.type == 'add'" class="fa fa-save"></i>
+                    <i ng-if="mode.type == 'edit'" class="fa fa-pencil"></i>
+                    {{mode.text}}
+                </button>
+            </div>
         </div>
+        
     </div>
 </form>
   <script type="text/ng-template" id="addFeeMapping">

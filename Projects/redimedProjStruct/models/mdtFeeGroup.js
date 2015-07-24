@@ -13,6 +13,8 @@ module.exports = function(sequelize, DataTypes){
 		COLUMN_PERCENT_MAPPING:DataTypes.STRING(200),
 		CONTACT_ADDRESS:DataTypes.STRING(200),
 		ISENABLE: DataTypes.INTEGER(1),
+		SOURCE_START_DATE:DataTypes.DATE,
+		SOURCE_FILE_TYPE:DataTypes.STRING(10),
 		COLUMN_MAPPING:DataTypes.STRING(300),
 		CREATED_BY: DataTypes.INTEGER(11),
 		LAST_UPDATED_BY: DataTypes.INTEGER(11),
