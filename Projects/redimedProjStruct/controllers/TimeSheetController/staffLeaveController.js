@@ -109,7 +109,7 @@ module.exports = {
                         chainer.add(db.HrLeaveDetail.create({
                             leave_id: result.dataValues.leave_id,
                             leave_type_id: info.infoTypeLeave[i].leave_type_id,
-                            time_leave: info.infoTypeLeave[i].time_leave_real,
+                            time_leave: (info.infoTypeLeave[i].time_leave_real!==0)?info.infoTypeLeave[i].time_leave_real:null,
                             type_other: i === 4 ? info.infoTypeLeave[i].type_other : null,
                             reason_leave: info.infoTypeLeave[i].reason_leave,
                             created_by: info.USER_ID

@@ -232,8 +232,7 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                 scope.uploader.filters.push({
                     name: "limitSize",
                     fn: function(item) {
-                        // return (item.size / 1048576) < 10;
-                        return true;
+                        return (item.size / 1048576) < 10;
                     }
                 });
                 //END FILTER LIMIT FILE UPLOAD
@@ -383,7 +382,7 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                                         isFound2 = true;
                                     }
                                 });
-                                if (isFound2 === false) {
+                                if (isFound2 === false && valueItem.isAction !== "delete") {
                                     scope.items[indexItem].fileUpload.push({
                                         file_name: valueFile.file.name,
                                         file_id: valueFile.file_id,

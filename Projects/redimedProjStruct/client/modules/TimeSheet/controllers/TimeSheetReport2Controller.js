@@ -79,7 +79,7 @@ angular.module("app.loggedIn.TimeSheet.Report2.Controller", [])
                 info.weekNoFrom = $scope.getWeekNumber(weekNoFrom);
                 info.weekNoTo = $scope.getWeekNumber(weekNoTo);
                 info.listEMP = angular.copy($scope.listEmployeeChoose);
-                info.USER_ID = $cookieStore.get('userInfo').id;
+                info.USER_ID = ($cookieStore.get('userInfo')!==undefined) ? $cookieStore.get('userInfo').id : null;
                 info.weekFrom = $scope.dateWeekFrom;
                 info.weekTo = $scope.dateWeekTo;
                 info.listDept = $scope.listDepartmentChoose;
@@ -87,7 +87,7 @@ angular.module("app.loggedIn.TimeSheet.Report2.Controller", [])
                 TimeSheetService.LoadReportUtilizationRatioDetail(info).then(function(response) {
                     if (response.status === "success") {
                         // PROCESSING PDF
-                        $scope.USER_ID = $cookieStore.get('userInfo').id;
+                        $scope.USER_ID = ($cookieStore.get('userInfo')!==undefined) ? $cookieStore.get('userInfo').id : null;
                         //END PDF
                     } 
                     else if (response.status === "error") {
