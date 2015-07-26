@@ -382,7 +382,7 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                                         isFound2 = true;
                                     }
                                 });
-                                if (isFound2 === false) {
+                                if (isFound2 === false && valueItem.isAction !== "delete") {
                                     scope.items[indexItem].fileUpload.push({
                                         file_name: valueFile.file.name,
                                         file_id: valueFile.file_id,

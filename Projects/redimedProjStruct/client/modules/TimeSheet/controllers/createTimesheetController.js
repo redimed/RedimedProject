@@ -50,7 +50,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
     $scope.checkTimeInLieu = function() {
         var info = {
             date: new Date(),
-            userId: $cookieStore.get('userInfo').id
+            userId: ($cookieStore.get('userInfo')!==undefined) ? $cookieStore.get('userInfo').id : null
         };
         StaffService.checkTimeInLieu(info).then(function(response) {
             if (response.status === "error") {
@@ -181,7 +181,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
     // GET TIME IN LIEU TO CHECK SUBMIT
     var info = {
         date: new Date(),
-        userId: $cookieStore.get('userInfo').id
+        userId: ($cookieStore.get('userInfo')!==undefined) ? $cookieStore.get('userInfo').id : null
     };
     StaffService.checkTimeInLieu(info).then(function(response) {
         if (response.status === "error") {
@@ -440,7 +440,8 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 }
             }
             //CHECK TYPE OF CONTRACT
-            StaffService.LoadContract($cookieStore.get('userInfo').id).then(function(conTract) {
+            var USER_ID = ($cookieStore.get('userInfo')!==undefined) ? $cookieStore.get('userInfo').id : null;
+            StaffService.LoadContract(USER_ID).then(function(conTract) {
                 if (conTract.status === "success" && conTract.result[0] !== undefined && conTract.result[0].TypeOfContruct !== undefined) {
                     $scope.TypeOfContruct = conTract.result[0].TypeOfContruct;
                 } else {

@@ -74,14 +74,14 @@ angular.module("app.loggedIn.TimeSheet.Report4.Controller", [])
                 var weekNoFrom = $scope.dateWeekFrom;
                 var weekNoTo = $scope.dateWeekTo;
                 info.listEMP = angular.copy($scope.listEmployeeChoose);
-                info.USER_ID = $cookieStore.get('userInfo').id;
+                info.USER_ID = ($cookieStore.get('userInfo')!==undefined) ? $cookieStore.get('userInfo').id : null;
                 info.dateWeekFrom = $scope.dateWeekFrom;
                 info.dateWeekTo = $scope.dateWeekTo;
                 info.listDept = $scope.listDepartmentChoose;
                 TimeSheetService.LoadReportOnActualWorking(info).then(function(response) {
                     if (response.status === "success") {
                         // PROCESSING PDF
-                        $scope.USER_ID = $cookieStore.get('userInfo').id;
+                        $scope.USER_ID = ($cookieStore.get('userInfo')!==undefined) ? $cookieStore.get('userInfo').id : null;
                         //END PDF
                         $scope.disabledPrint = false;
                     } else if (response.status === "error") {

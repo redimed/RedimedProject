@@ -218,11 +218,12 @@ module.exports = {
 
                                             //DELETE TIME_ITEM_FILE
                                             chainer.add(
-                                                    db.sequelize.query("DELETE FROM time_item_file WHERE time_item_file.task_id = :taskId AND time_item_file.item_id = :itemId", null, {
+                                                    db.sequelize.query("DELETE FROM time_item_file WHERE time_item_file.task_id = :taskId AND time_item_file.item_id = :itemId AND time_item_file.file_id = :fileId", null, {
                                                         raw: true
                                                     }, {
                                                         taskId: taskId,
-                                                        itemId: a.ITEM_ID
+                                                        itemId: a.ITEM_ID,
+                                                        fileId: a.fileUpload[keyFileS].file_id
                                                     })
                                                 )
                                                 //END
@@ -296,11 +297,12 @@ module.exports = {
 
                                             //DELETE TIME_ITEM_FILE
                                             chainer.add(
-                                                    db.sequelize.query("DELETE FROM time_item_file WHERE time_item_file.task_id = :taskId AND time_item_file.item_id = :itemId", null, {
+                                                    db.sequelize.query("DELETE FROM time_item_file WHERE time_item_file.task_id = :taskId AND time_item_file.item_id = :itemId AND time_item_file.file_id = :fileId", null, {
                                                         raw: true
                                                     }, {
                                                         taskId: taskId,
-                                                        itemId: a.ITEM_ID
+                                                        itemId: a.ITEM_ID,
+                                                        fileId: a.fileUpload[keyFileS].file_id
                                                     })
                                                 )
                                                 //END
