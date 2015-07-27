@@ -66,12 +66,12 @@ angular.module("app.loggedIn.TimeSheet.Report1.Controller", [])
                 $scope.isHavedata = 1;
                 var info = {};
                 info.listEMP = angular.copy($scope.listEmployeeChoose);
-                info.USER_ID = $cookieStore.get('userInfo').id;
+                info.USER_ID = ($cookieStore.get('userInfo')!==undefined) ? $cookieStore.get('userInfo').id : null;
                 info.listDept = angular.copy($scope.listDepartmentChoose);
                 TimeSheetService.LoadReportTimeInLieu(info).then(function(response) {
                     if (response.status === "success") {
                         // PROCESSING PDF
-                        $scope.USER_ID = $cookieStore.get('userInfo').id;
+                        $scope.USER_ID = ($cookieStore.get('userInfo')!==undefined) ? $cookieStore.get('userInfo').id : null;
                         //END PDF
                     } 
                     else if (response.status === "error") {

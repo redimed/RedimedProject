@@ -75,7 +75,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
             offset: 0,
             maxSize: 5,
             currentPage: 1,
-            userID: $cookieStore.get('userInfo').id,
+            userID: ($cookieStore.get('userInfo')!==undefined) ? $cookieStore.get('userInfo').id : null,
             week_no: null,
             order: {
                 0: "DESC"
@@ -143,7 +143,6 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
     };
 
     $scope.chooseItem = function(task) {
-        console.log(task);
         var modalInstance = $modal.open({
             templateUrl: "modules/TimeSheet/views/itemModal.html",
             controller: 'ItemController',
@@ -198,7 +197,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
     // GET TIME IN LIEU TO CHECK SUBMIT
     var info = {
         date: new Date(),
-        userId: $cookieStore.get('userInfo').id
+        userId: ($cookieStore.get('userInfo')!==undefined) ? $cookieStore.get('userInfo').id : null
     };
     StaffService.checkTimeInLieu(info).then(function(response) {
         if (response.status === "error") {
@@ -282,7 +281,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                     result[0] !== undefined) {
                     $scope.ID_WEEK = result[0].tasks_week_id;
                     $scope.STATUS = result[0].STATUS;
-                    $scope.USER_ID = $cookieStore.get('userInfo').id;
+                    $scope.USER_ID = ($cookieStore.get('userInfo')!==undefined) ? $cookieStore.get('userInfo').id : null;
                     $scope.after_status_id = result[0].after_status_id;
                     $scope.time_in_lieuChoose = result[0].time_in_lieuChoose;
                     //TRACKER
@@ -366,7 +365,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
     // GET TIME IN LIEU TO CHECK SUBMIT
     var info = {
         date: new Date(),
-        userId: $cookieStore.get('userInfo').id
+        userId: ($cookieStore.get('userInfo')!==undefined) ? $cookieStore.get('userInfo').id : null
     };
     StaffService.checkTimeInLieu(info).then(function(response) {
         if (response.status === "error") {
@@ -442,7 +441,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                     $scope.STATUS = result[0].status;
                     $scope.ID_WEEK = result[0].tasks_week_id;
                     $scope.time_in_lieuChoose = result[0].time_in_lieuChoose;
-                    $scope.USER_ID = $cookieStore.get('userInfo').id;
+                    $scope.USER_ID = ($cookieStore.get('userInfo')!==undefined) ? $cookieStore.get('userInfo').id : null;
                     //TRACKER
                     $scope.submitOnView = {};
                     $scope.submitOnView.STATUS = $scope.STATUS;

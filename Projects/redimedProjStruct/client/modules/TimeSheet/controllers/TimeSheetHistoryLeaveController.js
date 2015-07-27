@@ -31,7 +31,7 @@ angular.module("app.loggedIn.TimeSheet.HistoryLeave.Controller", [])
                 offset: 0,
                 currentPage: 1,
                 maxSize: 5,
-                USER_ID: $cookieStore.get('userInfo').id,
+                USER_ID: ($cookieStore.get('userInfo')!==undefined) ? $cookieStore.get('userInfo').id : null,
                 select: {
                     "hr_leave.status_id": ""
                 },
