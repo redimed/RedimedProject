@@ -622,12 +622,14 @@ module.exports = {
             if(rows.length>0)
             {
                 var groupFee=rows[0];
+                //kiem tra xem start date co ton tai khong
                 if(!kiss.checkData(groupFee.SOURCE_START_DATE))
                 {
                     kiss.exlog(fHeader,'fee start date khong xac dinh');
                     res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN007')});
                     return;
                 }
+                var startDate=moment(new Date(groupFee.SOURCE_START_DATE)).format("YYYY/MM/DD");
                 //duong dan chua file source
                 var filePath=itemUtil.sourceFolderPath+groupFee.PRICE_SOURCE;
                 if(!kiss.checkData(groupFee.PRICE_SOURCE))
@@ -733,11 +735,11 @@ module.exports = {
                     var listSourceFee=data.TABLE.DATA;
                     parseSourceFeesToDbFees(listSourceFee,function(listDbFee){
                         //xuat file log the hien data db duoc parse source json
-                        kiss.exFileJSON(listDbFee,'dvaDbJson.txt')
+                        // kiss.exFileJSON(listDbFee,'dvaDbJson.txt')
                         if(listDbFee.length>0)
                         {
-                            var fieldUpdate=['!Last_updated_by','!Last_update_date'];
-                            kiss.executeInsertIfDupKeyUpdate(req,'cln_item_fees',listDbFee,fieldUpdate,function(result){
+                            var updateCols=['FEE','Last_update_date','Last_updated_by'];
+                            kiss.executeInsertIfDupKeyUpdate(req,'cln_item_fees',listDbFee,updateCols,function(result){
                                 res.json({status:'success',data:listDbFee});
                             },function(err){
                                 kiss.exlog(fHeader,'Loi truy van insert list fee',err);
@@ -795,14 +797,29 @@ module.exports = {
             if(rows.length>0)
             {
                 var groupFee=rows[0];
-                //duong dan chua file source
+
+                //kiem tra source start date co ton tai khong
+                if(!kiss.checkData(groupFee.SOURCE_START_DATE))
+                {
+                    kiss.exlog(fHeader,'fee start date khong xac dinh');
+                    res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN006')});
+                    return;
+                }
+                var startDate=moment(new Date(groupFee.SOURCE_START_DATE)).format("YYYY/MM/DD");
+
+                //kiem tra duong dan chua file source co ton tai khong
+                if(!kiss.checkData(groupFee.PRICE_SOURCE))
+                {
+                    kiss.exlog(fHeader,'Price source file khong xac dinh');
+                    res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN007')});
+                    return;
+                }
                 var filePath=itemUtil.sourceFolderPath+groupFee.PRICE_SOURCE;
+
                 //doc file txt chuyen thanh json                
                 parseTxtSource(filePath,function(result){
                     // kiss.exFileJSON(result,'txtToJson.txt');
-                    var startDate=moment(result.startDate,'DD.MM.YYYY').format("YYYY/MM/DD");
                     var listSourceFee=result.dataArr;
-
                     /**
                      * Chuyen source txt fee (array) thanh json luu xuong database
                      * tannv.dts@gmail.com
@@ -811,7 +828,9 @@ module.exports = {
                     function parseSourceFeesToDbFees(listSourceFee,functionSuccess,functionError)
                     {
                         var listDbFee=[];
-                        var columnMapping={
+                        //tannv.dts
+                        //test
+                        /*var columnMapping={
                             itemCode:1,
                             feeMapping:{
                                 1:{col:2,uom:'currency'},
@@ -819,7 +838,9 @@ module.exports = {
                                 3:{col:4,uom:'percent'}
                             }
                             
-                        }
+                        }*/
+                        var columnMapping=JSON.parse(groupFee.COLUMN_MAPPING);
+                        kiss.exlog(fHeader,'columnMapping',columnMapping);
 
                         //lay danh sach items (item_id, item_code)
                         var sql="SELECT item.* FROM `inv_items` item WHERE item.`ISENABLE`=1;";
