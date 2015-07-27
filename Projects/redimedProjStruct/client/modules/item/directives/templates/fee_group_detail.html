@@ -46,7 +46,7 @@
         <div class="col-md-4 col-sm-6 col-xs-12">
             <span class="field" ng-class="{'has-error': mainForm.SOURCE_START_DATE.$invalid && isSubmit}">
             <label for="SOURCE_START_DATE">Source Start Date</label>
-            <input custom-date readonly placeholder="Source Start Date" name="SOURCE_START_DATE" ng-model="modelObjectMap.SOURCE_START_DATE" class="form-control" id="SOURCE_START_DATE" float-label >
+            <input custom-date readonly placeholder="Source Start Date" name="SOURCE_START_DATE" ng-model="modelObjectMap.SOURCE_START_DATE" class="form-control" id="SOURCE_START_DATE" float-label ng-required="currentGroupType.haveStartDate">
              <span ng-show="mainForm.SOURCE_START_DATE.$invalid && isSubmit">
                     <span class="mdt-popover above" ng-show="mainForm.SOURCE_START_DATE.$error.required">
                         Source Start Date
