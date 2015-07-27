@@ -421,7 +421,7 @@ module.exports = function(io,cookie,cookieParser) {
                                 "FROM driverInjury d "+
                                 "INNER JOIN cln_patients p ON d.patient_id = p.Patient_id " +
                                 "INNER JOIN im_injury i ON i.patient_id = d.patient_id AND i.driver_id = d.driver_id "+
-                                "WHERE d.driver_id = ? AND d.STATUS = 'Picking' AND DATE(d.pickup_date) = DATE(CURDATE())",null,{raw:true},[data[0].id])
+                                "WHERE d.driver_id = ? AND d.STATUS = 'Picking' AND i.`STATUS` = 'Picking' AND DATE(d.pickup_date) = DATE(CURDATE())",null,{raw:true},[data[0].id])
                 .success(function(rs){
                     data[0].patientList = _.uniq(rs,'patient_id');
                     if(driverArr.length > 0)
