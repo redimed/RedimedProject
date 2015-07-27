@@ -128,7 +128,6 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			hand_therapist: null,
 			measurements: null,
 			medication: null,
-			images: [],
 			consult_id: null
 		}
 		/*
@@ -248,13 +247,10 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		}
 		//end
 		$scope.getImgDrawingHistory = function(){
-			console.log($scope.cal_id)
-			console.log($stateParams.patient_id)
 			$scope.listImgDrawingHistory = {};
 			ConsultationService.getImgDrawingHistory($stateParams.patient_id,$scope.cal_id).then(function(data){
 				if (data.status == 'success') {
 					$scope.listImgDrawingHistory = data.data;
-					console.log('aaaa',$scope.listImgDrawingHistory);
 				};
 			})
 		}
@@ -266,16 +262,47 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			angular.element('#popupConsultationHistory').modal('show');
 		}
 		$scope.popupNewDrawing = function(){
-			angular.element('#popupNewDrawing').modal('show');
+			var modalInstance = $modal.open({
+                templateUrl: "popupNewDrawing",
+                size: 'lg',
+                controller: function($scope,$modalInstance,patient_id,cal_id,consult_id){
+                	$scope.patient_id = patient_id;
+                	$scope.cal_id = cal_id;
+                	$scope.consult_id = consult_id;
+                	$scope.cancel = function () {
+					    $modalInstance.dismiss('cancel');
+					};
+                    //set actionCenterDrawing 
+					$scope.actionCenterDrawing = {
+						runWhenFinish:function(){
+					    	$modalInstance.dismiss({status:'success'});
+						}
+					};
+                },
+                resolve: {
+                	patient_id: function () {
+                		return $stateParams.patient_id;
+                	},
+                	cal_id : function () {
+                		return $stateParams.cal_id;
+                	},
+                	consult_id : function () {
+                		return $scope.consultInfo.consult_id;
+                	}
+                }
+            });
+			modalInstance.result.then(function (data) {},
+			function (data) {
+				if (data.status == 'success') {
+					/*phanquocchien.c1109g@gmail.com
+					* load data drawing history
+                    */
+					$scope.getImgDrawingHistory();
+				};
+			});
 		}
 		$scope.showChooseItem = function() {
 			angular.element('#popupChooseItem').modal('show');
-		}
-		//set actionCenterDrawing 
-		$scope.actionCenterDrawing = {
-			runWhenFinish:function(){
-				angular.element('#popupNewDrawing').modal('hide');
-			}
 		}
 		//end
 		//chien show patien bar
@@ -922,10 +949,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 					* load data consultation history
                     */
                     $scope.setListConsultationOfPatient();
-                    /*phanquocchien.c1109g@gmail.com
-					* load data drawing history
-                    */
-					$scope.getImgDrawingHistory();
+                    
 		            if ($scope.checktoasl === 0) {
 		            	 toastr.success('Submit Consultation Success!');
 		            };

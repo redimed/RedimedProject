@@ -3,11 +3,10 @@
 	    return {
 	        restrict: 'E',
 	        scope: {
-	        	images: '=',
 	        	patient: '=',
 	        	calendar: '=',
 	        	actionCenterDrawing:'=',
-	        	consualid: '='
+	        	consultid: '='
 	        },
 	        templateUrl: "modules/consultation/directives/templates/drawingConsult.html",
 	        link: function (scope, element, attrs) {
@@ -107,10 +106,9 @@
 	            scope.capture = function () {
 	                var imgData = canvas.toDataURL('image/png');
 	                
-	                Restangular.all('api/consultation/draw/saveImage').post({patient_id: scope.patient, cal_id: scope.calendar, imgData: imgData}).then(function(rs){
+	                Restangular.all('api/consultation/draw/saveImage').post({patient_id: scope.patient, cal_id: scope.calendar, imgData: imgData, consult_id: scope.consultid}).then(function(rs){
 	                	if(rs.status == 'success')
 	                	{
-	                		scope.images.push(rs.id);
 	                		toastr.success("Image Saved!");
 	                		 //phanquocchien save img success
 		                    if(scope.actionCenterDrawing && scope.actionCenterDrawing.runWhenFinish)

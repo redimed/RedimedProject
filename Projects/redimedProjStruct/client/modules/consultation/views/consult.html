@@ -187,7 +187,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6 col-sm-6">
-                                            <div class="row un_padding_left_5">
+                                            <div class="row un_padding_right_5">
                                                 <div class="form-group pt_margin_bottom_0">
                                                     <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Diagnosis</label>
                                                     <textarea rows="6" ng-model="consultInfo.diagnosis" 
@@ -196,7 +196,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-sm-6">
-                                            <div class="row un_padding_right_5">
+                                            <div class="row un_padding_left_5">
                                                 <div class="form-group pt_margin_bottom_0">
                                                     <label class="un-label-form un-label-whidth-130" style="font-size: 15px;">Investigation</label>
                                                     <textarea rows="6" ng-model="consultInfo.investigation" 
@@ -1609,7 +1609,7 @@
 
 
 <!-- phan quoc chien -->
-<!-- Modal drawing -->
+<!-- Modal Sreach Item -->
 <div class="modal fade" style="z-index: 99999;" id="popupSreachItem" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div style="margin-top: 60px;" class="modal-dialog modal-md">
         <div class="modal-content">
@@ -1712,27 +1712,28 @@
 </div>
 <!-- phan quoc chien -->
 <!-- Modal drawing -->
-<div class="modal fade" id="popupNewDrawing" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div style="z-index: 10;margin-top: 60px;" class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <h4 class="modal-title un-label-popup-header-m un-bg-label-333333" id="myModalLabel">Drawing</h4>
-            <div class="modal-body">
-                <consult-drawing
-                    images="consultInfo.images"
-                    patient="patient_id"
-                    calendar="cal_id"
-                    width="650"
-                    height="600"
-                    lineWidth="5"
-                    action-center-drawing="actionCenterDrawing"
-                ></consult-drawing>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="un-button un-bgXam-colBlack" data-dismiss="modal">Close</button>
-            </div>
-        </div>
+<script type="text/ng-template" id="popupNewDrawing">
+    <style type="text/css">
+        .modal.in .modal-dialog {
+            margin-top:50px;
+        }
+    </style>
+    <h4 class="modal-title un-label-popup-header-m un-bg-label-333333" id="myModalLabel">Choose Item</h4>
+    <div class="modal-body">
+        <consult-drawing
+            consultid="consult_id"
+            patient="patient_id"
+            calendar="cal_id"
+            width="650"
+            height="600"
+            lineWidth="5"
+            action-center-drawing="actionCenterDrawing"
+        ></consult-drawing>
     </div>
-</div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="cancel()">Close</button>
+    </div>
+</script>
 <!-- phan quoc chien -->
 <!-- Modal choose item -->
 <div class="modal fade" id="popupChooseItem" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
