@@ -122,6 +122,7 @@ module.exports = {
         var patient_id = req.body.patient_id;
         var cal_id = req.body.cal_id;
         var imgData = req.body.imgData;
+        var consult_id = req.body.consult_id;
 
         var data = imgData.replace(/^data:image\/\w+;base64,/, "");
         var buf = new Buffer(data, 'base64');
@@ -143,7 +144,8 @@ module.exports = {
                             id: max + 1,
                             patient_id: patient_id,
                             cal_id: cal_id,
-                            url: targetFolderForSave+"\\image_"+date+".png"
+                            url: targetFolderForSave+"\\image_"+date+".png",
+                            consult_id:consult_id
                         })
                         .success(function(data){
                             res.json({status:'success', id: data.values.id })
