@@ -7,7 +7,6 @@ module.exports = function(sequelize, DataTypes){
 		},
 		FEE_GROUP_NAME: DataTypes.STRING(100),
 		FEE_GROUP_TYPE: DataTypes.STRING(50),
-		PRICE_SOURCE: DataTypes.STRING(200),
 		FORMULA :DataTypes.STRING(200),
 		COLUMN_FEE_MAPPING:DataTypes.STRING(200),
 		COLUMN_PERCENT_MAPPING:DataTypes.STRING(200),

@@ -106,7 +106,7 @@ angular.module("app.loggedIn.item.fee.controller",[
                 {field: 'FEE_GROUP_ID', is_hide: true},
                 {field: 'FEE_GROUP_NAME', label: 'Group name'},
                 {field: 'FEE_GROUP_TYPE', label: 'Code'},
-                {field: 'PRICE_SOURCE', label: 'Price Source'},            
+                // {field: 'PRICE_SOURCE', label: 'Price Source'},            
                 {field: 'SOURCE_FILE_TYPE',label:'Source file type'},
                 {field: 'SOURCE_START_DATE',label:'Start date',
                     type:'custom',
@@ -156,10 +156,10 @@ angular.module("app.loggedIn.item.fee.controller",[
                 {
                     class: 'fa fa-check-circle', title: 'Update Price Source',
                     callback: function(item){
-                        if(!item.PRICE_SOURCE) {
-                            toastr.warning('Needed a price source', 'Warning');
-                            return;
-                        }
+                        // if(!item.PRICE_SOURCE) {
+                        //     toastr.warning('Needed a price source', 'Warning');
+                        //     return;
+                        // }
 
                         if(item.FEE_GROUP_TYPE == 'item_fee_type') {
                             ItemService.importItemFromXML().then(function(response){
@@ -194,7 +194,7 @@ angular.module("app.loggedIn.item.fee.controller",[
             columns: [
                 {field: 'FEE_TYPE_ID', is_hide: true},
                 {field: 'FEE_TYPE_NAME', label: 'Fund name'},
-                {field: 'PRICE_SOURCE', label: 'Price Source'},
+                // {field: 'PRICE_SOURCE', label: 'Price Source'},
                 {field: 'FEE_GROUP_ID', label: 'Group', type: 'custom', fn: function(item){
                     if(item.feeGroup == null) return 'No Group';
                     return item.feeGroup.FEE_GROUP_NAME;
@@ -234,10 +234,10 @@ angular.module("app.loggedIn.item.fee.controller",[
                 {
                     class: 'fa fa-check-circle', title: 'Update Price Source',
                     callback: function(item){
-                        if(!item.PRICE_SOURCE) {
-                            toastr.warning('Needed a price source', 'Warning');
-                            return;
-                        }
+                        // if(!item.PRICE_SOURCE) {
+                        //     toastr.warning('Needed a price source', 'Warning');
+                        //     return;
+                        // }
                         $scope.fee_types.select_item = item;
                         ItemService.updateTypePriceSource(item.FEE_TYPE_ID).then(function(response){
                             if(response.status == 'success') {
@@ -636,7 +636,7 @@ angular.module("app.loggedIn.item.fee.controller",[
                             toastr.error('Upload fail !', 'error');
                             return;
                         }
-                        feeGroup.PRICE_SOURCE=response.data.PRICE_SOURCE;
+                        // feeGroup.PRICE_SOURCE=response.data.PRICE_SOURCE;
                         toastr.success('Upload successfully !', 'Success');
                         finishUploadFeeSourceFile();
                     }
