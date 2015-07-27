@@ -1,13 +1,13 @@
 var db = require('../models');
 var fs = require('fs');
 var mdt_functions = require('../mdt-functions.js');
-var errorCode=require('./errorCode');
 var item_model = require('../v1_models/Inv_items.js');
 var item_fees_model = require('../v1_models/Cln_item_fees.js');
 var parseString = require('xml2js').parseString;
 
 var kiss=require('./kissUtilsController');// tan add
-var controllerCode="RED_CONSULT";
+var controllerCode="RED_CONSULT";//tan add
+var errorCode=require('./errorCode');//tan add
 var general_process = function(req, res){
 
 	var UPLOAD_FOLDER = db.FeeGroup.getUploadPath();
@@ -504,5 +504,6 @@ module.exports = {
         },true);
 	},
 
+	
 	
 }

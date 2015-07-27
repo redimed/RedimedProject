@@ -206,5 +206,24 @@ angular.module("app.loggedIn.item.services", [])
         return detailApi.post(data);
     }
 
+    /**
+     * tannv.dts@gmail.com
+     * 27-07-2015
+     */
+    instanceService.getListGroupFee=function()
+    {
+        var detailApi = appApi.all("v2/fees/group/get_list_group_fee");
+        return detailApi.post();
+    }
+    /**
+     * tannv.dts@gmail.com
+     * 27-07-2015
+     */
+     instanceService.getItemFeeTypes=function(postData)
+    {
+        var detailApi = appApi.all("v2/fees/type/get_item_fee_types");
+        return detailApi.post({postData:postData});
+    }
+
     return instanceService;
 })

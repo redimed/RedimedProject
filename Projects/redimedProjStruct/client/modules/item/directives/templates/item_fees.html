@@ -15,3 +15,42 @@
 		</div>
 	</div>
 </div>
+
+<br/>
+
+<tabset>
+	<tab ng-repeat="groupFee in groupFeeList" heading="{{groupFee.FEE_GROUP_NAME}}" ng-click="getItemFeeTypes(groupFee)">
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				{{groupFee.FEE_GROUP_NAME}}
+			</div>
+			<div class="panel-body">
+				<table>
+					<tr>
+						<th>Fee name</th>
+						<th>Start date </th>
+						<th>Fee </th>
+						<th>Percent</th>
+					</tr>
+					<tr ng-repeat="(key,feeType) in itemFeeTypes">
+						<td>{{feeType.FEE_TYPE_NAME}}:</td>
+						<td>
+							<select ng-model="feeType.currentFee" ng-options="fee.FEE_START_DATE_DISPLAY for fee in feeType.LIST_FEE">
+				                <!-- <option value=''>- Fee group type -</option> -->
+				            </select>
+		        		</td>
+						<td>
+							{{feeType.currentFee.FEE}}
+						</td>
+						<td>
+							{{feeType.currentFee.PERCENT}}
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</tab>
+	
+
+
+</tabset>

@@ -83,6 +83,90 @@ angular.module("app.loggedIn.item.item_fees.directive", [])
             } 
              console.log($scope.panel )
             // $scope.reload(6245);
+            // 
+            
+            /**
+             * tannv.dts@gmail.com
+             * 27-07-2015
+             * ----------------------------------------------------------------------------------
+             * ----------------------------------------------------------------------------------
+             * ----------------------------------------------------------------------------------
+             */
+            
+            $scope.groupFeeList=[];
+            ItemService.getListGroupFee()
+            .then(function(data){
+                if(data.status=='success')
+                {
+                    $scope.groupFeeList=data.data;
+                }
+                else
+                {
+                    exlog.logErr('item->itemFeesDirective',data);
+                }
+            },function(err){
+                exlog.logErr('item->itemFeesDirective',err);
+            });
+
+            $scope.itemFeeTypes={};
+            $scope.selectedFee={};
+            $scope.getItemFeeTypes=function(feeGroup)
+            {
+                ItemService.getItemFeeTypes({feeGroupId:feeGroup.FEE_GROUP_ID,itemId:$scope.item_id})
+                .then(function(data){
+                    if(data.status=='success')
+                    {
+                        for(var i=0;i<data.data.length;i++)
+                        {
+                            var item=data.data[i];
+                            if(!$scope.itemFeeTypes[item.FEE_TYPE_ID])
+                            {
+                                $scope.itemFeeTypes[item.FEE_TYPE_ID]={
+                                    FEE_TYPE_NAME:item.FEE_TYPE_NAME,
+                                    LIST_FEE:[{
+                                        FEE_START_DATE:item.FEE_START_DATE,
+                                        FEE_START_DATE_DISPLAY:moment(new Date(item.FEE_START_DATE)).format("DD-MM-YYYY"),
+                                        FEE:item.FEE,
+                                        PERCENT:item.PERCENT
+                                    }]
+                                }
+                            }
+                            else
+                            {
+                                $scope.itemFeeTypes[item.FEE_TYPE_ID].LIST_FEE.push({
+                                    FEE_START_DATE:item.FEE_START_DATE,
+                                    FEE_START_DATE_DISPLAY:moment(new Date(item.FEE_START_DATE)).format("DD-MM-YYYY"),
+                                    FEE:item.FEE,
+                                    PERCENT:item.PERCENT
+                                })
+                            }
+                        }
+
+                        angular.forEach($scope.itemFeeTypes,function(feeType,key){
+                            var listFee=feeType.LIST_FEE;
+                            for(var i=0;i<listFee.length;i++)
+                            {
+                                var feeItem=listFee[i];
+                                var currentDate=moment();
+                                var startDate=moment(new Date(feeItem.FEE_START_DATE));
+                                if(startDate.isBefore(currentDate))
+                                {
+                                    feeType.currentFee=feeItem;
+                                    break;
+                                }
+                            }
+                        });
+                        exlog.alert($scope.itemFeeTypes);
+                        exlog.log($scope.itemFeeTypes);
+                    }
+                    else
+                    {
+                        exlog.logErr('item->itemFeesDirective->getFeeTypeList',data);
+                    }
+                },function(err){
+                    exlog.logErr('item->itemFeesDirective->getFeeTypeList',err);
+                });
+            }   
         }
     };
 });

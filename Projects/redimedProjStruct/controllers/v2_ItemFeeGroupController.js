@@ -1051,5 +1051,32 @@ module.exports = {
             kiss.exlog(fHeader,'Loi truy van lay thong tin fee group tuong ung voi group id');
             res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN002')});
         });
+    },
+
+    /**
+     * tannv.dts@gmail.com
+     * 27-07-2015
+     * -------------------------------------
+     */
+    
+    /**
+     * Lay danh sach group fee
+     * tannv.dts@gmail.com
+     * 27-07-2015
+     */
+    postGetListGroupFee:function(req,res)
+    {
+        var fHeader="v2_ItemFeeGroupController->getGetListGroupFee";
+        var controllerCode="FN005";
+        var sql=
+            " SELECT * FROM `cln_fee_group` feeGroup                                  "+
+            " WHERE feeGroup.`ISENABLE`=1                                             "+
+            " ORDER BY feeGroup.`FEE_GROUP_TYPE` ASC, feeGroup.`FEE_GROUP_NAME` ASC   ";
+        var sql=kiss.executeQuery(req,sql,[],function(rows){
+            res.json({status:'success',data:rows});
+        },function(err){
+            kiss.exlog(fHeader,'Loi truy van lay danh sach fee group',err);
+            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
+        });
     }
 }
