@@ -1,11 +1,6 @@
 angular.module("app.loggedIn.patient.consult.consulthistoryController", [])
 .controller("ConsultHistoryController", function($scope, ConsultationService, consult_id, $modalInstance){
-	// $scope.consultion = {
-	// 	consults: consults
-	// }
-	//phanquocchien edit
-	// $scope.listConsult = consults;
-	// console.log(consults);
+	//get history
 	$scope.setListConsultHistory = function(){
 		ConsultationService.getByIdConsult(consult_id).then(function(response){
 			if (response.status == 'success') {
@@ -15,22 +10,39 @@ angular.module("app.loggedIn.patient.consult.consulthistoryController", [])
 				ConsultationService.getImgDrawingHistory(response.data.patient_id,response.data.cal_id).then(function(data){
 					if (data.status == 'success') {
 						$scope.listImgDrawingHistory = data.data;
-						console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',$scope.listImgDrawingHistory);
 					};
-				})
+				});
+				//set document
 				ConsultationService.getDocumentFileOfPatientidAndCalid(response.data.patient_id,response.data.cal_id).then(function(data){
 					if (data.status == 'success') {
 						$scope.listDocumentFile = data.data;
-						console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',$scope.listDocumentFile);
 					};
-				})
+				});
+				//set Measurements
+				ConsultationService.getListMeasurementsOfConsualt(response.data.patient_id,response.data.cal_id).then(function(data){
+					if (data.status == 'success') {
+						$scope.listMeasurementsConsual = data.data;
+					}
+				});
+				//set medication
+				ConsultationService.getListMedicationOfConsualt(response.data.patient_id,response.data.cal_id).then(function(data){
+					if (data.status == 'success') {
+						$scope.listMedicationConsualt = data.data;
+					}
+				});
 			};
 		});
-	}
+	};
 	$scope.setListConsultHistory();
-	//closr popup
+	//close popup
 	$scope.cancelDetail = function(){
 		$modalInstance.close({'type':'cancel'});
-	}
+	};
 
+	$scope.popupMedication = function () {
+		angular.element('#popupListMedicationOfConsualt').modal('show');
+	};
+	$scope.popupMeasurements = function () {
+		angular.element('#popupListMeasurementsOfConsualt').modal('show');
+	};
 })

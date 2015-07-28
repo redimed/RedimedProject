@@ -85,12 +85,12 @@
 										                            <table class="responsive table table-bordered">
 										                                <thead>
 										                                    <tr>
-										                                        <th style="background-color: rgb(102, 102, 102);">
+										                                        <th class="un_table_tab_bg">
 										                                            <div class="th">
 										                                                <span style="color: white;">Date</span>
 										                                            </div>
 										                                        </th>
-										                                        <th style="background-color: rgb(102, 102, 102);">
+										                                        <th class="un_table_tab_bg">
 										                                            <div class="th">
 										                                                <span style="color: white;">Document Name</span>
 										                                            </div>
@@ -151,6 +151,220 @@
 	</div>
 </div>
 <div class="modal-footer">
+    <button type="button" class="btn btn-default un-bg-black" ng-click="popupMeasurements()">Measurements</button>
+    <button type="button" class="btn btn-default un-bg-black" ng-click="popupMedication()">Medication</button>
     <button type="button" class="btn btn-default" ng-click='cancelDetail()'>Close</button>
 </div>
 <!--</div>-->
+
+
+<!-- phan quoc chien -->
+<!-- Modal list medication consualt -->
+<div class="modal fade" id="popupListMedicationOfConsualt" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div style="z-index: 99999;margin-top: 60px;" class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <h4 class="modal-title un-label-popup-header-m un-bg-label-B41E46" id="myModalLabel">Medication</h4>
+            <div class="modal-body">
+            	<div class="table-dynamic un_overflow_auto">
+                    <table class="responsive table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="un_table_tab_bg">
+                                    <div class="th">
+                                        <span style="color: white;">Appt Date</span>
+                                    </div>
+                                </th>
+                                <th class="un_table_tab_bg">
+                                    <div class="th">
+                                        <span style="color: white;">Name</span>
+                                    </div>
+                                </th>
+                                <th class="un_table_tab_bg">
+                                    <div class="th">
+                                        <span style="color: white;">Dose</span>
+                                    </div>
+                                </th>
+                                <th class="un_table_tab_bg">
+                                    <div class="th">
+                                        <span style="color: white;">Unit</span>
+                                    </div>
+                                </th>
+                                <th class="un_table_tab_bg">
+                                    <div class="th">
+                                        <span style="color: white;">Route</span>
+                                    </div>
+                                </th>
+                                <th class="un_table_tab_bg">
+                                    <div class="th">
+                                        <span style="color: white;">Freq</span>
+                                    </div>
+                                </th>
+                                <th class="un_table_tab_bg">
+                                    <div class="th">
+                                        <span style="color: white;">Start Date</span>
+                                    </div>
+                                </th>
+                                <th class="un_table_tab_bg">
+                                    <div class="th">
+                                        <span style="color: white;">End Date</span>
+                                    </div>
+                                </th>
+                                <th class="un_table_tab_bg">
+                                    <div class="th">
+                                        <span style="color: white;">Qty</span>
+                                    </div>
+                                </th>
+                                <th class="un_table_tab_bg">
+                                    <div class="th">
+                                        <span style="color: white;">Doctor</span>
+                                    </div>
+                                </th>
+                                 <th class="un_table_tab_bg">
+                                    <div class="th">
+                                        <span style="color: white;">Condition/Indication</span>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="11">
+                                    <div style="text-align: center;">
+                                        <span ng-if="listMedicationConsualt.length <= 0" style="font-size: 20px; font-style: italic; font-weight: bold;">      
+                                            Empty Data
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr style="background-color: white;" class="bold" ng-if="listMedicationConsualt.length > 0" ng-repeat="m in listMedicationConsualt">
+                                <td style="vertical-align: middle">
+                                    {{m.FROM_TIME | date: 'dd/MM/yyyy - hh:mm'}}
+                                </td>
+                                <td style="vertical-align: middle">
+                                    {{m.medication_name}}
+                                </td>
+                                <td style="vertical-align: middle">
+                                    {{m.dose}}
+                                </td>
+                                <td style="vertical-align: middle">
+                                    {{m.unit}}
+                                </td>
+                                <td style="vertical-align: middle">
+                                    {{m.route}}
+                                </td>
+                                <td style="vertical-align: middle">
+                                    {{m.frequency}}
+                                </td>
+                                <td style="vertical-align: middle">
+                                    {{m.start_date | filterdate: 'DD/MM/YYYY'}}
+                                </td>
+                                 <td style="vertical-align: middle">
+                                    {{m.end_date | filterdate: 'DD/MM/YYYY'}}
+                                </td>
+                                 <td style="vertical-align: middle">
+                                    {{m.qty}}
+                                </td>
+                                 <td style="vertical-align: middle" ng-if="!m.Provider_no">
+                                    {{m.NAME}}
+                                </td>
+                                <td style="vertical-align: middle" ng-if="m.Provider_no">
+                                    {{m.NAME}} , {{m.Provider_no}}
+                                </td>
+                                <td style="vertical-align: middle">
+                                    {{m.condition_Indication}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- phan quoc chien -->
+<!-- Modal List Measurements Consualt -->
+<div class="modal fade" id="popupListMeasurementsOfConsualt" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div style="z-index: 99999;margin-top: 60px;" class="modal-dialog modal-md">
+        <div class="modal-content">
+            <h4 class="modal-title un-label-popup-header-m un-bg-label-B41E46" id="myModalLabel">Measurements</h4>
+            <div class="modal-body">
+            	<div class="table-dynamic un_overflow_auto">
+                    <table class="responsive table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="un_table_tab_bg">
+                                    <div class="th">
+                                        <span style="color: white;">Date</span>
+                                    </div>
+                                </th>
+                                <th class="un_table_tab_bg">
+                                    <div class="th">
+                                        <span style="color: white;">Height (cms)</span>
+                                    </div>
+                                </th>
+                                <th class="un_table_tab_bg">
+                                    <div class="th">
+                                        <span style="color: white;">Weight (kgs)</span>
+                                    </div>
+                                </th>
+                                <th class="un_table_tab_bg">
+                                    <div class="th">
+                                        <span style="color: white;">Waist (cms)</span>
+                                    </div>
+                                </th>
+                                <th class="un_table_tab_bg">
+                                    <div class="th">
+                                        <span style="color: white;">Hips (cms)</span>
+                                    </div>
+                                </th>
+                                <th class="un_table_tab_bg">
+                                    <div class="th">
+                                        <span style="color: white;">Neck (cms)</span>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="6">
+                                    <div style="text-align: center;">
+                                        <span ng-if="listMeasurementsConsual.length <= 0" style="font-size: 20px; font-style: italic; font-weight: bold;">      
+                                            Empty Data
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr style="background-color: white;" class="bold" align="center" ng-if="listMeasurementsConsual.length > 0" ng-repeat="m in listMeasurementsConsual">
+                                <td style="vertical-align: middle">
+                                    {{m.FROM_TIME | date:'dd/MM/yyyy - hh:mm'}}
+                                </td>
+                                <td style="vertical-align: middle">
+                                    {{m.height}}
+                                </td>
+                                <td style="vertical-align: middle">
+                                    {{m.weight}}
+                                </td>
+                                <td style="vertical-align: middle">
+                                    {{m.waist}}
+                                </td>
+                                <td style="vertical-align: middle">
+                                    {{m.hips}}
+                                </td>
+                                <td style="vertical-align: middle">
+                                    {{m.neck}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

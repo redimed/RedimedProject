@@ -789,6 +789,31 @@ module.exports = {
    },
    /*
     * phanquocchien.c1109g@gmail.com
+    * list Measurements of consualt
+    */
+   getListMeasurementsOfConsualt:function(req,res){
+        var patientId=kiss.checkData(req.body.patient_id)?req.body.patient_id:'';
+        var cal_id=kiss.checkData(req.body.cal_id)?req.body.cal_id:'';
+        if(!kiss.checkListData(patientId,cal_id))
+        {
+            kiss.exlog("getListMeasurementsOfConsualt Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
+        var sql=
+            " SELECT mea.*,cal.`FROM_TIME` FROM `cln_patient_measurements` mea          "+
+            " INNER JOIN `cln_appointment_calendar` cal ON mea.`cal_id` = cal.`CAL_ID`  "+
+            " WHERE mea.`patient_id` = ? AND mea.`cal_id` = ?                           "+
+            " AND mea.`isEnable` = 1                                                    "+
+            " ORDER BY cal.`FROM_TIME` DESC                                             "; 
+        kiss.executeQuery(req,sql,[patientId,cal_id],function(rows){
+            res.json({status:'success',data:rows});
+        },function(err){
+            res.json({status:'error',error:err})
+        })
+   },
+   /*
+    * phanquocchien.c1109g@gmail.com
     * list Measurements of patient
     */
    getListMedication:function(req,res){
@@ -807,6 +832,32 @@ module.exports = {
             " AND medi.`isEnable` = 1                                                                                    "+
             " ORDER BY cal.`FROM_TIME` DESC                                                                              ";
         kiss.executeQuery(req,sql,[patientId],function(rows){
+            res.json({status:'success',data:rows});
+        },function(err){
+            res.json({status:'error',error:err})
+        })
+   },
+   /*
+    * phanquocchien.c1109g@gmail.com
+    * list Measurements of consualt
+    */
+   getListMedicationOfConsualt:function(req,res){
+        var patientId=kiss.checkData(req.body.patient_id)?req.body.patient_id:'';
+        var cal_id=kiss.checkData(req.body.cal_id)?req.body.cal_id:'';
+        if(!kiss.checkListData(patientId,cal_id))
+        {
+            kiss.exlog("getListMedicationOfConsualt Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
+        var sql=
+            " SELECT medi.*, cal.`FROM_TIME`, doc.`NAME`, doc.`Provider_no`  FROM `cln_patient_medication_details` medi  "+
+            " INNER JOIN `cln_appointment_calendar` cal ON medi.`cal_id` = cal.`CAL_ID`                                  "+
+            " LEFT JOIN `doctors` doc ON medi.`doctor_id` = doc.`doctor_id`                                              "+
+            " WHERE medi.`patient_id` = ? AND medi.`cal_id` = ?                                                          "+
+            " AND medi.`isEnable` = 1                                                                                    "+
+            " ORDER BY cal.`FROM_TIME` DESC                                                                              ";
+        kiss.executeQuery(req,sql,[patientId,cal_id],function(rows){
             res.json({status:'success',data:rows});
         },function(err){
             res.json({status:'error',error:err})

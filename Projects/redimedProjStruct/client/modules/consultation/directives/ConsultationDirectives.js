@@ -210,6 +210,7 @@
 	        },
 	        templateUrl: "modules/consultation/directives/templates/consultation-history.html",
 	        controller: function ($scope,ConsultationService) {
+
 	        	
 	        }
 		}

@@ -125,6 +125,18 @@ angular.module("app.loggedIn.patient.consult.services",[])
 			return api.all('consultation/list-medication').post({patient_id:patient_id});
 		}
 		/*phanquocchien.c1109g@gmail.com
+		*get list measurements of patient
+		*/
+		services.getListMeasurementsOfConsualt = function(patient_id,cal_id){
+			return api.all('consultation/list-measurements-of-consualt').post({patient_id:patient_id,cal_id:cal_id});
+		}
+		/*phanquocchien.c1109g@gmail.com
+		*get list medication of patient
+		*/
+		services.getListMedicationOfConsualt = function(patient_id,cal_id){
+			return api.all('consultation/list-medication-of-consualt').post({patient_id:patient_id,cal_id:cal_id});
+		}
+		/*phanquocchien.c1109g@gmail.com
 		*set Is Enable Measurements
 		*/
 		services.setIsEnableMeasurements = function(measure_id,isEnable){
