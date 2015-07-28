@@ -133,7 +133,7 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
             //NOT ERROR INPUT
             else {
                 $scope.info.statusID = statusID;
-                $scope.info.USER_ID = ($cookieStore.get('userInfo')!==undefined) ? $cookieStore.get('userInfo').id : null;
+                $scope.info.USER_ID = ($cookieStore.get('userInfo') !== undefined) ? $cookieStore.get('userInfo').id : null;
                 if ($scope.isEdit === false) {
                     //ADD NEW
 

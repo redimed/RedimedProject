@@ -31,7 +31,7 @@ angular.module("app.loggedIn.TimeSheet.HistoryLeave.Controller", [])
                 offset: 0,
                 currentPage: 1,
                 maxSize: 5,
-                USER_ID: ($cookieStore.get('userInfo')!==undefined) ? $cookieStore.get('userInfo').id : null,
+                USER_ID: ($cookieStore.get('userInfo') !== undefined) ? $cookieStore.get('userInfo').id : null,
                 select: {
                     "hr_leave.status_id": ""
                 },
@@ -110,4 +110,16 @@ angular.module("app.loggedIn.TimeSheet.HistoryLeave.Controller", [])
             $scope.searchObjectMap.order[0] = "DESC";
             $scope.loadList();
         };
+
+        //GET STYLE
+        $scope.getStyle = function(timeLeave) {
+            if (timeLeave >= 6000) {
+                return {
+                    "margin-right": "5px"
+                };
+            } else {
+                return;
+            }
+        };
+        //END
     });

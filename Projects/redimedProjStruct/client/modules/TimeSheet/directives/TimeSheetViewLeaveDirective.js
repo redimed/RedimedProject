@@ -33,6 +33,15 @@ angular.module("app.loggedIn.TimeSheet.ViewLeave.Directive", [])
                         });
                     }
                 });
+                scope.getStyle = function(timeLeave) {
+                    if (timeLeave >= 6000) {
+                        return {
+                            "margin-right": "5px"
+                        };
+                    } else {
+                        return;
+                    }
+                };
             },
             templateUrl: "modules/TimeSheet/directives/templates/ViewLeave.html"
         };
