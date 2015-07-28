@@ -373,8 +373,14 @@
                                     </label>
                                 </div>
                             </div>
-                            <div ng-class="{'has-error': amsForm.mh_medication_c.$valid}" class="col-md-8 col-sm-8">{{amsForm.mh_medication_c.$valid}}
-                                <textarea name="mh_medication_c" ng-model="info.mh_medication_c" class="form-control" ng-required="true"></textarea>
+                            <div ng-class="{'has-error': amsForm.mh_medication_c.$invalid}" class="col-md-8 col-sm-8">
+                                <textarea name="mh_medication_c" ng-model="info.mh_medication_c" class="form-control" ng-required="info.mh_medication===1" ng-maxlength="200"></textarea>
+                                <label class="help-block" ng-show="amsForm.mh_medication_c.$error.required">
+                                    Required!
+                                </label>
+                                <label class="help-block" ng-show="amsForm.mh_medication_c.$error.maxlength">
+                                    Too long!
+                                </label>
                             </div>
                         </div>
                         <!-- END QUESTION 1 -->
@@ -388,15 +394,21 @@
                             <div class="col-md-4 col-sm-4">
                                 <div class="btn-group">
                                     <label class="btn">
-                                        <input type="radio" />&nbsp;Yes
+                                        <input type="radio" name="mh_operation" ng-model="info.mh_operation" ng-value="1" />&nbsp;Yes
                                     </label>
                                     <label class="btn">
-                                        <input type="radio" />&nbsp;No
+                                        <input type="radio" name="mh_operation" ng-model="info.mh_operation" ng-value="0"/>&nbsp;No
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-md-8 col-sm-8">
-                                <textarea class="form-control"></textarea>
+                            <div class="col-md-8 col-sm-8" ng-class="{'has-error': amsForm.mh_operation_c.$invalid}">
+                                <textarea class="form-control" name="mh_operation_c" ng-model="info.mh_operation_c" ng-required="info.mh_operation===1" ng-maxlength="200"></textarea>
+                                <label class="help-block" ng-show="amsForm.mh_operation_c.$error.required">
+                                    Required!
+                                </label>
+                                <label class="help-block" ng-show="amsForm.mh_operation_c.$error.maxlength">
+                                    Too long!
+                                </label>
                             </div>
                         </div>
                         <!-- END QUESTION 2 -->
@@ -410,15 +422,21 @@
                             <div class="col-md-4 col-sm-4">
                                 <div class="btn-group">
                                     <label class="btn">
-                                        <input type="radio" />&nbsp;Yes
+                                        <input type="radio" name="mh_reason" ng-model="info.mh_reason" ng-value="1" />&nbsp;Yes
                                     </label>
                                     <label class="btn">
-                                        <input type="radio" />&nbsp;No
+                                        <input type="radio" name="mh_reason" ng-model="info.mh_reason" ng-value="0"/>&nbsp;No
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-md-8 col-sm-8">
-                                <textarea class="form-control"></textarea>
+                            <div class="col-md-8 col-sm-8" ng-class="{'has-error': amsForm.mh_reason_c.$invalid}">
+                                <textarea class="form-control" name="mh_reason_c" ng-model="info.mh_reason_c" ng-maxlength="200" ng-required="info.mh_reason===1"></textarea>
+                                <label class="help-block" ng-show="amsForm.mh_reason_c.$error.required">
+                                    Required!
+                                </label>
+                                <label class="help-block" ng-show="amsForm.mh_reason_c.$error.maxlength">
+                                    Too long!
+                                </label>
                             </div>
                         </div>
                         <!-- END QUESTION 3 -->
@@ -432,15 +450,21 @@
                             <div class="col-md-4 col-sm-4">
                                 <div class="btn-group">
                                     <label class="btn">
-                                        <input type="radio" />&nbsp;Yes
+                                        <input type="radio" name="mh_smoke" ng-model="info.mh_smoke" ng-value="1" />&nbsp;Yes
                                     </label>
                                     <label class="btn">
-                                        <input type="radio" />&nbsp;No
+                                        <input type="radio" name="mh_smoke" ng-model="info.mh_smoke" ng-value="0"/>&nbsp;No
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-md-8 col-sm-8">
-                                <textarea class="form-control"></textarea>
+                            <div class="col-md-8 col-sm-8" ng-class="{'has-error': amsForm.mh_smoke_c.$invalid}">
+                                <textarea class="form-control" name="mh_smoke_c" ng-model="info.mh_smoke_c" ng-maxlength="200" ng-required="info.mh_smoke===1"></textarea>
+                                <label class="help-block" ng-show="amsForm.mh_smoke_c.$error.required">
+                                    Required!
+                                </label>
+                                <label class="help-block" ng-show="amsForm.mh_smoke_c.$error.maxlength">
+                                    Too long!
+                                </label>
                             </div>
                         </div>
                         <!-- END QUESTION 4 -->
@@ -454,15 +478,21 @@
                             <div class="col-md-4 col-sm-4">
                                 <div class="btn-group">
                                     <label class="btn">
-                                        <input type="radio" />&nbsp;Yes
+                                        <input type="radio" name="mh_exercise" ng-model="info.mh_exercise" ng-value="1"/>&nbsp;Yes
                                     </label>
                                     <label class="btn">
-                                        <input type="radio" />&nbsp;No
+                                        <input type="radio" name="mh_exercise" ng-model="info.mh_exercise" ng-value="0"/>&nbsp;No
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-md-8 col-sm-8">
-                                <textarea class="form-control"></textarea>
+                            <div class="col-md-8 col-sm-8" ng-class="{'has-error': amsForm.mh_exercise_c.$invalid}">
+                                <textarea class="form-control" name="mh_exercise_c" ng-model="info.mh_exercise_c" ng-required="info.mh_exercise===1" ng-maxlength="200"></textarea>
+                                <label class="help-block" ng-show="amsForm.mh_exercise_c.$error.required">
+                                    Required!
+                                </label>
+                                <label class="help-block" ng-show="amsForm.mh_exercise_c.$error.maxlength">
+                                    Too long!
+                                </label>
                             </div>
                         </div>
                         <!-- END QUESTION 5 -->
@@ -476,15 +506,21 @@
                             <div class="col-md-4 col-sm-4">
                                 <div class="btn-group">
                                     <label class="btn">
-                                        <input type="radio" />&nbsp;Yes
+                                        <input type="radio" name="mh_activity" ng-model="info.mh_activity" ng-value="1" />&nbsp;Yes
                                     </label>
                                     <label class="btn">
-                                        <input type="radio" />&nbsp;No
+                                        <input type="radio" name="mh_activity" ng-model="info.mh_activity" ng-value="0"/>&nbsp;No
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-md-8 col-sm-8">
-                                <textarea class="form-control"></textarea>
+                            <div class="col-md-8 col-sm-8" ng-class="{'has-error': amsForm.mh_activity_c.$invalid}">
+                                <textarea class="form-control" name="mh_activity_c" ng-model="info.mh_activity_c" ng-required="info.mh_activity===1" ng-maxlength="200"></textarea>
+                                <label class="help-block" ng-show="amsForm.mh_activity_c.$error.required">
+                                    Required!
+                                </label>
+                                <label class="help-block" ng-show="amsForm.mh_activity_c.$error.maxlength">
+                                    Too long!
+                                </label>
                             </div>
                         </div>
                         <!-- END QUESTION 6 -->
@@ -498,15 +534,21 @@
                             <div class="col-md-4 col-sm-4">
                                 <div class="btn-group">
                                     <label class="btn">
-                                        <input type="radio" />&nbsp;Yes
+                                        <input type="radio" name="mh_balance" ng-model="info.mh_balance" ng-value="1"/>&nbsp;Yes
                                     </label>
                                     <label class="btn">
-                                        <input type="radio">&nbsp;No
+                                        <input type="radio" name="mh_balance" ng-model="info.mh_balance" ng-value="0"/>&nbsp;No
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-md-8 col-sm-8">
-                                <textarea class="form-control"></textarea>
+                            <div class="col-md-8 col-sm-8" ng-class="{'has-error': amsForm.mh_balance_c.$invalid}">
+                                <textarea class="form-control" name="mh_balance_c" ng-model="info.mh_balance_c" ng-required="info.mh_balance===1" ng-maxlength="200"></textarea>
+                                <label class="help-block" ng-show="amsForm.mh_balance_c.$error.required">
+                                    Required!
+                                </label>
+                                <label class="help-block" ng-show="amsForm.mh_balance_c.$error.maxlength">
+                                    Too long!
+                                </label>
                             </div>
                         </div>
                         <!-- END QUESTION 7 -->
@@ -520,15 +562,21 @@
                             <div class="col-md-4 col-sm-4">
                                 <div class="btn-group">
                                     <label class="btn">
-                                        <input type="radio" />&nbsp;Yes
+                                        <input type="radio" name="mh_dizziness" ng-model="info.mh_dizziness" ng-value="1"/>&nbsp;Yes
                                     </label>
                                     <label class="btn">
-                                        <input type="radio" />&nbsp;No
+                                        <input type="radio" name="mh_dizziness" ng-model="info.mh_dizziness" ng-value="0"/>&nbsp;No
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-md-8 col-sm-8">
-                                <textarea class="form-control"></textarea>
+                            <div class="col-md-8 col-sm-8" ng-class="{'has-error': amsForm.mh_dizziness_c.$invalid}">
+                                <textarea class="form-control" name="mh_dizziness_c" ng-model="info.mh_dizziness_c" ng-required="info.mh_dizziness===1" ng-maxlength="200"></textarea>
+                                <label class="help-block" ng-show="amsForm.mh_dizziness_c.$error.required">
+                                    Required!
+                                </label>
+                                <label class="help-block" ng-show="amsForm.mh_dizziness_c.$error.maxlength">
+                                    Too long!
+                                </label>
                             </div>
                         </div>
                         <!-- END QUESTION 8 -->
@@ -541,15 +589,21 @@
                             <div class="col-md-4">
                                 <div class="btn">
                                     <label class="btn">
-                                        <input type="radio" />&nbsp;Yes
+                                        <input type="radio" name="mh_cholesterol" ng-model="info.mh_cholesterol" ng-value="1"/>&nbsp;Yes
                                     </label>
                                     <label class="btn">
-                                        <input type="radio" />&nbsp;No
+                                        <input type="radio" name="mh_cholesterol" ng-model="info.mh_cholesterol" ng-value="0"/>&nbsp;No
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-md-8 col-sm-8">
-                                <textarea class="form-control"></textarea>
+                            <div class="col-md-8 col-sm-8" ng-class="{'has-error': amsForm.mh_cholesterol_c.$invalid}">
+                                <textarea class="form-control" name="mh_cholesterol_c" ng-model="info.mh_cholesterol_c" ng-required="info.mh_cholesterol===1" ng-maxlength="200"></textarea>
+                                <label class="help-block" ng-show="amsForm.mh_cholesterol_c.$error.required">
+                                    Required!
+                                </label>
+                                <label class="help-block" ng-show="amsForm.mh_cholesterol_c.$error.maxlength">
+                                    Too long!
+                                </label>
                             </div>
                         </div>
                         <!-- END QUESTION 9 -->
@@ -563,15 +617,21 @@
                             <div class="col-md-4 col-sm-4">
                                 <div class="btn-group">
                                     <label class="btn">
-                                        <input type="radio" />&nbsp;Yes
+                                        <input type="radio" name="mh_YN_exercise" ng-model="info.mh_YN_exercise" ng-value="1" />&nbsp;Yes
                                     </label>
                                     <label class="btn">
-                                        <input type="radio" />&nbsp;No
+                                        <input type="radio" name="mh_YN_exercise" ng-model="info.mh_YN_exercise" ng-value="0"/>&nbsp;No
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-md-8 col-sm-8">
-                                <textarea class="form-control"></textarea>
+                            <div class="col-md-8 col-sm-8" ng-class="{'has-error': amsForm.mh_YN_excercise_c.$invalid}">
+                                <textarea class="form-control" name="mh_YN_excercise_c" ng-model="info.mh_YN_excercise_c" ng-required="info.mh_YN_exercise===1" ng-maxlength="200"></textarea>
+                                <label class="help-block" ng-show="amsForm.mh_YN_excercise_c.$error.required">
+                                    Required!
+                                </label>
+                                <label class="help-block" ng-show="amsForm.mh_YN_excercise_c.$error.maxlength">
+                                    Too long!
+                                </label>
                             </div>
                         </div>
                         <!-- END QUESTION 10 -->
@@ -1501,15 +1561,21 @@
                             <div class="col-md-4 col-sm-4">
                                 <div class="btn-group">
                                     <label class="btn">
-                                        <input type="radio" />&nbsp; Yes
+                                        <input type="radio" name="heq_pressure" ng-model="info.heq_pressure" ng-value="1" />&nbsp; Yes
                                     </label>
                                     <label class="btn">
-                                        <input type="radio" />&nbsp; No
+                                        <input type="radio" name="heq_pressure" ng-model="info.heq_pressure" ng-value="0"/>&nbsp; No
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-md-8 col-sm-8">
-                                <textarea class="form-control"></textarea>
+                            <div class="col-md-8 col-sm-8" ng-class="{'has-error': amsForm.heq_pressure_c.$invalid}">
+                                <textarea class="form-control" name="heq_pressure_c" ng-model="info.heq_pressure_c" ng-required="info.heq_pressure===1" ng-maxlength="200"></textarea>
+                                <label class="help-block" ng-show="amsForm.heq_pressure_c.$error.required">
+                                    Required!
+                                </label>
+                                <label class="help-block" ng-show="amsForm.heq_pressure_c.$error.maxlength">
+                                    Too long!
+                                </label>
                             </div>
                         </div>
                         <!-- END QUESTION 1 -->
@@ -1523,15 +1589,21 @@
                             <div class="col-md-4 col-sm-4">
                                 <div class="btn-group">
                                     <label class="btn">
-                                        <input type="radio" />&nbsp;Yes
+                                        <input type="radio" name="heq_diabetes" ng-model="info.heq_diabetes" ng-value="1"/>&nbsp;Yes
                                     </label>
                                     <label class="btn">
-                                        <input type="radio" />&nbsp;No
+                                        <input type="radio" name="heq_diabetes" ng-model="info.heq_diabetes" ng-value="0"/>&nbsp;No
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-md-8 col-sm-8">
-                                <textarea class="form-control"></textarea>
+                            <div class="col-md-8 col-sm-8" ng-class="{'has-error': amsForm.heq_diabetes_c.$invalid}">
+                                <textarea class="form-control" name="heq_diabetes_c" ng-model="info.heq_diabtetes_c" ng-required="info.heq_diabetes===1" ng-maxlength="200"></textarea>
+                                <label class="help-block" ng-show="amsForm.heq_diabetes_c.$error.required">
+                                    Required!
+                                </label>
+                                <label class="help-block" ng-show="amsForm.heq_diabetes_c.$error.maxlength">
+                                    Too long!
+                                </label>
                             </div>
                         </div>
                         <!-- END QUESTION 2 -->
@@ -1545,15 +1617,21 @@
                             <div class="col-md-4 col-sm-4">
                                 <div class="btn-group">
                                     <label class="btn">
-                                        <input type="radio" />&nbsp;Yes
+                                        <input type="radio" name="heq_disease" ng-model="info.heq_disease" ng-value="1"/>&nbsp;Yes
                                     </label>
                                     <label class="btn">
-                                        <input type="radio" />&nbsp;No
+                                        <input type="radio" name="heq_disease" ng-model="info.heq_disease" ng-value="0"/>&nbsp;No
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-md-8 col-sm-8">
-                                <textarea class="form-control"></textarea>
+                            <div class="col-md-8 col-sm-8" ng-class="{'has-error': amsForm.heq_disease_c.$invalid}">
+                                <textarea class="form-control" name="heq_disease_c" ng-model="info.heq_disease_c" ng-required="info.heq_disease===1" ng-maxlength="200"></textarea>
+                                <label class="help-block" ng-show="amsForm.heq_disease_c.$error.required">
+                                    Required!
+                                </label>
+                                <label class="help-block" ng-show="amsForm.heq_disease_c.$error.maxlength">
+                                    Too long!
+                                </label>
                             </div>
                         </div>
                         <!-- END QUESTON 3 -->
@@ -1567,15 +1645,22 @@
                             <div class="col-md-4 col-sm-4">
                                 <div class="btn-group">
                                     <label class="btn">
-                                        <input type="radio" />&nbsp;Yes
+                                        <input type="radio" name="heq_cancer" ng-model="info.heq_cancer" ng-value="1" />&nbsp;Yes
                                     </label>
                                     <label class="btn">
-                                        <input type="radio" />&nbsp;No
+                                        <input type="radio" name="heq_cancer" ng-model="info.heq_cancer" ng-value="0" />&nbsp;No
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-md-8 col-sm-8">
-                                <textarea class="form-control"></textarea>
+                            <div class="col-md-8 col-sm-8" ng-class="{'has-error': amsForm.heq_cancer_c.$invalid}">
+                                <textarea class="form-control" name="heq_cancer_c" ng-model="info.heq_cancer_c" ng-required="info.heq_cancer===1" ng-maxlength="200">
+                                </textarea>
+                                <label class="help-block" ng-show="amsForm.heq_cancer_c.$error.required">
+                                    Required!
+                                </label>
+                                <label class="help-block" ng-show="amsForm.heq_cancer_c.$error.maxlength">
+                                    Too long!
+                                </label>
                             </div>
                         </div>
                         <!-- END QUESTION 4 -->
@@ -1589,15 +1674,21 @@
                             <div class="col-md-4 col-sm-4">
                                 <div class="btn-group">
                                     <label class="btn">
-                                        <input type="radio" />&nbsp;Yes
+                                        <input type="radio" name="heq_injury" ng-model="info.heq_injury" ng-value="1" />&nbsp;Yes
                                     </label>
                                     <label class="btn">
-                                        <input type="radio" />&nbsp;No
+                                        <input type="radio" name="heq_injury" ng-model="info.heq_injury" ng-value="0" />&nbsp;No
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-md-8 col-sm-8">
-                                <textarea class="form-control"></textarea>
+                            <div class="col-md-8 col-sm-8" ng-class="{'has-error': amsForm.heq_injury_c.$invalid}">
+                                <textarea class="form-control" name="heq_injury_c" ng-model="info.heq_injury_c" ng-required="info.heq_injury===1" ng-maxlength="200"></textarea>
+                                <label class="help-block" ng-show="amsForm.heq_injury_c.$error.required">
+                                    Required!
+                                </label>
+                                <label class="help-block" ng-show="amsForm.heq_injury_c.$error.maxlength">
+                                    Too long!
+                                </label>
                             </div>
                         </div>
                         <!-- END QUESTION 5 -->
@@ -1606,19 +1697,19 @@
                             <div class="col-md-8 col-sm-8">
                                 <div class="btn-group">
                                     <label class="btn">
-                                        <input type="checkbox" />&nbsp;Measles
+                                        <input type="checkbox" name="heq_measles" ng-model="info.heq_measles" ng-true-value="1" ng-false-value="0"/>&nbsp;Measles
                                     </label>
                                     <label class="btn">
-                                        <input type="checkbox" />&nbsp;Mumps
+                                        <input type="checkbox" name="heq_mumps" ng-model="info.heq_mumps" ng-true-value="1" ng-false-value="0"/>&nbsp;Mumps
                                     </label>
                                     <label class="btn">
-                                        <input type="checkbox" />&nbsp;Meningitis
+                                        <input type="checkbox" name="heq_meningitis" ng-model="info.heq_meningitis" ng-true-value="1" ng-false-value="0"/>&nbsp;Meningitis
                                     </label>
                                     <label class="btn">
-                                        <input type="checkbox" />&nbsp;Chicken Pox
+                                        <input type="checkbox" name="heq_pox" ng-model="info.heq_pox" ng-true-value="1" ng-false-value="0"/>&nbsp;Chicken Pox
                                     </label>
                                     <label class="btn">
-                                        <input type="checkbox" />&nbsp;Scarlet Fever
+                                        <input type="checkbox" name="heq_scarlet_fever" ng-model="info.heq_fever" ng-true-value="1" ng-false-value="0"/>&nbsp;Scarlet Fever
                                     </label>
                                     <label class="btn">
                                         <input type="checkbox" />&nbsp;Rheumatic Fever
