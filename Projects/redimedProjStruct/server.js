@@ -19,8 +19,11 @@ var _ = require('lodash-node');
 var http = require('http');
 var https = require('https');
 var busboy = require('connect-busboy');
+var os = require('os');
 
-
+process.env.TMPDIR =path.join(__dirname, 'temp');
+process.env.TEMP =path.join(__dirname, 'temp');
+process.env.TMP =path.join(__dirname, 'temp');
 
 var ssl_options = {
     pfx: fs.readFileSync('key/star_redimed_com_au.pfx'),
@@ -71,8 +74,6 @@ app.use(express.static(clientDir));
 app.get('/',function(req, res) {
     res.sendfile(path.join(clientDir, 'login.html'))
 });
-app.use(busboy());
-
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/img/patient/avt', express.static(uploadedFile));
 app.use('/document/fa/images', express.static(documentImage));
@@ -90,7 +91,7 @@ app.use(connection(mysql, config.get('mysql'), 'pool'));
 
 
 //connect-multiparty FOR UPLOAD
-process.env.TMPDIR =path.join(__dirname, 'temp');
+
 var mkdirp = require('mkdirp');
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
