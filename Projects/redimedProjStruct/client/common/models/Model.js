@@ -763,6 +763,13 @@ angular.module("app.model", [])
 	hip_girth:'',
 	w_h_Raito:'',
 	colour_vision:null,
+	is_have_risk_rating: null,
+	is_have_fit_rating: null,
+	fit_rating: null,
+	is_have_comments_recommendations: null,
+	is_have_health_reharb_recommend: null,
+	is_have_build_rating: null,
+	is_have_additional_test: null,
 })
 // END FA HEADER
 
