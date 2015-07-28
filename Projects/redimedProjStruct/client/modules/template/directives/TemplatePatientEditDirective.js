@@ -95,6 +95,39 @@ angular.module('app.loggedIn.template.directives.patient_edit', [])
 	                    //showstatic: true,    // wanted on the toolbar
 	                    showselection: false    // wanted on selection
 	                },
+	                fontsize: {
+	                    title: 'Size',
+	                    image: '\uf034',
+	                    popup: function( $popup, $button ) {
+	                            var list_fontsizes = [];
+	                            for( var i=8; i <= 11; ++i )
+	                                list_fontsizes.push(i+'px');
+	                            for( var i=12; i <= 28; i+=2 )
+	                                list_fontsizes.push(i+'px');
+	                            list_fontsizes.push('36px');
+	                            list_fontsizes.push('48px');
+	                            list_fontsizes.push('72px');
+	                            var $list = $('<div/>').addClass('wysiwyg-plugin-list')
+	                                                   .attr('unselectable','on');
+	                            $.each( list_fontsizes, function( index, size ) {
+	                                var $link = $('<a/>').attr('href','#')
+	                                                    .html( size )
+	                                                    .click(function(event) {
+	                                                        $(element).wysiwyg('shell').fontSize(7).closePopup();
+	                                                        $(element).wysiwyg('container')
+	                                                                .find('font[size=7]')
+	                                                                .removeAttr("size")
+	                                                                .css("font-size", size);
+	                                                        // prevent link-href-#
+	                                                        event.stopPropagation();
+	                                                        event.preventDefault();
+	                                                        return false;
+	                                                    });
+	                                $list.append( $link );
+	                            });
+	                            $popup.append( $list );
+	                    }
+	                },
 	                strikethrough: {
 	                    title: 'Strikethrough (Ctrl+S)',
 	                    image: '\uf0cc', // <img src="path/to/image.png" width="16" height="16" alt="" />
