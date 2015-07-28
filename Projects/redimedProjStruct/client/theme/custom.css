@@ -4029,6 +4029,11 @@ label{
     text-align: center;
     margin-top: 30px;
 }
+.un_history_tap{
+    min-height: 320px;
+    max-height: 320px;
+    overflow: auto;
+}
 /*phanquocchien patient end*/
 
 .ql-container{

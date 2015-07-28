@@ -76,7 +76,7 @@ angular.module('app.loggedIn.patient.apptdoc.controller',[])
                     {field: 'cal_id', label: 'Date', width:"20%", type:'custom', 
                         fn:function(item){
                             if(!item.appointment) return '';
-                            return moment(item.appointment.FROM_TIME).format('DD-MM-YYYY - h:mm');                            
+                            return moment(item.appointment.FROM_TIME).format('DD-MM-YYYY - hh:mm');                            
                         }
                     },    
                     {field: 'document_name', label: 'Document Name', width:"70%"}    

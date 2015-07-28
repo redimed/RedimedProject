@@ -13,52 +13,144 @@
 	</div>
 	<div>
 		<div class="row">
-			<div class="col-xs-6">
-				<div class="un-label-forms-custom">
-					<span>Date</span>
+			<div class="col-md-6 col-sm-6">
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="un-label-forms-custom">
+							<span>Date</span>
+						</div>
+						<label class="un_label_popup_history">{{listConsult.form_time}}</label>
+					</div>
+					<div class="col-xs-6">
+						<div class="un-label-forms-custom">
+							<span>Problem</span>
+						</div>
+						<label class="un_label_popup_history" ng-show="listConsult.Notes != null">{{listConsult.Notes}}</label>
+						<label class="un_label_popup_history" ng-show="listConsult.Notes == null">&nbsp</label>
+					</div>
 				</div>
-				<label class="un_label_popup_history">{{listConsult.form_time}}</label>
-			</div>
-			<div class="col-xs-6">
-				<div class="un-label-forms-custom">
-					<span>Problem</span>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="un-label-forms-custom">
+							<span>Investigation</span>
+						</div>
+						<textarea rows="6" class="form-control pt_width_100" disabled="disabled" style="resize: none;">{{listConsult.investigation}}</textarea>
+					</div>
+					<div class="col-xs-6">
+						<div class="un-label-forms-custom">
+							<span>Diagnosis</span>
+						</div>
+						<textarea rows="6" class="form-control pt_width_100" disabled="disabled" style="resize: none;">{{listConsult.diagnosis}}</textarea>
+					</div>
 				</div>
-				<label class="un_label_popup_history" ng-show="listConsult.Notes != null">{{listConsult.Notes}}</label>
-				<label class="un_label_popup_history" ng-show="listConsult.Notes == null">&nbsp</label>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-6">
-				<div class="un-label-forms-custom">
-					<span>Investigation</span>
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="un-label-forms-custom">
+							<span>Specialist</span>
+						</div>
+						<textarea rows="6" class="form-control pt_width_100" disabled="disabled" style="resize: none;">{{listConsult.specialist}}</textarea>
+					</div>
+					<div class="col-xs-6">
+						<div class="un-label-forms-custom">
+							<span>Treatment/Plan</span>
+						</div>
+						<textarea rows="6" class="form-control pt_width_100" disabled="disabled" style="resize: none;">{{listConsult.treatment_plan}}</textarea>
+					</div>
 				</div>
-				<textarea rows="6" class="form-control pt_width_100" disabled="disabled" style="resize: none;">{{listConsult.investigation}}</textarea>
 			</div>
-			<div class="col-xs-6">
-				<div class="un-label-forms-custom">
-					<span>Diagnosis</span>
+			<div class="col-md-6 col-sm-6">
+				<div class="row">
+					<div class="col-md-12 col-sm-12">
+						<div role="tabpanel">
+						  	<!-- Nav tabs -->
+						    <ul class="nav nav-tabs pt_margin_bottom_0" role="tablist">
+						        <li role="presentation" class="active">
+						            <a class="un_header_attach_file" href="index.html#documentfiles" aria-controls="home" role="tab" data-toggle="tab">Document files</a>
+						        </li>
+						        <li role="presentation">
+						            <a class="un_header_attach_file" href="index.html#drawingsfile" aria-controls="profile" role="tab" data-toggle="tab">Drawings file</a>
+						        </li>
+						    </ul>
+						  	<!-- Tab panes -->
+						    <div class="tab-content">
+						        <div role="tabpanel" class="tab-pane active" id="documentfiles">
+						            <div class="row">
+						                <div class="col-md-12 col-sm-12">
+						                    <div class="un_history_tap un-div-content un-bgWhite un_bg_attach_files">
+						                        <div class="un-padding-15">
+						                            <div class="row">
+						                                <div class="row">
+						                                    <div class="col-md-12 col-sm-12">
+						                                        <div class="table-dynamic un_overflow_auto">
+										                            <table class="responsive table table-bordered">
+										                                <thead>
+										                                    <tr>
+										                                        <th style="background-color: rgb(102, 102, 102);">
+										                                            <div class="th">
+										                                                <span style="color: white;">Date</span>
+										                                            </div>
+										                                        </th>
+										                                        <th style="background-color: rgb(102, 102, 102);">
+										                                            <div class="th">
+										                                                <span style="color: white;">Document Name</span>
+										                                            </div>
+										                                        </th>
+										                                    </tr>
+										                                </thead>
+										                                <tbody>
+										                                	<tr>
+										                                        <td colspan="2">
+										                                            <div style="text-align: center;">
+										                                                <span ng-if="listDocumentFile.length == null " style="font-size: 20px; font-style: italic; font-weight: bold;">      
+										                                                    Empty Data
+										                                                </span>
+										                                            </div>
+										                                        </td>
+										                                    </tr>
+										                                    <tr style="background-color: white;" class="bold" align="center" ng-repeat="item in listDocumentFile">
+										                                        <td style="vertical-align: middle">
+										                                        	{{item.form_time}}
+										                                        </td>
+										                                        <td style="vertical-align: middle">
+										                                        	{{item.document_name}}
+										                                        </td>
+										                                    </tr>
+										                                </tbody>
+										                            </table>
+										                        </div>
+						                                    </div>
+						                                </div>
+						                            </div>
+						                        </div>
+						                    </div>
+						                </div>  
+						            </div>
+						        </div>
+						        <div role="tabpanel" class="tab-pane" id="drawingsfile">
+						            <div class="row">
+						                <div class="col-md-12 col-sm-12">
+						                    <div class="un_history_tap un-div-content un-bgWhite un_bg_attach_files un-padding-15">
+						                        <div class="row">
+						                            <div class="col-md-12 col-sm-12">
+						                            	<label ng-if="listImgDrawingHistory.length == null" style="font-size: 20px; font-style: italic; font-weight: bold;">Empty Data</label>
+						                                <div class="col-md-4 col-sm-4 un_padding_bottom_15" ng-repeat="img in listImgDrawingHistory">
+						                                    <img style="height:35%" class="un_img_width_100 pt_boder_dotted" ng-src="api/consultation/drawing/image/{{img.id}}">
+						                                </div>
+						                            </div>
+						                        </div>
+						                    </div>
+						                </div>
+						            </div>
+						        </div>
+						    </div>
+						</div>
+					</div>
 				</div>
-				<textarea rows="6" class="form-control pt_width_100" disabled="disabled" style="resize: none;">{{listConsult.diagnosis}}</textarea>
 			</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-6">
-				<div class="un-label-forms-custom">
-					<span>Specialist</span>
-				</div>
-				<textarea rows="6" class="form-control pt_width_100" disabled="disabled" style="resize: none;">{{listConsult.specialist}}</textarea>
-			</div>
-			<div class="col-xs-6">
-				<div class="un-label-forms-custom">
-					<span>Treatment/Plan</span>
-				</div>
-				<textarea rows="6" class="form-control pt_width_100" disabled="disabled" style="resize: none;">{{listConsult.treatment_plan}}</textarea>
-			</div>
-			
 		</div>
 	</div>
-	<div align="right" style="margin-top: 15px; margin-right: 15px;">
-		<a href="javascript:;" class="un-button un-bgXam-colBlack" ng-click='cancelDetail()'>Cancel</a>
-	</div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click='cancelDetail()'>Close</button>
 </div>
 <!--</div>-->

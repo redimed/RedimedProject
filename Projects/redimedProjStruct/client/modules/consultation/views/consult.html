@@ -292,7 +292,7 @@
                                                                 </div>
                                                             </td>
                                                         </tr>
-                                                        <tr style="background-color: white;" class="bold" ng-repeat="item in actionCenter.listConsultOfPatient" ng-if="actionCenter.listConsultOfPatient" ng-click="actionCenter.showPopupHistoryPhysiotherapist(item)">
+                                                        <tr style="background-color: white;" class="bold" ng-repeat="item in actionCenter.listConsultOfPatient" ng-if="actionCenter.listConsultOfPatient" ng-click="actionCenter.showPopupHistoryPhysiotherapist(item.consult_id)">
                                                             <td style="vertical-align: middle; padding: 5px;">
                                                                 <label style="max-width: 110px;min-width: 110px;">
                                                                     {{item.form_time}}
@@ -360,7 +360,7 @@
                                                                 </div>
                                                             </td>
                                                         </tr>
-                                                        <tr style="background-color: white;" class="bold" ng-repeat="item in actionCenter.listConsultOfPatient" ng-if="actionCenter.listConsultOfPatient" ng-click="actionCenter.showPopupHistoryHandtherapist(item)">
+                                                        <tr style="background-color: white;" class="bold" ng-repeat="item in actionCenter.listConsultOfPatient" ng-if="actionCenter.listConsultOfPatient" ng-click="actionCenter.showPopupHistoryHandtherapist(item.consult_id)">
                                                             <td style="vertical-align: middle; padding: 5px;">
                                                                 <label style="max-width: 110px;min-width: 110px;">
                                                                     {{item.form_time}}
@@ -439,7 +439,7 @@
                                                                 </div>
                                                             </td>
                                                         </tr>
-                                                        <tr style="background-color: white;" class="bold" ng-repeat="item in actionCenter.listConsultOfPatient" ng-if="actionCenter.listConsultOfPatient" ng-click="actionCenter.showPopupHistoryExercisePhysiologist(item)">
+                                                        <tr style="background-color: white;" class="bold" ng-repeat="item in actionCenter.listConsultOfPatient" ng-if="actionCenter.listConsultOfPatient" ng-click="actionCenter.showPopupHistoryExercisePhysiologist(item.consult_id)">
                                                             <td style="vertical-align: middle; padding: 5px;">
                                                                 <label style="max-width: 110px;min-width: 110px;">
                                                                     {{item.form_time}}
@@ -1366,7 +1366,7 @@
                                         <div class="un-div-content un-bgWhite un_bg_attach_files un-padding-15">
                                             <div class="row"> 
                                                 <div class="col-md-4 col-sm-4">
-                                                    <select class="form-control" ng-model="cal_id" ng-options="item.cal_id as item.form_time for item in actionCenter.listConsultOfPatient" ng-change="loadImgDrawing()">
+                                                    <select class="form-control" ng-model="cal_id" ng-options="item.cal_id as item.form_time for item in actionCenter.listConsultOfPatient" ng-change="getImgDrawingHistory()">
                                                     </select>
                                                 </div> 
                                             </div>
@@ -1428,7 +1428,7 @@
                                                                 </div>
                                                             </td>
                                                         </tr>
-                                                        <tr style="background-color: white;" class="bold" ng-repeat="item in actionCenter.listConsultOfPatient" ng-if="actionCenter.listConsultOfPatient" ng-click="actionCenter.showPopupHistoryPhysiotherapist(item)">
+                                                        <tr style="background-color: white;" class="bold" ng-repeat="item in actionCenter.listConsultOfPatient" ng-if="actionCenter.listConsultOfPatient" ng-click="actionCenter.showPopupHistoryPhysiotherapist(item.consult_id)">
                                                             <td style="vertical-align: middle; padding: 5px;">
                                                                 <label style="max-width: 110px;min-width: 110px;">
                                                                     {{item.form_time}}
@@ -1500,7 +1500,7 @@
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                <tr style="background-color: white;" class="bold" ng-repeat="item in actionCenter.listConsultOfPatient" ng-if="actionCenter.listConsultOfPatient" ng-click="actionCenter.showPopupHistoryExercisePhysiologist(item)">
+                                                <tr style="background-color: white;" class="bold" ng-repeat="item in actionCenter.listConsultOfPatient" ng-if="actionCenter.listConsultOfPatient" ng-click="actionCenter.showPopupHistoryExercisePhysiologist(item.consult_id)">
                                                     <td style="vertical-align: middle; padding: 5px;">
                                                         <label style="max-width: 110px;min-width: 110px;">
                                                             {{item.form_time}}
@@ -1705,7 +1705,7 @@
                 <consultation-history action-center="actionCenter"></consultation-history>
             </div>
             <div class="modal-footer">
-                <button type="button" class="un-button un-bgXam-colBlack" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

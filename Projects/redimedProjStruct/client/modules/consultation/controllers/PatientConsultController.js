@@ -203,10 +203,11 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 				templateUrl:'modules/consultation/dialogs/dialogs_consult_history.html',
 				controller: 'ConsultHistoryController',
 				resolve: {
-					consults:function(){
+					consult_id:function(){
 						return data;
 					}
-				}
+				},
+				size:'lg'
 			})	
 		}
 		$scope.actionCenter.showPopupHistoryPhysiotherapist = function(data){
@@ -214,7 +215,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 				templateUrl:'modules/consultation/dialogs/dialogs_consult_history_physiotherapist.html',
 				controller: 'ConsultHistoryController',
 				resolve: {
-					consults:function(){
+					consult_id:function(){
 						return data;
 					}
 				}
@@ -226,7 +227,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 				templateUrl:'modules/consultation/dialogs/dialogs_consult_history_handtherapist.html',
 				controller: 'ConsultHistoryController',
 				resolve: {
-					consults:function(){
+					consult_id:function(){
 						return data;
 					}
 				}
@@ -238,7 +239,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 				templateUrl:'modules/consultation/dialogs/dialogs_consult_history_exercise_physiologist.html',
 				controller: 'ConsultHistoryController',
 				resolve: {
-					consults:function(){
+					consult_id:function(){
 						return data;
 					}
 				}
@@ -255,9 +256,6 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			})
 		}
 		$scope.getImgDrawingHistory();
-		$scope.loadImgDrawing = function(){
-			$scope.getImgDrawingHistory();
-		}
 		$scope.showPopupConsultationHistory = function(){
 			angular.element('#popupConsultationHistory').modal('show');
 		}

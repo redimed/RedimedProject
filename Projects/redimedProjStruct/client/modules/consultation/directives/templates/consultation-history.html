@@ -44,10 +44,10 @@
                     </div>
                 </td>
             </tr>
-            <tr style="background-color: white;" class="bold" ng-repeat="item in actionCenter.listConsultOfPatient" ng-if="actionCenter.listConsultOfPatient" ng-click="actionCenter.showPopupHistory(item)">
+            <tr style="background-color: white;" class="bold" ng-repeat="item in actionCenter.listConsultOfPatient" ng-if="actionCenter.listConsultOfPatient" ng-click="actionCenter.showPopupHistory(item.consult_id)">
                 <td style="vertical-align: middle; padding: 5px;">
                     <label>
-                        {{item.form_time}}
+                        {{item.form_time}} &nbsp &nbsp <i class="fa fa-paperclip"></i>
                     </label>
                 </td>
                 <td style="vertical-align: middle; padding: 5px;">

@@ -20,27 +20,30 @@ module.exports = {
 
     getByIdProblem: function(req, res){
 
-        var postData = req.body.consult_id;
-
-        var sql = knex
-        .column('cln_patient_consults.history',
-        'cln_patient_consults.Creation_date',
-        'cln_patient_consults.examination',
-        'cln_patient_consults.treatment_plan',
-        'cln_patient_consults.diagnosis',
-        'cln_problems.Notes')
-        .from('cln_patient_consults')
-        .innerJoin('cln_problems', 'cln_patient_consults.problem_id', 'cln_problems.Problem_id')
-        .where({'consult_id': postData})
-        .toString();
-        db.sequelize.query(sql)
-        .success(function(data){
-            res.json({data: data[0]});
+        var consult_id = req.body.consult_id;
+        if(!kiss.checkListData(consult_id))
+        {
+            kiss.exlog("getByIdProblem Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
+        var sql=
+            " SELECT consult.*,problem.`Notes`, DATE_FORMAT(app.`FROM_TIME`, '%d/%m/%Y - %h:%i') AS form_time FROM `cln_patient_consults` consult       "+ 
+            " LEFT JOIN `cln_problems` problem ON consult.`problem_id` = problem.`Problem_id`                                                           "+ 
+            " inner join `cln_appointment_calendar` app on consult.`cal_id` = app.`CAL_ID`                                                              "+ 
+            " WHERE consult.`consult_id` = ?                                                                                                            ";
+        kiss.executeQuery(req,sql,[consult_id],function(rows){
+            if(rows.length>0)
+            {
+                res.json({status:'success',data:rows[0]});
+            }
+            else
+            {
+                res.json({status:'error'});
+            }
+        },function(erro){
+            res.json({status:'error',error:erro})
         })
-        .error(function(error){
-            res.json({'status': 'error', 'message': error})
-        })
-
     },
 
 	getPatientProblem: function(req,res){
@@ -660,7 +663,7 @@ module.exports = {
             {
                 res.json({status:'fail'});
             }
-        },function(erro){
+        },function(err){
             res.json({status:'error',error:err})
         });
     },
@@ -687,7 +690,7 @@ module.exports = {
             {
                 res.json({status:'fail'});
             }
-        },function(erro){
+        },function(err){
             res.json({status:'error',error:err})
         })
     },
@@ -720,7 +723,7 @@ module.exports = {
                     {
                         res.json({status:'success',data:data});
                     }
-                },function(erro){
+                },function(err){
                     res.json({status:'error',error:err})
                 });
             }
@@ -728,7 +731,7 @@ module.exports = {
             {
                 res.json({status:'fail'});
             }
-        },function(erro){
+        },function(err){
             res.json({status:'error',error:err})
         });
     },
@@ -756,13 +759,13 @@ module.exports = {
             {
                 res.json({status:'error'});
             }
-        },function(erro){
+        },function(err){
             res.json({status:'error',error:err})
         })
    },
    /*
     * phanquocchien.c1109g@gmail.com
-    * list Measurements
+    * list Measurements of patient
     */
    getListMeasurements:function(req,res){
         var patientId=kiss.checkData(req.body.patient_id)?req.body.patient_id:'';
@@ -780,13 +783,13 @@ module.exports = {
             " ORDER BY cal.`FROM_TIME` DESC                                             "; 
         kiss.executeQuery(req,sql,[patientId],function(rows){
             res.json({status:'success',data:rows});
-        },function(erro){
+        },function(err){
             res.json({status:'error',error:err})
         })
    },
    /*
     * phanquocchien.c1109g@gmail.com
-    * list Measurements
+    * list Measurements of patient
     */
    getListMedication:function(req,res){
         var patientId=kiss.checkData(req.body.patient_id)?req.body.patient_id:'';
@@ -805,7 +808,7 @@ module.exports = {
             " ORDER BY cal.`FROM_TIME` DESC                                                                              ";
         kiss.executeQuery(req,sql,[patientId],function(rows){
             res.json({status:'success',data:rows});
-        },function(erro){
+        },function(err){
             res.json({status:'error',error:err})
         })
    },
@@ -813,7 +816,7 @@ module.exports = {
     * phanquocchien.c1109g@gmail.com
     * get Img Drawing History
     */
-   getImgDrawingHistory:function(req,res){
+    getImgDrawingHistory:function(req,res){
         var patientId=kiss.checkData(req.body.patient_id)?req.body.patient_id:'';
         var calId=kiss.checkData(req.body.cal_id)?req.body.cal_id:'';
         if(!kiss.checkListData(patientId,calId))
@@ -838,7 +841,37 @@ module.exports = {
             {
                 res.json({status:'fail'});
             }
-        },function(erro){
+        },function(err){
+            res.json({status:'error',error:err})
+        });
+    },
+    /*
+    * phanquocchien.c1109g@gmail.com
+    * get document theo patient_id and cal_id
+    */
+    getDocumentFileOfPatientidAndCalid:function(req,res){
+        var patientId=kiss.checkData(req.body.patient_id)?req.body.patient_id:'';
+        var calId=kiss.checkData(req.body.cal_id)?req.body.cal_id:'';
+        if(!kiss.checkListData(patientId,calId))
+        {
+            kiss.exlog("getDocumentFileOfPatientidAndCalid Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
+        var sql = 
+            " SELECT app.*, DATE_FORMAT(cal.`FROM_TIME`, '%d/%m/%Y - %h:%i') AS form_time FROM `cln_appt_document` app "+
+            " INNER JOIN `cln_appointment_calendar` cal ON app.`cal_id` = cal.`CAL_ID`                                 "+
+            " WHERE app.`patient_id` = ? AND app.`cal_id`= ?                                                           ";
+        kiss.executeQuery(req,sql,[patientId,calId],function(rows){
+            if(rows.length>0)
+            {
+                res.json({status:'success',data:rows});
+            }
+            else
+            {
+                res.json({status:'fail'});
+            }
+        },function(err){
             res.json({status:'error',error:err})
         });
     },
@@ -865,7 +898,7 @@ module.exports = {
                     })
                 }
             }
-        },function(erro){
+        },function(err){
             res.json({status:'error',error:err})
         });
     },
