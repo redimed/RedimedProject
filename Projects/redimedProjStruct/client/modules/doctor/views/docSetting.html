@@ -3,7 +3,7 @@
         <div class="caption">
             <i class="fa fa-cogs"></i>
             <span class="caption-subject bold uppercase">
-                Doctor Settings
+                Doctor Settings {{doctorInfo == null ? '' : ' : '+doctorInfo.NAME}}
             </span>
         </div>
         <div class="actions">
@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="portlet-body">
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-md-12 col-sm-12">
                 <span>
                     <label style="font-weight: bold;">Select Doctor: </label>
@@ -32,7 +32,7 @@
                 </span>
             </div>
         </div>
-        <br/>
+        <br/> -->
         <div class="row">
             <div class="col-md-3">
                 <label for="currSite" class="un-label-form-3 un-label-whidth-130">Current Site</label>
@@ -62,5 +62,8 @@
                 <label for="isonline" class="un-label-isenable form-control un-input-m-custom">Is Online</label>
             </div>
         </div>
+        <br/>
+        <my-data-table options="doctorList.options" rowclick="changeDoctor" rowclass="doctorList.class" numrows="10"></my-data-table>
+        <div class="clearfix"></div>
     </div>
 </div>

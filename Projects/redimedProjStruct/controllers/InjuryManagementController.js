@@ -179,7 +179,7 @@ module.exports = {
               user_submit: userId,
               doctor_id: imInfo.doctor_id,
               cal_id: imInfo.cal_id,
-              injury_date: moment(imInfo.injury_date).format('YYYY-MM-DD hh:mm:ss'),
+              injury_date: imInfo.injury_date,
               injury_description: imInfo.injury_description,
               STATUS: imInfo.cal_id == null || typeof imInfo.cal_id === 'undefined' ?"New":null,
               pickup_address: imInfo.cal_id == null || typeof imInfo.cal_id === 'undefined' ? (imInfo.infoMaps.format_address == null || typeof imInfo.infoMaps.format_address === 'undefined' ? null : imInfo.infoMaps.format_address) : null,

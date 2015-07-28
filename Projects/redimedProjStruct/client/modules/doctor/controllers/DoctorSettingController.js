@@ -2,12 +2,49 @@ angular.module('app.loggedIn.doctor.setting.controller',[
 
 ])
     .controller('DoctorSettingController',function($scope,toastr,mdtDoctorService,DoctorService,ReceptionistService,UserService,ConfigService){
-    	$scope.doctor = {
-    		selected: null
-    	};
-		$scope.doctors = [];
 		$scope.userList = [];
 		$scope.doctorInfo = null;
+
+		$scope.doctorList = {
+            select:0,
+            class:function(doctor){
+                return {
+                    selected: (doctor.doco == $scope.doctors.select)
+                };
+            },
+            scope: $scope.doctor_panel,
+            options:{
+                api:'api/erm/v2/doctor/search',
+                method:'post',
+                scope: $scope.doctor_panel,
+                columns: [
+                    {field: 'doctor_id', is_hide: true},
+                    {field: 'NAME', label: 'Full name'},    
+                    {field: 'Email', label: 'Email'},
+                    {field: 'Phone', label: 'Phone'},     
+                    {field: 'Specialties', label: 'Specialties', not_submit:true, 
+                     type: 'custom', 
+                     fn: function(item){
+                        if(!item.specialties || item.specialties.length == 0) 
+                            return '';
+                         
+                        var specialties = [];
+                        angular.forEach(item.specialties, function(value, key){
+                            specialties.push(value.Specialties_name);
+                        })
+                         
+                        return  specialties.join(', ');
+                     }
+                    },     
+                ],
+                use_filters: true,
+                filters: {
+                    NAME: {type: 'text'},
+                    Email: {type: 'text'},
+                    Phone: {type: 'text'},
+                }
+            }
+        };
 
 		DoctorService.all().then(function(rs){
 			$scope.doctors = rs;
