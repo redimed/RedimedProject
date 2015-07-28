@@ -41,6 +41,15 @@ angular.module("app.loggedIn.TimeSheet.ApproveLeave.Directive", [])
                         scope.info.comments = null;
                     }
                 });
+                scope.getStyle = function(timeLeave) {
+                    if (timeLeave >= 6000) {
+                        return {
+                            "margin-right": "5px"
+                        }
+                    } else {
+                        return;
+                    }
+                };
             },
             templateUrl: "modules/TimeSheet/directives/templates/ViewLeaveApprove.html"
         };

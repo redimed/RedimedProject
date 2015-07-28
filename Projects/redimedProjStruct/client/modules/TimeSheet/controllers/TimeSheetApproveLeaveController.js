@@ -145,7 +145,7 @@ angular.module("app.loggedIn.TimeSheet.ApproveLeave.Controller", [])
                 offset: 0,
                 currentPage: 1,
                 maxSize: 5,
-                USER_ID: ($cookieStore.get('userInfo')!==undefined) ? $cookieStore.get('userInfo').id : null,
+                USER_ID: ($cookieStore.get('userInfo') !== undefined) ? $cookieStore.get('userInfo').id : null,
                 search: {
                     0: null
                 },
@@ -165,5 +165,16 @@ angular.module("app.loggedIn.TimeSheet.ApproveLeave.Controller", [])
         //CALL INIT
         init();
         //END INIT
+        //GET STYLE
+        $scope.getStyle = function(timeLeave) {
+            if (timeLeave >= 6000) {
+                return {
+                    "margin-right": "5px"
+                };
+            } else {
+                return;
+            }
+        };
+        //END
 
     });
