@@ -179,7 +179,7 @@ module.exports = {
               user_submit: userId,
               doctor_id: imInfo.doctor_id,
               cal_id: imInfo.cal_id,
-              injury_date: moment.utc(imInfo.injury_date).format('YYYY-MM-DD hh:mm:ss'),
+              injury_date: moment(imInfo.injury_date).format('YYYY-MM-DD hh:mm:ss'),
               injury_description: imInfo.injury_description,
               STATUS: imInfo.cal_id == null || typeof imInfo.cal_id === 'undefined' ?"New":null,
               pickup_address: imInfo.cal_id == null || typeof imInfo.cal_id === 'undefined' ? (imInfo.infoMaps.format_address == null || typeof imInfo.infoMaps.format_address === 'undefined' ? null : imInfo.infoMaps.format_address) : null,
@@ -393,7 +393,7 @@ module.exports = {
                           "FROM `im_injury` i " +
                           "INNER JOIN `cln_patients` p ON i.`patient_id` = p.`Patient_id` " +
                           "LEFT JOIN cln_appt_patients a ON i.injury_id = a.injury_id "+
-                          "WHERE i.driver_id = ? "+
+                          "WHERE i.driver_id = ? AND DATE(i.injury_date) = DATE(CURDATE()) "+
                           "ORDER BY  i.`STATUS` = 'New' DESC, i.`STATUS` = 'Picking' DESC, i.`STATUS` = 'Picked' DESC, i.`STATUS` = 'Done' DESC, i.`injury_date` DESC",null,{raw:true},[driver_id])
           .success(function(data){
               res.json({status:'success',data:data})

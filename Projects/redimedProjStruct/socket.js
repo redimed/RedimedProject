@@ -417,7 +417,9 @@ module.exports = function(io,cookie,cookieParser) {
         
         
         socket.on('location',function(data){
-            db.sequelize.query("SELECT d.*, p.company_id, p.user_id ,CONCAT(IFNULL(p.Title,''), '.', IFNULL(p.`First_name`,''),' ',IFNULL(p.`Sur_name`,''),' ',IFNULL(p.`Middle_name`,'')) as FullName, i.latitude, i.longitude " +
+            if(data[0].userType.toLowerCase() == 'driver')
+            {
+                db.sequelize.query("SELECT d.*, p.company_id, p.user_id ,CONCAT(IFNULL(p.Title,''), '.', IFNULL(p.`First_name`,''),' ',IFNULL(p.`Sur_name`,''),' ',IFNULL(p.`Middle_name`,'')) as FullName, i.latitude, i.longitude " +
                                 "FROM driverInjury d "+
                                 "INNER JOIN cln_patients p ON d.patient_id = p.Patient_id " +
                                 "INNER JOIN im_injury i ON i.patient_id = d.patient_id AND i.driver_id = d.driver_id "+
@@ -426,15 +428,15 @@ module.exports = function(io,cookie,cookieParser) {
                     data[0].patientList = _.uniq(rs,'patient_id');
                     if(driverArr.length > 0)
                     {
-                    	var index = _.findIndex(driverArr,{'id':data[0].id});
-                    	if(index == -1)
-                    		driverArr.push(data[0])
-                    	else
-	                    {
-	                        driverArr[index].latitude = data[0].latitude;
-	                        driverArr[index].longitude = data[0].longitude;
-	                        driverArr[index].patientList = data[0].patientList;
-	                    }
+                        var index = _.findIndex(driverArr,{'id':data[0].id});
+                        if(index == -1)
+                            driverArr.push(data[0])
+                        else
+                        {
+                            driverArr[index].latitude = data[0].latitude;
+                            driverArr[index].longitude = data[0].longitude;
+                            driverArr[index].patientList = data[0].patientList;
+                        }
                     }
                     else
                         driverArr.push(data[0])
@@ -443,6 +445,8 @@ module.exports = function(io,cookie,cookieParser) {
                 .error(function(err){
                     console.log(err);
                 })
+            }
+            
         })
 
         socket.on("onlineMeasureData",function(id,info){

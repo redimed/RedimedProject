@@ -148,37 +148,40 @@ angular.module("app.loggedIn.patient.injuryManagement.map.controller",[])
             InjuryManagementService.getInjuryList().then(function(rs){
                 if(rs.status == 'success'){
                     for(var i=0; i<rs.data.length; i++){
-                        if(rs.data[i].isPickUp == 1 && (rs.data[i].STATUS == 'New' || rs.data[i].STATUS == 'Picking' ))
+                        var isCurrDate = moment(rs.data[i].injury_date).isSame(moment(), 'day');
+                        if(isCurrDate)
                         {
-                            var patient = rs.data[i];
-                            var positionArr = [];
-                            var icon;
-                            if(patient.latitude != null)
-                                positionArr.push(patient.latitude);
-                            if(patient.longitude != null)
-                                positionArr.push(patient.longitude);
+                            if(rs.data[i].isPickUp == 1 && (rs.data[i].STATUS == 'New' || rs.data[i].STATUS == 'Picking' ))
+                            {
+                                var patient = rs.data[i];
+                                var positionArr = [];
+                                var icon;
+                                if(patient.latitude != null)
+                                    positionArr.push(patient.latitude);
+                                if(patient.longitude != null)
+                                    positionArr.push(patient.longitude);
 
-                            if(patient.STATUS == 'Picking')
-                                icon = 'modules/injuryManagement/icons/icon-orange.png';
-                            else if(patient.STATUS == 'New')
-                                icon = 'modules/injuryManagement/icons/icon-blue.png';
+                                if(patient.STATUS == 'Picking')
+                                    icon = 'modules/injuryManagement/icons/icon-orange.png';
+                                else if(patient.STATUS == 'New')
+                                    icon = 'modules/injuryManagement/icons/icon-blue.png';
 
-                            $scope.patientData = {id:patient.injury_id,
-                                patientId: patient.Patient_id,
-                                position:positionArr,
-                                pickupAddr:patient.pickup_address,
-                                FullName: patient.FullName,
-                                gender: patient.Sex,
-                                injuryDesc: patient.injury_description,
-                                status:patient.STATUS,
-                                icon: icon,
-                                driverUser: patient.driverUser ,
-                                driverName: patient.driverName
-                            };
+                                $scope.patientData = {id:patient.injury_id,
+                                    patientId: patient.Patient_id,
+                                    position:positionArr,
+                                    pickupAddr:patient.pickup_address,
+                                    FullName: patient.FullName,
+                                    gender: patient.Sex,
+                                    injuryDesc: patient.injury_description,
+                                    status:patient.STATUS,
+                                    icon: icon,
+                                    driverUser: patient.driverUser ,
+                                    driverName: patient.driverName
+                                };
 
-                            $scope.injuryMarker.push($scope.patientData);
+                                $scope.injuryMarker.push($scope.patientData);
+                            }
                         }
-
                     }
                 }
             })
