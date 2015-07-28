@@ -63,11 +63,11 @@ module.exports = {
 		mkdirp(UPLOAD_FOLDER, function (err) {
 		    if (err) console.error(err);
 			fs.rename(tmp_path, target_path, function(err) {
-	            if (err) throw err;
+	            if (err) res.json(500,{'status':'error'});
 	            fs.unlink(tmp_path, function() { // delete 
 	                if (err){ 
-	                 console.log(err)
-	                 throw err;
+	                 	console.log(err)
+	                 	res.json(500,{'status':'error'});
 	                }
 	    	        //PROCESS DATABASE
 					var insertData = {
