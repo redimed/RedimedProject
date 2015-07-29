@@ -265,32 +265,49 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 				})
 			}
 			$scope.save = function(){
-				if ($scope.modelObjectMap.FEE_GROUP_TYPE == 'private_fund') {
+				 $scope.isSubmit = true;
+                if (!$scope.mainForm.$invalid) {
+                	if ($scope.modelObjectMap.FEE_GROUP_TYPE == 'private_fund') {
 					postData = {
 						Patient_id:$scope.patient.Patient_id,
 						SOURCE_TYPE:$scope.modelObjectMap.FEE_GROUP_TYPE,
 						SOURCE_ID:$scope.insurers.FEE_GROUP_ID,
 						FEE_TYPE:$scope.modelObjectMap.FEE_TYPE_ID,
 						FORMULA:$scope.FORMULA,
-						Insurer_id:$scope.insurers.id
-					}
-				}else{
-					postData = {
-						Patient_id:$scope.patient.Patient_id,
-						SOURCE_TYPE:$scope.modelObjectMap.FEE_GROUP_TYPE,
-						SOURCE_ID:$scope.modelObjectMap.FEE_GROUP_ID,
-						FEE_TYPE:$scope.modelObjectMap.FEE_TYPE_ID,
-						FORMULA:$scope.FORMULA,
-					}
-				};
-				InvoiceService.getSaveManual(postData).then(function(response){
-					$scope.success = true;
-				})
+							Insurer_id:$scope.insurers.id
+						}
+					}else{
+						postData = {
+							Patient_id:$scope.patient.Patient_id,
+							SOURCE_TYPE:$scope.modelObjectMap.FEE_GROUP_TYPE,
+							SOURCE_ID:$scope.modelObjectMap.FEE_GROUP_ID,
+							FEE_TYPE:$scope.modelObjectMap.FEE_TYPE_ID,
+							FORMULA:$scope.FORMULA,
+						}
+					};
+					InvoiceService.getSaveManual(postData).then(function(response){
+						$scope.success = true;
+					})
+                }
+
+				
+
 				// if ($scope.patientName) {
 				// 	if(typeof $scope.modelObjectMap !== 'undefined'){
-				// 		if ($scope.modelObjectMap.FEE_GROUP_TYPE) {
-				// 			console.log($scope.insurers);
-				// 		}else{
+				// 		if ($scope.modelObjectMap.FEE_GROUP_TYPE !== null) {
+				// 			if (typeof $scope.modelObjectMap.FEE_GROUP_ID !== 'undefined') {
+				// 				if ($scope.modelObjectMap.FEE_GROUP_ID !== null) {
+				// 					console.log('12');
+				// 				}else{
+				// 					toastr.error("Please choose group fee");
+				// 				}
+				// 			}else{
+				// 				toastr.error("Please choose group fee");
+				// 			};
+				// 		}else if($scope.modelObjectMap.FEE_GROUP_TYPE === 'private_fund'){
+
+				// 		}
+				// 		else{
 				// 			toastr.error("Please choose Bill to");
 				// 		};
 				// 	}else{
