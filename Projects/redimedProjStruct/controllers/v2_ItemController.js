@@ -8,6 +8,7 @@ var parseString = require('xml2js').parseString;
 var kiss=require('./kissUtilsController');// tan add
 var controllerCode="RED_CONSULT";//tan add
 var errorCode=require('./errorCode');//tan add
+var _ = require('lodash');//tan add
 var general_process = function(req, res){
 
 	var UPLOAD_FOLDER = db.FeeGroup.getUploadPath();
@@ -505,5 +506,96 @@ module.exports = {
 	},
 
 	
-	
+	/**
+     * tannv.dts@gmail.com
+     */
+    postGetItemFeeList:function(req,res)
+    {
+        var fHeader="v2_ItemFeeTypesController->postGetItemFeeList";
+        var functionCode="FN002";
+        var postData=kiss.checkData(req.body.postData)?req.body.postData:{};
+        var itemId=kiss.checkData(postData.itemId)?postData.itemId:'';
+        kiss.exlog(req.body);
+        if(!kiss.checkListData(itemId))
+        {
+            kiss.exlog(fHeader,'Loi data truyen den');
+            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
+            return;
+        }
+        var sql=
+            " SELECT feeGroup.`FEE_GROUP_ID`,feeGroup.`FEE_GROUP_NAME`,feeGroup.`FEE_GROUP_TYPE`,                       "+
+			" feeType.`FEE_TYPE_ID`,feeType.`FEE_TYPE_NAME`,                                                            "+
+			" itemFee.`ITEM_FEE_ID`,itemFee.`CLN_ITEM_ID`,itemFee.`FEE_START_DATE`,itemFee.`FEE`,itemFee.`PERCENT`      "+
+			" FROM `cln_fee_group` feeGroup                                                                             "+
+			" LEFT JOIN `cln_fee_types` feeType ON feeGroup.`FEE_GROUP_ID`=feeType.`FEE_GROUP_ID`                       "+
+			" LEFT JOIN `cln_item_fees` itemFee ON feeType.`FEE_TYPE_ID`=itemFee.`FEE_TYPE_ID`                          "+
+			" WHERE feeGroup.`ISENABLE`=1                                                                               "+
+			" AND (feeType.`ISENABLE`=1 OR feeType.`FEE_TYPE_ID` IS NULL)                                               "+
+			" AND (itemFee.`ISENABLE`=1 OR itemFee.`ITEM_FEE_ID` IS NULL)                                               "+
+			" AND (itemFee.`CLN_ITEM_ID`=? OR itemFee.`CLN_ITEM_ID` IS NULL)                                            "+
+			" ORDER BY feeGroup.`FEE_GROUP_TYPE`,feeGroup.`FEE_GROUP_NAME`,                                             "+
+			" feeType.`FEE_TYPE_NAME`,itemFee.`FEE_START_DATE` DESC;                                                    ";
+        kiss.executeQuery(req,sql,[itemId],function(rows){
+            res.json({status:'success',data:rows});
+        },function(err){
+            kiss.exlog(fHeader,'Loi truy van lay fee list tuong ung item id',err);
+            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
+        },true);
+    },
+
+    /**
+     * Save tat ca fee item trong group fee truyen den
+     * tannv.dts@gmail.com
+     * 29-07-2015
+     */
+    postSaveAllItemFeeInGroupFee:function(req,res)
+    {
+    	var fHeader="V2_ItemController->postSaveAllItemFeeInGroupFee";
+    	var functionCode="FN003";
+    	var feeGroup=kiss.checkData(req.body.feeGroup)?req.body.feeGroup:{};
+    	var feeTypes=kiss.checkData(feeGroup.FEE_TYPES)?feeGroup.FEE_TYPES:null;
+    	kiss.exlog(req.body)
+    	if(!kiss.checkListData(feeTypes))
+    	{
+    		kiss.exlog(fHeader,'Loi data truyen den');
+    		res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
+    		return;
+    	}
+    	var listDbItemFee=[];
+    	for(var i=0;i<feeTypes.length;i++)
+    	{
+    		var feeType=feeTypes[i];
+    		var listFee=feeType.LIST_FEE;
+    		for(var j=0;j<listFee.length;j++)
+    		{
+    			var fee=listFee[j];
+    			var dbItemFee={
+    				ITEM_FEE_ID: fee.ITEM_FEE_ID?fee.ITEM_FEE_ID:null,
+    				CLN_ITEM_ID:fee.CLN_ITEM_ID,
+    				FEE_START_DATE:fee.FEE_START_DATE?moment(new Date(fee.FEE_START_DATE)).format("YYYY/MM/DD"):null,
+    				FEE:fee.FEE,
+    				PERCENT:fee.PERCENT,
+    				FEE_TYPE_ID:feeType.FEE_TYPE_ID
+    			}
+
+    			if(kiss.checkData(dbItemFee.CLN_ITEM_ID,dbItemFee.FEE_START_DATE,dbItemFee.FEE_TYPE_ID))
+    			{
+    				if(kiss.checkData(dbItemFee.FEE)|| kiss.checkData(dbItemFee.PERCENT))
+    				{
+    					listDbItemFee.push(dbItemFee);
+    				}
+    			}
+    		}
+    	}
+
+    	kiss.beginTransaction(req,function(){
+
+    	},function(err){
+    		kiss.exlog(fHeader,'Loi mo transaction',err);
+    		res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN002')});
+    	})
+    	kiss.exFileJSON(listDbItemFee,'listDbItemFee.txt');
+    	res.json({status:'success',data:listDbItemFee});
+
+    }
 }

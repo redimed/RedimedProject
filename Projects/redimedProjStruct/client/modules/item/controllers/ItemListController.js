@@ -36,9 +36,37 @@ angular.module("app.loggedIn.item.list.controller",[
                 {
                     class: 'fa fa-info', title: 'Info',
                     callback: function(item){
-                        console.log(item)
-                            $scope.itemInfo.ITEM_ID = item.ITEM_ID;
-                            $scope.editForm.open();
+                        // console.log(item)
+                        $scope.itemInfo.ITEM_ID = item.ITEM_ID;
+                        // $scope.editForm.open();
+
+                        var modalInstance=$modal.open({
+                            templateUrl:'showItemTemplate',
+                            controller:function($scope,$modalInstance,options,editForm,itemInfo){
+                                $scope.options=options;
+                                $scope.editForm=editForm;
+                                $scope.itemInfo=itemInfo;
+
+                            },
+                            resolve:{
+                                options : function(){
+                                    return $scope.options;
+                                },
+                                editForm:function(){
+                                    return $scope.editForm;
+                                },
+                                itemInfo:function(){
+                                    return $scope.itemInfo;
+                                }
+                            },
+                            size:'lg'
+                        })
+                        // .result.then(function(response){
+                        //     if(response === 'success'){
+                        //          $scope.fee_types_panel.reload();
+                        //     }
+                        // })
+
                     }
                 },
                 {
@@ -154,5 +182,9 @@ angular.module("app.loggedIn.item.list.controller",[
             // console.log(response);
         });
    }
+
+
+
+
 
 })

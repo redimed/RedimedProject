@@ -33,7 +33,7 @@
             <div class="modal-body">
                 <h4 class="modal-title un-label-popup-header-m un-bg-label-333333" id="myModalLabel">Add Item</h4>
                 <div ng-if="addForm.is_show">
-                    <item-detail options="options" onsuccess="addForm.success">
+                    <item-detail onsuccess="addForm.success">
                 </div>
             </div>
             <div class="modal-footer">
@@ -44,7 +44,7 @@
 </div><!-- /.modal -->
 <!-- POPUP ITEM ADD FORM -->
 
-<div class="modal fade" id="popupEditItem">
+<!-- <div class="modal fade" id="popupEditItem">
     <div class="modal-dialog un-header-top modal-lg">
         <div class="modal-content">
             <div class="modal-body">
@@ -56,10 +56,26 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+        </div>
+    </div>
+</div> -->
 
+<script type="text/ng-template" id="showItemTemplate">
+    <style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+    </style>
+    <div class="modal-body">
+        <h4 class="modal-title un-label-popup-header-m un-bg-label-333333" id="myModalLabel">Info Item</h4>
+        <div>
+            <item-detail options="options" onsuccess="editForm.success" data="{id: '{{itemInfo.ITEM_ID}}'}">
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+</script>
 
 <!-- POPUP ITEM ADD FORM -->
 

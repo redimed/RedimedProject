@@ -1,56 +1,85 @@
-<div class="clearfix"></div>
-<div class="row">
-	<div class="col-md-8">
-		<h4>List Funds</h4>
-		<my-data-table options="private_funds.options"></my-data-table>
-		<div style="margin-top: 15px;">
-			<button class="btn btn-sm green" ng-click="private_funds.save()"><i class="fa fa-save"></i> Save</button>
-		</div>
-	</div>
-	<div class="col-md-4">
-		<h4>Fee Types</h4>
-		<my-data-table options="fee_types.options"></my-data-table>
-		<div style="margin-top: 15px;">
-			<button class="btn btn-sm green" ng-click="fee_types.save()"><i class="fa fa-save"></i> Save</button>
-		</div>
-	</div>
-</div>
-
-<br/>
 
 <tabset>
-	<tab ng-repeat="groupFee in groupFeeList" heading="{{groupFee.FEE_GROUP_NAME}}" ng-click="getItemFeeTypes(groupFee)">
+	<tab ng-repeat="groupFee in feeArr" heading="{{groupFee.FEE_GROUP_NAME}}">
 		<div class="panel panel-info">
-			<div class="panel-heading">
-				{{groupFee.FEE_GROUP_NAME}}
-			</div>
+			<!-- <div class="panel-heading">
+				{{groupFee.FEE_GROUP_NAME}} ({{groupFee.FEE_GROUP_TYPE}})
+			</div> -->
 			<div class="panel-body">
-				<table>
+				{{groupFee.FEE_GROUP_NAME}} ({{groupFee.FEE_GROUP_TYPE}})
+				{{groupFee}}
+				<table class="un_tn_table un_tn_table_header_gray un_tn_table_border_gray">
 					<tr>
-						<th>Fee name</th>
+						<th>Fee type</th>
 						<th>Start date </th>
 						<th>Fee </th>
 						<th>Percent</th>
+						<th>Actions</th>
 					</tr>
-					<tr ng-repeat="(key,feeType) in itemFeeTypes">
+					<tr ng-repeat="feeType in groupFee.FEE_TYPES">
 						<td>{{feeType.FEE_TYPE_NAME}}:</td>
 						<td>
 							<select ng-model="feeType.currentFee" ng-options="fee.FEE_START_DATE_DISPLAY for fee in feeType.LIST_FEE">
-				                <!-- <option value=''>- Fee group type -</option> -->
+				                <option value=''>- Fee start date -</option>
 				            </select>
 		        		</td>
 						<td>
-							{{feeType.currentFee.FEE}}
+							<input ng-model="feeType.currentFee.FEE"/>
 						</td>
 						<td>
-							{{feeType.currentFee.PERCENT}}
+							<input ng-model="feeType.currentFee.PERCENT"/>
+						</td>
+						<td>
+							<button ng-click="addNewFeeItem(feeType)">Add New</button>
 						</td>
 					</tr>
 				</table>
+				<div class="form-group">
+					<button class="un_tn_btn un_tn_btn_green" ng-click="saveAllItemFeeInGroupFee(groupFee);">
+	                	Save	
+	            	</button>
+				</div>
 			</div>
+			
+			
 		</div>
 	</tab>
 	
 
 
 </tabset>
+
+<script type="text/ng-template" id="addNewFeeItemTemplate">
+    <style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+    </style>
+    <div class="modal-body">
+        <div class="form-group ">
+            <label class="un_tn_form_label un_tn_form_label_gray">
+                Start date
+            </label>
+            <input custom-date class="form-control input-sm un_tn_form_control" ng-model="newFeeItem.FEE_START_DATE_DISPLAY" id="FEE_START_DATE_DISPLAY">
+        </div>
+
+        <div class="form-group">
+            <label class="un_tn_form_label un_tn_form_label_gray">
+                Fee
+            </label>
+            <input type="number" ng-model="newFeeItem.FEE" class="form-control un_tn_form_control ng-pristine ng-valid">
+        </div>
+
+        <div class="form-group">
+            <label class="un_tn_form_label un_tn_form_label_gray">
+                Percent
+            </label>
+            <input type="number" ng-model="newFeeItem.PERCENT" class="form-control un_tn_form_control ng-pristine ng-valid">
+        </div>
+
+    </div>
+    <div class="modal-footer" style="height: 60px">
+    	<button class="un_tn_btn un_tn_btn_pink" ng-click="add()">Add</button>
+        <button class="un_tn_btn un_tn_btn_gray" ng-click="cancel()">Cancel</button>
+    </div>
+ </script>

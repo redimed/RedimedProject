@@ -219,10 +219,30 @@ angular.module("app.loggedIn.item.services", [])
      * tannv.dts@gmail.com
      * 27-07-2015
      */
-     instanceService.getItemFeeTypes=function(postData)
+    instanceService.getItemFeeTypes=function(postData)
     {
         var detailApi = appApi.all("v2/fees/type/get_item_fee_types");
         return detailApi.post({postData:postData});
+    }
+
+    /**
+     * tannv.dts@gmail.com
+     * 28-07-2015
+     */
+    instanceService.getItemFeeList=function(postData)
+    {
+        var detailApi = appApi.all("v2/items/get_item_fee_list");
+        return detailApi.post({postData:postData});
+    }
+
+    /**
+     * tannv.dts@gmail.com
+     * 29-07-2015
+     */
+    instanceService.saveAllItemFeeInGroupFee=function(feeGroup)
+    {
+        var detailApi = appApi.all("v2/items/save_all_item_fee_in_group_fee");
+        return detailApi.post({feeGroup:feeGroup});
     }
 
     return instanceService;

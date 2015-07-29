@@ -55,7 +55,7 @@
                 </label>
                 <select class="form-control un_input_form" name="ITEM_TYPE"
                         ng-model="modelObjectMap.ITEM_TYPE"
-                        ng-options="type.PREFIX_NAME as type.PREFIX_NAME for type in options.prefix_headers"
+                        ng-options="type.PREFIX_NAME as type.PREFIX_NAME for type in prefix_headers"
                         required>
                         <option value="">-- Select Item Type --</option>
                 </select>
@@ -91,7 +91,7 @@
                 </label>
                 <select class="form-control un_input_form" name="TAX_ID"
                     ng-model="modelObjectMap.TAX_ID"
-                    ng-options="type.TAX_ID as type.TAX_CODE for type in options.taxes">
+                    ng-options="type.TAX_ID as type.TAX_CODE for type in taxes">
                     <option value="">-- Select Tax --</option>
                 </select>
             </div>
@@ -107,7 +107,7 @@
                 </label>
                 <select class="form-control un_input_form" name="UOM"
                         ng-model="modelObjectMap.UOM"
-                        ng-options="item.UOM as item.UOM_NAME group by item.CLASS_NAME for item in options.uoms">
+                        ng-options="item.UOM as item.UOM_NAME group by item.CLASS_NAME for item in uoms">
                         <option value="">-- Select UOM --</option>
                 </select>
             </div>
@@ -291,7 +291,7 @@
                 </label>
                 <select class="form-control un_input_form" name="PROVIDER_TYPE"
                         ng-model="modelObjectMap.PROVIDER_TYPE"
-                        ng-options="item.code as item.title for item in options.providers">
+                        ng-options="item.code as item.title for item in providers">
                         <option value="">-- Select Provider --</option>
                 </select>
             </div>
@@ -604,5 +604,6 @@
 
     </div>
 </form>
+ <!-- <item_fees ng-show="mode.type=='edit'" id="data.id"></item_fees> -->
+ <item_fees  id="itemId"></item_fees>
 
- <item_fees ng-show="mode.type=='edit'" id="scope.modelObjectMap.id" panel="fee_panel"></item_fees>

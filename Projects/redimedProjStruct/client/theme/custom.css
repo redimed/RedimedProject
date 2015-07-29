@@ -3309,6 +3309,34 @@ label{
     border:1px solid #B0B0B0;
 }
 
+/*dinh nghia style cho table*/
+.un_tn_table th, .un_tn_table td{
+    padding-top:5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.un_tn_table_header_gray th{
+    background-color: #B9B9B9;
+}
+.un_tn_table_border_gray th,.un_tn_table_border_gray td{
+    border:1px solid #6B6969;
+}
+.un_tn_table_border_around_gray{
+    border:1px solid #6B6969;
+}
+.un_tn_cell_left{
+    text-align:left;
+}
+.un_tn_cell_center{
+    text-align:center;
+}
+
+.un_tn_cell_right{
+    text-align:right;
+}
+
+
 /*kieu ke khung cho table*/
 .un_tn_table_border_black{
     
@@ -3350,6 +3378,13 @@ label{
     background: #B41E46 !important;
     outline: 0;
 }
+
+.un_tn_btn_green{
+    color: white;
+    background: #35AA47 !important;
+    outline: 0;
+}
+
 .un_tn_btn_black{
     color: white;
     background: #525252 !important;
