@@ -40,5 +40,5 @@ app.get('/api/sound/:type',function(req,res){
 })
 
 app.get('/api/im/menu',injuryController.loadSideMenu);
-
+app.post('/api/im/checkInjury',injuryController.checkPatientInjury);
 app.post('/api/im/consultation', injuryController.getInjuryConsultation);

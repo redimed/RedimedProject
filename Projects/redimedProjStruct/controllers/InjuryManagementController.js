@@ -818,6 +818,25 @@ module.exports = {
                   error:err});
           })
     },
+    checkPatientInjury: function(req,res){
+      var patient_id = req.body.patient_id;
+
+      db.sequelize.query("SELECT i.* "+
+                         "FROM im_injury i "+
+                         "WHERE i.`patient_id` = ? "+
+                         "AND i.`STATUS` IN ('Picked','New','Picking') "+
+                         "AND DATE(i.`injury_date`) = CURDATE()",null,{raw:true},[patient_id])
+        .success(function(data){
+            if(data.length > 0)
+              res.json({status:'error'})
+            else
+              res.json({status:'success'})
+        })
+        .error(function(err){
+            res.json({status:'fail',
+                error:err});
+        })
+    },
     getInjuryConsultation: function(req,res){
       var injurySQL = "WHERE c.`cal_id` = (SELECT p.`CAL_ID` FROM cln_appt_patients p WHERE p.`injury_id` = ?) "+
                       "AND c.`patient_id` = (SELECT p.`Patient_id` FROM cln_appt_patients p WHERE p.`injury_id` = ?)";
