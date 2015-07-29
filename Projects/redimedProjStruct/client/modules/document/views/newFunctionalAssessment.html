@@ -787,7 +787,7 @@
 		<div class="panel-body">
 			<label class="control-label text-info bold" style="margin-top:10px;">Risk rating</label>
 
-			<div class="row">
+			<div class="row" ng-if="header.is_have_risk_rating===1">
 				<div class="col-md-2 col-sm-2 col-xs-2">
 					<label class="control-label bold">Risk rating:</label>
 				</div>
@@ -803,8 +803,25 @@
 					</label>
 				</div>
 			</div>
+
+			<div class="row" ng-if="header.is_have_fit_rating===1">
+				<div class="col-md-2 col-sm-2 col-xs-2">
+					<label class="control-label bold">Fit rating:</label>
+				</div>
+				<div class="col-md-10 col-sm-10 col-xs-10">
+					<label class="btn">
+						Fit <input type="radio" ng-model="header.fit_rating" value="2">
+					</label>
+					<label class="btn">
+						Fit Pending <input type="radio" ng-model="header.fit_rating" value="1">
+					</label>
+					<label class="btn">
+						Unfit <input type="radio" ng-model="header.fit_rating" value="0">
+					</label>
+				</div>
+			</div>
 			
-			<div class="row">
+			<div class="row" ng-if="header.is_have_comments_recommendations===1">
 				<div class="col-md-3 col-sm-3 col-xs-3">
 					<label class="control-label bold">*Comments/Recommendations:</label>
 				</div>
@@ -813,7 +830,7 @@
 				</div>
 			</div>
 
-			<div class="row">
+			<div class="row" ng-if="header.is_have_health_reharb_recommend===1">
 				<div class="col-md-6 col-sm-6 col-xs-6">
 					<label class="control-label bold" style="margin-top:10px;">Health and Rehab Coorinator Review Recommended:</label>
 				</div>
@@ -827,7 +844,7 @@
 				</div>
 			</div>
 
-			<div class="row">
+			<div class="row" ng-if="header.is_have_build_rating">
 				<div class="col-md-2 col-sm-2 col-xs-2">
 					<label class="control-label bold">Build rating:</label>
 				</div>
@@ -844,8 +861,8 @@
 				</div>
 			</div>
 			
-			<label class="control-label text-info bold">Additional Tests Attached:</label>
-			<div class="row">
+			<label class="control-label text-info bold" ng-if="header.is_have_additional_test===1">Additional Tests Attached:</label>
+			<div class="row" ng-if="header.is_have_additional_test===1">
 				<div class="col-md-3 col-sm-3 col-xs-3" >
 					<label class="control-label pull-right">Ankle</label>
 				</div>
@@ -865,7 +882,7 @@
 					<input type="checkbox"  ng-checked="header.Att_Wirst_Elbow_func===1 || header.Att_Wirst_Elbow_func==='1'" ng-model="header.Att_Wirst_Elbow_func"/>
 				</div>
 			</div>
-			<div class="row">
+			<div class="row" ng-if="header.is_have_additional_test===1">
 				<div class="col-md-3 col-sm-3 col-xs-3">
 					<label class="control-label pull-right">Back</label>
 				</div>

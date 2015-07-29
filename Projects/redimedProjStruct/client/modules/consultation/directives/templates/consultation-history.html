@@ -2,41 +2,46 @@
     <table class="responsive table table-bordered">
         <thead>
             <tr>
-                <th>
+                <th class="un_table_tab_bg">
                     <div class="th">
                         <span style="color: white;">Date</span>
                     </div>
                 </th>
-                <th>
+                <th class="un_table_tab_bg">
                     <div class="th">
                         <span style="color: white;">Problem</span>
                     </div>
                 </th>
-                <th>
+                <th class="un_table_tab_bg">
                     <div class="th">
                         <span style="color: white;">Investigation</span>
                     </div>
                 </th>
-                <th>
+                <th class="un_table_tab_bg">
                     <div class="th">
                         <span style="color: white;">Diagnosis</span>
                     </div>
                 </th>
-                <th>
+                <th class="un_table_tab_bg">
                     <div class="th">
                         <span style="color: white;">Referral</span>
                     </div>
                 </th>
-                <th>
+                <th class="un_table_tab_bg">
                     <div class="th">
                         <span style="color: white;">Treatment</span>
+                    </div>
+                </th>
+                <th class="un_table_tab_bg">
+                    <div class="th">
+                        <span style="color: white;">Action</span>
                     </div>
                 </th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td colspan="6">
+                <td colspan="7">
                     <div style="text-align: center;">
                         <span ng-if="!actionCenter.listConsultOfPatient" style="font-size: 20px; font-style: italic; font-weight: bold;" class="ng-scope">      
                             Empty Data
@@ -44,38 +49,43 @@
                     </div>
                 </td>
             </tr>
-            <tr style="background-color: white;" class="bold" ng-repeat="item in actionCenter.listConsultOfPatient" ng-if="actionCenter.listConsultOfPatient" ng-click="actionCenter.showPopupHistory(item)">
-                <td style="vertical-align: middle; padding: 5px;">
+            <tr style="background-color: white;" class="bold" ng-repeat="item in actionCenter.listConsultOfPatient" ng-if="actionCenter.listConsultOfPatient">
+                <td style="vertical-align: middle; padding: 5px;width: 80px;" ng-click="actionCenter.showPopupHistory(item.consult_id)">
                     <label>
-                        {{item.form_time}}
+                        {{item.form_time}} &nbsp <i class="fa fa-paperclip" ng-if="item.num_doc != null || item.num_drawing !=null"></i>
                     </label>
                 </td>
-                <td style="vertical-align: middle; padding: 5px;">
+                <td style="vertical-align: middle; padding: 5px;" ng-click="actionCenter.showPopupHistory(item.consult_id)">
                     <label>
                         {{item.Notes}}
                     </label>
                 </td>
-                <td style="vertical-align: middle; padding: 5px;">
+                <td style="vertical-align: middle; padding: 5px;" ng-click="actionCenter.showPopupHistory(item.consult_id)">
                     <label style="height: 20px;overflow: hidden; max-width: 150px;">
                         {{item.investigation}}
                     </label>
                 </td>
-                <td style="vertical-align: middle; padding: 5px;">
+                <td style="vertical-align: middle; padding: 5px;" ng-click="actionCenter.showPopupHistory(item.consult_id)">
                     <label style="height: 20px;overflow: hidden; max-width: 150px;">
                         {{item.diagnosis}}
                     </label>
                 </td>
-                <td style="vertical-align: middle; padding: 5px;">
+                <td style="vertical-align: middle; padding: 5px;" ng-click="actionCenter.showPopupHistory(item.consult_id)">
                     <label style="height: 20px;overflow: hidden; max-width: 150px;">
                         {{item.specialist}}
                     </label>
                 </td>
-                <td style="vertical-align: middle; padding: 5px;">
+                <td style="vertical-align: middle; padding: 5px;" ng-click="actionCenter.showPopupHistory(item.consult_id)">
                     <label style="height: 20px;overflow: hidden; max-width: 150px;">
                         {{item.treatment_plan}}
                     </label>
+                </td>
+                <td style="vertical-align: middle; padding: 5px;width: 68px;">
+                    <button style="padding: 0px 10px 0px 10px;margin: 0;" class="un_tn_btn un_tn_btn_gray" ng-click="actionCenter.popupMeasurements(item)">Mea</button>
+                    <button style="padding: 0px 10px 0px 10px;margin: 0;" class="un_tn_btn un-bgBlack" ng-click="actionCenter.popupMedication(item)">Med</button>
                 </td>
             </tr>
         </tbody>
     </table>
 </div>
+

@@ -28,9 +28,12 @@ app.post('/api/consultation/getApptPatient',ConsultationController.getApptPatien
 app.post('/api/consultation/check-consultation-patientID-calID',ConsultationController.checkConsultation);
 app.post('/api/consultation/list-measurements',ConsultationController.getListMeasurements);
 app.post('/api/consultation/list-medication',ConsultationController.getListMedication);
+app.post('/api/consultation/list-medication-of-consualt',ConsultationController.getListMedicationOfConsualt);
+app.post('/api/consultation/list-measurements-of-consualt',ConsultationController.getListMeasurementsOfConsualt);
 app.post('/api/consultation/set-isenable-measurements',ConsultationController.setIsEnableMeasurements);
 app.post('/api/consultation/set-isenable-medication',ConsultationController.setIsEnableMedication);
 app.post('/api/consultation/get-img-drawing-history',ConsultationController.getImgDrawingHistory);
+app.post('/api/consultation/document-file-of-patientId-and-calId',ConsultationController.getDocumentFileOfPatientidAndCalid);
 app.get('/api/consultation/drawing/image/:imageId',ConsultationController.drawingImageById);
 app.post('/api/consultation/listCor',ConsultationController.postListCor);
 app.post('/api/consultation/addCor',ConsultationController.postAddCor);

@@ -113,16 +113,28 @@ angular.module("app.loggedIn.patient.consult.services",[])
 			return api.all('consultation/check-consultation-patientID-calID').post({patient_id:patient_id,cal_id:cal_id});
 		}
 		/*phanquocchien.c1109g@gmail.com
-		*get list measurements
+		*get list measurements of patient
 		*/
 		services.getListMeasurements = function(patient_id){
 			return api.all('consultation/list-measurements').post({patient_id:patient_id});
 		}
 		/*phanquocchien.c1109g@gmail.com
-		*get list medication
+		*get list medication of patient
 		*/
 		services.getListMedication = function(patient_id){
 			return api.all('consultation/list-medication').post({patient_id:patient_id});
+		}
+		/*phanquocchien.c1109g@gmail.com
+		*get list measurements of patient
+		*/
+		services.getListMeasurementsOfConsualt = function(patient_id,cal_id){
+			return api.all('consultation/list-measurements-of-consualt').post({patient_id:patient_id,cal_id:cal_id});
+		}
+		/*phanquocchien.c1109g@gmail.com
+		*get list medication of patient
+		*/
+		services.getListMedicationOfConsualt = function(patient_id,cal_id){
+			return api.all('consultation/list-medication-of-consualt').post({patient_id:patient_id,cal_id:cal_id});
 		}
 		/*phanquocchien.c1109g@gmail.com
 		*set Is Enable Measurements
@@ -141,6 +153,12 @@ angular.module("app.loggedIn.patient.consult.services",[])
 		*/
 		services.getImgDrawingHistory = function(patient_id,cal_id){
 			return api.all('consultation/get-img-drawing-history').post({patient_id:patient_id,cal_id:cal_id});
+		}
+		/*phanquocchien.c1109g@gmail.com
+		*get img drawing history
+		*/
+		services.getDocumentFileOfPatientidAndCalid = function(patient_id,cal_id){
+			return api.all('consultation/document-file-of-patientId-and-calId').post({patient_id:patient_id,cal_id:cal_id});
 		}
 		services.getListCor = function(data){
 			return api.all('consultation/listCor').post({data: data});

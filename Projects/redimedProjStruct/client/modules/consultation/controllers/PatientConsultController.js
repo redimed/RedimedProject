@@ -187,6 +187,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			});
 		}
 		$scope.loadListMedication();
+		//phanquocchien.c1109g@gmail.com
 		//set actionCenter popup consultation history
 		$scope.actionCenter = {};
 		$scope.setListConsultationOfPatient = function(){
@@ -198,54 +199,126 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			});
 		}
 		$scope.setListConsultationOfPatient();
+		//phanquocchien.c1109g@gmail.com
+		//set open popup medication
+		$scope.actionCenter.popupMedication = function(data){
+			var modalInstance = $modal.open({
+				templateUrl:'popupListMedicationOfConsualtation',
+				controller: function ($scope,$modalInstance,patient_id,cal_id,ConsultationService) {
+					$scope.loadListMedicationOfConsualt = function () {
+	        			//set medication
+						ConsultationService.getListMedicationOfConsualt(patient_id,cal_id).then(function(data){
+							if (data.status == 'success') {
+								$scope.listMedicationConsualt = data.data;
+							}
+						});
+		        	};
+					$scope.loadListMedicationOfConsualt();
+					//close
+					$scope.cancel = function () {
+					    $modalInstance.dismiss('cancel');
+					};
+				},
+				resolve: {
+					patient_id:function(){
+						return data.patient_id;
+					},
+					cal_id:function(){
+						return data.cal_id;
+					}
+				},
+				size:'lg'
+			});	
+		}
+		//phanquocchien.c1109g@gmail.com
+		//set open popup measurments
+		$scope.actionCenter.popupMeasurements = function(data){
+			var modalInstance = $modal.open({
+				templateUrl:'popupListMeasurementsOfConsualtation',
+				controller: function ($scope,$modalInstance,patient_id,cal_id,ConsultationService) {
+					$scope.loadListMeasurementsOfConsualt = function () {
+		        		//set Measurements
+						ConsultationService.getListMeasurementsOfConsualt(patient_id,cal_id).then(function(data){
+							if (data.status == 'success') {
+								$scope.listMeasurementsConsual = data.data;
+							}
+						});
+		        	};
+		        	$scope.loadListMeasurementsOfConsualt();
+					//close
+					$scope.cancel = function () {
+					    $modalInstance.dismiss('cancel');
+					};
+				},
+				resolve: {
+					patient_id:function(){
+						return data.patient_id;
+					},
+					cal_id:function(){
+						return data.cal_id;
+					}
+				},
+				size:'md'
+			});	
+		}
+		//phanquocchien.c1109g@gmail.com
+		//set open popup history
 		$scope.actionCenter.showPopupHistory = function(data){
 			var modalInstance = $modal.open({
 				templateUrl:'modules/consultation/dialogs/dialogs_consult_history.html',
 				controller: 'ConsultHistoryController',
 				resolve: {
-					consults:function(){
+					consult_id:function(){
 						return data;
 					}
-				}
+				},
+				size:'lg'
 			})	
 		}
+		//phanquocchien.c1109g@gmail.com
+		//set open popup History Physiotherapist
 		$scope.actionCenter.showPopupHistoryPhysiotherapist = function(data){
 			var modalInstance = $modal.open({
 				templateUrl:'modules/consultation/dialogs/dialogs_consult_history_physiotherapist.html',
 				controller: 'ConsultHistoryController',
 				resolve: {
-					consults:function(){
+					consult_id:function(){
 						return data;
 					}
 				}
 			})
 			
 		}
+		//phanquocchien.c1109g@gmail.com
+		//set open popup History Handtherapist
 		$scope.actionCenter.showPopupHistoryHandtherapist = function(data){
 			var modalInstance = $modal.open({
 				templateUrl:'modules/consultation/dialogs/dialogs_consult_history_handtherapist.html',
 				controller: 'ConsultHistoryController',
 				resolve: {
-					consults:function(){
+					consult_id:function(){
 						return data;
 					}
 				}
 			})
 			
 		}
+		//phanquocchien.c1109g@gmail.com
+		//set open popup History ExercisePhysiologist
 		$scope.actionCenter.showPopupHistoryExercisePhysiologist = function(data){
 			var modalInstance = $modal.open({
 				templateUrl:'modules/consultation/dialogs/dialogs_consult_history_exercise_physiologist.html',
 				controller: 'ConsultHistoryController',
 				resolve: {
-					consults:function(){
+					consult_id:function(){
 						return data;
 					}
 				}
 			})
-			
 		}
 		//end
+		//phanquocchien.c1109g@gmail.com
+		//set get list id Img Drawing
 		$scope.getImgDrawingHistory = function(){
 			$scope.listImgDrawingHistory = {};
 			ConsultationService.getImgDrawingHistory($stateParams.patient_id,$scope.cal_id).then(function(data){
@@ -255,12 +328,28 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			})
 		}
 		$scope.getImgDrawingHistory();
-		$scope.loadImgDrawing = function(){
-			$scope.getImgDrawingHistory();
-		}
+		//phanquocchien.c1109g@gmail.com
+		//set open popup Consultation History
 		$scope.showPopupConsultationHistory = function(){
-			angular.element('#popupConsultationHistory').modal('show');
+			var modalInstance = $modal.open({
+				templateUrl:'popupConsultationHistory',
+				controller: function ($scope,$modalInstance,actionCenter) {
+					$scope.actionCenter = actionCenter;
+					//close
+					$scope.cancel = function () {
+					    $modalInstance.dismiss('cancel');
+					};
+				},
+				size:'lg',
+				resolve: {
+                	actionCenter : function () {
+                		return $scope.actionCenter;
+                	}
+                }
+			})
 		}
+		//phanquocchien.c1109g@gmail.com
+		//set open popup New Drawing
 		$scope.popupNewDrawing = function(){
 			var modalInstance = $modal.open({
                 templateUrl: "popupNewDrawing",
@@ -298,6 +387,10 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 					* load data drawing history
                     */
 					$scope.getImgDrawingHistory();
+					/*phanquocchien.c1109g@gmail.com
+					* load data consultation history
+                    */
+                    $scope.setListConsultationOfPatient();
 				};
 			});
 		}
@@ -305,8 +398,17 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			angular.element('#popupChooseItem').modal('show');
 		}
 		//end
-		//chien show patien bar
-        // $scope.patientBarVer.version='zip';
+		//phanquocchien.c1109g@gmail.com
+		//load list histoty of patient upload document file
+        // 
+        $scope.documentFileSuccess = {
+        	runWhenFinish:function () {
+        		/*phanquocchien.c1109g@gmail.com
+				* load data consultation history
+                */
+                $scope.setListConsultationOfPatient();
+        	}
+        }
         
 		$scope.currDate = $filter('date')(new Date(),'dd/MM/yyyy hh:mm a');
 
