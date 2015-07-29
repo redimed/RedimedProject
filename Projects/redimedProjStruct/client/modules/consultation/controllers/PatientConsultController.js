@@ -387,6 +387,10 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 					* load data drawing history
                     */
 					$scope.getImgDrawingHistory();
+					/*phanquocchien.c1109g@gmail.com
+					* load data consultation history
+                    */
+                    $scope.setListConsultationOfPatient();
 				};
 			});
 		}
@@ -394,8 +398,17 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			angular.element('#popupChooseItem').modal('show');
 		}
 		//end
-		//chien show patien bar
-        // $scope.patientBarVer.version='zip';
+		//phanquocchien.c1109g@gmail.com
+		//load list histoty of patient upload document file
+        // 
+        $scope.documentFileSuccess = {
+        	runWhenFinish:function () {
+        		/*phanquocchien.c1109g@gmail.com
+				* load data consultation history
+                */
+                $scope.setListConsultationOfPatient();
+        	}
+        }
         
 		$scope.currDate = $filter('date')(new Date(),'dd/MM/yyyy hh:mm a');
 

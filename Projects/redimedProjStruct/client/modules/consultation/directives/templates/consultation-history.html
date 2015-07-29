@@ -52,7 +52,7 @@
             <tr style="background-color: white;" class="bold" ng-repeat="item in actionCenter.listConsultOfPatient" ng-if="actionCenter.listConsultOfPatient">
                 <td style="vertical-align: middle; padding: 5px;width: 80px;" ng-click="actionCenter.showPopupHistory(item.consult_id)">
                     <label>
-                        {{item.form_time}} &nbsp <i class="fa fa-paperclip"></i>
+                        {{item.form_time}} &nbsp <i class="fa fa-paperclip" ng-if="item.num_doc != null || item.num_drawing !=null"></i>
                     </label>
                 </td>
                 <td style="vertical-align: middle; padding: 5px;" ng-click="actionCenter.showPopupHistory(item.consult_id)">

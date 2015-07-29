@@ -32,8 +32,8 @@ angular.module('app.loggedIn.patient.apptdoc.controller',[])
                     progress_percent: 0,
                     pre_progress_percent: 0,
                 }
-
                 toastr.success('Upload complete!','Complete!');
+                $scope.documentFileSuccess.runWhenFinish();
             },
             onAfterAddingAll :function(items){
                 angular.forEach(items, function(f){

@@ -648,11 +648,16 @@ module.exports = {
             return;
         }
         var sql=
-            " SELECT consult.*,problem.`Notes`, DATE_FORMAT(app.`FROM_TIME`, '%d/%m/%Y - %h:%i') AS form_time FROM `cln_patient_consults` consult       "+ 
-            " LEFT JOIN `cln_problems` problem ON consult.`problem_id` = problem.`Problem_id`                                                           "+ 
-            " inner join `cln_appointment_calendar` app on consult.`cal_id` = app.`CAL_ID`                                                              "+ 
-            " WHERE consult.`patient_id` = ?                                                                                                            "+ 
-            " ORDER BY app.`FROM_TIME` DESC                                                                                                             "; 
+            " SELECT consult.*, problem.`Notes`, DATE_FORMAT(app.`FROM_TIME`, '%d/%m/%Y - %h:%i') AS form_time, doc.num_doc, dra.num_drawing            "+
+            " FROM `cln_patient_consults` consult                                                                                                       "+
+            " LEFT JOIN `cln_problems` problem ON consult.`problem_id` = problem.`Problem_id`                                                           "+
+            " INNER JOIN `cln_appointment_calendar` app ON consult.`cal_id` = app.`CAL_ID`                                                              "+
+            " LEFT JOIN (select `patient_id`, `cal_id`, count(`id`) as num_doc from `cln_appt_document` group by `patient_id`,`cal_id`) doc             "+
+            " ON (consult.`patient_id` = doc.`patient_id` and consult.`cal_id` = doc.`cal_id`)                                                          "+
+            " LEFT JOIN (select `patient_id`, `cal_id`, count(`id`) as num_drawing from `cln_patient_drawings` group by `patient_id`,`cal_id`) dra      "+
+            " ON (consult.`patient_id` = dra.`patient_id` and consult.`cal_id` = dra.`cal_id`)                                                          "+
+            " WHERE consult.`patient_id` = ?                                                                                                            "+
+            " ORDER BY app.`FROM_TIME` DESC                                                                                                             ";
 
         kiss.executeQuery(req,sql,patientId,function(rows){
             if(rows.length>0)
