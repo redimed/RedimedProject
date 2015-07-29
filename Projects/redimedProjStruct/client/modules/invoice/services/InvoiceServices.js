@@ -117,7 +117,25 @@ angular.module('app.loggedIn.invoice.services', [])
 		return result.post({patientId:patientId,calId:calId});
 	}
 	
+	/**
+	 * tannv.dts@gmail.com
+	 */
+	mdtService.getFeegrouptype=function(postData)
+	{
+		var funcApi = mdtApi.all('invoice/feegrouptype');
+		return funcApi.post({data: postData});
+	}
 
+	mdtService.getFeeType=function(postData)
+	{
+		var funcApi = mdtApi.all('invoice/feetype');
+		return funcApi.post({data: postData});
+	}
+	mdtService.getSaveManual=function(postData)
+	{
+		var funcApi = mdtApi.all('invoice/savemanual');
+		return funcApi.post({data: postData});
+	}
 	
 	mdtService.search = function(option){
 		var funcApi = mdtApi.all('search');

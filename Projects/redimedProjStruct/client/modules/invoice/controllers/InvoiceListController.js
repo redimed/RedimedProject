@@ -1,7 +1,6 @@
 angular.module("app.loggedIn.invoice.list.controller",[
 ])
-.controller("InvoiceListController", function($scope, $state, toastr, ItemService, ConfigService){
-	console.log($scope.options)
+.controller("InvoiceListController", function($scope, $state, toastr, ItemService, ConfigService,$modal){
 
     /*
     *   SET UP TABLE - INVOICE 
@@ -80,8 +79,36 @@ angular.module("app.loggedIn.invoice.list.controller",[
             add: true,
         }
     }
-
-
+    $scope.showAddFormInvoice = function(){
+       var modalInstance=$modal.open({
+            templateUrl:'popupAddManualInvoice',
+            controller:function($scope,$modalInstance,options){
+                $scope.options = options;
+                $scope.addmanual ={
+                    success:''
+                }
+                 $scope.$watch('addmanual.success', function(response){
+                    if (response == true) {
+                        $modalInstance.close({status:'success',data:response});
+                    };
+                     
+                })
+                $scope.cancel=function(){
+                    $modalInstance.dismiss('cancel');
+                }
+            },
+            resolve:{
+                options:function(){
+                    return $scope.options;
+                }
+            }
+        })
+        .result.then(function(response){
+           if (response.status == 'success') {
+            $scope.invoicePanel.reload();
+           };
+        }) 
+    }
     $scope.addFormInvoice = {
         is_show: false,
         open: function () {

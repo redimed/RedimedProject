@@ -19078,3 +19078,15 @@ Error at Mon Jul 13 2015 14:12:01 GMT+0800 (W. Australia Standard Time) : {"code
 Exec SQL: SELECT classes.CLASS, classes.CLASS_NAME, UOM, UOM_NAME FROM inv_uoms `uoms` INNER JOIN inv_uom_classes `classes` ON (classes.CLASS = uoms.CLASS) WHERE (uoms.ISENABLE = 1) AND (classes.ISENABLE = 1)
 Error at Mon Jul 13 2015 14:12:01 GMT+0800 (W. Australia Standard Time) : {"code":"PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR","fatal":false}
 
+Exec SQL: INSERT INTO cln_insurers (id, insurer_name, address, suburb, postcode, state, phone, country, isenable, created_by, creation_date, last_updated_by, last_update_date, FEE_GROUP_ID) VALUES (NULL, '1', '1', '1', NULL, NULL, '1', 1, '1', NULL, NULL, NULL, NULL, 'dva')
+Error at Mon Jul 27 2015 17:12:14 GMT+0700 (SE Asia Standard Time) : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","index":0}
+
+Exec SQL: INSERT INTO cln_insurers (id, insurer_name, address, suburb, postcode, state, phone, country, isenable, created_by, creation_date, last_updated_by, last_update_date, FEE_GROUP_ID) VALUES (NULL, '1', '1', '1', '1', '1', '1', 1, '1', NULL, NULL, NULL, NULL, 'dva')
+Error at Mon Jul 27 2015 17:12:17 GMT+0700 (SE Asia Standard Time) : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","index":0}
+
+Exec SQL: INSERT INTO cln_insurers (id, insurer_name, address, suburb, postcode, state, phone, country, isenable, created_by, creation_date, last_updated_by, last_update_date, FEE_GROUP_ID) VALUES (NULL, '1', '1', '1', '1', '1', '1', 1, '1', NULL, NULL, NULL, NULL, 'dva')
+Error at Mon Jul 27 2015 17:12:18 GMT+0700 (SE Asia Standard Time) : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","index":0}
+
+Exec SQL: INSERT INTO cln_insurers (id, insurer_name, address, suburb, postcode, state, phone, country, isenable, created_by, creation_date, last_updated_by, last_update_date, FEE_GROUP_ID) VALUES (NULL, '1', '1', '1', '1', '1', '1', 1, '1', NULL, NULL, NULL, NULL, 'dva')
+Error at Mon Jul 27 2015 17:12:35 GMT+0700 (SE Asia Standard Time) : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","index":0}
+

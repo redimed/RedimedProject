@@ -8,6 +8,10 @@ angular.module("app.loggedIn.claim.model", [])
         var detailApi = appApi.all("listFollowPatient");
         return detailApi.post({data: data});
     }
+    instanceService.listFollowPatientInsurer = function (data) {
+        var detailApi = appApi.all("listFollowPatientInsurer");
+        return detailApi.post({data: data});
+    }
 
     instanceService.listNoFollowPatient = function (data) {
         var detailApi = appApi.all("listNoFollowPatient");

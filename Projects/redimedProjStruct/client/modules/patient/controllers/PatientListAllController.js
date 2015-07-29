@@ -1,5 +1,6 @@
 angular.module('app.loggedIn.patient.listall.controller',[])
 	.controller('PatientListAllController', function(CompanyModel,$scope, $state){
+        console.log($scope.options);
 		$scope.patient_panel={};
 
 		var selectedID = null;

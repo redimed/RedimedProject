@@ -4,7 +4,6 @@ angular.module("app.loggedIn.patient.appt.controller", [])
     var cal_id = $stateParams.cal_id;
 
     var arrGetBy = $filter('arrGetBy');
-
     var get_list_services = function(){
 		ConfigService.system_service_by_clinical($scope.modelObjectMap.dept)
 		.then(function(response){

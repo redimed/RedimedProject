@@ -1174,5 +1174,83 @@ module.exports = {
 			kiss.exlog(fHeader,'Loi truy van lay thong tin invoice line thong qua patientId va calId',err);
 			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN002')});
 		});
+	},
+	/**
+	*manh
+	*get fee group
+	*/
+	postFeegrouptype:function(req,res){
+		var postData = req.body.data;
+		var fHeader="v2_InvoiceController->postFeegrouptype";
+		var functionCode='DM001';
+		var FEE_GROUP_TYPE=kiss.checkData(postData)?postData:'';
+		if(!kiss.checkListData(FEE_GROUP_TYPE))
+		{
+			kiss.exlog(fHeader,"Loi data truyen den",req.body);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
+			return;
+		}
+		var sql=
+			" SELECT *                                                                  	 "+
+			" FROM `cln_fee_group`                                                  		 "+
+			" WHERE FEE_GROUP_TYPE =? 												         ";
+
+		kiss.executeQuery(req,sql,[FEE_GROUP_TYPE],function(rows){
+			res.json({status:'success',data:rows});
+		},function(err){
+			kiss.exlog(fHeader,'Loi truy van lay thong tin invoice line thong qua',err);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
+		});
+	},
+	postFeetype:function(req,res){
+		var postData = req.body.data;
+		var fHeader="v2_InvoiceController->postFeetype";
+		var functionCode='DM001';
+		var FEE_GROUP_ID=kiss.checkData(postData)?postData:'';
+		if(!kiss.checkListData(FEE_GROUP_ID))
+		{
+			kiss.exlog(fHeader,"Loi data truyen den",req.body);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
+			return;
+		}
+		var sql=
+			" SELECT *                                                                  	 "+
+			" FROM `cln_fee_types`                                                  		 "+
+			" WHERE FEE_GROUP_ID =? 												         ";
+
+		kiss.executeQuery(req,sql,[FEE_GROUP_ID],function(rows){
+			res.json({status:'success',data:rows});
+		},function(err){
+			kiss.exlog(fHeader,'Loi truy van lay thong tin invoice line thong qua',err);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
+		});
+	},
+	postSavemanual:function(req,res){
+		var postData = req.body.data;
+		var fHeader="v2_InvoiceController->postSavemanual";
+		var functionCode='FN00M1';
+		postData=kiss.checkData(postData)?postData:'';
+		if(!kiss.checkListData(postData))
+		{
+			kiss.exlog(fHeader,"Loi data truyen den",req.body);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
+			return;
+		}
+		var invoiceHeaderInsert={
+			Patient_id:postData.Patient_id,
+			SOURCE_TYPE:postData.SOURCE_TYPE,
+			SOURCE_ID:postData.SOURCE_ID,
+			FEE_TYPE:postData.FEE_TYPE,
+			FORMULA:postData.FORMULA,
+			Insurer_id:postData.Insurer_id
+		}
+		var sql="insert into cln_invoice_header set ?";
+
+		kiss.executeQuery(req,sql,[invoiceHeaderInsert],function(rows){
+			res.json({status:'success',data:rows});
+		},function(err){
+			kiss.exlog(fHeader,'Loi truy van lay thong tin invoice line thong qua',err);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
+		});
 	}
 }

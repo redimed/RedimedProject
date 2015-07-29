@@ -1,0 +1,101 @@
+<div class="row">
+	<!--Patient-->
+	<div class="col-md-6">
+		<span class="field extend-field">
+			<label>Patient</label>
+			<div>
+				<input type="text" disabled placeholder="Patient"  ng-model="patientName" class="form-control">
+			</div>
+			<div style="position: absolute;right: 0;bottom: 0px;">
+				<button style="height: 32px;width: 40px;margin-right: 0px;" class="btn btn-block" ng-click="patientSearch.open()">
+					<i class="fa fa-search"></i>
+				</button>
+			</div>
+		</span>	
+	</div>
+	<!--Patient-->
+	<!--Bill To-->
+	<div class="col-md-6 col-sm-6 col-xs-12">
+		<span class="field extend-field">
+			<label>Bill To</label>
+			 <select placeholder="Fee group type" name="fee_group" ng-model="modelObjectMap.FEE_GROUP_TYPE" ng-options="value.value as value.display for (key,value) in feeGroupType" ng-change="feeGroupTypeChange(modelObjectMap.FEE_GROUP_TYPE)">
+                <option value=''>-- Bill To --</option>
+            </select>
+		</span>	
+	</div>
+</div>
+<div ng-if="patientName">
+	<div class="row" ng-if="modelObjectMap.FEE_GROUP_TYPE !== 'private_fund'">
+		<!--Feegroup-->
+		<div class="col-md-6">
+			<span class="field extend-field">
+				<label>Group Name</label>
+				 <select placeholder="Fee group type" name="fee_group_type" ng-model="modelObjectMap.FEE_GROUP_ID" ng-options="item.FEE_GROUP_ID as item.FEE_GROUP_NAME for item in feeGroupID" ng-change="feeGroupChangeID(modelObjectMap.FEE_GROUP_ID)">
+	                <option value=''>-- Group Fee --</option>
+	            </select>
+			</span>	
+		</div>
+		<!--Feegroup-->
+
+		<!--Feetype-->
+		<div class="col-md-6">
+			<span class="field extend-field">
+				<label>Fee Type</label>
+				 <select placeholder="Fee type" name="fee_type" ng-model="modelObjectMap.FEE_TYPE_ID" ng-options="item.FEE_TYPE_ID as item.FEE_TYPE_NAME for item in feeTypeID">
+	                <option value=''>-- Fee Type --</option>
+	            </select>
+			</span>	
+		</div>
+		<!--Feetype-->
+	</div>
+	<div class="row" ng-if="modelObjectMap.FEE_GROUP_TYPE == 'private_fund'">
+		<!--Insurer-->
+		<div class="col-md-6">
+			<span class="field extend-field">
+				<label>Insurer</label>
+				<div>
+					<input type="text" disabled placeholder="Insurer"  ng-model="insurers.insurer_name" class="form-control">
+				</div>
+				<div style="position: absolute;right: 0;bottom: 0px;">
+					<button style="height: 32px;width: 40px;margin-right: 0px;" class="btn btn-block" ng-click="insurerSearch.open()">
+						<i class="fa fa-search"></i>
+					</button>
+				</div>
+			</span>	
+		</div>
+		<!--Insurer-->
+
+		<!--Feetype-->
+		<div class="col-md-6">
+			<span class="field extend-field">
+				<label>Fee Type</label>
+				 <select placeholder="Fee type" name="fee_type" ng-model="modelObjectMap.FEE_TYPE_ID" ng-options="item.FEE_TYPE_ID as item.FEE_TYPE_NAME for item in feeTypeID">
+	                <option value=''>-- Fee Type --</option>
+	            </select>
+			</span>	
+		</div>
+		<!--Feetype-->
+	</div>
+	<div class="row" ng-if="insurers.insurer_name">
+		<!--Insurer-->
+		<div class="col-md-6">
+			<span class="field extend-field">
+				<label>claim</label>
+				<div>
+					<input type="text" disabled placeholder="Claim"  ng-model="claim.Claim_no" class="form-control">
+				</div>
+				<div style="position: absolute;right: 0;bottom: 0px;">
+					<button style="height: 32px;width: 40px;margin-right: 0px;" class="btn btn-block" ng-click="claimSearch.open()">
+						<i class="fa fa-search"></i>
+					</button>
+				</div>
+			</span>	
+		</div>
+		<!--Insurer-->
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6">
+		<button ng-click="save()" class="btn un-submit"><i class="fa fa-save"></i> Save </button>
+	</div>
+</div>
