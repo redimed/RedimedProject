@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.item.fee.controller",[
 ])
-.controller("ItemFeeController", function($scope, $state, $timeout, toastr, FileUploader, ItemService, $modal){
+.controller("ItemFeeController", function($scope,$http, $state, $timeout, toastr, FileUploader, ItemService, $modal){
     $scope.fee_types_panel = {};
     $scope.private_funds_panel = {};
     $scope.fee_groups_panel = {};
@@ -8,10 +8,6 @@ angular.module("app.loggedIn.item.fee.controller",[
     $scope.feeGroup = {};
     $scope.feeType = {};
     $scope.pf = {};
-
-    
-
-
 
 
     // tannv.dts: upload handle end
@@ -123,61 +119,78 @@ angular.module("app.loggedIn.item.fee.controller",[
                 },
                 {field: 'ISENABLE',label:'Is enable'},            
             ],
-                use_actions: true,
-                actions: [
-                    {
-                        class: 'fa fa-pencil',
-                        title: 'Edit',
-                        callback: function (item) {
-                            console.log(item);
-                            $scope.feeGroup.id = item.FEE_GROUP_ID;
-                            // $scope.editGroupForm.open();// tannv.dts comment
-                            $scope.editGroupFee();
-                        }
+            use_actions: true,
+            actions: [
+                {
+                    class: 'fa fa-pencil',
+                    title: 'Edit',
+                    callback: function (item) {
+                        console.log(item);
+                        $scope.feeGroup.id = item.FEE_GROUP_ID;
+                        // $scope.editGroupForm.open();// tannv.dts comment
+                        $scope.editGroupFee();
+                    }
                 },
-                    {
-                        class: 'fa fa-upload',
-                        title: 'Upload Price Source',
-                        callback: function (item) {
-                            $scope.fee_groups.select_item = item;
-                            //tan comment begin 23-07-2015
-                            /*uploader.url = 'api/erm/v2/fees/upload_group_price_source';
-                            uploader.formData[0] = {};
-                            uploader.formData[0].FEE_GROUP_ID = item.FEE_GROUP_ID
-
-                            $timeout(function () {
-                                $('#fee_type_upload').click();
-                            }, 100);*/ //tan comment end
-                            
-                            $scope.uploadSourceFileFee(item);
-                                
+                {
+                    class: 'fa fa-upload',
+                    title: 'Upload Price Source',
+                    is_hide:function(item){
+                        if(!item.SOURCE_FILE_TYPE)
+                            return true;
+                        else
+                            return false;
+                    },
+                    callback: function (item) {
+                        $scope.fee_groups.select_item = item;
+                        $scope.uploadSourceFileFee(item);
                     }
                 }, 
                 {
                     class: 'fa fa-check-circle', title: 'Update Price Source',
+                    is_hide:function(item){
+                        if (!item.PRICE_SOURCE) 
+                            return true;
+                        else 
+                            return false;
+                    },
                     callback: function(item){
-                        // if(!item.PRICE_SOURCE) {
-                        //     toastr.warning('Needed a price source', 'Warning');
-                        //     return;
-                        // }
-
-                        if(item.FEE_GROUP_TYPE == 'item_fee_type') {
-                            ItemService.importItemFromXML().then(function(response){
-                                console.log(response);
-                                if(response.status == 'success') {
-                                    toastr.success('Upload successfully !', 'Success');
-                                }
-                            });
-                            return;
-                        }
-
+                        exlog.log(item);
                         $scope.fee_groups.select_item = item;
-                        ItemService.updateGroupPriceSource(item.FEE_GROUP_ID).then(function(response){
-							console.log(response);
-                            if(response.status == 'success') {
-                                toastr.success('Upload successfully !', 'Success');
+                        function chooseImportFunction(){
+                            if(item.FEE_GROUP_TYPE==itemConst.feeGroupType.medicare.value)
+                            {
+                                return ItemService.importMedicareFeeFromSource({feeGroupId:item.FEE_GROUP_ID})
                             }
-                        });
+                            else if(item.FEE_GROUP_TYPE==itemConst.feeGroupType.dva.value)
+                            {
+                                return ItemService.importDvaFeeFromSource({feeGroupId:item.FEE_GROUP_ID})
+                            }
+                            else if(item.FEE_GROUP_TYPE==itemConst.feeGroupType.private_fund.value)
+                            {
+                                return ItemService.importFeeFromTxtSource({feeGroupId:item.FEE_GROUP_ID});
+                            }
+                            else{
+                                return ItemService.importFeeFromTxtSource({feeGroupId:item.FEE_GROUP_ID});
+                            }
+                        }
+                        chooseImportFunction()
+                        .then(function(data){
+                            if(data.status=='success')
+                            {
+                                toastr.success("Update fee success");
+                            }
+                            else
+                            {
+                                toastr.error('Error when update fee.','Error');
+                                exlog.logErr('Loi update fee tu file',err);
+                            }
+                        },function(err){
+                            toastr.error('Error when update fee.','Error');
+                            exlog.logErr('Loi update fee tu file',err);
+
+                        })
+
+                        
                     }
                 }
             ]
@@ -217,35 +230,6 @@ angular.module("app.loggedIn.item.fee.controller",[
                             $scope.editTypeFormopen();
                     }
                 },   
-                {
-                    class: 'fa fa-upload', title: 'Upload Price Source',
-                    callback: function(item){
-                        $scope.fee_types.select_item = item;
-                        //tan comment begin 23-07-2015
-                        /*uploader.url = 'api/erm/v2/fees/upload_type_price_source';
-                        uploader.formData[0]={};
-                        uploader.formData[0].FEE_TYPE_ID = item.FEE_TYPE_ID;
-                        
-						$timeout(function(){
-							$('#fee_type_upload').click();
-						}, 100);*/ //tan comment end 
-                    }
-                }, 
-                {
-                    class: 'fa fa-check-circle', title: 'Update Price Source',
-                    callback: function(item){
-                        // if(!item.PRICE_SOURCE) {
-                        //     toastr.warning('Needed a price source', 'Warning');
-                        //     return;
-                        // }
-                        $scope.fee_types.select_item = item;
-                        ItemService.updateTypePriceSource(item.FEE_TYPE_ID).then(function(response){
-                            if(response.status == 'success') {
-                                toastr.success('Upload successfully !', 'Success');
-                            }
-                        })
-                    }
-                }
             ],
         }
     }
