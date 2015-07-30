@@ -1295,9 +1295,11 @@ module.exports = {
 		});	
 	},
 	postEditmanual:function(req,res){
+
 		var postData = req.body.data;
 		var fHeader="v2_InvoiceController->postSavemanual";
 		var functionCode='FN00M1';
+		console.log(postData);
 		postData=kiss.checkData(postData)?postData:'';
 		if(!kiss.checkListData(postData))
 		{
@@ -1308,6 +1310,7 @@ module.exports = {
 		var listBDLine = postData.listLines;
 		var listInsertLine=[];
 		var invoiceHeaderInsert={
+			header_id :postData.header_id,
 			Patient_id:postData.Patient_id,
 			SOURCE_TYPE:postData.SOURCE_TYPE,
 			SOURCE_ID:postData.SOURCE_ID,
@@ -1316,15 +1319,15 @@ module.exports = {
 			Insurer_id:postData.Insurer_id
 		}
 		kiss.beginTransaction(req,function(){
-			var sql="update into cln_invoice_header set ?";
-
-			kiss.executeQuery(req,sql,[invoiceHeaderInsert],function(result){
+			kiss.executeInsertIfDupKeyUpdate(req,'cln_invoice_header',[invoiceHeaderInsert],null,function(result){
 				if(result.affectedRows>0)
 				{
+					console.log(result);
 					
                     for (var i = 0; i < listBDLine.length; i++) {
                     	var obj = {
-                    		HEADER_ID:result.insertId,
+                    		line_id:listBDLine[i].line_id,
+                    		HEADER_ID:postData.header_id,
 							ITEM_ID:listBDLine[i].ITEM_ID,
 							PRICE:listBDLine[i].PRICE,
 							QUANTITY:listBDLine[i].QUANTITY,
@@ -1336,6 +1339,7 @@ module.exports = {
 							IS_ENABLE:1
                     	}
                     	listInsertLine.push(obj);
+                    	console.log(listInsertLine);
                     };
 					kiss.executeInsertIfDupKeyUpdate(req,'cln_invoice_lines',listInsertLine,null,function(result){
 						kiss.commit(req,function(){
@@ -1387,10 +1391,9 @@ module.exports = {
 
 		kiss.executeQuery(req,sql,[postData.header_id],function(rows){
 			var sqlLine=
-				" SELECT inv_items.*,cln_invoice_lines.AMOUNT,cln_invoice_lines.TIME_SPENT,cln_invoice_lines.QUANTITY,cln_invoice_lines.PRICE  "+
+				" SELECT inv_items.*,cln_invoice_lines.AMOUNT,cln_invoice_lines.TIME_SPENT,cln_invoice_lines.QUANTITY,cln_invoice_lines.PRICE ,cln_invoice_lines.line_id "+
 				" FROM `cln_invoice_lines`                                                  		 "+
 				" INNER JOIN `inv_items` ON cln_invoice_lines.`ITEM_ID`=inv_items.`ITEM_ID` 		 "+
-				// " INNER JOIN `inv_items` ON cln_invoice_lines.`ITEM_ID`=inv_items.`ITEM_ID` 		 "+
 				" WHERE HEADER_ID =? 												         		 ";
 			kiss.executeQuery(req,sqlLine,[postData.header_id],function(dataline){
 				res.json({status:'success',data:rows,dataline:dataline});
@@ -1416,7 +1419,7 @@ module.exports = {
 		// 	return;
 		// }
 		var sql=
-			"SELECT itemFee.`ITEM_FEE_ID`,itemFee.`FEE`,`itemFee`.`PERCENT`,`item`.`ITEM_CODE`,"+
+			"SELECT itemFee.`ITEM_FEE_ID`,itemFee.`FEE`,`itemFee`.`PERCENT`,`item`.`ITEM_CODE`,`item`.`ITEM_ID`,"+
 			"item.`ITEM_NAME`,itemFee.`FEE_START_DATE`,itemFee.`FEE_TYPE_ID`    "+
 			"FROM `cln_item_fees` itemFee                                       "+
 			"INNER JOIN `inv_items` item ON itemFee.`CLN_ITEM_ID`=item.`ITEM_ID`"+

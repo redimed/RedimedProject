@@ -351,7 +351,7 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 						}
 					})
 					.result.then(function(data){
-						console.log(data[0].ITEM_NAME);
+						console.log(data[0]);
 						var checkExit=0;
 						for (key in $scope.InvoiceMap.lines) {
 							if($scope.InvoiceMap.lines[key].ITEM_CODE == data[0].ITEM_CODE){
@@ -408,7 +408,9 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 						InvoiceService.getSaveManual(postData).then(function(response){
 							$scope.success = true;
 						})
+
 					}else{
+						postData.header_id = $scope.headerdata.header_id;
 						InvoiceService.getEditManual(postData).then(function(response){
 							$scope.success = true;
 						})
@@ -418,7 +420,6 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 			}
 
 			if ($scope.checkedit == true) {
-				console.log($scope.headerdata);
 				var postData = {
 					header_id : $scope.headerdata.header_id
 				}
@@ -432,6 +433,7 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 					$scope.feeGroupChangeID(response.data[0].groupFEE_GROUP_ID);
 					$scope.modelObjectMap.FEE_TYPE_ID = response.data[0].typesFEE_TYPE_ID;
 					$scope.InvoiceMap.lines = response.dataline;
+					console.log($scope.InvoiceMap.lines[0].line_id);
 				})
 			};
 		}
