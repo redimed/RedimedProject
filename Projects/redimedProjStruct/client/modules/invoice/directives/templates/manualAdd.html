@@ -119,7 +119,7 @@
 					<th> Tax Code </th>
 					<th> Tax Rate </th>
 					<th> Tax Amount </th>
-					<!-- <th>Actions</th> -->
+					<th>Actions</th>
 				</tr>
 				<tr ng-repeat="item in InvoiceMap.lines">
 					<td>{{item.ITEM_CODE}}</td>
@@ -135,13 +135,13 @@
 					<td class="text-right">{{item.TAX_RATE}}</td>
 					<td class="text-right">{{item.TAX_RATE?item.PRICE * item.QUANTITY * item.TAX_RATE:null}}</td>
 					<!-- <td class="text-right"> -->
-					<!-- <td>
+					<td>
 						<div style="display:inline">
 							<button style="float:left" class="un_tn_btn un_tn_btn_gray un_tn_btn_sm  un_tn_btn_zip" ng-click="removeInvoiceLine(item)">
 								Remove
 							</button>
 						</div>
-					</td> -->
+					</td>
 				</tr>
 				<tr>
 					<td colspan="5"><strong> Total </strong></td>

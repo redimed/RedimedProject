@@ -25,6 +25,7 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 			$scope.feeGroupID;
 			$scope.feeTypeID;
 			$scope.FORMULA;
+			$scope.ArrayLineDelete =[];
 			$scope.InvoiceMap = {
 				lines:[]
 			}
@@ -254,6 +255,7 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 					})
 					.result.then(function(data){
 						$scope.claim = data;
+						console.log($scope.claim);
 					})
 				}
 			}
@@ -351,7 +353,7 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 						}
 					})
 					.result.then(function(data){
-						console.log(data[0]);
+						
 						var checkExit=0;
 						for (key in $scope.InvoiceMap.lines) {
 							if($scope.InvoiceMap.lines[key].ITEM_CODE == data[0].ITEM_CODE){
@@ -381,7 +383,7 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 		 		return Math.round(amount * 100) / 100;
 			}
 			$scope.save = function() {
-
+				console.log($scope.ArrayLineDelete);
 				$scope.isSubmit = true;
                 if (!$scope.mainForm.$invalid) {
                 	if ($scope.modelObjectMap.FEE_GROUP_TYPE == 'private_fund') {
@@ -392,7 +394,8 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 						FEE_TYPE:$scope.modelObjectMap.FEE_TYPE_ID,
 						FORMULA:$scope.FORMULA,
 						Insurer_id:$scope.insurers.id,
-						listLines:$scope.InvoiceMap.lines
+						listLines:$scope.InvoiceMap.lines,
+						claim_id:$scope.claim.Claim_id
 						}
 					}else{
 						postData = {
@@ -418,12 +421,35 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 					
                 }
 			}
-
+			$scope.removeInvoiceLine = function(item){
+				console.log($scope.InvoiceLineRoot);
+				// console.log(item);
+				// for (var i = 0; i < $scope.InvoiceLineRoot.length; i++) {
+				// 	if ($scope.InvoiceLineRoot[i].ITEM_ID == item.ITEM_ID) {
+				// 		$scope.ArrayLineDelete.push(item);
+				// 	};
+				// };
+				
+				for (var i = 0; i < $scope.InvoiceMap.lines.length; i++) {
+					if ($scope.InvoiceMap.lines[i].ITEM_ID == item.ITEM_ID) {
+						$scope.InvoiceMap.lines.splice(i,1);
+					};
+				};
+				
+				var postData = {
+					invoiceLineId:item.line_id
+				}
+				InvoiceService.removeInvoiceLine(postData).then(function(response){
+					console.log(response);
+				})
+			}
+			
 			if ($scope.checkedit == true) {
 				var postData = {
 					header_id : $scope.headerdata.header_id
 				}
 				InvoiceService.getOnemanual(postData).then(function(response){
+					console.log(response.data);
 					$scope.patientName = response.data[0].First_name +''+ response.data[0].Sur_name ;
 					$scope.patient = {
 						Patient_id :response.data[0].Patient_id,
@@ -433,7 +459,17 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 					$scope.feeGroupChangeID(response.data[0].groupFEE_GROUP_ID);
 					$scope.modelObjectMap.FEE_TYPE_ID = response.data[0].typesFEE_TYPE_ID;
 					$scope.InvoiceMap.lines = response.dataline;
-					console.log($scope.InvoiceMap.lines[0].line_id);
+					$scope.InvoiceLineRoot = response.dataline;
+					for (var i = 0; i < $scope.InvoiceMap.lines.length; i++) {
+						$scope.InvoiceMap.lines[i].ITEM_NAME = $scope.InvoiceMap.lines[i].ITEM_NAME.substring(0, 50);
+					};
+					$scope.insurers = {
+						insurer_name : response.data[0].insurer_name,
+						id:response.data[0].Insurer_id
+					}
+					$scope.claim = {
+						Claim_no:response.data[0].Claim_no
+					}
 				})
 			};
 		}

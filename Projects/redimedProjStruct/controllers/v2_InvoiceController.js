@@ -1244,14 +1244,16 @@ module.exports = {
 			SOURCE_ID:postData.SOURCE_ID,
 			FEE_TYPE:postData.FEE_TYPE,
 			FORMULA:postData.FORMULA,
-			Insurer_id:postData.Insurer_id
+			Insurer_id:postData.Insurer_id,
+			claim_id :postData.claim_id
 		}
 		kiss.beginTransaction(req,function(){
 			var sql="insert into cln_invoice_header set ?";
 
 			kiss.executeQuery(req,sql,[invoiceHeaderInsert],function(result){
-				if(result.affectedRows>0)
-				{
+				if (postData.listLines.length !== 0) {
+					if(result.affectedRows>0)
+					{
 					
                     for (var i = 0; i < listBDLine.length; i++) {
                     	var obj = {
@@ -1281,8 +1283,15 @@ module.exports = {
 							res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM003')});
 						});
                     })
-
-				}
+					}
+				}else{
+					kiss.commit(req,function(){
+                    	 res.json({status:'success',data:invoiceHeaderInsert});
+                    },function(err){
+                        kiss.exlog(fHeader,"Loi commit",err);
+                        res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM004')});
+                    })
+				};
 			},function(err){
 				kiss.exlog("not insert data",err);
 				kiss.rollback(req,function(){
@@ -1316,13 +1325,13 @@ module.exports = {
 			SOURCE_ID:postData.SOURCE_ID,
 			FEE_TYPE:postData.FEE_TYPE,
 			FORMULA:postData.FORMULA,
-			Insurer_id:postData.Insurer_id
+			Insurer_id:postData.Insurer_id,
+			claim_id:postData.claim_id
 		}
 		kiss.beginTransaction(req,function(){
 			kiss.executeInsertIfDupKeyUpdate(req,'cln_invoice_header',[invoiceHeaderInsert],null,function(result){
 				if(result.affectedRows>0)
 				{
-					console.log(result);
 					
                     for (var i = 0; i < listBDLine.length; i++) {
                     	var obj = {
@@ -1380,13 +1389,14 @@ module.exports = {
 			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
 			return;
 		}
-		console.log(postData);
 		var sql=
-			" SELECT cln_invoice_header.*,cln_patients.Sur_name,cln_patients.First_name,cln_patients.Patient_id,cln_fee_group.FEE_GROUP_NAME as groupFEE_GROUP_NAME,cln_fee_group.FEE_GROUP_ID as groupFEE_GROUP_ID,cln_fee_types.FEE_TYPE_ID as typesFEE_TYPE_ID,cln_fee_types.FEE_TYPE_NAME as typesFEE_TYPE_NAME"+
+			" SELECT cln_invoice_header.*,cln_patients.Sur_name,cln_patients.First_name,cln_patients.Patient_id,cln_fee_group.FEE_GROUP_NAME as groupFEE_GROUP_NAME,cln_fee_group.FEE_GROUP_ID as groupFEE_GROUP_ID,cln_fee_types.FEE_TYPE_ID as typesFEE_TYPE_ID,cln_fee_types.FEE_TYPE_NAME as typesFEE_TYPE_NAME,cln_insurers.insurer_name,cln_claims.Claim_no"+
 			" FROM `cln_invoice_header`                                                  				"+
 			" INNER JOIN `cln_patients`  ON cln_invoice_header.`Patient_id`=cln_patients.`Patient_id` 	"+
 			" INNER JOIN `cln_fee_group` ON cln_invoice_header.`SOURCE_ID`=cln_fee_group.`FEE_GROUP_ID` "+
 			" INNER JOIN `cln_fee_types` ON cln_invoice_header.`FEE_TYPE`=cln_fee_types.`FEE_TYPE_ID` 	"+
+			" LEFT JOIN `cln_insurers`  ON cln_invoice_header.`Insurer_id`=cln_insurers.`id` 			"+
+			" LEFT JOIN `cln_claims`    ON cln_invoice_header.`claim_id`=cln_claims.`Claim_id` 	        "+
 			" WHERE header_id =? 												            			";
 
 		kiss.executeQuery(req,sql,[postData.header_id],function(rows){
@@ -1396,6 +1406,7 @@ module.exports = {
 				" INNER JOIN `inv_items` ON cln_invoice_lines.`ITEM_ID`=inv_items.`ITEM_ID` 		 "+
 				" WHERE HEADER_ID =? 												         		 ";
 			kiss.executeQuery(req,sqlLine,[postData.header_id],function(dataline){
+				console.log(rows);
 				res.json({status:'success',data:rows,dataline:dataline});
 			},function(err){
 				kiss.exlog(fHeader,'Loi truy van lay thong tin invoice header thong qua',err);
@@ -1419,7 +1430,7 @@ module.exports = {
 		// 	return;
 		// }
 		var sql=
-			"SELECT itemFee.`ITEM_FEE_ID`,itemFee.`FEE`,`itemFee`.`PERCENT`,`item`.`ITEM_CODE`,`item`.`ITEM_ID`,"+
+			"SELECT itemFee.`ITEM_FEE_ID`,itemFee.`FEE`,`itemFee`.`PERCENT`,`item`.`ITEM_CODE`,`item`.`ITEM_ID`,`item`.`TAX_ID`,`item`.`TAX_CODE`,`item`.`TAX_RATE`,"+
 			"item.`ITEM_NAME`,itemFee.`FEE_START_DATE`,itemFee.`FEE_TYPE_ID`    "+
 			"FROM `cln_item_fees` itemFee                                       "+
 			"INNER JOIN `inv_items` item ON itemFee.`CLN_ITEM_ID`=item.`ITEM_ID`"+
