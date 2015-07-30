@@ -15,8 +15,6 @@ angular.module('app.loggedIn.script.directive.add', [])
 		link: function(scope, ele, attrs){
 
 			var user_id = $cookieStore.get('userInfo').id;
-			
-
 
 			var save = function(){
 
@@ -25,7 +23,6 @@ angular.module('app.loggedIn.script.directive.add', [])
 
 				var postData = angular.copy(scope.script.form);
 
-				//var postDatar = angular.copy(scope.script_s);
 				var postDatar = [];
 				angular.forEach(scope.script_s, function(value_script, index_script){
 					if (scope.script_s[index_script].Checked === "1") {
@@ -35,14 +32,6 @@ angular.module('app.loggedIn.script.directive.add', [])
 					};
 				});
 				console.log('chiennnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn',postDatar);
-
-				/*ScriptModel.postID($stateParams.cal_id)
-				.then(function(response){
-					
-					scope.script.list_medicare.ID_SCRIPT = response.data;
-					console.log('^^^^^^: ', scope.script.list_medicare.ID_SCRIPT);
-					
-				}, function(error){})*/
 
 				postData.Patient_id = $stateParams.patient_id;
 				postData.CAL_ID = $stateParams.cal_id;
@@ -64,21 +53,18 @@ angular.module('app.loggedIn.script.directive.add', [])
 						console.log('postDatar',postDatar);
 						ScriptModel.postScriptHead(postDatar)
 						.then(function(responser){
-							//console.log('^^^^^^^^: ', postDatar);
 						}, function(error){})
-						//scope.script.list_medicare.ID_SCRIPT = response.data;
-					//$state.go('loggedIn.patient.script');
 				}, function(error){
 					scope.script.errors = angular.copy(error.data.errors);
 					ConfigService.beforeError(scope.script.errors);
 				})
-				//console.log('^^^^^^^^: ', scope.script.list_medicare);
-
 			}
 			
 			var patientLoad = function(){
 				PatientService.get($stateParams.patient_id)
 				.then(function(response){
+					console.log("uuuuuuuuuuuuuuuuuuuuuuuuu",scope.current_patient);
+					console.log("uuuuuuuuuuuuuuuuuuuuuuuuu",response.data);
 					scope.patient.item = response.data;
 				}, function(error){});
 			}
@@ -90,11 +76,6 @@ angular.module('app.loggedIn.script.directive.add', [])
 
 
 			var scriptLoad = function(){
-				/*scope.postData = {
-					CAL_ID: $stateParams.cal_id,
-					DOCTOR_ID: null
-				}*/
-				//scope.script.list_medicare.Checked = 0;
 				scope.script_s = angular.copy(scope.medicare);
 				angular.forEach(scope.script_s, function(value_script, index_script){
 					scope.script_s[index_script].Checked = null;
@@ -103,7 +84,6 @@ angular.module('app.loggedIn.script.directive.add', [])
 					scope.script_s[index_script].Last_updated_by = user_id;
 					scope.script_s[index_script].Last_update_date = moment().format('YYYY-MM-DD');
 				});
-				//console.log('^^^^^^^^^: ', scope.script.list_medicare);
 				ScriptModel.postSing(user_id)
 				.then(function(response){
 					console.log('+++++++++++++++++: ',response.data);
@@ -115,23 +95,13 @@ angular.module('app.loggedIn.script.directive.add', [])
 			}
 
 			var getUsername = function() {
-				//AppointmentModel.one(user_id).then(function(response){
-					//scope.postData.DOCTOR_ID = response.data.DOCTOR_ID;
-					//console.log('SSSSSSSSSSS ', scope.postData.DOCTOR_ID);
 					OutreferralModel.DotorFromUserId(user_id)
 						.then(function(response){
-							//console.log(response);
 							scope.script.form.prescriber = response.data[0].NAME;
 						}, function(error){})
-				//}, function(error){})
 			}
 
-			//var getID_Script = function(){
-				
-			//}
-
 			scope.script = {
-				//getID_Script: function(){ getID_Script(); },
 				getUsername: function(){ getUsername(); },
 				add: function(params){ save(params); },
 				load: function(){ scriptLoad(); },
@@ -153,11 +123,11 @@ angular.module('app.loggedIn.script.directive.add', [])
 					patientDate: '',
 					agentAddress: ''
 				}
-			}//end script
+			}
+			//end script
 			scope.script.load();
 			scope.patient.load();
 			scope.script.getUsername();
-			//scope.script.getID_Script();
 		}
 
 	}//end return
