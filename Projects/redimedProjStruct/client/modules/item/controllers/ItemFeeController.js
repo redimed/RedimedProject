@@ -582,13 +582,17 @@ angular.module("app.loggedIn.item.fee.controller",[
             });
         }
 
-
+        /**
+         * tannv.dts@gmail.com
+         * @param  {[type]} feeGroup [description]
+         * @return {[type]}          [description]
+         */
         $scope.uploadSourceFileFee=function(feeGroup)
         {
 
             var modalInstance=$modal.open({
                 templateUrl:"uploadFeeSourceTemplate",
-                controller:function($scope,$modalInstance,feeGroup)
+                controller:function($scope,$modalInstance,feeGroup,fee_groups_panel)
                 {
                     /**
                      * tannv.dts@gmail.com
@@ -639,11 +643,14 @@ angular.module("app.loggedIn.item.fee.controller",[
                     {
                         // alert("OK")
                         $modalInstance.close("success");
+                        fee_groups_panel.reload();
+
                     }
 
                 },
                 resolve:{
-                    feeGroup:function(){return feeGroup}
+                    feeGroup:function(){return feeGroup},
+                    fee_groups_panel:function(){return $scope.fee_groups_panel}
                 }
             });
 

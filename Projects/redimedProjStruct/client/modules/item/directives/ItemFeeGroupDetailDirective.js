@@ -26,8 +26,8 @@ angular.module("app.loggedIn.item.feegroup.detail.directive", [])
 
                 var loadData = function (id) {
                     ItemService.feegroupdetail(id).then(function (data) {
-                        angular.extend(scope.modelObjectMap, data.data);
 
+                        angular.extend(scope.modelObjectMap, data.data);
                         scope.currentGroupType=scope.feeGroupType[scope.modelObjectMap.FEE_GROUP_TYPE];//tan
                         // exlog.alert(scope.modelObjectMap)
                         ConfigService.autoConvertData(scope.modelObjectMap);

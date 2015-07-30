@@ -727,7 +727,10 @@ angular.module('app.config', [])
                     data[key] = data[key].toString();
                 else if (key.toLowerCase().indexOf("_date") != -1 || key.toLowerCase().indexOf("date") != -1)
                     {
-                        if(key !== "Last_updated_by") data[key] = new Date(data[key]);
+                        // tannv.dts comment
+                        // if(key !== "Last_updated_by") data[key] = new Date(data[key]);
+                        // tannv.dts change
+                        if(key.toLowerCase() !== "last_updated_by") data[key] = new Date(data[key]);
                     }
             }
         }

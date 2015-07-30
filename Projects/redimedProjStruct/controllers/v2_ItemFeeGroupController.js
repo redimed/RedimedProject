@@ -288,14 +288,24 @@ module.exports = {
 
     },
 
+    /**
+     * modify by: Duc manh
+     * modify by:tannv.dts@gmail.com
+     */
     postUpdate: function (req, res) {
         var postData = req.body;
-        var item_id = postData.FEE_GROUP_ID;
+        var feeGroupId = postData.FEE_GROUP_ID;
         postData.COLUMN_MAPPING=JSON.stringify(postData.COLUMN_MAPPING);
-        kiss.exlog(postData,item_id);
+        //tannv add
+        var userInfo=kiss.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+        var userId=kiss.checkData(userInfo.id)?userInfo.id:null;
+        var currentTime=kiss.getCurrentTimeStr();
+        postData.LAST_UPDATED_BY=userId;
+        //exlog
+        kiss.exlog(postData,feeGroupId);
 
         db.FeeGroup.update(postData, {
-            FEE_GROUP_ID: item_id
+            FEE_GROUP_ID: feeGroupId
         })
         .success(function (data) {
             res.json({
@@ -840,7 +850,7 @@ module.exports = {
                             
                         }*/
                         var columnMapping=JSON.parse(groupFee.COLUMN_MAPPING);
-                        kiss.exlog(fHeader,'columnMapping',columnMapping);
+                        
 
                         //lay danh sach items (item_id, item_code)
                         var sql="SELECT item.* FROM `inv_items` item WHERE item.`ISENABLE`=1;";
@@ -897,11 +907,12 @@ module.exports = {
                                             if(columnMapping.feeMapping[feeTypeOrder])
                                             {
                                                 //kiem tra column trong source co ton tai hay khong
+                                                
                                                 if(sourceFee[ columnMapping.feeMapping[feeTypeOrder].col-1 ])
                                                 {
                                                     //column co don vi do luong la currency thi luu vao field FEE
                                                     //column co don vi do luong la percent thi luu vao field PERCENT
-                                                    if(columnMapping.feeMapping[feeTypeOrder].uom=='currency')
+                                                    if(columnMapping.feeMapping[feeTypeOrder].uom.toLowerCase()=='currency')
                                                     {
                                                         dbFee.FEE=parseValue(sourceFee[ columnMapping.feeMapping[feeTypeOrder].col-1 ],'float','$');
                                                     }
@@ -913,7 +924,6 @@ module.exports = {
                                                 }
                                                 
                                             }
-
                                             //CLN_ITEM_ID va FEE_START_DATE bat buoc phai co gia tri
                                             //Mot trong 2 FEE va PERCENT bat buoc phai co gia tri
                                             if(kiss.checkListData(dbFee.CLN_ITEM_ID , dbFee.FEE_START_DATE))
@@ -930,6 +940,7 @@ module.exports = {
                                 }
                                 else
                                 {
+                                    kiss.exlog(fHeader,"Khong co feeType nao tuong ung feeGroupId:"+feeGroupId);
                                     functionSuccess(listDbFee);
                                 }
                             },function(err){
@@ -941,7 +952,6 @@ module.exports = {
                             functionError(err);
                         });
                     }
-
                     //parse source fees (array) thanh list cac json co the luu vao database
                     parseSourceFeesToDbFees(listSourceFee,function(listDbFee){
                         // kiss.exFileJSON(listDbFee,'dbFee.txt');
