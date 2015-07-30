@@ -38,6 +38,7 @@ angular.module('app.loggedIn.alert.directives.list', [])
 				max_size: 5,
 				name: '',
 				description: '',
+				SERVICE_COLOR: '',
 				Creation_date: 'desc',
 				isenable:''
 			}

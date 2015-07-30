@@ -186,7 +186,8 @@ module.exports = {
 		var errors = [];
 		var required = [
 			{field: 'name', message: 'Alert Name required'},
-			{field: 'description', message: 'Description required'}
+			{field: 'description', message: 'Description required'},
+			{field: 'SERVICE_COLOR', message: 'Service color required'}
 		]
 
 		_.forIn(postData, function(value, field){
@@ -277,7 +278,8 @@ module.exports = {
 		var errors = [];
 		var required = [
 			{field: 'name', message: 'Alert Name required'},
-			{field: 'description', message: 'Description required'}
+			{field: 'description', message: 'Description required'},
+			{field: 'SERVICE_COLOR', message: 'Service color required'}
 		]
 
 		_.forIn(postData, function(value, field){
@@ -331,6 +333,7 @@ module.exports = {
 				'id',
 				knex.raw('IFNULL(name,\'\') AS name'),
 				knex.raw('IFNULL(description,\'\') AS description'),
+				'SERVICE_COLOR',
 				'Creation_date',
 				'isenable'
 			)

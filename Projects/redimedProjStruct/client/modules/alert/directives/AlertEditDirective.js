@@ -11,9 +11,14 @@ angular.module('app.loggedIn.alert.directives.edit', [])
 		link: function(scope, elem, attrs){
 			var user_id = $cookieStore.get('userInfo').id;
 
+			$("#service_color").minicolors({
+		        control: 'wheel'
+		    });
+			
 			var form = {
 				name: '',
 				description: '',
+				SERVICE_COLOR: '',
 				Created_by: user_id,
 				Last_updated_by: user_id
 			}

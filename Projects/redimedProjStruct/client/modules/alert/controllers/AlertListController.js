@@ -4,7 +4,7 @@ angular.module('app.loggedIn.alert.controllers.list', [])
 	$scope.alert = {
 		success: false
 	}
-
+    
 	$scope.$watch('alert.success', function(success){
 		if(success){
 			$modalInstance.close('success');
