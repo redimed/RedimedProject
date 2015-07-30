@@ -1122,9 +1122,16 @@ table.timetable-table td:last-child {
 .custom-timesheet {
     font-size: 13px;
 }
+.textarea-paperless {
+    height: 50px !important;
+}
 
 .top-10 {
     margin-top: 10px;
+}
+
+.top-5 {
+    margin-top: 5px;
 }
 
 .width-auto {
