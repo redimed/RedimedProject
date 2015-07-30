@@ -30,6 +30,10 @@ module.exports = function(sequelize, DataTypes){
 		BASE_TOTAL_AMOUNT: DataTypes.FLOAT,
 		LAST_UPDATED_BY: DataTypes.INTEGER(11),
 		CREATED_BY: DataTypes.INTEGER(11),
+		SOURCE_TYPE:DataTypes.STRING(20),
+		SOURCE_ID:DataTypes.INTEGER(11),
+		FEE_TYPE:DataTypes.INTEGER(11),
+		FORMULA:DataTypes.STRING(20),
 	}, {
 		tableName: 'cln_invoice_header',
 		createdAt: 'CREATION_DATE',

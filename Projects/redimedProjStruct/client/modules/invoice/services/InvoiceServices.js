@@ -136,6 +136,21 @@ angular.module('app.loggedIn.invoice.services', [])
 		var funcApi = mdtApi.all('invoice/savemanual');
 		return funcApi.post({data: postData});
 	}
+	mdtService.getEditManual=function(postData)
+	{
+		var funcApi = mdtApi.all('invoice/editmanual');
+		return funcApi.post({data: postData});
+	}
+	mdtService.getOnemanual=function(postData)
+	{
+		var funcApi = mdtApi.all('invoice/onemanual');
+		return funcApi.post({data: postData});
+	}
+	mdtService.getfeetypefillter=function(postData)
+	{
+		var funcApi = mdtApi.all('invoice/getfeetypefillter');
+		return funcApi.post({data: postData});
+	}
 	
 	mdtService.search = function(option){
 		var funcApi = mdtApi.all('search');

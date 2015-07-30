@@ -146,3 +146,18 @@
         <button class="un-button-submit-m ng-scope" style="margin-top: -5px;" ng-click="cancel()">Cancel</button>
     </div>
 </script>
+
+<script type="text/ng-template" id="popupEditManualInvoice">
+  <style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+    </style>
+   <div class="modal-body">
+       <label class="un-label-popup-header-m un-bg-label-B41E46-m">Add Manual Invoice</label>
+       <addmaunal-invoice options="options" success="addmanual.success" checkedit="true" headerdata="addmanual.headerdata"></addmaunal-invoice>
+    </div>
+    <div class="modal-footer" style="height: 47px">
+        <button class="un-button-submit-m ng-scope" style="margin-top: -5px;" ng-click="cancel()">Cancel</button>
+    </div>
+</script>

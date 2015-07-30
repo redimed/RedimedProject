@@ -64,8 +64,44 @@ angular.module("app.loggedIn.invoice.list.controller",[
             {
                 class: 'fa fa-money', title: 'Detail',
                 callback: function(item){
-                    exlog.log(item)
-               		$state.go('loggedIn.patient.invoice_detail', {header_id: item.header_id,patient_id:item.Patient_id,cal_id:item.cal_id}); 
+                    if (item.cal_id) {
+                       $state.go('loggedIn.patient.invoice_detail', {header_id: item.header_id,patient_id:item.Patient_id,cal_id:item.cal_id}); 
+                   }else{
+                          var modalInstance=$modal.open({
+                                templateUrl:'popupEditManualInvoice',
+                                controller:function($scope,$modalInstance,options,item){
+                                    $scope.options = options;
+                                    $scope.addmanual ={
+                                        success:'',
+                                        headerdata:item
+                                    }
+                                     $scope.$watch('addmanual.success', function(response){
+                                        if (response == true) {
+                                            $modalInstance.close({status:'success',data:response});
+                                        };
+                                         
+                                    })
+                                    $scope.cancel=function(){
+                                        $modalInstance.dismiss('cancel');
+                                    }
+                                },
+                                resolve:{
+                                    options:function(){
+                                        return $scope.options;
+                                    },
+                                    item:function(){
+                                        return item;
+                                    }
+                                },
+                                size:'lg'
+                            })
+                            .result.then(function(response){
+                               if (response.status == 'success') {
+                                $scope.invoicePanel.reload();
+                               };
+                            }) 
+                   };
+               		 
                 }
             },
         ],

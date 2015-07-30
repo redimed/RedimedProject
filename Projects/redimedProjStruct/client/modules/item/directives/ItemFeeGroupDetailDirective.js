@@ -29,8 +29,10 @@ angular.module("app.loggedIn.item.feegroup.detail.directive", [])
                         angular.extend(scope.modelObjectMap, data.data);
 
                         scope.currentGroupType=scope.feeGroupType[scope.modelObjectMap.FEE_GROUP_TYPE];//tan
-
+                        // exlog.alert(scope.modelObjectMap)
                         ConfigService.autoConvertData(scope.modelObjectMap);
+                        // exlog.alert(scope.modelObjectMap)
+
                         if (scope.modelObjectMap.COLUMN_MAPPING) {
                              scope.modelObjectMap.COLUMN_MAPPING = JSON.parse(scope.modelObjectMap.COLUMN_MAPPING);
                             var feeMapping = scope.modelObjectMap.COLUMN_MAPPING;

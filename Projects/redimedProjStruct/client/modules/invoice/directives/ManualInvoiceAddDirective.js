@@ -5,11 +5,18 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 		restrict: 'EA',
 		scope:{
 			options:'=',
-			success:'='
+			success:'=',
+			checkedit:'=',
+			headerdata:'='
 		},
 		templateUrl: 'modules/invoice/directives/templates/manualAdd.html',
 		controller: function($scope) {
 			var arrGetBy = $filter('arrGetBy');
+			$scope.modelObjectMap = {
+				FEE_GROUP_TYPE :null,
+				FEE_GROUP_ID:null,
+				FEE_TYPE_ID:null
+			}
 			$scope.insurers;
 			$scope.patientName;
 			$scope.patient;
@@ -251,6 +258,7 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 				}
 			}
 			$scope.feeGroupTypeChange = function(value){
+				$scope.modelObjectMap.FEE_GROUP_TYPE = value;
 				$scope.insurers=null;
 				$scope.feeTypeID = null;
 				InvoiceService.getFeegrouptype(value).then(function(response){
@@ -259,6 +267,7 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 			}
 			$scope.feeGroupChangeID = function(value){
 				$scope.modelObjectMap.FEE_TYPE_ID=null;
+				$scope.modelObjectMap.FEE_GROUP_ID = value;
 				for (key in $scope.feeGroupID) {
 					if(key == value){
 						$scope.FORMULA = $scope.feeGroupID[key].FORMULA;
@@ -288,7 +297,7 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 							var load = function(){
 								 $scope.ItemAll.loading = true;
 								ItemService.insertManualLine(search).then(function(response){
-									console.log(response);
+									console.log(response.sql);
 									$scope.ItemAll.list = response.data;
 									$scope.ItemAll.count = response.count;
 								})
@@ -323,7 +332,15 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 							}
 							$scope.ItemAll.load();
 							$scope.clickOnRow = function(value){
-								$modalInstance.close(value);
+								var postData = {
+									ITEM_ID:value.ITEM_ID,
+									FEE_TYPE_ID:FEE_TYPE_ID,
+									CurrentDate : new Date()
+								}
+								InvoiceService.getfeetypefillter(postData).then(function(response){
+									$modalInstance.close(response.data);
+								})
+								
 							}
 						},
 						size:'lg',
@@ -334,25 +351,38 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 						}
 					})
 					.result.then(function(data){
+						console.log(data[0].ITEM_NAME);
 						var checkExit=0;
 						for (key in $scope.InvoiceMap.lines) {
-							if($scope.InvoiceMap.lines[key].ITEM_CODE == data.ITEM_CODE){
+							if($scope.InvoiceMap.lines[key].ITEM_CODE == data[0].ITEM_CODE){
 								checkExit ++;
 							}
 						};
 						if (checkExit == 0) {
-							data.ITEM_NAME = data.ITEM_NAME.substring(0, 50);
-							data.QUANTITY = 1;
-							data.TIME_SPENT = 0;
-							data.IS_ENABLE = 1;
-							$scope.InvoiceMap.lines.push(data);
+							data[0].ITEM_NAME = data[0].ITEM_NAME.substring(0, 50);
+							data[0].PRICE = data[0].FEE;
+							data[0].QUANTITY = 1;
+							data[0].TIME_SPENT = 0;
+							data[0].IS_ENABLE = 1;
+							$scope.InvoiceMap.lines.push(data[0]);
 						};
 						
 					})
 				}
 			}
+			$scope.amountBill = function() {
+				var amount = 0;
+				for(var i = 0, len = $scope.InvoiceMap.lines.length; i < len; ++i) {
+		 			var line = $scope.InvoiceMap.lines[i];
+		 			line.AMOUNT = line.PRICE * line.QUANTITY;
+		 			amount +=  line.AMOUNT;
+		 		}
+
+		 		return Math.round(amount * 100) / 100;
+			}
 			$scope.save = function() {
-				 $scope.isSubmit = true;
+
+				$scope.isSubmit = true;
                 if (!$scope.mainForm.$invalid) {
                 	if ($scope.modelObjectMap.FEE_GROUP_TYPE == 'private_fund') {
 					postData = {
@@ -374,11 +404,36 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 							listLines:$scope.InvoiceMap.lines
 						}
 					};
-					InvoiceService.getSaveManual(postData).then(function(response){
-						$scope.success = true;
-					})
+					if ($scope.checkedit !== true) {
+						InvoiceService.getSaveManual(postData).then(function(response){
+							$scope.success = true;
+						})
+					}else{
+						InvoiceService.getEditManual(postData).then(function(response){
+							$scope.success = true;
+						})
+					};
+					
                 }
 			}
+
+			if ($scope.checkedit == true) {
+				console.log($scope.headerdata);
+				var postData = {
+					header_id : $scope.headerdata.header_id
+				}
+				InvoiceService.getOnemanual(postData).then(function(response){
+					$scope.patientName = response.data[0].First_name +''+ response.data[0].Sur_name ;
+					$scope.patient = {
+						Patient_id :response.data[0].Patient_id,
+					}
+					$scope.feeGroupType=invConst.feeGroupType;
+					$scope.feeGroupTypeChange(response.data[0].SOURCE_TYPE);
+					$scope.feeGroupChangeID(response.data[0].groupFEE_GROUP_ID);
+					$scope.modelObjectMap.FEE_TYPE_ID = response.data[0].typesFEE_TYPE_ID;
+					$scope.InvoiceMap.lines = response.dataline;
+				})
+			};
 		}
 	}//end return
 })

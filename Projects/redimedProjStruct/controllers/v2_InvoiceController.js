@@ -1246,13 +1246,10 @@ module.exports = {
 			FORMULA:postData.FORMULA,
 			Insurer_id:postData.Insurer_id
 		}
-		console.log(postData);
 		kiss.beginTransaction(req,function(){
 			var sql="insert into cln_invoice_header set ?";
 
 			kiss.executeQuery(req,sql,[invoiceHeaderInsert],function(result){
-				console.log(result.insertId);
-				// res.json({status:'success',data:rows});
 				if(result.affectedRows>0)
 				{
 					
@@ -1295,8 +1292,143 @@ module.exports = {
 		},function(err){
 			kiss.exlog(fHeader,'Loi mo transaction',err);
 			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
-		});
+		});	
+	},
+	postEditmanual:function(req,res){
+		var postData = req.body.data;
+		var fHeader="v2_InvoiceController->postSavemanual";
+		var functionCode='FN00M1';
+		postData=kiss.checkData(postData)?postData:'';
+		if(!kiss.checkListData(postData))
+		{
+			kiss.exlog(fHeader,"Loi data truyen den",req.body);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
+			return;
+		}
+		var listBDLine = postData.listLines;
+		var listInsertLine=[];
+		var invoiceHeaderInsert={
+			Patient_id:postData.Patient_id,
+			SOURCE_TYPE:postData.SOURCE_TYPE,
+			SOURCE_ID:postData.SOURCE_ID,
+			FEE_TYPE:postData.FEE_TYPE,
+			FORMULA:postData.FORMULA,
+			Insurer_id:postData.Insurer_id
+		}
+		kiss.beginTransaction(req,function(){
+			var sql="update into cln_invoice_header set ?";
 
-		
+			kiss.executeQuery(req,sql,[invoiceHeaderInsert],function(result){
+				if(result.affectedRows>0)
+				{
+					
+                    for (var i = 0; i < listBDLine.length; i++) {
+                    	var obj = {
+                    		HEADER_ID:result.insertId,
+							ITEM_ID:listBDLine[i].ITEM_ID,
+							PRICE:listBDLine[i].PRICE,
+							QUANTITY:listBDLine[i].QUANTITY,
+							TIME_SPENT:listBDLine[i].TIME_SPENT,
+							AMOUNT:listBDLine[i].PRICE*listBDLine[i].QUANTITY,
+							TAX_ID:listBDLine[i].TAX_ID,
+							TAX_CODE:listBDLine[i].TAX_CODE,
+							TAX_RATE:listBDLine[i].TAX_RATE,
+							IS_ENABLE:1
+                    	}
+                    	listInsertLine.push(obj);
+                    };
+					kiss.executeInsertIfDupKeyUpdate(req,'cln_invoice_lines',listInsertLine,null,function(result){
+						kiss.commit(req,function(){
+                        	 res.json({status:'success',data:listInsertLine});
+	                    },function(err){
+	                        kiss.exlog(fHeader,"Loi commit",err);
+	                        res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM004')});
+	                    })
+                    },function(err){
+                        kiss.exlog(fHeader,'Loi truy van insert list lines',err);
+                       kiss.rollback(req,function(){
+							res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM003')});
+						});
+                    })
+
+				}
+			},function(err){
+				kiss.exlog("not insert data",err);
+				kiss.rollback(req,function(){
+					res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM002')});
+				});
+			},true);
+		},function(err){
+			kiss.exlog(fHeader,'Loi mo transaction',err);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
+		});	
+	},
+	postOnemanual:function(req,res){
+		var postData = req.body.data;
+		var fHeader="v2_InvoiceController->postOnemanual";
+		var functionCode='FN003';
+
+		postData=kiss.checkData(postData)?postData:'';
+
+		if(!kiss.checkListData(postData.header_id))
+		{
+			kiss.exlog(fHeader,"Loi data truyen den",req.body);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
+			return;
+		}
+		console.log(postData);
+		var sql=
+			" SELECT cln_invoice_header.*,cln_patients.Sur_name,cln_patients.First_name,cln_patients.Patient_id,cln_fee_group.FEE_GROUP_NAME as groupFEE_GROUP_NAME,cln_fee_group.FEE_GROUP_ID as groupFEE_GROUP_ID,cln_fee_types.FEE_TYPE_ID as typesFEE_TYPE_ID,cln_fee_types.FEE_TYPE_NAME as typesFEE_TYPE_NAME"+
+			" FROM `cln_invoice_header`                                                  				"+
+			" INNER JOIN `cln_patients`  ON cln_invoice_header.`Patient_id`=cln_patients.`Patient_id` 	"+
+			" INNER JOIN `cln_fee_group` ON cln_invoice_header.`SOURCE_ID`=cln_fee_group.`FEE_GROUP_ID` "+
+			" INNER JOIN `cln_fee_types` ON cln_invoice_header.`FEE_TYPE`=cln_fee_types.`FEE_TYPE_ID` 	"+
+			" WHERE header_id =? 												            			";
+
+		kiss.executeQuery(req,sql,[postData.header_id],function(rows){
+			var sqlLine=
+				" SELECT inv_items.*,cln_invoice_lines.AMOUNT,cln_invoice_lines.TIME_SPENT,cln_invoice_lines.QUANTITY,cln_invoice_lines.PRICE  "+
+				" FROM `cln_invoice_lines`                                                  		 "+
+				" INNER JOIN `inv_items` ON cln_invoice_lines.`ITEM_ID`=inv_items.`ITEM_ID` 		 "+
+				// " INNER JOIN `inv_items` ON cln_invoice_lines.`ITEM_ID`=inv_items.`ITEM_ID` 		 "+
+				" WHERE HEADER_ID =? 												         		 ";
+			kiss.executeQuery(req,sqlLine,[postData.header_id],function(dataline){
+				res.json({status:'success',data:rows,dataline:dataline});
+			},function(err){
+				kiss.exlog(fHeader,'Loi truy van lay thong tin invoice header thong qua',err);
+				res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM002')});
+			});
+		},function(err){
+			kiss.exlog(fHeader,'Loi truy van lay thong tin invoice header thong qua',err);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
+		});
+	},
+	postGetfeetypefillter:function(req,res){
+		var postData = req.body.data;
+		console.log(postData);
+		var fHeader="v2_InvoiceController->postGetfeetypefillter";
+		var functionCode='DM001';
+		var postData=kiss.checkData(postData)?postData:'';
+		// if(!kiss.checkListData(postData))
+		// {
+		// 	kiss.exlog(fHeader,"Loi data truyen den",req.body);
+		// 	res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
+		// 	return;
+		// }
+		var sql=
+			"SELECT itemFee.`ITEM_FEE_ID`,itemFee.`FEE`,`itemFee`.`PERCENT`,`item`.`ITEM_CODE`,"+
+			"item.`ITEM_NAME`,itemFee.`FEE_START_DATE`,itemFee.`FEE_TYPE_ID`    "+
+			"FROM `cln_item_fees` itemFee                                       "+
+			"INNER JOIN `inv_items` item ON itemFee.`CLN_ITEM_ID`=item.`ITEM_ID`"+
+			"WHERE item.`ITEM_ID`=? AND `itemFee`.`FEE_TYPE_ID`=?               "+
+			"AND itemFee.`FEE_START_DATE`<=?                                    "+
+			"ORDER BY itemFee.`FEE_START_DATE` DESC                             "+
+			"LIMIT 1															";
+		kiss.executeQuery(req,sql,[postData.ITEM_ID,postData.FEE_TYPE_ID,postData.CurrentDate],function(rows){
+			res.json({status:'success',data:rows});
+		},function(err){
+			kiss.exlog(fHeader,'Loi truy van lay thong tin thong qua',err);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
+		});
 	}
 }

@@ -106,14 +106,6 @@
 <!-- INVOICE ITEMS -->
 <div class="row">
 	<div class="portlet box mporlet-black" ng-if="modelObjectMap.FEE_TYPE_ID">
-		<!-- <div class="portlet-title mporlet-titleblack">
-		    <div class="caption">
-		       Invoice Items
-		    </div>
-		    <div class="pull-right navbar-right">
-	            <button ng-click="itemSearch.open()" class="un_tn_btn un_tn_btn_pink">Choose Item </button>
-	        </div>
-		</div> -->
 		<div class="portlet-body">
 			<button ng-click="itemSearch.open()" class="un_tn_btn un_tn_btn_pink" style="margin-left: 89%;margin-top: -8px;">Choose Item </button>
 			<table class="mdt-table">
@@ -127,7 +119,7 @@
 					<th> Tax Code </th>
 					<th> Tax Rate </th>
 					<th> Tax Amount </th>
-					<th>Actions</th>
+					<!-- <th>Actions</th> -->
 				</tr>
 				<tr ng-repeat="item in InvoiceMap.lines">
 					<td>{{item.ITEM_CODE}}</td>
@@ -143,17 +135,18 @@
 					<td class="text-right">{{item.TAX_RATE}}</td>
 					<td class="text-right">{{item.TAX_RATE?item.PRICE * item.QUANTITY * item.TAX_RATE:null}}</td>
 					<!-- <td class="text-right"> -->
-					<td>
+					<!-- <td>
 						<div style="display:inline">
 							<button style="float:left" class="un_tn_btn un_tn_btn_gray un_tn_btn_sm  un_tn_btn_zip" ng-click="removeInvoiceLine(item)">
 								Remove
 							</button>
 						</div>
-					</td>
+					</td> -->
 				</tr>
 				<tr>
 					<td colspan="5"><strong> Total </strong></td>
 					<td class="text-right">${{amountBill()}}</td>
+					<td colspan="3"></td>
 				</tr>
 			</table>
 
