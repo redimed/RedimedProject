@@ -1,3 +1,7 @@
+var knex = require('../knex-connect.js');
+var commonFunction =  require('../knex-function.js');
+var S = require('string');
+var _ = require('lodash');
 var db = require('../models');
 var fs = require('fs');
 var mdt_functions = require('../mdt-functions.js');
@@ -224,6 +228,41 @@ var general_process = function(req, res){
 }
 
 module.exports = {
+	postSearchmanual: function(req, res) {
+		var postData = req.body;
+		console.log(postData);
+		var sql = knex
+				.select('inv_items.*')
+				.from('cln_item_fees')
+				.innerJoin('inv_items','cln_item_fees.CLN_ITEM_ID','inv_items.ITEM_ID')
+				.where(knex.raw('IFNULL(ITEM_CODE,\'\') LIKE \'%'+postData.ITEM_CODE+'%\''))
+				.where(knex.raw('IFNULL(ITEM_NAME,\'\') LIKE \'%'+postData.ITEM_NAME+'%\''))
+				.where('cln_item_fees.FEE_TYPE_ID', postData.FEE_TYPE_ID)
+				.limit(postData.limit)
+				.offset(postData.offset)
+				.toString();
+		 var sql_count = knex
+				.select('inv_items.*')
+				.from('cln_item_fees')
+				.innerJoin('inv_items','cln_item_fees.CLN_ITEM_ID','inv_items.ITEM_ID')
+				.where(knex.raw('IFNULL(ITEM_CODE,\'\') LIKE \'%'+postData.ITEM_CODE+'%\''))
+				.where(knex.raw('IFNULL(ITEM_NAME,\'\') LIKE \'%'+postData.ITEM_NAME+'%\''))
+				.where('cln_item_fees.FEE_TYPE_ID', postData.FEE_TYPE_ID)
+	            .toString();
+		db.sequelize.query(sql)
+		.success(function(rows){
+			db.sequelize.query(sql_count)
+            .success(function(count){
+                res.json({data: rows, count: count.length});
+            })
+            .error(function(error){
+                res.json(500, {'status': 'error', 'message': error});
+            })
+		})
+		.error(function(error){
+			res.json(500, {error: error});
+		})
+	},
 	postSearch: function(req, res) {
 		var limit = (req.body.limit) ? req.body.limit : 10;
         var offset = (req.body.offset) ? req.body.offset : 0;
