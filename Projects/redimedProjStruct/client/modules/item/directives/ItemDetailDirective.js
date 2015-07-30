@@ -21,10 +21,6 @@ angular.module("app.loggedIn.item.detail.directive", [])
                 ConfigService.inv_uoms_option().then(function(data){
                     $scope.uoms = data;
                 });
-                ConfigService.provider_option().then(function(response){
-                    if(response.status === 'success')
-                        $scope.providers = response.data;
-                })
                  // EDIT 
                 $scope.loadData = function (id) {
                     $scope.id = id;
@@ -50,7 +46,7 @@ angular.module("app.loggedIn.item.detail.directive", [])
                         scope.loadData(data.id);
                         scope.mode = {
                             type: 'edit',
-                            text: 'Edit Item'
+                            text: 'Save Item'
                         };
                     }
                 }
@@ -66,7 +62,7 @@ angular.module("app.loggedIn.item.detail.directive", [])
                             scope.modelObjectMap = angular.copy(response.data);
                             scope.mode = {
                                 type: 'edit',
-                                text: 'Edit Item'
+                                text: 'Save Item'
                             };
                             // CHANGE TO EDIT MODE
 

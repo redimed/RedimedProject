@@ -241,8 +241,18 @@ angular.module("app.loggedIn.item.services", [])
      */
     instanceService.saveAllItemFeeInGroupFee=function(feeGroup)
     {
-        var detailApi = appApi.all("v2/items/save_all_item_fee_in_group_fee");
+        var detailApi = appApi.all("v2/fees/group/save_all_item_fee_in_group_fee");
         return detailApi.post({feeGroup:feeGroup});
+    }
+
+    /**
+     * tannv.dts@gmail.com
+     * 30-07-2015
+     */
+    instanceService.removeItemFee=function(itemFeeId)
+    {
+        var detailApi = appApi.all("v2/fees/remove_item_fee");
+        return detailApi.post({itemFeeId:itemFeeId});
     }
 
     return instanceService;

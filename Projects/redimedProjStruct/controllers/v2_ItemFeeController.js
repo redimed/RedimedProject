@@ -543,5 +543,29 @@ module.exports = {
 		});
 	},
 
+	/**
+	 * Remove item fee
+	 * tannv.dts@gmail.com
+	 * 30-07-2015
+	 */
+	postRemoveItemFee:function(req,res){
+		var fHeader="v2_ItemFeeController->postRemoveItemFee";
+		var functionCode="FN002";
+		var itemFeeId=kiss.checkData(req.body.itemFeeId)?req.body.itemFeeId:'';
+		if(!kiss.checkListData(itemFeeId))
+		{
+			kiss.exlog(fHeader,'Loi data truyen den');
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
+			return;
+		}
+		var sql="DELETE FROM `cln_item_fees` WHERE ITEM_FEE_ID=?";
+		kiss.executeQuery(req,sql,[itemFeeId],function(result){
+			res.json({status:'success'});
+		},function(err){
+			kiss.exlog(fHeader,'Loi truy van xoa item fee',err);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN002')});
+		})
+	}
+
 	
 }

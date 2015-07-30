@@ -6,9 +6,10 @@ var item_fees_model = require('../v1_models/Cln_item_fees.js');
 var parseString = require('xml2js').parseString;
 
 var kiss=require('./kissUtilsController');// tan add
-var controllerCode="RED_CONSULT";//tan add
+var controllerCode="RED_V2ITEM";//tan add
 var errorCode=require('./errorCode');//tan add
 var _ = require('lodash');//tan add
+var moment = require('moment');//tannv add
 var general_process = function(req, res){
 
 	var UPLOAD_FOLDER = db.FeeGroup.getUploadPath();
@@ -543,59 +544,5 @@ module.exports = {
         },true);
     },
 
-    /**
-     * Save tat ca fee item trong group fee truyen den
-     * tannv.dts@gmail.com
-     * 29-07-2015
-     */
-    postSaveAllItemFeeInGroupFee:function(req,res)
-    {
-    	var fHeader="V2_ItemController->postSaveAllItemFeeInGroupFee";
-    	var functionCode="FN003";
-    	var feeGroup=kiss.checkData(req.body.feeGroup)?req.body.feeGroup:{};
-    	var feeTypes=kiss.checkData(feeGroup.FEE_TYPES)?feeGroup.FEE_TYPES:null;
-    	kiss.exlog(req.body)
-    	if(!kiss.checkListData(feeTypes))
-    	{
-    		kiss.exlog(fHeader,'Loi data truyen den');
-    		res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
-    		return;
-    	}
-    	var listDbItemFee=[];
-    	for(var i=0;i<feeTypes.length;i++)
-    	{
-    		var feeType=feeTypes[i];
-    		var listFee=feeType.LIST_FEE;
-    		for(var j=0;j<listFee.length;j++)
-    		{
-    			var fee=listFee[j];
-    			var dbItemFee={
-    				ITEM_FEE_ID: fee.ITEM_FEE_ID?fee.ITEM_FEE_ID:null,
-    				CLN_ITEM_ID:fee.CLN_ITEM_ID,
-    				FEE_START_DATE:fee.FEE_START_DATE?moment(new Date(fee.FEE_START_DATE)).format("YYYY/MM/DD"):null,
-    				FEE:fee.FEE,
-    				PERCENT:fee.PERCENT,
-    				FEE_TYPE_ID:feeType.FEE_TYPE_ID
-    			}
-
-    			if(kiss.checkData(dbItemFee.CLN_ITEM_ID,dbItemFee.FEE_START_DATE,dbItemFee.FEE_TYPE_ID))
-    			{
-    				if(kiss.checkData(dbItemFee.FEE)|| kiss.checkData(dbItemFee.PERCENT))
-    				{
-    					listDbItemFee.push(dbItemFee);
-    				}
-    			}
-    		}
-    	}
-
-    	kiss.beginTransaction(req,function(){
-
-    	},function(err){
-    		kiss.exlog(fHeader,'Loi mo transaction',err);
-    		res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN002')});
-    	})
-    	kiss.exFileJSON(listDbItemFee,'listDbItemFee.txt');
-    	res.json({status:'success',data:listDbItemFee});
-
-    }
+    
 }

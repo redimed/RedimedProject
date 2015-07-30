@@ -1078,5 +1078,83 @@ module.exports = {
             kiss.exlog(fHeader,'Loi truy van lay danh sach fee group',err);
             res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
         });
+    },
+
+
+    /**
+     * Save tat ca fee item trong group fee truyen den
+     * tannv.dts@gmail.com
+     * 29-07-2015
+     */
+    postSaveAllItemFeeInGroupFee:function(req,res)
+    {
+        var fHeader="V2_ItemController->postSaveAllItemFeeInGroupFee";
+        var functionCode="FN003";
+        var feeGroup=kiss.checkData(req.body.feeGroup)?req.body.feeGroup:{};
+        var feeTypes=kiss.checkData(feeGroup.FEE_TYPES)?feeGroup.FEE_TYPES:null;
+        var userInfo=kiss.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+        var userId=kiss.checkData(userInfo.id)?userInfo.id:null;
+        var currentTime=kiss.getCurrentTimeStr();
+        if(!kiss.checkListData(userId,feeTypes))
+        {
+            kiss.exlog(fHeader,'Loi data truyen den');
+            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
+            return;
+        }
+        var listDbItemFee=[];
+        for(var i=0;i<feeTypes.length;i++)
+        {
+            var feeType=feeTypes[i];
+            var listFee=feeType.LIST_FEE;
+            for(var j=0;j<listFee.length;j++)
+            {
+                var fee=listFee[j];
+                var dbItemFee={
+                    ITEM_FEE_ID: fee.ITEM_FEE_ID?fee.ITEM_FEE_ID:null,
+                    CLN_ITEM_ID:fee.CLN_ITEM_ID,
+                    FEE_START_DATE:fee.FEE_START_DATE?moment(new Date(fee.FEE_START_DATE)).format("YYYY/MM/DD"):null,
+                    FEE:fee.FEE,
+                    PERCENT:fee.PERCENT,
+                    FEE_TYPE_ID:feeType.FEE_TYPE_ID,
+                    ISENABLE:1,
+                    CREATED_BY:userId,
+                    CREATION_DATE:currentTime,
+                    Last_updated_by:userId,
+                    Last_update_date:currentTime
+                }
+
+                if(kiss.checkData(dbItemFee.CLN_ITEM_ID,dbItemFee.FEE_START_DATE,dbItemFee.FEE_TYPE_ID))
+                {
+                    if(kiss.checkData(dbItemFee.FEE)|| kiss.checkData(dbItemFee.PERCENT))
+                    {
+                        listDbItemFee.push(dbItemFee);
+                    }
+                }
+            }
+        }
+        if(listDbItemFee.length==0)
+        {
+            res.json({status:'empty',message:'Danh sach fee trong.'});
+            return;
+        }
+        kiss.beginTransaction(req,function(){
+            var updateCols=['FEE','PERCENT','Last_update_date','Last_updated_by'];
+            kiss.executeInsertIfDupKeyUpdate(req,'cln_item_fees',listDbItemFee,updateCols,function(result){
+                kiss.commit(req,function(){
+                    res.json({status:'success',data:listDbItemFee});
+                },function(err){
+                    kiss.exlog(fHeader,'Loi commit',err);
+                    res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN004')});
+                });
+            },function(err){
+                kiss.exlog(fHeader,'Loi truy van insert list fee',err);
+                kiss.rollback(req,function(){
+                    res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN003')});
+                });
+            })
+        },function(err){
+            kiss.exlog(fHeader,'Loi mo transaction',err);
+            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN002')});
+        });
     }
 }

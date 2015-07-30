@@ -3483,6 +3483,10 @@ label{
     background: #686868;
 }
 
+.un_tn_form_border_gray{
+    border: 1px solid #968D8D!important;
+}
+
 .un-checkbox-group {
     position:relative
 }
