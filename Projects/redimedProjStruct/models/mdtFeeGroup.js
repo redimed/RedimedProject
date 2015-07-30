@@ -8,6 +8,7 @@ module.exports = function(sequelize, DataTypes){
 		FEE_GROUP_NAME: DataTypes.STRING(100),
 		FEE_GROUP_TYPE: DataTypes.STRING(50),
 		FORMULA :DataTypes.STRING(200),
+		PRICE_SOURCE:DataTypes.STRING(200),
 		CONTACT_ADDRESS:DataTypes.STRING(200),
 		ISENABLE: DataTypes.INTEGER(1),
 		SOURCE_START_DATE:DataTypes.DATE,

@@ -1236,6 +1236,8 @@ module.exports = {
 			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
 			return;
 		}
+		var listBDLine = postData.listLines;
+		var listInsertLine=[];
 		var invoiceHeaderInsert={
 			Patient_id:postData.Patient_id,
 			SOURCE_TYPE:postData.SOURCE_TYPE,
@@ -1244,13 +1246,57 @@ module.exports = {
 			FORMULA:postData.FORMULA,
 			Insurer_id:postData.Insurer_id
 		}
-		var sql="insert into cln_invoice_header set ?";
+		console.log(postData);
+		kiss.beginTransaction(req,function(){
+			var sql="insert into cln_invoice_header set ?";
 
-		kiss.executeQuery(req,sql,[invoiceHeaderInsert],function(rows){
-			res.json({status:'success',data:rows});
+			kiss.executeQuery(req,sql,[invoiceHeaderInsert],function(result){
+				console.log(result.insertId);
+				// res.json({status:'success',data:rows});
+				if(result.affectedRows>0)
+				{
+					
+                    for (var i = 0; i < listBDLine.length; i++) {
+                    	var obj = {
+                    		HEADER_ID:result.insertId,
+							ITEM_ID:listBDLine[i].ITEM_ID,
+							PRICE:listBDLine[i].PRICE,
+							QUANTITY:listBDLine[i].QUANTITY,
+							TIME_SPENT:listBDLine[i].TIME_SPENT,
+							AMOUNT:listBDLine[i].PRICE*listBDLine[i].QUANTITY,
+							TAX_ID:listBDLine[i].TAX_ID,
+							TAX_CODE:listBDLine[i].TAX_CODE,
+							TAX_RATE:listBDLine[i].TAX_RATE,
+							IS_ENABLE:1
+                    	}
+                    	listInsertLine.push(obj);
+                    };
+					kiss.executeInsertIfDupKeyUpdate(req,'cln_invoice_lines',listInsertLine,null,function(result){
+						kiss.commit(req,function(){
+                        	 res.json({status:'success',data:listInsertLine});
+	                    },function(err){
+	                        kiss.exlog(fHeader,"Loi commit",err);
+	                        res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM004')});
+	                    })
+                    },function(err){
+                        kiss.exlog(fHeader,'Loi truy van insert list lines',err);
+                       kiss.rollback(req,function(){
+							res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM003')});
+						});
+                    })
+
+				}
+			},function(err){
+				kiss.exlog("not insert data",err);
+				kiss.rollback(req,function(){
+					res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM002')});
+				});
+			},true);
 		},function(err){
-			kiss.exlog(fHeader,'Loi truy van lay thong tin invoice line thong qua',err);
+			kiss.exlog(fHeader,'Loi mo transaction',err);
 			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
 		});
+
+		
 	}
 }

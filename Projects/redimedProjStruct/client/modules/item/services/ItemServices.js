@@ -19,6 +19,10 @@ angular.module("app.loggedIn.item.services", [])
         var detailApi = appApi.all("v2/items/insert_header_items");
         return detailApi.post(data);
     }
+    instanceService.insertManualLine = function(data) {
+        var detailApi = appApi.all("v2/items/searchmanual");
+        return detailApi.post(data);
+    }
 
     instanceService.insertHeader = function(data) {
         var detailApi = appApi.all("v2/items/insert_header");

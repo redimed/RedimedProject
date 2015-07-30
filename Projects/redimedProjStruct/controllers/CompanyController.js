@@ -48,7 +48,6 @@ module.exports = {
     },
     postDetail: function(req, res){
         var postData = req.body.data;
-        console.log('------------------------------',postData);
         var sql = knex
                 .select(
                     'companies.Company_name',

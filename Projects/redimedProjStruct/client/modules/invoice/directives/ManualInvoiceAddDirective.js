@@ -9,6 +9,7 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 		},
 		templateUrl: 'modules/invoice/directives/templates/manualAdd.html',
 		controller: function($scope) {
+			var arrGetBy = $filter('arrGetBy');
 			$scope.insurers;
 			$scope.patientName;
 			$scope.patient;
@@ -17,6 +18,9 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 			$scope.feeGroupID;
 			$scope.feeTypeID;
 			$scope.FORMULA;
+			$scope.InvoiceMap = {
+				lines:[]
+			}
 
 			$scope.patientSearch = {
 				open: function() {
@@ -264,7 +268,90 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 					$scope.feeTypeID = response.data;
 				})
 			}
-			$scope.save = function(){
+			$scope.itemSearch = {
+				open: function() {
+					$modal.open({
+						templateUrl:'popupChooseMaunalItem',
+						controller: function($scope,$modalInstance,FEE_TYPE_ID,ItemService){
+							
+							var search = {
+								page: 1,
+								limit: 7,
+								offset: 0,
+								max_size: 5,
+								ITEM_CODE: '',
+								ITEM_NAME: '',
+								TAX_CODE: '',
+								TAX_RATE:'',
+								FEE_TYPE_ID:FEE_TYPE_ID
+							}
+							var load = function(){
+								 $scope.ItemAll.loading = true;
+								ItemService.insertManualLine(search).then(function(response){
+									console.log(response);
+									$scope.ItemAll.list = response.data;
+									$scope.ItemAll.count = response.count;
+								})
+							}
+				            $scope.rowClick = function(item){
+				            	$modalInstance.close({item:item});
+				            }
+				            var setPage = function(page){
+								$scope.ItemAll.search.offset = (page-1)*$scope.ItemAll.search.limit;
+								$scope.ItemAll.load();
+							}
+							var onSearch = function(option){
+								switch(option.field){
+									case 'ITEM_CODE':
+										$scope.ItemAll.search.ITEM_CODE = option.value;
+										break;
+									case 'ITEM_NAME':
+										$scope.ItemAll.search.ITEM_NAME = option.value;
+										break;
+								}//end switch
+								$scope.ItemAll.load();
+								setPage(1);
+							}
+				            $scope.ItemAll = {
+								search: search,
+								count: 0,
+								loading: false,
+								list: [],
+								load: function(){ load(); },
+								setPage: function(page){ setPage(page); },
+								onSearch: function(option){ onSearch(option)}
+							}
+							$scope.ItemAll.load();
+							$scope.clickOnRow = function(value){
+								$modalInstance.close(value);
+							}
+						},
+						size:'lg',
+						resolve:{
+							FEE_TYPE_ID : function(){
+								return $scope.modelObjectMap.FEE_TYPE_ID;
+							}
+						}
+					})
+					.result.then(function(data){
+						var checkExit=0;
+						for (key in $scope.InvoiceMap.lines) {
+							if($scope.InvoiceMap.lines[key].ITEM_CODE == data.ITEM_CODE){
+								checkExit ++;
+							}
+						};
+						if (checkExit == 0) {
+							data.ITEM_NAME = data.ITEM_NAME.substring(0, 50);
+							data.QUANTITY = 1;
+							data.TIME_SPENT = 0;
+							data.IS_ENABLE = 1;
+							$scope.InvoiceMap.lines.push(data);
+						};
+						
+					})
+				}
+			}
+			$scope.save = function() {
 				 $scope.isSubmit = true;
                 if (!$scope.mainForm.$invalid) {
                 	if ($scope.modelObjectMap.FEE_GROUP_TYPE == 'private_fund') {
@@ -274,7 +361,8 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 						SOURCE_ID:$scope.insurers.FEE_GROUP_ID,
 						FEE_TYPE:$scope.modelObjectMap.FEE_TYPE_ID,
 						FORMULA:$scope.FORMULA,
-							Insurer_id:$scope.insurers.id
+						Insurer_id:$scope.insurers.id,
+						listLines:$scope.InvoiceMap.lines
 						}
 					}else{
 						postData = {
@@ -283,41 +371,14 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 							SOURCE_ID:$scope.modelObjectMap.FEE_GROUP_ID,
 							FEE_TYPE:$scope.modelObjectMap.FEE_TYPE_ID,
 							FORMULA:$scope.FORMULA,
+							listLines:$scope.InvoiceMap.lines
 						}
 					};
 					InvoiceService.getSaveManual(postData).then(function(response){
 						$scope.success = true;
 					})
                 }
-
-				
-
-				// if ($scope.patientName) {
-				// 	if(typeof $scope.modelObjectMap !== 'undefined'){
-				// 		if ($scope.modelObjectMap.FEE_GROUP_TYPE !== null) {
-				// 			if (typeof $scope.modelObjectMap.FEE_GROUP_ID !== 'undefined') {
-				// 				if ($scope.modelObjectMap.FEE_GROUP_ID !== null) {
-				// 					console.log('12');
-				// 				}else{
-				// 					toastr.error("Please choose group fee");
-				// 				}
-				// 			}else{
-				// 				toastr.error("Please choose group fee");
-				// 			};
-				// 		}else if($scope.modelObjectMap.FEE_GROUP_TYPE === 'private_fund'){
-
-				// 		}
-				// 		else{
-				// 			toastr.error("Please choose Bill to");
-				// 		};
-				// 	}else{
-				// 		toastr.error("Please choose Bill to");
-				// 	}
-				// }else{
-				// 	toastr.error("Please choose Patient");
-				// };
 			}
 		}
-		
 	}//end return
 })

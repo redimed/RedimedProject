@@ -101,7 +101,8 @@ angular.module("app.loggedIn.invoice.list.controller",[
                 options:function(){
                     return $scope.options;
                 }
-            }
+            },
+            size:'lg'
         })
         .result.then(function(response){
            if (response.status == 'success') {
