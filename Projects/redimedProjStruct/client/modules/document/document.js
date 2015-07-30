@@ -27,7 +27,8 @@ angular.module("app.loggedIn.document", [
     "app.loggedIn.document.QANTASfleet.controllers",
     "app.loggedIn.document.QANTASgroundsupport.controllers",
     "app.loggedIn.document.QANTASrampbaggage.controllers",
-    "app.loggedIn.document.PEMedical.controllers"
+    "app.loggedIn.document.PEMedical.controllers",
+    "app.loggedIn.document.directives"
 ])
     .config(function ($stateProvider) {
         $stateProvider

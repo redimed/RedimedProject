@@ -4,7 +4,7 @@ angular.module('app.loggedIn.document.PEMedical.controllers',[])
     CalID = $stateParams.cal_id; 
     Patient_ID = $scope.patientInfo.Patient_id;
     $scope.path ={};
-    $scope.isShowImg = true;
+    $scope.isSubmit = false;
     var oriInfo,clearInfo,height,weight,value;
     $scope.patientInfo.DOB = moment($scope.patientInfo.DOB).format('YYYY-MM-DD');
     console.log($scope.patientInfo);
@@ -12,9 +12,7 @@ angular.module('app.loggedIn.document.PEMedical.controllers',[])
     {id:0,isShow:false},
     {id:1,isShow:false},
     {id:2,isShow:false},
-    {id:3,isShow:false},
-    {id:4,isShow:false},
-    {id:5,isShow:false}
+    {id:3,isShow:false}
     ];
 
     $scope.part1_rate1 =[
@@ -109,24 +107,7 @@ angular.module('app.loggedIn.document.PEMedical.controllers',[])
     }
 
     $scope.clearClick = function (value) {
-    	if(value==0){
-        	$scope.info.PATIENT_SIGN  = '';
-        }
-        else if(value==1){
-        	$scope.info.PATIENT_SIGN1 = '';
-        }
-        else if(value==2){
-        	$scope.info.PATIENT_SIGN2 = '';
-        }
-        else if(value==3){
-        	$scope.info.PATIENT_SIGN3 = '';
-        }
-        else if(value==4){
-        	$scope.info.PATIENT_SIGN4 = '';
-        }
-        else if(value==5){
-        	$scope.info.PATIENT_SIGN5 = '';
-        }
+    	$scope.info.PATIENT_SIGN  = '';
     }
     $scope.mathBMI = function() {
     	height = $scope.info.part2_sec1_value1;
@@ -259,6 +240,13 @@ angular.module('app.loggedIn.document.PEMedical.controllers',[])
 	    		$scope.info.part3_sec7_value1 = "4";
 	    	}
     	}
+    }
+    $scope.manage_part1_sec3 = function() {
+            if($scope.info.part1_sec3_comment1==null || $scope.info.part1_sec3_comment1==undefined || $scope.info.part1_sec3_comment1==''){
+                if($scope.info.part1_sec3_rate1!=undefined && $scope.info.part1_sec3_rate1!=null && $scope.info.part1_sec3_rate1!=''){
+                    $scope.info.part1_sec3_rate1 ='';
+                }
+            }  
     }
     $scope.infoChanged = function() {
             return angular.equals(oriInfo, $scope.info);
@@ -451,6 +439,7 @@ angular.module('app.loggedIn.document.PEMedical.controllers',[])
             }, 0);
         };
                 //END SHOW FILE
+
         $scope.insert = false;
         DocumentService.checkPEMedical(Patient_ID,CalID).then(function(response){
             if(response.status==="insert"){
@@ -696,7 +685,7 @@ angular.module('app.loggedIn.document.PEMedical.controllers',[])
 					part5_sec2_value12:null,
 					part5_sec2_value13:null,
 					part5_sec3_value1:null,
-					part6_result_img:null,
+					part6_img_file_name:null,
 					part7_sec1_value1:null,
 					part7_sec1_value2:null,
 					part7_sec1_value3:null,
@@ -716,11 +705,6 @@ angular.module('app.loggedIn.document.PEMedical.controllers',[])
 					part7_sec4_value1:null,
 					part7_sec4_value2:null,
 					PATIENT_SIGN:null,
-					PATIENT_SIGN1:null,
-					PATIENT_SIGN2:null,
-					PATIENT_SIGN3:null,
-					PATIENT_SIGN4:null,
-					PATIENT_SIGN5:null,
 					dateChose:null,
 					dateChose1:null,
 					file_name:null
@@ -731,10 +715,6 @@ angular.module('app.loggedIn.document.PEMedical.controllers',[])
               	$scope.insert = false;
               	$scope.isNew = false;
               	$scope.info = angular.copy(response['data']);
-              	$scope.path = {
-					realPath : ".\\uploadFile\\allPEMedicalFileUpload\\800\\"+$scope.info.file_name,
-					previewPath : 'https://'+location.host+'/document/pemedical/images/'+$scope.info.file_name
-				};
               	$scope.dateChose = $scope.info.dateChose;
               	$scope.dateChose1 = $scope.info.dateChose1;
               	oriInfo = angular.copy($scope.info);
@@ -985,7 +965,7 @@ angular.module('app.loggedIn.document.PEMedical.controllers',[])
 					part5_sec2_value12:null,
 					part5_sec2_value13:null,
 					part5_sec3_value1:null,
-					part6_result_img:null,
+					part6_img_file_name:null,
 					part7_sec1_value1:null,
 					part7_sec1_value2:null,
 					part7_sec1_value3:null,
@@ -1005,11 +985,6 @@ angular.module('app.loggedIn.document.PEMedical.controllers',[])
 					part7_sec4_value1:null,
 					part7_sec4_value2:null,
 					PATIENT_SIGN:null,
-					PATIENT_SIGN1:null,
-					PATIENT_SIGN2:null,
-					PATIENT_SIGN3:null,
-					PATIENT_SIGN4:null,
-					PATIENT_SIGN5:null,
 					dateChose:null,
 					dateChose1:null,
 					file_name:null
@@ -1017,43 +992,53 @@ angular.module('app.loggedIn.document.PEMedical.controllers',[])
             }
         });
 		$scope.submitPEMedical = function(PEMedicalForm){
-        	if($scope.insert==true){
-            	$scope.info.dateChose  = $scope.dateChose?$scope.dateChose:null;
-            	$scope.info.dateChose1 = $scope.dateChose1?$scope.dateChose1:null;
-            	console.log($scope.info);
-            	DocumentService.insertPEMedical($scope.info).then(function(response){
-              		if(response.status==="success"){
-                		toastr.success("insert!!","success");
-                		$state.go('loggedIn.PEMedical', null, {
-                  			'reload': true
-                		});
-              		}
-              		else{
-                		toastr.error("fail!!","FAIL");
-                		$state.go('loggedIn.listall', null, {
-                  			'reload': true
-                		});
-              		}
-            	})
-          	}
-          	else{
-            	$scope.info.dateChose = $scope.dateChose;
-            	$scope.info.dateChose1 = $scope.dateChose1;
-            	DocumentService.updatePEMedical($scope.info).then(function(response){
-              
-              		if(response.status==="success"){
-                		toastr.success("update!!","success");
-                		$state.go('loggedIn.PEMedical', null, {
-                  			'reload': true
-                		});
-              		}
-              		else{
-                		toastr.error("fail!!","FAIL");
-                		$state.go('loggedIn.listall', null, {
-                  			'reload': true
-                		});
-              		}
-            	})
-          	}
+            $scope.isSubmit = true;
+            console.log(PEMedicalForm);
+            if(PEMedicalForm.$invalid){
+                toastr.error("error","!x!");
+            }
+            else{
+                console.log("1");
+            	if($scope.insert==true){
+                	$scope.info.dateChose  = $scope.dateChose?$scope.dateChose:null;
+                	$scope.info.dateChose1 = $scope.dateChose1?$scope.dateChose1:null;
+                	console.log($scope.info);
+                    $scope.isSubmit = false;
+                	DocumentService.insertPEMedical($scope.info).then(function(response){
+                  		if(response.status==="success"){
+                    		toastr.success("insert!!","success");
+                    		$state.go('loggedIn.PEMedical', null, {
+                      			'reload': true
+                    		});
+                  		}
+                  		else{
+                    		toastr.error("fail!!","FAIL");
+                    		$state.go('loggedIn.listall', null, {
+                      			'reload': true
+                    		});
+                  		}
+                	})
+              	}
+              	else{
+                    $scope.isSubmit = false;
+                	$scope.info.dateChose = $scope.dateChose;
+                	$scope.info.dateChose1 = $scope.dateChose1;
+                	DocumentService.updatePEMedical($scope.info).then(function(response){
+                  
+                  		if(response.status==="success"){
+                    		toastr.success("update!!","success");
+                    		$state.go('loggedIn.PEMedical', null, {
+                      			'reload': true
+                    		});
+                  		}
+                  		else{
+                    		toastr.error("fail!!","FAIL");
+                    		$state.go('loggedIn.listall', null, {
+                      			'reload': true
+                    		});
+                  		}
+                	})
+              	}
+            }
         };
 });

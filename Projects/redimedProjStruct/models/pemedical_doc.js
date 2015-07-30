@@ -239,7 +239,7 @@ module.exports = function(sequelize,DataTypes){
         part5_sec2_value12:DataTypes.STRING(2),
         part5_sec2_value13:DataTypes.STRING(2),
         part5_sec3_value1:DataTypes.STRING(100),
-        part6_result_img:DataTypes.TEXT,
+        part6_img_file_name:DataTypes.TEXT,
         part7_sec1_value1:DataTypes.STRING(100),
         part7_sec1_value2:DataTypes.STRING(100),
         part7_sec1_value3:DataTypes.STRING(100),
@@ -259,13 +259,9 @@ module.exports = function(sequelize,DataTypes){
         part7_sec4_value1:DataTypes.STRING(2),
         part7_sec4_value2:DataTypes.STRING(2),
         PATIENT_SIGN:DataTypes.TEXT,
-        PATIENT_SIGN1:DataTypes.TEXT,
-        PATIENT_SIGN2:DataTypes.TEXT,
-        PATIENT_SIGN3:DataTypes.TEXT,
-        PATIENT_SIGN4:DataTypes.TEXT,
-        PATIENT_SIGN5:DataTypes.TEXT,
         dateChose:DataTypes.DATE,
-        dateChose1:DataTypes.DATE
+        dateChose1:DataTypes.DATE,
+        created_by:DataTypes.INTEGER(11)
       
     },{
         tableName: 'pemedical_doc', // đặt tên bảng

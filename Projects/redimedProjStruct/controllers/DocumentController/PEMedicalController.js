@@ -8,73 +8,24 @@ module.exports = {
 		var CalID = req.body.CalID;
 		console.log(Patient_ID);
 		console.log(CalID);
-		var sql_check2 ="select * from pemedical_doc "+
-		               "inner join pemedical_file on pemedical_doc.PATIENT_ID = pemedical_file.created_by "+
-					   "where pemedical_doc.PATIENT_ID=:PATIENT_ID and pemedical_doc.CAL_ID=:CAL_ID";
-
-		var sql_check1 ="select * from pemedical_file where created_by =:Patient_ID";
-
-		var sql_check3 ="select * from pemedical_doc where pemedical_doc.PATIENT_ID=:PATIENT_ID and pemedical_doc.CAL_ID=:CAL_ID";
+		var sql_check1 ="select * from pemedical_doc where PATIENT_ID =:Patient_ID";
 
 		db.sequelize.query(sql_check1,null,{raw:true},{
 			Patient_ID:Patient_ID
 		})
 		.success(function(data){
-			if(data!==undefined&&data!==null&&data!==''&&data.length!==0){
-				db.sequelize.query(sql_check2,null,{raw:true},{
-					PATIENT_ID : Patient_ID,
-					CAL_ID     : CalID
-				})
-				.success(function(data){
-					if(data!==undefined && data!==null && data!=='' && data.length!==0){
-						res.json({
-							status:"update",
-							data:data[0]
-						});
-						return;
-					}
-					else{
-						res.json({
-							status:"insert"
-						});
-						return;
-					}
-				})
-				.error(function(err){
-					console.log("*****ERROR: "+err+" *****");
-					res.json({
-						status:"error"
-					});
-					return;
-				})
+			if(data!==undefined && data!==null && data!=='' && data.length!==0){
+				res.json({
+					status:"update",
+					data:data[0]
+				});
+				return;
 			}
 			else{
-				db.sequelize.query(sql_check3,null,{raw:true},{
-					PATIENT_ID : Patient_ID,
-					CAL_ID     : CalID
-				})
-				.success(function(data){
-					if(data!==undefined && data!==null && data!=='' && data.length!==0){
-						res.json({
-							status:"update",
-							data:data[0]
-						});
-						return;
-					}
-					else{
-						res.json({
-							status:"insert"
-						});
-						return;
-					}
-				})
-				.error(function(err){
-					console.log("*****ERROR: "+err+" *****");
-					res.json({
-						status:"error"
-					});
-					return;
-				})
+				res.json({
+					status:"insert"
+				});
+				return;
 			}
 		})
 		.error(function(err){
@@ -328,7 +279,7 @@ module.exports = {
 	        part5_sec2_value12:info.part5_sec2_value12,
 	        part5_sec2_value13:info.part5_sec2_value13,
 	        part5_sec3_value1:info.part5_sec3_value1,
-	        part6_result_img:info.part6_result_img,
+	        part6_img_file_name:info.part6_img_file_name,
 	        part7_sec1_value1:info.part7_sec1_value1,
 	        part7_sec1_value2:info.part7_sec1_value2,
 	        part7_sec1_value3:info.part7_sec1_value3,
@@ -348,13 +299,9 @@ module.exports = {
 	        part7_sec4_value1:info.part7_sec4_value1,
 	        part7_sec4_value2:info.part7_sec4_value2,
 	        PATIENT_SIGN:info.PATIENT_SIGN,
-	        PATIENT_SIGN1:info.PATIENT_SIGN1,
-	        PATIENT_SIGN2:info.PATIENT_SIGN2,
-	        PATIENT_SIGN3:info.PATIENT_SIGN3,
-	        PATIENT_SIGN4:info.PATIENT_SIGN4,
-	        PATIENT_SIGN5:info.PATIENT_SIGN5,
 	        dateChose:info.dateChose,
-	        dateChose1:info.dateChose1
+	        dateChose1:info.dateChose1,
+	        created_by:info.Patient_ID
 		},{
 			raw : true
 		})
@@ -375,6 +322,7 @@ module.exports = {
 
 	updatePEMedical: function(req, res) {
 		var info = req.body.info;
+		console.log(info.PATIENT_ID);
 		db.pemedical_doc.update({
 	        header_check:info.header_check,
 	        part1_sec1_comment1:info.part1_sec1_comment1,
@@ -613,7 +561,7 @@ module.exports = {
 	        part5_sec2_value12:info.part5_sec2_value12,
 	        part5_sec2_value13:info.part5_sec2_value13,
 	        part5_sec3_value1:info.part5_sec3_value1,
-	        part6_result_img:info.part6_result_img,
+	        part6_img_file_name:info.part6_img_file_name,
 	        part7_sec1_value1:info.part7_sec1_value1,
 	        part7_sec1_value2:info.part7_sec1_value2,
 	        part7_sec1_value3:info.part7_sec1_value3,
@@ -633,11 +581,6 @@ module.exports = {
 	        part7_sec4_value1:info.part7_sec4_value1,
 	        part7_sec4_value2:info.part7_sec4_value2,
 	        PATIENT_SIGN:info.PATIENT_SIGN,
-	        PATIENT_SIGN1:info.PATIENT_SIGN1,
-	        PATIENT_SIGN2:info.PATIENT_SIGN2,
-	        PATIENT_SIGN3:info.PATIENT_SIGN3,
-	        PATIENT_SIGN4:info.PATIENT_SIGN4,
-	        PATIENT_SIGN5:info.PATIENT_SIGN5,
 	        dateChose:info.dateChose,
 	        dateChose1:info.dateChose1
 		},{

@@ -34,26 +34,26 @@
         <div class="portlet-body">
         	<div class="row">
         		<div class="col-md-12 col-sm-12">
-        			<div class="col-md-1 col-sm-1">
-        				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.header_check" style="width:40%;height: 3%;float:left;">
+        			<div class="col-md-1 col-sm-1" ng-class="{'is_error':PEMedicalForm.header_check.$error.required && isSubmit===true}">
+        				<input type="radio" value="0" name="header_check" ng-model="info.header_check" style="width:40%;height: 3%;float:left;" required />
         			</div>
         			<div class="col-md-2 col-sm-2">
         				<label style="margin-top: 3%;">Corporate</label>
         			</div>
-        			<div class="col-md-1 col-sm-1">
-        				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.header_check" style="width:40%;height: 3%;float:left;">
+        			<div class="col-md-1 col-sm-1" ng-class="{'is_error':PEMedicalForm.header_check.$error.required && isSubmit===true}">
+        				<input type="radio" value="1" name="header_check" ng-model="info.header_check" style="width:40%;height: 3%;float:left;" required />
         			</div>
         			<div class="col-md-2 col-sm-2">
         				<label style="margin-top: 3%;">Discovery & Growth</label>
         			</div>
-        			<div class="col-md-1 col-sm-1">
-        				<input type="checkbox" ng-true-value="3" ng-false-value="0" ng-model="info.header_check" style="width:40%;height: 3%;float:left;">
+        			<div class="col-md-1 col-sm-1" ng-class="{'is_error':PEMedicalForm.header_check.$error.required && isSubmit===true}">
+        				<input type="radio" value="2" name="header_check" ng-model="info.header_check" style="width:40%;height: 3%;float:left;" required />
         			</div>
         			<div class="col-md-2 col-sm-2">
         				<label style="margin-top: 3%;">Leonora Operations</label>
         			</div>
-        			<div class="col-md-1 col-sm-1">
-        				<input type="checkbox" ng-true-value="4" ng-false-value="0" ng-model="info.header_check" style="width:40%;height: 3%;float:left;">
+        			<div class="col-md-1 col-sm-1" ng-class="{'is_error':PEMedicalForm.header_check.$error.required && isSubmit===true}">
+        				<input type="radio" value="3" name="header_check" ng-model="info.header_check" style="width:40%;height: 3%;float:left;" required />
         			</div>
         			<div class="col-md-2 col-sm-2">
         				<label style="margin-top: 3%;">Southern Cross Operations</label>
@@ -63,10 +63,12 @@
         	<div class="row">&nbsp;</div>
         	<div class="row">
         		<div class="col-md-12 col-sm-12">
-					&nbsp;
-        			<label>
-	        			This Pre-Employment Medical Form shall be completed for all long-term contractors and employees for access to St Barbara Operations.
-	        		</label>
+					<div class="col-md-9 col-sm-9">
+	        			<label>
+		        			This Pre-Employment Medical Form shall be completed for all long-term contractors and employees for access to St Barbara Operations.
+		        		</label>
+	        		</div>
+	        		<div class="col-md-3 col-sm-3"><span style="color:red" ng-show="PEMedicalForm.header_check.$error.required && isSubmit===true">Required!</span></div>
         		</div>
         	</div>
 		</div>
@@ -117,16 +119,115 @@
 			        	<div class="col-md-12 col-sm-12">
 			        		<div class="col-md-1 col-sm-1">&nbsp;</div>
 			        		<div class="col-md-2 col-sm-2">
-			        			<input name="part1_sec1_comment1" type="text" ng-model="info.part1_sec1_comment1" class="form-control" style="height:4%;">
+			        			<input name="part1_sec1_comment1" type="text" ng-model="info.part1_sec1_comment1" class="form-control" ng-class="{'is_error':PEMedicalForm.part1_sec1_comment1.$error.maxlength}" style="height:4%;" ng-maxlength="5" />
+			        			<span style="color: red;" ng-show="PEMedicalForm.part1_sec1_comment1.$error.maxlength">Too long!!!</span>
 			        		</div>
 			        		<div class="col-md-2 col-sm-2">
-			        			<input name="part1_sec1_comment2" type="text" ng-model="info.part1_sec1_comment2" class="form-control" style="height:4%;">
+			        			<input name="part1_sec1_comment2" type="text" ng-model="info.part1_sec1_comment2" class="form-control" ng-class="{'is_error':PEMedicalForm.part1_sec1_comment2.$error.maxlength}" style="height:4%;" ng-maxlength="5" />
+			        			<span style="color: red;" ng-show="PEMedicalForm.part1_sec1_comment2.$error.maxlength">Too long!!!</span>
 			        		</div>
 			        		<div class="col-md-1 col-sm-1">
-			        			<input name="part1_sec1_comment3" type="text" ng-model="info.part1_sec1_comment3" class="form-control" style="height:4%;">
+			        			<input name="part1_sec1_comment3" type="text" ng-model="info.part1_sec1_comment3" class="form-control" ng-class="{'is_error':PEMedicalForm.part1_sec1_comment3.$error.pattern}" style="height:4%;" ng-pattern="/^[0-9]+$/" />
+			        			<span style="color: red;" ng-show="PEMedicalForm.part1_sec1_comment3.$error.pattern">Must be a number!!</span>
 			        		</div>
 			        		<div class="col-md-2 col-sm-2">
-			        			<input name="part1_sec1_comment4" type="text" ng-model="info.part1_sec1_comment4" class="form-control" style="height:4%;">
+			        			<input name="part1_sec1_comment4" type="text" ng-model="info.part1_sec1_comment4" class="form-control" ng-class="{'is_error':PEMedicalForm.part1_sec1_comment4.$error.maxlength}" style="height:4%;" ng-maxlength="5" />
+			        			<span style="color: red;" ng-show="PEMedicalForm.part1_sec1_comment4.$error.maxlength">Too long!!!</span>
+			        		</div>
+			        	</div>
+			        	<div class="col-md-12 col-sm-12">
+			        		<div class="col-md-1 col-sm-1">&nbsp;</div>
+			        		<div class="col-md-2 col-sm-2">
+			        			<input name="part1_sec1_comment5" type="text" ng-model="info.part1_sec1_comment5" class="form-control" ng-class="{'is_error':PEMedicalForm.part1_sec1_comment5.$error.maxlength}" style="height:4%;" ng-maxlength="5" />
+			        			<span style="color: red;" ng-show="PEMedicalForm.part1_sec1_comment5.$error.maxlength">Too long!!!</span>
+			        		</div>
+			        		<div class="col-md-2 col-sm-2">
+			        			<input name="part1_sec1_comment6" type="text" ng-model="info.part1_sec1_comment6" class="form-control" ng-class="{'is_error':PEMedicalForm.part1_sec1_comment6.$error.maxlength}" style="height:4%;" ng-maxlength="5" />
+			        			<span style="color: red;" ng-show="PEMedicalForm.part1_sec1_comment6.$error.maxlength">Too long!!!</span>
+			        		</div>
+			        		<div class="col-md-1 col-sm-1">
+			        			<input name="part1_sec1_comment7" type="text" ng-model="info.part1_sec1_comment7" class="form-control" ng-class="{'is_error':PEMedicalForm.part1_sec1_comment7.$error.pattern}" style="height:4%;" ng-pattern="/^[0-9]+$/" />
+			        			<span style="color: red;" ng-show="PEMedicalForm.part1_sec1_comment7.$error.pattern">Must be a number!!</span>
+			        		</div>
+			        		<div class="col-md-2 col-sm-2">
+			        			<input name="part1_sec1_comment8" type="text" ng-model="info.part1_sec1_comment8" class="form-control" ng-class="{'is_error':PEMedicalForm.part1_sec1_comment8.$error.maxlength}" style="height:4%;" ng-maxlength="5" />
+			        			<span style="color: red;" ng-show="PEMedicalForm.part1_sec1_comment8.$error.maxlength">Too long!!!</span>
+			        		</div>
+			        	</div>
+			        	<div class="col-md-12 col-sm-12">
+			        		<div class="col-md-1 col-sm-1">&nbsp;</div>
+			        		<div class="col-md-2 col-sm-2">
+			        			<input name="part1_sec1_comment9" type="text" ng-model="info.part1_sec1_comment9" class="form-control" ng-class="{'is_error':PEMedicalForm.part1_sec1_comment9.$error.maxlength}" style="height:4%;" ng-maxlength="5" />
+			        			<span style="color: red;" ng-show="PEMedicalForm.part1_sec1_comment9.$error.maxlength">Too long!!!</span>
+			        		</div>
+			        		<div class="col-md-2 col-sm-2">
+			        			<input name="part1_sec1_comment10" type="text" ng-model="info.part1_sec1_comment10" class="form-control" ng-class="{'is_error':PEMedicalForm.part1_sec1_comment10.$error.maxlength}" style="height:4%;" ng-maxlength="5" />
+			        			<span style="color: red;" ng-show="PEMedicalForm.part1_sec1_comment10.$error.maxlength">Too long!!!</span>
+			        		</div>
+			        		<div class="col-md-1 col-sm-1">
+			        			<input name="part1_sec1_comment11" type="text" ng-model="info.part1_sec1_comment11" class="form-control" ng-class="{'is_error':PEMedicalForm.part1_sec1_comment11.$error.pattern}" style="height:4%;" ng-pattern="/^[0-9]+$/" />
+			        			<span style="color: red;" ng-show="PEMedicalForm.part1_sec1_comment11.$error.pattern">Must be a number!!</span>
+			        		</div>
+			        		<div class="col-md-2 col-sm-2">
+			        			<input name="part1_sec1_comment12" type="text" ng-model="info.part1_sec1_comment12" class="form-control" ng-class="{'is_error':PEMedicalForm.part1_sec1_comment12.$error.maxlength}" style="height:4%;" ng-maxlength="5" />
+			        			<span style="color: red;" ng-show="PEMedicalForm.part1_sec1_comment12.$error.maxlength">Too long!!!</span>
+			        		</div>
+			        	</div>
+			        	<div class="col-md-12 col-sm-12">
+			        		<div class="col-md-1 col-sm-1">&nbsp;</div>
+			        		<div class="col-md-2 col-sm-2">
+			        			<input name="part1_sec1_comment13" type="text" ng-model="info.part1_sec1_comment13" class="form-control" ng-class="{'is_error':PEMedicalForm.part1_sec1_comment13.$error.maxlength}" style="height:4%;" ng-maxlength="5" />
+			        			<span style="color: red;" ng-show="PEMedicalForm.part1_sec1_comment13.$error.maxlength">Too long!!!</span>
+			        		</div>
+			        		<div class="col-md-2 col-sm-2">
+			        			<input name="part1_sec1_comment14" type="text" ng-model="info.part1_sec1_comment14" class="form-control" ng-class="{'is_error':PEMedicalForm.part1_sec1_comment14.$error.maxlength}" style="height:4%;" ng-maxlength="5" />
+			        			<span style="color: red;" ng-show="PEMedicalForm.part1_sec1_comment14.$error.maxlength">Too long!!!</span>
+			        		</div>
+			        		<div class="col-md-1 col-sm-1">
+			        			<input name="part1_sec1_comment15" type="text" ng-model="info.part1_sec1_comment15" class="form-control" ng-class="{'is_error':PEMedicalForm.part1_sec1_comment15.$error.pattern}" style="height:4%;" ng-pattern="/^[0-9]+$/" />
+			        			<span style="color: red;" ng-show="PEMedicalForm.part1_sec1_comment15.$error.pattern">Must be a number!!</span>
+			        		</div>
+			        		<div class="col-md-2 col-sm-2">
+			        			<input name="part1_sec1_comment16" type="text" ng-model="info.part1_sec1_comment16" class="form-control" ng-class="{'is_error':PEMedicalForm.part1_sec1_comment16.$error.maxlength}" style="height:4%;" ng-maxlength="5" />
+			        			<span style="color: red;" ng-show="PEMedicalForm.part1_sec1_comment16.$error.maxlength">Too long!!!</span>
+			        		</div>
+			        	</div>
+			        	<div class="col-md-12 col-sm-12">
+			        		<div class="col-md-1 col-sm-1">&nbsp;</div>
+			        		<div class="col-md-2 col-sm-2">
+			        			<input name="part1_sec1_comment17" type="text" ng-model="info.part1_sec1_comment17" class="form-control" ng-class="{'is_error':PEMedicalForm.part1_sec1_comment17.$error.maxlength}" style="height:4%;" ng-maxlength="5" />
+			        			<span style="color: red;" ng-show="PEMedicalForm.part1_sec1_comment17.$error.maxlength">Too long!!!</span>
+			        		</div>
+			        		<div class="col-md-2 col-sm-2">
+			        			<input name="part1_sec1_comment18" type="text" ng-model="info.part1_sec1_comment18" class="form-control" ng-class="{'is_error':PEMedicalForm.part1_sec1_comment18.$error.maxlength}" style="height:4%;" ng-maxlength="5" />
+			        			<span style="color: red;" ng-show="PEMedicalForm.part1_sec1_comment18.$error.maxlength">Too long!!!</span>
+			        		</div>
+			        		<div class="col-md-1 col-sm-1">
+			        			<input name="part1_sec1_comment19" type="text" ng-model="info.part1_sec1_comment19" class="form-control" ng-class="{'is_error':PEMedicalForm.part1_sec1_comment19.$error.pattern}" style="height:4%;" ng-pattern="/^[0-9]+$/" />
+			        			<span style="color: red;" ng-show="PEMedicalForm.part1_sec1_comment19.$error.pattern">Must be a number!!</span>
+			        		</div>
+			        		<div class="col-md-2 col-sm-2">
+			        			<input name="part1_sec1_comment20" type="text" ng-model="info.part1_sec1_comment20" class="form-control" ng-class="{'is_error':PEMedicalForm.part1_sec1_comment20.$error.maxlength}" style="height:4%;" ng-maxlength="5" />
+			        			<span style="color: red;" ng-show="PEMedicalForm.part1_sec1_comment20.$error.maxlength">Too long!!!</span>
+			        		</div>
+			        	</div>
+			        	<div class="col-md-12 col-sm-12">
+			        		<div class="col-md-1 col-sm-1">&nbsp;</div>
+			        		<div class="col-md-2 col-sm-2">
+			        			<input name="part1_sec1_comment21" type="text" ng-model="info.part1_sec1_comment21" class="form-control" ng-class="{'is_error':PEMedicalForm.part1_sec1_comment21.$error.maxlength}" style="height:4%;" ng-maxlength="5" />
+			        			<span style="color: red;" ng-show="PEMedicalForm.part1_sec1_comment21.$error.maxlength">Too long!!!</span>
+			        		</div>
+			        		<div class="col-md-2 col-sm-2">
+			        			<input name="part1_sec1_comment22" type="text" ng-model="info.part1_sec1_comment22" class="form-control" ng-class="{'is_error':PEMedicalForm.part1_sec1_comment22.$error.maxlength}" style="height:4%;" ng-maxlength="5" />
+			        			<span style="color: red;" ng-show="PEMedicalForm.part1_sec1_comment22.$error.maxlength">Too long!!!</span>
+			        		</div>
+			        		<div class="col-md-1 col-sm-1">
+			        			<input name="part1_sec1_comment23" type="text" ng-model="info.part1_sec1_comment23" class="form-control" ng-class="{'is_error':PEMedicalForm.part1_sec1_comment23.$error.pattern}" style="height:4%;" ng-pattern="/^[0-9]+$/" />
+			        			<span style="color: red;" ng-show="PEMedicalForm.part1_sec1_comment23.$error.pattern">Must be a number!!</span>
+			        		</div>
+			        		<div class="col-md-2 col-sm-2">
+			        			<input name="part1_sec1_comment24" type="text" ng-model="info.part1_sec1_comment24" class="form-control" ng-class="{'is_error':PEMedicalForm.part1_sec1_comment24.$error.maxlength}" style="height:4%;" ng-maxlength="5" />
+			        			<span style="color: red;" ng-show="PEMedicalForm.part1_sec1_comment24.$error.maxlength">Too long!!!</span>
 			        		</div>
 			        	</div>
 			        </div>
@@ -476,10 +577,12 @@
 			        	</div>
 			        	<div class="col-md-12 col-sm-12">
 			        		<div class="col-md-6 col-sm-6">
-			        			<textarea rows="7" class="form-control" ng-model="info.part1_sec2_comment1"></textarea>
+			        			<textarea rows="7" name="part1_sec2_comment1" class="form-control" ng-class="{'is_error':PEMedicalForm.part1_sec2_comment1.$error.maxlength}" ng-maxlength="5" ng-model="info.part1_sec2_comment1"></textarea>
+			        			<span style="color: red;" ng-show="PEMedicalForm.part1_sec2_comment1.$error.maxlength">Too long!!</span>
 			        		</div>
 			        		<div class="col-md-6 col-sm-6">
-			        			<textarea rows="7" class="form-control" ng-model="info.part1_sec2_comment2"></textarea>
+			        			<textarea rows="7" name="part1_sec2_comment2" class="form-control" ng-class="{'is_error':PEMedicalForm.part1_sec2_comment2.$error.maxlength}" ng-maxlength="5" ng-model="info.part1_sec2_comment2"></textarea>
+			        			<span style="color: red;" ng-show="PEMedicalForm.part1_sec2_comment2.$error.maxlength">Too long!!</span>
 			        		</div>
 			        	</div>
 			        	<div class="col-md-12 col-sm-12">
@@ -513,15 +616,16 @@
 		        			<div class="col-md-2 col-sm-2">
 		        				<label style="margin-top: 3%;">What exercise do you do?</label>
 		        			</div>
-		        			<div class="col-md-2 col-sm-2">
-		        				<input name="part1_sec3_comment1" type="text" ng-model="info.part1_sec3_comment1" class="form-control">
+		        			<div class="col-md-3 col-sm-3">
+		        				<input name="part1_sec3_comment1" ng-class="{'is_error':PEMedicalForm.part1_sec3_comment1.$error.maxlength}" ng-maxlength="5" type="text" ng-model="info.part1_sec3_comment1" class="form-control" ng-change="manage_part1_sec3()"/>
+		        				<span style="color: red;" ng-show="PEMedicalForm.part1_sec3_comment1.$error.maxlength">Too long!!</span>
 		        			</div>
-		        			<div class="col-md-1 col-sm-1">&nbsp;</div>
 		        			<div class="col-md-2 col-sm-2">
 		        				<label style="margin-top: 3%;">How often do you exercise?</label>
 		        			</div>
 		        			<div class="col-md-2 col-sm-2">
-		        				<select ng-model="info.part1_sec3_rate1" ng-options="rate.id as rate.name for rate in part1_rate1" class="form-control"></select>
+		        				<select ng-model="info.part1_sec3_rate1" name="part1_sec3_rate1"  ng-options="rate.id as rate.name for rate in part1_rate1" class="form-control" ng-class="{'is_error':!PEMedicalForm.part1_sec3_comment1.$error.required && PEMedicalForm.part1_sec3_rate1.$invalid}" ng-required="info.part1_sec3_comment1.length!==0 && info.part1_sec3_comment1!==null&&info.part1_sec3_comment1!==undefined" ng-disabled="info.part1_sec3_comment1===undefined || info.part1_sec3_comment1===null || info.part1_sec3_comment1===''"></select>
+		        				<span style="color: red;" ng-show="!PEMedicalForm.part1_sec3_comment1.$error.required && PEMedicalForm.part1_sec3_rate1.$error.required">Please chose !!</span>
 		        			</div>
 		        		</div>
 		        		<div class="col-md-12 col-sm-12">&nbsp;</div>
@@ -531,15 +635,15 @@
 		        				<label>Do you smoke?</label>
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part1_sec3_check1" style="width:40%;height: 3%;float: left;">
+		        				<input type="radio" value="1" ng-model="info.part1_sec3_check1" style="width:40%;height: 3%;float: left;">
 		        				<label style="margin-top: 7%;">Yes</label>
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part1_sec3_check1" style="width:40%;height: 3%;float: left;">
+		        				<input type="radio" value="2" ng-model="info.part1_sec3_check1" style="width:40%;height: 3%;float: left;">
 		        				<label style="margin-top: 7%;">Previous</label>
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="3" ng-false-value="0" ng-model="info.part1_sec3_check1" style="width:40%;height: 3%;float: left;">
+		        				<input type="radio" value="0" ng-model="info.part1_sec3_check1" style="width:40%;height: 3%;float: left;">
 		        				<label style="margin-top: 7%;">Never</label>
 		        			</div>
 		        			<div class="col-md-2 col-sm-2">
@@ -565,10 +669,9 @@
 		        			<div class="col-md-2 col-sm-2">
 		        				<label>Do you consume alcohol?</label>
 		        			</div>
-		        			<div class="col-md-2 col-sm-2">
+		        			<div class="col-md-3 col-sm-3">
 		        				<input name="part1_sec3_comment3" type="text" ng-model="info.part1_sec3_comment3" class="form-control">
 		        			</div>
-		        			<div class="col-md-1 col-sm-1">&nbsp;</div>
 		        			<div class="col-md-2 col-sm-2">
 		        				<label>Specify number of standard drinks consumed per week:</label>
 		        			</div>
@@ -600,15 +703,15 @@
 		        				<label>Do you find it easy to get to sleep at night?</label>
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part1_sec4_check1" style="width:40%;height: 3%;float: left;">
+		        				<input type="radio" value="1" ng-model="info.part1_sec4_check1" style="width:40%;height: 3%;float: left;">
 		        				<label style="margin-top: 7%;">Yes</label>
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part1_sec4_check1" style="width:40%;height: 3%;float: left;">
+		        				<input type="radio" value="2" ng-model="info.part1_sec4_check1" style="width:40%;height: 3%;float: left;">
 		        				<label style="margin-top: 7%;">No</label>
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="3" ng-false-value="0" ng-model="info.part1_sec4_check1" style="width:40%;height: 3%;float: left;">
+		        				<input type="radio" value="0" ng-model="info.part1_sec4_check1" style="width:40%;height: 3%;float: left;">
 		        				<label style="margin-top: 7%;">Unsure</label>
 		        			</div>
 		        		</div>
@@ -618,15 +721,15 @@
 		        				<label>Do you often wake up earlier in the morning than you would like to?</label>
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part1_sec4_check2" style="width:40%;height: 3%;float: left;">
+		        				<input type="radio" value="1" ng-model="info.part1_sec4_check2" style="width:40%;height: 3%;float: left;">
 		        				<label style="margin-top: 7%;">Yes</label>
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part1_sec4_check2" style="width:40%;height: 3%;float: left;">
+		        				<input type="radio" value="2" ng-model="info.part1_sec4_check2" style="width:40%;height: 3%;float: left;">
 		        				<label style="margin-top: 7%;">No</label>
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="3" ng-false-value="0" ng-model="info.part1_sec4_check2" style="width:40%;height: 3%;float: left;">
+		        				<input type="radio" value="0" ng-model="info.part1_sec4_check2" style="width:40%;height: 3%;float: left;">
 		        				<label style="margin-top: 7%;">Unsure</label>
 		        			</div>
 		        		</div>
@@ -636,15 +739,15 @@
 		        				<label>Do you snore most times while sleeping?</label>
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part1_sec4_check3" style="width:40%;height: 3%;float: left;">
+		        				<input type="radio" value="1" ng-model="info.part1_sec4_check3" style="width:40%;height: 3%;float: left;">
 		        				<label style="margin-top: 7%;">Yes</label>
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part1_sec4_check3" style="width:40%;height: 3%;float: left;">
+		        				<input type="radio" value="2" ng-model="info.part1_sec4_check3" style="width:40%;height: 3%;float: left;">
 		        				<label style="margin-top: 7%;">No</label>
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="3" ng-false-value="0" ng-model="info.part1_sec4_check3" style="width:40%;height: 3%;float: left;">
+		        				<input type="radio" value="0" ng-model="info.part1_sec4_check3" style="width:40%;height: 3%;float: left;">
 		        				<label style="margin-top: 7%;">Unsure</label>
 		        			</div>
 		        		</div>
@@ -654,15 +757,15 @@
 		        				<label>Have you ever been told that you stop breathing while asleep?</label>
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part1_sec4_check4" style="width:40%;height: 3%;float: left;">
+		        				<input type="radio" value="1" ng-model="info.part1_sec4_check4" style="width:40%;height: 3%;float: left;">
 		        				<label style="margin-top: 7%;">Yes</label>
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part1_sec4_check4" style="width:40%;height: 3%;float: left;">
+		        				<input type="radio" value="2" ng-model="info.part1_sec4_check4" style="width:40%;height: 3%;float: left;">
 		        				<label style="margin-top: 7%;">No</label>
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="3" ng-false-value="0" ng-model="info.part1_sec4_check4" style="width:40%;height: 3%;float: left;">
+		        				<input type="radio" value="0" ng-model="info.part1_sec4_check4" style="width:40%;height: 3%;float: left;">
 		        				<label style="margin-top: 7%;">Unsure</label>
 		        			</div>
 		        		</div>
@@ -672,15 +775,15 @@
 		        				<label>Have you ever fallen asleep unexpectedly or under unusual circumstances?</label>
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part1_sec4_check5" style="width:40%;height: 3%;float: left;">
+		        				<input type="radio" value="1" ng-model="info.part1_sec4_check5" style="width:40%;height: 3%;float: left;">
 		        				<label style="margin-top: 7%;">Yes</label>
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part1_sec4_check5" style="width:40%;height: 3%;float: left;">
+		        				<input type="radio" value="2" ng-model="info.part1_sec4_check5" style="width:40%;height: 3%;float: left;">
 		        				<label style="margin-top: 7%;">No</label>
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="3" ng-false-value="0" ng-model="info.part1_sec4_check5" style="width:40%;height: 3%;float: left;">
+		        				<input type="radio" value="0" ng-model="info.part1_sec4_check5" style="width:40%;height: 3%;float: left;">
 		        				<label style="margin-top: 7%;">Unsure</label>
 		        			</div>
 		        		</div>
@@ -690,15 +793,15 @@
 		        				<label>Have you ever been told that you kick or jerk during your sleep or are restless?</label>
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part1_sec4_check6" style="width:40%;height: 3%;float: left;">
+		        				<input type="radio" value="1" ng-model="info.part1_sec4_check6" style="width:40%;height: 3%;float: left;">
 		        				<label style="margin-top: 7%;">Yes</label>
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part1_sec4_check6" style="width:40%;height: 3%;float: left;">
+		        				<input type="radio" value="2" ng-model="info.part1_sec4_check6" style="width:40%;height: 3%;float: left;">
 		        				<label style="margin-top: 7%;">No</label>
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="3" ng-false-value="0" ng-model="info.part1_sec4_check6" style="width:40%;height: 3%;float: left;">
+		        				<input type="radio" value="0" ng-model="info.part1_sec4_check6" style="width:40%;height: 3%;float: left;">
 		        				<label style="margin-top: 7%;">Unsure</label>
 		        			</div>
 		        		</div>
@@ -708,15 +811,15 @@
 		        				<label>Do you find it easy to get to sleep after night shift?</label>
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part1_sec4_check7" style="width:40%;height: 3%;float: left;">
+		        				<input type="radio" value="1" ng-model="info.part1_sec4_check7" style="width:40%;height: 3%;float: left;">
 		        				<label style="margin-top: 7%;">Yes</label>
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part1_sec4_check7" style="width:40%;height: 3%;float: left;">
+		        				<input type="radio" value="2" ng-model="info.part1_sec4_check7" style="width:40%;height: 3%;float: left;">
 		        				<label style="margin-top: 7%;">No</label>
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="3" ng-false-value="0" ng-model="info.part1_sec4_check7" style="width:40%;height: 3%;float: left;">
+		        				<input type="radio" value="0" ng-model="info.part1_sec4_check7" style="width:40%;height: 3%;float: left;">
 		        				<label style="margin-top: 7%;">Unsure</label>
 		        			</div>
 		        		</div>
@@ -1130,40 +1233,6 @@
 		        			</div>
 		        		</div>
 		        	</div>
-		        	<div class="row">
-		        		<div class="col-md-1 col-sm-1">&nbsp;</div>
-						<div class="col-md-2 col-sm-2 col-xs-2">
-							<button class="btn btn-default green" ng-click="showSignature(0)">Signature</button>
-						</div>
-						<div class="col-md-4 col-sm-3"
-		                     ng-show="info.PATIENT_SIGN!==null && info.PATIENT_SIGN!==undefined && info.PATIENT_SIGN!=='' && isSignatureShow[0].isShow===false">
-		                    <img ng-src="{{info.PATIENT_SIGN}}" alt=""
-		                         style="width: 200px;height: 150px;"/>
-		                </div>
-		                <div class="col-md-4 col-sm-3" ng-hide="info.PATIENT_SIGN!==null && info.PATIENT_SIGN!==undefined && info.PATIENT_SIGN!=='' && isSignatureShow[0].isShow===false">&nbsp;</div>
-		                <label class="col-lg-1 col-md-1 col-sm-2 bold">Date</label>
-			        	<div class="col-lg-3 col-md-4 col-sm-3">
-			        		<input ng-model="dateChose" type="text" class="form-control input-sm" name="dob1" datepicker-popup="dd/MM/yyyy" is-open="openDOB2" ng-click="openDOB2 = true" datepicker-options="dateOptions2" close-text="Close" style="text-align:center;font-weight:bold;color:blue;">
-			        	</div>
-					</div>
-					<div class="row" style="text-align: center;" ng-show="isSignatureShow[0].isShow">
-			            <div class="col-md-12 col-sm-12">
-			                <canvas width="500" height="400" id="canvas"
-			                        signature ng-model="info.PATIENT_SIGN" style="background-color: #8eece8">
-			                </canvas>
-			            </div>
-			            <div class="col-md-12 col-sm-12">
-			                <div class="break-row"></div>
-			                <div class="btn-group">
-			                    <button type="button" ng-click="cancelClick(0)" class="btn btn-danger btn-sm">
-			                        Cancel
-			                    </button>
-			                    <button type="button" ng-click="clearClick(0)" class="btn btn-warning btn-sm">Clear
-			                    </button>
-			                    <button type="button" ng-click="okClick(0)" class="btn green btn-sm">Ok</button>
-			                </div>
-			            </div>
-			        </div>
 		        </div>
 		    </div>
 	        <!-- end DETAILS OF WORKERS COMPENSATION CLAIMS - sec7 -->
@@ -1212,41 +1281,6 @@
 		        			</div>
 		        		</div>
 		        	</div>
-		        	<div class="row">&nbsp;</div>
-		        	<div class="row">
-		        		<div class="col-md-1 col-sm-1">&nbsp;</div>
-						<div class="col-md-2 col-sm-2 col-xs-2">
-							<button class="btn btn-default green" ng-click="showSignature(1)">Signature</button>
-						</div>
-						<div class="col-md-4 col-sm-3"
-		                     ng-show="info.PATIENT_SIGN1!==null && info.PATIENT_SIGN1!==undefined && info.PATIENT_SIGN1!=='' && isSignatureShow[1].isShow===false">
-		                    <img ng-src="{{info.PATIENT_SIGN1}}" alt=""
-		                         style="width: 200px;height: 150px;"/>
-		                </div>
-		                <div class="col-md-4 col-sm-3" ng-hide="info.PATIENT_SIGN1!==null && info.PATIENT_SIGN1!==undefined && info.PATIENT_SIGN1!=='' && isSignatureShow[1].isShow===false">&nbsp;</div>
-		                <label class="col-lg-1 col-md-1 col-sm-2 bold">Date</label>
-			        	<div class="col-lg-3 col-md-4 col-sm-3">
-			        		<input ng-model="dateChose" type="text" class="form-control input-sm" name="dob2" datepicker-popup="dd/MM/yyyy" is-open="openDOB1" ng-click="openDOB1 = true" datepicker-options="dateOptions1" close-text="Close" style="text-align:center;font-weight:bold;color:blue;">
-			        	</div>
-					</div>
-					<div class="row" style="text-align: center;" ng-show="isSignatureShow[1].isShow">
-			            <div class="col-md-12 col-sm-12">
-			                <canvas width="500" height="400" id="canvas1"
-			                        signature ng-model="info.PATIENT_SIGN1" style="background-color: #8eece8">
-			                </canvas>
-			            </div>
-			            <div class="col-md-12 col-sm-12">
-			                <div class="break-row"></div>
-			                <div class="btn-group">
-			                    <button type="button" ng-click="cancelClick(1)" class="btn btn-danger btn-sm">
-			                        Cancel
-			                    </button>
-			                    <button type="button" ng-click="clearClick(1)" class="btn btn-warning btn-sm">Clear
-			                    </button>
-			                    <button type="button" ng-click="okClick(1)" class="btn green btn-sm">Ok</button>
-			                </div>
-			            </div>
-			        </div>
 		        </div>
 		    </div>
 	        <!-- end AUTHORITY TO RELEASE MEDICAL INFORMATION - sec8 -->
@@ -1393,13 +1427,13 @@
 				    			<label style="margin-top: 7%;">bpm</label>
 				    		</div>
 				    		<div class="col-md-1 col-sm-1">
-				    			<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part2_sec2_rate1" style="width:40%;height: 3%;">
+				    			<input type="radio" value="0" ng-model="info.part2_sec2_rate1" style="width:40%;height: 3%;">
 				    		</div>
 				    		<div class="col-md-1 col-sm-1">
 				    			<label style="margin-top: 5%;">Regular</label>
 				    		</div>
 				    		<div class="col-md-1 col-sm-1">
-				    			<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part2_sec2_rate1" style="width:40%;height: 3%;">
+				    			<input type="radio" value="1" ng-model="info.part2_sec2_rate1" style="width:40%;height: 3%;">
 				    		</div>
 				    		<div class="col-md-1 col-sm-1">
 				    			<label style="margin-top: 5%;">Irregular</label>
@@ -1412,13 +1446,13 @@
 				    			<label>Heart sounds normal</label>
 				    		</div>
 				    		<div class="col-md-1 col-sm-1">
-				    			<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part2_sec2_rate2" style="width:40%;height: 3%;float:left;">
+				    			<input type="radio" value="1" ng-model="info.part2_sec2_rate2" style="width:40%;height: 3%;float:left;">
 				    		</div>
 				    		<div class="col-md-1 col-sm-1">
 				    			<label>Yes</label>
 				    		</div>
 				    		<div class="col-md-1 col-sm-1">
-				    			<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part2_sec2_rate2" style="width:40%;height: 3%;float:left;">
+				    			<input type="radio" value="0" ng-model="info.part2_sec2_rate2" style="width:40%;height: 3%;float:left;">
 				    		</div>
 				    		<div class="col-md-1 col-sm-1">
 				    			<label>No</label>
@@ -1431,13 +1465,13 @@
 				    			<label>Absence of murmurs </label>
 				    		</div>
 				    		<div class="col-md-1 col-sm-1">
-				    			<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part2_sec2_rate3" style="width:40%;height: 3%;float:left;">
+				    			<input type="radio" value="1" ng-model="info.part2_sec2_rate3" style="width:40%;height: 3%;float:left;">
 				    		</div>
 				    		<div class="col-md-1 col-sm-1">
 				    			<label>Yes</label>
 				    		</div>
 				    		<div class="col-md-1 col-sm-1">
-				    			<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part2_sec2_rate3" style="width:40%;height: 3%;float:left;">
+				    			<input type="radio" value="0" ng-model="info.part2_sec2_rate3" style="width:40%;height: 3%;float:left;">
 				    		</div>
 				    		<div class="col-md-1 col-sm-1">
 				    			<label>No</label>
@@ -1450,13 +1484,13 @@
 				    			<label>Peripheral pulses normal</label>
 				    		</div>
 				    		<div class="col-md-1 col-sm-1">
-				    			<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part2_sec2_rate4" style="width:40%;height: 3%;float:left;">
+				    			<input type="radio" value="1" ng-model="info.part2_sec2_rate4" style="width:40%;height: 3%;float:left;">
 				    		</div>
 				    		<div class="col-md-1 col-sm-1">
 				    			<label>Yes</label>
 				    		</div>
 				    		<div class="col-md-1 col-sm-1">
-				    			<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part2_sec2_rate4" style="width:40%;height: 3%;float:left;">
+				    			<input type="radio" value="0" ng-model="info.part2_sec2_rate4" style="width:40%;height: 3%;float:left;">
 				    		</div>
 				    		<div class="col-md-1 col-sm-1">
 				    			<label>No</label>
@@ -1469,13 +1503,13 @@
 				    			<label>Absence of various veins</label>
 				    		</div>
 				    		<div class="col-md-1 col-sm-1">
-				    			<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part2_sec2_rate5" style="width:40%;height: 3%;float:left;">
+				    			<input type="radio" value="0" ng-model="info.part2_sec2_rate5" style="width:40%;height: 3%;float:left;">
 				    		</div>
 				    		<div class="col-md-1 col-sm-1">
 				    			<label>Yes</label>
 				    		</div>
 				    		<div class="col-md-1 col-sm-1">
-				    			<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part2_sec2_rate5" style="width:40%;height: 3%;float:left;">
+				    			<input type="radio" value="1" ng-model="info.part2_sec2_rate5" style="width:40%;height: 3%;float:left;">
 				    		</div>
 				    		<div class="col-md-1 col-sm-1">
 				    			<label>No</label>
@@ -1506,13 +1540,13 @@
 			    				<label>Urinalysis</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part2_sec3_rate1" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="1" ng-model="info.part2_sec3_rate1" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>Normal</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part2_sec3_rate1" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="0" ng-model="info.part2_sec3_rate1" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>Abnormal</label>
@@ -1543,13 +1577,13 @@
 			    				<label>Symmetrical chest expansion</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part2_sec4_rate1" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="1" ng-model="info.part2_sec4_rate1" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>Yes</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part2_sec4_rate1" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="0" ng-model="info.part2_sec4_rate1" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>No</label>
@@ -1562,13 +1596,13 @@
 			    				<label>Auscultation normal </label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part2_sec4_rate2" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="1" ng-model="info.part2_sec4_rate2" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>Yes</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part2_sec4_rate2" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="0" ng-model="info.part2_sec4_rate2" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>No</label>
@@ -1599,13 +1633,13 @@
 			    				<label>Vision </label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part2_sec5_rate1" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="1" ng-model="info.part2_sec5_rate1" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>Normal</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part2_sec5_rate1" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="0" ng-model="info.part2_sec5_rate1" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>Abnormal</label>
@@ -1671,11 +1705,11 @@
 			    			<div class="col-md-2 col-sm-2">&nbsp;</div>
 			    			<div class="col-md-3 col-sm-3"><label>L > 45°</label></div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part2_sec5_rate2" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="1" ng-model="info.part2_sec5_rate2" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1"><label>Yes</label></div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part2_sec5_rate2" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="0" ng-model="info.part2_sec5_rate2" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1"><label>No</label></div>
 			    		</div>
@@ -1684,11 +1718,11 @@
 			    			<div class="col-md-2 col-sm-2">&nbsp;</div>
 			    			<div class="col-md-3 col-sm-3"><label>R > 45°</label></div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part2_sec5_rate3" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="1" ng-model="info.part2_sec5_rate3" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1"><label>Yes</label></div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part2_sec5_rate3" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="0" ng-model="info.part2_sec5_rate3" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1"><label>No</label></div>
 			    		</div>
@@ -1699,11 +1733,11 @@
 			    				<label>Colour Vision</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part2_sec5_rate4" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="1" ng-model="info.part2_sec5_rate4" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1"><label>Normal</label></div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part2_sec5_rate4" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="0" ng-model="info.part2_sec5_rate4" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1"><label>Abnormal</label></div>
 			    		</div>
@@ -1714,11 +1748,11 @@
 			    				<label>Vision aides to be worn at work?</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part2_sec5_rate5" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="1" ng-model="info.part2_sec5_rate5" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1"><label>Yes</label></div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part2_sec5_rate5" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="0" ng-model="info.part2_sec5_rate5" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1"><label>No</label></div>
 			    		</div>
@@ -1747,13 +1781,13 @@
 			    				<label>Abdomen normal</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part2_sec6_rate1" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="1" ng-model="info.part2_sec6_rate1" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>Yes</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part2_sec6_rate1" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="0" ng-model="info.part2_sec6_rate1" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>No</label>
@@ -1766,13 +1800,13 @@
 			    				<label>Hernia orifices normal</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part2_sec6_rate2" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="1" ng-model="info.part2_sec6_rate2" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>Yes</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part2_sec6_rate2" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="0" ng-model="info.part2_sec6_rate2" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>No</label>
@@ -1785,13 +1819,13 @@
 			    				<label>Liver/Kidney/Spleen palpable</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part2_sec6_rate3" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="1" ng-model="info.part2_sec6_rate3" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>Yes</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part2_sec6_rate3" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="0" ng-model="info.part2_sec6_rate3" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>No</label>
@@ -1804,13 +1838,13 @@
 			    				<label>Lymph nodes palpable</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part2_sec6_rate4" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="1" ng-model="info.part2_sec6_rate4" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>Yes</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part2_sec6_rate4" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="0" ng-model="info.part2_sec6_rate4" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>No</label>
@@ -1841,13 +1875,13 @@
 			    				<label>Nasal passages normal</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part2_sec7_rate1" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="1" ng-model="info.part2_sec7_rate1" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>Yes</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part2_sec7_rate1" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="0" ng-model="info.part2_sec7_rate1" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>No</label>
@@ -1860,13 +1894,13 @@
 			    				<label>External auditory canal normal</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part2_sec7_rate2" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="1" ng-model="info.part2_sec7_rate2" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>Yes</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part2_sec7_rate2" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="0" ng-model="info.part2_sec7_rate2" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>No</label>
@@ -1879,13 +1913,13 @@
 			    				<label>Tympanic membranes normal</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part2_sec7_rate3" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="1" ng-model="info.part2_sec7_rate3" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>Yes</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part2_sec7_rate3" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="0" ng-model="info.part2_sec7_rate3" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>No</label>
@@ -1898,13 +1932,13 @@
 			    				<label>Gums and teeth normal</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part2_sec7_rate4" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="1" ng-model="info.part2_sec7_rate4" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>Yes</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part2_sec7_rate4" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="0" ng-model="info.part2_sec7_rate4" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>No</label>
@@ -1917,13 +1951,13 @@
 			    				<label>Skin normal</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part2_sec7_rate5" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="1" ng-model="info.part2_sec7_rate5" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>Yes</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part2_sec7_rate5" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="0" ng-model="info.part2_sec7_rate5" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>No</label>
@@ -1954,13 +1988,13 @@
 			    				<label>Coordination normal</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part2_sec8_rate1" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="1" ng-model="info.part2_sec8_rate1" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>Yes</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part2_sec8_rate1" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="0" ng-model="info.part2_sec8_rate1" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>No</label>
@@ -1973,13 +2007,13 @@
 			    				<label>Balance/Gait normal</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part2_sec8_rate2" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="1" ng-model="info.part2_sec8_rate2" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>Yes</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part2_sec8_rate2" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="0" ng-model="info.part2_sec8_rate2" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>No</label>
@@ -1992,13 +2026,13 @@
 			    				<label>Reflexes normal</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part2_sec8_rate3" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="1" ng-model="info.part2_sec8_rate3" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>Yes</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part2_sec8_rate3" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="0" ng-model="info.part2_sec8_rate3" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>No</label>
@@ -2058,13 +2092,13 @@
 			    				<label>Hands normal</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part2_sec9_rate1" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="1" ng-model="info.part2_sec9_rate1" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>Yes</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part2_sec9_rate1" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="0" ng-model="info.part2_sec9_rate1" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>No</label>
@@ -2077,13 +2111,13 @@
 			    				<label>Wrists normal</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part2_sec9_rate2" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="1" ng-model="info.part2_sec9_rate2" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>Yes</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part2_sec9_rate2" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="0" ng-model="info.part2_sec9_rate2" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>No</label>
@@ -2096,13 +2130,13 @@
 			    				<label>Elbows normal</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part2_sec9_rate3" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="1" ng-model="info.part2_sec9_rate3" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>Yes</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part2_sec9_rate3" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="0" ng-model="info.part2_sec9_rate3" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>No</label>
@@ -2115,13 +2149,13 @@
 			    				<label>Shoulders normal</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part2_sec9_rate4" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="1" ng-model="info.part2_sec9_rate4" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>Yes</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part2_sec9_rate4" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="0" ng-model="info.part2_sec9_rate4" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>No</label>
@@ -2134,13 +2168,13 @@
 			    				<label>Ankles normal</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part2_sec9_rate5" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="1" ng-model="info.part2_sec9_rate5" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>Yes</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part2_sec9_rate5" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="0" ng-model="info.part2_sec9_rate5" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>No</label>
@@ -2153,13 +2187,13 @@
 			    				<label>Knees normal</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part2_sec9_rate6" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="1" ng-model="info.part2_sec9_rate6" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>Yes</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part2_sec9_rate6" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="0" ng-model="info.part2_sec9_rate6" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>No</label>
@@ -2172,13 +2206,13 @@
 			    				<label>Hips normal</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part2_sec9_rate7" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="1" ng-model="info.part2_sec9_rate7" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>Yes</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part2_sec9_rate7" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="0" ng-model="info.part2_sec9_rate7" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>No</label>
@@ -2191,13 +2225,13 @@
 			    				<label>Cervical spine normal</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part2_sec9_rate8" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="1" ng-model="info.part2_sec9_rate8" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>Yes</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part2_sec9_rate8" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="0" ng-model="info.part2_sec9_rate8" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>No</label>
@@ -2210,13 +2244,13 @@
 			    				<label>Lumbar spine normal</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part2_sec9_rate9" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="1" ng-model="info.part2_sec9_rate9" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>Yes</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part2_sec9_rate9" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="0" ng-model="info.part2_sec9_rate9" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>No</label>
@@ -2229,13 +2263,13 @@
 			    				<label>Thoracic spine normal</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part2_sec9_rate10" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="1" ng-model="info.part2_sec9_rate10" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>Yes</label>
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
-			    				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part2_sec9_rate10" style="width:40%;height: 3%;float:left;">
+			    				<input type="radio" value="0" ng-model="info.part2_sec9_rate10" style="width:40%;height: 3%;float:left;">
 			    			</div>
 			    			<div class="col-md-1 col-sm-1">
 			    				<label>No</label>
@@ -2333,27 +2367,27 @@
 				    	<div class="col-md-12 col-sm-12">
 				    		<div class="col-md-1 col-sm-1">&nbsp;</div>
 				    		<div class="col-md-3 col-sm-3">
-				    			<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part3_sec1_rate1" style="width:40%;height: 3%;float:left;">
+				    			<input type="radio" value="0" ng-model="info.part3_sec1_rate1" style="width:40%;height: 3%;float:left;">
 				    			<label>Queens College Step Test</label>
 				    		</div>
 				    		<div class="col-md-2 col-sm-2">
-				    			<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part3_sec1_rate1" style="width:40%;height: 3%;float:left;">
+				    			<input type="radio" value="1" ng-model="info.part3_sec1_rate1" style="width:40%;height: 3%;float:left;">
 				    			<label>Very Poor</label>
 				    		</div>
 				    		<div class="col-md-1 col-sm-1">
-				    			<input type="checkbox" ng-true-value="3" ng-false-value="0" ng-model="info.part3_sec1_rate1" style="width:40%;height: 3%;float:left;">
+				    			<input type="radio" value="2" ng-model="info.part3_sec1_rate1" style="width:40%;height: 3%;float:left;">
 				    			<label>Poor</label>
 				    		</div>
 				    		<div class="col-md-2 col-sm-2">
-				    			<input type="checkbox" ng-true-value="4" ng-false-value="0" ng-model="info.part3_sec1_rate1" style="width:40%;height: 3%;float:left;">
+				    			<input type="radio" value="3" ng-model="info.part3_sec1_rate1" style="width:40%;height: 3%;float:left;">
 				    			<label>Satisfactory</label>
 				    		</div>
 				    		<div class="col-md-1 col-sm-1">
-				    			<input type="checkbox" ng-true-value="5" ng-false-value="0" ng-model="info.part3_sec1_rate1" style="width:40%;height: 3%;float:left;">
+				    			<input type="radio" value="4" ng-model="info.part3_sec1_rate1" style="width:40%;height: 3%;float:left;">
 				    			<label>Good</label>
 				    		</div>
 				    		<div class="col-md-2 col-sm-2">
-				    			<input type="checkbox" ng-true-value="6" ng-false-value="0" ng-model="info.part3_sec1_rate1" style="width:40%;height: 3%;float:left;">
+				    			<input type="radio" value="5" ng-model="info.part3_sec1_rate1" style="width:40%;height: 3%;float:left;">
 				    			<label>Very Good</label>
 				    		</div>
 				    	</div>
@@ -2490,40 +2524,6 @@
 		        			</div>
 		        		</div>
 		        	</div>
-		        	<div class="row">
-		        		<div class="col-md-1 col-sm-1">&nbsp;</div>
-						<div class="col-md-2 col-sm-2 col-xs-2">
-							<button class="btn btn-default green" ng-click="showSignature(2)">Signature</button>
-						</div>
-						<div class="col-md-4 col-sm-3"
-		                     ng-show="info.PATIENT_SIGN2!==null && info.PATIENT_SIGN2!==undefined && info.PATIENT_SIGN2!=='' && isSignatureShow[2].isShow===false">
-		                    <img ng-src="{{info.PATIENT_SIGN2}}" alt=""
-		                         style="width: 200px;height: 150px;"/>
-		                </div>
-		                <div class="col-md-4 col-sm-3" ng-hide="info.PATIENT_SIGN2!==null && info.PATIENT_SIGN2!==undefined && info.PATIENT_SIGN2!=='' && isSignatureShow[2].isShow===false">&nbsp;</div>
-		                <label class="col-lg-1 col-md-1 col-sm-2 bold">Date</label>
-			        	<div class="col-lg-3 col-md-4 col-sm-3">
-			        		<input ng-model="dateChose" type="text" class="form-control input-sm" name="dob3" datepicker-popup="dd/MM/yyyy" is-open="openDOB3" ng-click="openDOB3 = true" datepicker-options="dateOptions3" close-text="Close" style="text-align:center;font-weight:bold;color:blue;">
-			        	</div>
-					</div>
-					<div class="row" style="text-align: center;" ng-show="isSignatureShow[2].isShow===true">
-			            <div class="col-md-12 col-sm-12">
-			                <canvas width="500" height="400" id="canvas2"
-			                        signature ng-model="info.PATIENT_SIGN2" style="background-color: #8eece8">
-			                </canvas>
-			            </div>
-			            <div class="col-md-12 col-sm-12">
-			                <div class="break-row"></div>
-			                <div class="btn-group">
-			                    <button type="button" ng-click="cancelClick(2)" class="btn btn-danger btn-sm">
-			                        Cancel
-			                    </button>
-			                    <button type="button" ng-click="clearClick(2)" class="btn btn-warning btn-sm">Clear
-			                    </button>
-			                    <button type="button" ng-click="okClick(2)" class="btn green btn-sm">Ok</button>
-			                </div>
-			            </div>
-			        </div>
 			        <div class="row">
 			        	<div class="col-md-12 col-sm-12">&nbsp;</div>
 			        	<div class="col-md-12 col-sm-12">
@@ -3107,7 +3107,7 @@
 		        		<div class="col-md-12 col-sm-12">
 		        			<div class="col-md-1 col-sm-1">&nbsp;</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part4_sec3_value1" style="width:40%;height: 3%;float:left;">
+		        				<input type="radio" value="1" ng-model="info.part4_sec3_value1" style="width:40%;height: 3%;float:left;">
 		        			</div>
 		        			<div class="col-md-2 col-sm-2">
 		        				<label style="margin-top: 1%;">Fit for the proposed position</label>
@@ -3116,53 +3116,14 @@
 		        		<div class="col-md-12 col-sm-12">
 		        			<div class="col-md-1 col-sm-1">&nbsp;</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part4_sec3_value2" style="width:40%;height: 3%;float:left;">
+		        				<input type="radio" value="0" ng-model="info.part4_sec3_value2" style="width:40%;height: 3%;float:left;">
 		        			</div>
 		        			<div class="col-md-2 col-sm-2">
 		        				<label style="margin-top: 2%;">Not fit for the proposed position.</label>
 		        			</div>
 		        		</div>
 		        		<div class="col-md-12 col-sm-12">&nbsp;</div>
-		        		<div class="col-md-12 col-sm-12">
-		        			<div class="col-md-3 col-sm-3">
-		        				<label>Signature of GP</label>
-		        			</div>
-		        		</div>
 		        	</div>
-		        	<div class="row">
-		        		<div class="col-md-1 col-sm-1">&nbsp;</div>
-						<div class="col-md-2 col-sm-2 col-xs-2">
-							<button class="btn btn-default green" ng-click="showSignature(3)">Signature</button>
-						</div>
-						<div class="col-md-4 col-sm-3"
-		                     ng-show="info.PATIENT_SIGN3!==null && info.PATIENT_SIGN3!==undefined && info.PATIENT_SIGN3!=='' && isSignatureShow[3].isShow===false">
-		                    <img ng-src="{{info.PATIENT_SIGN3}}" alt=""
-		                         style="width: 200px;height: 150px;"/>
-		                </div>
-		                <div class="col-md-4 col-sm-3" ng-hide="info.PATIENT_SIGN3!==null && info.PATIENT_SIGN3!==undefined && info.PATIENT_SIGN3!=='' && isSignatureShow[3].isShow===false">&nbsp;</div>
-		                <label class="col-lg-1 col-md-1 col-sm-2 bold">Date</label>
-			        	<div class="col-lg-3 col-md-4 col-sm-3">
-			        		<input ng-model="dateChose" type="text" class="form-control input-sm" name="dob4" datepicker-popup="dd/MM/yyyy" is-open="openDOB4" ng-click="openDOB4 = true" datepicker-options="dateOptions4" close-text="Close" style="text-align:center;font-weight:bold;color:blue;">
-			        	</div>
-					</div>
-					<div class="row" style="text-align: center;" ng-show="isSignatureShow[3].isShow===true">
-			            <div class="col-md-12 col-sm-12">
-			                <canvas width="500" height="400" id="canvas3"
-			                        signature ng-model="info.PATIENT_SIGN3" style="background-color: #8eece8">
-			                </canvas>
-			            </div>
-			            <div class="col-md-12 col-sm-12">
-			                <div class="break-row"></div>
-			                <div class="btn-group">
-			                    <button type="button" ng-click="cancelClick(3)" class="btn btn-danger btn-sm">
-			                        Cancel
-			                    </button>
-			                    <button type="button" ng-click="clearClick(3)" class="btn btn-warning btn-sm">Clear
-			                    </button>
-			                    <button type="button" ng-click="okClick(3)" class="btn green btn-sm">Ok</button>
-			                </div>
-			            </div>
-			        </div>
 			        <div class="row">
 			        	<div class="col-md-12 col-sm-12">&nbsp;</div>
 			        	<div class="col-md-12 col-sm-12">
@@ -3211,7 +3172,7 @@
 		        		<div class="col-md-12 col-sm-12">
 		        			<div class="col-md-1 col-sm-1">&nbsp;</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part5_sec1_value1" style="width:40%;height: 3%;float:left;">
+		        				<input type="radio" value="0" ng-model="info.part5_sec1_value1" style="width:40%;height: 3%;float:left;">
 		        			</div>
 		        			<div class="col-md-8 col-sm-8">
 		        				<label style="margin-top: 0.6%;">On site screening with instant test cups: result <label class="bold" style="margin-top: 0.6%;">NEGATIVE</label> drugs and alcohol as per below</label>
@@ -3220,7 +3181,7 @@
 		        		<div class="col-md-12 col-sm-12">
 		        			<div class="col-md-1 col-sm-1">&nbsp;</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part5_sec1_value1" style="width:40%;height: 3%;float:left;">
+		        				<input type="radio" value="1" ng-model="info.part5_sec1_value1" style="width:40%;height: 3%;float:left;">
 		        			</div>
 		        			<div class="col-md-8 col-sm-8">
 		        				<label style="margin-top: 0.6%;">On site screening with instant test cups: result <label class="bold" style="margin-top: 0.6%;">NON-NEGATIVE</label> GCMS confirmation attached at Part 6</label>
@@ -3229,7 +3190,7 @@
 		        		<div class="col-md-12 col-sm-12">
 		        			<div class="col-md-1 col-sm-1">&nbsp;</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="3" ng-false-value="0" ng-model="info.part5_sec1_value1" style="width:40%;height: 3%;float:left;">
+		        				<input type="radio" value="2" ng-model="info.part5_sec1_value1" style="width:40%;height: 3%;float:left;">
 		        			</div>
 		        			<div class="col-md-8 col-sm-8">
 		        				<label style="margin-top: 0.6%;">On site screening not conducted. GCMS confirmation attached at Part 6</label>
@@ -3433,46 +3394,8 @@
 		        <div class="portlet-body">
 		        	<div class="row">
 		        		<div class="col-md-12 col-sm-12">&nbsp;</div>
-		        		<div class="col-md-12 col-sm-12">
-		        			<div class="col-md-3 col-sm-3">
-		        				<label>Signature of Tester</label>
-		        			</div>
 		        		</div>
 		        	</div>
-		        	<div class="row">
-		        		<div class="col-md-1 col-sm-1">&nbsp;</div>
-						<div class="col-md-2 col-sm-2 col-xs-2">
-							<button class="btn btn-default green" ng-click="showSignature(4)">Signature</button>
-						</div>
-						<div class="col-md-4 col-sm-3"
-		                     ng-show="info.PATIENT_SIGN4!==null && info.PATIENT_SIGN4!==undefined && info.PATIENT_SIGN4!=='' && isSignatureShow[4].isShow===false">
-		                    <img ng-src="{{info.PATIENT_SIGN4}}" alt=""
-		                         style="width: 200px;height: 150px;"/>
-		                </div>
-		                <div class="col-md-4 col-sm-3" ng-hide="info.PATIENT_SIGN4!==null && info.PATIENT_SIGN4!==undefined && info.PATIENT_SIGN4!=='' && isSignatureShow[4].isShow===false">&nbsp;</div>
-		                <label class="col-lg-1 col-md-1 col-sm-2 bold">Date</label>
-			        	<div class="col-lg-3 col-md-4 col-sm-3">
-			        		<input ng-model="dateChose" type="text" class="form-control input-sm" name="dob6" datepicker-popup="dd/MM/yyyy" is-open="openDOB6" ng-click="openDOB6 = true" datepicker-options="dateOptions6" close-text="Close" style="text-align:center;font-weight:bold;color:blue;">
-			        	</div>
-					</div>
-					<div class="row" style="text-align: center;" ng-show="isSignatureShow[4].isShow===true">
-			            <div class="col-md-12 col-sm-12">
-			                <canvas width="500" height="400" id="canvas4"
-			                        signature ng-model="info.PATIENT_SIGN4" style="background-color: #8eece8">
-			                </canvas>
-			            </div>
-			            <div class="col-md-12 col-sm-12">
-			                <div class="break-row"></div>
-			                <div class="btn-group">
-			                    <button type="button" ng-click="cancelClick(4)" class="btn btn-danger btn-sm">
-			                        Cancel
-			                    </button>
-			                    <button type="button" ng-click="clearClick(4)" class="btn btn-warning btn-sm">Clear
-			                    </button>
-			                    <button type="button" ng-click="okClick(4)" class="btn green btn-sm">Ok</button>
-			                </div>
-			            </div>
-			        </div>
 			        <div class="row">
 			        	<div class="col-md-12 col-sm-12">&nbsp;</div>
 			        	<div class="col-md-12 col-sm-12">
@@ -3516,19 +3439,11 @@
        		</div>
        		<div class="row">
        			<!-- INPUT FILE -->
-                
-                <div style='height: 0px;width: 0px; overflow:hidden;'>
-                    <input type="file" id="uploadpemedical" nv-file-select uploader="uploader" multiple filters="limitFile,limitSize,img_filter"/>
-                </div>
-                <!-- END INPUT FILE -->  
-                <!-- BUTTON DELETE FILE -->
-                <a style="color:black;text-align:right;">
-                    <i class="glyphicon glyphicon-remove" ng-click="removeItem()" style="margin-top:2px; font-size:12px;">
-                    </i>
-                </a>
-                <!-- END BUTTON DELETE FILE -->
-                <img ng-show="isShowImg" ng-src="{{info.file_name!==null && info.file_name!==undefined?path.previewPath:''}}" alt="">
-                <!-- <img src="img/audio1.png"> -->
+       			<div class="col-md-12 col-sm-12">
+	                <input type="file" ng-model="info.part6_img_file_name" file-upload />
+	                <img ng-src="{{info.part6_img_file_name}}" ng-show="info.part6_img_file_name!==null&&info.part6_img_file_name!==undefined" style="width: 60%; height:60%">
+            	</div>
+                <!-- END INPUT FILE -->
        		</div>
        	</div>
     </div>
@@ -3649,13 +3564,13 @@
 		        		<div class="col-md-12 col-sm-12">
 		        			<div class="col-md-1 col-sm-1">&nbsp;</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part7_sec3_value1" style="width:40%;height: 3%;float:left;">
+		        				<input type="radio" value="1" ng-model="info.part7_sec3_value1" style="width:40%;height: 3%;float:left;">
 		        			</div>
 		        			<div class="col-md-2 col-sm-2">
 		        				<label style="margin-top: 2.5%;">INITIAL</label>
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part7_sec3_value1" style="width:40%;height: 3%;float:left;">
+		        				<input type="radio" value="0" ng-model="info.part7_sec3_value1" style="width:40%;height: 3%;float:left;">
 		        			</div>
 		        			<div class="col-md-2 col-sm-2">
 		        				<label style="margin-top: 2.5%;">PERIODIC</label>
@@ -3668,13 +3583,13 @@
 		        				<label style="margin-top: 2%;">Respiratory Questionnaire</label>
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part7_sec3_value2" style="width:40%;height: 3%;float:left;">
+		        				<input type="radio" value="1" ng-model="info.part7_sec3_value2" style="width:40%;height: 3%;float:left;">
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
 		        				<label style="margin-top: 5%;">OK</label>
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part7_sec3_value2" style="width:40%;height: 3%;float:left;">
+		        				<input type="radio" value="0" ng-model="info.part7_sec3_value2" style="width:40%;height: 3%;float:left;">
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
 		        				<label style="margin-top: 5%;">Requires Review</label>
@@ -3686,13 +3601,13 @@
 		        				<label style="margin-top: 2%;">Lung Function</label>
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part7_sec3_value3" style="width:40%;height: 3%;float:left;">
+		        				<input type="radio" value="1" ng-model="info.part7_sec3_value3" style="width:40%;height: 3%;float:left;">
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
 		        				<label style="margin-top: 5%;">OK</label>
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part7_sec3_value3" style="width:40%;height: 3%;float:left;">
+		        				<input type="radio" value="0" ng-model="info.part7_sec3_value3" style="width:40%;height: 3%;float:left;">
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
 		        				<label style="margin-top: 5%;">Requires Review</label>
@@ -3704,13 +3619,13 @@
 		        				<label style="margin-top: 2%;">Audiometry</label>
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part7_sec3_value4" style="width:40%;height: 3%;float:left;">
+		        				<input type="radio" value="1" ng-model="info.part7_sec3_value4" style="width:40%;height: 3%;float:left;">
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
 		        				<label style="margin-top: 5%;">OK</label>
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part7_sec3_value4" style="width:40%;height: 3%;float:left;">
+		        				<input type="radio" value="0" ng-model="info.part7_sec3_value4" style="width:40%;height: 3%;float:left;">
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
 		        				<label style="margin-top: 5%;">Requires Review</label>
@@ -3722,19 +3637,19 @@
 		        				<label style="margin-top: 2%;">Chest X-ray</label>
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part7_sec3_value5" style="width:40%;height: 3%;float:left;">
+		        				<input type="radio" value="1" ng-model="info.part7_sec3_value5" style="width:40%;height: 3%;float:left;">
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
 		        				<label style="margin-top: 5%;">OK</label>
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part7_sec3_value5" style="width:40%;height: 3%;float:left;">
+		        				<input type="radio" value="2" ng-model="info.part7_sec3_value5" style="width:40%;height: 3%;float:left;">
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
 		        				<label style="margin-top: 5%;">Requires Review</label>
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="3" ng-false-value="0" ng-model="info.part7_sec3_value5" style="width:40%;height: 3%;float:left;">
+		        				<input type="radio" value="0" ng-model="info.part7_sec3_value5" style="width:40%;height: 3%;float:left;">
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
 		        				<label style="margin-top: 5%;">N/A</label>
@@ -3796,24 +3711,24 @@
 		        				<label class="bold" style="margin-top: 2%;">Designation</label>
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part7_sec4_value1" style="width:40%;height: 3%;float:left;">
+		        				<input type="radio" value="1" ng-model="info.part7_sec4_value1" style="width:40%;height: 3%;float:left;">
 		        			</div>
 		        			<div class="col-md-2 col-sm-2">
 		        				<label style="margin-top: 2%;">Medical Practitioner</label>
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part7_sec4_value1" style="width:40%;height: 3%;float:left;">
+		        				<input type="radio" value="2" ng-model="info.part7_sec4_value1" style="width:40%;height: 3%;float:left;">
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
 		        				<label style="margin-top: 5%;">Approved Person</label>
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
-		        				<input type="checkbox" ng-true-value="3" ng-false-value="0" ng-model="info.part7_sec4_value1" style="width:40%;height: 3%;float:left;">
+		        				<input type="radio" value="0" ng-model="info.part7_sec4_value1" style="width:40%;height: 3%;float:left;">
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">
 		        				<label style="margin-top: 5%;">Other:</label>
 		        			</div>
-		        			<div class="col-md-2 col-sm-2" ng-show="info.part7_sec4_value1==='3' ">
+		        			<div class="col-md-2 col-sm-2" ng-show="info.part7_sec4_value1==='0' ">
 		        				<input name="part7_sec4_comment2" type="text" ng-model="info.part7_sec4_comment2" class="form-control">
 		        			</div>
 		        		</div>
@@ -3832,34 +3747,34 @@
 		        	<div class="row">
 		        		<div class="col-md-1 col-sm-1">&nbsp;</div>
 						<div class="col-md-2 col-sm-2 col-xs-2">
-							<button class="btn btn-default green" ng-click="showSignature(5)">Signature</button>
+							<a class="btn btn-default green" ng-click="showSignature(0)">Signature</a>
 						</div>
 						<div class="col-md-4 col-sm-3"
-		                     ng-show="info.PATIENT_SIGN5!==null && info.PATIENT_SIGN5!==undefined && info.PATIENT_SIGN5!=='' && isSignatureShow[5].isShow===false">
-		                    <img ng-src="{{info.PATIENT_SIGN5}}" alt=""
+		                     ng-show="info.PATIENT_SIGN!==null && info.PATIENT_SIGN!==undefined && info.PATIENT_SIGN!=='' && isSignatureShow[0].isShow===false">
+		                    <img ng-src="{{info.PATIENT_SIGN}}" alt=""
 		                         style="width: 200px;height: 150px;"/>
 		                </div>
-		                <div class="col-md-4 col-sm-3" ng-hide="info.PATIENT_SIGN5!==null && info.PATIENT_SIGN5!==undefined && info.PATIENT_SIGN5!=='' && isSignatureShow[5].isShow===false">&nbsp;</div>
+		                <div class="col-md-4 col-sm-3" ng-hide="info.PATIENT_SIGN!==null && info.PATIENT_SIGN!==undefined && info.PATIENT_SIGN!=='' && isSignatureShow[0].isShow===false">&nbsp;</div>
 		                <label class="col-lg-1 col-md-1 col-sm-2 bold">Date</label>
 			        	<div class="col-lg-3 col-md-4 col-sm-3">
 			        		<input ng-model="dateChose" type="text" class="form-control input-sm" name="dob9" datepicker-popup="dd/MM/yyyy" is-open="openDOB9" ng-click="openDOB9 = true" datepicker-options="dateOptions9" close-text="Close" style="text-align:center;font-weight:bold;color:blue;">
 			        	</div>
 					</div>
-					<div class="row" style="text-align: center;" ng-show="isSignatureShow[5].isShow===true">
+					<div class="row" style="text-align: center;" ng-show="isSignatureShow[0].isShow===true">
 			            <div class="col-md-12 col-sm-12">
-			                <canvas width="500" height="400" id="canvas5"
-			                        signature ng-model="info.PATIENT_SIGN5" style="background-color: #8eece8">
+			                <canvas width="500" height="400" id="canvas"
+			                        signature ng-model="info.PATIENT_SIGN" style="background-color: #8eece8">
 			                </canvas>
 			            </div>
 			            <div class="col-md-12 col-sm-12">
 			                <div class="break-row"></div>
 			                <div class="btn-group">
-			                    <button type="button" ng-click="cancelClick(5)" class="btn btn-danger btn-sm">
+			                    <a type="a" ng-click="cancelClick(0)" class="btn btn-danger btn-sm">
 			                        Cancel
-			                    </button>
-			                    <button type="button" ng-click="clearClick(5)" class="btn btn-warning btn-sm">Clear
-			                    </button>
-			                    <button type="button" ng-click="okClick(5)" class="btn green btn-sm">Ok</button>
+			                    </a>
+			                    <a type="a" ng-click="clearClick()" class="btn btn-warning btn-sm">Clear
+			                    </a>
+			                    <a type="a" ng-click="okClick(0)" class="btn green btn-sm">Ok</a>
 			                </div>
 			            </div>
 			        </div>
@@ -3871,22 +3786,22 @@
 			        			<label class="bold" style="margin-top: 2%;">Medical Practice</label>
 			        		</div>
 			        		<div class="col-md-2 col-sm-2">
-			        			<input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="info.part7_sec4_value2" style="width:40%;height: 3%;float:left;">
+			        			<input type="radio" value="1" ng-model="info.part7_sec4_value2" style="width:40%;height: 3%;float:left;">
 			        			<label style="margin-top: 2.5%;">Occumed</label>
 		        			</div>
 		        			<div class="col-md-2 col-sm-2">
-		        				<input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="info.part7_sec4_value2" style="width:40%;height: 3%;float:left;">
+		        				<input type="radio" value="2" ng-model="info.part7_sec4_value2" style="width:40%;height: 3%;float:left;">
 			        			<label style="margin-top: 2.5%;">Carepoint</label>		        				
 		        			</div>
 		        			<div class="col-md-2 col-sm-2">
-		        				<input type="checkbox" ng-true-value="3" ng-false-value="0" ng-model="info.part7_sec4_value2" style="width:40%;height: 3%;float:left;">
+		        				<input type="radio" value="3" ng-model="info.part7_sec4_value2" style="width:40%;height: 3%;float:left;">
 			        			<label style="margin-top: 2.5%;">Kinetic</label>		        				
 		        			</div>
 		        			<div class="col-md-2 col-sm-2">
-		        				<input type="checkbox" ng-true-value="4" ng-false-value="0" ng-model="info.part7_sec4_value2" style="width:40%;height: 3%;float:left;">
+		        				<input type="radio" value="0" ng-model="info.part7_sec4_value2" style="width:40%;height: 3%;float:left;">
 			        			<label style="margin-top: 2.5%;">Other:</label>		        				
 		        			</div>
-		        			<div class="col-md-2 col-sm-2" ng-show="info.part7_sec4_value2==='4'">
+		        			<div class="col-md-2 col-sm-2" ng-show="info.part7_sec4_value2==='0'">
 		        				<input name="part7_sec4_comment4" type="text" ng-model="info.part7_sec4_comment4" class="form-control">
 		        			</div>
 			        	</div>
@@ -3899,7 +3814,7 @@
     </div>
 	<!-- end part7 -->
 
-	<!-- button -->
+	<!-- a -->
 	<div class="row">
         <div class="col-md-12 col-sm-12 ">
             <button type="submit"
@@ -3908,7 +3823,7 @@
                     class="btn green pull-right">{{insert?"Add New":"Update"}}
             </button>
             <!-- <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/MA/{{info.MA_ID}}"
-               type="button"
+               type="a"
                target="_blank"
                ng-disabled="isNew || infoChanged()"
                class="btn btn-primary blue pull-right">Print PDF
@@ -3921,6 +3836,6 @@
             </a>
         </div>
     </div>
-	<!-- end button -->
+	<!-- end a -->
 
 </form>

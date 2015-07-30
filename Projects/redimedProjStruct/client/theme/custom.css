@@ -3160,6 +3160,9 @@ label{
 .menu_change2{
     margin-top: -0.5% !important;
 }
+.is_error{
+    border: 2px solid #DCA7B0 !important;
+}
 /*giang css end*/
 /* END VUONG */
 /*TAN NAV ITEM DROPDOWN END*/
