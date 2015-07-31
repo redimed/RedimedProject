@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.insurer.detail.directive", [])
-.directive("insurerDetail", function (InsurerModel, InsurerService, ConfigService, toastr) {
+.directive("insurerDetail", function (InsurerModel, InsurerService, ConfigService, toastr,InvoiceService) {
     return{
         restrict: "EA",
         scope: {
@@ -11,7 +11,18 @@ angular.module("app.loggedIn.insurer.detail.directive", [])
         },
         templateUrl: "modules/insurer/directives/templates/detail.html",
         link: function (scope, element, attrs) {
-            scope.feeGroupType=itemConst.feeGroupType;
+            scope.getFeegrouptype = function(){
+                var postData ={
+                    FEE_GROUP_TYPE :'private_fund'
+                }
+                InsurerService.getFeeGroup(postData).then(function(response){
+                    scope.feeGroupType = response.data;
+
+                    console.log(scope.feeGroupType);
+
+                })
+            }
+             scope.getFeegrouptype();
             var loadData = function (id) {
 
                 InsurerService.detail(id).then(function (data) {

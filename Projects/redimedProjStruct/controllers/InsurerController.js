@@ -62,5 +62,21 @@ module.exports = {
 				else
 					res.json({status:'error'});
 			})
+	},
+	postGetFeeGroup: function(req,res){
+		var postData = req.body.data;
+		var sql = knex
+				  .select('*')
+				  .from('cln_fee_group')
+				  .where('FEE_GROUP_TYPE',postData.FEE_GROUP_TYPE)
+				  .where('ISENABLE',1)
+				  .toString();
+		db.sequelize.query(sql)
+		.success(function(rows){
+			res.json({data: rows, sql: sql});
+		})
+		.error(function(error){
+			res.status(500).json({error: error, sql: sql});
+		})
 	}
 }

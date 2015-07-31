@@ -57,8 +57,8 @@
         <!--FEE_GROUP_NAME-->
 
         <!--FEE_GROUP_TYPE-->
-        <div class="col-md-4 col-sm-6 col-xs-12">
-            <span class="field" ng-class="{'has-error': mainForm.SOURCE_FILE_TYPE.$invalid && isSubmit}" ng-show="currentGroupType.sourceFileTypes">
+        <div class="col-md-4 col-sm-6 col-xs-12"  ng-if="currentGroupType.sourceFileTypes">
+            <span class="field" ng-class="{'has-error': mainForm.SOURCE_FILE_TYPE.$invalid && isSubmit}">
                 <label for="SOURCE_FILE_TYPE">Source File Type</label>
                 <select placeholder="Fee group type" name="SOURCE_FILE_TYPE" ng-model="modelObjectMap.SOURCE_FILE_TYPE" ng-options="value.value as value.display for (key,value) in currentGroupType.sourceFileTypes">
                     <option value=''>-- Source File Type --</option>
@@ -71,6 +71,14 @@
             </span>
         </div>
         <!--FEE_GROUP_TYPE-->
+        <!--FORMULA-->
+         <div class="col-md-4 col-sm-6 col-xs-12">
+            <span class="field" ng-class="{'has-error': mainForm.FORMULA.$invalid && isSubmit}">
+            <label for="FORMULA">FORMULA</label>
+            <input type="text" placeholder="FORMULA" name="FORMULA" ng-model="modelObjectMap.FORMULA" class="form-control" id="FORMULA" float-label >
+            </span>
+        </div>
+        <!--FORMULA-->
         <div class="clearfix"></div>
         <hr>
         <div ng-if="modelObjectMap.SOURCE_FILE_TYPE=='txt'">
