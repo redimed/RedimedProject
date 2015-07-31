@@ -13,7 +13,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 			scope.oldColor=[];
 			scope.isKeyPressed = function($event){
 				e = event || window.event;
-				 if (e.ctrlKey) {
+				 if (e.altKey) {
 			       var id = $(event.target).find('.appid').text();
 			       var patient_name  = $(event.target).find('.patient_name').text();
 			       if (id > 0) {
@@ -46,7 +46,25 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 			       };
 
 			    }
-			    if(e.altKey)
+			    // if(e.altKey)
+			    // {
+			    // 	 var id = $(event.target).find('.appid').text();
+			    // 	 for (var i = 0; i < scope.arrayAppid.length; i++) {
+			    // 	 	if (id == scope.arrayAppid[i].CAL_ID) {
+			    // 	 		for (var j = 0; j < scope.oldColor.length; j++) {
+			    // 	 			if (id == scope.oldColor[j].CAL_ID ) {
+			    // 	 				event.target.style.backgroundColor = scope.oldColor[j].color_old;
+			    // 	 				scope.oldColor.splice(j,1);
+			    // 	 			};
+			    // 	 			scope.arrayAppid.splice(i,1);
+			    // 	 		};
+			    // 	 	};
+			    // 	 };
+			    // }
+			}
+			scope.rightClickChangeColor = function($event){
+				e = event || window.event;
+				if(e.altKey)
 			    {
 			    	 var id = $(event.target).find('.appid').text();
 			    	 for (var i = 0; i < scope.arrayAppid.length; i++) {
@@ -61,6 +79,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 			    	 	};
 			    	 };
 			    }
+
 			}
 			scope.changeService = function(SERVICE_ID){
 				var postData=[]

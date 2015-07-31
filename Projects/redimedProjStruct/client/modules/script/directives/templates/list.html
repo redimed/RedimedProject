@@ -61,30 +61,13 @@
 	<button class="un-button un-bgBlack" ng-click="Scripts('new')" style="margin-top: -13px;
   margin-left: 11px;">Add New Script</button>
 </div>
-<script type="text/ng-template" id="notifyToAdd">
-	<style>
-		.modal-content {
-	  	 	border: none;
-			background-color: rgba(252, 250, 250, 0);
-			box-shadow: none;
-		}
-	</style>
-    <div class="modal-body">
-        <script-add success='scriptadd.success' medicare='scriptadd.medicare'></script-add>
-    </div>
- </script>
+<div ng-if="addFormScript.is_show">
+    <script-add medicare='medicare'></script-add>
+</div>
  <script type="text/ng-template" id="notifyToEdit">
-	<style>
-		.modal-content {
-	  	 	border: none;
-			background-color: rgba(252, 250, 250, 0);
-			box-shadow: none;
-		}
-	</style>
     <div class="modal-body">
         <script-edit id='scriptedit.ID' success='scriptedit.success' medicare='scriptedit.medicare'></script-edit>
     </div>
-
  </script>
  <!--
 <script type="text/ng-template" id="notifyToRemove">

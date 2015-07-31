@@ -30,8 +30,7 @@ angular.module('app.loggedIn.script.directive.list', [])
 				ScriptModel.list(search).then(function(response){
 
 					scope.script.list = response.data;
-					scope.script.count = response.count;
-					//console.log(response.data);					
+					scope.script.count = response.count;		
 				}, function(error) {})
 
 			}
@@ -83,31 +82,26 @@ angular.module('app.loggedIn.script.directive.list', [])
 			}
 
 			scope.Scripts = function(type, index){
-				//scope.script.medication_name = [];
-				// for (var i = 0; i < scope.medicaname.length; i++) {
-					//scope.script.medication_name.push({'medication_name':scope.medicaname[i].medication_name});
-				//};
 				if(type == 'new')
 				{
 					var modalInstance = $modal.open({
-			         templateUrl: 'notifyToAdd',
-			         controller: 'ScriptAddController',
-			         size :'lg',
-			         resolve :{
-			         	medicare :function(){
-			         		return scope.medicare;
-			         		//console.log('++++++++', scope.medicare);
+			        	templateUrl: 'notifyToAdd',
+			         	controller: function ($scope,$modalInstance,medicare) {
+			         		$scope.medicare = medicare;
+			         	},
+			         	size :'lg',
+			         	resolve :{
+			         		medicare :function(){
+			         			return scope.medicare;
+			         		}
 			         	}
-			         }
-			       })
-			       .result.then(function(response){
+			       	})
+			       	.result.then(function(response){
 			        	scope.script.load();
-			       })
-			       //console.log('333333333333333333', scope.medicare);
-			   }
+			       	})
+			   	}
 
-			   if(type == 'edit'){
-			   		//console.log('chien',index);
+			   	if(type == 'edit'){
 			   		var modalInstance = $modal.open({
 			         	templateUrl: 'notifyToEdit',
 			         	controller: 'ScriptEditController',
@@ -126,18 +120,8 @@ angular.module('app.loggedIn.script.directive.list', [])
 							scope.script.load();
 						}
 			       })
-
-			   }
-
+			   	}
 			}
-			
-			/*var add = function(){
-
-				//$
-
-				$state.go('loggedIn.patient.script.add');
-
-			}*/
 
 			var disable = function(row){
 				
@@ -147,16 +131,12 @@ angular.module('app.loggedIn.script.directive.list', [])
 
 			}
 
-			/*var edit = function(id){
-				$state.go('loggedIn.patient.script.edit', {scriptId: id});
-			}*/
 			scope.setPage = function (page) {
 				scope.script.search.offset = (page-1)*scope.script.search.limit;
 				scope.script.load();
 			}
 
 			scope.script = {
-				//medicare :[],
 				search: search,
 				dialog: {
 					remove: function(id){ remove(id); }
@@ -167,11 +147,17 @@ angular.module('app.loggedIn.script.directive.list', [])
 				error: '',
 				disable: function(row){ disable(row); },
 				load: function(){ load(); },
-				//add: function(){ add(); },
-				//edit: function(id){ edit(id); },
 				onSearch: function(option){ onSearch(option); }
 			}
-
+			$scope.addFormScript = {
+		        is_show: false,
+		        open: function () {
+		            this.is_show = true;
+		        },
+		        close: function () {
+		            this.is_show = false;
+		        }
+		    }
 			scope.script.load();
 
 		}//end link
