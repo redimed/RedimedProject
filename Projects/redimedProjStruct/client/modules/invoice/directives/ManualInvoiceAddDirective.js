@@ -27,6 +27,10 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 			$scope.feeTypeID;
 			$scope.FORMULA;
 			$scope.ArrayLineRoot =[];
+			$scope.ArrayInv_ITEM = {
+				ITEM_FEE_ID:'',
+				FEE:''
+			}
 			$scope.InvoiceMap = {
 				lines:[]
 			}
@@ -277,7 +281,15 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 				$scope.modelObjectMap.FEE_GROUP_ID = value;
 				for (var i = 0; i < $scope.feeGroupID.length; i++) {
 					if (value == $scope.feeGroupID[i].FEE_GROUP_ID) {
-						$scope.FORMULA = $scope.feeGroupID[i].FORMULA;
+						if($scope.feeGroupID[i].FORMULA)
+						{
+							$scope.FORMULA = $scope.feeGroupID[i].FORMULA;
+						}
+						else
+						{
+							$scope.FORMULA = "100";
+						}
+						
 					};
 				};
 				InvoiceService.getFeeType(value).then(function(response){
@@ -369,6 +381,9 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 						};
 						$scope.FORMULACal= $scope.FORMULA.split(":");
 						if (checkExit == 0) {
+							$scope.ArrayInv_ITEM.ITEM_FEE_ID = data[0].ITEM_FEE_ID;
+							$scope.ArrayInv_ITEM.FEE = data[0].FEE;
+
 							data[0].ITEM_NAME = data[0].ITEM_NAME.substring(0, 50);
 							// data[0].PRICE = data[0].FEE;
 							data[0].QUANTITY = 1;
@@ -389,12 +404,12 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 							{
 								if($scope.FORMULACal[i])
 								{
-									$scope.InvoiceMap.lines[i].PRICE=$scope.InvoiceMap.lines[i].FEE*$scope.FORMULACal[i];
+									$scope.InvoiceMap.lines[i].PRICE=$scope.InvoiceMap.lines[i].FEE*$scope.FORMULACal[i]/100;
 									$scope.InvoiceMap.lines[i].Percer =$scope.FORMULACal[i];
 								}
 								else
 								{
-									$scope.InvoiceMap.lines[i].PRICE=$scope.InvoiceMap.lines[i].FEE*$scope.FORMULACal[$scope.FORMULACal.length-1];
+									$scope.InvoiceMap.lines[i].PRICE=$scope.InvoiceMap.lines[i].FEE*$scope.FORMULACal[$scope.FORMULACal.length-1]/100;
 									$scope.InvoiceMap.lines[i].Percer =$scope.FORMULACal[$scope.FORMULACal.length-1];
 								}
 							}
@@ -426,6 +441,7 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 						Insurer_id:$scope.insurers.id,
 						listLines:$scope.InvoiceMap.lines,
 						claim_id:$scope.claim.Claim_id
+
 						}
 					}else{
 						postData = {
@@ -438,6 +454,7 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 						}
 					};
 					if ($scope.checkedit !== true) {
+						console.log(postData.listLines);
 						postData.CREATION_DATE = new Date();
 						postData.LAST_UPDATE_DATE = new Date();
 						postData.STATUS = 'enter'
@@ -448,6 +465,7 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 					}else{
 						postData.header_id = $scope.headerdata.header_id;
 						postData.LAST_UPDATE_DATE = new Date();
+						postData.STATUS = 'enter'
 						InvoiceService.getEditManual(postData).then(function(response){
 							$scope.success = true;
 						})
@@ -485,9 +503,16 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 						else 
 							return 0;
 					}
-					// $scope.FORMULACal = response.data[0].FORMULA;
-					$scope.FORMULA = response.data[0].FORMULA;
-					$scope.FORMULACal= response.data[0].FORMULA.split(":");
+					
+					if(response.data[0].FORMULA)
+					{
+						$scope.FORMULA 	  = response.data[0].FORMULA;
+					}
+					else
+					{
+						$scope.FORMULA 	  = "100";
+					}
+					$scope.FORMULACal = response.data[0].FORMULA.split(":");
 					$scope.InvoiceMap.lines.sort(sortLine);
 					for(var i=0;i<$scope.InvoiceMap.lines.length;i++)
 					{
@@ -505,7 +530,7 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 					for (var i = 0; i < $scope.InvoiceMap.lines.length; i++) {
 						$scope.InvoiceMap.lines[i].ITEM_NAME = $scope.InvoiceMap.lines[i].ITEM_NAME.substring(0, 50);
 					};
-					$scope.ArrayLineRoot = response.dataline;
+					//console.log($scope.InvoiceMap.lines);
 					$scope.insurers = {
 						insurer_name : response.data[0].insurer_name,
 						id:response.data[0].Insurer_id

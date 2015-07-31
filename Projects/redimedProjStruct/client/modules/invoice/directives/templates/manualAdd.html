@@ -113,11 +113,11 @@
 					<th> Item No</th>
 					<th> Item Name</th>
 					<th> Time Spent </th>
+					<th> Fee</th>
+					<th> Percer </th>
 					<th> Quantity </th>
 					<th> Price</th>
 					<th> Amount</th>
-					<th> Fee</th>
-					<th> Percer </th>
 					<!-- <th> Tax Code </th> -->
 					<th> Tax Rate </th>
 					<th> Tax Amount </th>
@@ -127,14 +127,14 @@
 					<td>{{item.ITEM_CODE}}</td>
 					<td>{{item.ITEM_NAME}}</td>
 					<td><input type="number" min="0" class="form-control" ng-model="item.TIME_SPENT" /></td>
+					<td class="text-right">{{item.FEE}}</td>
+					<td class="text-right">{{item.Percer}}%</td>
 					<td><input type="number" min="0" class="form-control" ng-model="item.QUANTITY" /></td>
 					<td class="text-right" ng-if="item.has_price">{{item.PRICE}}</td>
 					<td class="text-right" ng-if="!item.has_price">
 						<input type="number" min="0" class="form-control" ng-model="item.PRICE" />
 					</td>
 					<td class="text-right">${{item.PRICE * item.QUANTITY}}</td>
-					<td class="text-right">{{item.FEE}}</td>
-					<td class="text-right">{{item.Percer}}%</td>
 					<!-- <td class="text-right">{{item.TAX_CODE}}</td> -->
 					<td class="text-right">{{item.TAX_RATE}}</td>
 					<td class="text-right">{{item.TAX_RATE?item.PRICE * item.QUANTITY * item.TAX_RATE:null}}</td>

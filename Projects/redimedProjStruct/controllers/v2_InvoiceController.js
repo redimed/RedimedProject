@@ -1310,6 +1310,8 @@ module.exports = {
 							TAX_ID:listBDLine[i].TAX_ID,
 							TAX_CODE:listBDLine[i].TAX_CODE,
 							TAX_RATE:listBDLine[i].TAX_RATE,
+							ITEM_FEE_ID:listBDLine[i].ITEM_FEE_ID,
+							FEE:listBDLine[i].FEE,
 							IS_ENABLE:1
                     	}
                     	listInsertLine.push(obj);
@@ -1463,7 +1465,7 @@ module.exports = {
 
 		kiss.executeQuery(req,sql,[postData.header_id],function(rows){
 			var sqlLine=
-				" SELECT inv_items.*,cln_invoice_lines.AMOUNT,cln_invoice_lines.TIME_SPENT,cln_invoice_lines.QUANTITY,cln_invoice_lines.PRICE ,cln_invoice_lines.line_id "+
+				" SELECT inv_items.*,cln_invoice_lines.ITEM_FEE_ID,cln_invoice_lines.FEE,cln_invoice_lines.AMOUNT,cln_invoice_lines.TIME_SPENT,cln_invoice_lines.QUANTITY,cln_invoice_lines.PRICE ,cln_invoice_lines.line_id "+
 				" FROM `cln_invoice_lines`                                                  		 "+
 				" INNER JOIN `inv_items` ON cln_invoice_lines.`ITEM_ID`=inv_items.`ITEM_ID` 		 "+
 				" WHERE HEADER_ID =? 												         		 ";
