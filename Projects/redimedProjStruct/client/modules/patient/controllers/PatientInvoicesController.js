@@ -73,7 +73,37 @@ angular.module("app.loggedIn.patient.invoices.controller", [])
         //     },
         // ],
 	};
-
+    $scope.showAddFormInvoice = function(){
+       var modalInstance=$modal.open({
+            templateUrl:'popupAddManualInvoice',
+            controller:function($scope,$modalInstance,options){
+                $scope.options = options;
+                $scope.addmanual ={
+                    success:''
+                }
+                 $scope.$watch('addmanual.success', function(response){
+                    if (response == true) {
+                        $modalInstance.close({status:'success',data:response});
+                    };
+                     
+                })
+                $scope.cancel=function(){
+                    $modalInstance.dismiss('cancel');
+                }
+            },
+            resolve:{
+                options:function(){
+                    return $scope.options;
+                }
+            },
+            size:'lg'
+        })
+        .result.then(function(response){
+           if (response.status == 'success') {
+            $scope.invoicePanel.reload();
+           };
+        }) 
+    }
     $scope.addFormInvoice = {
         open: function () {
             $modal.open({

@@ -35,7 +35,7 @@
 				<span class="field extend-field">
 					<label>Group Name</label>
 					<span class="field" ng-class="{'has-error': mainForm.fee_group_type.$invalid && isSubmit}">
-					 <select placeholder="Fee group type" name="fee_group_type" ng-model="modelObjectMap.FEE_GROUP_ID" ng-options="item.FEE_GROUP_ID as item.FEE_GROUP_NAME for item in feeGroupID" ng-change="feeGroupChangeID(modelObjectMap.FEE_GROUP_ID)" ng-required="modelObjectMap.FEE_GROUP_TYPE !== 'private_fund'">
+					 <select placeholder="Fee group type" name="fee_group_type" ng-model="modelObjectMap.FEE_GROUP_ID" ng-options="item.FEE_GROUP_ID as item.FEE_GROUP_NAME for item in feeGroupID" ng-change="feeGroupNameChange(modelObjectMap.FEE_GROUP_ID)" ng-required="modelObjectMap.FEE_GROUP_TYPE !== 'private_fund'">
 		                <option value=''>-- Group Fee --</option>
 		            </select>
 				</span>	
@@ -46,7 +46,7 @@
 			<div class="col-md-6">
 				<span class="field extend-field">
 					<label>Fee Type</label>
-					 <select placeholder="Fee type" name="fee_type" ng-model="modelObjectMap.FEE_TYPE_ID" ng-options="item.FEE_TYPE_ID as item.FEE_TYPE_NAME for item in feeTypeID">
+					 <select placeholder="Fee type" name="fee_type" ng-model="modelObjectMap.FEE_TYPE_ID" ng-options="item.FEE_TYPE_ID as item.FEE_TYPE_NAME for item in feeTypeID" ng-change="changeFeeType(modelObjectMap.FEE_TYPE_ID)">
 		                <option value=''>-- Fee Type --</option>
 		            </select>
 				</span>	
@@ -114,9 +114,11 @@
 					<th> Item Name</th>
 					<th> Time Spent </th>
 					<th> Quantity </th>
-					<th> Price </th>
-					<th> Amount </th>
-					<th> Tax Code </th>
+					<th> Price</th>
+					<th> Amount</th>
+					<th> Fee</th>
+					<th> Percer </th>
+					<!-- <th> Tax Code </th> -->
 					<th> Tax Rate </th>
 					<th> Tax Amount </th>
 					<th>Actions</th>
@@ -126,12 +128,14 @@
 					<td>{{item.ITEM_NAME}}</td>
 					<td><input type="number" min="0" class="form-control" ng-model="item.TIME_SPENT" /></td>
 					<td><input type="number" min="0" class="form-control" ng-model="item.QUANTITY" /></td>
-					<td class="text-right" ng-if="item.has_price">${{item.PRICE}}</td>
+					<td class="text-right" ng-if="item.has_price">{{item.PRICE}}</td>
 					<td class="text-right" ng-if="!item.has_price">
 						<input type="number" min="0" class="form-control" ng-model="item.PRICE" />
 					</td>
 					<td class="text-right">${{item.PRICE * item.QUANTITY}}</td>
-					<td class="text-right">{{item.TAX_CODE}}</td>
+					<td class="text-right">{{item.FEE}}</td>
+					<td class="text-right">{{item.Percer}}%</td>
+					<!-- <td class="text-right">{{item.TAX_CODE}}</td> -->
 					<td class="text-right">{{item.TAX_RATE}}</td>
 					<td class="text-right">{{item.TAX_RATE?item.PRICE * item.QUANTITY * item.TAX_RATE:null}}</td>
 					<!-- <td class="text-right"> -->
@@ -146,7 +150,7 @@
 				<tr>
 					<td colspan="5"><strong> Total </strong></td>
 					<td class="text-right">${{amountBill()}}</td>
-					<td colspan="3"></td>
+					<td colspan="5"></td>
 				</tr>
 			</table>
 
@@ -158,6 +162,7 @@
 <div class="row">
 	<div class="col-md-6">
 		<button ng-click="save()" class="btn un-submit"><i class="fa fa-save"></i> Save </button>
+		<button ng-click="resetEdit()" class="btn un-submit" ng-if="checkedit == true"><i class="fa fa-save"></i> Reset </button>
 	</div>
 </div>
 

@@ -1245,7 +1245,10 @@ module.exports = {
 			FEE_TYPE:postData.FEE_TYPE,
 			FORMULA:postData.FORMULA,
 			Insurer_id:postData.Insurer_id,
-			claim_id :postData.claim_id
+			claim_id :postData.claim_id,
+			LAST_UPDATE_DATE:postData.LAST_UPDATE_DATE,
+			CREATION_DATE:postData.CREATION_DATE,
+			STATUS:postData.STATUS
 		}
 		kiss.beginTransaction(req,function(){
 			var sql="insert into cln_invoice_header set ?";
@@ -1326,13 +1329,14 @@ module.exports = {
 			FEE_TYPE:postData.FEE_TYPE,
 			FORMULA:postData.FORMULA,
 			Insurer_id:postData.Insurer_id,
-			claim_id:postData.claim_id
+			claim_id:postData.claim_id,
+			LAST_UPDATE_DATE:postData.LAST_UPDATE_DATE,
+			STATUS:postData.STATUS
 		}
 		kiss.beginTransaction(req,function(){
 			kiss.executeInsertIfDupKeyUpdate(req,'cln_invoice_header',[invoiceHeaderInsert],null,function(result){
 				if(result.affectedRows>0)
-				{
-					
+				{	
                     for (var i = 0; i < listBDLine.length; i++) {
                     	var obj = {
                     		line_id:listBDLine[i].line_id,
@@ -1348,22 +1352,39 @@ module.exports = {
 							IS_ENABLE:1
                     	}
                     	listInsertLine.push(obj);
-                    	console.log(listInsertLine);
                     };
-					kiss.executeInsertIfDupKeyUpdate(req,'cln_invoice_lines',listInsertLine,null,function(result){
-						kiss.commit(req,function(){
-                        	 res.json({status:'success',data:listInsertLine});
-	                    },function(err){
-	                        kiss.exlog(fHeader,"Loi commit",err);
-	                        res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM004')});
+                    	var sql="DELETE FROM `cln_invoice_lines` WHERE HEADER_ID=?";
+						kiss.executeQuery(req,sql,[postData.header_id],function(result){
+							console.log(result);
+							if (listBDLine.length !==0) {
+								kiss.executeInsertIfDupKeyUpdate(req,'cln_invoice_lines',listInsertLine,null,function(result){
+									kiss.commit(req,function(){
+			                        	 res.json({status:'success',data:listInsertLine});
+				                    },function(err){
+				                        kiss.exlog(fHeader,"Loi commit",err);
+				                        res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM004')});
+				                    })
+			                    },function(err){
+			                        kiss.exlog(fHeader,'Loi truy van insert list lines',err);
+			                       kiss.rollback(req,function(){
+										res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM003')});
+									});
+			                    })
+							}else{
+			                	kiss.commit(req,function(){
+		                        	 res.json({status:'success',data:listInsertLine});
+			                    },function(err){
+			                        kiss.exlog(fHeader,"Loi commit",err);
+			                        res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM004')});
+			                    })
+			                };
+						},function(err){
+	                        kiss.exlog(fHeader,'Loi truy van delete list lines',err);
+	                       kiss.rollback(req,function(){
+								res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM003')});
+							});
 	                    })
-                    },function(err){
-                        kiss.exlog(fHeader,'Loi truy van insert list lines',err);
-                       kiss.rollback(req,function(){
-							res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM003')});
-						});
-                    })
-
+	                
 				}
 			},function(err){
 				kiss.exlog("not insert data",err);

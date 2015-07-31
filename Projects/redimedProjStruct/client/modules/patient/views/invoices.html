@@ -2,6 +2,7 @@
  <label class="un-label-popup-header un-bg-label-333333">Invoices</label>
   <div class="un-padding-top-bottom-10 ">
     <div class="un-div-content un-bgWhite-boxshadow-bottom un-padding-10">
+     <button class="un-button un-bgBlack pull-right un-margin-bottom-6px" ng-click="showAddFormInvoice()"> Add Manual Invoice</button>
     <button class="un-button un-bgBlack pull-right un-margin-bottom-6px" ng-click="addFormInvoice.open()"> Add invoice</button>
       <div class="row">
         <div class="col-md-12 col-sm-12">
@@ -28,3 +29,139 @@
 </script>
 
 <!--END POPUP FORM ADD INVOICE -->
+
+<script type="text/ng-template" id="popupAddManualInvoice">
+  <style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+    </style>
+   <div class="modal-body">
+       <label class="un-label-popup-header-m un-bg-label-B41E46-m">Add Manual Invoice</label>
+       <addmaunal-invoice options="options" success="addmanual.success"></addmaunal-invoice>
+    </div>
+    <div class="modal-footer" style="height: 47px">
+        <button class="un-button-submit-m ng-scope" style="margin-top: -5px;" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
+
+<script type="text/ng-template" id="popupPatientSearch">
+  <style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+    </style>
+   <div class="modal-body">
+       <label class="un-label-popup-header-m un-bg-label-B41E46-m">Select Patient</label>
+       <button class="un-button un-bgBlack pull-right un-margin-bottom-6px" ng-click="showAddPatient()"> Add Patient</button>
+       {{successData}}
+       <my-data-table options="patients.options" numrows="10" rowclick="rowClick" success="successData"></my-data-table>
+    </div>
+    <div class="modal-footer" style="height: 47px">
+        <button class="un-button-submit-m ng-scope" style="margin-top: -5px;" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
+
+<script type="text/ng-template" id="popupInsurerSearch">
+  <style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+    </style>
+   <div class="modal-body">
+       <label class="un-label-popup-header-m un-bg-label-B41E46-m">Select Insurer</label>
+       <div class="portlet-body">
+          <my-data-table options="insurer.options" rowclick="rowClick" numrows="10"></my-data-table>
+      </div>
+    </div>
+    <div class="modal-footer" style="height: 47px">
+        <button class="un-button-submit-m ng-scope" style="margin-top: -5px;" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
+<script type="text/ng-template" id="popupClaimSearchInsurer">
+  <style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+    </style>
+   <div class="modal-body">
+       <label class="un-label-popup-header-m un-bg-label-B41E46-m">Select Insurer</label>
+       <div class="portlet-body">
+          <button class="un-button un-bgBlack pull-right un-margin-bottom-6px" ng-click="showAddClaim()"> Add Claim</button>
+          <div class="row">
+            <div class="col-md-12">
+              <table class="mdt-table">
+              <thead>
+                <tr>
+                  <th>Claim No</th>
+                  <th>Claim Date</th>
+                  <th>Injury Name</th>
+                  <th>Injury Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat=" value in claim" ng-click="onRowClick(value)">
+                  <td >{{value.Claim_id}}</td>
+                  <td >{{value.Claim_date | filterdate:'DD/MM/YYYY'}}</td>
+                  <td >{{value.Injury_name}}</td>
+                  <td >{{value.Injury_date | filterdate:'DD/MM/YYYY'}}</td>
+                </tr>
+              </tbody>
+            </table>
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="modal-footer" style="height: 47px">
+        <button class="un-button-submit-m ng-scope" style="margin-top: -5px;" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
+
+<script type="text/ng-template" id="popupAddPatient">
+  <style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+    </style>
+   <div class="modal-body">
+       <label class="un-label-popup-header-m un-bg-label-B41E46-m">Add Patient</label>
+       <div class="portlet-body">
+          <patient-detail options="options" params="patientAddForm.params" action-center="actionCenter"/>
+      </div>
+    </div>
+    <div class="modal-footer" style="height: 47px">
+        <button class="un-button-submit-m ng-scope" style="margin-top: -5px;" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
+
+<script type="text/ng-template" id="popupAddClaim">
+  <style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+    </style>
+   <div class="modal-body">
+       <label class="un-label-popup-header-m un-bg-label-B41E46-m">Add Claim</label>
+       <div class="portlet-body">
+         <claim-patient-add patient-id="claim.Patient_id" insurerdata="claim.insurers" success="claim.success"></claim-patient-add>
+      </div>
+    </div>
+    <div class="modal-footer" style="height: 47px">
+        <button class="un-button-submit-m ng-scope" style="margin-top: -5px;" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
+
+<script type="text/ng-template" id="popupEditManualInvoice">
+  <style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+    </style>
+   <div class="modal-body">
+       <label class="un-label-popup-header-m un-bg-label-B41E46-m">Add Manual Invoice</label>
+       <addmaunal-invoice options="options" success="addmanual.success" checkedit="true" headerdata="addmanual.headerdata"></addmaunal-invoice>
+    </div>
+    <div class="modal-footer" style="height: 47px">
+        <button class="un-button-submit-m ng-scope" style="margin-top: -5px;" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
