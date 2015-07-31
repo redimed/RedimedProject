@@ -70,6 +70,9 @@
                     <td data-title="'Invoice Email'" >
                         <label>{{b.invoice_email}}</label>
                     </td>
+                    <td data-title="'Requirements'">
+                        <a ng-click="showRequirement()"><i class="fa fa-cog"></i></a>
+                    </td>
                     <!-- <td data-title="'Contact Email In Result'" >
                         <input type="checkbox" disabled checked ng-if="b.isAddContactEmailToResult == 1" />
                         <input type="checkbox" disabled ng-if="b.isAddContactEmailToResult != 1"/>
@@ -101,6 +104,12 @@
         </div>
     </div>
 </div>
+
+<script type="text/ng-template" id="Requirements">
+    <div class="modal-body">
+        <requirement-list idr="reqmt.idr" success="success"></requirement-list>
+    </div>
+ </script>
 
 
 <div ng-if="selectedId != null" class="portlet light ">

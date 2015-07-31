@@ -14,7 +14,6 @@ angular.module('app.loggedIn.alert.directives.edit', [])
 			$("#service_color").minicolors({
 		        control: 'wheel'
 		    });
-			
 			var form = {
 				name: '',
 				description: '',

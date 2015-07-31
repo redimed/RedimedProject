@@ -613,7 +613,9 @@ gulp.task('onlineBooking_Admin', function(){
 					 './client/modules/onlineBooking_Admin/controllers/CompanyController.js',
 					 './client/modules/onlineBooking_Admin/controllers/UserController.js',
 					 './client/modules/onlineBooking_Admin/controllers/SiteController.js',
+					 './client/modules/onlineBooking_Admin/controllers/RequirementController.js',
 					 './client/modules/onlineBooking_Admin/services/OnlineBookingAdminService.js',
+		             './client/modules/onlineBooking_Admin/directives/RequirementDirective.js'
 	])
 	.pipe(concat('onlineBooking_Admin.js'))
 	.pipe(uglify({mangle: false}))
