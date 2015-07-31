@@ -300,47 +300,55 @@ angular.module("app.loggedIn.item.item_fees.directive", [])
              */
             $scope.removeItemFee=function(itemFee)
             {
-                var modalInstance=$modal.open({
-                    templateUrl:'notifyRemoveItemFeeTemplate',
-                    controller:function($scope,$modalInstance){
-                        $scope.ok=function(){
-                            $modalInstance.close('ok');
-                        };
+                if(itemFee)
+                {
+                    var modalInstance=$modal.open({
+                        templateUrl:'notifyRemoveItemFeeTemplate',
+                        controller:function($scope,$modalInstance){
+                            $scope.ok=function(){
+                                $modalInstance.close('ok');
+                            };
 
-                        $scope.cancel=function()
+                            $scope.cancel=function()
+                            {
+                                $modalInstance.dismiss('cancel');
+                            }
+                        },
+                        size:'sm'
+                    });
+                    modalInstance.result.then(function(result){
+                        if(result=='ok')
                         {
-                            $modalInstance.dismiss('cancel');
-                        }
-                    },
-                    size:'sm'
-                });
-                modalInstance.result.then(function(result){
-                    if(result=='ok')
-                    {
-                        ItemService.removeItemFee(itemFee.ITEM_FEE_ID)
-                        .then(function(data){
-                            if(data.status=='success')
-                            {
-                                toastr.success("Remove item fee success.", "Success");
-                                $scope.loadFeeArr();
-                            }
-                            else
-                            {
+                            ItemService.removeItemFee(itemFee.ITEM_FEE_ID)
+                            .then(function(data){
+                                if(data.status=='success')
+                                {
+                                    toastr.success("Remove item fee success.", "Success");
+                                    $scope.loadFeeArr();
+                                }
+                                else
+                                {
+                                    toastr.error('Remove item fee error.','Error');
+                                    exlog.logErr(data);
+                                }
+                            },function(err){
                                 toastr.error('Remove item fee error.','Error');
-                                exlog.logErr(data);
-                            }
-                        },function(err){
-                            toastr.error('Remove item fee error.','Error');
-                            exlog.logErr(err);
-                        });
-                    }
-                    else
-                    {
+                                exlog.logErr(err);
+                            });
+                        }
+                        else
+                        {
+                            //
+                        }
+                    },function(reason){
                         //
-                    }
-                },function(reason){
-                    //
-                });
+                    });
+                }
+                else
+                {
+                    toastr.warning("No Fee Exist.","Warning");
+                }
+                
 
             }
         }

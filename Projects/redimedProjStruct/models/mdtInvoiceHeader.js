@@ -22,12 +22,12 @@ module.exports = function(sequelize, DataTypes){
 		STATUS: DataTypes.STRING(45),
 		DESCRIPTION: DataTypes.STRING(1000),
 		DUE_DATE: DataTypes.DATE,
-		AMOUNT: DataTypes.FLOAT,
-		TAX_AMOUNT: DataTypes.FLOAT,
-		TOTAL_AMOUNT: DataTypes.FLOAT,
-		BASE_AMOUNT: DataTypes.FLOAT,
-		BASE_TAX_AMOUNT: DataTypes.FLOAT,
-		BASE_TOTAL_AMOUNT: DataTypes.FLOAT,
+		// AMOUNT: DataTypes.FLOAT, //tan comment
+		// TAX_AMOUNT: DataTypes.FLOAT, //tan comment
+		// TOTAL_AMOUNT: DataTypes.FLOAT, //tan comment
+		// BASE_AMOUNT: DataTypes.FLOAT, //tan comment
+		// BASE_TAX_AMOUNT: DataTypes.FLOAT, //tan comment
+		// BASE_TOTAL_AMOUNT: DataTypes.FLOAT, //tan comment
 		LAST_UPDATED_BY: DataTypes.INTEGER(11),
 		CREATED_BY: DataTypes.INTEGER(11),
 		SOURCE_TYPE:DataTypes.STRING(20),
@@ -133,6 +133,19 @@ module.exports = function(sequelize, DataTypes){
                  mdtInvoiceHeader.belongsTo(models.Appointment,{
                  	as: 'Appointment', foreignKey: 'cal_id'
                  });
+                 /**
+                  * tannv.dts@gmail.com
+                  */
+                mdtInvoiceHeader.belongsTo(models.FeeGroup,{
+                	as:'FeeGroup',foreignKey:'SOURCE_ID'
+                });
+                // /**
+                //   * tannv.dts@gmail.com
+                //   */
+                // mdtInvoiceHeader.belongsTo(models.Insurer, { 
+                // 	as: 'FeeGroupInsurer', foreignKey: 'SOURCE_ID'
+                // });
+
             },
             
         },

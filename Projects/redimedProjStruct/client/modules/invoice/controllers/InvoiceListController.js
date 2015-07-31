@@ -28,17 +28,79 @@ angular.module("app.loggedIn.invoice.list.controller",[
             {field: 'Patient_id', label: 'Patient', type: 'custom', fn: function(item){
             	if(item.patient) return item.patient.Title + '. ' + item.patient.First_name;
             }},
-			{field: 'AMOUNT', label: 'Amount', type: 'custom', fn: function(item){
+
+            //tannv add
+            {field:'SOURCE_ID',label:'Bill to',type:'custom',fn:function(item){
+                
+                if(item.cal_id)//neu la auto invoice
+                {
+                    if(item.Insurer_id)
+                    {
+                        if(item.insurer) 
+                            return 'Insurer:'+item.insurer.insurer_name;
+                        else
+                            return null;
+                    }
+                    else if(item.Company_id)
+                    {
+                        if(item.company) 
+                            return 'Company:'+item.company.Company_name;
+                        else
+                            return null;
+                    }
+                    else
+                    {
+                        if(item.patient)
+                        {
+                            return 'Patient:'+item.patient.First_name+" "+item.patient.Sur_name;
+                        }
+                        else
+                            return null;
+                    }
+                }
+                else//neu la manual invoice
+                {
+                    if(item.FEE_GROUP_TYPE==itemConst.feeGroupType.private_fund.value)
+                    {
+                        if(item.insurer) 
+                            return itemConst.feeGroupType.private_fund.value+": "+item.insurer.insurer_name;
+                        else
+                            return null;
+                    }
+                    else
+                    {
+                        if(item.feeGroup)
+                            return item.feeGroup.FEE_GROUP_TYPE+": "+item.feeGroup.FEE_GROUP_NAME;
+                        else
+                            return null;
+                    }
+                }
+                
+                
+            }},
+
+            //tannv add
+            {field:'cal_id',label:'Invoice type',type:'custom',fn:function(item){
+                // exlog.log(item)
+                if(item.cal_id)
+                    return 'Auto';
+                else
+                    return 'Manual';
+            }},
+
+            //tannv.dts hide field amount
+			/*{field: 'AMOUNT', label: 'Amount', type: 'custom',is_hide:true, fn: function(item){
 				if(!item.AMOUNT) 
 					return '$0';
-				
-				
             	return '$' + Number((item.AMOUNT).toFixed(2));
-            }},
-            {field: 'Company_id', label: 'Company', type: 'custom', fn: function(item){
+            }},*/
+
+            //tannv.dts hide
+            {field: 'Company_id', label: 'Company',is_hide:true, type: 'custom', fn: function(item){
             	if(item.company) return item.company.Company_name;
             }},
-            {field: 'Insurer_id', label: 'Insurer', type: 'custom', fn: function(item){
+            //tannv.dts hide
+            {field: 'Insurer_id', label: 'Insurer',is_hide:true, type: 'custom', fn: function(item){
             	if(item.insurer) return item.insurer.insurer_name;
             }},
             {field: 'DOCTOR_ID', label: 'Doctor', type: 'custom', fn: function(item){
@@ -50,10 +112,12 @@ angular.module("app.loggedIn.invoice.list.controller",[
             {field: 'SERVICE_ID', label: 'Service', type: 'custom', fn: function(item){
             	if(item.service) return item.service.SERVICE_NAME;
             }},
-            {field: 'CREATION_DATE', order: 'ASC', label: 'Created Date', type: 'custom', fn: function(item){
+            {field: 'CREATION_DATE', order: 'DESC', label: 'Created Date', type: 'custom', fn: function(item){
             	return ConfigService.getCommonDateDefault(item.CREATION_DATE);
             }},
-            {field: 'STATUS', label: 'Status'},
+            {field: 'STATUS', label: 'Invoice status'},
+            
+            
         ],
         use_filters: true,
         filters: {

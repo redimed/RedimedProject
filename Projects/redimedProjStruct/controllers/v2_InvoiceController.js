@@ -163,6 +163,10 @@ module.exports = {
 	},
 
 	postSearch: function(req, res) {
+
+
+
+
 		var limit = (req.body.limit) ? req.body.limit : 10;
         var offset = (req.body.offset) ? req.body.offset : 0;
         var order = (req.body.order) ? req.body.order : null;
@@ -172,7 +176,38 @@ module.exports = {
 		var search_data = req.body.search;
 		var whereOpt = {};
 
+		//tannv.dts
+		// var sql=
+		// 	" SELECT header.`Patient_id`,header.`STATUS`,header.`CREATION_DATE`,                                    "+
+		// 	" patient.`First_name`,patient.`Sur_name`,patient.`Title`,                                              "+
+		// 	" title.`name`,                                                                                         "+
+		// 	" company.`Company_name`,                                                                               "+
+		// 	" insurer.`insurer_name`,                                                                               "+
+		// 	" doctor.`NAME`,                                                                                        "+
+		// 	" site.`Site_name`,                                                                                     "+
+		// 	" service.`SERVICE_NAME`,                                                                               "+
+		// 	" line.*                                                                                                "+
+		// 	" FROM `cln_invoice_header` header                                                                      "+
+		// 	" INNER JOIN                                                                                            "+
+		// 	" (                                                                                                     "+
+		// 	" 	SELECT line.`HEADER_ID`,SUM(line.`AMOUNT`) AS HEADER_AMOUNT,                                        "+
+		// 	" 	SUM(line.`TAX_AMOUNT`) AS HEADER_TAX_AMOUNT,                                                        "+
+		// 	" 	(IFNULL(SUM(line.`AMOUNT`),0)+IFNULL(SUM(line.`TAX_AMOUNT`),0)) AS HEADER_TOTAL_AMOUNT              "+
+		// 	" 	FROM `cln_invoice_lines` line                                                                       "+
+		// 	" 	WHERE line.`IS_ENABLE`=1                                                                            "+
+		// 	" 	GROUP BY line.`HEADER_ID`) line ON header.`header_id`=line.`HEADER_ID`                              "+
+		// 	" INNER JOIN `cln_patients` patient ON header.`Patient_id`=patient.`Patient_id`                         "+
+		// 	" LEFT JOIN `sys_titles` title ON patient.`Title`=title.`id`                                            "+
+		// 	" LEFT JOIN `companies` company ON header.`Company_id`=company.`id`                                     "+
+		// 	" LEFT JOIN `cln_insurers` insurer ON header.`Insurer_id`=insurer.`id`                                  "+
+		// 	" LEFT JOIN `doctors` doctor ON header.`DOCTOR_ID`=doctor.`doctor_id`                                   "+
+		// 	" LEFT JOIN `redimedsites` site ON header.`SITE_ID`=site.`id`                                           "+
+		// 	" LEFT JOIN `sys_services` service ON header.`SERVICE_ID`=service.`SERVICE_ID`                          "+
+		// 	" ORDER BY header.`CREATION_DATE` DESC                                                                  "+
+		// 	" LIMIT ?                                                                                               "+
+		// 	" OFFSET ?                                                                                              ";
 		
+
 		if(search_data && search_data.patient_id && search_data.cal_id) {
 			whereOpt.Patient_id = search_data.patient_id;
 			whereOpt.cal_id = search_data.cal_id;
@@ -182,7 +217,12 @@ module.exports = {
 				{
 					model: db.Patient , as: 'Patient',
 					attributes: ['Title', 'First_name', 'Sur_name']
-				}
+				},
+
+				{
+					model: db.FeeGroup , as: 'FeeGroup',
+					attributes: ['FEE_GROUP_NAME','FEE_GROUP_TYPE']
+				},
 			]);
 
 			if(search_data.STATUS) { // equal
@@ -199,6 +239,7 @@ module.exports = {
 			include: inc_model,
 			order: order
 		}).success(function(result){
+			console.log(result);
 			res.json({"status": "success", "list": result.rows, "count": result.count});
 		})
 		.error(function(error){
@@ -506,7 +547,7 @@ module.exports = {
 							DEPT_ID:deptId,
 							SERVICE_ID:serviceId,
 							STATUS: status, 
-							AMOUNT: totalAmount
+							// AMOUNT: totalAmount// tann comment
 						};
 						kiss.exlog(invoiceHeaderUpdateInfo);
 						kiss.executeQuery(req,sql,[invoiceHeaderUpdateInfo,invoiceHeaderId],function(result){

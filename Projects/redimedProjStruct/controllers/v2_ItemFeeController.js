@@ -554,9 +554,11 @@ module.exports = {
 		var itemFeeId=kiss.checkData(req.body.itemFeeId)?req.body.itemFeeId:'';
 		if(!kiss.checkListData(itemFeeId))
 		{
-			kiss.exlog(fHeader,'Loi data truyen den');
-			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
+			res.json({status:'success',msg:'not found item fee id'});
 			return;
+			// kiss.exlog(fHeader,'Loi data truyen den');
+			// res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
+			// return;
 		}
 		var sql="DELETE FROM `cln_item_fees` WHERE ITEM_FEE_ID=?";
 		kiss.executeQuery(req,sql,[itemFeeId],function(result){
@@ -564,7 +566,7 @@ module.exports = {
 		},function(err){
 			kiss.exlog(fHeader,'Loi truy van xoa item fee',err);
 			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN002')});
-		})
+		},true)
 	}
 
 	
