@@ -454,9 +454,7 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 						}
 					};
 					if ($scope.checkedit !== true) {
-						console.log(postData.listLines);
 						postData.CREATION_DATE = new Date();
-						postData.LAST_UPDATE_DATE = new Date();
 						postData.STATUS = 'enter'
 						InvoiceService.getSaveManual(postData).then(function(response){
 							$scope.success = true;

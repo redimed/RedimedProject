@@ -1311,7 +1311,6 @@ module.exports = {
 			FORMULA:postData.FORMULA,
 			Insurer_id:postData.Insurer_id,
 			claim_id :postData.claim_id,
-			LAST_UPDATE_DATE:postData.LAST_UPDATE_DATE,
 			CREATION_DATE:postData.CREATION_DATE,
 			STATUS:postData.STATUS
 		}
@@ -1378,7 +1377,6 @@ module.exports = {
 		var postData = req.body.data;
 		var fHeader="v2_InvoiceController->postSavemanual";
 		var functionCode='FN00M1';
-		console.log(postData);
 		postData=kiss.checkData(postData)?postData:'';
 		if(!kiss.checkListData(postData))
 		{
@@ -1422,7 +1420,6 @@ module.exports = {
                     };
                     	var sql="DELETE FROM `cln_invoice_lines` WHERE HEADER_ID=?";
 						kiss.executeQuery(req,sql,[postData.header_id],function(result){
-							console.log(result);
 							if (listBDLine.length !==0) {
 								kiss.executeInsertIfDupKeyUpdate(req,'cln_invoice_lines',listInsertLine,null,function(result){
 									kiss.commit(req,function(){
