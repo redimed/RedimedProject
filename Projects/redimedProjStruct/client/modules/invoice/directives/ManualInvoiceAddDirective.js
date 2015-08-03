@@ -357,7 +357,7 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 								var postData = {
 									ITEM_ID:value.ITEM_ID,
 									FEE_TYPE_ID:FEE_TYPE_ID,
-									CurrentDate : new Date()
+									CurrentDate :  moment().format('YYYY-MM-DD hh:mm:ss')
 								}
 								InvoiceService.getfeetypefillter(postData).then(function(response){
 									$modalInstance.close(response.data);
@@ -454,8 +454,8 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 						}
 					};
 					if ($scope.checkedit !== true) {
-						postData.CREATION_DATE = moment().format('YYYY-MM-DD');
-						postData.LAST_UPDATE_DATE = moment().format('YYYY-MM-DD');
+						postData.CREATION_DATE = moment().format('YYYY-MM-DD hh:mm:ss');
+						postData.LAST_UPDATE_DATE = moment().format('YYYY-MM-DD hh:mm:ss');
 						postData.STATUS = 'enter'
 						InvoiceService.getSaveManual(postData).then(function(response){
 							$scope.success = true;
@@ -463,7 +463,7 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 
 					}else{
 						postData.header_id = $scope.headerdata.header_id;
-						postData.LAST_UPDATE_DATE = moment().format('YYYY-MM-DD');
+						postData.LAST_UPDATE_DATE = moment().format('YYYY-MM-DD hh:mm:ss');
 						postData.STATUS = 'enter'
 						InvoiceService.getEditManual(postData).then(function(response){
 							$scope.success = true;

@@ -1330,6 +1330,7 @@ module.exports = {
 							QUANTITY:listBDLine[i].QUANTITY,
 							TIME_SPENT:listBDLine[i].TIME_SPENT,
 							AMOUNT:listBDLine[i].PRICE*listBDLine[i].QUANTITY,
+							TAX_AMOUNT:listBDLine[i].PRICE*listBDLine[i].QUANTITY*listBDLine[i].TAX_RATE,
 							TAX_ID:listBDLine[i].TAX_ID,
 							TAX_CODE:listBDLine[i].TAX_CODE,
 							TAX_RATE:listBDLine[i].TAX_RATE,
@@ -1411,6 +1412,7 @@ module.exports = {
 							QUANTITY:listBDLine[i].QUANTITY,
 							TIME_SPENT:listBDLine[i].TIME_SPENT,
 							AMOUNT:listBDLine[i].PRICE*listBDLine[i].QUANTITY,
+							TAX_AMOUNT:listBDLine[i].PRICE*listBDLine[i].QUANTITY*listBDLine[i].TAX_RATE,
 							TAX_ID:listBDLine[i].TAX_ID,
 							TAX_CODE:listBDLine[i].TAX_CODE,
 							TAX_RATE:listBDLine[i].TAX_RATE,
@@ -1475,18 +1477,22 @@ module.exports = {
 			return;
 		}
 		var sql=
-			" SELECT cln_invoice_header.*,cln_patients.Sur_name,cln_patients.First_name,cln_patients.Patient_id,cln_fee_group.FEE_GROUP_NAME as groupFEE_GROUP_NAME,cln_fee_group.FEE_GROUP_ID as groupFEE_GROUP_ID,cln_fee_types.FEE_TYPE_ID as typesFEE_TYPE_ID,cln_fee_types.FEE_TYPE_NAME as typesFEE_TYPE_NAME,cln_insurers.insurer_name,cln_claims.Claim_no"+
-			" FROM `cln_invoice_header`                                                  				"+
-			" INNER JOIN `cln_patients`  ON cln_invoice_header.`Patient_id`=cln_patients.`Patient_id` 	"+
-			" INNER JOIN `cln_fee_group` ON cln_invoice_header.`SOURCE_ID`=cln_fee_group.`FEE_GROUP_ID` "+
-			" INNER JOIN `cln_fee_types` ON cln_invoice_header.`FEE_TYPE`=cln_fee_types.`FEE_TYPE_ID` 	"+
-			" LEFT JOIN `cln_insurers`  ON cln_invoice_header.`Insurer_id`=cln_insurers.`id` 			"+
-			" LEFT JOIN `cln_claims`    ON cln_invoice_header.`claim_id`=cln_claims.`Claim_id` 	        "+
-			" WHERE header_id =? 												            			";
+			" SELECT cln_invoice_header.*,cln_patients.Sur_name,cln_patients.First_name,cln_patients.Patient_id,	"+
+			"cln_fee_group.FEE_GROUP_NAME as groupFEE_GROUP_NAME,cln_fee_group.FEE_GROUP_ID as groupFEE_GROUP_ID,	"+
+			"cln_fee_types.FEE_TYPE_ID as typesFEE_TYPE_ID,cln_fee_types.FEE_TYPE_NAME as typesFEE_TYPE_NAME,		"+
+			"cln_insurers.insurer_name,cln_claims.Claim_no															"+
+			" FROM `cln_invoice_header`                                                  							"+
+			" INNER JOIN `cln_patients`  ON cln_invoice_header.`Patient_id`=cln_patients.`Patient_id` 				"+
+			" INNER JOIN `cln_fee_group` ON cln_invoice_header.`SOURCE_ID`=cln_fee_group.`FEE_GROUP_ID`				"+
+			" INNER JOIN `cln_fee_types` ON cln_invoice_header.`FEE_TYPE`=cln_fee_types.`FEE_TYPE_ID` 				"+
+			" LEFT JOIN `cln_insurers`  ON cln_invoice_header.`Insurer_id`=cln_insurers.`id` 						"+
+			" LEFT JOIN `cln_claims`    ON cln_invoice_header.`claim_id`=cln_claims.`Claim_id` 	        			"+
+			" WHERE header_id =? 												            						";
 
 		kiss.executeQuery(req,sql,[postData.header_id],function(rows){
 			var sqlLine=
-				" SELECT inv_items.*,cln_invoice_lines.ITEM_FEE_ID,cln_invoice_lines.FEE,cln_invoice_lines.AMOUNT,cln_invoice_lines.TIME_SPENT,cln_invoice_lines.QUANTITY,cln_invoice_lines.PRICE ,cln_invoice_lines.line_id "+
+				" SELECT inv_items.*,cln_invoice_lines.ITEM_FEE_ID,cln_invoice_lines.FEE,cln_invoice_lines.AMOUNT,"+
+				"cln_invoice_lines.TIME_SPENT,cln_invoice_lines.QUANTITY,cln_invoice_lines.PRICE ,cln_invoice_lines.line_id "+
 				" FROM `cln_invoice_lines`                                                  		 "+
 				" INNER JOIN `inv_items` ON cln_invoice_lines.`ITEM_ID`=inv_items.`ITEM_ID` 		 "+
 				" WHERE HEADER_ID =? 												         		 ";
@@ -1506,23 +1512,25 @@ module.exports = {
 		var postData = req.body.data;
 		console.log(postData);
 		var fHeader="v2_InvoiceController->postGetfeetypefillter";
-		var functionCode='DM001';
+		var functionCode='FN003';
 		var postData=kiss.checkData(postData)?postData:'';
-		// if(!kiss.checkListData(postData))
-		// {
-		// 	kiss.exlog(fHeader,"Loi data truyen den",req.body);
-		// 	res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
-		// 	return;
-		// }
+		if(!kiss.checkListData(postData))
+		{
+			kiss.exlog(fHeader,"Loi data truyen den",req.body);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM002')});
+			return;
+		}
 		var sql=
-			"SELECT itemFee.`ITEM_FEE_ID`,itemFee.`FEE`,`itemFee`.`PERCENT`,`item`.`ITEM_CODE`,`item`.`ITEM_ID`,`item`.`TAX_ID`,`item`.`TAX_CODE`,`item`.`TAX_RATE`,"+
-			"item.`ITEM_NAME`,itemFee.`FEE_START_DATE`,itemFee.`FEE_TYPE_ID`    "+
-			"FROM `cln_item_fees` itemFee                                       "+
-			"INNER JOIN `inv_items` item ON itemFee.`CLN_ITEM_ID`=item.`ITEM_ID`"+
-			"WHERE item.`ITEM_ID`=? AND `itemFee`.`FEE_TYPE_ID`=?               "+
-			"AND itemFee.`FEE_START_DATE`<=?                                    "+
-			"ORDER BY itemFee.`FEE_START_DATE` DESC                             "+
-			"LIMIT 1															";
+			"SELECT itemFee.`ITEM_FEE_ID`,itemFee.`FEE`,`itemFee`.`PERCENT`, 								   "+
+			"`item`.`ITEM_CODE`,`item`.`ITEM_ID`,`item`.`TAX_ID`,`sys_taxes`.`TAX_CODE`,`sys_taxes`.`TAX_RATE`,"+
+			"item.`ITEM_NAME`,itemFee.`FEE_START_DATE`,itemFee.`FEE_TYPE_ID`   								   "+
+			"FROM `cln_item_fees` itemFee                                       							   "+
+			"INNER JOIN `inv_items` item ON itemFee.`CLN_ITEM_ID`=item.`ITEM_ID`							   "+
+			"LEFT JOIN `sys_taxes`  ON item.`TAX_CODE`=sys_taxes.`TAX_CODE`     							   "+
+			"WHERE item.`ITEM_ID`=? AND `itemFee`.`FEE_TYPE_ID`=?                                              "+
+			"AND itemFee.`FEE_START_DATE`<=?                                                                   "+
+			"ORDER BY itemFee.`FEE_START_DATE` DESC                                                            "+
+			"LIMIT 1															                               ";
 		kiss.executeQuery(req,sql,[postData.ITEM_ID,postData.FEE_TYPE_ID,postData.CurrentDate],function(rows){
 			res.json({status:'success',data:rows});
 		},function(err){
