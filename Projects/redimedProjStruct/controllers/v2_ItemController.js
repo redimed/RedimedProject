@@ -562,19 +562,34 @@ module.exports = {
             res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
             return;
         }
+        
         var sql=
-            " SELECT feeGroup.`FEE_GROUP_ID`,feeGroup.`FEE_GROUP_NAME`,feeGroup.`FEE_GROUP_TYPE`,                       "+
-			" feeType.`FEE_TYPE_ID`,feeType.`FEE_TYPE_NAME`,                                                            "+
-			" itemFee.`ITEM_FEE_ID`,itemFee.`CLN_ITEM_ID`,itemFee.`FEE_START_DATE`,itemFee.`FEE`,itemFee.`PERCENT`      "+
-			" FROM `cln_fee_group` feeGroup                                                                             "+
-			" LEFT JOIN `cln_fee_types` feeType ON feeGroup.`FEE_GROUP_ID`=feeType.`FEE_GROUP_ID`                       "+
-			" LEFT JOIN `cln_item_fees` itemFee ON feeType.`FEE_TYPE_ID`=itemFee.`FEE_TYPE_ID`                          "+
-			" WHERE feeGroup.`ISENABLE`=1                                                                               "+
-			" AND (feeType.`ISENABLE`=1 OR feeType.`FEE_TYPE_ID` IS NULL)                                               "+
-			" AND (itemFee.`ISENABLE`=1 OR itemFee.`ITEM_FEE_ID` IS NULL)                                               "+
-			" AND (itemFee.`CLN_ITEM_ID`=? OR itemFee.`CLN_ITEM_ID` IS NULL)                                            "+
-			" ORDER BY feeGroup.`FEE_GROUP_TYPE`,feeGroup.`FEE_GROUP_NAME`,                                             "+
-			" feeType.`FEE_TYPE_NAME`,itemFee.`FEE_START_DATE` DESC;                                                    ";
+			"  SELECT t1.FEE_GROUP_ID, t1.FEE_GROUP_NAME, t1.FEE_GROUP_TYPE,                                        "+
+			"  t1.FEE_TYPE_ID, t1.FEE_TYPE_NAME,t2.ITEM_FEE_ID, t2.CLN_ITEM_ID,                                     "+
+			"  t2.FEE, t2.PERCENT, t2.FEE_START_DATE                                                                "+
+			"  FROM                                                                                                 "+
+			"  (                                                                                                    "+
+			" 	 SELECT DISTINCT feeGroup.`FEE_GROUP_ID`,feeGroup.`FEE_GROUP_NAME`,feeGroup.`FEE_GROUP_TYPE`,       "+
+			" 	 feeType.`FEE_TYPE_ID`,feeType.`FEE_TYPE_NAME`                                                      "+
+			" 	 FROM `cln_fee_group` feeGroup                                                                      "+
+			" 	 LEFT JOIN `cln_fee_types` feeType ON feeGroup.`FEE_GROUP_ID`=feeType.`FEE_GROUP_ID`                "+
+			" 	 LEFT JOIN `cln_item_fees` itemFee ON feeType.`FEE_TYPE_ID`=itemFee.`FEE_TYPE_ID`                   "+
+			" 	 WHERE feeGroup.`ISENABLE`=1                                                                        "+
+			" 	 AND (feeType.`ISENABLE`=1 OR feeType.`FEE_TYPE_ID` IS NULL)                                        "+
+			" 	                                                                                                    "+
+			"  ) t1                                                                                                 "+
+			"  LEFT JOIN                                                                                            "+
+			"  (                                                                                                    "+
+			" 	 SELECT DISTINCT feeType.`FEE_TYPE_ID`,feeType.`FEE_TYPE_NAME`,                                     "+
+			" 	 itemFee.`ITEM_FEE_ID`,itemFee.`CLN_ITEM_ID`,itemFee.`FEE`,itemFee.`PERCENT`,                       "+
+			" 	 itemFee.`FEE_START_DATE`                                                                           "+
+			" 	 FROM `cln_fee_types` feeType                                                                       "+
+			" 	 LEFT  JOIN `cln_item_fees` itemFee ON itemFee.`FEE_TYPE_ID`=feeType.`FEE_TYPE_ID`                  "+
+			" 	 WHERE  itemFee.`CLN_ITEM_ID`=256                                                                   "+
+			"  ) t2                                                                                                 "+
+			"  ON t1.FEE_TYPE_ID=t2.FEE_TYPE_ID                                                                     "+
+			"  ORDER BY t1.`FEE_GROUP_TYPE`,t1.`FEE_GROUP_NAME`,                                                    "+
+			"  t2.`FEE_TYPE_NAME`,t2.`FEE_START_DATE` DESC;                                                         ";
         kiss.executeQuery(req,sql,[itemId],function(rows){
             res.json({status:'success',data:rows});
         },function(err){
