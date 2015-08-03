@@ -21,16 +21,16 @@
         </div>
         <div>
             <div class="btn-group pull-right">
-                <a ng-click="addNewSite()" href="javascript:;" class="btn green" >
-                    Add New Site &nbsp;&nbsp;<i class="fa fa-plus"></i>
+                <a href="javascript:;" ng-click="addNewSite()" style="width: 120px;  background-color: green;" class="btn un-submit">
+                    Add New Site 
                 </a>
             </div>
         </div>
     </div>
     <div class="portlet-body form">
         <div class="table-scrollable">
-            <table ng-table="tableParams"  class="table table-bordered table-condensed  table-responsive">
-                <tr style="white-space: nowrap" align="center" ng-repeat="b in $data" ng-click="showSiteCalendar(b)" ng-class="{selected : b.id === selectedId}">
+            <table ng-table="tableParams" class="table table-hover table-bordered table-condensed table-responsive">
+                <tr style="white-space: nowrap; cursor: pointer;" align="center" ng-repeat="b in $data" ng-click="showSiteCalendar(b)" ng-class="{selected : b.id === selectedId}">
                     <td data-title="'Site Name'" >
                         <a href="javascript:;" ng-click="editSite(b)">{{b.Site_name}}</a>
                     </td>
@@ -68,7 +68,7 @@
         </div>
     </div>
 </div>
-<div class="tabbable tabbable-custom tabbable-custom-profile">
+<div ng-if="selectedId != null" class="tabbable tabbable-custom tabbable-custom-profile">
     <ul class="nav nav-tabs">
         <li class="active">
             <a href="admin/booking/site#tab_1_1" data-toggle="tab">
@@ -78,11 +78,15 @@
             <a href="admin/booking/site#tab_1_2" data-toggle="tab">
                 State </a>
         </li>
+        <li>
+            <a href="admin/booking/site#tab_1_3" data-toggle="tab">
+                Rooms </a>
+        </li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane active" id="tab_1_1">
             <div class="portlet-body form">
-                <form name="calendarForm" ng-submit="submitCalendar(calendarForm)" method="post" novalidate>
+                <form ng-if="selectedCal != null" name="calendarForm" ng-submit="submitCalendar(calendarForm)" method="post" novalidate>
                     <div class="form-group" ng-class="{'has-error':showClickedValidation && calendarForm.fromTime.$invalid}">
                         <div class="row">
                             <div class="col-md-3"></div>
@@ -183,8 +187,8 @@
                 </form>
                 <br/>
                 <div class="table-scrollable">
-                    <table ng-table="tableParams2"  class="table table-bordered table-condensed  table-responsive">
-                        <tr style="white-space: nowrap" align="center" ng-repeat="b in $data" ng-click="showCalendarDetail(b)" ng-class="{selected : b.cal_id === selectedCal}">
+                    <table ng-table="tableParams2"  class="table table-hover table-bordered table-condensed  table-responsive">
+                        <tr style="white-space: nowrap; cursor: pointer;" align="center" ng-repeat="b in $data" ng-click="showCalendarDetail(b)" ng-class="{selected : b.cal_id === selectedCal}">
                             <td data-title="'Site ID'">
                                 <label>{{b.site_id}}</label>
                             </td>
@@ -328,6 +332,29 @@
                     </div>
                 </div>
 
+            </div>
+        </div>
+        <div class="tab-pane" id="tab_1_3">
+            <div class="table-scrollable">
+                <table ng-table="tableParams2"  class="table table-hover table-bordered table-condensed  table-responsive">
+                    <tr style="white-space: nowrap; cursor: pointer;" align="center" ng-repeat="b in $data" ng-click="showCalendarDetail(b)" ng-class="{selected : b.cal_id === selectedCal}">
+                        <td data-title="'Site ID'">
+                            <label>{{b.site_id}}</label>
+                        </td>
+                        <td data-title="'From Time'" >
+                            <label>{{b.From_time | date:'dd/MM/yyyy - HH:mm'}}</label>
+                        </td>
+                        <td data-title="'To Time'" >
+                            <label>{{b.to_time | date:'dd/MM/yyyy - HH:mm'}}</label>
+                        </td>
+                        <td data-title="'Available'" >
+                            <label >{{b.available}}</label>
+                        </td>
+                        <td data-title="'Remain'" >
+                            <label>({{b.available - b.booking <= 0 ? 0 : b.available - b.booking}} available(s))</label>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
