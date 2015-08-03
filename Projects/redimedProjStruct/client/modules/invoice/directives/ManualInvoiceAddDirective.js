@@ -454,7 +454,8 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 						}
 					};
 					if ($scope.checkedit !== true) {
-						postData.CREATION_DATE = new Date();
+						postData.CREATION_DATE = moment().format('YYYY-MM-DD');
+						postData.LAST_UPDATE_DATE = moment().format('YYYY-MM-DD');
 						postData.STATUS = 'enter'
 						InvoiceService.getSaveManual(postData).then(function(response){
 							$scope.success = true;
@@ -462,7 +463,7 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 
 					}else{
 						postData.header_id = $scope.headerdata.header_id;
-						postData.LAST_UPDATE_DATE = new Date();
+						postData.LAST_UPDATE_DATE = moment().format('YYYY-MM-DD');
 						postData.STATUS = 'enter'
 						InvoiceService.getEditManual(postData).then(function(response){
 							$scope.success = true;
