@@ -1,0 +1,31 @@
+<label class="un-label-popup-header-m un-bg-label-B41E46-m">Show History</label>
+<div>
+	<div>
+		<div >
+			<div class="row">
+		    	<div class="col-md-12">
+		    		<table class="mdt-table">
+						<thead>
+							<tr>
+								<th>Fee Type Name</th>
+								<th>Fee Start Date</th>
+								<th>Fee</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat=" (key,value) in obj">
+
+								<td >{{value.FEE_TYPE_NAME}}</td>
+								<td>
+									<select name="value.historyFee" id="value.historyFee" ng-model="value.historyFee" ng-options="item.FEE as item.FEE_START_DATE for item in value.listFee" style="width:200px">
+									</select>
+								</td>
+								<td >{{value.historyFee}}</td>
+							</tr>
+						</tbody>
+					</table>
+		    	</div>
+		    </div>
+		</div>
+	</div>
+</div>

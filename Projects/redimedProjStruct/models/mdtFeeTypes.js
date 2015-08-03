@@ -6,7 +6,6 @@ module.exports = function(sequelize, DataTypes){
 			autoIncrement: true
 		},
 		FEE_TYPE_NAME: DataTypes.STRING(11),
-		PRICE_SOURCE: DataTypes.STRING(200),
 		FEE_GROUP_ID: DataTypes.INTEGER(11),
 		FEE_GROUP_ORDER: DataTypes.INTEGER(11),
 		ISENABLE: DataTypes.INTEGER(11),

@@ -114,20 +114,31 @@ var rlobConstant={
 }
 
 var exlog={
-    alert:function(data)
+    alert:function()
     {
-        alert(JSON.stringify(data));
+        var str='';
+        for (var i = 0; i < arguments.length; i++) 
+        {
+            str=str+JSON.stringify(arguments[i])+"  |  ";
+        }
+        alert(str.slice(0,str.length-4));
     },
-    log:function(data)
+    log:function()
     {
         console.log("%c----------------------TANNV BEGIN LOG------------------------",'background: #ABC7E9; color: #141B76');
-        console.log('%c'+JSON.stringify(data), 'background: #ABC7E9; color: #141B76');
+        for (var i = 0; i < arguments.length; i++) 
+        {
+            console.log('%c'+JSON.stringify(arguments[i]), 'background: #ABC7E9; color: #141B76');
+        }
         console.log("%c----------------------TANNV END LOG--------------------------",'background: #ABC7E9; color: #141B76');
     },
-    logErr:function(data)
+    logErr:function()
     {
         console.log("%c----------------------TANNV ERROR BEGIN LOG------------------------",'background: #D4B1B1; color: red');
-        console.log('%c'+JSON.stringify(data), 'background: #D4B1B1; color: red');
+        for (var i = 0; i < arguments.length; i++) 
+        {
+            console.log('%c'+JSON.stringify(arguments[i]), 'background: #D4B1B1; color: red');
+        }
         console.log("%c-----------------------TANNV ERROR END LOG-------------------------",'background: #D4B1B1; color: red');
     }
 }

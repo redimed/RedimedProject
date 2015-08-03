@@ -374,6 +374,7 @@ gulp.task('invoice', function(){
 					 './client/modules/invoice/directives/tnInvoiceDetailDirective.js',
 					 './client/modules/invoice/directives/InvoiceSearchDirective.js',
 					 './client/modules/invoice/directives/InvoiceAddDirective.js',
+					 './client/modules/invoice/directives/ManualInvoiceAddDirective.js',
 	])
 	.pipe(concat('invoice.js'))
 	.pipe(uglify({mangle: false}))
@@ -418,6 +419,7 @@ gulp.task('item', function(){
 					 './client/modules/item/controllers/ItemHeaderController.js',
 					 './client/modules/item/controllers/ItemFeeController.js',
 					 './client/modules/item/controllers/ItemFeeSearchController.js',
+					 './client/modules/item/directives/ItemShowHistoryDirective.js'
 	])
 	.pipe(concat('item.js'))
 	.pipe(uglify({mangle: false}))

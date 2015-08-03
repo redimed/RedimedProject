@@ -1,0 +1,216 @@
+<form name="mainForm" novalidate>
+	<div class="row">
+		<!--Patient-->
+		<div class="col-md-6">
+			<span class="field extend-field">
+				
+				<label>Patient</label>
+				<span class="field" ng-class="{'has-error': mainForm.patientName.$invalid && isSubmit}">
+				<div>
+					<input type="text" disabled placeholder="Patient"  ng-model="patientName" class="form-control" name="patientName" id="patientName" required>
+				</div>
+				<div style="position: absolute;right: 0;bottom: 0px;" ng-if="patientTest == false">
+					<button style="height: 32px;width: 40px;margin-right: 0px;" class="btn btn-block" ng-click="patientSearch.open()">
+						<i class="fa fa-search"></i>
+					</button>
+				</div>
+			</span>	
+		</div>
+		<!--Patient-->
+		<!--Bill To-->
+		<div class="col-md-6 col-sm-6 col-xs-12">
+			<span class="field extend-field">
+				<label>Bill To</label>
+				<span class="field" ng-class="{'has-error': mainForm.fee_group.$invalid && isSubmit}">
+				 <select placeholder="Fee group type" name="fee_group" id="fee_group" ng-model="modelObjectMap.FEE_GROUP_TYPE" ng-options="value.value as value.display for (key,value) in feeGroupType" ng-change="feeGroupTypeChange(modelObjectMap.FEE_GROUP_TYPE)" required>
+	                <option value=''>-- Bill To --</option>
+	            </select>
+			</span>	
+		</div>
+	</div>
+	<div ng-if="patientName">
+		<div class="row" ng-if="modelObjectMap.FEE_GROUP_TYPE !== 'private_fund'">
+			<!--Feegroup-->
+			<div class="col-md-6">
+				<span class="field extend-field">
+					<label>Group Name</label>
+					<span class="field" ng-class="{'has-error': mainForm.fee_group_type.$invalid && isSubmit}">
+					 <select placeholder="Fee group type" name="fee_group_type" ng-model="modelObjectMap.FEE_GROUP_ID" ng-options="item.FEE_GROUP_ID as item.FEE_GROUP_NAME for item in feeGroupID" ng-change="feeGroupNameChange(modelObjectMap.FEE_GROUP_ID)" ng-required="modelObjectMap.FEE_GROUP_TYPE !== 'private_fund'">
+		                <option value=''>-- Group Fee --</option>
+		            </select>
+				</span>	
+			</div>
+			<!--Feegroup-->
+
+			<!--Feetype-->
+			<div class="col-md-6">
+				<span class="field extend-field">
+					<label>Fee Type</label>
+					 <select placeholder="Fee type" name="fee_type" ng-model="modelObjectMap.FEE_TYPE_ID" ng-options="item.FEE_TYPE_ID as item.FEE_TYPE_NAME for item in feeTypeID" ng-change="changeFeeType(modelObjectMap.FEE_TYPE_ID)">
+		                <option value=''>-- Fee Type --</option>
+		            </select>
+				</span>	
+			</div>
+			<!--Feetype-->
+		</div>
+		<div class="row" ng-if="modelObjectMap.FEE_GROUP_TYPE == 'private_fund'">
+			<!--Insurer-->
+			<div class="col-md-6">
+				<span class="field extend-field">
+					<label>Insurer</label>
+					<div>
+						<span class="field" ng-class="{'has-error': mainForm.insurers.$invalid && isSubmit}">
+						<input type="text" disabled placeholder="Insurer" name="insurers" id="insurers" ng-model="insurers.insurer_name" class="form-control" ng-required="modelObjectMap.FEE_GROUP_TYPE == 'private_fund'">
+					</div>
+					<div style="position: absolute;right: 0;bottom: 0px;">
+						<button style="height: 32px;width: 40px;margin-right: 2px;margin-bottom: 2px;" class="btn btn-block" ng-click="insurerSearch.open()">
+							<i class="fa fa-search"></i>
+						</button>
+					</div>
+				</span>	
+			</div>
+			<!--Insurer-->
+
+			<!--Feetype-->
+			<div class="col-md-6">
+				<span class="field extend-field">
+					<label>Fee Type</label>
+					 <select placeholder="Fee type" name="fee_type" ng-model="modelObjectMap.FEE_TYPE_ID" ng-options="item.FEE_TYPE_ID as item.FEE_TYPE_NAME for item in feeTypeID">
+		                <option value=''>-- Fee Type --</option>
+		            </select>
+				</span>	
+			</div>
+			<!--Feetype-->
+		</div>
+		<div class="row" ng-if="insurers.insurer_name">
+			<!--Insurer-->
+			<div class="col-md-6">
+				<span class="field extend-field">
+					<label>claim</label>
+					<span class="field" ng-class="{'has-error': mainForm.claim.$invalid && isSubmit}">
+					<div>
+						<input type="text" disabled placeholder="Claim" name="claim" id="claim" ng-model="claim.Claim_no" class="form-control" ng-required="insurers.insurer_name">
+					</div>
+					<div style="position: absolute;right: 0;bottom: 0px;">
+						<button style="height: 32px;width: 40px;margin-right: 0px;" class="btn btn-block" ng-click="claimSearch.open()">
+							<i class="fa fa-search"></i>
+						</button>
+					</div>
+				</span>	
+			</div>
+			<!--Insurer-->
+		</div>
+	</div>
+	
+</form>
+<!-- INVOICE ITEMS -->
+<div class="row">
+	<div class="portlet box mporlet-black" ng-if="modelObjectMap.FEE_TYPE_ID">
+		<div class="portlet-body">
+			<button ng-click="itemSearch.open()" class="un_tn_btn un_tn_btn_pink" style="margin-left: 89%;margin-top: -8px;">Choose Item </button>
+			<table class="mdt-table">
+				<tr>
+					<th> Item No</th>
+					<th> Item Name</th>
+					<th> Time Spent </th>
+					<th> Fee</th>
+					<th> Percent </th>
+					<th> Price</th>
+					<th> Quantity </th>
+					<th> Amount</th>
+					<!-- <th> Tax Code </th> -->
+					<th> Tax Rate </th>
+					<th> Tax Amount </th>
+					<th>Actions</th>
+				</tr>
+				<tr ng-repeat="item in InvoiceMap.lines">
+					<td>{{item.ITEM_CODE}}</td>
+					<td>{{item.ITEM_NAME}}</td>
+					<td><input type="number" min="0" class="form-control" ng-model="item.TIME_SPENT" /></td>
+					<td class="text-right">{{item.FEE}}</td>
+					<td class="text-right">{{item.Percent}}%</td>
+					<td class="text-right" ng-if="item.has_price">{{item.PRICE}}</td>
+					<td class="text-right" ng-if="!item.has_price">
+						<input type="number" min="0" class="form-control" ng-model="item.PRICE" />
+					</td>
+					<td><input type="number" min="0" class="form-control" ng-model="item.QUANTITY" /></td>
+					<td class="text-right">${{item.PRICE * item.QUANTITY}}</td>
+					<!-- <td class="text-right">{{item.TAX_CODE}}</td> -->
+					<td class="text-right">{{item.TAX_RATE}}</td>
+					<td class="text-right">{{item.TAX_RATE?item.PRICE * item.QUANTITY * item.TAX_RATE:null}}</td>
+					<!-- <td class="text-right"> -->
+					<td>
+						<div style="display:inline">
+							<button style="float:left" class="un_tn_btn un_tn_btn_gray un_tn_btn_sm  un_tn_btn_zip" ng-click="removeInvoiceLine(item)">
+								Remove
+							</button>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="6"><strong> Total </strong></td>
+					<td class="text-right">${{amountBill()}}</td>
+					<td colspan="4"></td>
+				</tr>
+			</table>
+
+		</div>
+	</div>
+</div>
+<!-- END INVOICE ITEMS -->
+
+<div class="row">
+	<div class="col-md-6">
+		<button ng-click="save()" class="btn un-submit"><i class="fa fa-save"></i> Save </button>
+		<button ng-click="resetEdit()" class="btn un-submit" ng-if="checkedit == true"><i class="fa fa-save"></i> Reset </button>
+	</div>
+</div>
+
+<!-- POPUP SEARCH-ITEM  -->
+<script type="text/ng-template" id="popupChooseMaunalItem">
+	<style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+    </style>
+	<div class="modal-body">	
+		<label class="un-label-popup-header-m un-bg-label-B41E46-m">Choose Item</label>
+    	<div class="portlet-body">
+			<table class="mdt-table">
+				<thead>
+					<tr>
+						<th> Item Code</th>
+						<th> Item Name</th>
+						<th> Tax Code </th>
+						<th> Tax Rate </th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							<input class="form-control input-sm" ng-model="ItemAll.search.ITEM_CODE" ng-enter="ItemAll.onSearch({field: 'ITEM_CODE', value: ItemAll.search.ITEM_CODE})">
+						</td>
+						<td>
+							<input class="form-control input-sm" ng-model="ItemAll.search.ITEM_NAME" ng-enter="ItemAll.onSearch({field: 'ITEM_NAME', value: ItemAll.search.ITEM_NAME})">
+						</td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr ng-repeat="item in ItemAll.list" ng-click="clickOnRow(item)">
+						<td>{{item.ITEM_CODE}}</td>
+						<td>{{item.ITEM_NAME}}</td>
+						<td>{{item.TAX_CODE}}</td>
+						<td>{{item.TAX_RATE}}</td>
+					</tr>
+				</tbody>
+			</table>
+		<div align="right">
+			<pagination boundary-links="true" total-items="ItemAll.count" ng-model="ItemAll.search.page" 
+		    class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+		    items-per-page="ItemAll.search.limit" max-size="ItemAll.search.max_size" ng-change="ItemAll.setPage(ItemAll.search.page)">
+			</pagination>
+		</div>
+	</div>
+	</div>
+</script>
+ <!-- POPUP SEARCH-ITEM  -->

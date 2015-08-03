@@ -23,7 +23,7 @@ angular.module('app.loggedIn.company.directives.listInsurer', [])
 				max_size: 5,
 				Company_name: '',
 				insurerArray :scope.insurerArray,
-				Industry:'',
+				insurer_name:'',
 				address:''
 			}
 			var load = function(){

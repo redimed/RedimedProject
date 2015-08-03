@@ -82,7 +82,10 @@
                             More <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li ng-repeat="action in options.actions">
+                            <!-- tannv.dts comment -->
+                            <!-- <li ng-repeat="action in options.actions"> -->
+                            <!-- tannv.dts modify -->
+                            <li ng-hide="action.is_hide(item)" ng-repeat="action in options.actions">
                                 <a ng-click="action.callback(item)"><i ng-if="action.class" class="{{action.class}}"></i> {{action.title}}</a>
                             </li>
                         </ul>

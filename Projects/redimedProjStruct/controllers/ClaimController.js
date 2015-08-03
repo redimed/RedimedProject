@@ -190,9 +190,12 @@ module.exports = {
 
 	postAdd: function(req, res){
 		var postData = req.body.data;
-		var CAL_ID = postData.CAL_ID;
-
-		delete postData.CAL_ID;
+		var checkCalId = postData.CAL_ID;
+		if (postData.CAL_ID) {
+			var CAL_ID = postData.CAL_ID;
+			delete postData.CAL_ID;
+		};
+		
 
 		var errors = [];
 		var required = [
@@ -227,18 +230,34 @@ module.exports = {
 		.success(function(created){
 			db.sequelize.query(last_id_sql)
 			.success(function(rows){
-				var insert_sub = {Claim_id: rows[0].id, Patient_id: postData.Patient_id, CAL_ID: CAL_ID};
-				var sub_sql = knex('cln_patient_claim')
-					.insert(insert_sub)
-					.toString();
+				if (checkCalId) {
+					var insert_sub = {Claim_id: rows[0].id, Patient_id: postData.Patient_id, CAL_ID: CAL_ID};
+					var sub_sql = knex('cln_patient_claim')
+						.insert(insert_sub)
+						.toString();
 
-				db.sequelize.query(sub_sql)
-				.success(function(created_sub){
-					res.json({data: created_sub});
-				})
-				.error(function(error){
-					res.json(500, {error: error});
-				})
+					db.sequelize.query(sub_sql)
+					.success(function(created_sub){
+						res.json({data: created_sub});
+					})
+					.error(function(error){
+						res.json(500, {error: error});
+					})
+				}else{
+					var sqlselect = knex('cln_claims')
+						.column(
+							'cln_claims.*'
+						)
+						.where('Claim_id', rows[0].id)
+						.toString();
+					db.sequelize.query(sqlselect)
+					.success(function(rows){
+						res.json({data: rows[0]});
+					})
+					.error(function(error){
+						res.json(500, {error: error});
+					})
+				};
 			})
 			.error(function(error){
 				res.json(500, {error: error});
@@ -303,7 +322,7 @@ module.exports = {
 		var sql = knex
 				.distinct(
 					'cln_claims.Claim_id',
-					'cln_patient_claim.Patient_id',
+					'cln_claims.Patient_id',
 					'Claim_date',
 					'Injury_date',
 					knex.raw('IFNULL(Claim_no,\'\') AS Claim_no'),
@@ -311,11 +330,11 @@ module.exports = {
 				)
 				.column('cln_claims.Isenable')
 				.from('cln_claims')
-				.innerJoin('cln_patient_claim', 'cln_claims.Claim_id', 'cln_patient_claim.Claim_id')
+				// .innerJoin('cln_patient_claim', 'cln_claims.Claim_id', 'cln_patient_claim.Claim_id')
 				//.where('cln_claims.Isenable', 1)
 				.where(knex.raw('IFNULL(Claim_no,\'\') LIKE \'%'+postData.Claim_no+'%\''))
 				.where(knex.raw('IFNULL(Injury_name,\'\') LIKE \'%'+postData.Injury_name+'%\''))
-				.where('cln_patient_claim.Patient_id', postData.Patient_id)
+				.where('cln_claims.Patient_id', postData.Patient_id)
 				.limit(postData.limit)
 				.offset(postData.offset)
 				.orderBy('cln_claims.Claim_date', postData.Claim_date)
@@ -323,12 +342,12 @@ module.exports = {
 				.toString();
 
 		var count_sql = knex('cln_claims')
-				.innerJoin('cln_patient_claim', 'cln_claims.Claim_id', 'cln_patient_claim.Claim_id')
+				// .innerJoin('cln_patient_claim', 'cln_claims.Claim_id', 'cln_patient_claim.Claim_id')
 				.count('cln_claims.Claim_id as a')
 				//.where('cln_claims.Isenable', 1)
 				.where(knex.raw('IFNULL(Claim_no,\'\') LIKE \'%'+postData.Claim_no+'%\''))
 				.where(knex.raw('IFNULL(Injury_name,\'\') LIKE \'%'+postData.Injury_name+'%\''))
-				.where('cln_patient_claim.Patient_id', postData.Patient_id)
+				.where('cln_claims.Patient_id', postData.Patient_id)
 				.toString();
 
 		db.sequelize.query(sql)
@@ -397,6 +416,54 @@ module.exports = {
 			res.json(500, {error: error,sql:sql});
 		})
 
+	},
+
+	postListFollowPatientInsurer : function(req,res){
+
+		var postData = req.body.data;
+		console.log(postData);
+		var sql = knex
+				.distinct(
+					'cln_claims.Claim_id',
+					'cln_claims.Patient_id',
+					'Claim_date',
+					'Injury_date',
+					knex.raw('IFNULL(Claim_no,\'\') AS Claim_no'),
+					knex.raw('IFNULL(Injury_name,\'\') AS Injury_name')
+				)
+				.column('cln_claims.Isenable')
+				.from('cln_claims')
+				.where(knex.raw('IFNULL(Claim_no,\'\') LIKE \'%'+postData.Claim_no+'%\''))
+				.where(knex.raw('IFNULL(Injury_name,\'\') LIKE \'%'+postData.Injury_name+'%\''))
+				.where('cln_claims.Patient_id', postData.Patient_id)
+				.where('cln_claims.insurer_id', postData.insurer_id)
+				.limit(postData.limit)
+				.offset(postData.offset)
+				.orderBy('cln_claims.Claim_date', postData.Claim_date)
+				.orderBy('cln_claims.insurer_id', postData.Injury_date)
+				.toString();
+
+		var count_sql = knex('cln_claims')
+				.count('cln_claims.Claim_id as a')
+				.where(knex.raw('IFNULL(Claim_no,\'\') LIKE \'%'+postData.Claim_no+'%\''))
+				.where(knex.raw('IFNULL(Injury_name,\'\') LIKE \'%'+postData.Injury_name+'%\''))
+				.where('cln_claims.Patient_id', postData.Patient_id)
+				.where('cln_claims.insurer_id', postData.insurer_id)
+				.toString();
+
+		db.sequelize.query(sql)
+		.success(function(rows){
+			db.sequelize.query(count_sql)
+			.success(function(count){
+				res.json({data: rows, count: count[0].a});
+			})
+			.error(function(error){
+				res.json(500, {error: error});	
+			})
+		})
+		.error(function(error){
+			res.json(500, {error: error});
+		})
 	}
 
 

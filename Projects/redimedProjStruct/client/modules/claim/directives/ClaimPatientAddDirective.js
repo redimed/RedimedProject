@@ -6,7 +6,9 @@ angular.module('app.loggedIn.claim.directives.patientAdd', [])
 		scope:{
 			patientId: '=',
 			calId: '=',
-			success: '='
+			success: '=',
+			successData:'=',
+			insurerdata:'='
 		},
 		templateUrl: 'modules/claim/directives/templates/patientAdd.html',
 		link: function(scope, elem, attrs){
@@ -67,7 +69,11 @@ angular.module('app.loggedIn.claim.directives.patientAdd', [])
 
 				ClaimModel.add(postData)
 				.then(function(response){
-					scope.success = true;
+					if (scope.insurerdata) {
+						scope.success = response.data;
+					}else{
+						scope.success = true;
+					};
 				}, function(error){
 					scope.claim.errors = angular.copy(error.data.errors);
 					ConfigService.beforeError(scope.claim.errors);
@@ -75,17 +81,22 @@ angular.module('app.loggedIn.claim.directives.patientAdd', [])
 			}
 
 			var loadInsurer = function(){
-				var postData = {Patient_id: scope.patientId};
-
-				InsurerService.oneFollowPatient(postData).then(function(response){
-					if(typeof response.data !== 'undefined'){
-						scope.insurer.name = response.data.insurer_name;
-						form.insurer_id=response.data.id;
-						form.Insurer=response.data.insurer_name;
-					}else{
-						scope.insurer.name = 'No Insurer';
-					}
-				}, function(error){})
+				if (scope.insurerdata) {
+					scope.insurer.name = scope.insurerdata.insurer_name;
+					form.insurer_id=scope.insurerdata.id;
+					form.Insurer=scope.insurerdata.insurer_name;
+				}else{
+					var postData = {Patient_id: scope.patientId};
+					InsurerService.oneFollowPatient(postData).then(function(response){
+						if(typeof response.data !== 'undefined'){
+							scope.insurer.name = response.data.insurer_name;
+							form.insurer_id=response.data.id;
+							form.Insurer=response.data.insurer_name;
+						}else{
+							scope.insurer.name = 'No Insurer';
+						}
+					}, function(error){})
+				};
 			}
 
 			scope.claim = {

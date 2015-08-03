@@ -50,15 +50,15 @@ angular.module('app.loggedIn.claim.directives.patientEdit', [])
 			}
 
 			var loadInsurer = function(){
-				//tannv mark
-				var postData = {Patient_id: scope.patientId};
-				InsurerService.oneFollowPatient(postData).then(function(response){
-					if(typeof response.data !== 'undefined'){
-						scope.insurer.name = response.data.insurer_name;
-					}else{
-						scope.insurer.name = 'No Insurer';
-					}
-				}, function(error){})
+				// //tannv mark
+				// var postData = {Patient_id: scope.patientId};
+				// InsurerService.oneFollowPatient(postData).then(function(response){
+				// 	if(typeof response.data !== 'undefined'){
+				// 		scope.insurer.name = response.data.insurer_name;
+				// 	}else{
+				// 		scope.insurer.name = 'No Insurer';
+				// 	}
+				// }, function(error){})
 			}
 
 			var load = function(){
@@ -66,6 +66,12 @@ angular.module('app.loggedIn.claim.directives.patientEdit', [])
 
 				ClaimModel.one(postData)
 				.then(function(response){
+					if(response.data.Insurer !== null){
+						scope.insurer.name = response.data.Insurer;
+					}else{
+						scope.insurer.name = 'No Insurer';
+					}
+					
 					angular.extend(scope.claim.form, response.data);
 
 					scope.claim.form.Claim_date = ConfigService.convertToDate(scope.claim.form.Claim_date);

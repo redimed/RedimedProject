@@ -503,6 +503,8 @@ module.exports =
                             else
                                 updateStr+=';';
                         }
+
+
                     }
                     else //if(listExclude.length>0)
                     {
@@ -524,10 +526,10 @@ module.exports =
                                     updateStr+=',';
                                 else
                                     updateStr+=';';
-                            }
-
-                            
+                            }                            
                         }
+                        if(updateStr.charAt(updateStr.length-1)==',')
+                            updateStr=updateStr.substr(0, updateStr.length-1)+";";
                     }
 
                     //code cu khi chua xet truong hop exclude

@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.insurer.detail.directive", [])
-.directive("insurerDetail", function (InsurerModel, InsurerService, ConfigService, toastr) {
+.directive("insurerDetail", function (InsurerModel, InsurerService, ConfigService, toastr,InvoiceService,InvoiceService) {
     return{
         restrict: "EA",
         scope: {
@@ -11,9 +11,22 @@ angular.module("app.loggedIn.insurer.detail.directive", [])
         },
         templateUrl: "modules/insurer/directives/templates/detail.html",
         link: function (scope, element, attrs) {
+            scope.getFeegrouptype = function(){
+                var postData ={
+                    FEE_GROUP_TYPE :'private_fund'
+                }
+                InsurerService.getFeeGroup(postData).then(function(response){
+                    scope.feeGroupType = response.data;
+                })
+            }
+             scope.getFeegrouptype();
             var loadData = function (id) {
+
                 InsurerService.detail(id).then(function (data) {
                     angular.extend(scope.modelObjectMap, data.row);
+                    InvoiceService.getFeegroupbyid({FEE_GROUP_ID:data.row.FEE_GROUP_ID}).then(function(response){
+                        scope.modelObjectMap.FEE_GROUP_ID = response.data[0].FEE_GROUP_ID;
+                    })
                     scope.modelObjectMap.isenable += '';
                     ConfigService.autoConvertData(scope.modelObjectMap);
 
@@ -56,6 +69,7 @@ angular.module("app.loggedIn.insurer.detail.directive", [])
                             if (response.status === 'success') {
                                 toastr.success("Edit Insurer Successfully", "Success");
                                 scope.isSubmit = false;
+                                scope.success = true;
                                 if (scope.on_success) {
                                     scope.on_success(response);
                                 }

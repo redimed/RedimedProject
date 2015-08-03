@@ -48,7 +48,6 @@ module.exports = {
     },
     postDetail: function(req, res){
         var postData = req.body.data;
-        console.log('------------------------------',postData);
         var sql = knex
                 .select(
                     'companies.Company_name',
@@ -766,9 +765,16 @@ module.exports = {
     postlistInsurer: function(req, res){
         var postData = req.body.data;
         var sql = knex
-        .select('*')
+        .select(
+            knex.raw('IFNULL(insurer_name,\'\') AS insurer_name'),
+            knex.raw('IFNULL(address,\'\') AS address'),
+            'id'
+            )
         .from('cln_insurers')
+        .where(knex.raw('IFNULL(insurer_name,\'\') LIKE \'%'+postData.insurer_name+'%\''))
+        .where(knex.raw('IFNULL(address,\'\') LIKE \'%'+postData.address+'%\''))
         .whereNotIn('cln_insurers.id', postData.insurerArray)
+        .where('cln_insurers.isenable', 1)
         .limit(postData.limit)
         .offset(postData.offset)
         .toString();

@@ -19,6 +19,10 @@ angular.module("app.loggedIn.item.services", [])
         var detailApi = appApi.all("v2/items/insert_header_items");
         return detailApi.post(data);
     }
+    instanceService.insertManualLine = function(data) {
+        var detailApi = appApi.all("v2/items/searchmanual");
+        return detailApi.post(data);
+    }
 
     instanceService.insertHeader = function(data) {
         var detailApi = appApi.all("v2/items/insert_header");
@@ -167,6 +171,92 @@ angular.module("app.loggedIn.item.services", [])
     instanceService.importItemFromXML = function() {
         var detailApi = appApi.all("v2/items/import_from_source");
         return detailApi.post();
+    }
+
+    /**
+     * tannv.dts@gmail.com
+     */
+    instanceService.importMedicareFeeFromSource=function(postData)
+    {
+        var detailApi = appApi.all("v2/fees/group/import_medicare_fee_from_source");
+        return detailApi.post({postData:postData});
+    }
+    
+    /**
+     * tannv.dts@gmail.com
+     */
+    instanceService.importFeeFromTxtSource=function(postData)
+    {
+        var detailApi = appApi.all("v2/fees/group/import_fee_from_txt_source");
+        return detailApi.post({postData:postData});
+    }
+
+    /**
+     * tannv.dts@gmail.com
+     * 21-07-2015
+     */
+    instanceService.importDvaFeeFromSource=function(postData)
+    {
+        var detailApi = appApi.all("v2/fees/group/import_dva_fee_from_source");
+        return detailApi.post({postData:postData});
+	}
+	
+	/**
+     * Duc Manh
+     * 21-07-2015
+     */
+    instanceService.showHistory = function(data) {
+        var detailApi = appApi.all("v2/items/show_history");
+        return detailApi.post(data);
+    }
+
+    /**
+     * tannv.dts@gmail.com
+     * 27-07-2015
+     */
+    instanceService.getListGroupFee=function()
+    {
+        var detailApi = appApi.all("v2/fees/group/get_list_group_fee");
+        return detailApi.post();
+    }
+    /**
+     * tannv.dts@gmail.com
+     * 27-07-2015
+     */
+    instanceService.getItemFeeTypes=function(postData)
+    {
+        var detailApi = appApi.all("v2/fees/type/get_item_fee_types");
+        return detailApi.post({postData:postData});
+    }
+
+    /**
+     * tannv.dts@gmail.com
+     * 28-07-2015
+     */
+    instanceService.getItemFeeList=function(postData)
+    {
+        var detailApi = appApi.all("v2/items/get_item_fee_list");
+        return detailApi.post({postData:postData});
+    }
+
+    /**
+     * tannv.dts@gmail.com
+     * 29-07-2015
+     */
+    instanceService.saveAllItemFeeInGroupFee=function(feeGroup)
+    {
+        var detailApi = appApi.all("v2/fees/group/save_all_item_fee_in_group_fee");
+        return detailApi.post({feeGroup:feeGroup});
+    }
+
+    /**
+     * tannv.dts@gmail.com
+     * 30-07-2015
+     */
+    instanceService.removeItemFee=function(itemFeeId)
+    {
+        var detailApi = appApi.all("v2/fees/remove_item_fee");
+        return detailApi.post({itemFeeId:itemFeeId});
     }
 
     return instanceService;

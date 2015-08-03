@@ -5,10 +5,12 @@ angular.module("app.loggedIn.item.feetype.detail.directive", [])
             scope: {
                 data: "@",
                 options: "=",
+                success:"=",
                 on_success: '=onsuccess'
             },
             templateUrl: "modules/item/directives/templates/fee_type_detail.html",
             link: function (scope, element, attrs) {
+                console.log(scope.options);
                 scope.groupOptions = scope.options.groupSelect.data.items;
                 var loadData = function (id) {
                     ItemService.feetypedetail(id).then(function (data) {
@@ -21,7 +23,7 @@ angular.module("app.loggedIn.item.feetype.detail.directive", [])
                     type: 'add',
                     text: 'Add Fee Type'
                 };
-
+                console.log(scope.data);
                 if (scope.data) {
                     var data = scope.$eval(scope.data);
                     if (data.id) {
@@ -39,6 +41,8 @@ angular.module("app.loggedIn.item.feetype.detail.directive", [])
                             toastr.success("Add successfully", "Success");
                             scope.modelObjectMap = angular.copy(FeeTypesModel);
                             scope.isSubmit = false;
+                            scope.success = true;
+                            console.log(scope.success);
                             if (scope.on_success) {
                                 scope.on_success(response);
                             }
@@ -53,6 +57,7 @@ angular.module("app.loggedIn.item.feetype.detail.directive", [])
                         if (response.status === 'success') {
                             toastr.success("Edit successfully", "Success");
                             scope.isSubmit = false;
+                            scope.success = true;
                             if (scope.on_success) {
                                 scope.on_success(response);
                             }
