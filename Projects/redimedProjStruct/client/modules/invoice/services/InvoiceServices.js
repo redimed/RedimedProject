@@ -120,6 +120,11 @@ angular.module('app.loggedIn.invoice.services', [])
 	/**
 	 * tannv.dts@gmail.com
 	 */
+	  mdtService.getpatientbyid=function(postData)
+	{
+		var funcApi = mdtApi.all('invoice/getpatientbyid');
+		return funcApi.post({data: postData});
+	}
 	 mdtService.getFeegroupbyid=function(postData)
 	{
 		var funcApi = mdtApi.all('invoice/feegroupbyid');

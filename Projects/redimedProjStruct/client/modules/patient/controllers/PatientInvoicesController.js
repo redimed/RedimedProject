@@ -7,7 +7,45 @@ angular.module("app.loggedIn.patient.invoices.controller", [])
     $scope.invoicePanel = {};
 
     $scope.invoiceClick = function(item){
-        $state.go('loggedIn.patient.invoice_detail', {header_id: item.header_id}); 
+        
+        if (item.cal_id) {
+            $state.go('loggedIn.patient.invoice_detail', {header_id: item.header_id}); 
+        }else{
+              var modalInstance=$modal.open({
+                    templateUrl:'popupEditManualInvoice',
+                    controller:function($scope,$modalInstance,options,item){
+                        $scope.options = options;
+                        $scope.addmanual ={
+                            success:'',
+                            headerdata:item
+                        }
+                         $scope.$watch('addmanual.success', function(response){
+                            if (response == true) {
+                                $modalInstance.close({status:'success',data:response});
+                            };
+                             
+                        })
+                        $scope.cancel=function(){
+                            $modalInstance.dismiss('cancel');
+                        }
+                    },
+                    resolve:{
+                        options:function(){
+                            return $scope.options;
+                        },
+                        item:function(){
+                            return item;
+                        }
+                    },
+                    size:'lg'
+                })
+                .result.then(function(response){
+                   if (response.status == 'success') {
+                    $scope.invoicePanel.reload();
+                   };
+                }) 
+       };
+        
     }
 
 	$scope.invoiceClass = function(item) {
@@ -61,7 +99,7 @@ angular.module("app.loggedIn.patient.invoices.controller", [])
             	return ConfigService.getCommonDateDefault(item.CREATION_DATE);
             }},
         ],
-        search: {patient_id: patient_id, cal_id:cal_id},
+        search: {patient_id: patient_id, cal_id:-1},
         // use_actions: true, 
         // actions: [              
         //     {
@@ -76,16 +114,16 @@ angular.module("app.loggedIn.patient.invoices.controller", [])
     $scope.showAddFormInvoice = function(){
        var modalInstance=$modal.open({
             templateUrl:'popupAddManualInvoice',
-            controller:function($scope,$modalInstance,options){
+            controller:function($scope,$modalInstance,options,patient_id){
                 $scope.options = options;
                 $scope.addmanual ={
-                    success:''
+                    success:'',
+                    patient_id:patient_id
                 }
-                 $scope.$watch('addmanual.success', function(response){
+                $scope.$watch('addmanual.success', function(response){
                     if (response == true) {
                         $modalInstance.close({status:'success',data:response});
                     };
-                     
                 })
                 $scope.cancel=function(){
                     $modalInstance.dismiss('cancel');
@@ -94,6 +132,9 @@ angular.module("app.loggedIn.patient.invoices.controller", [])
             resolve:{
                 options:function(){
                     return $scope.options;
+                },
+                 patient_id:function(){
+                    return $stateParams.patient_id;
                 }
             },
             size:'lg'

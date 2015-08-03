@@ -210,7 +210,9 @@ module.exports = {
 
 		if(search_data && search_data.patient_id && search_data.cal_id) {
 			whereOpt.Patient_id = search_data.patient_id;
-			whereOpt.cal_id = search_data.cal_id;
+			if (search_data.cal_id !== -1) {
+				whereOpt.cal_id = search_data.cal_id;
+			};
 			var inc_model = inc_common_model;
 		} else {
 			var inc_model = inc_common_model.concat([
@@ -1532,6 +1534,26 @@ module.exports = {
 			"ORDER BY itemFee.`FEE_START_DATE` DESC                                                            "+
 			"LIMIT 1															                               ";
 		kiss.executeQuery(req,sql,[postData.ITEM_ID,postData.FEE_TYPE_ID,postData.CurrentDate],function(rows){
+			res.json({status:'success',data:rows});
+		},function(err){
+			kiss.exlog(fHeader,'Loi truy van lay thong tin thong qua',err);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
+		});
+	},
+	postGetpatientbyid:function(req,res){
+		var postData = req.body.data;
+		var fHeader="v2_InvoiceController->postGetpatientbyid";
+		var functionCode='FN003';
+		var postData=kiss.checkData(postData)?postData:'';
+		if(!kiss.checkListData(postData))
+		{
+			kiss.exlog(fHeader,"Loi data truyen den",req.body);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM002')});
+			return;
+		}
+		var sql=
+			"SELECT * FROM cln_patients WHERE `Patient_id` = ?";
+		kiss.executeQuery(req,sql,[postData.Patient_id],function(rows){
 			res.json({status:'success',data:rows});
 		},function(err){
 			kiss.exlog(fHeader,'Loi truy van lay thong tin thong qua',err);

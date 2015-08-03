@@ -9,7 +9,7 @@
 				<div>
 					<input type="text" disabled placeholder="Patient"  ng-model="patientName" class="form-control" name="patientName" id="patientName" required>
 				</div>
-				<div style="position: absolute;right: 0;bottom: 0px;">
+				<div style="position: absolute;right: 0;bottom: 0px;" ng-if="patientTest == false">
 					<button style="height: 32px;width: 40px;margin-right: 0px;" class="btn btn-block" ng-click="patientSearch.open()">
 						<i class="fa fa-search"></i>
 					</button>

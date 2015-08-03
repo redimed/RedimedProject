@@ -3,7 +3,7 @@
   <div class="un-padding-top-bottom-10 ">
     <div class="un-div-content un-bgWhite-boxshadow-bottom un-padding-10">
      <button class="un-button un-bgBlack pull-right un-margin-bottom-6px" ng-click="showAddFormInvoice()"> Add Manual Invoice</button>
-    <button class="un-button un-bgBlack pull-right un-margin-bottom-6px" ng-click="addFormInvoice.open()"> Add invoice</button>
+    <!-- <button class="un-button un-bgBlack pull-right un-margin-bottom-6px" ng-click="addFormInvoice.open()"> Add invoice</button> -->
       <div class="row">
         <div class="col-md-12 col-sm-12">
            <my-data-table options="invoiceOption" rowclick="invoiceClick" rowclass="invoiceClass" numrows="50"></my_data-table>
@@ -29,7 +29,6 @@
 </script>
 
 <!--END POPUP FORM ADD INVOICE -->
-
 <script type="text/ng-template" id="popupAddManualInvoice">
   <style type="text/css">
           .modal.in .modal-dialog {
@@ -38,7 +37,7 @@
     </style>
    <div class="modal-body">
        <label class="un-label-popup-header-m un-bg-label-B41E46-m">Add Manual Invoice</label>
-       <addmaunal-invoice options="options" success="addmanual.success"></addmaunal-invoice>
+       <addmaunal-invoice options="options" success="addmanual.success" patientid="addmanual.patient_id"></addmaunal-invoice>
     </div>
     <div class="modal-footer" style="height: 47px">
         <button class="un-button-submit-m ng-scope" style="margin-top: -5px;" ng-click="cancel()">Cancel</button>
@@ -158,7 +157,7 @@
           }
     </style>
    <div class="modal-body">
-       <label class="un-label-popup-header-m un-bg-label-B41E46-m">Add Manual Invoice</label>
+       <label class="un-label-popup-header-m un-bg-label-B41E46-m">Edit Manual Invoice</label>
        <addmaunal-invoice options="options" success="addmanual.success" checkedit="true" headerdata="addmanual.headerdata"></addmaunal-invoice>
     </div>
     <div class="modal-footer" style="height: 47px">

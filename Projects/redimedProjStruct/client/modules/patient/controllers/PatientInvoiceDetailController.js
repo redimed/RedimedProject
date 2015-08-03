@@ -21,6 +21,7 @@ angular.module("app.loggedIn.patient.invoice_detail.controller", [])
 
  	PatientService.invoiceDetail(header_id)
  	.then(function(response){
+ 		console.log(response.data);
  		$scope.invoice = response.data;
 
  		$scope.invoice.lines = $scope.invoice.lines.filter(function(item){

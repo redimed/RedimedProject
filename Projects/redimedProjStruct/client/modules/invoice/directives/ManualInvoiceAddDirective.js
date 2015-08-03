@@ -7,7 +7,8 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 			options:'=',
 			success:'=',
 			checkedit:'=',
-			headerdata:'='
+			headerdata:'=',
+			patientid:'='
 		},
 		templateUrl: 'modules/invoice/directives/templates/manualAdd.html',
 		controller: function($scope) {
@@ -17,6 +18,7 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 				FEE_GROUP_ID:null,
 				FEE_TYPE_ID:null
 			}
+			$scope.patientTest = false;
 			$scope.FORMULACal =[];
 			$scope.insurers;
 			$scope.patientName;
@@ -34,7 +36,17 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 			$scope.InvoiceMap = {
 				lines:[]
 			}
-
+			console.log($scope.patientid);
+			if($scope.patientid){
+				$scope.patientTest = true;
+				var postDataPatient={
+					Patient_id:$scope.patientid
+				}
+				InvoiceService.getpatientbyid(postDataPatient).then(function(response){
+					$scope.patient = response.data[0];
+					$scope.patientName = response.data[0].First_name + ' ' + response.data[0].Sur_name;
+				})
+			}
 			$scope.patientSearch = {
 				open: function() {
 					$modal.open({
