@@ -4,8 +4,8 @@ var config = require('./config.js');
 var url = config.defaultUrl+'alert/';
 
 app.post(url+'one', AlertController.postOne);
-app.post(url+'listFollowPatient', AlertController.postListFollowPatient);
-app.post(url+'listNoFollowPatient', AlertController.postListNoFollowPatient);
+// app.post(url+'listFollowPatient', AlertController.postListFollowPatient);
+// app.post(url+'listNoFollowPatient', AlertController.postListNoFollowPatient);
 app.post(url+'add', AlertController.postAdd);
 app.post(url+'list', AlertController.postList);
 app.post(url+'edit', AlertController.postEdit);
@@ -17,3 +17,7 @@ app.post(url+'getMedication',AlertController.getMedication);
 app.post(url+'insertMedication',AlertController.insertMedication);
 app.post(url+'deleteMedication',AlertController.deleteMedication);
 app.post(url+'getdoctorid',AlertController.getdoctorid);
+app.post(url+'showcompanyid', AlertController.postSelectAlert);
+app.post(url+'showalert', AlertController.postShowAlert);
+app.post(url+'insertalert', AlertController.postInsertAlert);
+app.post(url+'postshowalertpatient', AlertController.postShowAlertPatient);

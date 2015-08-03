@@ -131,7 +131,7 @@ gulp.task('alert', function(){
 					 './client/modules/alert/directives/AlertListDirective.js',
 					 './client/modules/alert/directives/AlertPatientListDirective.js',
 					 './client/modules/alert/directives/AlertAddDirective.js',
-					 './client/modules/alert/directives/AlertEditDirective.js',
+					 './client/modules/alert/directives/AlertEditDirective.js'
 
 	])
 	.pipe(concat('alert.js'))
@@ -613,7 +613,9 @@ gulp.task('onlineBooking_Admin', function(){
 					 './client/modules/onlineBooking_Admin/controllers/CompanyController.js',
 					 './client/modules/onlineBooking_Admin/controllers/UserController.js',
 					 './client/modules/onlineBooking_Admin/controllers/SiteController.js',
+					 './client/modules/onlineBooking_Admin/controllers/RequirementController.js',
 					 './client/modules/onlineBooking_Admin/services/OnlineBookingAdminService.js',
+		             './client/modules/onlineBooking_Admin/directives/RequirementDirective.js'
 	])
 	.pipe(concat('onlineBooking_Admin.js'))
 	.pipe(uglify({mangle: false}))

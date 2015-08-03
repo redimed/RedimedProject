@@ -1,54 +1,64 @@
+<!--<div class="row">
+	<div class="col-lg-12">
+		<table class="mdt-table">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Description</th>
+					<th>
+						Creation Date&nbsp-->
+						<!-- <a ng-if="alert.search.Creation_date === 'asc'" ng-click="alert.onOrderBy({field: 'Creation_date', order: 'desc'})">
+							<i class="fa fa-caret-up"></i>
+						</a>
+						<a ng-if="alert.search.Creation_date === 'desc'" ng-click="alert.onOrderBy({field: 'Creation_date', order: 'asc'})">
+							<i class="fa fa-caret-down"></i>
+						</a> -->
+					<!--</th>
+				</tr>
+			</thead>
+			<tbody>
 
-<label class="un-label-popup-header-m un-bg-label-B41E46-m" ng-show='alert.checkedit == false'>Add Referral</label>
-<button class="un-button un-bgBlack pull-right un-margin-bottom-6px" ng-if="action.checkbox" ng-click="onSavecheck({data: alert.checkbox})">Save</button>
+			</tbody>
+		</table>
+	<div class="col-lg-12">
+</div>-->
+
+<label class="un-label-popup-header-m un-bg-label-B41E46-m" ng-show='alert.checkedit == false'>Select Alert</label>
+<!-- <button class="un-button un-bgBlack pull-right un-margin-bottom-6px" ng-if="action.checkbox" ng-click="onSavecheck({data: alert.checkbox})">Save</button> -->
 <div class="row">
 	<div class="col-lg-12">
 		<table class="mdt-table">
 			<thead>
 				<tr>
-					<th ng-if="action.checkbox"></th>
 					<th>Name</th>
 					<th>Description</th>
 					<th>
 						Creation Date&nbsp
-						<a ng-if="alert.search.Creation_date === 'asc'" ng-click="alert.onOrderBy({field: 'Creation_date', order: 'desc'})">
+						<!-- <a ng-if="alert.search.Creation_date === 'asc'" ng-click="alert.onOrderBy({field: 'Creation_date', order: 'desc'})">
 							<i class="fa fa-caret-up"></i>
 						</a>
 						<a ng-if="alert.search.Creation_date === 'desc'" ng-click="alert.onOrderBy({field: 'Creation_date', order: 'asc'})">
 							<i class="fa fa-caret-down"></i>
-						</a>
+						</a> -->
 					</th>
-					<th>Action</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="l in alert.list">
-					<td ng-if="action.checkbox">
-						<input type="checkbox" class="form-control" ng-model="itemcheck" 
-							ng-change="alert.onCheckbox({value: itemcheck, list: l})">
-					</td>
+				<tr ng-repeat="l in alert.list" ng-click="onClickRow({row: l})" ng-show='alert.checkedit == false'>
 					<td>{{l.name}}</td>
 					<td>{{l.description}}</td>
 					<td>{{l.Creation_date | filterdate: 'DD/MM/YYYY'}}</td>
-					<td align="center">
-						<button class="un-button-submit-m" ng-click="alert.dialog.edit(l)" ng-if="action.edit">
-						Edit</button>
-						<button class="un-submit un-bgBlack" ng-click="alert.dialog.remove(l)" ng-if="action.remove">
-						Remove</button>
-					</td>
+				</tr>
+				<tr ng-repeat="l in alert.bylist" ng-show='alert.checkedit == true'>
+					<td>{{l.name}}</td>
+					<td>{{l.description}}</td>
+					<td>{{l.Creation_date | filterdate: 'DD/MM/YYYY'}}</td>
 				</tr>
 			</tbody>
 		</table>
-		<div align="right">
-			<pagination boundary-links="true" total-items="alert.count" ng-model="alert.search.page" 
-		    class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
-		    items-per-page="alert.search.limit" max-size="alert.search.max_size" ng-change="alert.onPage(alert.search.page)">
-			</pagination>
-		</div>
 	</div>
 </div>
-
-
+<!--
 <script type="text/ng-template" id="dialogAlertRemove">
     <div class="modal-body">
         <p>Do you want to remove this alert ?</p>
@@ -68,4 +78,4 @@
     <div class="modal-body">
         <alert-edit alert-id="alert.id" success="alert.success"></alert-edit>
     </div>
- </script>
+ </script>-->

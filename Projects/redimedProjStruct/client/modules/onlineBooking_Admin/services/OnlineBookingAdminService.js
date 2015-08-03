@@ -222,5 +222,23 @@ angular.module('app.loggedIn.booking.admin.services',[])
             return del.post({id:id});
         }
 
+        adminBooking.getAlert = function(data){
+            var get = api.all('booking/getalert');
+            return get.post({data: data});
+        }
+
+        adminBooking.updateAlert = function(data){
+            var get = api.all('booking/updatealert');
+            return get.post({data: data});
+        }
+        // adminBooking.getByAlert = function(data){
+        //     var get = api.all('booking/getbyalert');
+        //     return get.post({data: data});
+        // }
+        adminBooking.getDisable = function(data){
+            var get = api.all('booking/getdisable');
+            return get.post({data: data});
+        }
+
         return adminBooking;
 })

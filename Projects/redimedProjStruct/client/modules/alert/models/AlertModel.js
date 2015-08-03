@@ -4,15 +4,15 @@ angular.module("app.loggedIn.alert.model", [])
     var instanceService = {};
     var appApi = Restangular.all("api/meditek/v1/alert");
 
-    instanceService.listFollowPatient = function (data) {
-        var detailApi = appApi.all("listFollowPatient");
-        return detailApi.post({data: data});
-    }
+    // instanceService.listFollowPatient = function (data) {
+    //     var detailApi = appApi.all("listFollowPatient");
+    //     return detailApi.post({data: data});
+    // }
 
-    instanceService.listNoFollowPatient = function (data) {
-        var detailApi = appApi.all("listNoFollowPatient");
-        return detailApi.post({data: data});
-    }
+    // instanceService.listNoFollowPatient = function (data) {
+    //     var detailApi = appApi.all("listNoFollowPatient");
+    //     return detailApi.post({data: data});
+    // }
 
     instanceService.list = function (data) {
         var detailApi = appApi.all("list");
@@ -63,10 +63,25 @@ angular.module("app.loggedIn.alert.model", [])
         var detailApi = appApi.all('deleteMedication');
         return detailApi.post({data: data});
     }
-     instanceService.getdoctorid = function(data){
+    instanceService.getdoctorid = function(data){
         var detailApi = appApi.all('getdoctorid');
         return detailApi.post({data: data});
     }
-
+    instanceService.showcompanyid = function(data){
+        var detailApi = appApi.all('showcompanyid');
+        return detailApi.post({data: data});
+    }
+    instanceService.showalert = function(data){
+        var detailApi = appApi.all('showalert');
+        return detailApi.post({data: data});
+    }
+    instanceService.insertalert = function(data){
+        var detailApi = appApi.all('insertalert');
+        return detailApi.post({data: data});
+    }
+    instanceService.postshowalertpatient = function(data){
+        var detailApi = appApi.all('postshowalertpatient');
+        return detailApi.post({data: data});
+    }
     return instanceService;
 })

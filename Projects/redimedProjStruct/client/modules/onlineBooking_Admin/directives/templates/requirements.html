@@ -1,0 +1,57 @@
+<style type="text/css" class="ng-scope">
+    .modal.in .modal-dialog {
+        margin-top:50px;
+    }
+    .un-button {
+        margin-top: -20px;
+    }
+    .mdt-table td:hover{
+        cursor: pointer;
+    }
+</style>
+<div class="modal-body">
+    <div class="active">
+        <label class="un-label-popup-header-m un-bg-label-333333" style="left:-15px; top: -52px;">
+            Requirements
+        </label>
+    </div>
+    <div class="row">
+        <button class="un-button un-bgBlack pull-right un-margin-bottom-6px" ng-click="req.add()">Add New</button>
+    </div>
+    <table class="mdt-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Service Color</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="l in req.list">
+                <td>{{l.name}}</td>
+                <td>{{l.description}}</td>
+                <td style="background:{{l.SERVICE_COLOR}};"></td>
+                <td align="right">
+                    <button class="un-button-submit-m ng-scope" ng-click="req.edit(l)">Edit</button>
+                    <button class="un-button-submit-m ng-scope" ng-if="l.isenable" ng-click="req.disable(l)">Enable</button>
+                    <button class="un-button-submit-m ng-scope" ng-if="!l.isenable" ng-click="req.disable(l)">Disable</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="text-align: right;">
+        <pagination boundary-links="true" total-items="req.count" ng-model="req.search.page" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" items-per-page="req.search.limit" max-size="req.search.max_size" ng-change="setPage(req.search.page)" >
+        </pagination>
+    </div>
+</div>
+<script type="text/ng-template" id="ReAlertAdd_R">
+    <div class="modal-body">
+        <alert-add alertid="alerts.alert_id" success="alerts.success"></alert-add>
+    </div>
+</script>
+<script type="text/ng-template" id="ReAlertEdit_R">
+    <div class="modal-body">
+        <alert-edit alert-id="alertedit.alert_id" success="alertedit.success"></alert-edit>
+    </div>
+</script>

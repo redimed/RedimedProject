@@ -8,6 +8,11 @@ var nodemailer = require("nodemailer");
 var smtpTransport = require('nodemailer-smtp-transport');
 var smtpPool = require('nodemailer-smtp-pool');
 var nodeExcel = require('excel-export');
+var S = require('string');
+var moment = require('moment');
+var _ = require('lodash');
+var knex = require('../knex-connect.js');
+var commonFunction =  require('../knex-function.js');
 
 
 //var path = require('path');
@@ -765,6 +770,107 @@ module.exports = {
             .error(function(err){
                 console.log(err);
             })
+    },
+
+    getAlert: function(req, res) {
+
+        var postData = req.body.data;
+
+        var sql = knex('cln_alerts')
+        .where({
+            'company_id' : postData.company_id
+        })
+        .limit(postData.limit)
+        .offset(postData.offset)
+        .orderBy('id', 'desc')
+        .toString();
+
+        var sql_count = knex('cln_alerts')
+        .where({
+            'company_id' : postData.company_id
+        })
+        .count('cln_alerts.id as a')
+        .toString();
+        db.sequelize.query(sql)
+        .success(function(data) {
+            db.sequelize.query(sql_count)
+            .success(function(count) {
+                res.json({data: data, count: count[0].a});
+            })
+            .error(function(error){
+                res.json(500, {'status': 'error', 'message': error});
+            })
+        })
+        .error(function(error){
+            res.json('500', {'status': 'error', 'message': error});
+        })
+    },
+
+    updateAlert: function(req, res) {
+
+        var postData = req.body.data;
+
+        var sql = knex('cln_alerts')
+        .where({
+            'id': postData.id
+        })
+        .update(postData)
+        .toString();
+        db.sequelize.query(sql)
+        .success(function(data) {
+            res.json({data: data});
+        })
+        .error(function(error){
+            res.json('500', {'status': 'error', 'message': error});
+        })
+    },
+
+    // getByAlert: function(req, res) {
+
+    //     var postData = req.body.data;
+
+    //     var sql = knex('cln_alerts')
+    //     .where({
+    //         'id': postData.id,
+    //         'isenable': '1'
+    //     })
+    //     .toString();
+
+    //     db.sequelize.query(sql)
+    //     .success(function(data) {
+    //         res.json({data: data[0]});
+    //     })
+    //     .error(function(error) {
+    //         res.json('500', {'status': 'error', 'message': error});
+    //     })
+
+    // },
+
+    getDisable: function(req, res) {
+
+        var postData = req.body.data;
+
+        if(postData.isenable == 1){
+            postData.isenable = 0;
+        }else {
+            postData.isenable = 1;
+        }
+
+        var sql = knex('cln_alerts')
+        .update({
+            'isenable': postData.isenable
+        })
+        .where({
+            'id': postData.id
+        })
+        .toString();
+        db.sequelize.query(sql)
+        .success(function(data) {
+            res.json({data: data, sql: sql});
+        })
+        .error(function(error) {
+            res.json('500', {'status': 'error', 'message': error});
+        })
     }
 
     

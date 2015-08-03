@@ -143,6 +143,24 @@ angular.module('app.loggedIn.booking.admin.company.controller',[])
             $state.go('loggedIn.patient.appointment',{patient_id:a.Patient_id,cal_id:1},{reload:true});
         }
 
+        $scope.showRequirement = function() {
+
+            var modalInstance = $modal.open({
+                templateUrl: 'Requirements',
+                controller: 'RequirementController',
+                size: 'lg',
+                resolve:{
+                    idr: function(){
+                        return $scope.selectedId;
+                    }
+                }
+            })
+            .result.then(function(response) {
+                console.log(response);
+            })
+            
+        }
+
     })
 
 .controller('AdminNewCompanyController',function($scope,$state,ngTableParams,$stateParams,toastr,$cookieStore,OnlineBookingAdminService){

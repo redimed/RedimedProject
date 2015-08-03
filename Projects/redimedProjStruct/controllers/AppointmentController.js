@@ -149,8 +149,10 @@ module.exports = {
 			'cln_appt_patients.Patient_id',
 			'cln_patients.First_name',
 			'cln_patients.Sur_name',
+			'cln_patient_alerts.id as ID',
 			'cln_alerts.id AS ALERT_ID',
 			'cln_alerts.name AS ALERT_NAME',
+			'cln_alerts.SERVICE_COLOR as SERVICE_COLOR',
 			'cln_patient_outreferral.outreferral_id'
 		)
 		.innerJoin('cln_appt_patients', 'cln_appointment_calendar.CAL_ID', 'cln_appt_patients.CAL_ID')

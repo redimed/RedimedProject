@@ -7,7 +7,9 @@ angular.module('app.loggedIn.booking.admin',[
     'app.loggedIn.booking.admin.assessment.controller',
     'app.loggedIn.booking.admin.company.controller',
     'app.loggedIn.booking.admin.user.controller',
-    'app.loggedIn.booking.admin.site.controller'
+    'app.loggedIn.booking.admin.site.controller',
+    'app.loggedIn.booking.admin.requiment.controller',
+    'app.loggedIn.booking.admin.requirement.directive'
 ])
 .config(function($stateProvider){
         $stateProvider
