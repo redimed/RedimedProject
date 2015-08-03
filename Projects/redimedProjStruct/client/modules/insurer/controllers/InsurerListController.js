@@ -54,7 +54,6 @@ angular.module("app.loggedIn.insurer.list.controller", [])
                 })
             }
             $scope.edit_forminsurer = function(){
-                console.log('insurer');
                 var modalInstance=$modal.open({
                     templateUrl:'edit_forminsurer',
                     controller:function($scope,$modalInstance,edit_form,id){
@@ -118,7 +117,6 @@ angular.module("app.loggedIn.insurer.list.controller", [])
                 if($scope.add_form.is_show) {
                     $scope.add_form.close();
                 }
-                console.log(item);;
                 $scope.insurerInfo = item;
                 // $scope.openEditForm();
                 $scope.edit_form.open();

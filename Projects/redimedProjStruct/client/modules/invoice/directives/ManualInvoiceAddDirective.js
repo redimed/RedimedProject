@@ -405,12 +405,12 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 								if($scope.FORMULACal[i])
 								{
 									$scope.InvoiceMap.lines[i].PRICE=$scope.InvoiceMap.lines[i].FEE*$scope.FORMULACal[i]/100;
-									$scope.InvoiceMap.lines[i].Percer =$scope.FORMULACal[i];
+									$scope.InvoiceMap.lines[i].Percent =$scope.FORMULACal[i];
 								}
 								else
 								{
 									$scope.InvoiceMap.lines[i].PRICE=$scope.InvoiceMap.lines[i].FEE*$scope.FORMULACal[$scope.FORMULACal.length-1]/100;
-									$scope.InvoiceMap.lines[i].Percer =$scope.FORMULACal[$scope.FORMULACal.length-1];
+									$scope.InvoiceMap.lines[i].Percent =$scope.FORMULACal[$scope.FORMULACal.length-1];
 								}
 							}
 						};
@@ -519,12 +519,12 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 						if($scope.FORMULACal[i])
 						{
 							//$scope.InvoiceMap.lines[i].PRICE=$scope.InvoiceMap.lines[i].FEE*$scope.FORMULACal[i];
-							$scope.InvoiceMap.lines[i].Percer =$scope.FORMULACal[i];
+							$scope.InvoiceMap.lines[i].Percent =$scope.FORMULACal[i];
 						}
 						else
 						{
 							//$scope.InvoiceMap.lines[i].PRICE=$scope.InvoiceMap.lines[i].FEE*$scope.FORMULACal[$scope.FORMULACal.length-1];
-							$scope.InvoiceMap.lines[i].Percer =$scope.FORMULACal[$scope.FORMULACal.length-1];
+							$scope.InvoiceMap.lines[i].Percent =$scope.FORMULACal[$scope.FORMULACal.length-1];
 						}
 					}
 					for (var i = 0; i < $scope.InvoiceMap.lines.length; i++) {

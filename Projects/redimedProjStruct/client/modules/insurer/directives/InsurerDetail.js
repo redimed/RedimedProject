@@ -1,5 +1,5 @@
 angular.module("app.loggedIn.insurer.detail.directive", [])
-.directive("insurerDetail", function (InsurerModel, InsurerService, ConfigService, toastr,InvoiceService) {
+.directive("insurerDetail", function (InsurerModel, InsurerService, ConfigService, toastr,InvoiceService,InvoiceService) {
     return{
         restrict: "EA",
         scope: {
@@ -17,9 +17,6 @@ angular.module("app.loggedIn.insurer.detail.directive", [])
                 }
                 InsurerService.getFeeGroup(postData).then(function(response){
                     scope.feeGroupType = response.data;
-
-                    console.log(scope.feeGroupType);
-
                 })
             }
              scope.getFeegrouptype();
@@ -27,6 +24,9 @@ angular.module("app.loggedIn.insurer.detail.directive", [])
 
                 InsurerService.detail(id).then(function (data) {
                     angular.extend(scope.modelObjectMap, data.row);
+                    InvoiceService.getFeegroupbyid({FEE_GROUP_ID:data.row.FEE_GROUP_ID}).then(function(response){
+                        scope.modelObjectMap.FEE_GROUP_ID = response.data[0].FEE_GROUP_ID;
+                    })
                     scope.modelObjectMap.isenable += '';
                     ConfigService.autoConvertData(scope.modelObjectMap);
 

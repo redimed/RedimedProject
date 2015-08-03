@@ -1220,6 +1220,30 @@ module.exports = {
 	*manh
 	*get fee group
 	*/
+	postFeegroupbyid:function(req,res){
+		var postData = req.body.data;
+		console.log(postData);
+		var fHeader="v2_InvoiceController->postFeegrouptype";
+		var functionCode='DM001';
+		var FEE_GROUP_ID=kiss.checkData(postData.FEE_GROUP_ID)?postData.FEE_GROUP_ID:'';
+		if(!kiss.checkListData(FEE_GROUP_ID))
+		{
+			kiss.exlog(fHeader,"Loi data truyen den",req.body);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
+			return;
+		}
+		var sql=
+			" SELECT *                                                                  	 "+
+			" FROM `cln_fee_group`                                                  		 "+
+			" WHERE FEE_GROUP_ID =? 												         ";
+
+		kiss.executeQuery(req,sql,[FEE_GROUP_ID],function(rows){
+			res.json({status:'success',data:rows});
+		},function(err){
+			kiss.exlog(fHeader,'Loi truy van lay thong tin invoice line thong qua',err);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
+		});
+	},
 	postFeegrouptype:function(req,res){
 		var postData = req.body.data;
 		var fHeader="v2_InvoiceController->postFeegrouptype";

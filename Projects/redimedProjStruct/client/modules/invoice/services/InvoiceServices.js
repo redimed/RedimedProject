@@ -120,6 +120,12 @@ angular.module('app.loggedIn.invoice.services', [])
 	/**
 	 * tannv.dts@gmail.com
 	 */
+	 mdtService.getFeegroupbyid=function(postData)
+	{
+		var funcApi = mdtApi.all('invoice/feegroupbyid');
+		return funcApi.post({data: postData});
+	}
+
 	mdtService.getFeegrouptype=function(postData)
 	{
 		var funcApi = mdtApi.all('invoice/feegrouptype');
