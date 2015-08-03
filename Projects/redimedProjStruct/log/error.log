@@ -19171,3 +19171,21 @@ Error at Mon Aug 03 2015 08:50:43 GMT+0800 (W. Australia Standard Time) : {"code
 Exec SQL: INSERT INTO cln_insurers (id, insurer_name, address, suburb, postcode, state, phone, country, isenable, created_by, creation_date, last_updated_by, last_update_date, FEE_GROUP_ID) VALUES (NULL, 'ww', 'ww', 'ww', 'ww', 'ww', 'ww', 2, '1', NULL, NULL, NULL, NULL, 18)
 Error at Mon Aug 03 2015 08:50:44 GMT+0800 (W. Australia Standard Time) : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","index":0}
 
+Exec SQL: UPDATE cln_insurers SET insurer_name = 'Prudential', address = '43 mac dinh chi Q1', suburb = 'ZZZZ', postcode = '555555', state = 'VN', phone = NULL, country = NULL, isenable = '1', created_by = 1, creation_date = '2014-11-20', last_updated_by = NULL, last_update_date = NULL, FEE_GROUP_ID = 18 WHERE (`id` = 1)
+Error at Mon Aug 03 2015 08:54:38 GMT+0800 (W. Australia Standard Time) : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","index":0}
+
+Exec SQL: UPDATE cln_insurers SET insurer_name = 'Prudential', address = '43 mac dinh chi Q1', suburb = 'ZZZZ', postcode = '555555', state = 'VN', phone = NULL, country = NULL, isenable = '1', created_by = 1, creation_date = '2014-11-20', last_updated_by = NULL, last_update_date = NULL, FEE_GROUP_ID = 18 WHERE (`id` = 1)
+Error at Mon Aug 03 2015 08:54:38 GMT+0800 (W. Australia Standard Time) : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","index":0}
+
+Exec SQL: UPDATE cln_insurers SET insurer_name = 'Prudential', address = '43 mac dinh chi Q1', suburb = 'ZZZZ', postcode = '555555', state = 'VN', phone = NULL, country = NULL, isenable = '1', created_by = 1, creation_date = '2014-11-20', last_updated_by = NULL, last_update_date = NULL, FEE_GROUP_ID = 18 WHERE (`id` = 1)
+Error at Mon Aug 03 2015 08:54:39 GMT+0800 (W. Australia Standard Time) : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","index":0}
+
+Exec SQL: UPDATE cln_insurers SET insurer_name = 'Dai-ichi Life', address = '12 ngo tat to Q BinhThanh', suburb = '123213', postcode = NULL, state = '123213', phone = NULL, country = NULL, isenable = '1', created_by = 10, creation_date = '2014-11-21', last_updated_by = NULL, last_update_date = NULL, FEE_GROUP_ID = 18 WHERE (`id` = 2)
+Error at Mon Aug 03 2015 08:54:44 GMT+0800 (W. Australia Standard Time) : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","index":0}
+
+Exec SQL: UPDATE cln_insurers SET insurer_name = 'Dai-ichi Life', address = '12 ngo tat to Q BinhThanh', suburb = '123213', postcode = NULL, state = '123213', phone = NULL, country = NULL, isenable = '1', created_by = 10, creation_date = '2014-11-21', last_updated_by = NULL, last_update_date = NULL, FEE_GROUP_ID = 18 WHERE (`id` = 2)
+Error at Mon Aug 03 2015 08:54:44 GMT+0800 (W. Australia Standard Time) : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","index":0}
+
+Exec SQL: UPDATE cln_insurers SET insurer_name = 'Dai-ichi Life', address = '12 ngo tat to Q BinhThanh', suburb = '123213', postcode = NULL, state = '123213', phone = NULL, country = NULL, isenable = '1', created_by = 10, creation_date = '2014-11-21', last_updated_by = NULL, last_update_date = NULL, FEE_GROUP_ID = 18 WHERE (`id` = 2)
+Error at Mon Aug 03 2015 08:54:45 GMT+0800 (W. Australia Standard Time) : {"code":"ER_BAD_FIELD_ERROR","errno":1054,"sqlState":"42S22","index":0}
+

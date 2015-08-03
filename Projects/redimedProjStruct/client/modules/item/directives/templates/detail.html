@@ -14,7 +14,20 @@
     <div class="row">
         <!-- ITEM CODE -->
         <div class="break-row" style="margin-top: 10px"></div>
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-right-5 un-padding-left-10">
+
+        <div class="col-lg-12 un-padding-right-5 un-padding-left-10">
+            <div class="form-group un_margin_bottom_10" ng-class="{'has-error': mainForm.ITEM_NAME.$invalid && isSubmit}">
+                <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
+                    Item name&nbsp;*
+                </label>
+                <!-- <input type="text" id="ITEM_NAME" required name="ITEM_NAME" class="form-control un_tn_form_control un_tn_form_border_gray" ng-model="modelObjectMap.ITEM_NAME"/> -->
+                <textarea id="ITEM_NAME" required name="ITEM_NAME" class="form-control un_tn_form_control un_tn_form_border_gray" ng-model="modelObjectMap.ITEM_NAME"/>
+            </div>
+        </div>
+
+        <div class="break-row"></div>
+
+        <div class="col-lg-2 un-padding-right-5 un-padding-left-10">
             <div class="form-group un_margin_bottom_10" ng-class="{'has-error': mainForm.ITEM_CODE.$invalid && isSubmit}">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     Item code&nbsp;*
@@ -22,22 +35,8 @@
                 <input type="text" id="ITEM_CODE" name="ITEM_CODE" class="form-control un_tn_form_control un_tn_form_border_gray" ng-model="modelObjectMap.ITEM_CODE" required>
             </div>
         </div>
-        <!-- END ITEM CODE -->
 
-        <!-- ITEM NAME -->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-5 un-padding-right-5">
-            <div class="form-group un_margin_bottom_10" ng-class="{'has-error': mainForm.ITEM_NAME.$invalid && isSubmit}">
-                <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
-                    Item name&nbsp;*
-                </label>
-                <input type="text" id="ITEM_NAME" required name="ITEM_NAME" class="form-control un_tn_form_control un_tn_form_border_gray" ng-model="modelObjectMap.ITEM_NAME"/>
-            </div>
-        </div>
-        <!-- END ITEM NAME -->
-
-
-        <!-- ALT NAME -->
-        <div class="col-lg-3 col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-5 un-padding-right-5">
+        <div class="col-lg-2 un-padding-right-5 un-padding-left-10">
             <div class="form-group un_margin_bottom_10">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     Alt name
@@ -45,10 +44,7 @@
                 <input type="text" id="ALT_NAME" name="ALT_NAME" ng-model="modelObjectMap.ALT_NAME" class="form-control un_tn_form_control un_tn_form_border_gray"/>
             </div>
         </div>
-        <!-- END ALT NAME -->
-
-        <!--ITEM_TYPE-->
-        <div class="col-lg-3 col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-5 un-padding-right-10">
+        <div class="col-lg-2 un-padding-right-5 un-padding-left-10">
             <div class="form-group un_margin_bottom_10" ng-class="{'has-error': mainForm.ITEM_TYPE.$invalid && isSubmit}">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     Item type&nbsp;*
@@ -61,30 +57,7 @@
                 </select>
             </div>
         </div>
-
-
-        <!--ITEM_TYPE-->
-
-        <!--PREFIX-->
-        <!-- div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-			<span class="field">
-				<label for="fee_type">Prefix</label>
-
-				<select class="form-control" name="ITEM_TYPE"
-						ng-model="modelObjectMap.ITEM_TYPE"
-						ng-options="type.PREFIX_NAME as type.PREFIX_NAME for type in options.prefix_headers"
-						required>
-						<option value="">-- Select Item Type --</option>
-					</select>
-			</span>	
-		</div> -->
-        <!--PREFIX-->
-
-
-        <div class="break-row"></div>
-
-        <!--TAX_ID-->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-right-5 un-padding-left-10">
+        <div class="col-lg-2 un-padding-right-5 un-padding-left-10">
             <div class="form-group un_margin_bottom_10">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     Tax id
@@ -96,11 +69,7 @@
                 </select>
             </div>
         </div>
-        <!--TAX_ID-->
-
-
-        <!--UOM-->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-5 un-padding-right-5">
+        <div class="col-lg-2 un-padding-right-5 un-padding-left-10">
             <div class="form-group un_margin_bottom_10">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     Uom
@@ -112,11 +81,8 @@
                 </select>
             </div>
         </div>
-        <!--UOM-->
 
-
-        <!--CATEGORY-->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-5 un-padding-right-5">
+        <div class="col-lg-2">
             <div class="form-group un_margin_bottom_10">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     Category
@@ -124,10 +90,10 @@
                <input type="text" name="category" ng-model="modelObjectMap.CATEGORY" class="form-control un_tn_form_control un_tn_form_border_gray" id="category" />
             </div>
         </div>
-        <!--CATEGORY-->
 
-        <!-- DESCRIPTION -->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-5 un-padding-right-10">
+        <div class="break-row"></div>
+
+        <div class="col-lg-2 un-padding-right-5 un-padding-left-10">
             <div class="form-group un_margin_bottom_10">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     Description
@@ -135,11 +101,10 @@
                 <input type="text" id="Description" name="DESCRIPTION" ng-model="modelObjectMap.DESCRIPTION" class="form-control un_tn_form_control un_tn_form_border_gray"/>
             </div>
         </div>
-        <!-- END DESCRIPTION -->
-        <div class="break-row"></div>
 
-        <!--DESCRIPTION_START_DATE-->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-10 un-padding-right-5">
+        
+
+        <div class="col-lg-2 un-padding-right-5 un-padding-left-10">
             <div class="form-group un_margin_bottom_10">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     Description start date
@@ -147,11 +112,7 @@
                 <input readonly ui-date="{dateFormat: 'dd/mm/yy'}" name="description_start_date" ng-model="modelObjectMap.DESCRIPTION_START_DATE" class="form-control un_tn_form_control un_tn_form_border_gray" id="description_start_date"/>
             </div>
         </div>
-        <!--DESCRIPTION_START_DATE-->
-
-
-        <!--FEE_TYPE-->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-5 un-padding-right-5">
+        <div class="col-lg-2 un-padding-right-5 un-padding-left-10">
             <div class="form-group un_margin_bottom_10">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     Fee type
@@ -163,12 +124,9 @@
                         <option value="">-- Select Fee Type --</option>
                 </select> -->
                 <input type="text" id="FEE_TYPE" name="FEE_TYPE" ng-model="modelObjectMap.FEE_TYPE" class="form-control un_tn_form_control un_tn_form_border_gray"/>
-            </div>	
+            </div>  
         </div>
-        <!--FEE_TYPE-->
-
-        <!--FEE_CHANGE-->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-5 un-padding-right-5">
+        <div class="col-lg-2 un-padding-right-5 un-padding-left-10">
             <div class="form-group un_margin_bottom_10">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     Fee change
@@ -176,10 +134,7 @@
                 <input type="text" name="fee_change" ng-model="modelObjectMap.FEE_CHANGE" class="form-control un_tn_form_control un_tn_form_border_gray" id="fee_change" />
             </div>
         </div>
-        <!--FEE_CHANGE-->
-
-        <!--INV_GROUP-->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-5 un-padding-right-10">
+        <div class="col-lg-2 un-padding-right-5 un-padding-left-10">
             <div class="form-group un_margin_bottom_10">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     Inv group
@@ -187,12 +142,7 @@
                 <input type="text" name="inv_group" ng-model="modelObjectMap.INV_GROUP" class="form-control un_tn_form_control un_tn_form_border_gray" id="inv_group" />
             </div>
         </div>
-        <!--INV_GROUP-->
-
-        <div class="break-row"></div>
-
-        <!--SUB_GROUP-->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-10 un-padding-right-5">
+        <div class="col-lg-2 un-padding-right-5 un-padding-left-10">
             <div class="form-group un_margin_bottom_10">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     Sub group
@@ -200,10 +150,11 @@
                 <input type="text" name="sub_group" ng-model="modelObjectMap.SUB_GROUP" class="form-control un_tn_form_control un_tn_form_border_gray" id="sub_group" />
             </div>
         </div>
-        <!--SUB_GROUP-->
 
-        <!--SUB_HEADING-->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-5 un-padding-right-5">
+        <div class="break-row"></div>
+
+
+        <div class="col-lg-2 un-padding-right-5 un-padding-left-10">
             <div class="form-group un_margin_bottom_10">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     Sub heading
@@ -211,10 +162,10 @@
                 <input type="text" name="sub_heading" ng-model="modelObjectMap.SUB_HEADING" class="form-control un_tn_form_control un_tn_form_border_gray" id="sub_heading" />
             </div>
         </div>
-        <!--SUB_HEADING-->
 
-        <!--LOT_OR_SERIAL-->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-5 un-padding-right-5">
+        
+
+        <div class="col-lg-2 un-padding-right-5 un-padding-left-10">
             <div class="form-group un_margin_bottom_10">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     Lot or serial
@@ -222,11 +173,7 @@
                 <input type="text" name="lot_or_serial" ng-model="modelObjectMap.LOT_OR_SERIAL" class="form-control un_tn_form_control un_tn_form_border_gray" id="lot_or_serial" />
             </div>
         </div>
-        <!--LOT_OR_SERIAL-->
-
-
-        <!--BENEFIT_TYPE-->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-5 un-padding-right-10">
+        <div class="col-lg-2 un-padding-right-5 un-padding-left-10">
             <div class="form-group un_margin_bottom_10">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     Benefit type
@@ -234,12 +181,7 @@
                 <input type="text" name="benefit_type" ng-model="modelObjectMap.BENEFIT_TYPE" class="form-control un_tn_form_control un_tn_form_border_gray" id="benefit_type"/>
             </div>
         </div>
-        <!--BENEFIT_TYPE-->
-
-        <div class="break-row"></div>
-
-        <!--BENEFIT_START_DATE-->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-10 un-padding-right-5">
+        <div class="col-lg-2 un-padding-right-5 un-padding-left-10">
             <div class="form-group un_margin_bottom_10">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     Benefit start date
@@ -247,22 +189,15 @@
                 <input readonly ui-date="{dateFormat: 'dd/mm/yy'}" name="benefit_start_date" ng-model="modelObjectMap.BENEFIT_START_DATE" class="form-control un_tn_form_control un_tn_form_border_gray" id="benefit_start_date" />
             </div>
         </div>
-        <!--BENEFIT_START_DATE-->
-
-        <!--ITEM_CHANGE-->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-5 un-padding-right-5">
-             <div class="form-group un_margin_bottom_10">
+        <div class="col-lg-2 un-padding-right-5 un-padding-left-10">
+            <div class="form-group un_margin_bottom_10">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     Item change
                 </label>
                 <input type="text" name="item_change" ng-model="modelObjectMap.ITEM_CHANGE" class="form-control un_tn_form_control un_tn_form_border_gray" id="item_change" />
             </div>
         </div>
-        <!--ITEM_CHANGE-->
-
-
-        <!--SUB_ITEM_CODE-->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-5 un-padding-right-5">
+        <div class="col-lg-2 un-padding-right-5 un-padding-left-10">
             <div class="form-group un_margin_bottom_10">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     Sub item code
@@ -270,10 +205,10 @@
                 <input type="text" name="sub_item_code" ng-model="modelObjectMap.SUB_ITEM_CODE" class="form-control un_tn_form_control un_tn_form_border_gray" id="sub_item_code"/>
             </div>
         </div>
-        <!--SUB_ITEM_CODE-->
 
-        <!--DURING_TIME-->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-5 un-padding-right-10">
+        <div class="break-row"></div>
+
+        <div class="col-lg-2 un-padding-right-5 un-padding-left-10">
             <div class="form-group un_margin_bottom_10">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     During time
@@ -281,12 +216,10 @@
                 <input type="number" name="during_time" ng-model="modelObjectMap.DURING_TIME" class="form-control un_tn_form_control un_tn_form_border_gray" id="during_time"/>
             </div>
         </div>
-        <!--DURING_TIME-->
 
+      
 
-        <div class="break-row"></div>
-        <!--PROVIDER_TYPE-->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-10 un-padding-right-5">
+        <div class="col-lg-2 un-padding-right-5 un-padding-left-10">
             <div class="form-group un_margin_bottom_10">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     Provider type
@@ -300,10 +233,7 @@
                 <input type="text" name="PROVIDER_TYPE" ng-model="modelObjectMap.PROVIDER_TYPE" class="form-control un_tn_form_control un_tn_form_border_gray" id="PROVIDER_TYPE"/>
             </div>
         </div>
-        <!--PROVIDER_TYPE-->
-
-        <!--DESCRIPTOR_CHANGE-->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-5 un-padding-right-5">
+        <div class="col-lg-2 un-padding-right-5 un-padding-left-10">
             <div class="form-group un_margin_bottom_10">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     Descriptor change
@@ -311,10 +241,7 @@
                 <input type="text" name="descriptor_change" ng-model="modelObjectMap.DESCRIPTOR_CHANGE" class="form-control un_tn_form_control un_tn_form_border_gray" id="descriptor_change" />
             </div>
         </div>
-        <!--DESCRIPTOR_CHANGE-->
-
-        <!--AMA_CODE-->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-5 un-padding-right-5">
+        <div class="col-lg-2 un-padding-right-5 un-padding-left-10">
             <div class="form-group un_margin_bottom_10">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     Ama code
@@ -322,10 +249,7 @@
                 <input type="text" name="ama_code" ng-model="modelObjectMap.AMA_CODE" class="form-control un_tn_form_control un_tn_form_border_gray" id="ama_code" />
             </div>
         </div>
-        <!--AMA_CODE-->
-
-        <!--AMA_DESC-->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-5 un-padding-right-10">
+        <div class="col-lg-2 un-padding-right-5 un-padding-left-10">
             <div class="form-group un_margin_bottom_10">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     Ama desc
@@ -333,12 +257,7 @@
                 <input type="text" name="ama_desc" ng-model="modelObjectMap.AMA_DESC" class="form-control un_tn_form_control un_tn_form_border_gray" id="ama_desc" />
             </div>
         </div>
-        <!--AMA_DESC-->
-
-        <div class="break-row"></div>
-
-        <!--DERIVED_FEE_START_DATE-->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-10 un-padding-right-5">
+        <div class="col-lg-2 un-padding-right-5 un-padding-left-10">
             <div class="form-group un_margin_bottom_10">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     Derived fee start date
@@ -346,10 +265,10 @@
                 <input readonly ui-date="{dateFormat: 'dd/mm/yy'}" name="derived_fee_start_date" ng-model="modelObjectMap.DERIVED_FEE_START_DATE" class="form-control un_tn_form_control un_tn_form_border_gray" id="derived_fee_start_date"/>
             </div>
         </div>
-        <!--DERIVED_FEE_START_DATE-->
 
-        <!--DERIVED_FEE-->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-5 un-padding-right-5">
+        <div class="break-row"></div>
+
+        <div class="col-lg-2 un-padding-right-5 un-padding-left-10">
             <div class="form-group un_margin_bottom_10">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     Derived fee
@@ -357,11 +276,9 @@
                 <input type="text" name="derived_fee" ng-model="modelObjectMap.DERIVED_FEE" class="form-control un_tn_form_control un_tn_form_border_gray" id="derived_fee" />
             </div>
         </div>
-        <!--DERIVED_FEE-->
 
 
-        <!--QFE_START_DATE-->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-5 un-padding-right-5">
+        <div class="col-lg-2 un-padding-right-5 un-padding-left-10">
             <div class="form-group un_margin_bottom_10">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     Qfe start date
@@ -369,10 +286,7 @@
                 <input readonly ui-date="{dateFormat: 'dd/mm/yy'}" name="qfe_start_date" ng-model="modelObjectMap.QFE_START_DATE" class="form-control un_tn_form_control un_tn_form_border_gray" id="qfe_start_date"/>
             </div>
         </div>
-        <!--QFE_START_DATE-->
-
-        <!--QFE_END_DATE-->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-5 un-padding-right-10">
+        <div class="col-lg-2 un-padding-right-5 un-padding-left-10">
             <div class="form-group un_margin_bottom_10">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     Qfe end date
@@ -380,14 +294,7 @@
                 <input readonly ui-date="{dateFormat: 'dd/mm/yy'}" name="qfe_end_date" ng-model="modelObjectMap.QFE_END_DATE" class="form-control un_tn_form_control un_tn_form_border_gray" id="qfe_end_date" />
             </div>
         </div>
-        <!--QFE_END_DATE-->
-
-
-
-
-        <div class="break-row"></div>
-        <!--EMSN_CHANGE-->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-10 un-padding-right-5">
+        <div class="col-lg-2 un-padding-right-5 un-padding-left-10">
             <div class="form-group un_margin_bottom_10">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     Emsn change
@@ -395,10 +302,7 @@
                 <input type="text" name="emsn_change" ng-model="modelObjectMap.EMSN_CHANGE" class="form-control un_tn_form_control un_tn_form_border_gray" id="emsn_change" />
             </div>
         </div>
-        <!--EMSN_CHANGE-->
-
-        <!--EMSN_CAP-->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-5 un-padding-right-5">
+        <div class="col-lg-2 un-padding-right-5 un-padding-left-10">
             <div class="form-group un_margin_bottom_10">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     Emsn cap
@@ -406,10 +310,7 @@
                 <input type="text" name="emsn_cap" ng-model="modelObjectMap.EMSN_CAP" class="form-control un_tn_form_control un_tn_form_border_gray" id="emsn_cap" />
             </div>
         </div>
-        <!--EMSN_CAP-->
-
-        <!--EMSN_FIXED_CAP_AMOUNT-->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-5 un-padding-right-5">
+        <div class="col-lg-2 un-padding-right-5 un-padding-left-10">
             <div class="form-group un_margin_bottom_10">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     Emsn fixed cap amount
@@ -417,10 +318,10 @@
                 <input type="text" name="emsn_cap" ng-model="modelObjectMap.EMSN_FIXED_CAP_AMOUNT" class="form-control un_tn_form_control un_tn_form_border_gray" id="emsn_fixed_cap_amount"/>
             </div>
         </div>
-        <!--EMSN_FIXED_CAP_AMOUNT-->
 
-        <!--EMSN_PERCENTAGE_CAP-->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-5 un-padding-right-10">
+        <div class="break-row"></div>
+
+        <div class="col-lg-2 un-padding-right-5 un-padding-left-10">
             <div class="form-group un_margin_bottom_10">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     Emsn percentage cap
@@ -428,11 +329,10 @@
                 <input type="number" name="emsn_percentage_cap" ng-model="modelObjectMap.EMSN_PERCENTAGE_CAP" class="form-control un_tn_form_control un_tn_form_border_gray" id="emsn_percentage_cap" />
             </div>
         </div>
-        <!--EMSN_PERCENTAGE_CAP-->
 
+        
 
-        <!--EMSN_MAXIMUM_CAP-->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-10 un-padding-right-5">
+        <div class="col-lg-2 un-padding-right-5 un-padding-left-10">
             <div class="form-group un_margin_bottom_10">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     Emsn maximum cap
@@ -440,10 +340,7 @@
                 <input type="number" name="emsn_maximum_cap" ng-model="modelObjectMap.EMSN_MAXIMUM_CAP" class="form-control un_tn_form_control un_tn_form_border_gray" id="emsn_maximum_cap" />
             </div>
         </div>
-        <!--EMSN_MAXIMUM_CAP-->
-
-        <!--EMSN_DESCRIPTION-->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-5 un-padding-right-5">
+        <div class="col-lg-2 un-padding-right-5 un-padding-left-10">
             <div class="form-group un_margin_bottom_10">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     Emsn description
@@ -451,10 +348,7 @@
                 <input type="text" name="emsn_description" ng-model="modelObjectMap.EMSN_DESCRIPTION" class="form-control un_tn_form_control un_tn_form_border_gray" id="emsn_description" />
             </div>
         </div>
-        <!--EMSN_DESCRIPTION-->
-
-        <!--EMSN_CHANGE_DATE-->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-5 un-padding-right-5">
+        <div class="col-lg-2 un-padding-right-5 un-padding-left-10">
             <div class="form-group un_margin_bottom_10">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     Emsn change date
@@ -462,10 +356,7 @@
                 <input readonly ui-date="{dateFormat: 'dd/mm/yy'}" name="emsn_change_date" ng-model="modelObjectMap.EMSN_CHANGE_DATE" class="form-control un_tn_form_control un_tn_form_border_gray" id="emsn_change_date"/>
             </div>
         </div>
-        <!--EMSN_CHANGE_DATE-->
-
-        <!--EMSN_START_DATE-->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-5 un-padding-right-10">
+        <div class="col-lg-2 un-padding-right-5 un-padding-left-10">
             <div class="form-group un_margin_bottom_10">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     Emsn start date
@@ -473,12 +364,7 @@
                 <input readonly ui-date="{dateFormat: 'dd/mm/yy'}" name="emsn_start_date" ng-model="modelObjectMap.EMSN_START_DATE" class="form-control un_tn_form_control un_tn_form_border_gray" id="emsn_start_date" />
             </div>
         </div>
-        <!--EMSN_START_DATE-->
-
-        <div class="break-row"></div>
-
-        <!--EMSN_END_DATE-->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-10 un-padding-right-5">
+        <div class="col-lg-2 un-padding-right-5 un-padding-left-10">
             <div class="form-group un_margin_bottom_10">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     Emsn end date
@@ -486,10 +372,10 @@
                 <input readonly ui-date="{dateFormat: 'dd/mm/yy'}" name="emsn_end_date" ng-model="modelObjectMap.EMSN_END_DATE" class="form-control un_tn_form_control un_tn_form_border_gray" id="emsn_end_date" />
             </div>
         </div>
-        <!--EMSN_END_DATE-->
 
-        <!--ANAES-->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-5 un-padding-right-5">
+        <div class="break-row"></div>
+
+        <div class="col-lg-2 un-padding-right-5 un-padding-left-10">
             <div class="form-group un_margin_bottom_10">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     Anaes
@@ -497,11 +383,9 @@
                 <input type="text" name="anaes" ng-model="modelObjectMap.ANAES" class="form-control un_tn_form_control un_tn_form_border_gray" id="anaes" />
             </div>
         </div>
-        <!--ANAES-->
 
 
-        <!--ANAES_CHANGE-->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-5 un-padding-right-5">
+        <div class="col-lg-2 un-padding-right-5 un-padding-left-10">
             <div class="form-group un_margin_bottom_10">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     Anaes change
@@ -509,12 +393,7 @@
                 <input type="text" name="anaes_change" ng-model="modelObjectMap.ANAES_CHANGE" class="form-control un_tn_form_control un_tn_form_border_gray" id="anaes_change" />
             </div>
         </div>
-        <!--ANAES_CHANGE-->
-
-
-
-        <!--ITEM_START_DATE-->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-5 un-padding-right-10">
+        <div class="col-lg-2 un-padding-right-5 un-padding-left-10">
             <div class="form-group un_margin_bottom_10">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     Item start date
@@ -522,10 +401,7 @@
                 <input readonly ui-date="{dateFormat: 'dd/mm/yy'}" name="item_start_date" ng-model="modelObjectMap.ITEM_START_DATE" class="form-control un_tn_form_control un_tn_form_border_gray" id="item_start_date"/>
             </div>
         </div>
-        <!--ITEM_START_DATE-->
-
-        <!--ITEM_END_DATE-->
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 un-padding-left-10 un-padding-right-5">
+        <div class="col-lg-2 un-padding-right-5 un-padding-left-10">
             <div class="form-group un_margin_bottom_10">
                 <label class="un_tn_form_label un_tn_form_label_gray" style="width:135px">
                     Item end date
@@ -533,68 +409,69 @@
                 <input readonly ui-date="{dateFormat: 'dd/mm/yy'}" name="item_end_date" ng-model="modelObjectMap.ITEM_END_DATE" class="form-control un_tn_form_control un_tn_form_border_gray" id="item_end_date" />
             </div>
         </div>
-        <!--ITEM_END_DATE-->
-
-
-
-
-        <div class="break-row"></div>
-        <!--ISEXP-->
-        <div class="col-md-3 col-sm-6 col-xs-12 un-padding-left-10 un-padding-right-5 un_margin_bottom_10">
+        <div class="col-lg-2 un-padding-left-5 un-padding-right-5 un_margin_bottom_10" style="margin-top: 17px;">
             <input type="checkbox" name="isexp" id="isexp" class="mdt-checkbox" ng-model="modelObjectMap.ISEXP" ng-true-value="1" ng-false-value="0">
-            <label for="isexp">Is Exp</label>
+            <label style="height:26px;" for="isexp">Is Exp</label>
         </div>
-        <!--ISEXP-->
 
-        <!--ISINV-->
-        <div class="col-md-3 col-sm-6 col-xs-12 un-padding-left-5 un-padding-right-5 un_margin_bottom_10">
-            <input type="checkbox" name="isinv" id="isinv" class="mdt-checkbox" ng-model="modelObjectMap.ISINV" ng-true-value="1" ng-false-value="0">
-            <label for="isinv">Is Inv</label>
-        </div>
-        <!--ISINV-->
-
-        <!--ISASSET-->
-        <div class="col-md-3 col-sm-6 col-xs-12 un-padding-left-5 un-padding-right-5 un_margin_bottom_10">
-            <input type="checkbox" name="isasset" id="isasset" class="mdt-checkbox" ng-model="modelObjectMap.ISASSET" ng-true-value="1" ng-false-value="0">
-            <label for="isasset">Is Asset</label>
-        </div>
-        <!--ISASSET-->
-
-        <!--ISBOM-->
-        <div class="col-md-3 col-sm-6 col-xs-12 un-padding-left-5 un-padding-right-10 un_margin_bottom_10">
-            <input type="checkbox" name="isbom" id="isbom" class="mdt-checkbox" ng-model="modelObjectMap.ISBOM" ng-true-value="1" ng-false-value="0">
-            <label for="isbom">Is BOM</label>
-        </div>
-        <!--ISBOM-->
-
-
-
-        <div class="break-row"></div>
         
-        <!--isPO-->
-        <div class="col-md-3 col-sm-6 col-xs-12 un-padding-left-10 un-padding-right-5 un_margin_bottom_10">
-            <input type="checkbox" name="ispo" id="ispo" class="mdt-checkbox" ng-model="modelObjectMap.isPO" ng-true-value="1" ng-false-value="0">
-            <label for="ispo">Is PO</label>
+
+
+        <div class="col-lg-2 un-padding-left-5 un-padding-right-5 un_margin_bottom_10" style="margin-top: 17px;">
+            <input type="checkbox" name="isinv" id="isinv" class="mdt-checkbox" ng-model="modelObjectMap.ISINV" ng-true-value="1" ng-false-value="0">
+            <label style="height:26px;" for="isinv">Is Inv</label>
         </div>
-        <!--isPO-->
-
-        <!--isOM-->
-        <div class="col-md-3 col-sm-6 col-xs-12 un-padding-left-5 un-padding-right-5 un_margin_bottom_10">
-            <input type="checkbox" name="isom" id="isom" class="mdt-checkbox" ng-model="modelObjectMap.isOM" ng-true-value="1" ng-false-value="0">
-            <label for="isom">Is OM</label>
-        </div>
-        <!--isOM-->
-
-        <!--ISENABLE-->
-        <div class="col-md-3 col-sm-6 col-xs-12 un-padding-left-5 un-padding-right-5 un_margin_bottom_10">
-            <input type="checkbox" name="isenable" id="isenable" class="mdt-checkbox" ng-model="modelObjectMap.ISENABLE" ng-true-value="1" ng-false-value="0">
-            <label for="isenable">Is Enable</label>
-        </div>
-        <!--ISENABLE-->
-
-
 
         <div class="break-row"></div>
+
+
+        <div class="col-lg-2 un-padding-left-5 un-padding-right-5 un_margin_bottom_10" style="margin-top: 17px;">
+            <input type="checkbox" name="isasset" id="isasset" class="mdt-checkbox" ng-model="modelObjectMap.ISASSET" ng-true-value="1" ng-false-value="0">
+            <label style="height:26px;" for="isasset">Is Asset</label>
+        </div>
+
+       
+
+        <div class="col-lg-2 un-padding-left-5 un-padding-right-5 un_margin_bottom_10" style="margin-top: 17px;">
+            <input type="checkbox" name="isbom" id="isbom" class="mdt-checkbox" ng-model="modelObjectMap.ISBOM" ng-true-value="1" ng-false-value="0">
+            <label style="height:26px;" for="isbom">Is BOM</label>
+        </div>
+        <div class="col-lg-2 un-padding-left-5 un-padding-right-5 un_margin_bottom_10" style="margin-top: 17px;">
+            <input type="checkbox" name="ispo" id="ispo" class="mdt-checkbox" ng-model="modelObjectMap.isPO" ng-true-value="1" ng-false-value="0">
+            <label style="height:26px;" for="ispo">Is PO</label>
+        </div>
+        <div class="col-lg-2 un-padding-left-5 un-padding-right-5 un_margin_bottom_10" style="margin-top: 17px;">
+            <input type="checkbox" name="isom" id="isom" class="mdt-checkbox" ng-model="modelObjectMap.isOM" ng-true-value="1" ng-false-value="0">
+            <label style="height:26px;" for="isom">Is OM</label>
+        </div>
+
+        
+
+        <div class="col-lg-2 un-padding-left-5 un-padding-right-5 un_margin_bottom_10" style="margin-top: 17px;">
+            <input type="checkbox" name="isenable" id="isenable" class="mdt-checkbox" ng-model="modelObjectMap.ISENABLE" ng-true-value="1" ng-false-value="0">
+            <label style="height:26px;" for="isenable">Is Enable</label>
+        </div>
+
+        <!-- <div class="break-row"></div>
+
+        <div class="col-lg-2 un-padding-left-5 un-padding-right-5 un_margin_bottom_10">
+            
+        </div>
+        <div class="col-lg-2 un-padding-left-5 un-padding-right-5 un_margin_bottom_10">
+            
+        </div>
+        <div class="col-lg-2 un-padding-left-5 un-padding-right-5 un_margin_bottom_10">
+            
+        </div>
+        <div class="col-lg-2 un-padding-left-5 un-padding-right-5 un_margin_bottom_10">
+            
+        </div>
+        <div class="col-lg-2 un-padding-left-5 un-padding-right-5 un_margin_bottom_10">
+            
+        </div> -->
+
+
+   
 
         <!-- ACTION -->
         <div class="col-md-3 col-sm-6 col-xs-6 un-padding-left-10 un-padding-right-5">
@@ -605,6 +482,8 @@
             </button>
         </div>
         <!-- END ACTION -->
+
+        <div class="break-row"></div>
 
     </div>
 </form>
