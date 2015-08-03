@@ -89,7 +89,9 @@
 			        {{list.First_name}} {{list.Sur_name}}
 			    </label>
 			    <ul ng-repeat="alert in list.alert" ng-if="list.alert.length > 0">
-			        <li>{{alert.name}}</li>
+			        <li style="color: {{alert.color}};">
+			        	{{alert.name}}
+			        </li>
 			    </ul>
 			    <p ng-repeat="cal in list.cal" ng-if="list.cal.length > 0 && list.test === 1">
 			        <span ng-if="cal.IS_REFERRAL && cal.OUTREFERRAL === 'no'" style="margin-left: 10px;">

@@ -38,6 +38,11 @@
         <div class="table-scrollable">
             <table ng-table="tableParams" show-filter="true"  class="table table-hover table-bordered table-condensed  table-responsive">
                 <tr style="white-space: nowrap; cursor: pointer;" align="center" ng-if="b.id !== companyInfo.id" ng-repeat="b in $data" ng-click="showSubCompany(b)" ng-class="{selected : b.id === selectedId}" >
+                    <td data-title="'Requirements'">
+                        <a ng-click="showRequirement()">
+                            <button class="un_tn_btn un-bgXam-colBlack">Requirements</button>
+                        </a>
+                    </td>
                     <td data-title="'Company Name'" sortable="'Company_name'" filter="{ 'Company_name': 'text' }">
                         <a href="javascript:;" ng-click="editCompany(b)">{{b.Company_name}}</a>
                     </td>
@@ -69,9 +74,6 @@
                     </td>
                     <td data-title="'Invoice Email'" >
                         <label>{{b.invoice_email}}</label>
-                    </td>
-                    <td data-title="'Requirements'">
-                        <a ng-click="showRequirement()"><i class="fa fa-cog"></i></a>
                     </td>
                     <!-- <td data-title="'Contact Email In Result'" >
                         <input type="checkbox" disabled checked ng-if="b.isAddContactEmailToResult == 1" />

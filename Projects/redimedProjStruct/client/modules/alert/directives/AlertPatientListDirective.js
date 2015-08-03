@@ -9,8 +9,9 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 			limit: '=',
 			reload: '=',
 			permission: '@',
-			withoutPatient: '@',
-			onSavecheck: '&'
+			//withoutPatient: '@',
+			onSavecheck: '&',
+			onClickRow: '&'
 		},
 		templateUrl: 'modules/alert/directives/templates/patientList.html',
 		link: function(scope, elem, attrs){
@@ -37,25 +38,47 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 				isEnable:''
 			}
 
-			var load = function(){
-				if(typeof scope.withoutPatient !== 'undefined' && scope.withoutPatient){
-					var postData = angular.copy(scope.alert.search);
+			var bysearch = {
+				patient_id: $stateParams.patient_id,
+				cal_id: $stateParams.cal_id
+			}
 
-					console.log(postData);
-					AlertModel.listNoFollowPatient(postData)
-					.then(function(response){
-						scope.alert.list = response.data;
-						scope.alert.count = response.count;
+			var load = function(){
+
+				if(scope.action.edit == true){
+
+					AlertModel.postshowalertpatient(bysearch)
+					.then(function(response) {
+						scope.alert.bylist = response.data;
 					}, function(error){})
 				}else{
-					var postData = angular.copy(scope.alert.search);
-
-					AlertModel.listFollowPatient(postData)
-					.then(function(response){
-						scope.alert.list = response.data;
-						scope.alert.count = response.count;
-					}, function(error){})
+					AlertModel.showcompanyid($stateParams.patient_id)
+					.then(function(response) {
+						var company_id = response.data[0].company_id;
+							AlertModel.showalert(company_id)
+							.then(function(resp) {
+								scope.alert.list = resp.data;
+							}, function(error){})
+					}, function(error){ })
 				}
+				// if(typeof scope.withoutPatient !== 'undefined' && scope.withoutPatient){
+				// 	var postData = angular.copy(scope.alert.search);
+
+				// 	console.log(postData);
+				// 	AlertModel.listNoFollowPatient(postData)
+				// 	.then(function(response){
+				// 		scope.alert.list = response.data;
+				// 		scope.alert.count = response.count;
+				// 	}, function(error){})
+				// }else{
+				// 	var postData = angular.copy(scope.alert.search);
+
+				// 	AlertModel.listFollowPatient(postData)
+				// 	.then(function(response){
+				// 		scope.alert.list = response.data;
+				// 		scope.alert.count = response.count;
+				// 	}, function(error){})
+				// }
 			}
 
 			var onSearch = function(){
@@ -156,8 +179,10 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 					}
 				},
 				search: angular.copy(search),
+				bysearch: angular.copy(bysearch),
 				load: function(){load();},
 				list: [],
+				bylist: [],
 				checkbox: [],
 				onSearch: function(){ onSearch(); },
 				onOrderBy: function(option){ onOrderBy(option); },
@@ -172,6 +197,7 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 			scope.$watch('reload', function(reload){
 				if(reload){
 					scope.alert.search = angular.copy(search);
+					scope.alert.bysearch = angular.copy(bysearch);
 					scope.alert.load();
 				}
 			})

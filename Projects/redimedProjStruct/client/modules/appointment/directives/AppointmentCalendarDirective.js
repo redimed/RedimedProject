@@ -961,7 +961,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 								})
 
 								if(alert_flag){
-									var object = {id: row.ALERT_ID, name: row.ALERT_NAME};
+									var object = {id: row.ALERT_ID, name: row.ALERT_NAME, color: row.SERVICE_COLOR, patient_alert: row.ID};
 									scope.alertCenter.list[flag].alert.push(object);
 								}
 
@@ -987,7 +987,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 							var object = {Patient_id: row.Patient_id, First_name: row.First_name, Sur_name: row.Sur_name, alert: [], cal: []};
 
 							if(row.ALERT_ID){
-								object.alert.push({id: row.ALERT_ID, name: row.ALERT_NAME});
+								object.alert.push({id: row.ALERT_ID, name: row.ALERT_NAME, color: row.SERVICE_COLOR});
 							}
 
 							if(row.CAL_ID){

@@ -131,7 +131,7 @@ gulp.task('alert', function(){
 					 './client/modules/alert/directives/AlertListDirective.js',
 					 './client/modules/alert/directives/AlertPatientListDirective.js',
 					 './client/modules/alert/directives/AlertAddDirective.js',
-					 './client/modules/alert/directives/AlertEditDirective.js',
+					 './client/modules/alert/directives/AlertEditDirective.js'
 
 	])
 	.pipe(concat('alert.js'))
