@@ -1,7 +1,6 @@
 var _ = require('lodash-node');
 var db = require('./models');
 var parser = require('socket.io-cookie');
-var useragent = require('express-useragent');
 
 var apiKey = "45279332";
 var apiSecret = "8d7639ab2088de84784beab28b3167f78a08c674";
@@ -44,7 +43,6 @@ apnsConnection.on('completed',log('completed'));
 
 module.exports = function(io,cookie,cookieParser) {
     var userList = [];
-    var ua = null;
     var driverArr = [];
 
     io.use(parser);
@@ -55,9 +53,6 @@ module.exports = function(io,cookie,cookieParser) {
         })
 
     io.on('connection', function (socket) {
-        var header = socket.request.headers;
-        var source = header['user-agent'];
-        ua = useragent.parse(source);
 
         socket.on('reconnected',function(id){
             db.User.find({where:{id: id}},{raw:true})
