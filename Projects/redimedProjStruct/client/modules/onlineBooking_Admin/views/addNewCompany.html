@@ -50,6 +50,11 @@
                     Patient List
                 </a>
             </li>
+            <li>
+                <a href="index.html#tab_1_4" data-toggle="tab">
+                    Requirements
+                </a>
+            </li>
         </ul>
     </div>
     <div class="portlet-body">
@@ -291,6 +296,9 @@
 
                     </table>
                 </div>
+            </div>
+            <div ng-if="isEdit && !subId" class="tab-pane" id="tab_1_4">
+                <requirement-list></requirement-list>
             </div>
         </div>
     </div>

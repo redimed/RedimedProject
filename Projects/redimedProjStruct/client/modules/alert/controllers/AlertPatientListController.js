@@ -4,8 +4,6 @@ angular.module('app.loggedIn.alert.controllers.patientList', [])
 	var onSaveCheck = function(data){
 		var postData = angular.copy(data);
 
-		console.log('##########' ,postData);
-
 		AlertModel.insertalert(postData)
 		.then(function(response){
 			toastr.success('Select Successfully');

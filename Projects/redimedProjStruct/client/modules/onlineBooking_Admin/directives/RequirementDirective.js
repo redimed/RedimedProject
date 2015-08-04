@@ -7,7 +7,6 @@ angular.module('app.loggedIn.booking.admin.requirement.directive', [])
         templateUrl: 'modules/onlineBooking_Admin/directives/templates/requirements.html',
         scope: {
             options: '=',
-            idr: '=',
             success: '='
         },
         link: function(scope, ele, attrs){
@@ -17,7 +16,7 @@ angular.module('app.loggedIn.booking.admin.requirement.directive', [])
                 offset: 0,
                 max_size: 5,
                 page: 1,
-                company_id: scope.idr
+                company_id: $stateParams.fatherId
             }
 
             var load = function() {
@@ -43,7 +42,6 @@ angular.module('app.loggedIn.booking.admin.requirement.directive', [])
                         $scope.alerts = {
                             success: false,
                             alert_id: alert_id
-                        
                         };
 
                         $scope.$watch('alerts.success', function(success){
@@ -54,7 +52,7 @@ angular.module('app.loggedIn.booking.admin.requirement.directive', [])
                     },
                     resolve: {
                         alert_id: function(){
-                            return scope.idr;
+                            return $stateParams.fatherId;
                         }
                     }
                 })
