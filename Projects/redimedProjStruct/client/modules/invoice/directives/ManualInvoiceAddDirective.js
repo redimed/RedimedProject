@@ -427,11 +427,31 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 					})
 				}
 			}
-			$scope.amountBill = function() {
+			$scope.amountAll = function() {
 				var amount = 0;
 				for(var i = 0, len = $scope.InvoiceMap.lines.length; i < len; ++i) {
 		 			var line = $scope.InvoiceMap.lines[i];
 		 			line.AMOUNT = line.PRICE * line.QUANTITY;
+		 			amount +=  line.AMOUNT;
+		 		}
+
+		 		return Math.round(amount * 100) / 100;
+			}
+			$scope.taxAmountAll = function() {
+				var amount = 0;
+				for(var i = 0, len = $scope.InvoiceMap.lines.length; i < len; ++i) {
+		 			var line = $scope.InvoiceMap.lines[i];
+		 			line.AMOUNT = line.PRICE * line.QUANTITY*line.TAX_RATE;
+		 			amount +=  line.AMOUNT;
+		 		}
+
+		 		return Math.round(amount * 100) / 100;
+			}
+			$scope.totalAmount = function() {
+				var amount = 0;
+				for(var i = 0, len = $scope.InvoiceMap.lines.length; i < len; ++i) {
+		 			var line = $scope.InvoiceMap.lines[i];
+		 			line.AMOUNT = line.PRICE * line.QUANTITY*line.TAX_RATE + line.PRICE * line.QUANTITY;
 		 			amount +=  line.AMOUNT;
 		 		}
 
