@@ -200,6 +200,7 @@ angular.module("app.loggedIn.invoice.list.controller",[
         })
         .result.then(function(response){
            if (response.status == 'success') {
+            toastr.success('Add Manual Invoice Success !');
             $scope.invoicePanel.reload();
            };
         }) 

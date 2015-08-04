@@ -41,6 +41,7 @@ angular.module("app.loggedIn.patient.invoices.controller", [])
                 })
                 .result.then(function(response){
                    if (response.status == 'success') {
+                  ///  toastr.success('Edit Manual Invoice Success !');
                     $scope.invoicePanel.reload();
                    };
                 }) 
@@ -152,7 +153,7 @@ angular.module("app.loggedIn.patient.invoices.controller", [])
             	if(item.service) return item.service.SERVICE_NAME;
             }},
             {field: 'CREATION_DATE', label: 'Created Date', type: 'custom', fn: function(item){
-            	return ConfigService.getCommonDateDefault(item.CREATION_DATE);
+            	return moment.utc(new Date(item.CREATION_DATE)).format('YYYY-MM-DD HH:mm:ss');
             }},
         ],
         search: {patient_id: patient_id, cal_id:-1},
@@ -198,6 +199,7 @@ angular.module("app.loggedIn.patient.invoices.controller", [])
         .result.then(function(response){
            if (response.status == 'success') {
             $scope.invoicePanel.reload();
+            toastr.success('Add Manual Invoice Success !');
            };
         }) 
     }

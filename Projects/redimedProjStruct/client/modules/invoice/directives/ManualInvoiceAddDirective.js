@@ -14,7 +14,6 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 		controller: function($scope) {
 			var arrGetBy = $filter('arrGetBy');
 			$scope.user_id = $cookieStore.get('userInfo').id;
-			console.log($scope.user_id);
 			$scope.modelObjectMap = {
 				FEE_GROUP_TYPE :null,
 				FEE_GROUP_ID:null,
@@ -464,8 +463,8 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 						}
 					};
 					if ($scope.checkedit !== true) {// Is Edit Form
-						postData.CREATION_DATE = moment().format('YYYY-MM-DD hh:mm:ss');
-						postData.LAST_UPDATE_DATE = moment().format('YYYY-MM-DD hh:mm:ss');
+						postData.CREATION_DATE = moment().format('YYYY-MM-DD HH:mm:ss');
+						postData.LAST_UPDATE_DATE = moment().format('YYYY-MM-DD HH:mm:ss');
 						postData.STATUS = 'enter';
 						postData.user_id = $scope.user_id;
 						InvoiceService.getSaveManual(postData).then(function(response){
@@ -474,15 +473,23 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 
 					}else{//Is Add Form
 						postData.header_id = $scope.headerdata.header_id;
-						postData.LAST_UPDATE_DATE = moment().format('YYYY-MM-DD hh:mm:ss');
+						postData.LAST_UPDATE_DATE = moment().format('YYYY-MM-DD HH:mm:ss');
 						postData.STATUS = 'enter';
 						postData.user_id = $scope.user_id;
 						InvoiceService.getEditManual(postData).then(function(response){
+							toastr.success('Edit Manual Invoice Success !');
 							$scope.success = true;
 						})
 					};
 					
                 }
+			}
+			$scope.removeInvoiceLine = function(item){
+				for (var i = 0; i < $scope.InvoiceMap.lines.length; i++) {
+					if ($scope.InvoiceMap.lines[i].ITEM_ID == item.ITEM_ID) {
+						$scope.InvoiceMap.lines.splice(i,1);
+					};
+				};
 			}
 			$scope.resetEdit = function(){//Button Reset Form Edit 
 				var postData = {
