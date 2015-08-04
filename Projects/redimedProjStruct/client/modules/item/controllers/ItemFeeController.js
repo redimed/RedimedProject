@@ -102,8 +102,9 @@ angular.module("app.loggedIn.item.fee.controller",[
                 {field: 'FEE_GROUP_ID', is_hide: true},
                 {field: 'FEE_GROUP_NAME', label: 'Group name'},
                 {field: 'FEE_GROUP_TYPE', label: 'Code'},
-                {field: 'PRICE_SOURCE', label: 'Price Source'},            
                 {field: 'SOURCE_FILE_TYPE',label:'Source file type'},
+                {field: 'PRICE_SOURCE', label: 'Price Source'},            
+                {field: 'FORMULA',label:'Formula'},
                 {field: 'SOURCE_START_DATE',label:'Start date',
                     type:'custom',
                     fn:function(item){

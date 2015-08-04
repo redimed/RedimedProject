@@ -18,7 +18,7 @@ var model_sql = {
 		var querybuilder = squel.select().from('sys_taxes');
 		querybuilder.where('ISENABLE = ?', 1);
 		if(is_option == 1) {
-			querybuilder.field('TAX_ID').field('TAX_NAME');
+			querybuilder.field('TAX_ID').field('TAX_NAME').field('TAX_CODE').field('TAX_RATE');
 		}
 		return querybuilder.toString();
 	},
