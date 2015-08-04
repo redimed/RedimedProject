@@ -6,43 +6,23 @@
 				<thead>
 					<tr>
 						<th>Patient Name</th>
-						<th>CAL ID</th>
+						<th>Appt</th>
 						<th>Script Num</th>
 						<th>Medicare</th>
 						<th></th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td></td>
-						<td></td>
-						<td>
-							<div class="form-group">
-								<input type="text" class="form-control" ng-model="script.search.scriptNum" ng-enter="script.onSearch({field: 'scriptNum', value: script.search.scriptNum})" placeholder="Script Num" />
-							</div>
-						</td>
-						<td>
-							<div class="form-group">
-								<input type="text" class="form-control" ng-model="script.search.medication_name" ng-enter="script.onSearch({field: 'medication_name', value: script.search.medication_name})" placeholder="Medicare" />
-							</div>
-						</td>
-						<td></td>
-					</tr>
 					<tr ng-repeat="row in script.list" style="cursor:pointer;">
 						<td>{{row.First_name}}&nbsp;{{row.Sur_name}}</td>
-						<td>{{row.CAL_ID}}</td>
+						<td>{{row.FROM_TIME | moment: 'format': 'DD/MM/YYYY hh:mm'}}</td>
 						<td>{{row.scriptNum}}</td>
-						<td>{{row.medication_name}}</td>
+						<td>{{row.name_medication}}</td>
 						<td align="center">
 							<a><button class="un_tn_btn un-bgBlack" ng-click="Scripts('edit', row.ID)">Edit</button>
-							<!--<i class="fa fa-pencil-square-o" ng-click="script.edit(row.ID)"></i></a>-->
-							<!--<a><i class="fa fa-times" ng-click="script.dialog.remove(row.ID)"></i></a>&nbsp;-->
 							<a>
 								<button  class="un_tn_btn un-bgXam-colBlack"  ng-if="row.isEnable"  ng-click="script.disable(row)">Enable</button>
 								<button  class="un_tn_btn un-bgBlack"  ng-if="!row.isEnable"  ng-click="script.disable(row)">Disable</button>
-								<!--
-								<span ng-if="row.isEnable" ng-click="script.disable(row)">Enable</span>
-								<span ng-if="!row.isEnable" ng-click="script.disable(row)">Disable</span>-->
 							</a>
 							<a target="_blank" href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/script/{{row.ID}}"><button class="un_tn_btn un-bgBlack">Print</button>
 							</a>
@@ -51,8 +31,7 @@
 				</tbody>
 			</table>
 			<div style="text-align: right;">
-				<pagination boundary-links="true" total-items="script.count" ng-model="script.search.page" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" items-per-page="script.search.limit" max-size="script.search.max_size" ng-change="setPage(script.search.page)" >
-				</pagination>
+				<pagination boundary-links="true" total-items="script.count" ng-model="script.search.page" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" items-per-page="script.search.limit" max-size="script.search.max_size" ng-change="setPage(script.search.page)"></pagination>
 			</div>
 		</div>
 	</div>
@@ -61,22 +40,31 @@
 	<button class="un-button un-bgBlack" ng-click="Scripts('new')" style="margin-top: -13px;
   margin-left: 11px;">Add New Script</button>
 </div>
-<div ng-if="addFormScript.is_show">
-    <script-add medicare='medicare'></script-add>
-</div>
- <script type="text/ng-template" id="notifyToEdit">
+<script type="text/ng-template" id="notifyToAdd">
+	<style type="text/css">
+        .modal.in .modal-dialog {
+            margin-top:50px;
+        }
+    </style>
+    <h4 class="modal-title un-label-popup-header-m un-bg-label-333333" id="myModalLabel">Add Script</h4>
     <div class="modal-body">
-        <script-edit id='scriptedit.ID' success='scriptedit.success' medicare='scriptedit.medicare'></script-edit>
-    </div>
- </script>
- <!--
-<script type="text/ng-template" id="notifyToRemove">
-    <div class="modal-body">
-        <p>Do you want to remove this site ?</p>
+        <script-add medicare='medicare' success="success"></script-add>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary btn-xs" ng-click="ok()">OK</button>
-        <button class="btn btn-warning btn-xs" ng-click="cancel()">Cancel</button>
+        <button type="button" class="btn btn-default" ng-click="cancel()">Close</button>
     </div>
  </script>
--->
+ <script type="text/ng-template" id="notifyToEdit">
+ 	<style type="text/css">
+        .modal.in .modal-dialog {
+            margin-top:50px;
+        }
+    </style>
+    <h4 class="modal-title un-label-popup-header-m un-bg-label-333333" id="myModalLabel">Edit Script</h4>
+    <div class="modal-body">
+        <script-edit id='idScript' success='success' medicare='medicare'></script-edit>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="cancel()">Close</button>
+    </div>
+ </script>

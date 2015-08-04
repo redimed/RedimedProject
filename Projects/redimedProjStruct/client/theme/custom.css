@@ -4073,6 +4073,9 @@ label{
     max-height: 320px;
     overflow: auto;
 }
+.pagination>li {
+    display: inline !important; 
+}
 /*phanquocchien patient end*/
 
 .ql-container{

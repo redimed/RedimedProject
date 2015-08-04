@@ -17,6 +17,11 @@ angular.module('app.loggedIn.script.model', [])
 		var instanceApi = mainApi.all('edit');
 		return instanceApi.post({data: data});
 	}
+	//phanquocchien.c1109g@gmail.com
+	mainModel.listMedicationInScript = function(id){
+		var instanceApi = mainApi.all('list-medication-in-script');
+		return instanceApi.post({id: id});
+	}
 	mainModel.remove = function(data){
 		var instanceApi = mainApi.all('remove');
 		return instanceApi.post({data: data});

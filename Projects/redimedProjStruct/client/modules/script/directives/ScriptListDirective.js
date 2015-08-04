@@ -10,25 +10,19 @@ angular.module('app.loggedIn.script.directive.list', [])
 			limit: '@',
 			medicare: '='
 		},
-		link: function(scope, ele, attrs){
+		link: function(scope, ele, attrs){		
 
 			var search = {
 				page: 1,
-				limit: 20,
+				limit: 5,
 				offset: 0,
 				max_size: 5,
-				scriptNum: '',
-				medication_name: '',
-				isEnable: '',
 				Patient_id: $stateParams.patient_id,
-				CAL_ID: $stateParams.cal_id,
-				Creation_date: 'desc'
+				CAL_ID: $stateParams.cal_id
 			}
 
 			var load = function(){
-				console.log('fdsfds: ',scope.medicare);
 				ScriptModel.list(search).then(function(response){
-
 					scope.script.list = response.data;
 					scope.script.count = response.count;		
 				}, function(error) {})
@@ -69,6 +63,7 @@ angular.module('app.loggedIn.script.directive.list', [])
 						}
 					}
 				});
+
 				modalInstance.result.then(function(id){
 					if(id){
 						ScriptModel.remove(id).then(function(deleted){
@@ -88,6 +83,14 @@ angular.module('app.loggedIn.script.directive.list', [])
 			        	templateUrl: 'notifyToAdd',
 			         	controller: function ($scope,$modalInstance,medicare) {
 			         		$scope.medicare = medicare;
+			         		$scope.cancel = function(){
+								$modalInstance.dismiss('cancel');
+							};
+							$scope.success = {
+								runWhenFinish : function () {
+									$modalInstance.dismiss({status:'success'});
+								}
+							}
 			         	},
 			         	size :'lg',
 			         	resolve :{
@@ -97,17 +100,31 @@ angular.module('app.loggedIn.script.directive.list', [])
 			         	}
 			       	})
 			       	.result.then(function(response){
-			        	scope.script.load();
+			       	},function (response) {
+			       		if (response.status == 'success') {
+			        		scope.script.load();
+			       		};
 			       	})
 			   	}
 
 			   	if(type == 'edit'){
 			   		var modalInstance = $modal.open({
-			         	templateUrl: 'notifyToEdit',
-			         	controller: 'ScriptEditController',
+			        	templateUrl: 'notifyToEdit',
+			         	controller: function ($scope,$modalInstance,medicare,idScript) {
+			         		$scope.medicare = medicare;
+			         		$scope.idScript = idScript;
+			         		$scope.cancel = function(){
+								$modalInstance.dismiss('cancel');
+							};
+							$scope.success = {
+								runWhenFinish : function () {
+									$modalInstance.dismiss({status:'success'});
+								}
+							}
+			         	},
 			         	size :'lg',
-			         	resolve: {
-				         	ID: function(){
+			         	resolve :{
+			         		idScript: function(){
 				         		return index;
 				         	},
 				         	medicare :function(){
@@ -115,12 +132,14 @@ angular.module('app.loggedIn.script.directive.list', [])
 			         		}
 			         	}
 			       	})
-			       .result.then(function(response){
-			       		if(response){
-							scope.script.load();
-						}
-			       })
+			       	.result.then(function(response){
+			       	},function (response) {
+			       		if (response.status == 'success') {
+			        		scope.script.load();
+			       		};
+			       	});
 			   	}
+
 			}
 
 			var disable = function(row){
@@ -149,15 +168,7 @@ angular.module('app.loggedIn.script.directive.list', [])
 				load: function(){ load(); },
 				onSearch: function(option){ onSearch(option); }
 			}
-			$scope.addFormScript = {
-		        is_show: false,
-		        open: function () {
-		            this.is_show = true;
-		        },
-		        close: function () {
-		            this.is_show = false;
-		        }
-		    }
+
 			scope.script.load();
 
 		}//end link

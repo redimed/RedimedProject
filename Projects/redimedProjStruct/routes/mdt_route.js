@@ -239,6 +239,7 @@ app.post('/api/meditek/v1/script/signature', ScriptController.postSing);
 app.post('/api/meditek/v1/script/addScriptHead', ScriptController.postAddScriptHead);
 app.post('/api/meditek/v1/script/listscriptHead', ScriptController.postListScriptHead);
 app.post('/api/meditek/v1/script/editcriptHead', ScriptController.postEditScriptHead);
+app.post('/api/meditek/v1/script/list-medication-in-script', ScriptController.listMedicationInScript);
 //app.post('/api/meditek/v1/script/updatescriptHead', ScriptController.postUpdateScriptHead);
 //app.post('/api/meditek/v1/script/removescriptHead', ScriptController.postRemoveScriptHead);
 /* END SCRIPT */
