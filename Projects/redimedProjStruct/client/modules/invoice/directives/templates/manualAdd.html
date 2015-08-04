@@ -139,7 +139,7 @@
 					<!-- <td class="text-right">{{item.TAX_CODE}}</td> -->
 					<td class="text-right">{{item.TAX_RATE|number:2}}</td>
 					<td class="text-right">{{(item.TAX_RATE?item.PRICE * item.QUANTITY * item.TAX_RATE:null)|number:2}}</td>
-					<td class="text-right">{{(item.PRICE * item.QUANTITY * item.TAX_RATE + item.PRICE * item.QUANTITY)}}</td>
+					<td class="text-right">{{(item.PRICE * item.QUANTITY * item.TAX_RATE + item.PRICE * item.QUANTITY)|number:2}}</td>
 					<!-- <td class="text-right"> -->
 					<td>
 						<div style="display:inline">
@@ -151,10 +151,10 @@
 				</tr>
 				<tr>
 					<td colspan="7"><strong> Total </strong></td>
-					<td class="text-right">${{amountAll()}}</td>
+					<td class="text-right">${{amountAll()|number:2}}</td>
 					<td colspan="1"></td>
-					<td class="text-right">${{taxAmountAll()}}</td>
-					<td class="text-right">${{totalAmount()}}</td>
+					<td class="text-right">${{taxAmountAll()|number:2}}</td>
+					<td class="text-right">${{totalAmount()|number:2}}</td>
 					<td colspan="1"></td>
 				</tr>
 			</table>
