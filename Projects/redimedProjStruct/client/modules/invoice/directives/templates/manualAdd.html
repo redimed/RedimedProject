@@ -117,9 +117,9 @@
 					<th> Percent </th>
 					<th> Price</th>
 					<th> Quantity </th>
-					<th> Amount</th>
 					<!-- <th> Tax Code </th> -->
 					<th> Tax Rate </th>
+					<th> Amount</th>
 					<th> Tax Amount </th>
 					<th> Total Amount </th>
 					<th>Actions</th>
@@ -135,9 +135,8 @@
 						<input type="number" min="0" class="form-control" ng-model="item.PRICE" />
 					</td>
 					<td><input type="number" min="0" class="form-control" ng-model="item.QUANTITY" /></td>
-					<td class="text-right">${{item.PRICE * item.QUANTITY|number:2}}</td>
-					<!-- <td class="text-right">{{item.TAX_CODE}}</td> -->
 					<td class="text-right">{{item.TAX_RATE|number:2}}</td>
+					<td class="text-right">${{item.PRICE * item.QUANTITY|number:2}}</td>
 					<td class="text-right">{{(item.TAX_RATE?item.PRICE * item.QUANTITY * item.TAX_RATE:null)|number:2}}</td>
 					<td class="text-right">{{(item.PRICE * item.QUANTITY * item.TAX_RATE + item.PRICE * item.QUANTITY)}}</td>
 					<!-- <td class="text-right"> -->
@@ -150,9 +149,8 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan="7"><strong> Total </strong></td>
+					<td colspan="8"><strong> Total </strong></td>
 					<td class="text-right">${{amountAll()}}</td>
-					<td colspan="1"></td>
 					<td class="text-right">${{taxAmountAll()}}</td>
 					<td class="text-right">${{totalAmount()}}</td>
 					<td colspan="1"></td>
@@ -167,7 +165,7 @@
 <div class="row">
 	<div class="col-md-6">
 		<button ng-click="save()" class="btn un-submit"><i class="fa fa-save"></i> Save </button>
-		<button ng-click="resetEdit()" class="btn un-submit" ng-if="checkedit == true"><i class="fa fa-save"></i> Reset </button>
+		<button ng-click="resetEdit()" class="btn un-submit" ng-if="checkedit == true"> Reset </button>
 	</div>
 </div>
 

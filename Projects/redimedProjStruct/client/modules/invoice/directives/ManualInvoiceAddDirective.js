@@ -277,7 +277,7 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 				}
 			}
 			$scope.feeGroupTypeChange = function(value){// When Choose Bill To
-				$scope.changeFeeType('');
+				$scope.feeGroupNameChange('');
 				$scope.modelObjectMap.FEE_GROUP_TYPE = value;
 				$scope.insurers=null;
 				$scope.feeTypeID = null;
@@ -427,7 +427,7 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 					})
 				}
 			}
-			$scope.amountAll = function() {
+			$scope.amountAll = function() {//cal amount = price * quantity
 				var amount = 0;
 				for(var i = 0, len = $scope.InvoiceMap.lines.length; i < len; ++i) {
 		 			var line = $scope.InvoiceMap.lines[i];
@@ -437,7 +437,7 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 
 		 		return Math.round(amount * 100) / 100;
 			}
-			$scope.taxAmountAll = function() {
+			$scope.taxAmountAll = function() {//cal amount_tax = price * quantity + tax_rate
 				var amount = 0;
 				for(var i = 0, len = $scope.InvoiceMap.lines.length; i < len; ++i) {
 		 			var line = $scope.InvoiceMap.lines[i];
@@ -447,7 +447,7 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 
 		 		return Math.round(amount * 100) / 100;
 			}
-			$scope.totalAmount = function() {
+			$scope.totalAmount = function() {// cal totalAmount = amount * amount_tax
 				var amount = 0;
 				for(var i = 0, len = $scope.InvoiceMap.lines.length; i < len; ++i) {
 		 			var line = $scope.InvoiceMap.lines[i];
