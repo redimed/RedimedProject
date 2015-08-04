@@ -239,6 +239,24 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 		}	
 	}
 
+	$scope.cloneToNewLine = function(section,line){
+		var newCloneLine = angular.copy(line);
+		newCloneLine.QUESTION = newCloneLine.QUESTION + " (copy)";
+		if($scope.isEdit === true) newCloneLine.action = 'add';
+		delete newCloneLine.LINE_ID;
+		//set all details action to "add"
+		for(var i = 0; i<newCloneLine.details.length; i++){
+			newCloneLine.details[i].action = "add";
+			delete newCloneLine.details[i].DETAIL_ID;
+		}
+		//set all comments action to "add";
+		for(var j = 0; j<newCloneLine.comments.length; j++){
+			newCloneLine.comments[j].action = "add";
+			delete newCloneLine.comments[j].FA_COMMENT_ID;
+		}
+		section.lines.push(newCloneLine);
+	}
+
 	$scope.addDetail = function(line){
 		var newDetail = angular.copy(line_detail_init);
 		if($scope.isEdit === true) newDetail.action = 'add';
