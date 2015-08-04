@@ -1,15 +1,17 @@
 angular.module('app.loggedIn.alert.controllers.patientList', [])
 
 .controller('AlertPatientSelectDialog', function($scope, $modalInstance, Patient_id, CAL_ID, AlertModel, toastr){
-	// var onSaveCheck = function(data){
-	// 	var postData = angular.copy(data);
+	var onSaveCheck = function(data){
+		var postData = angular.copy(data);
 
-	// 	AlertModel.select(postData)
-	// 	.then(function(response){
-	// 		toastr.success('Select Successfully');
-	// 		$modalInstance.close('success');
-	// 	}, function(error){})
-	// }
+		console.log('##########' ,postData);
+
+		AlertModel.insertalert(postData)
+		.then(function(response){
+			toastr.success('Select Successfully');
+			$modalInstance.close('success');
+		}, function(error){})
+	}
 
 	$scope.alert = {
 		success: false
@@ -21,36 +23,36 @@ angular.module('app.loggedIn.alert.controllers.patientList', [])
 		}
 	})
 
-	var onClickRow = function(row){
+	// var onClickRow = function(row){
 		
-		var search = {
-			patient_id: 0,
-			cal_id: 0,
-			alert_id: 0,
-			isEnable: 0
-		}
+	// 	var search = {
+	// 		patient_id: 0,
+	// 		cal_id: 0,
+	// 		alert_id: 0,
+	// 		isEnable: 0
+	// 	}
 
-		search.alert_id = row.id;
-		search.patient_id = Patient_id;
-		search.cal_id = CAL_ID;
+	// 	search.alert_id = row.id;
+	// 	search.patient_id = Patient_id;
+	// 	search.cal_id = CAL_ID;
 
-		AlertModel.insertalert(search)
-		.then(function(response) {
-			toastr.success('Select Successfully');
-			$modalInstance.close('success');
-		}, function(error){})
+	// 	AlertModel.insertalert(search)
+	// 	.then(function(response) {
+	// 		toastr.success('Select Successfully');
+	// 		$modalInstance.close('success');
+	// 	}, function(error){})
 
 
-	}
+	// }
 
 	$scope.alert = {
 		Patient_id: Patient_id,
 		CAL_ID: CAL_ID,
 		limit: 10,
-		// onSaveCheck: function(data){ onSaveCheck(data); },
-		onClickRow: function(row){
-			onClickRow(row);
-		},
+		onSaveCheck: function(data){ onSaveCheck(data); }
+		// onClickRow: function(row){
+		// 	onClickRow(row);
+		// },
 	}
 })
 

@@ -19,3 +19,4 @@ app.post(url+'getServiceColor', AppointmentController.getServiceColor);
 app.post(url+'getOneApptPatient', AppointmentController.getOneApptPatient);
 app.post(url+'changeService', AppointmentController.changeService);
 app.post(url+'changeStatus', AppointmentController.changeStatus);
+app.post(url+'postcheck', AppointmentController.postCheck);

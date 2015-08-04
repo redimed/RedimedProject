@@ -6,7 +6,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 		templateUrl: 'modules/appointment/directives/templates/calendar.html',
 		scope: {
 			options: '=',
-			search: '=',
+			search: '='
 		},
 		link: function(scope, elem, attrs){
 			scope.arrayAppid=[];
@@ -961,7 +961,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 								})
 
 								if(alert_flag){
-									var object = {id: row.ALERT_ID, name: row.ALERT_NAME, color: row.SERVICE_COLOR, patient_alert: row.ID};
+									var object = {id: row.ALERT_ID, name: row.ALERT_NAME, color: row.SERVICE_COLOR, patient_alert: row.ID, Check: row.Check};
 									scope.alertCenter.list[flag].alert.push(object);
 								}
 
@@ -987,7 +987,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 							var object = {Patient_id: row.Patient_id, First_name: row.First_name, Sur_name: row.Sur_name, alert: [], cal: []};
 
 							if(row.ALERT_ID){
-								object.alert.push({id: row.ALERT_ID, name: row.ALERT_NAME, color: row.SERVICE_COLOR});
+								object.alert.push({id: row.ALERT_ID, name: row.ALERT_NAME, color: row.SERVICE_COLOR, patient_alert: row.ID, Check: row.Check});
 							}
 
 							if(row.CAL_ID){
@@ -1016,7 +1016,25 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 				}
 			}
 
+			var search = {
+				id: 0,
+				isCheck: 0
+			}
+
+			var onCheck = function(row) {
+				// console.log('Row: ', row);
+				scope.alertCenter.search.id = row.patient_alert;
+				scope.alertCenter.search.isCheck = row.Check;
+				// console.log('Search: ', scope.alertCenter.search);
+				AppointmentModel.PostCheck(scope.alertCenter.search)
+				.then(function(response){
+					scope.alertCenter.load();
+				}, function(error){})
+			}
+
 			scope.alertCenter = {
+				search: search,
+				onCheck: function(row){ onCheck(row); },
 				load: function(){ loadAlertCenter(); },
 				list: [],
 				arrow: false

@@ -150,6 +150,7 @@ module.exports = {
 			'cln_patients.First_name',
 			'cln_patients.Sur_name',
 			'cln_patient_alerts.id as ID',
+			'cln_patient_alerts.isCheck as Check',
 			'cln_alerts.id AS ALERT_ID',
 			'cln_alerts.name AS ALERT_NAME',
 			'cln_alerts.SERVICE_COLOR as SERVICE_COLOR',
@@ -527,6 +528,33 @@ module.exports = {
 		})
 		.error(function(error){
 			res.status(500).json({error: error, sql: main_sql});
+		})
+
+	},
+	postCheck: function(req, res) {
+
+		var postData = req.body.data;
+
+		if(postData.isCheck == 0){
+			postData.isCheck = 1;
+		} else{
+			postData.isCheck = 0;
+		}
+
+		var sql = knex('cln_patient_alerts')
+		.update({
+			isCheck: postData.isCheck
+		})
+		.where({
+			id: postData.id
+		})
+		.toString();
+		db.sequelize.query(sql)
+		.success(function(data){
+			res.json({data: data});
+		})
+		.error(function(error){
+			res.status(500).json({status: 'error', error: error});
 		})
 
 	}

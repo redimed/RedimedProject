@@ -423,20 +423,20 @@ module.exports = {
 		})
 	},
 
-	postSelect: function(req, res){
-		var postData = req.body.data;
+	// postSelect: function(req, res){
+	// 	var postData = req.body.data;
 
-		var sql = knex('cln_patient_alerts')
-				.insert(postData)
-				.toString();
+	// 	var sql = knex('cln_patient_alerts')
+	// 			.insert(postData)
+	// 			.toString();
 
-		db.sequelize.query(sql)
-		.success(function(created){
-			res.json({data: created});
-		}, function(error){
-			res.json(500, {error: error});
-		})
-	},
+	// 	db.sequelize.query(sql)
+	// 	.success(function(created){
+	// 		res.json({data: created});
+	// 	}, function(error){
+	// 		res.json(500, {error: error});
+	// 	})
+	// },
 	postUpdateEnable : function(req,res){
 		var postData = req.body.data;
         if (postData.isenable == 1) {
@@ -483,90 +483,136 @@ module.exports = {
                     res.json(500, {error: error,sql:sql});
                 })
 	},
-	postSelectAlert: function(req, res) {
+	// postSelectAlert: function(req, res) {
 
-		var postData = req.body.data;
+	// 	var postData = req.body.data;
 
-		var sql = knex('cln_patients')
-		.column('company_id')
-		.where({
-			'Patient_id': postData
-		})
-		.toString();
-		db.sequelize.query(sql)
-		.success(function(data){
-            res.json({data: data});
-        })
-        .error(function(error){
-            res.json(500, {error: error,sql:sql});
-        })
+	// 	var sql = knex('cln_patients')
+	// 	.column('company_id')
+	// 	.where({
+	// 		'Patient_id': postData
+	// 	})
+	// 	.toString();
+	// 	db.sequelize.query(sql)
+	// 	.success(function(data){
+ //            res.json({data: data});
+ //        })
+ //        .error(function(error){
+ //            res.json(500, {error: error,sql:sql});
+ //        })
 
-	},
-	postShowAlert: function(req, res) {
+	// },
+	// postShowAlert: function(req, res) {
 
-		var postData = req.body.data;
-		var postDatar = req.body.datar;
+	// 	var postData = req.body.data;
+	// 	var postDatar = req.body.datar;
 
-		var sql = knex('cln_alerts')
-		.where({
-			'company_id': postData
-		})
-		.toString();
+	// 	var sql = knex('cln_alerts')
+	// 	.where({
+	// 		'company_id': postData
+	// 	})
+	// 	.toString();
 
-		// var sql_count = knex('cln_alerts')
-		// .count('id as a')
-		// .where({
-		// 	'company_id': postData
-		// })
-		// .limit(postDatar.limit)
-		// .offset(postDatar.offset)
-		// .toString();
+	// 	// var sql_count = knex('cln_alerts')
+	// 	// .count('id as a')
+	// 	// .where({
+	// 	// 	'company_id': postData
+	// 	// })
+	// 	// .limit(postDatar.limit)
+	// 	// .offset(postDatar.offset)
+	// 	// .toString();
 
-		db.sequelize.query(sql)
-		.success(function(data){
-			res.json({data: data});
-   //          db.sequelize.query(sql_count)
-			// .success(function(count){
-	  //           res.json({data: data, count: count[0].a});
-	  //       })
-	  //       .error(function(error){
-	  //           res.json(500, {error: error,sql:sql});
-	  //       })
-        })
-        .error(function(error){
-            res.json(500, {error: error,sql:sql});
-        })
+	// 	db.sequelize.query(sql)
+	// 	.success(function(data){
+	// 		res.json({data: data});
+ //   //          db.sequelize.query(sql_count)
+	// 		// .success(function(count){
+	//   //           res.json({data: data, count: count[0].a});
+	//   //       })
+	//   //       .error(function(error){
+	//   //           res.json(500, {error: error,sql:sql});
+	//   //       })
+ //        })
+ //        .error(function(error){
+ //            res.json(500, {error: error,sql:sql});
+ //        })
 
-	},
+	// },
 	postInsertAlert: function(req, res){
 
 		var postData = req.body.data;
+		var sr = {
+			p:0,
+			c: 0
+		}
+
+		_.forEach(postData, function(values, indexs) {
+			sr.p = postData[indexs].patient_id;
+			sr.c = postData[indexs].cal_id;
+		})
 
 		var sql_check = knex('cln_patient_alerts')
-		.whereIn('alert_id', [postData.alert_id])
+		.where({
+			patient_id: sr.p,
+			cal_id: sr.c
+		})
 		.toString();
 		db.sequelize.query(sql_check)
-		.success(function(d) {
-			if(d.length > 0){
-				res.json({data: d});
-				return;
-			}else {
-				var sql = knex('cln_patient_alerts')
-				.insert(postData)
-				.toString();
-				db.sequelize.query(sql)
-				.success(function(data){
-		            res.json({data: data});
-		        })
-		        .error(function(error){
-		            res.json(500, {error: error,sql:sql});
-		        })
-			}
+		.success(function(data){
+
+			var new_array = [];
+            _.forEach(postData, function(value, index) {
+            	var flag = true;
+            	_.forEach(data, function(value_s, index_s) {
+            		if(data[index_s].alert_id == postData[index].alert_id) {
+            			flag = false;
+            			return;
+            		}
+            	})
+            	if(flag)
+            		new_array.push(value);
+			})
+
+        	var sql = knex('cln_patient_alerts')
+			.insert(new_array)
+			.toString();
+			db.sequelize.query(sql)
+			.success(function(data){
+	            res.json({data: data});
+	        })
+	        .error(function(error){
+	            res.json(500, {error: error,sql:sql});
+	        })
+
+        })
+        .error(function(error){
+            res.json(500, {error: error,sql:sql});
+        })
+		// var sql_check = knex('cln_patient_alerts')
+		// .whereIn('alert_id', [postData.alert_id])
+		// .toString();
+		// db.sequelize.query(sql_check)
+		// .success(function(d) {
+		// 	if(d.length > 0){
+		// 		res.json({data: d});
+		// 		return;
+		// 	}else {
+				// var sql = knex('cln_patient_alerts')
+				// .insert(postData)
+				// .toString();
+				// db.sequelize.query(sql)
+				// .success(function(data){
+		  //           res.json({data: data});
+		  //       })
+		  //       .error(function(error){
+		  //           res.json(500, {error: error,sql:sql});
+		  //       })
+		// 	}
 			
-		})
-		.error(function(error){
-			res.json(500, {error: error,sql:sql});
-		})
+		// })
+		// .error(function(error){
+		// 	res.json(500, {error: error,sql:sql});
+		// })
 	},
 	postShowAlertPatient: function(req, res) {
 
@@ -578,15 +624,62 @@ module.exports = {
 			'cln_patient_alerts.cal_id': postData.cal_id
 		})
 		.innerJoin('cln_alerts', 'cln_patient_alerts.alert_id', 'cln_alerts.id')
+		.limit(postData.limit)
+		.offset(postData.offset)
 		.toString();
+
+		var sql_count = knex('cln_patient_alerts')
+		.count('cln_patient_alerts.id as a')
+		.where({
+			'cln_patient_alerts.patient_id': postData.patient_id,
+			'cln_patient_alerts.cal_id': postData.cal_id
+		})
+		.innerJoin('cln_alerts', 'cln_patient_alerts.alert_id', 'cln_alerts.id')
+		.toString();
+
 		db.sequelize.query(sql)
 		.success(function(data){
-            res.json({data: data});
+			db.sequelize.query(sql_count)
+			.success(function(count){
+        		res.json({data: data, count: count[0].a});
+        	})
+        	.error(function(error){
+	            res.json(500, {error: error,sql:sql});
+	        })
         })
         .error(function(error){
             res.json(500, {error: error,sql:sql});
         })
         
+	},
+	postListAlert: function(req, res) {
+
+		var postData = req.body.data;
+
+		var sql = knex('cln_alerts')
+		.limit(postData.limit)
+		.offset(postData.offset)
+		.orderBy('id', 'desc')
+		.toString();
+
+		var sql_count = knex('cln_alerts')
+		.count('id as a')
+		.toString();
+
+		db.sequelize.query(sql)
+		.success(function(data){
+            db.sequelize.query(sql_count)
+            .success(function(count){
+            	res.json({data: data, count: count[0].a});
+            })	
+            .error(function(error){
+            	res.json(500, {error: error,sql:sql});
+        	})
+    	})
+        .error(function(error){
+            res.json(500, {error: error,sql:sql});
+        })
+
 	}
 
 }

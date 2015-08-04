@@ -39,10 +39,10 @@ angular.module("app.loggedIn.alert.model", [])
         return detailApi.post({data: data});   
     }
 
-    instanceService.select = function(data){
-        var detailApi = appApi.all('select');
-        return detailApi.post({data: data});
-    }
+    // instanceService.select = function(data){
+    //     var detailApi = appApi.all('select');
+    //     return detailApi.post({data: data});
+    // }
     instanceService.disableAlert = function(data){
         var detailApi = appApi.all('disableAlert');
         return detailApi.post({data: data});
@@ -67,20 +67,24 @@ angular.module("app.loggedIn.alert.model", [])
         var detailApi = appApi.all('getdoctorid');
         return detailApi.post({data: data});
     }
-    instanceService.showcompanyid = function(data){
-        var detailApi = appApi.all('showcompanyid');
-        return detailApi.post({data: data});
-    }
-    instanceService.showalert = function(data){
-        var detailApi = appApi.all('showalert');
-        return detailApi.post({data: data});
-    }
+    // instanceService.showcompanyid = function(data){
+    //     var detailApi = appApi.all('showcompanyid');
+    //     return detailApi.post({data: data});
+    // }
+    // instanceService.showalert = function(data){
+    //     var detailApi = appApi.all('showalert');
+    //     return detailApi.post({data: data});
+    // }
     instanceService.insertalert = function(data){
         var detailApi = appApi.all('insertalert');
         return detailApi.post({data: data});
     }
     instanceService.postshowalertpatient = function(data){
         var detailApi = appApi.all('postshowalertpatient');
+        return detailApi.post({data: data});
+    }
+    instanceService.postlistalert = function(data){
+        var detailApi = appApi.all('postlistalert');
         return detailApi.post({data: data});
     }
     return instanceService;
