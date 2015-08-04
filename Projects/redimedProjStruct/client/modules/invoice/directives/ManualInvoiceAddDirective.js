@@ -1,6 +1,6 @@
 angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 
-.directive('addmaunalInvoice', function($stateParams,$modal,PatientService,InvoiceHeaderModel, ConfigService, InvoiceService, ReceptionistService, toastr, $filter, $state, CompanyService){
+.directive('addmaunalInvoice', function($cookieStore,$stateParams,$modal,PatientService,InvoiceHeaderModel, ConfigService, InvoiceService, ReceptionistService, toastr, $filter, $state, CompanyService){
 	return {
 		restrict: 'EA',
 		scope:{
@@ -13,6 +13,8 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 		templateUrl: 'modules/invoice/directives/templates/manualAdd.html',
 		controller: function($scope) {
 			var arrGetBy = $filter('arrGetBy');
+			$scope.user_id = $cookieStore.get('userInfo').id;
+			console.log($scope.user_id);
 			$scope.modelObjectMap = {
 				FEE_GROUP_TYPE :null,
 				FEE_GROUP_ID:null,
@@ -464,7 +466,8 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 					if ($scope.checkedit !== true) {// Is Edit Form
 						postData.CREATION_DATE = moment().format('YYYY-MM-DD hh:mm:ss');
 						postData.LAST_UPDATE_DATE = moment().format('YYYY-MM-DD hh:mm:ss');
-						postData.STATUS = 'enter'
+						postData.STATUS = 'enter';
+						postData.user_id = $scope.user_id;
 						InvoiceService.getSaveManual(postData).then(function(response){
 							$scope.success = true;
 						})
@@ -472,7 +475,8 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 					}else{//Is Add Form
 						postData.header_id = $scope.headerdata.header_id;
 						postData.LAST_UPDATE_DATE = moment().format('YYYY-MM-DD hh:mm:ss');
-						postData.STATUS = 'enter'
+						postData.STATUS = 'enter';
+						postData.user_id = $scope.user_id;
 						InvoiceService.getEditManual(postData).then(function(response){
 							$scope.success = true;
 						})

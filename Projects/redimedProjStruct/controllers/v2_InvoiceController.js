@@ -1328,6 +1328,8 @@ module.exports = {
 			Insurer_id:postData.Insurer_id,
 			claim_id :postData.claim_id,
 			CREATION_DATE:postData.CREATION_DATE,
+			LAST_UPDATE_DATE:postData.CREATION_DATE,
+			CREATED_BY:postData.user_id,
 			STATUS:postData.STATUS
 		}
 		kiss.beginTransaction(req,function(){
@@ -1352,6 +1354,10 @@ module.exports = {
 							TAX_RATE:listBDLine[i].TAX_RATE,
 							ITEM_FEE_ID:listBDLine[i].ITEM_FEE_ID,
 							FEE:listBDLine[i].FEE,
+							BILL_PERCENT:listBDLine[i].Percent,
+							CREATION_DATE:postData.CREATION_DATE,
+							LAST_UPDATE_DATE:postData.CREATION_DATE,
+							CREATED_BY:postData.user_id,
 							IS_ENABLE:1
                     	}
                     	listInsertLine.push(obj);
@@ -1412,7 +1418,10 @@ module.exports = {
 			FORMULA:postData.FORMULA,
 			Insurer_id:postData.Insurer_id,
 			claim_id:postData.claim_id,
+			//CREATION_DATE:postData.LAST_UPDATE_DATE,
+			//CREATED_BY:postData.user_id,
 			LAST_UPDATE_DATE:postData.LAST_UPDATE_DATE,
+			LAST_UPDATED_BY:postData.user_id,
 			STATUS:postData.STATUS
 		}
 		kiss.beginTransaction(req,function(){
@@ -1432,6 +1441,12 @@ module.exports = {
 							TAX_ID:listBDLine[i].TAX_ID,
 							TAX_CODE:listBDLine[i].TAX_CODE,
 							TAX_RATE:listBDLine[i].TAX_RATE,
+							FEE:listBDLine[i].FEE,
+							BILL_PERCENT:listBDLine[i].Percent,
+							CREATION_DATE:postData.LAST_UPDATE_DATE,
+							LAST_UPDATE_DATE:postData.LAST_UPDATE_DATE,
+							CREATED_BY:postData.user_id,
+							LAST_UPDATED_BY:postData.user_id,
 							IS_ENABLE:1
                     	}
                     	listInsertLine.push(obj);
