@@ -31,7 +31,6 @@ angular.module("app.loggedIn.invoice.list.controller",[
 
             //tannv add
             {field:'SOURCE_ID',label:'Bill to',type:'custom',fn:function(item){
-                
                 if(item.cal_id)//neu la auto invoice
                 {
                     if(item.Insurer_id)
@@ -116,8 +115,6 @@ angular.module("app.loggedIn.invoice.list.controller",[
             	return ConfigService.getCommonDateDefault(item.CREATION_DATE);
             }},
             {field: 'STATUS', label: 'Invoice status'},
-            
-            
         ],
         use_filters: true,
         filters: {
@@ -171,9 +168,6 @@ angular.module("app.loggedIn.invoice.list.controller",[
         ],
 	};
 
-    /*
-    *   SET UP ADD FORM
-    */
     $scope.invoiceParams = {
         permission: {
             add: true,

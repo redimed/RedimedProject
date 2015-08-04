@@ -13,15 +13,12 @@ angular.module("app.loggedIn.item.showhistory.detail.directive", [])
                     }
                     ItemService.showHistory(postData).then(function (response) {
                        var now = moment();
-                        if(data.status=='success')
-                        {
+                        if(data.status=='success'){
                             var obj={};
                             var arr=data.data;
-                            for(var i=0;i<arr.length;i++)
-                            {
+                            for(var i=0;i<arr.length;i++){
                                 var item=arr[i];
-                                if(!obj[item.FEE_TYPE_ID])
-                                {
+                                if(!obj[item.FEE_TYPE_ID]){
                                     obj[item.FEE_TYPE_ID]={
                                         listFee:[],
                                         FEE_TYPE_NAME:item.FEE_TYPE_NAME,
@@ -35,8 +32,7 @@ angular.module("app.loggedIn.item.showhistory.detail.directive", [])
                                         ISENABLE:item.ISENABLE
                                     });
                                 }
-                                else
-                                {
+                                else{
                                     obj[item.FEE_TYPE_ID].listFee.push({
                                         ITEM_FEE_ID:item.ITEM_FEE_ID,
                                         FEE_START_DATE:moment(item.FEE_START_DATE).format("DD-MM-YYYY"),
@@ -47,11 +43,10 @@ angular.module("app.loggedIn.item.showhistory.detail.directive", [])
                                 }
 
                             }  
-                            for(var key in obj)
-                            {
+                            for(var key in obj){
                                 var count = 0;
                                 var countsame =0;
-                                for (var i = 0; i < obj[key].listFee.length; i++) {
+                                for (var i = 0; i < obj[key].listFee.length; i++) {//Check
                                     if (moment(obj[key].listFee[i].FEE_STARTDATE).isBefore(now) && count === 0) {
                                         obj[key].historyFee =  obj[key].listFee[i].FEE;
                                         count = 1;
@@ -62,9 +57,7 @@ angular.module("app.loggedIn.item.showhistory.detail.directive", [])
                                     };
                                 };
                             }     
-
                             scope.obj=obj;
-                            exlog.log(obj);
                         }
                     });
                 };

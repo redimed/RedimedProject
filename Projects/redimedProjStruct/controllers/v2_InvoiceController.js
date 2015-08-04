@@ -213,7 +213,22 @@ module.exports = {
 			if (search_data.cal_id !== -1) {
 				whereOpt.cal_id = search_data.cal_id;
 			};
-			var inc_model = inc_common_model;
+			//var inc_model = inc_common_model;
+			var inc_model = inc_common_model.concat([
+				{
+					model: db.Patient , as: 'Patient',
+					attributes: ['Title', 'First_name', 'Sur_name']
+				},
+
+				{
+					model: db.FeeGroup , as: 'FeeGroup',
+					attributes: ['FEE_GROUP_NAME','FEE_GROUP_TYPE']
+				},
+			]);
+
+			if(search_data.STATUS) { // equal
+				whereOpt.STATUS = search_data.STATUS;
+			}
 		} else {
 			var inc_model = inc_common_model.concat([
 				{
@@ -1220,9 +1235,8 @@ module.exports = {
 	},
 	/**
 	*manh
-	*get fee group
 	*/
-	postFeegroupbyid:function(req,res){
+	postFeegroupbyid:function(req,res){//Get Fee group By FEE_GROUP_ID
 		var postData = req.body.data;
 		console.log(postData);
 		var fHeader="v2_InvoiceController->postFeegrouptype";
@@ -1246,7 +1260,7 @@ module.exports = {
 			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
 		});
 	},
-	postFeegrouptype:function(req,res){
+	postFeegrouptype:function(req,res){//Get Fee Group by FEE_GROUP_TYPE
 		var postData = req.body.data;
 		var fHeader="v2_InvoiceController->postFeegrouptype";
 		var functionCode='DM001';
@@ -1269,7 +1283,7 @@ module.exports = {
 			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
 		});
 	},
-	postFeetype:function(req,res){
+	postFeetype:function(req,res){//Get FEE TYPE By FEE_GROUP_ID
 		var postData = req.body.data;
 		var fHeader="v2_InvoiceController->postFeetype";
 		var functionCode='DM001';
@@ -1465,7 +1479,7 @@ module.exports = {
 			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
 		});	
 	},
-	postOnemanual:function(req,res){
+	postOnemanual:function(req,res){ //Get manualInvoice By Id
 		var postData = req.body.data;
 		var fHeader="v2_InvoiceController->postOnemanual";
 		var functionCode='FN003';
@@ -1510,7 +1524,7 @@ module.exports = {
 			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
 		});
 	},
-	postGetfeetypefillter:function(req,res){
+	postGetfeetypefillter:function(req,res){ //get Item  by FEE_TYPE_ID and ITEM_ID 
 		var postData = req.body.data;
 		console.log(postData);
 		var fHeader="v2_InvoiceController->postGetfeetypefillter";
@@ -1540,7 +1554,7 @@ module.exports = {
 			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
 		});
 	},
-	postGetpatientbyid:function(req,res){
+	postGetpatientbyid:function(req,res){//get patient by id
 		var postData = req.body.data;
 		var fHeader="v2_InvoiceController->postGetpatientbyid";
 		var functionCode='FN003';
