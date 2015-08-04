@@ -1494,7 +1494,12 @@ module.exports = {
 			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
 		});	
 	},
-	postOnemanual:function(req,res){ //Get manualInvoice By Id
+	/**
+	 * duc manh
+	 * Get manualInvoice By Id
+	 * 04-08-2015
+	 */
+	postOnemanual:function(req,res){ 
 		var postData = req.body.data;
 		var fHeader="v2_InvoiceController->postOnemanual";
 		var functionCode='FN003';
@@ -1533,7 +1538,7 @@ module.exports = {
 			},function(err){
 				kiss.exlog(fHeader,'Loi truy van lay thong tin invoice header thong qua',err);
 				res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM002')});
-			});
+			},true);
 		},function(err){
 			kiss.exlog(fHeader,'Loi truy van lay thong tin invoice header thong qua',err);
 			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
