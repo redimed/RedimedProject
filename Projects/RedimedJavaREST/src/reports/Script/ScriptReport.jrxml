@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ScriptReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c2b6103d-271a-46dc-b501-29c4a01f4289">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="144"/>
+	<property name="ireport.y" value="490"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<style name="table">
@@ -232,7 +232,7 @@ WHERE
 		<field name="script_head_Last_update_date" class="java.sql.Timestamp"/>
 		<field name="script_head_isEnable" class="java.lang.Integer"/>
 	</subDataset>
-	<parameter name="id" class="java.lang.String">
+	<parameter name="id" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="real_path" class="java.lang.String">
@@ -252,14 +252,13 @@ WHERE
 	p.`Address1`,
 	p.`Ref`,
 	p.`Post_code`,
-	h.`medication_name`,
-	h.`dose`,
-	h.`unit`,
-	h.`route`,
-	h.`frequency`,
-	h.`qty`,
-	h.`start_date`,
-	h.`end_date`,
+	d.`medication_name`,
+	d.`dose`,
+	d.`route`,
+	d.`frequency`,
+	d.`qty`,
+	d.`start_date`,
+	d.`end_date`,
 	s.`EntitlementNo`,
 	IFNULL(s.`isSafety`,0) AS 'isSafety',
 	IFNULL(s.`isConcessional`,0) AS 'isConcessional',
@@ -274,6 +273,7 @@ WHERE
 FROM `cln_scripts` s
 INNER JOIN `cln_patients` p ON s.`Patient_id` = p.`Patient_id`
 INNER JOIN `script_head` h ON s.`ID` = h.`ID_SCRIPT`
+INNER JOIN `cln_patient_medication_details` d ON h.`id_medicare` = d.`id`
 WHERE s.`ID`= $P{id}]]>
 	</queryString>
 	<field name="prescriber" class="java.lang.String">
