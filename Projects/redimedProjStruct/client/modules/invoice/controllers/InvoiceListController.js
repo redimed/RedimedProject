@@ -165,6 +165,14 @@ angular.module("app.loggedIn.invoice.list.controller",[
                		 
                 }
             },
+
+            {
+                class: 'fa fa-list-alt',title:'Print Invoice',
+                callback:function(item){
+                    window.open(getUrlReport()+"/redimedInvoice/"+item.header_id);
+                }
+
+            },
         ],
 	};
 

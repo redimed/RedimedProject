@@ -602,6 +602,11 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 				$scope.resetEdit();
 				
 			};
+
+			$scope.printReport=function()
+			{				
+				window.open(getUrlReport()+"/redimedInvoice/"+$scope.headerdata.header_id);
+			}
 			
 		}
 	}//end return

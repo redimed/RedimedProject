@@ -11,4 +11,18 @@ var invConst={
 		workcover:{value:'workcover',haveStartDate:false,display:'Workcover'}//tan add
 	},
 
+
+	
 };
+
+//tannv.dts@gmail.com
+//05-08-2015
+var testReport=true;
+function getUrlReport(){
+	if(testReport)
+		return 'http://localhost:3003/RedimedJavaREST/api/document';
+	else
+	{
+		return 'http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document';
+	}
+}
