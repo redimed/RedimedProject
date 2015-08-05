@@ -150,7 +150,9 @@ module.exports = {
 			'cln_patients.First_name',
 			'cln_patients.Sur_name',
 			'cln_patient_alerts.id as ID',
+			'cln_patient_alerts.patient_id as Patients_id',
 			'cln_patient_alerts.isCheck as Check',
+			'cln_patient_alerts.isUser as isUser',
 			'cln_alerts.id AS ALERT_ID',
 			'users.user_name as User',
 			'cln_alerts.name AS ALERT_NAME',
@@ -560,5 +562,25 @@ module.exports = {
 			res.status(500).json({status: 'error', error: error});
 		})
 
+	},
+	postUser: function(req, res) {
+
+		var postData = req.body.data;
+
+		var sql = knex('users')
+		.column('user_name as User')
+		.where({
+			'id': postData
+		})
+		.toString();
+		db.sequelize.query(sql)
+		.success(function(data){
+			res.json({data: data});
+		})
+		.error(function(error){
+			res.status(500).json({status: 'error', error: error});
+		})
+
 	}
+
 }
