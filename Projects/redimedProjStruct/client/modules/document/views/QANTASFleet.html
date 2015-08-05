@@ -30,24 +30,24 @@
 						<span style="font-size:120%; text-align:center">Sur Name :</span>
 					</div>
 					<div class="col-md-2 col-sm-2">
-						<input name="surname" type="text" ng-model="patientInfo.Sur_name"  class="form-control">
+						<input name="surname" type="text" ng-model="patientInfo.Sur_name" ng-disabled="true" class="form-control">
 					</div>
 					<div class="col-md-2 col-sm-2">
 						<span style="font-size:120%;">First Name :</span>
 					</div>
 					<div class="col-md-2 col-sm-2">
-						<input name="firstname" type="text" ng-model="patientInfo.First_name"  class="form-control">
+						<input name="firstname" type="text" ng-model="patientInfo.First_name" ng-disabled="true" class="form-control">
 					</div>
 					<div class="col-md-1 col-sm-1">
 						&nbsp
 					</div>
 					<div class="col-md-2 col-sm-2">
 						<label class="btn">
-							<input type="radio" ng-model="patientInfo.Sex" value="1" />
+							<input type="radio" ng-model="patientInfo.Sex" ng-disabled="true" value="1" />
 							<span style="font-size:120%;">Female</span>
 						</label>
 						<label class="btn">
-							<input type="radio" ng-model="patientInfo.Sex" value="0" />
+							<input type="radio" ng-model="patientInfo.Sex" ng-disabled="true" value="0" />
 							<span style="font-size:120%;">Male</span>
 						</label>
 					</div>
@@ -59,13 +59,13 @@
 						<span style="font-size:120%;">Andress</span>
 					</div>
 					<div class="col-md-2 col-sm-2">
-						<input name="andress" type="text" ng-model="patientInfo.Address1"  class="form-control">
+						<input name="andress" type="text" ng-model="patientInfo.Address1" ng-disabled="true" class="form-control">
 					</div>
 					<div class="col-md-2 col-sm-2">
 						<span style="font-size:120%;">DOB :</span>
 					</div>
 					<div class="col-md-2 col-sm-2">
-						<input name="DOB" type="text" ng-model="patientInfo.DOB"  class="form-control">
+						<input name="DOB" type="text" ng-model="patientInfo.DOB" ng-disabled="true" class="form-control">
 					</div>
 				</div>
 			</div>
@@ -75,19 +75,19 @@
 						<span style="font-size:120%;">Contact details</span>
 					</div>
 					<div class="col-md-2 col-sm-2">
-						<input name="contact_1" type="text" placeholder="(H)" ng-model="patientInfo.Home_phone"  class="form-control">
+						<input name="contact_1" type="text" placeholder="(H)" ng-model="patientInfo.Home_phone" ng-disabled="true" class="form-control">
 					</div>
 					<div class="col-md-2 col-sm-2">
 						&nbsp
 					</div>
 					<div class="col-md-2 col-sm-2">
-						<input name="contact_2" type="text" placeholder="(M)" ng-model="patientInfo.Mobile"  class="form-control">
+						<input name="contact_2" type="text" placeholder="(M)" ng-model="patientInfo.Mobile" ng-disabled="true" class="form-control">
 					</div>
 					<div class="col-md-1 col-sm-1">
 						&nbsp
 					</div>
 					<div class="col-md-2 col-sm-2">
-						<input name="contact_3" type="text" placeholder="(Email)" ng-model="patientInfo.Email"  class="form-control">
+						<input name="contact_3" type="text" placeholder="(Email)" ng-model="patientInfo.Email" ng-disabled="true" class="form-control">
 					</div>
 				</div>
 			</div>
@@ -97,19 +97,19 @@
 						<span style="font-size:120%;">Position Applied for </span>
 					</div>
 					<div class="col-md-2 col-sm-2">
-						<input name="position_Applied" type="text" ng-model="info.PA"  class="form-control">
+						<input name="position_Applied" type="text" ng-model="info.PA" ng-disabled="true" class="form-control">
 					</div>
 					<div class="col-md-2 col-sm-2">
 						<span style="font-size:120%;">Site of assessment :</span>
 					</div>
 					<div class="col-md-2 col-sm-2">
-						<input name="site_assessment" type="text" ng-model="info.SA"  class="form-control">
+						<input name="site_assessment" type="text" ng-model="info.SA" ng-disabled="true" class="form-control">
 					</div>
 					<div class="col-md-1 col-sm-1">
 						<span style="font-size:120%;">Assessing Physiotherapist</span>
 					</div>
 					<div class="col-md-2 col-sm-2">
-						<input name="assessing_phyio" type="text" ng-model="info.AP"  class="form-control">
+						<input name="assessing_phyio" type="text" ng-model="info.AP" ng-disabled="true" class="form-control">
 					</div>
 				</div>
 			</div>
@@ -613,38 +613,39 @@
 	        	</div>
 	        </div>
 	        <div class="row">
-				<div class="col-md-2 col-sm-2 col-xs-2">
-					<button class="btn btn-default green" ng-click="showSignature()">Signature</button>
-				</div>
-				<div class="col-md-4 col-sm-3"
-                     ng-show="info.PATIENT_SIGN!==null && info.PATIENT_SIGN!==undefined && info.PATIENT_SIGN!=='' && isSignatureShow===false">
-                    <img ng-src="{{info.PATIENT_SIGN}}" alt=""
-                         style="width: 200px;height: 150px;"/>
-                </div>
-                <div class="col-md-4 col-sm-3" ng-hide="info.PATIENT_SIGN!==null && info.PATIENT_SIGN!==undefined && info.PATIENT_SIGN!=='' && isSignatureShow===false">&nbsp;</div>
-                <label class="col-lg-2 col-md-2 col-sm-3 bold">Date</label>
-	        	<div class="col-lg-3 col-md-4 col-sm-3">
-	        		<input ng-model="dateChose" type="text" class="form-control input-sm" name="dob1" datepicker-popup="dd/MM/yyyy" is-open="openDOB2" ng-click="openDOB2 = true" datepicker-options="dateOptions2" close-text="Close" style="text-align:center;font-weight:bold;color:blue;">
-	        	</div>
-			</div>
-			<div class="row" style="text-align: center;" ng-show="isSignatureShow">
-	            <div class="col-md-12 col-sm-12">
-	                <canvas width="500" height="400" id="canvas"
-	                        signature ng-model="info.PATIENT_SIGN" style="background-color: #8eece8">
-	                </canvas>
-	            </div>
-	            <div class="col-md-12 col-sm-12">
-	                <div class="break-row"></div>
-	                <div class="btn-group">
-	                    <button type="button" ng-click="cancelClick()" class="btn btn-danger btn-sm">
-	                        Cancel
-	                    </button>
-	                    <button type="button" ng-click="clearClick()" class="btn btn-warning btn-sm">Clear
-	                    </button>
-	                    <button type="button" ng-click="okClick()" class="btn green btn-sm">Ok</button>
-	                </div>
-	            </div>
-	        </div>
+		        		<div class="col-md-1 col-sm-1">&nbsp;</div>
+						<div class="col-md-2 col-sm-2 col-xs-2">
+							<a class="btn btn-default green" ng-click="showSignature(0)">Signature</a>
+						</div>
+						<div class="col-md-4 col-sm-3"
+		                     ng-show="info.PATIENT_SIGN!==null && info.PATIENT_SIGN!==undefined && info.PATIENT_SIGN!=='' && isSignatureShow[0].isShow===false">
+		                    <img ng-src="{{info.PATIENT_SIGN}}" alt=""
+		                         style="width: 200px;height: 150px;"/>
+		                </div>
+		                <div class="col-md-4 col-sm-3" ng-hide="info.PATIENT_SIGN!==null && info.PATIENT_SIGN!==undefined && info.PATIENT_SIGN!=='' && isSignatureShow[0].isShow===false">&nbsp;</div>
+		                <label class="col-lg-1 col-md-1 col-sm-2 bold">Date</label>
+			        	<div class="col-lg-3 col-md-4 col-sm-3">
+			        		<input ng-model="dateChose" type="text" class="form-control input-sm" name="dob9" datepicker-popup="dd/MM/yyyy" is-open="openDOB9" ng-click="openDOB9 = true" datepicker-options="dateOptions9" close-text="Close" style="text-align:center;font-weight:bold;color:blue;">
+			        	</div>
+					</div>
+					<div class="row" style="text-align: center;" ng-show="isSignatureShow[0].isShow===true">
+			            <div class="col-md-12 col-sm-12">
+			                <canvas width="500" height="400" id="canvas"
+			                        signature ng-model="info.PATIENT_SIGN" style="background-color: #8eece8">
+			                </canvas>
+			            </div>
+			            <div class="col-md-12 col-sm-12">
+			                <div class="break-row"></div>
+			                <div class="btn-group">
+			                    <a type="a" ng-click="cancelClick(0)" class="btn btn-danger btn-sm">
+			                        Cancel
+			                    </a>
+			                    <a type="a" ng-click="clearClick(0)" class="btn btn-warning btn-sm">Clear
+			                    </a>
+			                    <a type="a" ng-click="okClick(0)" class="btn green btn-sm">Ok</a>
+			                </div>
+			            </div>
+			        </div>
         </div>
 	</div>
 	<!-- end group2 -->
@@ -703,26 +704,29 @@
 	        			<div><label>< 180 mmHg</label></div>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
-	        			<input name="group3_sec1_value1" type="text" placeholder="mmHg" ng-model="info.group3_sec1_value1"  class="form-control" style="height:4%;">
+	        			<input name="group3_sec1_value1" type="text" placeholder="mmHg" ng-model="info.group3_sec1_value1" ng-pattern="/^[0-9]+$/" class="form-control" style="height:4%;" ng-class="{'is_error':QANTAS_Fleet.group3_sec1_value1.$error.pattern}" ng-change="clearform(1)"/>
+	        			<span style="color: red;" ng-show="QANTAS_Fleet.group3_sec1_value1.$error.pattern">Must be a number!!</span>
 	        		</div>
 	        		<div class="col-md-1 col-sm-1">
 	        			mmHg
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
-	        			<input name="group3_sec1_comment1" type="text" ng-model="info.group3_sec1_comment1"  class="form-control" style="height:4%;">
+	        			<input name="group3_sec1_comment1" type="text" ng-model="info.group3_sec1_comment1" ng-disabled="info.group3_sec1_value1==null || info.group3_sec1_value1==''" class="form-control" style="height:4%;" ng-maxlength="5" ng-class="{'is_error':QANTAS_Fleet.group3_sec1_comment1.$error.maxlength}" />
+	        			<span style="color: red;" ng-show="QANTAS_Fleet.group3_sec1_comment1.$error.maxlength">Too long!!</span>
 	        		</div>
 	        		<div class="col-md-1 col-sm-1">
 	        			&nbsp
 	        		</div>
-	        		<div class="col-md-2 col-sm-2">
+	        		<div class="col-md-2 col-sm-2" ng-show="info.group3_sec1_value1!=null && info.group3_sec1_value1!=''" ng-class="{'is_error':info.check25==null}">
 	        			<label class="btn">
-							<input type="radio" ng-model="info.check25" value="0" />
+							<input name="check25" type="radio" ng-model="info.check25" value="0" ng-required="info.group3_sec1_value1!=null" />
 							Yes
 						</label>
 						<label class="btn">
-							<input type="radio" ng-model="info.check25" value="1" />
+							<input name="check25" type="radio" ng-model="info.check25" value="1" ng-required="info.group3_sec1_value1!=null" />
 							No
 						</label>
+						<span style="color: red;" ng-show="info.check25==null">Please check in!!</span>
 	        		</div>
 	        	</div>
 	        	<div class="col-md-12 col-sm-12">
@@ -733,26 +737,29 @@
 	        			<div><label>< 110 mmHg</label></div>
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
-	        			<input name="group3_sec1_value2" type="text" placeholder="mmHg" ng-model="info.group3_sec1_value2"  class="form-control" style="height:4%;">
+	        			<input name="group3_sec1_value2" type="text" placeholder="mmHg" ng-model="info.group3_sec1_value2" ng-pattern="/^[0-9]+$/" class="form-control" style="height:4%;" ng-class="{'is_error':QANTAS_Fleet.group3_sec1_value2.$error.pattern}" ng-change="clearform(2)" />
+	        			<span style="color: red;" ng-show="QANTAS_Fleet.group3_sec1_value2.$error.pattern">Must be a number!!</span>
 	        		</div>
 	        		<div class="col-md-1 col-sm-1">
 	        			mmHg
 	        		</div>
 	        		<div class="col-md-2 col-sm-2">
-	        			<input name="group3_sec1_comment2" type="text" ng-model="info.group3_sec1_comment2"  class="form-control" style="height:4%;">
+	        			<input name="group3_sec1_comment2" type="text" ng-model="info.group3_sec1_comment2" ng-disabled="info.group3_sec1_value2==null || info.group3_sec1_value2==''" class="form-control" style="height:4%;" ng-maxlength="5" ng-class="{'is_error':QANTAS_Fleet.group3_sec1_comment2.$error.maxlength}">
+	        			<span style="color: red;" ng-show="QANTAS_Fleet.group3_sec1_comment2.$error.maxlength">Too long!!</span>
 	        		</div>
 	        		<div class="col-md-1 col-sm-1">
 	        			&nbsp
 	        		</div>
-	        		<div class="col-md-2 col-sm-2">
+	        		<div class="col-md-2 col-sm-2" ng-show="info.group3_sec1_value2!=null && info.group3_sec1_value2!=''" ng-class="{'is_error':info.check26==null}" >
 	        			<label class="btn">
-							<input type="radio" ng-model="info.check26" value="0" />
+							<input name="check26" type="radio" ng-model="info.check26" value="0" ng-required="info.group3_sec1_value2!=null" />
 							Yes
 						</label>
 						<label class="btn">
-							<input type="radio" ng-model="info.check26" value="1" />
+							<input name="check26" type="radio" ng-model="info.check26" value="1" ng-required="info.group3_sec1_value2!=null" />
 							No
 						</label>
+						<span style="color: red;" ng-show="info.check26==null">Please check in!!</span>
 	        		</div>
 	        	</div>
 	        </div>
@@ -785,13 +792,15 @@
 		        			<label>General :</label>
 		        		</div>
 		        		<div class="col-md-2 col-sm-2">
-		        			<input name="group3_sec2_comment1" type="text" ng-model="info.group3_sec2_comment1"  class="form-control" style="height:4%;">
+		        			<input name="group3_sec2_comment1" type="text" ng-model="info.group3_sec2_comment1"  class="form-control" style="height:4%;" ng-maxlength="5" ng-class="{'is_error':QANTAS_Fleet.group3_sec2_comment1.$error.maxlength}" />
+		        			<span style="color: red;" ng-show="QANTAS_Fleet.group3_sec2_comment1.$invalid">Too long!!</span>
 		        		</div>
 		        		<div class="col-md-1 col-sm-1">
 		        			<label>Feet :</label>
 		        		</div>
 		        		<div class="col-md-2 col-sm-2">
-		        			<input name="group3_sec2_comment2" type="text" ng-model="info.group3_sec2_comment2"  class="form-control" style="height:4%;">
+		        			<input name="group3_sec2_comment2" type="text" ng-model="info.group3_sec2_comment2"  class="form-control" style="height:4%;" ng-maxlength="5" ng-class="{'is_error':QANTAS_Fleet.group3_sec2_comment2.$error.maxlength}" />
+		        			<span style="color: red;" ng-show="QANTAS_Fleet.group3_sec2_comment2.$invalid">Too long!!</span>
 		        		</div>
 		        	</div>
 	        	</div>
@@ -804,13 +813,15 @@
 		        			<label>Sit :</label>
 		        		</div>
 		        		<div class="col-md-2 col-sm-2">
-		        			<input name="group3_sec2_comment3" type="text" ng-model="info.group3_sec2_comment3"  class="form-control" style="height:4%;">
+		        			<input name="group3_sec2_comment3" type="text" ng-model="info.group3_sec2_comment3"  class="form-control" style="height:4%;" ng-maxlength="5" ng-class="{'is_error':QANTAS_Fleet.group3_sec2_comment3.$error.maxlength}" />
+		        			<span style="color: red;" ng-show="QANTAS_Fleet.group3_sec2_comment3.$invalid">Too long!!</span>
 		        		</div>
 		        		<div class="col-md-1 col-sm-1">
 		        			<label>Gait :</label>
 		        		</div>
 		        		<div class="col-md-2 col-sm-2">
-		        			<input name="group3_sec2_comment4" type="text" ng-model="info.group3_sec2_comment4"  class="form-control" style="height:4%;">
+		        			<input name="group3_sec2_comment4" type="text" ng-model="info.group3_sec2_comment4"  class="form-control" style="height:4%;" ng-maxlength="5" ng-class="{'is_error':QANTAS_Fleet.group3_sec2_comment4.$error.maxlength}" />
+		        			<span style="color: red;" ng-show="QANTAS_Fleet.group3_sec2_comment4.$invalid">Too long!!</span>
 		        		</div>
 		        	</div>
 	        	</div>
@@ -823,13 +834,15 @@
 		        			<label>Stand :</label>
 		        		</div>
 		        		<div class="col-md-2 col-sm-2">
-		        			<input name="group3_sec2_comment5" type="text" ng-model="info.group3_sec2_comment5"  class="form-control" style="height:4%;">
+		        			<input name="group3_sec2_comment5" type="text" ng-model="info.group3_sec2_comment5"  class="form-control" style="height:4%;" ng-maxlength="5" ng-class="{'is_error':QANTAS_Fleet.group3_sec2_comment5.$error.maxlength}" />
+		        			<span style="color: red;" ng-show="QANTAS_Fleet.group3_sec2_comment5.$invalid">Too long!!</span>
 		        		</div>
 		        		<div class="col-md-1 col-sm-1">
 		        			<label>Other :</label>
 		        		</div>
 		        		<div class="col-md-2 col-sm-2">
-		        			<input name="group3_sec2_comment6" type="text" ng-model="info.group3_sec2_comment6"  class="form-control" style="height:4%;">
+		        			<input name="group3_sec2_comment6" type="text" ng-model="info.group3_sec2_comment6"  class="form-control" style="height:4%;" ng-maxlength="5" ng-class="{'is_error':QANTAS_Fleet.group3_sec2_comment6.$error.maxlength}" />
+		        			<span style="color: red;" ng-show="QANTAS_Fleet.group3_sec2_comment6.$invalid">Too long!!</span>
 		        		</div>
 		        	</div>
 	        	</div>
@@ -882,63 +895,28 @@
 		        			<div><label>Female 128‐142 bpm (average)<label></div>
 		        		</div>
 		        		<div class="col-md-2 col-sm-2">
-		        			<input name="group3_sec2_value2" type="text" placeholder="bpm" ng-model="info.group3_sec2_value2"  class="form-control" ng-change="mathBPM(info.group3_sec2_value2)" style="height:4%;">
+		        			<input name="group3_sec2_value2" type="text" placeholder="bpm" ng-model="info.group3_sec2_value2"  class="form-control" ng-change="mathBPM(info.group3_sec2_value2)" style="height:4%;" ng-pattern="/^[0-9]+$/" ng-class="{'is_error':QANTAS_Fleet.group3_sec2_value2.$error.pattern}"  />
+		        			<span style="color: red;" ng-show="QANTAS_Fleet.group3_sec2_value2.$error.pattern">Must be a number!!</span>
 		        		</div>
 		        		<div class="col-md-1 col-sm-1">
-		        			<input name="group3_sec2_rate" type="text" placeholder="RATE" ng-model="info.group3_sec2_rate"  class="form-control" ng-disabled="true" style="height:4%;">
+		        			<input name="group3_sec2_rate" type="text" ng-model="info.group3_sec2_rate"  class="form-control" ng-disabled="true" style="height:4%;">
 		        		</div>
-		        		<div class="col-md-2 col-sm-2">
-		        			<label class="btn">
-								<input type="radio" ng-model="info.check27" value="0" />
+		        		<div class="col-md-2 col-sm-2" ng-show="info.group3_sec2_value2!=null && info.group3_sec2_value2!=''" ng-class="{'is_error':info.check27==null}" >
+		        			<label style="margin-right: 15;">
+								<input name="check27" type="radio" ng-model="info.check27" value="0" ng-required="info.group3_sec2_value2!=null && info.group3_sec2_value2!=''" />
 								Yes
 							</label>
-							<label class="btn">
-								<input type="radio" ng-model="info.check27" value="1" />
+							<label style="margin-right: 20">
+								<input name="check27" type="radio" ng-model="info.check27" value="1" ng-required="info.group3_sec2_value2!=null && info.group3_sec2_value2!=''" />
 								No
 							</label>
+							<span style="color: red;" ng-show="info.check27==null">Please check in!!</span>
 		        		</div>
 		        	</div>
 	        	</div>
 	        </div>
 	        <div class="row">
-	        	&nbsp
-	        </div>
-	        <div class="row">
-	        	<div class="col-md-8 col-sm-8">&nbsp</div>
-	        	<div class="col-md-4 col-sm-4">
-	        		<table style="text-align:center;">
-					  <tr style="border: 1px solid;">
-					    <th style="border: 1px solid;">Males (bpm)</th>
-					    <th style="border: 1px solid;text-align:center;">Percentile</th>
-					    <th style="border: 1px solid;">Females (bpm)</th>
-					  </tr>
-					  <tr style="border: 1px solid;">
-					    <td style="border: 1px solid;">< 71</td>
-					    <td style="border: 1px solid;">90% excellent</td>
-					    <td style="border: 1px solid;">< 97</td>
-					  </tr>
-					  <tr style="border: 1px solid;">
-					    <td style="border: 1px solid;">71 ‐ 102</td>
-					    <td style="border: 1px solid;">75% good</td>
-					    <td style="border: 1px solid;">97 ‐ 127</td>
-					  </tr>
-					  <tr style="border: 1px solid;">
-					    <td style="border: 1px solid;">103 ‐ 117</td>
-					    <td style="border: 1px solid;">50% average </td>
-					    <td style="border: 1px solid;">128 ‐ 142</td>
-					  </tr>
-					  <tr style="border: 1px solid;">
-					    <td style="border: 1px solid;">118 ‐147</td>
-					    <td style="border: 1px solid;">25% below average</td>
-					    <td style="border: 1px solid;">143 ‐ 171 </td>
-					  </tr>
-					  <tr style="border: 1px solid;">
-					  	<td style="border: 1px solid;">148+</td>
-					  	<td style="border: 1px solid;">10% poor</td>
-					  	<td style="border: 1px solid;">172+</td>
-					  </tr>
-					</table>
-	        	</div>
+	        	&nbsp;
 	        </div>
 	        <!-- end 2. -->
 
@@ -977,24 +955,26 @@
 	        		<div class="col-md-2 col-sm-2"><label>negative</label></div>
 	        		<div class="col-md-1 col-sm-1">
 						<div style="float:left;">L: &nbsp</div>
-						<div><input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkL_1" style="width:40%;height: 3%;"></div>
+						<div><input type="checkbox" name="group3_sec3_checkL_1" ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkL_1" style="width:40%;height: 3%;" ng-change="clearcheck(1)" ></div>
 	        		</div>
 	        		<div class="col-md-1 col-sm-1">
 						<div style="float:left;">R: &nbsp</div>
-						<div><input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkR_1" style="width:40%;height: 3%;"></div>
+						<div><input type="checkbox" name="group3_sec3_checkR_1" ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkR_1" style="width:40%;height: 3%;" ng-change="clearcheck(1)" ></div>
 	        		</div>
 	        		<div class="col-md-3 col-sm-3">
-	        			<input name="group3_sec3_comment1" type="text" ng-model="info.group3_sec3_comment1"  class="form-control">
+	        			<input name="group3_sec3_comment1" type="text" ng-model="info.group3_sec3_comment1" ng-maxlength="5" ng-class="{'is_error':QANTAS_Fleet.group3_sec3_comment1.$error.maxlength}" class="form-control" ng-disabled="info.group3_sec3_checkL_1!='1' && info.group3_sec3_checkR_1!='1'"/>
+	        			<span style="color: red;" ng-show="QANTAS_Fleet.group3_sec3_comment1.$error.maxlength">Too long!!</span>
 	        		</div>
-	        		<div class="col-md-2 col-sm-2">
+	        		<div class="col-md-2 col-sm-2" ng-show="info.group3_sec3_checkL_1=='1' || info.group3_sec3_checkR_1=='1'" ng-class="{'is_error':info.check28==null}" >
 	        			<label class="btn">
-							<input type="radio" ng-model="info.check28" value="0" />
+							<input type="radio" name="check28" ng-model="info.check28" value="0" ng-required="info.group3_sec3_checkL_1=='1' || info.group3_sec3_checkR_1=='1'" />
 							Yes
 						</label>
 						<label class="btn">
-							<input type="radio" ng-model="info.check28" value="1" />
+							<input type="radio" name="check28" ng-model="info.check28" value="1" ng-required="info.group3_sec3_checkL_1=='1' || info.group3_sec3_checkR_1=='1'" />
 							No
 						</label>
+						<span style="color: red;" ng-show="info.check28==null">Please check in!!</span>
 	        		</div>
 	        	</div>
 	        	<div class="col-md-12 col-sm-12">
@@ -1003,24 +983,26 @@
 	        		<div class="col-md-2 col-sm-2"><label>100° min with Nil neural Sx </label></div>
 	        		<div class="col-md-1 col-sm-1">
 						<div style="float:left;">L: &nbsp</div>
-						<div><input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkL_2" style="width:40%;height: 3%;"></div>
+						<div><input type="checkbox" name="group3_sec3_checkL_2" ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkL_2" style="width:40%;height: 3%;" ng-change="clearcheck(2)"></div>
 	        		</div>
 	        		<div class="col-md-1 col-sm-1">
 						<div style="float:left;">R: &nbsp</div>
-						<div><input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkR_2" style="width:40%;height: 3%;"></div>
+						<div><input type="checkbox" name="group3_sec3_checkR_2" ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkR_2" style="width:40%;height: 3%;" ng-change="clearcheck(2)"></div>
 	        		</div>
 	        		<div class="col-md-3 col-sm-3">
-	        			<input name="group3_sec3_comment2" type="text" ng-model="info.group3_sec3_comment2"  class="form-control">
+	        			<input name="group3_sec3_comment2" type="text" ng-model="info.group3_sec3_comment2" ng-maxlength="5" ng-class="{'is_error':QANTAS_Fleet.group3_sec3_comment2.$error.maxlength}" class="form-control" ng-disabled="info.group3_sec3_checkL_2!='1' && info.group3_sec3_checkR_2!='1'"/>
+	        			<span style="color: red;" ng-show="QANTAS_Fleet.group3_sec3_comment2.$error.maxlength">Too long!!</span>
 	        		</div>
-	        		<div class="col-md-2 col-sm-2">
+	        		<div class="col-md-2 col-sm-2" ng-show="info.group3_sec3_checkL_2=='1' || info.group3_sec3_checkR_2=='1'" ng-class="{'is_error':info.check29==null}" >
 	        			<label class="btn">
-							<input type="radio" ng-model="info.check29" value="0" />
+							<input type="radio" name="check29" ng-model="info.check29" value="0" ng-required="info.group3_sec3_checkL_2=='1' || info.group3_sec3_checkR_2=='1'" />
 							Yes
 						</label>
 						<label class="btn">
-							<input type="radio" ng-model="info.check29" value="1" />
+							<input type="radio" name="check29" ng-model="info.check29" value="1" ng-required="info.group3_sec3_checkL_2=='1' || info.group3_sec3_checkR_2=='1'" />
 							No
 						</label>
+						<span style="color: red;"ng-show="info.check29==null">Please check in!!</span>
 	        		</div>
 	        	</div>
 	        	<div class="col-md-12 col-sm-12">
@@ -1029,24 +1011,26 @@
 	        		<div class="col-md-2 col-sm-2"><label>60°‐80° with nil neuro Sx</label></div>
 	        		<div class="col-md-1 col-sm-1">
 						<div style="float:left;">L: &nbsp</div>
-						<div><input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkL_3" style="width:40%;height: 3%;"></div>
+						<div><input type="checkbox" name="group3_sec3_checkL_3" ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkL_3" style="width:40%;height: 3%;" ng-change="clearcheck(3)"></div>
 	        		</div>
 	        		<div class="col-md-1 col-sm-1">
 						<div style="float:left;">R: &nbsp</div>
-						<div><input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkR_3" style="width:40%;height: 3%;"></div>
+						<div><input type="checkbox" name="group3_sec3_checkR_3" ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkR_3" style="width:40%;height: 3%;" ng-change="clearcheck(3)"></div>
 	        		</div>
 	        		<div class="col-md-3 col-sm-3">
-	        			<input name="group3_sec3_comment3" type="text" ng-model="info.group3_sec3_comment3"  class="form-control">
+	        			<input name="group3_sec3_comment3" type="text" ng-model="info.group3_sec3_comment3" ng-maxlength="5" ng-class="{'is_error':QANTAS_Fleet.group3_sec3_comment3.$error.maxlength}" class="form-control" ng-disabled="info.group3_sec3_checkL_3!='1' && info.group3_sec3_checkR_3!='1'"/>
+	        			<span style="color: red;" ng-show="QANTAS_Fleet.group3_sec3_comment3.$error.maxlength">Too long!!</span>
 	        		</div>
-	        		<div class="col-md-2 col-sm-2">
+	        		<div class="col-md-2 col-sm-2" ng-show="info.group3_sec3_checkL_3=='1' || info.group3_sec3_checkR_3=='1'" ng-class="{'is_error':info.check30==null}">
 	        			<label class="btn">
-							<input type="radio" ng-model="info.check30" value="0" />
+							<input type="radio" name="check30" ng-model="info.check30" value="0" ng-required="info.group3_sec3_checkL_3=='1' || info.group3_sec3_checkR_3=='1'" />
 							Yes
 						</label>
 						<label class="btn">
-							<input type="radio" ng-model="info.check30" value="1" />
+							<input type="radio" name="check30" ng-model="info.check30" value="1" ng-required="info.group3_sec3_checkL_3=='1' || info.group3_sec3_checkR_3=='1'" />
 							No
 						</label>
+						<span style="color: red;" ng-show="info.check30==null">Please check in!!</span>
 	        		</div>
 	        	</div>
 	        	<div class="col-md-12 col-sm-12">
@@ -1055,24 +1039,26 @@
 	        		<div class="col-md-2 col-sm-2"><label>WNL with nil neuro Sx</label></div>
 	        		<div class="col-md-1 col-sm-1">
 						<div style="float:left;">L: &nbsp</div>
-						<div><input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkL_4" style="width:40%;height: 3%;"></div>
+						<div><input type="checkbox" name="group3_sec3_checkL_4" ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkL_4" style="width:40%;height: 3%;" ng-change="clearcheck(4)"></div>
 	        		</div>
 	        		<div class="col-md-1 col-sm-1">
 						<div style="float:left;">R: &nbsp</div>
-						<div><input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkR_4" style="width:40%;height: 3%;"></div>
+						<div><input type="checkbox" name="group3_sec3_checkR_4" ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkR_4" style="width:40%;height: 3%;" ng-change="clearcheck(4)"></div>
 	        		</div>
 	        		<div class="col-md-3 col-sm-3">
-	        			<input name="group3_sec3_comment4" type="text" ng-model="info.group3_sec3_comment4"  class="form-control">
+	        			<input name="group3_sec3_comment4" type="text" ng-model="info.group3_sec3_comment4" ng-maxlength="5" ng-class="{'is_error':QANTAS_Fleet.group3_sec3_comment4.$error.maxlength}" class="form-control" ng-disabled="info.group3_sec3_checkL_4!='1' && info.group3_sec3_checkR_4!='1'"/>
+	        			<span style="color: red;" ng-show="QANTAS_Fleet.group3_sec3_comment4.$error.maxlength">Too long!!</span>
 	        		</div>
-	        		<div class="col-md-2 col-sm-2">
+	        		<div class="col-md-2 col-sm-2" ng-show="info.group3_sec3_checkL_4=='1' || info.group3_sec3_checkR_4=='1'" ng-class="{'is_error':info.check31==null}">
 	        			<label class="btn">
-							<input type="radio" ng-model="info.check31" value="0" />
+							<input type="radio" name="check31" ng-model="info.check31" value="0" ng-required="info.group3_sec3_checkL_4=='1' || info.group3_sec3_checkR_4=='1'" />
 							Yes
 						</label>
 						<label class="btn">
-							<input type="radio" ng-model="info.check31" value="1" />
+							<input type="radio" name="check31" ng-model="info.check31" value="1" ng-required="info.group3_sec3_checkL_4=='1' || info.group3_sec3_checkR_4=='1'" />
 							No
 						</label>
+						<span style="color: red;" ng-show="info.check31==null">Please check in!!</span>
 	        		</div>
 	        	</div>
 	        	<div class="col-md-12 col-sm-12">
@@ -1081,24 +1067,26 @@
 	        		<div class="col-md-2 col-sm-2"><label>Normal</label></div>
 	        		<div class="col-md-1 col-sm-1">
 						<div style="float:left;">L: &nbsp</div>
-						<div><input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkL_5" style="width:40%;height: 3%;"></div>
+						<div><input type="checkbox" name="group3_sec3_cjeckL_5" ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkL_5" style="width:40%;height: 3%;" ng-change="clearcheck(5)"></div>
 	        		</div>
 	        		<div class="col-md-1 col-sm-1">
 						<div style="float:left;">R: &nbsp</div>
-						<div><input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkR_5" style="width:40%;height: 3%;"></div>
+						<div><input type="checkbox" name="group3_sec3_cjeckR_5" ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkR_5" style="width:40%;height: 3%;" ng-change="clearcheck(5)"></div>
 	        		</div>
 	        		<div class="col-md-3 col-sm-3">
-	        			<input name="group3_sec3_comment5" type="text" ng-model="info.group3_sec3_comment5"  class="form-control">
+	        			<input name="group3_sec3_comment5" type="text" ng-model="info.group3_sec3_comment5" ng-maxlength="5" ng-class="{'is_error':QANTAS_Fleet.group3_sec3_comment5.$error.maxlength}" class="form-control" ng-disabled="info.group3_sec3_checkL_5!='1' && info.group3_sec3_checkR_5!='1'"/>
+	        			<span style="color: red;" ng-show="QANTAS_Fleet.group3_sec3_comment5.$error.maxlength">Too long!!</span>
 	        		</div>
-	        		<div class="col-md-2 col-sm-2">
+	        		<div class="col-md-2 col-sm-2" ng-show="info.group3_sec3_checkL_5=='1' || info.group3_sec3_checkR_5=='1'" ng-class="{'is_error':info.check32==null}" >
 	        			<label class="btn">
-							<input type="radio" ng-model="info.check32" value="0" />
+							<input type="radio" name="check32" ng-model="info.check32" value="0" ng-required="info.group3_sec3_checkL_5=='1' || info.group3_sec3_checkR_5=='1'" />
 							Yes
 						</label>
 						<label class="btn">
-							<input type="radio" ng-model="info.check32" value="1" />
+							<input type="radio" name="check32" ng-model="info.check32" value="1" ng-required="info.group3_sec3_checkL_5=='1' || info.group3_sec3_checkR_5=='1'" />
 							No
 						</label>
+						<span style="color: red;" ng-show="info.check32==null">Please check in!!</span>
 	        		</div>
 	        	</div>
 	        	<div class="col-md-12 col-sm-12">
@@ -1107,24 +1095,26 @@
 	        		<div class="col-md-2 col-sm-2"><label>WNL – no pain/ catching</label></div>
 	        		<div class="col-md-1 col-sm-1">
 						<div style="float:left;">L: &nbsp</div>
-						<div><input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkL_6" style="width:40%;height: 3%;"></div>
+						<div><input type="checkbox" name="group3_sec3_checkL_6" ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkL_6" style="width:40%;height: 3%;" ng-change="clearcheck(6)"></div>
 	        		</div>
 	        		<div class="col-md-1 col-sm-1">
 						<div style="float:left;">R: &nbsp</div>
-						<div><input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkR_6" style="width:40%;height: 3%;"></div>
+						<div><input type="checkbox" name="group3_sec3_checkR_6" ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkR_6" style="width:40%;height: 3%;" ng-change="clearcheck(6)"></div>
 	        		</div>
 	        		<div class="col-md-3 col-sm-3">
-	        			<input name="group3_sec3_comment6" type="text" ng-model="info.group3_sec3_comment6"  class="form-control">
+	        			<input name="group3_sec3_comment6" type="text" ng-model="info.group3_sec3_comment6" ng-maxlength="5" ng-class="{'is_error':QANTAS_Fleet.group3_sec3_comment6.$error.maxlength}" class="form-control" ng-disabled="info.group3_sec3_checkL_6!='1' && info.group3_sec3_checkR_6!='1'"/>
+	        			<span style="color: red;" ng-show="QANTAS_Fleet.group3_sec3_comment6.$error.maxlength">Too long!!</span>
 	        		</div>
-	        		<div class="col-md-2 col-sm-2">
+	        		<div class="col-md-2 col-sm-2" ng-show="info.group3_sec3_checkL_6=='1' || info.group3_sec3_checkR_6=='1'" ng-class="{'is_error':info.check33==null}">
 	        			<label class="btn">
-							<input type="radio" ng-model="info.check33" value="0" />
+							<input type="radio" name="check33" ng-model="info.check33" value="0" ng-required="info.group3_sec3_checkL_6=='1' || info.group3_sec3_checkR_6=='1'" />
 							Yes
 						</label>
 						<label class="btn">
-							<input type="radio" ng-model="info.check33" value="1" />
+							<input type="radio" name="check33" ng-model="info.check33" value="1" ng-required="info.group3_sec3_checkL_6=='1' || info.group3_sec3_checkR_6=='1'" />
 							No
 						</label>
+						<span style="color: red;" ng-show="info.check33==null">Please check in!!</span>
 	        		</div>
 	        	</div>
 	        	<div class="col-md-12 col-sm-12">
@@ -1133,24 +1123,26 @@
 	        		<div class="col-md-2 col-sm-2"><label>3kgs x 10 reps in 60sec</label></div>
 	        		<div class="col-md-1 col-sm-1">
 						<div style="float:left;">L: &nbsp</div>
-						<div><input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkL_7" style="width:40%;height: 3%;"></div>
+						<div><input type="checkbox" name="group3_sec3_checkL_7" ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkL_7" style="width:40%;height: 3%;" ng-change="clearcheck(7)"></div>
 	        		</div>
 	        		<div class="col-md-1 col-sm-1">
 						<div style="float:left;">R: &nbsp</div>
-						<div><input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkR_7" style="width:40%;height: 3%;"></div>
+						<div><input type="checkbox" name="group3_sec3_checkR_7" ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkR_7" style="width:40%;height: 3%;" ng-change="clearcheck(7)"></div>
 	        		</div>
 	        		<div class="col-md-3 col-sm-3">
-	        			<input name="group3_sec3_comment7" type="text" ng-model="info.group3_sec3_comment7"  class="form-control">
+	        			<input name="group3_sec3_comment7" type="text" ng-model="info.group3_sec3_comment7" ng-maxlength="5" ng-class="{'is_error':QANTAS_Fleet.group3_sec3_comment7.$error.maxlength}" class="form-control" ng-disabled="info.group3_sec3_checkL_7!='1' && info.group3_sec3_checkR_7!='1'"/>
+	        			<span style="color: red;" ng-show="QANTAS_Fleet.group3_sec3_comment7.$error.maxlength">Too long!!</span>
 	        		</div>
-	        		<div class="col-md-2 col-sm-2">
+	        		<div class="col-md-2 col-sm-2" ng-show="info.group3_sec3_checkL_7=='1' || info.group3_sec3_checkR_7=='1'" ng-class="{'is_error':info.check34==null}" >
 	        			<label class="btn">
-							<input type="radio" ng-model="info.check34" value="0" />
+							<input type="radio" name="check34" ng-model="info.check34" value="0" ng-required="info.group3_sec3_checkL_7=='1' || info.group3_sec3_checkR_7=='1'" />
 							Yes
 						</label>
 						<label class="btn">
-							<input type="radio" ng-model="info.check34" value="1" />
+							<input type="radio" namne="check34" ng-model="info.check34" value="1" ng-required="info.group3_sec3_checkL_7=='1' || info.group3_sec3_checkR_7=='1'" />
 							No
 						</label>
+						<span style="color: red;" ng-show="info.check34==null">Please check in!!</span>
 	        		</div>
 	        	</div>
 	        	<div class="col-md-12 col-sm-12">
@@ -1159,24 +1151,26 @@
 	        		<div class="col-md-2 col-sm-2"><label>Nil Impingement</label></div>
 	        		<div class="col-md-1 col-sm-1">
 						<div style="float:left;">L: &nbsp</div>
-						<div><input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkL_8" style="width:40%;height: 3%;"></div>
+						<div><input type="checkbox" name="group3_sec3_checkL_8" ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkL_8" style="width:40%;height: 3%;" ng-change="clearcheck(8)"></div>
 	        		</div>
 	        		<div class="col-md-1 col-sm-1">
 						<div style="float:left;">R: &nbsp</div>
-						<div><input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkR_8" style="width:40%;height: 3%;"></div>
+						<div><input type="checkbox" name="group3_sec3_checkR_8" ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkR_8" style="width:40%;height: 3%;" ng-change="clearcheck(8)"></div>
 	        		</div>
 	        		<div class="col-md-3 col-sm-3">
-	        			<input name="group3_sec3_comment8" type="text" ng-model="info.group3_sec3_comment8"  class="form-control">
+	        			<input name="group3_sec3_comment8" type="text" ng-model="info.group3_sec3_comment8" ng-maxlength="5" ng-class="{'is_error':QANTAS_Fleet.group3_sec3_comment8.$error.maxlength}" class="form-control" ng-disabled="info.group3_sec3_checkL_8!='1' && info.group3_sec3_checkR_8!='1'"/>
+	        			<span style="color: red;" ng-show="QANTAS_Fleet.group3_sec3_comment8.$error.maxlength">Too long!!</span>
 	        		</div>
-	        		<div class="col-md-2 col-sm-2">
+	        		<div class="col-md-2 col-sm-2" ng-show="info.group3_sec3_checkL_8=='1' || info.group3_sec3_checkR_8=='1'" ng-class="{'is_error':info.check35==null}" >
 	        			<label class="btn">
-							<input type="radio" ng-model="info.check35" value="0" />
+							<input type="radio" name="check35" ng-model="info.check35" value="0" ng-required="info.group3_sec3_checkL_8=='1' || info.group3_sec3_checkR_8=='1'" />
 							Yes
 						</label>
 						<label class="btn">
-							<input type="radio" ng-model="info.check35" value="1" />
+							<input type="radio" name="check35" ng-model="info.check35" value="1" ng-required="info.group3_sec3_checkL_8=='1' || info.group3_sec3_checkR_8=='1'" />
 							No
 						</label>
+						<span style="color: red;" ng-show="info.check35==null">Please check in!!</span>
 	        		</div>
 	        	</div>
 	        	<div class="col-md-12 col-sm-12">
@@ -1185,24 +1179,26 @@
 	        		<div class="col-md-2 col-sm-2"><label>Females to be >25kg, Males >40kg and both require < 12% variance L vs R</label></div>
 	        		<div class="col-md-1 col-sm-1">
 						<div style="float:left;">L: &nbsp</div>
-						<div><input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkL_9" style="width:40%;height: 3%;"></div>
+						<div><input type="checkbox" name="group3_sec3_checkL_9" ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkL_9" style="width:40%;height: 3%;" ng-change="clearcheck(9)"></div>
 	        		</div>
 	        		<div class="col-md-1 col-sm-1">
 						<div style="float:left;">R: &nbsp</div>
-						<div><input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkR_9" style="width:40%;height: 3%;"></div>
+						<div><input type="checkbox" name="group3_sec3_checkR_9" ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkR_9" style="width:40%;height: 3%;" ng-change="clearcheck(9)"></div>
 	        		</div>
 	        		<div class="col-md-3 col-sm-3">
-	        			<input name="group3_sec3_comment9" type="text" ng-model="info.group3_sec3_comment9"  class="form-control">
+	        			<input name="group3_sec3_comment9" type="text" ng-model="info.group3_sec3_comment9" ng-maxlength="5" ng-class="{'is_error':QANTAS_Fleet.group3_sec3_comment9.$error.maxlength}" class="form-control" ng-disabled="info.group3_sec3_checkL_9!='1' && info.group3_sec3_checkR_9!='1'"/>
+	        			<span style="color: red;" ng-show="QANTAS_Fleet.group3_sec3_comment9.$error.maxlength">Too long!!</span>
 	        		</div>
-	        		<div class="col-md-2 col-sm-2">
+	        		<div class="col-md-2 col-sm-2" ng-show="info.group3_sec3_checkL_9=='1' || info.group3_sec3_checkR_9=='1'" ng-class="{'is_error':info.check36==null}" >
 	        			<label class="btn">
-							<input type="radio" ng-model="info.check36" value="0" />
+							<input type="radio" name="check36" ng-model="info.check36" value="0" ng-required="info.group3_sec3_checkL_9=='1' || info.group3_sec3_checkR_9=='1'" />
 							Yes
 						</label>
 						<label class="btn">
-							<input type="radio" ng-model="info.check36" value="1" />
+							<input type="radio" name="check36" ng-model="info.check36" value="1" ng-required="info.group3_sec3_checkL_9=='1' || info.group3_sec3_checkR_9=='1'" />
 							No
 						</label>
+						<span style="color: red;" ng-show="info.check36==null">Please check in!!</span>
 	        		</div>
 	        	</div>
 	        	<div class="col-md-12 col-sm-12">
@@ -1211,24 +1207,26 @@
 	        		<div class="col-md-2 col-sm-2"><label>Nil pain with resistance</label></div>
 	        		<div class="col-md-1 col-sm-1">
 						<div style="float:left;">L: &nbsp</div>
-						<div><input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkL_10" style="width:40%;height: 3%;"></div>
+						<div><input type="checkbox" name="group3_sec3_checkL_10" ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkL_10" style="width:40%;height: 3%;" ng-change="clearcheck(10)"></div>
 	        		</div>
 	        		<div class="col-md-1 col-sm-1">
 						<div style="float:left;">R: &nbsp</div>
-						<div><input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkR_10" style="width:40%;height: 3%;"></div>
+						<div><input type="checkbox" name="group3_sec3_checkR_10" ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkR_10" style="width:40%;height: 3%;" ng-change="clearcheck(10)"></div>
 	        		</div>
 	        		<div class="col-md-3 col-sm-3">
-	        			<input name="group3_sec3_comment10" type="text" ng-model="info.group3_sec3_comment10"  class="form-control">
+	        			<input name="group3_sec3_comment10" type="text" ng-model="info.group3_sec3_comment10" ng-maxlength="5" ng-class="{'is_error':QANTAS_Fleet.group3_sec3_comment10.$error.maxlength}" class="form-control" ng-disabled="info.group3_sec3_checkL_10!='1' && info.group3_sec3_checkR_10!='1'"/>
+	        			<span style="color: red;" ng-show="QANTAS_Fleet.group3_sec3_comment10.$error.maxlength">Too long!!</span>
 	        		</div>
-	        		<div class="col-md-2 col-sm-2">
+	        		<div class="col-md-2 col-sm-2" ng-show="info.group3_sec3_checkL_10=='1' || info.group3_sec3_checkR_10=='1'" ng-class="{'is_error':info.check37==null}" >
 	        			<label class="btn">
-							<input type="radio" ng-model="info.check37" value="0" />
+							<input type="radio" name="check37" ng-model="info.check37" value="0" ng-required="info.group3_sec3_checkL_10=='1' || info.group3_sec3_checkR_10=='1'" />
 							Yes
 						</label>
 						<label class="btn">
-							<input type="radio" ng-model="info.check37" value="1" />
+							<input type="radio" name="check37" ng-model="info.check37" value="1" ng-required="info.group3_sec3_checkL_10=='1' || info.group3_sec3_checkR_10=='1'" />
 							No
 						</label>
+						<span style="color: red;" ng-show="info.check37==null">Please check in!!</span>
 	        		</div>
 	        	</div>
 	        	<div class="col-md-12 col-sm-12">
@@ -1237,24 +1235,26 @@
 	        		<div class="col-md-2 col-sm-2"><label>Good pelvic/ knee control: L=R and WNL<label></div>
 	        		<div class="col-md-1 col-sm-1">
 						<div style="float:left;">L: &nbsp</div>
-						<div><input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkL_11" style="width:40%;height: 3%;"></div>
+						<div><input type="checkbox" name="group3_sec3_checkL_11" ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkL_11" style="width:40%;height: 3%;" ng-change="clearcheck(11)"></div>
 	        		</div>
 	        		<div class="col-md-1 col-sm-1">
 						<div style="float:left;">R: &nbsp</div>
-						<div><input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkR_11" style="width:40%;height: 3%;"></div>
+						<div><input type="checkbox" name="group3_sec3_checkR_11" ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkR_11" style="width:40%;height: 3%;" ng-change="clearcheck(11)"></div>
 	        		</div>
 	        		<div class="col-md-3 col-sm-3">
-	        			<input name="group3_sec3_comment11" type="text" ng-model="info.group3_sec3_comment11"  class="form-control">
+	        			<input name="group3_sec3_comment11" type="text" ng-model="info.group3_sec3_comment11" ng-maxlength="5" ng-class="{'is_error':QANTAS_Fleet.group3_sec3_comment11.$error.maxlength}" class="form-control" ng-disabled="info.group3_sec3_checkL_11!='1' && info.group3_sec3_checkR_11!='1'"/>
+	        			<span style="color: red;" ng-show="QANTAS_Fleet.group3_sec3_comment11.$error.maxlength">Too long!!</span>
 	        		</div>
-	        		<div class="col-md-2 col-sm-2">
+	        		<div class="col-md-2 col-sm-2" ng-show="info.group3_sec3_checkL_11=='1' || info.group3_sec3_checkR_11=='1'" ng-class="{'is_error':info.check38==null}" >
 	        			<label class="btn">
-							<input type="radio" ng-model="info.check38" value="0" />
+							<input type="radio" name="check38" ng-model="info.check38" value="0" ng-required="info.group3_sec3_checkL_11=='1' || info.group3_sec3_checkR_11=='1'" />
 							Yes
 						</label>
 						<label class="btn">
-							<input type="radio" ng-model="info.check38" value="1" />
+							<input type="radio" name="check38" ng-model="info.check38" value="1" ng-required="info.group3_sec3_checkL_11=='1' || info.group3_sec3_checkR_11=='1'" />
 							No
 						</label>
+						<span style="color: red;" ng-show="info.check38==null">Please check in!!</span>
 	        		</div>
 	        	</div>
 	        	<div class="col-md-12 col-sm-12">
@@ -1263,24 +1263,26 @@
 	        		<div class="col-md-2 col-sm-2"><label>10x10kg in 60 sec</label></div>
 	        		<div class="col-md-1 col-sm-1">
 						<div style="float:left;">L: &nbsp</div>
-						<div><input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkL_12" style="width:40%;height: 3%;"></div>
+						<div><input type="checkbox" name="group3_sec3_checkL_12" ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkL_12" style="width:40%;height: 3%;" ng-change="clearcheck(12)"></div>
 	        		</div>
 	        		<div class="col-md-1 col-sm-1">
 						<div style="float:left;">R: &nbsp</div>
-						<div><input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkR_12" style="width:40%;height: 3%;"></div>
+						<div><input type="checkbox" name="group3_sec3_checkR_12" ng-true-value="1" ng-false-value="0" ng-model="info.group3_sec3_checkR_12" style="width:40%;height: 3%;" ng-change="clearcheck(12)"></div>
 	        		</div>
 	        		<div class="col-md-3 col-sm-3">
-	        			<input name="group3_sec3_comment12" type="text" ng-model="info.group3_sec3_comment12"  class="form-control">
+	        			<input name="group3_sec3_comment12" type="text" ng-model="info.group3_sec3_comment12" ng-maxlength="5" ng-class="{'is_error':QANTAS_Fleet.group3_sec3_comment12.$error.maxlength}" class="form-control" ng-disabled="info.group3_sec3_checkL_12!='1' && info.group3_sec3_checkR_12!='1'"/>
+	        			<span style="color: red;" ng-show="QANTAS_Fleet.group3_sec3_comment12.$error.maxlength">Too long!!</span>
 	        		</div>
-	        		<div class="col-md-2 col-sm-2">
+	        		<div class="col-md-2 col-sm-2" ng-show="info.group3_sec3_checkL_12=='1' || info.group3_sec3_checkR_12=='1'" ng-class="{'is_error':QANTAS_Fleet.check39.$error.required}">
 	        			<label class="btn">
-							<input type="radio" ng-model="info.check39" value="0" />
+							<input type="radio" name="check39" ng-model="info.check39" value="0" ng-required="info.group3_sec3_checkL_12=='1' || info.group3_sec3_checkR_12=='1'" />
 							Yes
 						</label>
 						<label class="btn">
-							<input type="radio" ng-model="info.check39" value="1" />
+							<input type="radio" name="check39" ng-model="info.check39" value="1" ng-required="info.group3_sec3_checkL_12=='1' || info.group3_sec3_checkR_12=='1'" />
 							No
 						</label>
+						<span style="color: red;" ng-show="info.check39==null">Please check in!!</span>
 	        		</div>
 	        	</div>
 	        	<!-- end line detail -->
@@ -1338,15 +1340,16 @@
 	        		<div class="col-md-2 col-sm-2">
 	        			<select ng-model="info.group3_sec4_rate1" ng-options="rate.id as rate.name for rate in rates" class="form-control"></select>
 	        		</div>
-	        		<div class="col-md-2 col-sm-2">
+	        		<div class="col-md-2 col-sm-2" ng-show="info.group3_sec4_rate1!=null" ng-class="{'is_error':info.check40==null}" >
 	        			<label class="btn">
-							<input type="radio" ng-model="info.check40" value="0" />
+							<input type="radio" name="check40" ng-model="info.check40" value="0" ng-required="info.group3_sec4_rate1!=null" />
 							Yes
 						</label>
 						<label class="btn">
-							<input type="radio" ng-model="info.check40" value="1" />
+							<input type="radio" name="check40" ng-model="info.check40" value="1" ng-required="info.group3_sec4_rate1!=null" />
 							No
 						</label>
+						<span style="color: red;" ng-show="info.check40==null">Please check in!!</span>
 	        		</div>
 	        	</div>
 	        	<div class="col-md-12 col-sm-12">&nbsp</div>
@@ -1366,15 +1369,16 @@
 	        		<div class="col-md-2 col-sm-2">
 	        			<select ng-model="info.group3_sec4_rate2" ng-options="rate.id as rate.name for rate in rates" class="form-control"></select>
 	        		</div>
-	        		<div class="col-md-2 col-sm-2">
+	        		<div class="col-md-2 col-sm-2" ng-show="info.group3_sec4_rate2!=null" ng-class="{'is_error':info.check41==null}">
 	        			<label class="btn">
-							<input type="radio" ng-model="info.check41" value="0" />
+							<input type="radio" name="check41" ng-model="info.check41" value="0" ng-required="info.group3_sec4_rate2!=null" />
 							Yes
 						</label>
 						<label class="btn">
-							<input type="radio" ng-model="info.check41" value="1" />
+							<input type="radio" name="check41" ng-model="info.check41" value="1" ng-required="info.group3_sec4_rate2!=null" />
 							No
 						</label>
+						<span style="color: red;" ng-show="info.check41==null">Please check in!!</span>
 	        		</div>
 	        	</div>
 	        	<div class="col-md-12 col-sm-12">&nbsp</div>
@@ -1394,15 +1398,16 @@
 	        		<div class="col-md-2 col-sm-2">
 	        			<select ng-model="info.group3_sec4_rate3" ng-options="rate.id as rate.name for rate in rates" class="form-control"></select>
 	        		</div>
-	        		<div class="col-md-2 col-sm-2">
+	        		<div class="col-md-2 col-sm-2" ng-show="info.group3_sec4_rate3!=null" ng-class="{'is_error':info.check42==null}">
 	        			<label class="btn">
-							<input type="radio" ng-model="info.check42" value="0" />
+							<input type="radio" name="check42" ng-model="info.check42" value="0" ng-required="info.group3_sec4_rate3!=null" />
 							Yes
 						</label>
 						<label class="btn">
-							<input type="radio" ng-model="info.check42" value="1" />
+							<input type="radio" name="check42" ng-model="info.check42" value="1" ng-required="info.group3_sec4_rate3!=null" />
 							No
 						</label>
+						<span style="color: red;" ng-show="info.check42==null">Please check in!!</span>
 	        		</div>
 	        	</div>
 	        	<div class="col-md-12 col-sm-12">&nbsp</div>
@@ -1422,15 +1427,16 @@
 	        		<div class="col-md-2 col-sm-2">
 	        			<select ng-model="info.group3_sec4_rate4" ng-options="rate.id as rate.name for rate in rates" class="form-control"></select>
 	        		</div>
-	        		<div class="col-md-2 col-sm-2">
+	        		<div class="col-md-2 col-sm-2" ng-show="info.group3_sec4_rate4!=null" ng-class="{'is_error':info.check43==null}">
 	        			<label class="btn">
-							<input type="radio" ng-model="info.check43" value="0" />
+							<input type="radio" name="check43" ng-model="info.check43" value="0" ng-required="info.group3_sec4_rate4!=null" />
 							Yes
 						</label>
 						<label class="btn">
-							<input type="radio" ng-model="info.check43" value="1" />
+							<input type="radio" name="check43" ng-model="info.check43" value="1" ng-required="info.group3_sec4_rate4!=null" />
 							No
 						</label>
+						<span style="color: red;" ng-show="info.check43==null">Please check in!!</span>
 	        		</div>
 	        	</div>
 	        	<div class="col-md-12 col-sm-12">&nbsp</div>
@@ -1450,15 +1456,16 @@
 	        		<div class="col-md-2 col-sm-2">
 	        			<select ng-model="info.group3_sec4_rate5" ng-options="rate.id as rate.name for rate in rates" class="form-control"></select>
 	        		</div>
-	        		<div class="col-md-2 col-sm-2">
+	        		<div class="col-md-2 col-sm-2" ng-show="info.group3_sec4_rate5!=null" ng-class="{'is_error':info.check44==null}" >
 	        			<label class="btn">
-							<input type="radio" ng-model="info.check44" value="0" />
+							<input type="radio" name="check44" ng-model="info.check44" value="0" ng-required="info.group3_sec4_rate5!=null" />
 							Yes
 						</label>
 						<label class="btn">
-							<input type="radio" ng-model="info.check44" value="1" />
+							<input type="radio" name="check44" ng-model="info.check44" value="1" ng-required="info.group3_sec4_rate5!=null" />
 							No
 						</label>
+						<span style="color: red;" ng-show="info.check44==null">Please check in!!</span>
 	        		</div>
 	        	</div>
 	        	<div class="col-md-12 col-sm-12">&nbsp</div>
@@ -1478,15 +1485,16 @@
 	        		<div class="col-md-2 col-sm-2">
 	        			<select ng-model="info.group3_sec4_rate6" ng-options="rate.id as rate.name for rate in rates" class="form-control"></select>
 	        		</div>
-	        		<div class="col-md-2 col-sm-2">
+	        		<div class="col-md-2 col-sm-2" ng-show="info.group3_sec4_rate6!=null" ng-class="{'is_error':info.check45==null}" >
 	        			<label class="btn">
-							<input type="radio" ng-model="info.check45" value="0" />
+							<input type="radio" name="check45" ng-model="info.check45" value="0" ng-required="info.group3_sec4_rate6!=null" />
 							Yes
 						</label>
 						<label class="btn">
-							<input type="radio" ng-model="info.check45" value="1" />
+							<input type="radio" name="check45" ng-model="info.check45" value="1" ng-required="info.group3_sec4_rate6!=null" />
 							No
 						</label>
+						<span style="color: red;" ng-show="info.check45==null">Please check in!!</span>
 	        		</div>
 	        	</div>
 	        	<div class="col-md-12 col-sm-12">&nbsp</div>
@@ -1506,15 +1514,16 @@
 	        		<div class="col-md-2 col-sm-2">
 	        			<select ng-model="info.group3_sec4_rate7" ng-options="rate.id as rate.name for rate in rates" class="form-control"></select>
 	        		</div>
-	        		<div class="col-md-2 col-sm-2">
+	        		<div class="col-md-2 col-sm-2" ng-show="info.group3_sec4_rate7!=null" ng-class="{'is_error':info.check46==null}">
 	        			<label class="btn">
-							<input type="radio" ng-model="info.check46" value="0" />
+							<input type="radio" name="check46" ng-model="info.check46" value="0" ng-required="info.group3_sec4_rate7!=null" />
 							Yes
 						</label>
 						<label class="btn">
-							<input type="radio" ng-model="info.check46" value="1" />
+							<input type="radio" name="check46" ng-model="info.check46" value="1" ng-required="info.group3_sec4_rate7!=null" />
 							No
 						</label>
+						<span style="color: red;" ng-show="info.check46==null">Please check in!!</span>
 	        		</div>
 	        	</div>
 	        	<div class="col-md-12 col-sm-12">&nbsp</div>
@@ -1534,15 +1543,16 @@
 	        		<div class="col-md-2 col-sm-2">
 	        			<select ng-model="info.group3_sec4_rate8" ng-options="rate.id as rate.name for rate in rates" class="form-control"></select>
 	        		</div>
-	        		<div class="col-md-2 col-sm-2">
+	        		<div class="col-md-2 col-sm-2" ng-show="info.group3_sec4_rate8!=null" ng-class="{'is_error':info.check47==null}">
 	        			<label class="btn">
-							<input type="radio" ng-model="info.check47" value="0" />
+							<input type="radio" name="check47" ng-model="info.check47" value="0" ng-required="info.group3_sec4_rate8!=null" />
 							Yes
 						</label>
 						<label class="btn">
-							<input type="radio" ng-model="info.check47" value="1" />
+							<input type="radio" name="check47" ng-model="info.check47" value="1" ng-required="info.group3_sec4_rate8!=null" />
 							No
 						</label>
+						<span style="color: red;" ng-show="info.check47==null">Please check in!!</span>
 	        		</div>
 	        	</div>
 	        	<div class="col-md-12 col-sm-12">&nbsp</div>
@@ -1562,15 +1572,16 @@
 	        		<div class="col-md-2 col-sm-2">
 	        			<select ng-model="info.group3_sec4_rate9" ng-options="rate.id as rate.name for rate in rates" class="form-control"></select>
 	        		</div>
-	        		<div class="col-md-2 col-sm-2">
+	        		<div class="col-md-2 col-sm-2" ng-show="info.group3_sec4_rate9!=null" ng-class="{'is_error':info.check48==null}" >
 	        			<label class="btn">
-							<input type="radio" ng-model="info.check48" value="0" />
+							<input type="radio" name="check48" ng-model="info.check48" value="0" ng-required="info.group3_sec4_rate9!=null" />
 							Yes
 						</label>
 						<label class="btn">
-							<input type="radio" ng-model="info.check48" value="1" />
+							<input type="radio" name="check48" ng-model="info.check48" value="1" ng-required="info.group3_sec4_rate9!=null" />
 							No
 						</label>
+						<span style="color: red;" ng-show="info.check48==null">Please check in!!</span>
 	        		</div>
 	        	</div>
 	        	<div class="col-md-12 col-sm-12">&nbsp</div>
@@ -1588,7 +1599,8 @@
 	        			Relevant Observations
 	        		</div>
 	        		<div class="col-md-10 col-sm-10">
-	        			<textarea rows="4" class="form-control" ng-model="info.group3_sec4_comment1"></textarea>
+	        			<textarea rows="4" name="group3_sec4_comment1" class="form-control" ng-model="info.group3_sec4_comment1" ng-maxlength="5" ng-class="{'is_error':QANTAS_Fleet.group3_sec4_comment1.$error.maxlength}"></textarea>
+	        			<span style="color: red;" ng-show="QANTAS_Fleet.group3_sec4_comment1.$invalid">Too long!!</span>
 	        		</div>
 	        	</div>
 	        	<!-- end line detail -->
@@ -1632,23 +1644,28 @@
 		        			<label style="margin-top: 3%">60 sec Minimal tremor </label>
 		        		</div>
 		        		<div class="col-md-1 col-sm-1">
-		        			<div style="float:left;"><input name="group3_sec5_value1" type="text" ng-model="info.group3_sec5_value1"  class="form-control" style="width:40;text-align: center;"></div>
+		        			<div style="float:left;">
+		        				<input name="group3_sec5_value1" type="text" ng-model="info.group3_sec5_value1"  class="form-control" style="width:40;text-align: center;" ng-pattern="/^[0-9]+$/" ng-class="{'is_error':QANTAS_Fleet.group3_sec5_value1.$error.pattern}" ng-change="clearform(3)" />
+		        				<span style="color: red;" ng-show="QANTAS_Fleet.group3_sec5_value1.$error.pattern">Must be a number!!</span>
+		        			</div>
 		        			<div style="float:left;">&nbsp &nbsp &nbsp</div>
 		        			<div style="text-align: center;float: left;"><label style="margin-top: 30%">sec</label></div>
 		        		</div>
 		        		<div class="col-md-4 col-sm-4">
-		        			<input name="group3_sec5_comment1" type="text" ng-model="info.group3_sec5_comment1"  class="form-control">
+		        			<input name="group3_sec5_comment1" type="text" ng-model="info.group3_sec5_comment1" ng-maxlength="5" ng-class="{'is_error':QANTAS_Fleet.group3_sec5_comment1.$error.maxlength}" ng-disabled="info.group3_sec5_value1==null || info.group3_sec5_value1==''" class="form-control" >
+		        			<span style="color: red;" ng-show="QANTAS_Fleet.group3_sec5_comment1.$error.maxlength">Too long</span>
 		        		</div>
 		        		<div class="col-md-1 col-sm-1">&nbsp</div>
-		        		<div class="col-md-2 col-sm-2">
-		        			<label class="btn">
-								<input type="radio" ng-model="info.check49" value="0" />
+		        		<div class="col-md-2 col-sm-2" ng-show="info.group3_sec5_value1!=null" ng-class="{'is_error':info.check49==null}" >
+		        			<label class="btn" style="margin-right: 0;">
+								<input type="radio" name="check49" ng-model="info.check49" value="0" ng-required="info.group3_sec5_value1!=null && info.group3_sec5_value1!=''"/>
 								Yes
 							</label>
-							<label class="btn">
-								<input type="radio" ng-model="info.check49" value="1" />
+							<label class="btn" style="margin-right: 0;">
+								<input type="radio" name="check49" ng-model="info.check49" value="1" ng-required="info.group3_sec5_value1!=null && info.group3_sec5_value1!=''" />
 								No
 							</label>
+							<span style="color: red;" ng-show="info.check49==null">Please check in!!</span>
 		        		</div>
 		        	</div>	
 	        	</div>
@@ -1661,23 +1678,28 @@
 		        			<label style="margin-top: 3%">60 sec Minimal tremor </label>
 		        		</div>
 		        		<div class="col-md-1 col-sm-1">
-		        			<div style="float:left;"><input name="group3_sec5_value2" type="text" ng-model="info.group3_sec5_value2"  class="form-control" style="width:40;text-align: center;"></div>
+		        			<div style="float:left;">
+		        				<input name="group3_sec5_value2" type="text" ng-model="info.group3_sec5_value2"  class="form-control" style="width:40;text-align: center;" ng-pattern="/^[0-9]+$/" ng-class="{'is_error':QANTAS_Fleet.group3_sec5_value2.$error.pattern}" ng-change="clearform(4)"/>
+		        				<span style="color: red;" ng-show="QANTAS_Fleet.group3_sec5_value2.$error.pattern">Must be a number!!</span>
+		        			</div>
 		        			<div style="float:left;">&nbsp &nbsp &nbsp</div>
 		        			<div style="text-align: center;float: left;"><label style="margin-top: 30%">sec</label></div>
 		        		</div>
 		        		<div class="col-md-4 col-sm-4">
-		        			<input name="group3_sec5_comment2" type="text" ng-model="info.group3_sec5_comment2"  class="form-control">
+		        			<input name="group3_sec5_comment2" type="text" ng-model="info.group3_sec5_comment2" ng-disabled="info.group3_sec5_value2==null || info.group3_sec5_value2==''" class="form-control" ng-maxlength="5" ng-class="{'is_error':QANTAS_Fleet.group3_sec5_comment2.$error.maxlength}">
+		        			<span style="color: red;" ng-show="QANTAS_Fleet.group3_sec5_comment2.$error.maxlength">Too long</span>
 		        		</div>
 		        		<div class="col-md-1 col-sm-1">&nbsp</div>
-		        		<div class="col-md-2 col-sm-2">
-		        			<label class="btn">
-								<input type="radio" ng-model="info.check50" value="0" />
+		        		<div class="col-md-2 col-sm-2" ng-show="info.group3_sec5_value2!=null" ng-class="{'is_error':info.check50==null}">
+		        			<label class="btn" style="margin-right: 0;">
+								<input type="radio" ng-model="info.check50" value="0" ng-required="info.group3_sec5_value2!=null && info.group3_sec5_value2!=''" />
 								Yes
 							</label>
-							<label class="btn">
-								<input type="radio" ng-model="info.check50" value="1" />
+							<label class="btn" style="margin-right: 0;">
+								<input type="radio" ng-model="info.check50" value="1" ng-required="info.group3_sec5_value2!=null && info.group3_sec5_value2!=''" />
 								No
 							</label>
+							<span style="color: red;" ng-show="info.check50==null">Please check in!!</span>
 		        		</div>
 		        	</div>	
 	        	</div>
@@ -1690,23 +1712,28 @@
 		        			<label style="margin-top: 3%">60 sec Minimal tremor </label>
 		        		</div>
 		        		<div class="col-md-1 col-sm-1">
-		        			<div style="float:left;"><input name="group3_sec5_value3" type="text" ng-model="info.group3_sec5_value3"  class="form-control" style="width:40;text-align: center;"></div>
+		        			<div style="float:left;">
+		        				<input name="group3_sec5_value3" type="text" ng-model="info.group3_sec5_value3" class="form-control" style="width:40;text-align: center;" ng-pattern="/^[0-9]+$/" ng-class="{'is_error':QANTAS_Fleet.group3_sec5_value3.$error.pattern}" ng-change="clearform(5)">
+		        				<span style="color: red;" ng-show="QANTAS_Fleet.group3_sec5_value3.$error.pattern">Must be a number!!</span>
+		        			</div>
 		        			<div style="float:left;">&nbsp &nbsp &nbsp</div>
 		        			<div style="text-align: center;float: left;"><label style="margin-top: 30%">sec</label></div>
 		        		</div>
 		        		<div class="col-md-4 col-sm-4">
-		        			<input name="group3_sec5_comment3" type="text" ng-model="info.group3_sec5_comment3"  class="form-control">
+		        			<input name="group3_sec5_comment3" type="text" ng-model="info.group3_sec5_comment3" ng-disabled="info.group3_sec5_value3==null || info.group3_sec5_value3==''" class="form-control" ng-maxlength="5" ng-class="{'is_error':QANTAS_Fleet.group3_sec5_comment3.$error.maxlength}">
+		        			<span style="color: red;" ng-show="QANTAS_Fleet.group3_sec5_comment3.$error.maxlength">Too long</span>
 		        		</div>
 		        		<div class="col-md-1 col-sm-1">&nbsp</div>
-		        		<div class="col-md-2 col-sm-2">
-		        			<label class="btn">
-								<input type="radio" ng-model="info.check51" value="0" />
+		        		<div class="col-md-2 col-sm-2" ng-show="info.group3_sec5_value3!=null" ng-class="{'is_error':info.check51==null}">
+		        			<label class="btn" style="margin-right: 0;">
+								<input type="radio" ng-model="info.check51" value="0" ng-required="info.group3_sec5_value3!=null && info.group3_sec5_value3!=''" />
 								Yes
 							</label>
-							<label class="btn">
-								<input type="radio" ng-model="info.check51" value="1" />
+							<label class="btn" style="margin-right: 0;">
+								<input type="radio" ng-model="info.check51" value="1" ng-required="info.group3_sec5_value3!=null && info.group3_sec5_value3!=''" />
 								No
 							</label>
+							<span style="color: red;" ng-show="info.check51==null">Please check in!!</span>
 		        		</div>
 		        	</div>	
 	        	</div>
@@ -1719,23 +1746,28 @@
 		        			<label style="margin-top: 3%">60 sec Minimal tremor </label>
 		        		</div>
 		        		<div class="col-md-1 col-sm-1">
-		        			<div style="float:left;"><input name="group3_sec5_value4" type="text" ng-model="info.group3_sec5_value4"  class="form-control" style="width:40;text-align: center;"></div>
+		        			<div style="float:left;">
+		        				<input name="group3_sec5_value4" type="text" ng-model="info.group3_sec5_value4" ng-pattern="/^[0-9]+$/" ng-class="{'is_error':QANTAS_Fleet.group3_sec5_value4.$error.pattern}" ng-change="clearform(6)" class="form-control" style="width:40;text-align: center;">
+		        				<span style="color: red;" ng-show="QANTAS_Fleet.group3_sec5_value4.$error.pattern">Must be a number!!</span>
+		        			</div>
 		        			<div style="float:left;">&nbsp &nbsp &nbsp</div>
 		        			<div style="text-align: center;float: left;"><label style="margin-top: 30%">sec</label></div>
 		        		</div>
 		        		<div class="col-md-4 col-sm-4">
-		        			<input name="group3_sec5_comment4" type="text" ng-model="info.group3_sec5_comment4"  class="form-control">
+		        			<input name="group3_sec5_comment4" type="text" ng-model="info.group3_sec5_comment4" ng-disabled="info.group3_sec5_value4==null || info.group3_sec5_value4==''" class="form-control" ng-maxlength="5" ng-class="{'is_error':QANTAS_Fleet.group3_sec5_comment4.$error.maxlength}">
+		        			<span style="color: red;" ng-show="QANTAS_Fleet.group3_sec5_comment4.$error.maxlength">Too long</span>
 		        		</div>
 		        		<div class="col-md-1 col-sm-1">&nbsp</div>
-		        		<div class="col-md-2 col-sm-2">
-		        			<label class="btn">
-								<input type="radio" ng-model="info.check52" value="0" />
+		        		<div class="col-md-2 col-sm-2" ng-show="info.group3_sec5_value4!=null" ng-class="{'is_error':info.check52==null}">
+		        			<label class="btn" style="margin-right: 0;">
+								<input type="radio" ng-model="info.check52" value="0" ng-disabled="info.group3_sec5_value4==null || info.group3_sec5_value4==''" />
 								Yes
 							</label>
-							<label class="btn">
-								<input type="radio" ng-model="info.check52" value="1" />
+							<label class="btn" style="margin-right: 0;">
+								<input type="radio" ng-model="info.check52" value="1" ng-disabled="info.group3_sec5_value4==null || info.group3_sec5_value4==''" />
 								No
 							</label>
+							<span style="color: red;" ng-show="info.check52==null">Please check in!!</span>
 		        		</div>
 		        	</div>	
 	        	</div>
@@ -1756,7 +1788,8 @@
 	        </div>
 	        <div class="row">
 	        	<div class="col-md-12 col-sm-12">
-	        		<textarea rows="7" class="form-control" ng-model="info.group3_sec6_comment1"></textarea>
+	        		<textarea rows="7"name="group3_sec6_comment1" class="form-control" ng-model="info.group3_sec6_comment1" ng-maxlength="5" ng-class="{'is_error':QANTAS_Fleet.group3_sec6_comment1.$error.maxlength}"></textarea>
+	        		<span style="color: red;" ng-show="QANTAS_Fleet.group3_sec6_comment1.$error.maxlength">Too long!!</span>
 	        	</div>
 	        	<div class="col-md-12 col-sm-12">
 	        		<div class="col-md-3 col-sm-3">
@@ -1831,10 +1864,12 @@
 						</ul>
         			</div>
         			<div class="col-md-1 col-sm-1">
-        				<input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group4_checkbox1" style="width:40%;height: 3%;margin-top: 20%;">
+        				<input type="checkbox" name="group4_checkbox1" ng-true-value="1" ng-false-value="0" ng-model="info.group4_checkbox1" style="width:40%;height: 3%;margin-top: 20%;" ng-change="clearcheck(13)">
         			</div>
         			<div class="col-md-4 col-sm-4">
-        				<textarea rows="3" class="form-control" ng-model="info.group4_comment1"></textarea>
+        				<textarea rows="3" class="form-control" name="group4_comment1" ng-model="info.group4_comment1" ng-disabled="info.group4_checkbox1=='0' || info.group4_checkbox1==null" ng-maxlength="5" ng-class="{'is_error':QANTAS_Fleet.group4_comment1.$error.required || QANTAS_Fleet.group4_comment1.$error.maxlength}" ng-required="info.group4_checkbox1=='1'"></textarea>
+        				<span style="color: red;" ng-show="QANTAS_Fleet.group4_comment1.$error.required">Please fill in!!</span>
+        				<span style="color: red;" ng-show="QANTAS_Fleet.group4_comment1.$error.maxlength">Too long!!</span>
         			</div>
         		</div>
         		<div class="col-md-12 col-sm-12">
@@ -1851,11 +1886,15 @@
 						</ul>
         			</div>
         			<div class="col-md-1 col-sm-1">
-        				<input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group4_checkbox2" style="width:40%;height: 3%;margin-top: 30%;">
+        				<input type="checkbox" name="group4_checkbox2" ng-true-value="1" ng-false-value="0" ng-model="info.group4_checkbox2" style="width:40%;height: 3%;margin-top: 30%;" ng-change="clearcheck(14)">
         			</div>
         			<div class="col-md-4 col-sm-4">
         				<div> <label>Recommendations: </label></div>
-        				<div><textarea rows="3" class="form-control" ng-model="info.group4_comment2"></textarea></div>
+        				<div>
+        					<textarea rows="3" name="group4_comment2" class="form-control" ng-model="info.group4_comment2" ng-disabled="info.group4_checkbox2=='0' || info.group4_checkbox2==null" ng-maxlength="5" ng-class="{'is_error':QANTAS_Fleet.group4_comment2.$error.required || QANTAS_Fleet.group4_comment2.$error.maxlength}" ng-required="info.group4_checkbox2=='1'"></textarea>
+        					<span style="color: red;" ng-show="QANTAS_Fleet.group4_comment2.$error.required">Please fill in!!</span>
+        					<span style="color: red;" ng-show="QANTAS_Fleet.group4_comment2.$error.maxlength">Too long!!</span>
+        				</div>
         			</div>
         		</div>
         		<div class="col-md-12 col-sm-12">
@@ -1876,13 +1915,21 @@
 						</ul>
         			</div>
         			<div class="col-md-1 col-sm-1">
-        				<input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group4_checkbox3" style="width:40%;height: 3%;margin-top: 30%;">
+        				<input type="checkbox" name="group4_checkbox3" ng-true-value="1" ng-false-value="0" ng-model="info.group4_checkbox3" style="width:40%;height: 3%;margin-top: 30%;" ng-change="clearcheck(15)">
         			</div>
         			<div class="col-md-4 col-sm-4">
         				<div><label>Which areas:</label></div>
-        				<div><textarea rows="3" class="form-control" ng-model="info.group4_comment3"></textarea></div>
+        				<div>
+        					<textarea rows="3" name="group4_comment3" class="form-control" ng-model="info.group4_comment3" ng-disabled="info.group4_checkbox3=='0' || info.group4_checkbox3==null" ng-maxlength="5" ng-class="{'is_error':QANTAS_Fleet.group4_comment3.$error.required || QANTAS_Fleet.group4_comment3.$error.maxlength}" ng-required="info.group4_checkbox3=='1'"></textarea>
+        					<span style="color: red;" ng-show="QANTAS_Fleet.group4_comment3.$error.required">Please fill in!!</span>
+        					<span style="color: red;" ng-show="QANTAS_Fleet.group4_comment3.$error.maxlength">Too long!!</span>
+        				</div>
         				<div><label>Recommendations/ retesting timeframe:</label></div>
-        				<div><textarea rows="3" class="form-control" ng-model="info.group4_comment4"></textarea></div>
+        				<div>
+        					<textarea rows="3" name="group4_comment4" class="form-control" ng-model="info.group4_comment4" ng-disabled="info.group4_checkbox3=='0' || info.group4_checkbox3==null" ng-maxlength="5" ng-class="{'is_error':QANTAS_Fleet.group4_comment4.$error.required || QANTAS_Fleet.group4_comment4.$error.maxlength}" ng-required="info.group4_checkbox3=='1'"></textarea>
+        					<span style="color: red;" ng-show="QANTAS_Fleet.group4_comment4.$error.required">Please fill in!!</span>
+        					<span style="color: red;" ng-show="QANTAS_Fleet.group4_comment4.$error.maxlength">Too long!!</span>
+        				</div>
         			</div>
         		</div>
         		<div class="col-md-12 col-sm-12">
@@ -1896,11 +1943,15 @@
 						</ul>
         			</div>
         			<div class="col-md-1 col-sm-1">
-        				<input type="checkbox"  ng-true-value="1" ng-false-value="0" ng-model="info.group4_checkbox4" style="width:40%;height: 3%;margin-top: 20%;">
+        				<input type="checkbox" name="group4_checkbox4" ng-true-value="1" ng-false-value="0" ng-model="info.group4_checkbox4" style="width:40%;height: 3%;margin-top: 20%;" ng-change="clearcheck(16)">
         			</div>
         			<div class="col-md-4 col-sm-4">
         				<div><label>Which areas:</label></div>
-        				<div><textarea rows="3" class="form-control" ng-model="info.group4_comment5"></textarea></div>
+        				<div>
+        					<textarea rows="3" name="group4_comment5" class="form-control" ng-model="info.group4_comment5" ng-disabled="info.group4_checkbox4=='0' || info.group4_checkbox4==null" ng-maxlength="5" ng-class="{'is_error':QANTAS_Fleet.group4_comment5.$error.required || QANTAS_Fleet.group4_comment5.$error.maxlength}" ng-required="info.group4_checkbox4=='1'"></textarea>
+        					<span style="color: red;" ng-show="QANTAS_Fleet.group4_comment5.$error.required">Please fill in!!</span>
+        					<span style="color: red;" ng-show="QANTAS_Fleet.group4_comment5.$error.maxlength">Too long!!</span>
+        				</div>
         			</div>
         		</div>
         	</div>
@@ -1910,34 +1961,46 @@
         				Assessor (print name)
         			</div>
         			<div class="col-md-3 col-sm-3">
-        				<input type="text" ng-model="info.assessor" class="form-control">
-        			</div>
-        		</div>
-        		<div class="col-md-12 col-sm-12">
-        			<div class="col-md-2 col-sm-2">
-        				Assessor Signature
-        			</div>
-        			<div class="col-md-3 col-sm-3">
-        				<input type="text" ng-model="info.assessor_signature" class="form-control">
-        			</div>
-        		</div>
-        		<div class="col-md-12 col-sm-12">
-        			<div class="col-md-2 col-sm-2">
-        				Assessment Site
-        			</div>
-        			<div class="col-md-3 col-sm-3">
-        				<input type="text" ng-model="info.assessor_site" class="form-control">
-        			</div>
-        		</div>
-        		<div class="col-md-12 col-sm-12">
-        			<div class="col-md-2 col-sm-2">
-        				Date
-        			</div>
-        			<div class="col-md-3 col-sm-3">
-        				<input ng-model="dateChose" type="text" class="form-control input-sm" name="dob1" datepicker-popup="dd/MM/yyyy" is-open="openDOB3" ng-click="openDOB3 = true" datepicker-options="dateOptions3" close-text="Close" style="text-align:center;font-weight:bold;color:blue;">
+        				<input type="text" ng-model="info.assessor" name="assessor" class="form-control" ng-maxlength="5" ng-class="{'is_error':QANTAS_Fleet.assessor.$error.maxlength}">
+        				<span style="color: red;" ng-show="QANTAS_Fleet.assessor.$error.maxlength">Too long!!</span>
         			</div>
         		</div>
         	</div>
+        	<div class="row">
+		        		<div class="col-md-1 col-sm-1">&nbsp;</div>
+						<div class="col-md-2 col-sm-2 col-xs-2">
+							<a class="btn btn-default green" ng-click="showSignature(1)">Signature</a>
+						</div>
+						<div class="col-md-4 col-sm-3"
+		                     ng-show="info.PATIENT_SIGN1!==null && info.PATIENT_SIGN1!==undefined && info.PATIENT_SIGN1!=='' && isSignatureShow[1].isShow===false">
+		                    <img ng-src="{{info.PATIENT_SIGN1}}" alt=""
+		                         style="width: 200px;height: 150px;"/>
+		                </div>
+		                <div class="col-md-4 col-sm-3" ng-hide="info.PATIENT_SIGN1!==null && info.PATIENT_SIGN1!==undefined && info.PATIENT_SIGN1!=='' && isSignatureShow[1].isShow===false">&nbsp;</div>
+		                <label class="col-lg-1 col-md-1 col-sm-2 bold">Date</label>
+			        	<div class="col-lg-3 col-md-4 col-sm-3">
+			        		<input ng-model="dateChose" type="text" class="form-control input-sm" name="dob23" datepicker-popup="dd/MM/yyyy" is-open="openDOB23" ng-click="openDOB23 = true" datepicker-options="dateOptions23" close-text="Close" style="text-align:center;font-weight:bold;color:blue;">
+			        	</div>
+					</div>
+					<div class="row" style="text-align: center;" ng-show="isSignatureShow[1].isShow===true">
+			            <div class="col-md-12 col-sm-12">
+			                <canvas width="500" height="400" id="canvas1"
+			                        signature ng-model="info.PATIENT_SIGN1" style="background-color: #8eece8">
+			                </canvas>
+			            </div>
+			            <div class="col-md-12 col-sm-12">
+			                <div class="break-row"></div>
+			                <div class="btn-group">
+			                    <a type="a" ng-click="cancelClick(1)" class="btn btn-danger btn-sm">
+			                        Cancel
+			                    </a>
+			                    <a type="a" ng-click="clearClick(1)" class="btn btn-warning btn-sm">Clear
+			                    </a>
+			                    <a type="a" ng-click="okClick(1)" class="btn green btn-sm">Ok</a>
+			                </div>
+			            </div>
+			        </div>
+        	<div class="col-md-12 col-sm-12">&nbsp;</div>
         	<div class="row">
         		<div class="col-md-12 col-sm-12">
         			<label>

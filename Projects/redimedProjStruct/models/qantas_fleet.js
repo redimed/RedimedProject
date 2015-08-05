@@ -133,7 +133,9 @@ module.exports = function(sequelize,DataTypes){
         group4_comment4:DataTypes.STRING(100),
         group4_comment5:DataTypes.STRING(100),
         dateChose:DataTypes.DATE,
-        PATIENT_SIGN:DataTypes.TEXT
+        PATIENT_SIGN:DataTypes.TEXT,
+        PATIENT_SIGN1:DataTypes.TEXT,
+        assessor:DataTypes.STRING(100)
     },{
         tableName: 'qantas_fleet', // đặt tên bảng
         createdAt: 'Creation_date',

@@ -99,14 +99,14 @@ module.exports = function(sequelize,DataTypes){
         group3_sec3_comment10:DataTypes.STRING(100),
         group3_sec3_comment11:DataTypes.STRING(100),
         group3_sec4_comment1:DataTypes.STRING(100),
-        group3_sec4_rate1:DataTypes.STRING(2),
-        group3_sec4_rate2:DataTypes.STRING(2),
-        group3_sec4_rate3:DataTypes.STRING(2),
-        group3_sec4_rate4:DataTypes.STRING(2),
-        group3_sec4_rate5:DataTypes.STRING(2),
-        group3_sec4_rate6:DataTypes.STRING(2),
-        group3_sec4_rate7:DataTypes.STRING(2),
-        group3_sec4_rate8:DataTypes.STRING(2),
+        group3_sec4_rate1:DataTypes.INTEGER(11),
+        group3_sec4_rate2:DataTypes.INTEGER(11),
+        group3_sec4_rate3:DataTypes.INTEGER(11),
+        group3_sec4_rate4:DataTypes.INTEGER(11),
+        group3_sec4_rate5:DataTypes.INTEGER(11),
+        group3_sec4_rate6:DataTypes.INTEGER(11),
+        group3_sec4_rate7:DataTypes.INTEGER(11),
+        group3_sec4_rate8:DataTypes.INTEGER(11),
         group3_sec5_comment1:DataTypes.STRING(100),
         group3_sec5_comment2:DataTypes.STRING(100),
         group3_sec5_comment3:DataTypes.STRING(100),
@@ -126,7 +126,9 @@ module.exports = function(sequelize,DataTypes){
         group4_comment4:DataTypes.STRING(100),
         group4_comment5:DataTypes.STRING(100),
         dateChose:DataTypes.DATE,
-        PATIENT_SIGN:DataTypes.STRING(100)
+        PATIENT_SIGN:DataTypes.TEXT,
+        PATIENT_SIGN1:DataTypes.TEXT,
+        assessor:DataTypes.STRING(100)
     },{
         tableName: 'qantas_cs', // đặt tên bảng
         createdAt: 'Creation_date',

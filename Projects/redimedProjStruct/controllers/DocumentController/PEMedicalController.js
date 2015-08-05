@@ -6,40 +6,88 @@ module.exports = {
 	checkPEMedical: function(req, res) {
 		var Patient_ID = req.body.Patient_ID;
 		var CalID = req.body.CalID;
+		var company_id = req.body.company_id?req.body.company_id:null;
 		console.log(Patient_ID);
 		console.log(CalID);
+		var sql_get_company_name="select Company_name,Site_name,Phone,Email from companies where id =:company_id ";
 		var sql_check1 ="select * from pemedical_doc where PATIENT_ID =:Patient_ID";
-
-		db.sequelize.query(sql_check1,null,{raw:true},{
-			Patient_ID:Patient_ID
-		})
-		.success(function(data){
-			if(data!==undefined && data!==null && data!=='' && data.length!==0){
+		if(company_id!=null){
+			db.sequelize.query(sql_get_company_name,null,{raw:true},{
+				company_id : company_id
+			})
+			.success(function(company_data){
+				if(company_data!==undefined){
+					db.sequelize.query(sql_check1,null,{raw:true},{
+						Patient_ID:Patient_ID
+					})
+					.success(function(data){
+						if(data!==undefined && data!==null && data!=='' && data.length!==0){
+							res.json({
+								status:"update",
+								data:data[0],
+								company:company_data[0]==null?null:company_data[0]
+							});
+							return;
+						}
+						else{
+							res.json({
+								status:"insert",
+								company:company_data[0]==null?null:company_data[0]
+							});
+							return;
+						}
+					})
+					.error(function(err){
+						console.log("*****ERROR: "+err+" *****");
+						res.json({
+							status:"error"
+						});
+						return;
+					})
+				}
+			})
+			.error(function(err){
+				console.log("*****ERROR : "+err+" *****");
 				res.json({
-					status:"update",
-					data:data[0]
+					status:"error"
 				});
 				return;
-			}
-			else{
+			})
+		}
+		else{
+			db.sequelize.query(sql_check1,null,{raw:true},{
+				Patient_ID:Patient_ID
+			})
+			.success(function(data){
+				if(data!==undefined && data!==null && data!=='' && data.length!==0){
+					res.json({
+						status:"update",
+						data:data[0]
+					});
+					return;
+				}
+				else{
+					res.json({
+						status:"insert"
+					});
+					return;
+				}
+			})
+			.error(function(err){
+				console.log("*****ERROR: "+err+" *****");
 				res.json({
-					status:"insert"
+					status:"error"
 				});
 				return;
-			}
-		})
-		.error(function(err){
-			console.log("*****ERROR: "+err+" *****");
-			res.json({
-				status:"error"
-			});
-			return;
-		})
+			})
+		}
+		
 		
 	},
 
 	insertPEMedical: function(req, res) {
 		var info = req.body.info;
+		console.log("aaa");
 		db.pemedical_doc.create({
 			PATIENT_ID:info.PATIENT_ID,
 	        CAL_ID:info.CAL_ID,
@@ -286,6 +334,7 @@ module.exports = {
 	        part7_sec2_value1:info.part7_sec2_value1,
 	        part7_sec2_value2:info.part7_sec2_value2,
 	        part7_sec2_value3:info.part7_sec2_value3,
+	        part7_sec2_value4:info.part7_sec2_value4,
 	        part7_sec3_value1:info.part7_sec3_value1,
 	        part7_sec3_value2:info.part7_sec3_value2,
 	        part7_sec3_value3:info.part7_sec3_value3,
@@ -299,9 +348,13 @@ module.exports = {
 	        part7_sec4_value1:info.part7_sec4_value1,
 	        part7_sec4_value2:info.part7_sec4_value2,
 	        PATIENT_SIGN:info.PATIENT_SIGN,
+	        PATIENT_SIGN1:info.PATIENT_SIGN1,
+	        PATIENT_SIGN2:info.PATIENT_SIGN2,
+	        PATIENT_SIGN3:info.PATIENT_SIGN3,
 	        dateChose:info.dateChose,
 	        dateChose1:info.dateChose1,
-	        created_by:info.Patient_ID
+	        created_by:info.Patient_ID,
+	        company:info.company
 		},{
 			raw : true
 		})
@@ -568,6 +621,7 @@ module.exports = {
 	        part7_sec2_value1:info.part7_sec2_value1,
 	        part7_sec2_value2:info.part7_sec2_value2,
 	        part7_sec2_value3:info.part7_sec2_value3,
+	        part7_sec2_value4:info.part7_sec2_value4,
 	        part7_sec3_value1:info.part7_sec3_value1,
 	        part7_sec3_value2:info.part7_sec3_value2,
 	        part7_sec3_value3:info.part7_sec3_value3,
@@ -581,8 +635,12 @@ module.exports = {
 	        part7_sec4_value1:info.part7_sec4_value1,
 	        part7_sec4_value2:info.part7_sec4_value2,
 	        PATIENT_SIGN:info.PATIENT_SIGN,
+	        PATIENT_SIGN1:info.PATIENT_SIGN1,
+	        PATIENT_SIGN2:info.PATIENT_SIGN2,
+	        PATIENT_SIGN3:info.PATIENT_SIGN3,
 	        dateChose:info.dateChose,
-	        dateChose1:info.dateChose1
+	        dateChose1:info.dateChose1,
+	        company:info.company
 		},{
 			PATIENT_ID : info.PATIENT_ID,
 			CAL_ID     : info.CAL_ID

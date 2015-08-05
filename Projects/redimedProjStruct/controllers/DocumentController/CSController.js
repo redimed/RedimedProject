@@ -130,7 +130,9 @@ module.exports = {
 			group4_comment4:info.group4_comment4,
 			group4_comment5:info.group4_comment5,
 			dateChose:info.dateChose,
-			PATIENT_SIGN:info.PATIENT_SIGN
+			PATIENT_SIGN:info.PATIENT_SIGN,
+			PATIENT_SIGN1:info.PATIENT_SIGN1,
+			assessor:info.assessor
 			},{
 				raw : true
 		})
@@ -311,7 +313,9 @@ module.exports = {
 			group4_comment4:info.group4_comment4,
 			group4_comment5:info.group4_comment5,
 			dateChose:info.dateChose,
-			PATIENT_SIGN:info.PATIENT_SIGN
+			PATIENT_SIGN:info.PATIENT_SIGN,
+			PATIENT_SIGN1:info.PATIENT_SIGN1,
+			assessor:info.assessor
 			},{
 				PATIENT_ID:info.PATIENT_ID,
 				CAL_ID:info.CAL_ID

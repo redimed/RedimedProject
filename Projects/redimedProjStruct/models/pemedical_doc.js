@@ -246,6 +246,7 @@ module.exports = function(sequelize,DataTypes){
         part7_sec2_value1:DataTypes.STRING(100),
         part7_sec2_value2:DataTypes.STRING(100),
         part7_sec2_value3:DataTypes.STRING(100),
+        part7_sec2_value4:DataTypes.STRING(100),
         part7_sec3_value1:DataTypes.STRING(2),
         part7_sec3_value2:DataTypes.STRING(2),
         part7_sec3_value3:DataTypes.STRING(2),
@@ -259,6 +260,9 @@ module.exports = function(sequelize,DataTypes){
         part7_sec4_value1:DataTypes.STRING(2),
         part7_sec4_value2:DataTypes.STRING(2),
         PATIENT_SIGN:DataTypes.TEXT,
+        PATIENT_SIGN1:DataTypes.TEXT,
+        PATIENT_SIGN2:DataTypes.TEXT,
+        PATIENT_SIGN3:DataTypes.TEXT,
         dateChose:DataTypes.DATE,
         dateChose1:DataTypes.DATE,
         created_by:DataTypes.INTEGER(11)

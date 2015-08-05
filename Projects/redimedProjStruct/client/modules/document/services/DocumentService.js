@@ -834,9 +834,9 @@ angular.module('app.loggedIn.document.services', [])
         //******************end QANTAS_RampBaggage*******************************
 
         //******************PEMedical********************************************
-        documentService.checkPEMedical = function(Patient_ID,CalID){
+        documentService.checkPEMedical = function(Patient_ID,CalID,company_id){
             var checkPEMedical_api = api.all('document/checkPEMedical');
-            return checkPEMedical_api.post({Patient_ID:Patient_ID,CalID:CalID});
+            return checkPEMedical_api.post({Patient_ID:Patient_ID,CalID:CalID,company_id:company_id});
         }
 
         documentService.insertPEMedical = function(obj){
