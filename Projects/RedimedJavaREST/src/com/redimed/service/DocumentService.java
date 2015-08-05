@@ -381,7 +381,16 @@ public class DocumentService {
         		
         		return downloadReport("/reports/AMS6/FormAMS6.jasper", params, "FormAMS6.pdf");
         	}
-        	
+        	// tannv.dts@gmail.com
+        	// manual invoice report
+        	// 05-08-2015
+        	if(report.equalsIgnoreCase("redimedInvoice"))
+        	{
+        		params.put("header_id",id);
+        		params.put("real_path","/reports/redimedInvoice");
+        		
+        		return downloadReport("/reports/redimedInvoice/redimedInvoice.jasper", params, "redimedInvoice.pdf");
+        	}
         	
             
         } catch (Exception e) {
