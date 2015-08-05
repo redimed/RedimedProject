@@ -17,7 +17,55 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 			/*
 			*	SEARCH DOCTOR
 			*/
-
+			$scope.feeGroupType=invConst.feeGroupTypeAuto;
+			$scope.feeGroupID=[];
+			$scope.feeTypeID;
+			$scope.InvoiceMap = {
+				FEE_GROUP_TYPE :null,
+				FEE_GROUP_ID:null,
+				FEE_TYPE_ID:null
+			}
+			$scope.feeGroupTypeChange = function(value){// When Choose Bill To
+				$scope.feeGroupNameChange('');
+				$scope.InvoiceMap.FEE_TYPE_ID = null;
+				if (value == 'private_fund') {
+					InvoiceService.getinsurerbyid({id:$scope.InvoiceMap.Insurer_id}).then(function(response){
+						$scope.feeGroupID = response.data;
+						$scope.InvoiceMap.FEE_GROUP_ID = response.data[0].FEE_GROUP_ID;
+						$scope.feeGroupNameChange($scope.InvoiceMap.FEE_GROUP_ID);
+					})
+				}else{
+					InvoiceService.getFeegrouptype(value).then(function(response){
+						$scope.feeGroupID = response.data
+						
+					})
+				};
+				
+				
+			}
+			$scope.feeGroupNameChange = function(value){//When Change Group Name
+				InvoiceService.getFeeType(value).then(function(response){
+					$scope.feeTypeID = response.data;
+					
+				})
+			}
+			$scope.changeFeeType = function(value){//When CHoose Fee Type
+				var postData = {
+					FEE_TYPE_ID:value,
+					CurrentDate : new Date()
+				}
+				console.log($scope.InvoiceMap.lines);
+				InvoiceService.getitemfillterfeeid(postData).then(function(response){
+					console.log(response.data);
+					for (var i = 0; i < $scope.InvoiceMap.lines.length; i++) {
+						for (var j = 0; j < response.data.length; j++) {
+							if($scope.InvoiceMap.lines[i].ITEM_ID == response.data[j].ITEM_ID){
+								$scope.InvoiceMap.lines[i].PRICE = response.data[j].FEE;
+							}
+						};
+					};
+				})
+			}
 			$scope.doctorSearch = {
 				open: function() {
 					$modal.open({
@@ -197,7 +245,16 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 							toastr.error('Error Get Detail', 'Error')
 						angular.extend(scope.InvoiceMap, response.data);
 						ConfigService.autoConvertData(scope.InvoiceMap);
-
+						if (response.data.feeGroup) {
+							scope.InvoiceMap.FEE_GROUP_TYPE =response.data.SOURCE_TYPE;
+							scope.feeGroupTypeChange(scope.InvoiceMap.FEE_GROUP_TYPE);
+							scope.InvoiceMap.FEE_GROUP_ID = response.data.feeGroup.FEE_GROUP_ID;
+						};
+						if ( response.data.feeType) {
+							scope.feeGroupNameChange(scope.InvoiceMap.FEE_GROUP_ID);
+							scope.InvoiceMap.FEE_TYPE_ID = response.data.feeType.FEE_TYPE_ID;
+						};
+						
 						// console.log("this is InvoiceMap", scope.InvoiceMap);
 						// INIT FIELD 
 						scope.InvoiceMap.patient.full_name = scope.InvoiceMap.patient.Title + '. ' + scope.InvoiceMap.patient.First_name + ' ' + scope.InvoiceMap.patient.Sur_name;

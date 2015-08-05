@@ -10,9 +10,11 @@ var invConst={
 		public_hospital:{value:'public_hospital',haveStartDate:false,display:'Public Hospital'},//tannv: add
 		workcover:{value:'workcover',haveStartDate:false,display:'Workcover'}//tan add
 	},
+	feeGroupTypeAuto:{
+		private_fund:{value:'private_fund',display:'Private Fund',haveStartDate:true,sourceFileTypes:{txt:{value:'txt',display:'txt'}}},//tannv: giu nguyen group type cu
+		workcover:{value:'workcover',haveStartDate:false,display:'Workcover'}//tan add
+	},
 
-
-	
 };
 
 //tannv.dts@gmail.com

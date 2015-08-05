@@ -289,6 +289,14 @@ module.exports = {
 						attributes: ['ITEM_CODE', 'ITEM_NAME']
 					},
 				]
+			},
+			{
+				model:db.FeeGroup, as :'FeeGroup',
+				attributes:['FEE_GROUP_ID','FEE_GROUP_NAME']
+			},
+			{
+				model:db.FeeType, as :'FeeType',
+				attributes:['FEE_TYPE_ID','FEE_TYPE_NAME']
 			}
 
 		]);
@@ -539,7 +547,9 @@ module.exports = {
 		var deptId=kiss.checkData(postData.DEPT_ID)?postData.DEPT_ID:'';
 		var serviceId=kiss.checkData(postData.SERVICE_ID)?postData.SERVICE_ID:'';
 		var status=kiss.checkData(postData.STATUS)?postData.STATUS:'';
-
+		var SOURCE_TYPE=kiss.checkData(postData.FEE_GROUP_TYPE)?postData.FEE_GROUP_TYPE:'';
+		var SOURCE_ID=kiss.checkData(postData.FEE_GROUP_ID)?postData.FEE_GROUP_ID:'';
+		var FEE_TYPE=kiss.checkData(postData.FEE_TYPE_ID)?postData.FEE_TYPE_ID:'';
 		kiss.beginTransaction(req,function(){
 		var sql=
 			" SELECT line.`HEADER_ID`, COUNT(line.`line_id`) AS TOTAL_LINES,   "+
@@ -563,7 +573,11 @@ module.exports = {
 							SITE_ID:siteId,
 							DEPT_ID:deptId,
 							SERVICE_ID:serviceId,
-							STATUS: status, 
+							STATUS: status,
+							SOURCE_TYPE:SOURCE_TYPE,
+							SOURCE_ID:SOURCE_ID,
+							FEE_TYPE:FEE_TYPE ,
+							FORMULA:'100:100:100'
 							// AMOUNT: totalAmount// tann comment
 						};
 						kiss.exlog(invoiceHeaderUpdateInfo);
@@ -1593,5 +1607,55 @@ module.exports = {
 			kiss.exlog(fHeader,'Loi truy van lay thong tin thong qua',err);
 			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
 		});
-	}
+	},
+	postGetinsurerbyid:function(req,res){
+		var postData = req.body.data;
+		var fHeader="v2_InvoiceController->postGetinsurerbyid";
+		var functionCode='FN003';
+		var postData=kiss.checkData(postData)?postData:'';
+		if(!kiss.checkListData(postData))
+		{
+			kiss.exlog(fHeader,"Loi data truyen den",req.body);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM002')});
+			return;
+		}
+		var sql=
+			"SELECT cln_insurers.*,cln_fee_group.FEE_GROUP_NAME FROM cln_insurers LEFT JOIN `cln_fee_group`  ON cln_insurers.`FEE_GROUP_ID`=cln_fee_group.`FEE_GROUP_ID` WHERE `id` = ?";
+		kiss.executeQuery(req,sql,[postData.id],function(rows){
+			res.json({status:'success',data:rows});
+		},function(err){
+			kiss.exlog(fHeader,'Loi truy van lay thong tin thong qua',err);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
+		});
+	},
+	postGetitemfillterfeeid:function(req,res){ //get Item  by FEE_TYPE_ID and ITEM_ID 
+		var postData = req.body.data;
+		console.log(postData);
+		var fHeader="v2_InvoiceController->postGetitemfillterfeeid";
+		var functionCode='FN003';
+		var postData=kiss.checkData(postData)?postData:'';
+		if(!kiss.checkListData(postData))
+		{
+			kiss.exlog(fHeader,"Loi data truyen den",req.body);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM002')});
+			return;
+		}
+		console.log(postData);
+		var sql=
+			"SELECT itemFee.`ITEM_FEE_ID`,itemFee.`FEE`,`itemFee`.`PERCENT`, 								   "+
+			"`item`.`ITEM_CODE`,`item`.`ITEM_ID`,`item`.`TAX_ID`,`sys_taxes`.`TAX_CODE`,`sys_taxes`.`TAX_RATE`,"+
+			"item.`ITEM_NAME`,itemFee.`FEE_START_DATE`,itemFee.`FEE_TYPE_ID`   								   "+
+			"FROM `cln_item_fees` itemFee                                       							   "+
+			"INNER JOIN `inv_items` item ON itemFee.`CLN_ITEM_ID`=item.`ITEM_ID`							   "+
+			"LEFT JOIN `sys_taxes`  ON item.`TAX_CODE`=sys_taxes.`TAX_CODE`     							   "+
+			"WHERE `itemFee`.`FEE_TYPE_ID`=?                                              					   "+
+			"AND itemFee.`FEE_START_DATE`<=?                                                                   "+
+			"ORDER BY itemFee.`FEE_START_DATE` DESC                                                            ";
+		kiss.executeQuery(req,sql,[postData.FEE_TYPE_ID,postData.CurrentDate],function(rows){
+			res.json({status:'success',data:rows});
+		},function(err){
+			kiss.exlog(fHeader,'Loi truy van lay thong tin thong qua',err);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
+		});
+	},
 }
