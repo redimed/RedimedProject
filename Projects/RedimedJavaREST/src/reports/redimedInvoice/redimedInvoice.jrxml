@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="redimedInvoice" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="168e8d36-487b-4aba-bc68-541ef186d964">
+	<property name="ireport.zoom" value="1.1000000000000079"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="144"/>
+	<parameter name="real_path" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="header_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT header.`INVOICE_DATE`,header.`INVOICE_NUMBER`,
+ header.`SOURCE_TYPE`,header.`SOURCE_ID`,
+ line.*,item.`ITEM_NAME`,item.`ITEM_CODE`,
+ insurer.`id` AS INSURER_ID,insurer.`insurer_name` AS INSURER_NAME,insurer.`address` AS INSURER_ADDRESS,
+ insurer.`postcode` AS INSURER_POSTCODE,insurer.`phone` AS INSURER_PHONE,
+ company.`id` AS COMPANY_ID, company.`Company_name` AS COMPANY_NAME, company.`Addr` AS COMPANY_ADDRESS,
+ company.`postcode` AS COMPANY_POSTCODE, company.`Phone` AS COMPANY_PHONE,
+ patient.`Patient_id` AS PATIENT_ID,patient.`First_name` AS PATIENT_FIRST_NAME,
+ patient.`Sur_name` AS PATIENT_SURNAME,patient.`Address1` AS PATIENT_ADDRESS1,
+ patient.`Address2` AS PATIENT_ADDRESS2,patient.`Post_code` AS PATIENT_POSTCODE,
+ patient.`Work_phone` AS PATIENT_WORKPHONE,patient.`Home_phone` AS PATIENT_HOMEPHONE,
+ patient.`Mobile` AS PATIENT_MOBILE,
+ feeGroup.`FEE_GROUP_ID` AS FEE_GROUP_ID, feeGroup.`CONTACT_ADDRESS` AS FEE_GROUP_ADDRESS,
+ feeGroup.`POSTCODE` AS FEE_GROUP_POSTCODE, feeGroup.`FEE_GROUP_NAME` AS FEE_GROUP_NAME
+ FROM `cln_invoice_header` header
+ INNER JOIN `cln_invoice_lines` line ON header.`header_id`=line.`HEADER_ID`
+ INNER JOIN `inv_items` item ON line.`ITEM_ID`=item.`ITEM_ID`
+ LEFT JOIN `cln_insurers` insurer ON header.`Insurer_id`=insurer.`id`
+ LEFT JOIN `companies` company ON company.`id` =header.`Company_id`
+ LEFT JOIN `cln_patients` patient ON header.`Patient_id`=patient.`Patient_id`
+ LEFT JOIN `cln_fee_group` feeGroup ON feeGroup.`FEE_GROUP_ID`=header.`SOURCE_ID`
+WHERE header.`header_id`=$P{header_id}]]>
+	</queryString>
+	<field name="INVOICE_DATE" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="INVOICE_NUMBER" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SOURCE_TYPE" class="java.lang.String">
+		<fieldDescription><![CDATA[vi du DVA,private_fund,medicare,public_hospital,workcover...]]></fieldDescription>
+	</field>
+	<field name="SOURCE_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[neu la private_fund thi lay id cua insurer, con lai lay id cln_fee_group]]></fieldDescription>
+	</field>
+	<field name="line_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="HEADER_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="appt_item_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ITEM_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PRICE" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="QUANTITY" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TIME_SPENT" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DESCRIPTION" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AMOUNT" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TAX_AMOUNT" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="BASE_AMOUNT" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="BASE_TAX_AMOUNT" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CREATION_DATE" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LAST_UPDATE_DATE" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LAST_UPDATED_BY" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CREATED_BY" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="IS_ENABLE" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TAX_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TAX_CODE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TAX_RATE" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ITEM_FEE_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FEE" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="BILL_PERCENT" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ITEM_NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ITEM_CODE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="INSURER_ID" class="java.lang.Integer"/>
+	<field name="INSURER_NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="INSURER_ADDRESS" class="java.lang.String"/>
+	<field name="INSURER_POSTCODE" class="java.lang.String"/>
+	<field name="INSURER_PHONE" class="java.lang.String"/>
+	<field name="COMPANY_ID" class="java.lang.Integer"/>
+	<field name="COMPANY_NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="COMPANY_ADDRESS" class="java.lang.String"/>
+	<field name="COMPANY_POSTCODE" class="java.lang.Integer"/>
+	<field name="COMPANY_PHONE" class="java.lang.String"/>
+	<field name="PATIENT_ID" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PATIENT_FIRST_NAME" class="java.lang.String"/>
+	<field name="PATIENT_SURNAME" class="java.lang.String"/>
+	<field name="PATIENT_ADDRESS1" class="java.lang.String"/>
+	<field name="PATIENT_ADDRESS2" class="java.lang.String"/>
+	<field name="PATIENT_POSTCODE" class="java.lang.String"/>
+	<field name="PATIENT_WORKPHONE" class="java.lang.String"/>
+	<field name="PATIENT_HOMEPHONE" class="java.lang.String"/>
+	<field name="PATIENT_MOBILE" class="java.lang.String"/>
+	<field name="FEE_GROUP_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FEE_GROUP_ADDRESS" class="java.lang.String"/>
+	<field name="FEE_GROUP_POSTCODE" class="java.lang.String"/>
+	<field name="FEE_GROUP_NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="AMOUNT_1" class="java.lang.Float" resetType="Group" resetGroup="groupHeader" calculation="Sum">
+		<variableExpression><![CDATA[$F{AMOUNT}]]></variableExpression>
+	</variable>
+	<variable name="TAX_AMOUNT_1" class="java.lang.Float" resetType="Group" resetGroup="groupHeader" calculation="Sum">
+		<variableExpression><![CDATA[$F{TAX_AMOUNT}]]></variableExpression>
+	</variable>
+	<variable name="BALANCE_DUE" class="java.lang.Float">
+		<variableExpression><![CDATA[$V{AMOUNT_1}+$V{TAX_AMOUNT_1}]]></variableExpression>
+	</variable>
+	<group name="groupHeader">
+		<groupExpression><![CDATA[$F{HEADER_ID}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<staticText>
+					<reportElement x="0" y="0" width="57" height="20" uuid="3102542e-f73d-4c23-9d5a-03004a8d7ac8"/>
+					<text><![CDATA[ITEM]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="57" y="0" width="205" height="20" uuid="117ca4ae-8d6a-41a1-83c4-b9d77e40446d"/>
+					<text><![CDATA[DESCRIPTION]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="262" y="0" width="54" height="20" uuid="1f06746c-aa5f-4b34-ad08-a814abb8528d"/>
+					<text><![CDATA[PRICE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="315" y="0" width="56" height="20" uuid="c963b28e-020b-4ed5-a1ef-0dec18193e7d"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[QUANTITY]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="371" y="0" width="46" height="20" uuid="12690f33-c893-486b-9f07-b78af7552afb"/>
+					<textElement textAlignment="Center"/>
+					<text><![CDATA[TAXED]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="416" y="0" width="60" height="20" uuid="0a699195-da62-41e8-81cc-3617a1fd5a97"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[AMOUNT]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="475" y="0" width="80" height="20" uuid="30d31a7a-ff3c-4173-9f1e-72bffc1e9e01"/>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[TAX AMOUNT]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="64">
+				<staticText>
+					<reportElement x="387" y="8" width="100" height="17" uuid="dedc4296-161c-4220-8fa4-2e18096902bb"/>
+					<text><![CDATA[Total:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="387" y="24" width="100" height="17" uuid="b1cfaf40-343c-4506-bf27-d4c93f010b17"/>
+					<text><![CDATA[GST component :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="387" y="40" width="100" height="17" uuid="70de8df9-1c01-4c10-8c20-d9d77112eb9a"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[BALANCE DUE :]]></text>
+				</staticText>
+				<textField pattern="¤ #,##0.00" isBlankWhenNull="true">
+					<reportElement x="487" y="8" width="67" height="17" uuid="ac06624b-4c68-4637-88e3-b646532e4ead"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{AMOUNT_1}]]></textFieldExpression>
+				</textField>
+				<textField pattern="¤ #,##0.00" isBlankWhenNull="true">
+					<reportElement x="487" y="24" width="67" height="17" uuid="a5833d7f-d027-4775-8dec-55763e9ffb43"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{TAX_AMOUNT_1}]]></textFieldExpression>
+				</textField>
+				<textField pattern="¤ #,##0.00">
+					<reportElement x="487" y="40" width="68" height="17" uuid="c1abd857-36f8-4683-9fbb-ce69291c7f5b"/>
+					<textElement textAlignment="Right">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{BALANCE_DUE}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="387" y="4" width="167" height="1" uuid="1df8083b-21aa-4b5d-98c6-1a991d1bddf5"/>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="228" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="131" height="28" uuid="4b1e085b-ec1f-46a8-8063-fea1d99890f8"/>
+				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\redimedInvoice\\LOGO_21.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="455" y="0" width="100" height="17" uuid="e9ffda99-548e-44f7-a9e4-5007f9e5e9f3"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Redimed Pty Ltd]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="375" y="16" width="180" height="16" uuid="e9c00264-cf11-4532-92bb-8ac57d6be929"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[PO Box 293 CLOVERDALE WA 6985]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="375" y="31" width="180" height="16" uuid="59f9f7ca-c292-4d34-b1ef-df475d05f70e"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[1 Frederick Street BELMONT WA 6104]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="375" y="46" width="180" height="16" uuid="800470f7-6156-4d72-93b4-5806bb066a99"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[P: (08) 9230 0900 F: (08) 9230 0999]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="375" y="61" width="180" height="16" uuid="fd15b4b6-0353-44ee-8b79-03b2d3a9f6ff"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[E: AccountQueries@redimed.com.au]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="334" y="101" width="100" height="20" uuid="c1dd104d-010d-476f-9d69-75b91fd98557"/>
+				<textElement>
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TAX INVOICE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="334" y="121" width="62" height="17" uuid="0cb652a7-d944-4147-aed9-c0b58e9e3b41"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Invoice No:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="334" y="137" width="62" height="17" uuid="47e27ce9-6822-40e9-a641-af7d88b96d43"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Date:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="57" y="101" width="165" height="20" uuid="2249ce7e-7827-456f-91a8-8aa3b5bed6ce"/>
+				<text><![CDATA[BILL TO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="200" width="100" height="20" uuid="4b8b8403-1ca5-46a3-b112-40c1ed0e99ac"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[INVOICE]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="57" y="121" width="165" height="20" uuid="086490bb-17e4-40b7-b59f-15f446bfc4c5"/>
+				<textFieldExpression><![CDATA[$F{SOURCE_TYPE}=="private_fund"?$F{INSURER_NAME}.toUpperCase():$F{FEE_GROUP_NAME}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="57" y="141" width="165" height="46" uuid="26759da7-821a-4dbb-b62f-526858332a73"/>
+				<textFieldExpression><![CDATA[$F{SOURCE_TYPE}=="private_fund"?$F{INSURER_ADDRESS}.toUpperCase():$F{FEE_GROUP_ADDRESS}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="395" y="121" width="100" height="16" uuid="1fa3c600-1676-40ae-91b3-ffc30c58ac18"/>
+				<textFieldExpression><![CDATA[$F{INVOICE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="395" y="137" width="100" height="17" uuid="7e4e1a89-af64-47e1-adf9-ac6e84cac50b"/>
+				<textFieldExpression><![CDATA[$F{INVOICE_DATE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="20" splitType="Stretch"/>
+	</pageHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="57" height="20" uuid="154e46e6-3456-4c6a-948a-e0a8248ecb24"/>
+				<textFieldExpression><![CDATA[$F{ITEM_CODE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="57" y="0" width="205" height="20" uuid="49e7bfeb-b91e-4402-816f-ecd004c1dd4e"/>
+				<textFieldExpression><![CDATA[$F{ITEM_NAME}.length()>43?$F{ITEM_NAME}.substring(0,30)+"...":$F{ITEM_NAME}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="262" y="0" width="54" height="20" uuid="0494cd0b-cf51-443a-a4f8-26d305f6b78a"/>
+				<textFieldExpression><![CDATA[$F{PRICE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="315" y="0" width="56" height="20" uuid="5568a22d-ea59-4e8c-89a9-1098f5f38c6b"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{QUANTITY}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="371" y="0" width="46" height="20" uuid="fa473095-62c0-4065-9092-d413421b893a"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{TAX_RATE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00" isBlankWhenNull="true">
+				<reportElement x="416" y="0" width="60" height="20" uuid="bf973f92-40e9-470d-b0fd-4d92edb1cf1c"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{AMOUNT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00" isBlankWhenNull="true">
+				<reportElement x="475" y="0" width="80" height="20" uuid="a7ebedce-7a27-41ac-b69b-8d75cc131a3c"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{TAX_AMOUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
