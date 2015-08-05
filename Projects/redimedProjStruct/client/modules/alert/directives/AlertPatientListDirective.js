@@ -80,20 +80,28 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 						scope.alert.bylist = response.data;
 					}, function(error){})
 				}else{
-					AlertModel.postlistalert(scope.alert.searchlist)
-					.then(function(res) {
-						//console.log(res.data);
-						scope.alert.list = res.data;
-						scope.alert.count_list = res.count;
-					}, function(error) {})
-					// AlertModel.showcompanyid($stateParams.patient_id)
-					// .then(function(response) {
-					// 	var company_id = response.data[0].company_id;
-					// 		AlertModel.showalert(company_id)
-					// 		.then(function(resp) {
-					// 			scope.alert.list = resp.data;
-					// 		}, function(error){})
-					// }, function(error){ })
+					// AlertModel.postlistalert(scope.alert.searchlist)
+					// .then(function(res) {
+					// 	//console.log(res.data);
+					// 	scope.alert.list = res.data;
+					// 	scope.alert.count_list = res.count;
+					// }, function(error) {})
+					AlertModel.showcompanyid($stateParams.patient_id)
+					.then(function(response) {
+						
+						scope.alert.searchlist.company_id = response.data[0].company_id;
+						AlertModel.postlistalert(scope.alert.searchlist)
+						.then(function(res) {
+							scope.alert.list = res.data;
+							scope.alert.count_list = res.count;
+						}, function(error) {})
+						
+						// var company_id = response.data[0].company_id;
+						// 	AlertModel.showalert(company_id)
+						// 	.then(function(resp) {
+						// 		scope.alert.list = resp.data;
+						// 	}, function(error){})
+					}, function(error){ })
 				}
 				// if(typeof scope.withoutPatient !== 'undefined' && scope.withoutPatient){
 				// 	var postData = angular.copy(scope.alert.search);

@@ -152,6 +152,7 @@ module.exports = {
 			'cln_patient_alerts.id as ID',
 			'cln_patient_alerts.isCheck as Check',
 			'cln_alerts.id AS ALERT_ID',
+			'users.user_name as User',
 			'cln_alerts.name AS ALERT_NAME',
 			'cln_alerts.SERVICE_COLOR as SERVICE_COLOR',
 			'cln_patient_outreferral.outreferral_id'
@@ -172,6 +173,7 @@ module.exports = {
 			this.on('cln_patient_outreferral.CAL_ID', '=', 'cln_appointment_calendar.CAL_ID')
 			.andOn('cln_appt_patients.Patient_id', 'cln_patient_outreferral.patient_id')
 		})
+		.leftOuterJoin('users', 'cln_patient_alerts.isUser', 'users.id')
 		.from('cln_appointment_calendar')
 		.where({
 			'cln_appointment_calendar.SITE_ID': postData.site_id
@@ -543,7 +545,8 @@ module.exports = {
 
 		var sql = knex('cln_patient_alerts')
 		.update({
-			isCheck: postData.isCheck
+			isCheck: postData.isCheck,
+			isUser: postData.isUser
 		})
 		.where({
 			id: postData.id

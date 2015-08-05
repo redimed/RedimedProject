@@ -17,7 +17,7 @@ app.post(url+'getMedication',AlertController.getMedication);
 app.post(url+'insertMedication',AlertController.insertMedication);
 app.post(url+'deleteMedication',AlertController.deleteMedication);
 app.post(url+'getdoctorid',AlertController.getdoctorid);
-// app.post(url+'showcompanyid', AlertController.postSelectAlert);
+app.post(url+'showcompanyid', AlertController.postSelectAlert);
 // app.post(url+'showalert', AlertController.postShowAlert);
 app.post(url+'insertalert', AlertController.postInsertAlert);
 app.post(url+'postshowalertpatient', AlertController.postShowAlertPatient);

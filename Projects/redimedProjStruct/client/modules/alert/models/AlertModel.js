@@ -67,10 +67,10 @@ angular.module("app.loggedIn.alert.model", [])
         var detailApi = appApi.all('getdoctorid');
         return detailApi.post({data: data});
     }
-    // instanceService.showcompanyid = function(data){
-    //     var detailApi = appApi.all('showcompanyid');
-    //     return detailApi.post({data: data});
-    // }
+    instanceService.showcompanyid = function(data){
+        var detailApi = appApi.all('showcompanyid');
+        return detailApi.post({data: data});
+    }
     // instanceService.showalert = function(data){
     //     var detailApi = appApi.all('showalert');
     //     return detailApi.post({data: data});

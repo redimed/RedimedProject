@@ -483,25 +483,25 @@ module.exports = {
                     res.json(500, {error: error,sql:sql});
                 })
 	},
-	// postSelectAlert: function(req, res) {
+	postSelectAlert: function(req, res) {
 
-	// 	var postData = req.body.data;
+		var postData = req.body.data;
 
-	// 	var sql = knex('cln_patients')
-	// 	.column('company_id')
-	// 	.where({
-	// 		'Patient_id': postData
-	// 	})
-	// 	.toString();
-	// 	db.sequelize.query(sql)
-	// 	.success(function(data){
- //            res.json({data: data});
- //        })
- //        .error(function(error){
- //            res.json(500, {error: error,sql:sql});
- //        })
+		var sql = knex('cln_patients')
+		.column('company_id')
+		.where({
+			'Patient_id': postData
+		})
+		.toString();
+		db.sequelize.query(sql)
+		.success(function(data){
+            res.json({data: data});
+        })
+        .error(function(error){
+            res.json(500, {error: error,sql:sql});
+        })
 
-	// },
+	},
 	// postShowAlert: function(req, res) {
 
 	// 	var postData = req.body.data;
@@ -657,6 +657,13 @@ module.exports = {
 		var postData = req.body.data;
 
 		var sql = knex('cln_alerts')
+		.where({
+			'isenable': 1,
+			'company_id': postData.company_id
+		})
+		.orWhere({
+			'company_id': 0
+		})
 		.limit(postData.limit)
 		.offset(postData.offset)
 		.orderBy('id', 'desc')
@@ -664,6 +671,13 @@ module.exports = {
 
 		var sql_count = knex('cln_alerts')
 		.count('id as a')
+		.where({
+			'isenable': 1,
+			'company_id': postData.company_id
+		})
+		.orWhere({
+			'company_id': 0
+		})
 		.toString();
 
 		db.sequelize.query(sql)

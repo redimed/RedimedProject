@@ -9,6 +9,9 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 			search: '='
 		},
 		link: function(scope, elem, attrs){
+
+			var user_id = $cookieStore.get('userInfo').id;
+
 			scope.arrayAppid=[];
 			scope.oldColor=[];
 			scope.isKeyPressed = function($event){
@@ -961,7 +964,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 								})
 
 								if(alert_flag){
-									var object = {id: row.ALERT_ID, name: row.ALERT_NAME, color: row.SERVICE_COLOR, patient_alert: row.ID, Check: row.Check};
+									var object = {id: row.ALERT_ID, name: row.ALERT_NAME, color: row.SERVICE_COLOR, patient_alert: row.ID, Check: row.Check, User: row.User};
 									scope.alertCenter.list[flag].alert.push(object);
 								}
 
@@ -987,7 +990,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 							var object = {Patient_id: row.Patient_id, First_name: row.First_name, Sur_name: row.Sur_name, alert: [], cal: []};
 
 							if(row.ALERT_ID){
-								object.alert.push({id: row.ALERT_ID, name: row.ALERT_NAME, color: row.SERVICE_COLOR, patient_alert: row.ID, Check: row.Check});
+								object.alert.push({id: row.ALERT_ID, name: row.ALERT_NAME, color: row.SERVICE_COLOR, patient_alert: row.ID, Check: row.Check, User: row.User});
 							}
 
 							if(row.CAL_ID){
@@ -1018,13 +1021,15 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 
 			var search = {
 				id: 0,
-				isCheck: 0
+				isCheck: 0,
+				isUser: 0
 			}
 
 			var onCheck = function(row) {
 				// console.log('Row: ', row);
 				scope.alertCenter.search.id = row.patient_alert;
 				scope.alertCenter.search.isCheck = row.Check;
+				scope.alertCenter.search.isUser = user_id
 				// console.log('Search: ', scope.alertCenter.search);
 				AppointmentModel.PostCheck(scope.alertCenter.search)
 				.then(function(response){
