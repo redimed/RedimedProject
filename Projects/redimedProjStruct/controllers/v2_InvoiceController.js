@@ -45,9 +45,30 @@ module.exports = {
 	 * khoi tao cln_invoice_header
 	 */
 	postInit: function(req, res) {
+		var fHeader='v2_InvoiceController->postInit';
+		var functionCode='FN016';
 		var patient_id = req.body.patient_id;
 		var cal_id = req.body.cal_id;
 		var appt = null, patient = null, patient_claim = null;
+
+		//tannv.dts@gmail.com begin---------------------------
+		// var sql="SELECT * FROM `cln_appointment_calendar` WHERE `CAL_ID`=?";
+		// kiss.executeQuery(req,sql,[cal_id],function(rows){
+		// 	if(rows.length>0)
+		// 	{
+		// 		appt = rows[0];
+		// 		var sql=""
+		// 	}
+		// 	else
+		// 	{
+		// 		kiss.exlog(fHeader,'thong tin appointment khong ton tai');
+		// 		res.json(500,{status:'error',error:errorCode.get(controllerCode,functionCode,'TN002')});
+		// 	}
+		// },function(err){
+		// 	kiss.exlog(fHeader,'Loi truy van lay thong tin appointment');
+		// 	res.json(500,{status:'error',error:errorCode.get(controllerCode,functionCode,'TN001')});
+		// });
+		//tannv.dts@gmail.com end-----------------------------
 
 		// GET APPT DEPTAIL
 		db.Appointment.find({
@@ -1254,7 +1275,7 @@ module.exports = {
 		var postData = req.body.data;
 		console.log(postData);
 		var fHeader="v2_InvoiceController->postFeegrouptype";
-		var functionCode='DM001';
+		var functionCode='FN008';
 		var FEE_GROUP_ID=kiss.checkData(postData.FEE_GROUP_ID)?postData.FEE_GROUP_ID:'';
 		if(!kiss.checkListData(FEE_GROUP_ID))
 		{
@@ -1277,7 +1298,7 @@ module.exports = {
 	postFeegrouptype:function(req,res){//Get Fee Group by FEE_GROUP_TYPE
 		var postData = req.body.data;
 		var fHeader="v2_InvoiceController->postFeegrouptype";
-		var functionCode='DM001';
+		var functionCode='FN009';
 		var FEE_GROUP_TYPE=kiss.checkData(postData)?postData:'';
 		if(!kiss.checkListData(FEE_GROUP_TYPE))
 		{
@@ -1300,7 +1321,7 @@ module.exports = {
 	postFeetype:function(req,res){//Get FEE TYPE By FEE_GROUP_ID
 		var postData = req.body.data;
 		var fHeader="v2_InvoiceController->postFeetype";
-		var functionCode='DM001';
+		var functionCode='FN010';
 		var FEE_GROUP_ID=kiss.checkData(postData)?postData:'';
 		if(!kiss.checkListData(FEE_GROUP_ID))
 		{
@@ -1320,10 +1341,14 @@ module.exports = {
 			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
 		});
 	},
+
+	/**
+	 * Duc Manh
+	 */
 	postSavemanual:function(req,res){
 		var postData = req.body.data;
 		var fHeader="v2_InvoiceController->postSavemanual";
-		var functionCode='FN00M1';
+		var functionCode='FN011';
 		postData=kiss.checkData(postData)?postData:'';
 		if(!kiss.checkListData(postData))
 		{
@@ -1331,6 +1356,10 @@ module.exports = {
 			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
 			return;
 		}
+		var currentTime=kiss.getCurrentTimeStr();//tan add
+		var userInfo=kiss.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};//tan add
+		var userId=userInfo.id;//tan add
+
 		var listBDLine = postData.listLines;
 		var listInsertLine=[];
 		var invoiceHeaderInsert={
@@ -1341,9 +1370,9 @@ module.exports = {
 			FORMULA:postData.FORMULA,
 			Insurer_id:postData.Insurer_id,
 			claim_id :postData.claim_id,
-			CREATION_DATE:postData.CREATION_DATE,
-			LAST_UPDATE_DATE:postData.CREATION_DATE,
-			CREATED_BY:postData.user_id,
+			CREATION_DATE:currentTime,
+			LAST_UPDATE_DATE:currentTime,
+			CREATED_BY:userId,
 			STATUS:postData.STATUS
 		}
 		kiss.beginTransaction(req,function(){
@@ -1369,9 +1398,9 @@ module.exports = {
 							ITEM_FEE_ID:listBDLine[i].ITEM_FEE_ID,
 							FEE:listBDLine[i].FEE,
 							BILL_PERCENT:listBDLine[i].Percent,
-							CREATION_DATE:postData.CREATION_DATE,
-							LAST_UPDATE_DATE:postData.CREATION_DATE,
-							CREATED_BY:postData.user_id,
+							CREATION_DATE:currentTime,
+							LAST_UPDATE_DATE:currentTime,
+							CREATED_BY:userId,
 							IS_ENABLE:1
                     	}
                     	listInsertLine.push(obj);
@@ -1413,7 +1442,7 @@ module.exports = {
 
 		var postData = req.body.data;
 		var fHeader="v2_InvoiceController->postSavemanual";
-		var functionCode='FN00M1';
+		var functionCode='FN012';
 		postData=kiss.checkData(postData)?postData:'';
 		if(!kiss.checkListData(postData))
 		{
@@ -1421,6 +1450,10 @@ module.exports = {
 			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
 			return;
 		}
+		var currentTime=kiss.getCurrentTimeStr();//tan add
+		var userInfo=kiss.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};//tan add
+		var userId=userInfo.id;//tan add
+
 		var listBDLine = postData.listLines;
 		var listInsertLine=[];
 		var invoiceHeaderInsert={
@@ -1434,8 +1467,8 @@ module.exports = {
 			claim_id:postData.claim_id,
 			//CREATION_DATE:postData.LAST_UPDATE_DATE,
 			//CREATED_BY:postData.user_id,
-			LAST_UPDATE_DATE:postData.LAST_UPDATE_DATE,
-			LAST_UPDATED_BY:postData.user_id,
+			LAST_UPDATE_DATE:currentTime,
+			LAST_UPDATED_BY:userId,
 			STATUS:postData.STATUS
 		}
 		kiss.beginTransaction(req,function(){
@@ -1457,10 +1490,10 @@ module.exports = {
 							TAX_RATE:listBDLine[i].TAX_RATE,
 							FEE:listBDLine[i].FEE,
 							BILL_PERCENT:listBDLine[i].Percent,
-							CREATION_DATE:postData.LAST_UPDATE_DATE,
-							LAST_UPDATE_DATE:postData.LAST_UPDATE_DATE,
-							CREATED_BY:postData.user_id,
-							LAST_UPDATED_BY:postData.user_id,
+							CREATION_DATE:currentTime,
+							LAST_UPDATE_DATE:currentTime,
+							CREATED_BY:userId,
+							LAST_UPDATED_BY:userId,
 							IS_ENABLE:1
                     	}
                     	listInsertLine.push(obj);
@@ -1516,7 +1549,7 @@ module.exports = {
 	postOnemanual:function(req,res){ 
 		var postData = req.body.data;
 		var fHeader="v2_InvoiceController->postOnemanual";
-		var functionCode='FN003';
+		var functionCode='FN013';
 
 		postData=kiss.checkData(postData)?postData:'';
 
@@ -1562,7 +1595,7 @@ module.exports = {
 		var postData = req.body.data;
 		console.log(postData);
 		var fHeader="v2_InvoiceController->postGetfeetypefillter";
-		var functionCode='FN003';
+		var functionCode='FN014';
 		var postData=kiss.checkData(postData)?postData:'';
 		if(!kiss.checkListData(postData))
 		{
@@ -1591,7 +1624,7 @@ module.exports = {
 	postGetpatientbyid:function(req,res){//get patient by id
 		var postData = req.body.data;
 		var fHeader="v2_InvoiceController->postGetpatientbyid";
-		var functionCode='FN003';
+		var functionCode='FN015';
 		var postData=kiss.checkData(postData)?postData:'';
 		if(!kiss.checkListData(postData))
 		{

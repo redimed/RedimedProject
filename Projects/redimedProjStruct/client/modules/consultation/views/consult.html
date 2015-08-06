@@ -1768,8 +1768,8 @@
                                 <th>ITEM NAME</th>
                                 <th width="10%">QUANITY</th>
                                 <th width="10%">TIME SPENT</th>
-                                <th width="10%">PRICE</th>
-                                <th width="10%">TAX CODE</th><!--tan add-->
+                                <!-- <th width="10%">PRICE</th> --><!-- tan remove -->
+                                <!-- <th width="10%">TAX CODE</th> --><!--tan remove-->
                                 <th width="10%">TAX RATE</th><!--tan add-->
 
                             </tr>
@@ -1793,11 +1793,13 @@
                                     
                                 </td>
                                 <!-- END -->
-                                        <td><input type="number" min="1" class="form-control" ng-model="item.QUANTITY"></td>
-                                <td><input type="number" min="0" class="form-control" ng-model="item.TIME_SPENT"></td>
-                                <td><input type="number" ng-disabled="item.disable_fee" min="0"  class="form-control" ng-model="item.PRICE"></td>
+                                <td><input type="number" min="1" class="form-control" ng-model="item.QUANTITY"></td>
 
-                                <td>{{item.TAX_CODE}}</td><!--tan add-->
+                                <td><input type="number" min="0" class="form-control" ng-model="item.TIME_SPENT"></td>
+
+                                <!-- <td><input type="number" ng-disabled="item.disable_fee" min="0"  class="form-control" ng-model="item.PRICE"></td> --> <!-- tan remove -->
+
+                                <!-- <td>{{item.TAX_CODE}}</td> --><!--tan remove-->
                                 <td>{{item.TAX_RATE}}</td><!--tan add-->
                    
                             </tr>
@@ -1820,8 +1822,8 @@
                                 </td>
                                         <td><input type="number" min="1" class="form-control" ng-model="item.QUANTITY"></td>
                                 <td><input type="number" min="1" class="form-control" ng-model="item.TIME_SPENT"></td>
-                                <td><input type="number" ng-disabled="item.disable_fee" min="0" class="form-control" ng-model="item.PRICE"></td>
-                                <td>{{item.TAX_CODE}}</td>
+                                <!-- <td><input type="number" ng-disabled="item.disable_fee" min="0" class="form-control" ng-model="item.PRICE"></td> --> <!-- tan remove -->
+                                <!-- <td>{{item.TAX_CODE}}</td> --> <!-- tan remove -->
                                 <td>{{item.TAX_RATE}}</td>
                             </tr>
                         </tbody>
