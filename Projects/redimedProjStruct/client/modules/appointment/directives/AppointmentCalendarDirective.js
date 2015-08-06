@@ -1030,7 +1030,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 			// }
 
 			var onCheck = function(row) {
-				console.log('Row: ', row);
+				//console.log('Row: ', row);
 				scope.alertCenter.search.id = row.patient_alert;
 				scope.alertCenter.search.isCheck = row.Check;
 				scope.alertCenter.search.isUser = user_id;
