@@ -1,3 +1,7 @@
+tannvdts
+<!-- <button ng-click="importMedicareFeeFromSource();">test medicare xml</button>
+<button ng-click="importFeeFromTxtSource();">test txt</button>
+<button ng-click="importDvaFeeFromSource();">test dva xml</button> -->
 <h1>Item Fees</h1>
 <div class="portlet box red ng-scope">
     <div class="portlet-title">
@@ -10,21 +14,32 @@
             <ul class="nav nav-tabs ">
                 <li ng-class="{active: (fees.tab == 1)}" ng-click="fees.tab = 1"><a> Groups </a></li>
                 <li ng-class="{active: (fees.tab == 2)}" ng-click="fees.tab = 2"><a> Fee Types </a></li>
-                <li ng-class="{active: (fees.tab == 3)}" ng-click="fees.tab = 3"><a> Private Funds </a></li>
+                <!-- <li ng-class="{active: (fees.tab == 3)}" ng-click="fees.tab = 3"><a> Private Funds </a></li> -->
             </ul>
             <div class="tab-content">
                 <!-- FEE GROUPS  -->
                 <div ng-class="{active: (fees.tab == 1)}" class="tab-pane">
                     <div class="pull-right navbar-right">
-                        <a class="btn btn-sm blue" ng-click="addGroupForm.open()"><i class="fa fa-plus"></i> Add Group</a>
+                        <!-- <a class="btn btn-sm blue" ng-click="addGroupForm.open()"><i class="fa fa-plus"></i> Add Group</a> --><!-- tannv.dts comment -->
+                        <span>
+                            <input type="checkbox"
+                               ng-model="fee_groups.options.search.SHOW_ALL"
+                               ng-true-value="1"
+                               ng-false-value="0"
+                               ng-change="fee_groups_panel.reload();"> Show all invisible groups
+                        </span>
+                        <a class="btn btn-sm blue" ng-click="addGroupFee();"><i class="fa fa-plus"></i> Add Group</a> <!-- tannv.dts add -->
+
                     </div>
+
                     <my-data-table options="fee_groups.options" rowclass="fee_groups.class"></my-data-table>
                 </div>
                 <!-- END GROUPS  -->
                 <!-- FEE TYPES  -->
                 <div ng-class="{active: (fees.tab == 2)}" class="tab-pane">
                     <div class="pull-right navbar-right">
-                        <a class="btn btn-sm blue" ng-click="addTypeForm.open()"><i class="fa fa-plus"></i> Add Fee Type</a>
+                       <!--  <a class="btn btn-sm blue" ng-click="addTypeForm.open()"><i class="fa fa-plus"></i> Add Fee Type</a> -->
+                        <a class="btn btn-sm blue" ng-click="addTypeFormopen()"><i class="fa fa-plus"></i> Add Fee Type</a>
                     </div>
                     <my-data-table options="fee_types.options" rowclass="fee_types.class"></my-data-table>
                 </div>
@@ -43,30 +58,101 @@
     </div>
 </div>
 
-<input id="fee_type_upload" ng-hide="true" type="file" nv-file-select uploader="uploader" />
+<!-- <input id="fee_type_upload"  type="file" nv-file-select uploader="uploader" /> -->
+<!-- tannv.dts add -->
+<script type="text/ng-template" id="uploadFeeSourceTemplate">
+    <div class="modal-body">
+        <div class="col-md-12 col-sm-12" style="margin-bottom: 40px">
+            <input style="background-color: burlywood" type="file" nv-file-select="" uploader="uploader"  /><br/>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th width="50%">Name</th>
+                    <th ng-show="uploader.isHTML5">Size</th>
+                    <th ng-show="uploader.isHTML5">Progress</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="item in uploader.queue">
+                    <td><strong>{{ item.file.name}}</strong></td>
+                    <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size / 1024 / 1024|number:2 }} MB</td>
+                    <td ng-show="uploader.isHTML5">
+                        <div class="progress" style="margin-bottom: 0;">
+                            <div class="progress-bar" role="progressbar" ng-style="{
+                                                                        'width': item.progress + '%' }"></div>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                        <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                        <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                    </td>
+                    
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-warning btn-xs" ng-click="cancel()">Cancel</button>
+    </div>
+ </script>
+
 
 
 <!--POPUP GROUP DETAIL ADD FORM-->
-<div class="mdt-search" style="display: block;" ng-if="addGroupForm.is_show">
+<!-- <div class="mdt-search" style="display: block;" ng-if="addGroupForm.is_show">
     <div class="pull-right text-center ng-scope">
         <button class="btn btn-sm btn-block red" ng-click="addGroupForm.close()">
             <i class="fa fa-times"></i>
         </button>
     </div>
     <fee-group-detail options="options" onsuccess="addGroupForm.success" />
-</div>
+</div> --> <!-- tannv.dts comment -->
+
+<!-- tannv.dts add -->
+<script type="text/ng-template" id="addGroupFeeTemplate">
+     <style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+    </style>
+    <div class="modal-body">
+        <fee-group-detail options="options" onsuccess="onSuccess" />
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-warning btn-xs" ng-click="cancel()">Cancel</button>
+    </div>
+ </script>
 <!--END POPUP GROUP DETAIL ADD FORM-->
 
 
 <!--POPUP GROUP DETAIL EDIT FORM-->
-<div class="mdt-search" style="display: block;" ng-if="editGroupForm.is_show">
+<!-- <div class="mdt-search" style="display: block;" ng-if="editGroupForm.is_show">
     <div class="pull-right text-center ng-scope">
         <button class="btn btn-sm btn-block red" ng-click="editGroupForm.close()">
             <i class="fa fa-times"></i>
         </button>
     </div>
     <fee-group-detail options="options" onsuccess="editGroupForm.success" data="{id: '{{feeGroup.id}}'}" />
-</div>
+</div> --> <!-- tannv.dts comment -->
+
+<script type="text/ng-template" id="editGroupFeeTemplate">
+     <style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+    </style>
+    <div class="modal-body">
+        
+        <fee-group-detail options="options" onsuccess="onSuccess" data="{id: '{{feeGroup.id}}'}" />
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-warning btn-xs" ng-click="cancel()">Cancel</button>
+    </div>
+ </script><!-- tannv.dts add -->
+
 <!--END POPUP GROUP EDIT FORM-->
 
 
@@ -116,3 +202,30 @@
     <private-funds-detail options="options" onsuccess="editPrivateFundsForm.success" data="{id: '{{pf.id}}'}" />
 </div>
 <!--END POPUP PRIVATE FUNDS DETAIL EDIT FORM-->
+<script type="text/ng-template" id="addTypeForm">
+    <style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+    </style>
+    <div class="modal-body">
+       <fee-type-detail options="options" success="addTypeFormopen.success"/>
+    </div>
+    <div class="modal-footer" style="height: 47px">
+        <button class="un-button-submit-m ng-scope" style="margin-top: -5px;" ng-click="cancel()">Cancel</button>
+    </div>
+ </script>
+
+ <script type="text/ng-template" id="editTypeForm">
+    <style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+    </style>
+    <div class="modal-body">
+       <fee-type-detail options="options" success="editTypeFormopen.success" data="{id: '{{editTypeFormopen.id}}'}"/>
+    </div>
+    <div class="modal-footer" style="height: 47px">
+        <button class="un-button-submit-m ng-scope" style="margin-top: -5px;" ng-click="cancel()">Cancel</button>
+    </div>
+ </script>

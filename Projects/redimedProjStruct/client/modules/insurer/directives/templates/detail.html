@@ -1,3 +1,4 @@
+<label class="un-label-popup-header-m un-bg-label-B41E46-m">Insurer</label>
 <form name="mainForm" novalidate>
 
     <div class="row">
@@ -98,6 +99,16 @@
             <label for="isenable">Is Enable</label>
         </div>
         <!-- END IS ENABLE -->
+         <!-- SELECT FEE GROUP -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <span class="field">
+                <label for="FEE_GROUP_ID ">Fee Group Id</label>
+                <select name="FEE_GROUP_ID " id="FEE_GROUP_ID " ng-model="modelObjectMap.FEE_GROUP_ID" ng-options="value.FEE_GROUP_ID as value.FEE_GROUP_NAME for value in feeGroupType" float-label>
+                    <option value="" disabled selected>--Fee Group Id--</option>
+                </select>
+            </span>
+        </div>
+        <!-- END SELECT FEE GROUP -->
         <div class="break-row" style="margin-top:15px"></div>
           <!-- ACTION -->
 

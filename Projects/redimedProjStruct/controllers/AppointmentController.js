@@ -51,6 +51,8 @@ module.exports = {
 	getServiceColor:function(req,res){
 		var postData = req.body.data;
 		var sql = knex('sys_services')
+			// .where('IS_BOOKABLE',1)
+			.where('Isenable',1)
 			.toString();
 
 		db.sequelize.query(sql)
@@ -150,7 +152,11 @@ module.exports = {
 			'cln_patients.First_name',
 			'cln_patients.Sur_name',
 			'cln_patient_alerts.id as ID',
+			'cln_patient_alerts.patient_id as Patients_id',
+			'cln_patient_alerts.isCheck as Check',
+			'cln_patient_alerts.isUser as isUser',
 			'cln_alerts.id AS ALERT_ID',
+			'users.user_name as User',
 			'cln_alerts.name AS ALERT_NAME',
 			'cln_alerts.SERVICE_COLOR as SERVICE_COLOR',
 			'cln_patient_outreferral.outreferral_id'
@@ -171,6 +177,7 @@ module.exports = {
 			this.on('cln_patient_outreferral.CAL_ID', '=', 'cln_appointment_calendar.CAL_ID')
 			.andOn('cln_appt_patients.Patient_id', 'cln_patient_outreferral.patient_id')
 		})
+		.leftOuterJoin('users', 'cln_patient_alerts.isUser', 'users.id')
 		.from('cln_appointment_calendar')
 		.where({
 			'cln_appointment_calendar.SITE_ID': postData.site_id
@@ -382,6 +389,7 @@ module.exports = {
 			'cln_appointment_calendar.STATUS',
 			'sys_services.SERVICE_NAME',
 			'sys_services.IS_REFERRAL',
+			'sys_services.IS_BOOKABLE',
 			'sys_services.SERVICE_COLOR',
 			'cln_appointment_calendar.DOCTOR_ID',
 			'cln_appointment_calendar.CAL_ID',
@@ -452,6 +460,7 @@ module.exports = {
 			'sys_services.SERVICE_NAME',
 			'sys_services.IS_REFERRAL',
 			'sys_services.SERVICE_COLOR',
+			'sys_services.IS_BOOKABLE',
 			'cln_appointment_calendar.DOCTOR_ID',
 			'cln_appointment_calendar.CAL_ID',
 			'cln_appointment_calendar.CLINICAL_DEPT_ID',
@@ -529,5 +538,53 @@ module.exports = {
 			res.status(500).json({error: error, sql: main_sql});
 		})
 
+	},
+	postCheck: function(req, res) {
+
+		var postData = req.body.data;
+
+		if(postData.isCheck == 0){
+			postData.isCheck = 1;
+		} else{
+			postData.isCheck = 0;
+		}
+
+		var sql = knex('cln_patient_alerts')
+		.update({
+			isCheck: postData.isCheck,
+			isUser: postData.isUser
+		})
+		.where({
+			id: postData.id
+		})
+		.toString();
+		db.sequelize.query(sql)
+		.success(function(data){
+			res.json({data: data});
+		})
+		.error(function(error){
+			res.status(500).json({status: 'error', error: error});
+		})
+
+	},
+	postUser: function(req, res) {
+
+		var postData = req.body.data;
+
+		var sql = knex('users')
+		.column('user_name as User')
+		.where({
+			'id': postData
+		})
+		.toString();
+		db.sequelize.query(sql)
+		.success(function(data){
+			res.json({data: data});
+		})
+		.error(function(error){
+			res.status(500).json({status: 'error', error: error});
+		})
+
 	}
+
 }

@@ -59,6 +59,14 @@ angular.module('app.loggedIn.appointment.models', [])
 		var instanceApi = mainApi.all('Getappt');
 		return instanceApi.post({data: data});
 	}
+	mainModel.PostCheck = function(data){
+		var instanceApi = mainApi.all('postcheck');
+		return instanceApi.post({data: data});
+	}
+	mainModel.PostUser = function(data){
+		var instanceApi = mainApi.all('postuser');
+		return instanceApi.post({data: data});
+	}
 
 	return mainModel;
 })

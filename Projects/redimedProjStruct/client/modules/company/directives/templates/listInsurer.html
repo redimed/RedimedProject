@@ -1,12 +1,7 @@
-<button class="btn btn-primary pull-right" ng-click="addNewInsurer()">add new insurer</button>
+<!-- <button class="btn btn-primary pull-right" ng-click="addNewInsurer()">add new insurer</button> -->
 <div class="row">
 	<div class="col-md-12">
-		<!-- PAGINATION -->
-		<pagination boundary-links="true" total-items="company.count" ng-model="company.search.page" 
-	        class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
-	        items-per-page="company.search.limit" max-size="company.search.max_size" ng-change="company.setPage(company.search.page)">
-	    </pagination>
-		<!-- END PAGINATION -->
+		
 		<table class="mdt-table table-hover">
 			<thead>
 				<tr>
@@ -29,5 +24,13 @@
 				</tr>
 			</tbody>
 		</table>
+		<div align="right">
+			<!-- PAGINATION -->
+			<pagination boundary-links="true" total-items="company.count" ng-model="company.search.page" 
+		        class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+		        items-per-page="company.search.limit" max-size="company.search.max_size" ng-change="company.setPage(company.search.page)">
+		    </pagination>
+			<!-- END PAGINATION -->
+		</div>
 	</div>
 </div>

@@ -84,13 +84,35 @@
     </div>
     <div class="panel-body msg_container_base">
        <div ng-if="list.test !== 0 || list.alert.length !== 0" class="un_body_notification_list" ng-repeat="list in alertCenter.list">
-	    	<div>
-			    <label ng-if="list.alert.length > 0 || list.cal.length > 0" style="font-size: 16px;font-weight: bold;">
-			        {{list.First_name}} {{list.Sur_name}}
-			    </label>
+	       <div class="panelo">
+        		<span ng-if="list.alert.length > 0 || list.cal.length > 0" style="font-size: 16px;font-weight: bold;">
+			        <a href="javascript:;" style="text-decoration: none;"><span id="minim_chat_window" class="icon_minims">{{list.First_name}} {{list.Sur_name}}</span></a>
+			    </span>
+				<div class="panelor">
+					<ul ng-repeat="alert in list.alert" ng-if="list.alert.length > 0">
+				        <li style="color: {{alert.color}};">
+				        	{{alert.name}} <input type="checkbox" ng-checked="alert.Check" ng-true-value=1 ng-false-value=0 ng-click="alertCenter.onCheck(alert)" />
+				        	<span style="font-weight: bold" ng-if="alert.User != null">{{' - ' + alert.User}}</span>
+				        	<span ng-if="alert.Check==0 && alert.isUser==0 && alert.User == null "></span>
+				        </li>
+				    </ul>
+				    <p ng-repeat="cal in list.cal" ng-if="list.cal.length > 0 && list.test === 1">
+				        <span ng-if="cal.IS_REFERRAL && cal.OUTREFERRAL === 'no'" style="margin-left: 10px;">
+				            {{cal.FROM_TIME}}-{{cal.TO_TIME}}:&nbsp
+				            There is no referral
+				        </span>
+				    </p>
+				</div>
+			</div>
+       		<!--<span ng-if="list.alert.length > 0 || list.cal.length > 0" style="font-size: 16px;font-weight: bold;">
+		        {{list.First_name}} {{list.Sur_name}}
+		    </span>
+	    	<div collapse="isCollapsed">
 			    <ul ng-repeat="alert in list.alert" ng-if="list.alert.length > 0">
 			        <li style="color: {{alert.color}};">
-			        	{{alert.name}}
+			        	{{alert.name}} <input type="checkbox" ng-checked="alert.Check" ng-true-value=1 ng-false-value=0 ng-click="alertCenter.onCheck(alert)" />
+			        	<span style="font-weight: bold">{{' - ' + alert.User}}</span>
+			        	<span ng-if="alert.Check==0 && alert.isUser==0"></span>
 			        </li>
 			    </ul>
 			    <p ng-repeat="cal in list.cal" ng-if="list.cal.length > 0 && list.test === 1">
@@ -99,7 +121,7 @@
 			            There is no referral
 			        </span>
 			    </p>
-			</div>
+			</div>-->
 	    </div>
 	    <div ng-if="alertCenter.list.length == 0">
 	    	<div style="text-align: center;">
@@ -450,6 +472,16 @@
 	        $this.removeClass('glyphicon-plus').addClass('glyphicon-minus');
 	    }
 	});
+	$(document).on('click', '.panelo span.icon_minims', function (e) {
+	    var $this = $(this);
+	    if (!$this.hasClass('panel-collapsed')) {
+	        $this.parents('.panelo').find('.panelor').slideUp();
+	        $this.addClass('panel-collapsed');
+	    } else {
+	        $this.parents('.panelo').find('.panelor').slideDown();
+	        $this.removeClass('panel-collapsed');
+	    }
+	});
 </script>
 <script type="text/ng-template" id="CheckAlert">
 	<div class="modal-body">
@@ -462,3 +494,17 @@
 	    <button class="btn btn-warning btn-xs" ng-click="clickNo()">No</button>
 	</div>
 </script>
+<script type="text/ng-template" id="showNotificationNo">
+    <style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+    </style>
+    <div class="modal-body">
+    	<label class="un-label-popup-header-m un-bg-label-B41E46-m">Notification</label>
+        <div align="center">Can not Booking !!!</div>
+    </div>
+    <div class="modal-footer" style="height: 47px">
+        <button class="un-button-submit-m ng-scope" style="margin-top: -5px;" ng-click="cancel()">OK</button>
+    </div>
+ </script>

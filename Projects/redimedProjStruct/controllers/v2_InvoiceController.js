@@ -45,9 +45,30 @@ module.exports = {
 	 * khoi tao cln_invoice_header
 	 */
 	postInit: function(req, res) {
+		var fHeader='v2_InvoiceController->postInit';
+		var functionCode='FN016';
 		var patient_id = req.body.patient_id;
 		var cal_id = req.body.cal_id;
 		var appt = null, patient = null, patient_claim = null;
+
+		//tannv.dts@gmail.com begin---------------------------
+		// var sql="SELECT * FROM `cln_appointment_calendar` WHERE `CAL_ID`=?";
+		// kiss.executeQuery(req,sql,[cal_id],function(rows){
+		// 	if(rows.length>0)
+		// 	{
+		// 		appt = rows[0];
+		// 		var sql=""
+		// 	}
+		// 	else
+		// 	{
+		// 		kiss.exlog(fHeader,'thong tin appointment khong ton tai');
+		// 		res.json(500,{status:'error',error:errorCode.get(controllerCode,functionCode,'TN002')});
+		// 	}
+		// },function(err){
+		// 	kiss.exlog(fHeader,'Loi truy van lay thong tin appointment');
+		// 	res.json(500,{status:'error',error:errorCode.get(controllerCode,functionCode,'TN001')});
+		// });
+		//tannv.dts@gmail.com end-----------------------------
 
 		// GET APPT DEPTAIL
 		db.Appointment.find({
@@ -163,6 +184,10 @@ module.exports = {
 	},
 
 	postSearch: function(req, res) {
+
+
+
+
 		var limit = (req.body.limit) ? req.body.limit : 10;
         var offset = (req.body.offset) ? req.body.offset : 0;
         var order = (req.body.order) ? req.body.order : null;
@@ -172,17 +197,70 @@ module.exports = {
 		var search_data = req.body.search;
 		var whereOpt = {};
 
+		//tannv.dts
+		// var sql=
+		// 	" SELECT header.`Patient_id`,header.`STATUS`,header.`CREATION_DATE`,                                    "+
+		// 	" patient.`First_name`,patient.`Sur_name`,patient.`Title`,                                              "+
+		// 	" title.`name`,                                                                                         "+
+		// 	" company.`Company_name`,                                                                               "+
+		// 	" insurer.`insurer_name`,                                                                               "+
+		// 	" doctor.`NAME`,                                                                                        "+
+		// 	" site.`Site_name`,                                                                                     "+
+		// 	" service.`SERVICE_NAME`,                                                                               "+
+		// 	" line.*                                                                                                "+
+		// 	" FROM `cln_invoice_header` header                                                                      "+
+		// 	" INNER JOIN                                                                                            "+
+		// 	" (                                                                                                     "+
+		// 	" 	SELECT line.`HEADER_ID`,SUM(line.`AMOUNT`) AS HEADER_AMOUNT,                                        "+
+		// 	" 	SUM(line.`TAX_AMOUNT`) AS HEADER_TAX_AMOUNT,                                                        "+
+		// 	" 	(IFNULL(SUM(line.`AMOUNT`),0)+IFNULL(SUM(line.`TAX_AMOUNT`),0)) AS HEADER_TOTAL_AMOUNT              "+
+		// 	" 	FROM `cln_invoice_lines` line                                                                       "+
+		// 	" 	WHERE line.`IS_ENABLE`=1                                                                            "+
+		// 	" 	GROUP BY line.`HEADER_ID`) line ON header.`header_id`=line.`HEADER_ID`                              "+
+		// 	" INNER JOIN `cln_patients` patient ON header.`Patient_id`=patient.`Patient_id`                         "+
+		// 	" LEFT JOIN `sys_titles` title ON patient.`Title`=title.`id`                                            "+
+		// 	" LEFT JOIN `companies` company ON header.`Company_id`=company.`id`                                     "+
+		// 	" LEFT JOIN `cln_insurers` insurer ON header.`Insurer_id`=insurer.`id`                                  "+
+		// 	" LEFT JOIN `doctors` doctor ON header.`DOCTOR_ID`=doctor.`doctor_id`                                   "+
+		// 	" LEFT JOIN `redimedsites` site ON header.`SITE_ID`=site.`id`                                           "+
+		// 	" LEFT JOIN `sys_services` service ON header.`SERVICE_ID`=service.`SERVICE_ID`                          "+
+		// 	" ORDER BY header.`CREATION_DATE` DESC                                                                  "+
+		// 	" LIMIT ?                                                                                               "+
+		// 	" OFFSET ?                                                                                              ";
 		
+
 		if(search_data && search_data.patient_id && search_data.cal_id) {
 			whereOpt.Patient_id = search_data.patient_id;
-			whereOpt.cal_id = search_data.cal_id;
-			var inc_model = inc_common_model;
+			if (search_data.cal_id !== -1) {
+				whereOpt.cal_id = search_data.cal_id;
+			};
+			//var inc_model = inc_common_model;
+			var inc_model = inc_common_model.concat([
+				{
+					model: db.Patient , as: 'Patient',
+					attributes: ['Title', 'First_name', 'Sur_name']
+				},
+
+				{
+					model: db.FeeGroup , as: 'FeeGroup',
+					attributes: ['FEE_GROUP_NAME','FEE_GROUP_TYPE']
+				},
+			]);
+
+			if(search_data.STATUS) { // equal
+				whereOpt.STATUS = search_data.STATUS;
+			}
 		} else {
 			var inc_model = inc_common_model.concat([
 				{
 					model: db.Patient , as: 'Patient',
 					attributes: ['Title', 'First_name', 'Sur_name']
-				}
+				},
+
+				{
+					model: db.FeeGroup , as: 'FeeGroup',
+					attributes: ['FEE_GROUP_NAME','FEE_GROUP_TYPE']
+				},
 			]);
 
 			if(search_data.STATUS) { // equal
@@ -199,6 +277,7 @@ module.exports = {
 			include: inc_model,
 			order: order
 		}).success(function(result){
+			// console.log(result);
 			res.json({"status": "success", "list": result.rows, "count": result.count});
 		})
 		.error(function(error){
@@ -231,6 +310,14 @@ module.exports = {
 						attributes: ['ITEM_CODE', 'ITEM_NAME']
 					},
 				]
+			},
+			{
+				model:db.FeeGroup, as :'FeeGroup',
+				attributes:['FEE_GROUP_ID','FEE_GROUP_NAME']
+			},
+			{
+				model:db.FeeType, as :'FeeType',
+				attributes:['FEE_TYPE_ID','FEE_TYPE_NAME']
 			}
 
 		]);
@@ -481,7 +568,9 @@ module.exports = {
 		var deptId=kiss.checkData(postData.DEPT_ID)?postData.DEPT_ID:'';
 		var serviceId=kiss.checkData(postData.SERVICE_ID)?postData.SERVICE_ID:'';
 		var status=kiss.checkData(postData.STATUS)?postData.STATUS:'';
-
+		var SOURCE_TYPE=kiss.checkData(postData.FEE_GROUP_TYPE)?postData.FEE_GROUP_TYPE:'';
+		var SOURCE_ID=kiss.checkData(postData.FEE_GROUP_ID)?postData.FEE_GROUP_ID:'';
+		var FEE_TYPE=kiss.checkData(postData.FEE_TYPE_ID)?postData.FEE_TYPE_ID:'';
 		kiss.beginTransaction(req,function(){
 		var sql=
 			" SELECT line.`HEADER_ID`, COUNT(line.`line_id`) AS TOTAL_LINES,   "+
@@ -505,8 +594,12 @@ module.exports = {
 							SITE_ID:siteId,
 							DEPT_ID:deptId,
 							SERVICE_ID:serviceId,
-							STATUS: status, 
-							AMOUNT: totalAmount
+							STATUS: status,
+							SOURCE_TYPE:SOURCE_TYPE,
+							SOURCE_ID:SOURCE_ID,
+							FEE_TYPE:FEE_TYPE ,
+							FORMULA:'100:100:100'
+							// AMOUNT: totalAmount// tann comment
 						};
 						kiss.exlog(invoiceHeaderUpdateInfo);
 						kiss.executeQuery(req,sql,[invoiceHeaderUpdateInfo,invoiceHeaderId],function(result){
@@ -1163,11 +1256,10 @@ module.exports = {
 		}
 
 		var sql=
-			" SELECT line.* ,item.`ITEM_NAME`,item.`ITEM_CODE`                              "+                                   
-			" FROM `cln_invoice_lines` line                                                 "+ 
-			" INNER JOIN `cln_invoice_header` header ON line.`HEADER_ID`=header.`header_id` "+
-			" INNER JOIN `inv_items` item ON  line.`ITEM_ID` = item.`ITEM_ID`               "+
-			" WHERE header.`Patient_id`=? AND header.`cal_id`=? AND line.`IS_ENABLE`=1      ";
+			" SELECT line.*                                                                  "+
+			" FROM `cln_invoice_lines` line                                                  "+
+			" INNER JOIN `cln_invoice_header` header ON line.`HEADER_ID`=header.`header_id`  "+
+			" WHERE header.`Patient_id`=? AND header.`cal_id`=? AND line.`IS_ENABLE`=1       ";
 
 		kiss.executeQuery(req,sql,[patientId,calId],function(rows){
 			res.json({status:'success',data:rows});
@@ -1175,5 +1267,428 @@ module.exports = {
 			kiss.exlog(fHeader,'Loi truy van lay thong tin invoice line thong qua patientId va calId',err);
 			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN002')});
 		});
-	}
+	},
+	/**
+	*manh
+	*/
+	postFeegroupbyid:function(req,res){//Get Fee group By FEE_GROUP_ID
+		var postData = req.body.data;
+		console.log(postData);
+		var fHeader="v2_InvoiceController->postFeegrouptype";
+		var functionCode='FN008';
+		var FEE_GROUP_ID=kiss.checkData(postData.FEE_GROUP_ID)?postData.FEE_GROUP_ID:'';
+		if(!kiss.checkListData(FEE_GROUP_ID))
+		{
+			kiss.exlog(fHeader,"Loi data truyen den",req.body);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
+			return;
+		}
+		var sql=
+			" SELECT *                                                                  	 "+
+			" FROM `cln_fee_group`                                                  		 "+
+			" WHERE FEE_GROUP_ID =? 												         ";
+
+		kiss.executeQuery(req,sql,[FEE_GROUP_ID],function(rows){
+			res.json({status:'success',data:rows});
+		},function(err){
+			kiss.exlog(fHeader,'Loi truy van lay thong tin invoice line thong qua',err);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
+		});
+	},
+	postFeegrouptype:function(req,res){//Get Fee Group by FEE_GROUP_TYPE
+		var postData = req.body.data;
+		var fHeader="v2_InvoiceController->postFeegrouptype";
+		var functionCode='FN009';
+		var FEE_GROUP_TYPE=kiss.checkData(postData)?postData:'';
+		if(!kiss.checkListData(FEE_GROUP_TYPE))
+		{
+			kiss.exlog(fHeader,"Loi data truyen den",req.body);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
+			return;
+		}
+		var sql=
+			" SELECT *                                                                  	 "+
+			" FROM `cln_fee_group`                                                  		 "+
+			" WHERE FEE_GROUP_TYPE =? 												         ";
+
+		kiss.executeQuery(req,sql,[FEE_GROUP_TYPE],function(rows){
+			res.json({status:'success',data:rows});
+		},function(err){
+			kiss.exlog(fHeader,'Loi truy van lay thong tin invoice line thong qua',err);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
+		});
+	},
+	postFeetype:function(req,res){//Get FEE TYPE By FEE_GROUP_ID
+		var postData = req.body.data;
+		var fHeader="v2_InvoiceController->postFeetype";
+		var functionCode='FN010';
+		var FEE_GROUP_ID=kiss.checkData(postData)?postData:'';
+		if(!kiss.checkListData(FEE_GROUP_ID))
+		{
+			kiss.exlog(fHeader,"Loi data truyen den",req.body);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
+			return;
+		}
+		var sql=
+			" SELECT *                                                                  	 "+
+			" FROM `cln_fee_types`                                                  		 "+
+			" WHERE FEE_GROUP_ID =? 												         ";
+
+		kiss.executeQuery(req,sql,[FEE_GROUP_ID],function(rows){
+			res.json({status:'success',data:rows});
+		},function(err){
+			kiss.exlog(fHeader,'Loi truy van lay thong tin invoice line thong qua',err);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
+		});
+	},
+
+	/**
+	 * Duc Manh
+	 */
+	postSavemanual:function(req,res){
+		var postData = req.body.data;
+		var fHeader="v2_InvoiceController->postSavemanual";
+		var functionCode='FN011';
+		postData=kiss.checkData(postData)?postData:'';
+		if(!kiss.checkListData(postData))
+		{
+			kiss.exlog(fHeader,"Loi data truyen den",req.body);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
+			return;
+		}
+		var currentTime=kiss.getCurrentTimeStr();//tan add
+		var userInfo=kiss.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};//tan add
+		var userId=userInfo.id;//tan add
+
+		var listBDLine = postData.listLines;
+		var listInsertLine=[];
+		var invoiceHeaderInsert={
+			Patient_id:postData.Patient_id,
+			SOURCE_TYPE:postData.SOURCE_TYPE,
+			SOURCE_ID:postData.SOURCE_ID,
+			FEE_TYPE:postData.FEE_TYPE,
+			FORMULA:postData.FORMULA,
+			Insurer_id:postData.Insurer_id,
+			claim_id :postData.claim_id,
+			CREATION_DATE:currentTime,
+			LAST_UPDATE_DATE:currentTime,
+			CREATED_BY:userId,
+			STATUS:postData.STATUS
+		}
+		kiss.beginTransaction(req,function(){
+			var sql="insert into cln_invoice_header set ?";
+
+			kiss.executeQuery(req,sql,[invoiceHeaderInsert],function(result){
+				if (postData.listLines.length !== 0) {
+					if(result.affectedRows>0)
+					{
+					
+                    for (var i = 0; i < listBDLine.length; i++) {
+                    	var obj = {
+                    		HEADER_ID:result.insertId,
+							ITEM_ID:listBDLine[i].ITEM_ID,
+							PRICE:listBDLine[i].PRICE,
+							QUANTITY:listBDLine[i].QUANTITY,
+							TIME_SPENT:listBDLine[i].TIME_SPENT,
+							AMOUNT:listBDLine[i].PRICE*listBDLine[i].QUANTITY,
+							TAX_AMOUNT:listBDLine[i].PRICE*listBDLine[i].QUANTITY*listBDLine[i].TAX_RATE,
+							TAX_ID:listBDLine[i].TAX_ID,
+							TAX_CODE:listBDLine[i].TAX_CODE,
+							TAX_RATE:listBDLine[i].TAX_RATE,
+							ITEM_FEE_ID:listBDLine[i].ITEM_FEE_ID,
+							FEE:listBDLine[i].FEE,
+							BILL_PERCENT:listBDLine[i].Percent,
+							CREATION_DATE:currentTime,
+							LAST_UPDATE_DATE:currentTime,
+							CREATED_BY:userId,
+							IS_ENABLE:1
+                    	}
+                    	listInsertLine.push(obj);
+                    };
+					kiss.executeInsertIfDupKeyUpdate(req,'cln_invoice_lines',listInsertLine,null,function(result){
+						kiss.commit(req,function(){
+                        	 res.json({status:'success',data:listInsertLine});
+	                    },function(err){
+	                        kiss.exlog(fHeader,"Loi commit",err);
+	                        res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM004')});
+	                    })
+                    },function(err){
+                        kiss.exlog(fHeader,'Loi truy van insert list lines',err);
+                       kiss.rollback(req,function(){
+							res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM003')});
+						});
+                    })
+					}
+				}else{
+					kiss.commit(req,function(){
+                    	 res.json({status:'success',data:invoiceHeaderInsert});
+                    },function(err){
+                        kiss.exlog(fHeader,"Loi commit",err);
+                        res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM004')});
+                    })
+				};
+			},function(err){
+				kiss.exlog("not insert data",err);
+				kiss.rollback(req,function(){
+					res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM002')});
+				});
+			},true);
+		},function(err){
+			kiss.exlog(fHeader,'Loi mo transaction',err);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
+		});	
+	},
+	postEditmanual:function(req,res){
+
+		var postData = req.body.data;
+		var fHeader="v2_InvoiceController->postSavemanual";
+		var functionCode='FN012';
+		postData=kiss.checkData(postData)?postData:'';
+		if(!kiss.checkListData(postData))
+		{
+			kiss.exlog(fHeader,"Loi data truyen den",req.body);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
+			return;
+		}
+		var currentTime=kiss.getCurrentTimeStr();//tan add
+		var userInfo=kiss.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};//tan add
+		var userId=userInfo.id;//tan add
+
+		var listBDLine = postData.listLines;
+		var listInsertLine=[];
+		var invoiceHeaderInsert={
+			header_id :postData.header_id,
+			Patient_id:postData.Patient_id,
+			SOURCE_TYPE:postData.SOURCE_TYPE,
+			SOURCE_ID:postData.SOURCE_ID,
+			FEE_TYPE:postData.FEE_TYPE,
+			FORMULA:postData.FORMULA,
+			Insurer_id:postData.Insurer_id,
+			claim_id:postData.claim_id,
+			//CREATION_DATE:postData.LAST_UPDATE_DATE,
+			//CREATED_BY:postData.user_id,
+			LAST_UPDATE_DATE:currentTime,
+			LAST_UPDATED_BY:userId,
+			STATUS:postData.STATUS
+		}
+		kiss.beginTransaction(req,function(){
+			kiss.executeInsertIfDupKeyUpdate(req,'cln_invoice_header',[invoiceHeaderInsert],null,function(result){
+				if(result.affectedRows>0)
+				{	
+                    for (var i = 0; i < listBDLine.length; i++) {
+                    	var obj = {
+                    		line_id:listBDLine[i].line_id,
+                    		HEADER_ID:postData.header_id,
+							ITEM_ID:listBDLine[i].ITEM_ID,
+							PRICE:listBDLine[i].PRICE,
+							QUANTITY:listBDLine[i].QUANTITY,
+							TIME_SPENT:listBDLine[i].TIME_SPENT,
+							AMOUNT:listBDLine[i].PRICE*listBDLine[i].QUANTITY,
+							TAX_AMOUNT:listBDLine[i].PRICE*listBDLine[i].QUANTITY*listBDLine[i].TAX_RATE,
+							TAX_ID:listBDLine[i].TAX_ID,
+							TAX_CODE:listBDLine[i].TAX_CODE,
+							TAX_RATE:listBDLine[i].TAX_RATE,
+							FEE:listBDLine[i].FEE,
+							BILL_PERCENT:listBDLine[i].Percent,
+							CREATION_DATE:currentTime,
+							LAST_UPDATE_DATE:currentTime,
+							CREATED_BY:userId,
+							LAST_UPDATED_BY:userId,
+							IS_ENABLE:1
+                    	}
+                    	listInsertLine.push(obj);
+                    };
+                    	var sql="DELETE FROM `cln_invoice_lines` WHERE HEADER_ID=?";
+						kiss.executeQuery(req,sql,[postData.header_id],function(result){
+							if (listBDLine.length !==0) {
+								kiss.executeInsertIfDupKeyUpdate(req,'cln_invoice_lines',listInsertLine,null,function(result){
+									kiss.commit(req,function(){
+			                        	 res.json({status:'success',data:listInsertLine});
+				                    },function(err){
+				                        kiss.exlog(fHeader,"Loi commit",err);
+				                        res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM004')});
+				                    })
+			                    },function(err){
+			                        kiss.exlog(fHeader,'Loi truy van insert list lines',err);
+			                       kiss.rollback(req,function(){
+										res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM003')});
+									});
+			                    })
+							}else{
+			                	kiss.commit(req,function(){
+		                        	 res.json({status:'success',data:listInsertLine});
+			                    },function(err){
+			                        kiss.exlog(fHeader,"Loi commit",err);
+			                        res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM004')});
+			                    })
+			                };
+						},function(err){
+	                        kiss.exlog(fHeader,'Loi truy van delete list lines',err);
+	                       kiss.rollback(req,function(){
+								res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM003')});
+							});
+	                    })
+	                
+				}
+			},function(err){
+				kiss.exlog("not insert data",err);
+				kiss.rollback(req,function(){
+					res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM002')});
+				});
+			},true);
+		},function(err){
+			kiss.exlog(fHeader,'Loi mo transaction',err);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
+		});	
+	},
+	/**
+	 * duc manh
+	 * Get manualInvoice By Id
+	 * 04-08-2015
+	 */
+	postOnemanual:function(req,res){ 
+		var postData = req.body.data;
+		var fHeader="v2_InvoiceController->postOnemanual";
+		var functionCode='FN013';
+
+		postData=kiss.checkData(postData)?postData:'';
+
+		if(!kiss.checkListData(postData.header_id))
+		{
+			kiss.exlog(fHeader,"Loi data truyen den",req.body);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
+			return;
+		}
+		var sql=
+			" SELECT cln_invoice_header.*,cln_patients.Sur_name,cln_patients.First_name,cln_patients.Patient_id,	"+
+			"cln_fee_group.FEE_GROUP_NAME as groupFEE_GROUP_NAME,cln_fee_group.FEE_GROUP_ID as groupFEE_GROUP_ID,	"+
+			"cln_fee_types.FEE_TYPE_ID as typesFEE_TYPE_ID,cln_fee_types.FEE_TYPE_NAME as typesFEE_TYPE_NAME,		"+
+			"cln_insurers.insurer_name,cln_claims.Claim_no															"+
+			" FROM `cln_invoice_header`                                                  							"+
+			" INNER JOIN `cln_patients`  ON cln_invoice_header.`Patient_id`=cln_patients.`Patient_id` 				"+
+			" INNER JOIN `cln_fee_group` ON cln_invoice_header.`SOURCE_ID`=cln_fee_group.`FEE_GROUP_ID`				"+
+			" INNER JOIN `cln_fee_types` ON cln_invoice_header.`FEE_TYPE`=cln_fee_types.`FEE_TYPE_ID` 				"+
+			" LEFT JOIN `cln_insurers`  ON cln_invoice_header.`Insurer_id`=cln_insurers.`id` 						"+
+			" LEFT JOIN `cln_claims`    ON cln_invoice_header.`claim_id`=cln_claims.`Claim_id` 	        			"+
+			" WHERE header_id =? 												            						";
+
+		kiss.executeQuery(req,sql,[postData.header_id],function(rows){
+			var sqlLine=
+				" SELECT inv_items.*,cln_invoice_lines.ITEM_FEE_ID,cln_invoice_lines.FEE,cln_invoice_lines.AMOUNT,"+
+				"cln_invoice_lines.TIME_SPENT,cln_invoice_lines.QUANTITY,cln_invoice_lines.PRICE ,cln_invoice_lines.line_id "+
+				" FROM `cln_invoice_lines`                                                  		 "+
+				" INNER JOIN `inv_items` ON cln_invoice_lines.`ITEM_ID`=inv_items.`ITEM_ID` 		 "+
+				" WHERE HEADER_ID =? 												         		 ";
+			kiss.executeQuery(req,sqlLine,[postData.header_id],function(dataline){
+				console.log(rows);
+				res.json({status:'success',data:rows,dataline:dataline});
+			},function(err){
+				kiss.exlog(fHeader,'Loi truy van lay thong tin invoice header thong qua',err);
+				res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM002')});
+			},true);
+		},function(err){
+			kiss.exlog(fHeader,'Loi truy van lay thong tin invoice header thong qua',err);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
+		});
+	},
+	postGetfeetypefillter:function(req,res){ //get Item  by FEE_TYPE_ID and ITEM_ID 
+		var postData = req.body.data;
+		console.log(postData);
+		var fHeader="v2_InvoiceController->postGetfeetypefillter";
+		var functionCode='FN014';
+		var postData=kiss.checkData(postData)?postData:'';
+		if(!kiss.checkListData(postData))
+		{
+			kiss.exlog(fHeader,"Loi data truyen den",req.body);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM002')});
+			return;
+		}
+		var sql=
+			"SELECT itemFee.`ITEM_FEE_ID`,itemFee.`FEE`,`itemFee`.`PERCENT`, 								   "+
+			"`item`.`ITEM_CODE`,`item`.`ITEM_ID`,`item`.`TAX_ID`,`sys_taxes`.`TAX_CODE`,`sys_taxes`.`TAX_RATE`,"+
+			"item.`ITEM_NAME`,itemFee.`FEE_START_DATE`,itemFee.`FEE_TYPE_ID`   								   "+
+			"FROM `cln_item_fees` itemFee                                       							   "+
+			"INNER JOIN `inv_items` item ON itemFee.`CLN_ITEM_ID`=item.`ITEM_ID`							   "+
+			"LEFT JOIN `sys_taxes`  ON item.`TAX_CODE`=sys_taxes.`TAX_CODE`     							   "+
+			"WHERE item.`ITEM_ID`=? AND `itemFee`.`FEE_TYPE_ID`=?                                              "+
+			"AND itemFee.`FEE_START_DATE`<=?                                                                   "+
+			"ORDER BY itemFee.`FEE_START_DATE` DESC                                                            "+
+			"LIMIT 1															                               ";
+		kiss.executeQuery(req,sql,[postData.ITEM_ID,postData.FEE_TYPE_ID,postData.CurrentDate],function(rows){
+			res.json({status:'success',data:rows});
+		},function(err){
+			kiss.exlog(fHeader,'Loi truy van lay thong tin thong qua',err);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
+		});
+	},
+	postGetpatientbyid:function(req,res){//get patient by id
+		var postData = req.body.data;
+		var fHeader="v2_InvoiceController->postGetpatientbyid";
+		var functionCode='FN015';
+		var postData=kiss.checkData(postData)?postData:'';
+		if(!kiss.checkListData(postData))
+		{
+			kiss.exlog(fHeader,"Loi data truyen den",req.body);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM002')});
+			return;
+		}
+		var sql=
+			"SELECT * FROM cln_patients WHERE `Patient_id` = ?";
+		kiss.executeQuery(req,sql,[postData.Patient_id],function(rows){
+			res.json({status:'success',data:rows});
+		},function(err){
+			kiss.exlog(fHeader,'Loi truy van lay thong tin thong qua',err);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
+		});
+	},
+	postGetinsurerbyid:function(req,res){
+		var postData = req.body.data;
+		var fHeader="v2_InvoiceController->postGetinsurerbyid";
+		var functionCode='FN003';
+		var postData=kiss.checkData(postData)?postData:'';
+		if(!kiss.checkListData(postData))
+		{
+			kiss.exlog(fHeader,"Loi data truyen den",req.body);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM002')});
+			return;
+		}
+		var sql=
+			"SELECT cln_insurers.*,cln_fee_group.FEE_GROUP_NAME FROM cln_insurers LEFT JOIN `cln_fee_group`  ON cln_insurers.`FEE_GROUP_ID`=cln_fee_group.`FEE_GROUP_ID` WHERE `id` = ?";
+		kiss.executeQuery(req,sql,[postData.id],function(rows){
+			res.json({status:'success',data:rows});
+		},function(err){
+			kiss.exlog(fHeader,'Loi truy van lay thong tin thong qua',err);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
+		});
+	},
+	postGetitemfillterfeeid:function(req,res){ //get Item  by FEE_TYPE_ID and ITEM_ID 
+		var postData = req.body.data;
+		console.log(postData);
+		var fHeader="v2_InvoiceController->postGetitemfillterfeeid";
+		var functionCode='FN003';
+		var postData=kiss.checkData(postData)?postData:'';
+		if(!kiss.checkListData(postData))
+		{
+			kiss.exlog(fHeader,"Loi data truyen den",req.body);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM002')});
+			return;
+		}
+		console.log(postData);
+		var sql=
+			"SELECT itemFee.`ITEM_FEE_ID`,itemFee.`FEE`,`itemFee`.`PERCENT`, 								   "+
+			"`item`.`ITEM_CODE`,`item`.`ITEM_ID`,`item`.`TAX_ID`,`sys_taxes`.`TAX_CODE`,`sys_taxes`.`TAX_RATE`,"+
+			"item.`ITEM_NAME`,itemFee.`FEE_START_DATE`,itemFee.`FEE_TYPE_ID`   								   "+
+			"FROM `cln_item_fees` itemFee                                       							   "+
+			"INNER JOIN `inv_items` item ON itemFee.`CLN_ITEM_ID`=item.`ITEM_ID`							   "+
+			"LEFT JOIN `sys_taxes`  ON item.`TAX_CODE`=sys_taxes.`TAX_CODE`     							   "+
+			"WHERE `itemFee`.`FEE_TYPE_ID`=?                                              					   "+
+			"AND itemFee.`FEE_START_DATE`<=?                                                                   "+
+			"ORDER BY itemFee.`FEE_START_DATE` DESC                                                            ";
+		kiss.executeQuery(req,sql,[postData.FEE_TYPE_ID,postData.CurrentDate],function(rows){
+			res.json({status:'success',data:rows});
+		},function(err){
+			kiss.exlog(fHeader,'Loi truy van lay thong tin thong qua',err);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
+		});
+	},
 }

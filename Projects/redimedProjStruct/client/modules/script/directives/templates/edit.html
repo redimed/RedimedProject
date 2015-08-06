@@ -1,257 +1,225 @@
-<div class="panel panel-default un-header-top">
-	<div class="panel-body">
-		<label class="un-label-header-custom un-bgWhite-custom">Edit Script</label>
-		<form name="FrForm" novalidate>
-			<div class="row">
-				<div class="col-xs-4">
-					<div class="un-label-form-custom">
-						<span>Patient Name</span>
-					</div>
-					<label>{{patient.item.First_name}}&nbsp;{{patient.item.Sur_name}}</label>
-				</div>
-				<div class="col-xs-4">
-					<div class="un-label-form-custom">
-						<span>Prescriber</span>
-					</div>
-					<input type="text" class="form-control" ng-model="script.form.prescriber" placeholder="Prescriber" id="prescriber" name="prescriber" disabled="disabled" />
-				</div>
-				<div class="col-xs-4">
-					<div class="un-label-form-custom">
-						<span>Script Number</span>
-					</div>
-					<input type="text" class="form-control" ng-model="script.form.scriptNum" placeholder="Script Number" id="scriptNum" name="scriptNum" required number />
-				</div>
-			</div>
-			<div class="row" style="margin-top: 15px;">
-				<!--<div class="col-xs-4">
-					<div class="un-label-form-custom">
-						<span>Medicare</span>
-					</div>
-					<select ng-model="script.form.Medicare" class="form-control" ng-options=" item.medication_name as item.medication_name for item in medicaname"  required>
-						<option value="script.form.Medicare" class="">{{script.form.Medicare}}</option>
-					</select>
-				</div>-->
-				<div class="col-xs-4">
-					<div class="un-label-form-custom">
-						<span>Medicare Number</span>
-					</div>
-					<input class="form-control" disabled="disabled" name="MedicareNo" ng-mode="patient.item.Medicare_no" />
-				</div>
-				<div class="col-xs-4">
-					<div class="un-label-form-custom">
-						<span>EntitlementNo</span>
-					</div>
-					<input type="text" class="form-control" ng-model="script.form.EntitlementNo" placeholder="EntitlementNo" id="EntitlementNo" name="EntitlementNo" required />
-				</div>
-				<div class="col-xs-4">
-					<div class="un-label-form-custom">
-						<span>Agent Address</span>
-					</div>
-					<input type="text" class="form-control" ng-model="script.form.agentAddress" placeholder="Agent Address" id="agentAddress" name="agentAddress" required />
-				</div>
-			</div>
-			<div class="row" style="margin-top: 15px;">
-				<div class="col-xs-4">
-					<div class="un-label-form-custom">
-						<span>Doctor Date</span>
-					</div>
-					<input custom-date class="form-control" placeholder="Doctor Date" ng-model="script.form.doctordate" id="doctordate" name="doctordate" required />
-				</div>
-				<div class="col-xs-4">
-					<div class="un-label-form-custom">
-						<span>Patient Date</span>
-					</div>
-					<input custom-date class="form-control" placeholder="Patient Date" ng-model="script.form.patientDate" id="patientDate" name="patientDate" required />
-				</div>
-				<div class="col-xs-4"></div>
-			</div>
-			<div class="form-group">
-				<div class="col-xs-2">
-					<label class="control-label">
-		                <input type="checkbox" ng-model="script.form.isRefNo" ng-true-value=1 ng-false-value=0 ng-checked="script.form.isRefNo">&nbsp;RefNo
-					</label>
-				</div>
-				<div class="col-xs-2">
-					<label class="control-label">
-		                <input type="checkbox" ng-model="script.form.isSafety" ng-true-value=1 ng-false-value=0 ng-checked="script.form.isSafety">&nbsp;Safety
-					</label>
-				</div>
-				<div class="col-xs-2">
-					<label class="control-label">
-		                <input type="checkbox" ng-model="script.form.isConcessional" ng-true-value=1 ng-false-value=0 ng-checked="script.form.isConcessional">&nbsp;Concessional
-					</label>
-				</div>
-				<div class="col-xs-2">
-					<label class="control-label">
-		                <input type="checkbox" ng-model="script.form.isPBS" ng-true-value=1 ng-false-value=0 ng-checked="script.form.isPBS">&nbsp;PBS
-					</label>
-				</div>
-				<div class="col-xs-2">
-					<label class="control-label">
-		                <input type="checkbox" ng-model="script.form.isRPBS" ng-true-value=1 ng-false-value=0 ng-checked="script.form.isRPBS">&nbsp;RPBS
-					</label>
-				</div>
-				<div class="col-xs-2">
-					<label class="control-label">
-		                <input type="checkbox" ng-model="script.form.isBrand" ng-true-value=1 ng-false-value=0 ng-checked="script.form.isBrand">&nbsp;Brand
-					</label>
-				</div>
-			</div>
-			<div class="row">
-				<div class="table-dynamic col-xs-12" style="overflow-y: scroll; height: 250px;">
-					<table class="responsive table table-bordered">
-		                <thead>
-		                    <tr>
-		                    	<th>
-		                    		<div class="th">
-		                                <span style="color: white;"></span>
-		                            </div>
-		                    	</th>
-		                        <th>
-		                            <div class="th">
-		                                <span style="color: white;">Name</span>
-		                            </div>
-		                        </th>
-		                        <th>
-		                            <div class="th">
-		                                <span style="color: white;">Dose</span>
-		                            </div>
-		                        </th>
-		                        <th>
-		                            <div class="th">
-		                                <span style="color: white;">Unit</span>
-		                            </div>
-		                        </th>
-		                        <th>
-		                            <div class="th">
-		                                <span style="color: white;">Route</span>
-		                            </div>
-		                        </th>
-		                        <th>
-		                            <div class="th">
-		                                <span style="color: white;">Frequency</span>
-		                            </div>
-		                        </th>
-		                        <th>
-		                            <div class="th">
-		                                <span style="color: white;">Start Date</span>
-		                            </div>
-		                        </th>
-		                        <th>
-		                            <div class="th">
-		                                <span style="color: white;">End Date</span>
-		                            </div>
-		                        </th>
-		                        <th>
-		                            <div class="th">
-		                                <span style="color: white;">Quanlity</span>
-		                            </div>
-		                        </th>
-		                    </tr>
-		                </thead>
-		                <tbody>
-		                	<tr>
-                                <td colspan="11">
-                                    <div style="text-align: center;">
-                                        <span ng-if="list.length <= 0"></span>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr style="background-color: white;" class="bold" ng-repeat="ml in list">
-                            	<td>
-                            		<input type="checkbox" name="Checked" ng-model="ml.Checked" ng-checked="ml.Checked" ng-true-value=1 ng-false-value=0 />
-                            	</td>
-                            	<td style="vertical-align: middle">
-                                    {{ml.medication_name}}
-                                </td>
-                                <td style="vertical-align: middle">
-                                    {{ml.dose}}
-                                </td>
-                                <td style="vertical-align: middle">
-                                    {{ml.unit}}
-                                </td>
-                                <td style="vertical-align: middle">
-                                    {{ml.route}}
-                                </td>
-                                <td style="vertical-align: middle">
-                                    {{ml.frequency}}
-                                </td>
-                                <td style="vertical-align: middle">
-                                    {{ml.start_date | filterdate: 'DD/MM/YYYY'}}
-                                </td> 
-                                 <td style="vertical-align: middle">
-                                    {{ml.end_date | filterdate: 'DD/MM/YYYY'}}
-                                </td>
-                                 <td style="vertical-align: middle">
-                                    {{ml.qty}}
-                                </td>
-                            </tr>
-                            <tr style="background-color: white;" class="bold" ng-if="script.s_array.length > 0" ng-repeat="m in script.s_array">
-                            	<td>
-                            		<input type="checkbox" name="Checked" ng-model="m.Checked" ng-true-value=1 ng-false-value=0 />
-                            	</td>
-                            	<td style="vertical-align: middle">
-                                    {{m.medication_name}}
-                                </td>
-                                <td style="vertical-align: middle">
-                                    {{m.dose}}
-                                </td>
-                                <td style="vertical-align: middle">
-                                    {{m.unit}}
-                                </td>
-                                <td style="vertical-align: middle">
-                                    {{m.route}}
-                                </td>
-                                <td style="vertical-align: middle">
-                                    {{m.frequency}}
-                                </td>
-                                <td style="vertical-align: middle">
-                                    {{m.start_date}}
-                                </td>
-                                 <td style="vertical-align: middle">
-                                    {{m.end_date}}
-                                </td>
-                                 <td style="vertical-align: middle">
-                                    {{m.qty}}
-                                </td>
-                            </tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-			<div class="row" style="margin-top: 15px;">
-				<div class="col-xs-6">
-					<div class="un-label-form-custom" style="width: 550px;">
-						<span>Doctor Signature</span>	
-					</div>
-				</div>
-				<div class="col-xs-6">
-					<div class="un-label-form-custom" style="width: 550px;">
-						<span>Patient Signature</span>
-					</div>
-				</div>
-			</div>
-
-			<div class="row" style="margin-top: 15px;">
-				<div class="col-xs-6">
-					<span>
-			            <canvas width="550" height="200" id="canvas" style="background-color: #DDDDDD; margin-bottom: 15px; border: 2px solid 64A0D9" signature ng-model="script.form.doctorSign">
-			            </canvas>
-			        </span>
-
-				</div>
-				<div class="col-xs-6">
-					<span>
-			            <canvas width="550" height="200" id="canvas_paient" style="background-color: #DDDDDD; margin-bottom: 15px; border: 2px solid 64A0D9" signature ng-model="script.form.patientSign">
-			            </canvas>
-			        </span>
-				</div>
-			</div>
-			<div class="row" style="margin-top: 15px;">
-				<div class="col-xs-12">
-					<input type="submit" class="un-button-custom" ng-click="script.save()" value="Save" />
-				</div>
-			</div>
-		</form>
+<form name="FrForm" novalidate>
+<div class="row">
+	<div class="col-xs-4">
+		<div class="un-label-form-custom">
+			<span>Patient Name</span>
+		</div>
+		<label class="form-control" disabled="disabled" >{{patientData.info.First_name}}&nbsp;{{patientData.info.Sur_name}}</label>
+	</div>
+	<div class="col-xs-4">
+		<div class="un-label-form-custom">
+			<span>Prescriber</span>
+		</div>
+		<input type="text" class="form-control" ng-model="scriptData.info.prescriber" placeholder="Prescriber" id="prescriber" name="prescriber" disabled="disabled" />
+	</div>
+	<div class="col-xs-4">
+		<div class="un-label-form-custom">
+			<span>Script Number</span>
+		</div>
+		<input type="text" class="form-control" ng-model="scriptData.info.scriptNum" placeholder="Script Number" id="scriptNum" name="scriptNum" required number />
 	</div>
 </div>
+<div class="row" style="margin-top: 15px;">
+	<!--<div class="col-xs-4">
+		<div class="un-label-form-custom">
+			<span>Medicare</span>
+		</div>
+		<select ng-model="scriptData.info.Medicare" class="form-control" ng-options=" item.medication_name as item.medication_name for item in medicaname"  required>
+			<option value="scriptData.info.Medicare" class="">{{scriptData.info.Medicare}}</option>
+		</select>
+	</div>-->
+	<div class="col-xs-4">
+		<div class="un-label-form-custom">
+			<span>Medicare Number</span>
+		</div>
+		<input class="form-control" disabled="disabled" name="MedicareNo" ng-mode="patientData.info.Medicare_no" />
+	</div>
+	<div class="col-xs-4">
+		<div class="un-label-form-custom">
+			<span>EntitlementNo</span>
+		</div>
+		<input type="text" class="form-control" ng-model="scriptData.info.EntitlementNo" placeholder="EntitlementNo" id="EntitlementNo" name="EntitlementNo" required />
+	</div>
+	<div class="col-xs-4">
+		<div class="un-label-form-custom">
+			<span>Agent Address</span>
+		</div>
+		<input type="text" class="form-control" ng-model="scriptData.info.agentAddress" placeholder="Agent Address" id="agentAddress" name="agentAddress" required />
+	</div>
+</div>
+<div class="row" style="margin-top: 15px;">
+	<div class="col-xs-4">
+		<div class="un-label-form-custom">
+			<span>Doctor Date</span>
+		</div>
+		<input custom-date class="form-control" placeholder="Doctor Date" ng-model="scriptData.info.doctordate" id="doctordate" name="doctordate" required />
+	</div>
+	<div class="col-xs-4">
+		<div class="un-label-form-custom">
+			<span>Patient Date</span>
+		</div>
+		<input custom-date class="form-control" placeholder="Patient Date" ng-model="scriptData.info.patientDate" id="patientDate" name="patientDate" required />
+	</div>
+	<div class="col-xs-4"></div>
+</div>
+<div class="form-group">
+	<div class="col-xs-2">
+		<label class="control-label">
+            <input type="checkbox" ng-model="scriptData.info.isRefNo" ng-true-value=1 ng-false-value=0 ng-checked="scriptData.info.isRefNo">&nbsp;RefNo
+		</label>
+	</div>
+	<div class="col-xs-2">
+		<label class="control-label">
+            <input type="checkbox" ng-model="scriptData.info.isSafety" ng-true-value=1 ng-false-value=0 ng-checked="scriptData.info.isSafety">&nbsp;Safety
+		</label>
+	</div>
+	<div class="col-xs-2">
+		<label class="control-label">
+            <input type="checkbox" ng-model="scriptData.info.isConcessional" ng-true-value=1 ng-false-value=0 ng-checked="scriptData.info.isConcessional">&nbsp;Concessional
+		</label>
+	</div>
+	<div class="col-xs-2">
+		<label class="control-label">
+            <input type="checkbox" ng-model="scriptData.info.isPBS" ng-true-value=1 ng-false-value=0 ng-checked="scriptData.info.isPBS">&nbsp;PBS
+		</label>
+	</div>
+	<div class="col-xs-2">
+		<label class="control-label">
+            <input type="checkbox" ng-model="scriptData.info.isRPBS" ng-true-value=1 ng-false-value=0 ng-checked="scriptData.info.isRPBS">&nbsp;RPBS
+		</label>
+	</div>
+	<div class="col-xs-2">
+		<label class="control-label">
+            <input type="checkbox" ng-model="scriptData.info.isBrand" ng-true-value=1 ng-false-value=0 ng-checked="scriptData.info.isBrand">&nbsp;Brand
+		</label>
+	</div>
+</div>
+<div class="row">
+	<div class="table-dynamic col-xs-12" style="overflow-y: scroll; height: 250px;">
+		<table class="responsive table table-bordered">
+            <thead>
+                <tr>
+                	<th class="un_table_tab_bg">
+                		<div class="th">
+                            <span style="color: white;"></span>
+                        </div>
+                	</th>
+                    <th class="un_table_tab_bg">
+                        <div class="th">
+                            <span style="color: white;">Name</span>
+                        </div>
+                    </th>
+                    <th class="un_table_tab_bg">
+                        <div class="th">
+                            <span style="color: white;">Dose</span>
+                        </div>
+                    </th>
+                    <th class="un_table_tab_bg">
+                        <div class="th">
+                            <span style="color: white;">Unit</span>
+                        </div>
+                    </th>
+                    <th class="un_table_tab_bg">
+                        <div class="th">
+                            <span style="color: white;">Route</span>
+                        </div>
+                    </th>
+                    <th class="un_table_tab_bg">
+                        <div class="th">
+                            <span style="color: white;">Frequency</span>
+                        </div>
+                    </th>
+                    <th class="un_table_tab_bg">
+                        <div class="th">
+                            <span style="color: white;">Start Date</span>
+                        </div>
+                    </th>
+                    <th class="un_table_tab_bg">
+                        <div class="th">
+                            <span style="color: white;">End Date</span>
+                        </div>
+                    </th>
+                    <th class="un_table_tab_bg">
+                        <div class="th">
+                            <span style="color: white;">Quanlity</span>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            	 <tr>
+                    <td colspan="12">
+                        <div style="text-align: center;">
+                            <span ng-if="scriptData.info.medicare.length <= 0" style="font-size: 20px; font-style: italic; font-weight: bold;">      
+                                Empty Data
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+                <tr style="background-color: white;" class="bold" ng-if="scriptData.info.medicare.length > 0" ng-repeat="m in scriptData.info.medicare">
+                	<td>
+                		<input type="checkbox" name="Checked" ng-model="m.Checked" ng-checked="m.Checked" ng-true-value=1 ng-false-value=0 />
+                	</td>
+                    <td style="vertical-align: middle">
+                        {{m.medication_name}}
+                    </td>
+                    <td style="vertical-align: middle">
+                        {{m.dose}}
+                    </td>
+                    <td style="vertical-align: middle">
+                        {{m.unit}}
+                    </td>
+                    <td style="vertical-align: middle">
+                        {{m.route}}
+                    </td>
+                    <td style="vertical-align: middle">
+                        {{m.frequency}}
+                    </td>
+                    <td style="vertical-align: middle">
+                        {{m.start_date | filterdate: 'DD/MM/YYYY'}}
+                    </td>
+                     <td style="vertical-align: middle">
+                        {{m.end_date | filterdate: 'DD/MM/YYYY'}}
+                    </td>
+                     <td style="vertical-align: middle">
+                        {{m.qty}}
+                    </td>
+                </tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<div class="row" style="margin-top: 15px;">
+	<div class="col-xs-6">
+		<div class="un-label-form-custom" style="width: 550px;">
+			<span>Doctor Signature</span>	
+		</div>
+	</div>
+	<div class="col-xs-6">
+		<div class="un-label-form-custom" style="width: 550px;">
+			<span>Patient Signature</span>
+		</div>
+	</div>
+</div>
+
+<div class="row" style="margin-top: 15px;">
+	<div class="col-xs-6">
+		<span>
+            <canvas width="550" height="200" id="canvas" style="background-color: #DDDDDD; margin-bottom: 15px; border: 2px solid 64A0D9" signature ng-model="scriptData.info.doctorSign">
+            </canvas>
+        </span>
+
+	</div>
+	<div class="col-xs-6">
+		<span>
+            <canvas width="550" height="200" id="canvas_paient" style="background-color: #DDDDDD; margin-bottom: 15px; border: 2px solid 64A0D9" signature ng-model="scriptData.info.patientSign">
+            </canvas>
+        </span>
+	</div>
+</div>
+<div class="row" style="margin-top: 15px;">
+	<div class="col-xs-12">
+		<input type="submit" class="un-button-custom" ng-click="scriptData.saveScript()" value="Save" />
+	</div>
+</div>
+</form>

@@ -365,7 +365,8 @@ gulp.task('insurer', function(){
 	.pipe(gulp.dest('./client/dist/'));
 }),
 gulp.task('invoice', function(){
-	return gulp.src(['./client/modules/invoice/Invoice.js', 
+	return gulp.src(['./client/modules/invoice/js/invoice_helper.js', 
+					 './client/modules/invoice/Invoice.js', 
 					 './client/modules/invoice/services/InvoiceServices.js',
 					 './client/modules/invoice/controllers/InvoiceController.js',
 					 './client/modules/invoice/controllers/InvoiceListController.js',
@@ -374,6 +375,7 @@ gulp.task('invoice', function(){
 					 './client/modules/invoice/directives/tnInvoiceDetailDirective.js',
 					 './client/modules/invoice/directives/InvoiceSearchDirective.js',
 					 './client/modules/invoice/directives/InvoiceAddDirective.js',
+					 './client/modules/invoice/directives/ManualInvoiceAddDirective.js',
 	])
 	.pipe(concat('invoice.js'))
 	.pipe(uglify({mangle: false}))
@@ -403,7 +405,8 @@ gulp.task('iso', function(){
 	.pipe(gulp.dest('./client/dist/'));
 }),
 gulp.task('item', function(){
-	return gulp.src(['./client/modules/item/Item.js', 
+	return gulp.src(['./client/modules/item/js/item_helper.js', 
+		    		 './client/modules/item/Item.js', 
 					 './client/modules/item/services/ItemServices.js',
 					 './client/modules/item/directives/ItemDirectives.js',
 					 './client/modules/item/directives/ItemDetailDirective.js',
@@ -412,6 +415,7 @@ gulp.task('item', function(){
 					 './client/modules/item/directives/ItemHeaderDetailDirective.js',
 					 './client/modules/item/directives/ItemFeeGroupDetailDirective.js',
 					 './client/modules/item/directives/ItemFeeTypeDirective.js',
+					 './client/modules/item/directives/ItemShowHistoryDirective.js',
 					 './client/modules/item/directives/ItemPrivateFundsDirective.js',
 					 './client/modules/item/controllers/ItemController.js',
 					 './client/modules/item/controllers/ItemListController.js',

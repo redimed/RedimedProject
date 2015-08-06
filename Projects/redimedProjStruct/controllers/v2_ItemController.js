@@ -1,13 +1,19 @@
+var knex = require('../knex-connect.js');
+var commonFunction =  require('../knex-function.js');
+var S = require('string');
+var _ = require('lodash');
 var db = require('../models');
 var fs = require('fs');
 var mdt_functions = require('../mdt-functions.js');
-
 var item_model = require('../v1_models/Inv_items.js');
 var item_fees_model = require('../v1_models/Cln_item_fees.js');
 var parseString = require('xml2js').parseString;
 
 var kiss=require('./kissUtilsController');// tan add
-
+var controllerCode="RED_V2ITEM";//tan add
+var errorCode=require('./errorCode');//tan add
+var _ = require('lodash');//tan add
+var moment = require('moment');//tannv add
 var general_process = function(req, res){
 
 	var UPLOAD_FOLDER = db.FeeGroup.getUploadPath();
@@ -223,6 +229,41 @@ var general_process = function(req, res){
 }
 
 module.exports = {
+	postSearchmanual: function(req, res) {
+		var postData = req.body;
+		console.log(postData);
+		var sql = knex
+				.select('inv_items.*')
+				.from('cln_item_fees')
+				.innerJoin('inv_items','cln_item_fees.CLN_ITEM_ID','inv_items.ITEM_ID')
+				.where(knex.raw('IFNULL(ITEM_CODE,\'\') LIKE \'%'+postData.ITEM_CODE+'%\''))
+				.where(knex.raw('IFNULL(ITEM_NAME,\'\') LIKE \'%'+postData.ITEM_NAME+'%\''))
+				.where('cln_item_fees.FEE_TYPE_ID', postData.FEE_TYPE_ID)
+				.limit(postData.limit)
+				.offset(postData.offset)
+				.toString();
+		 var sql_count = knex
+				.select('inv_items.*')
+				.from('cln_item_fees')
+				.innerJoin('inv_items','cln_item_fees.CLN_ITEM_ID','inv_items.ITEM_ID')
+				.where(knex.raw('IFNULL(ITEM_CODE,\'\') LIKE \'%'+postData.ITEM_CODE+'%\''))
+				.where(knex.raw('IFNULL(ITEM_NAME,\'\') LIKE \'%'+postData.ITEM_NAME+'%\''))
+				.where('cln_item_fees.FEE_TYPE_ID', postData.FEE_TYPE_ID)
+	            .toString();
+		db.sequelize.query(sql)
+		.success(function(rows){
+			db.sequelize.query(sql_count)
+            .success(function(count){
+                res.json({data: rows, count: count.length});
+            })
+            .error(function(error){
+                res.json(500, {'status': 'error', 'message': error});
+            })
+		})
+		.error(function(error){
+			res.json(500, {error: error});
+		})
+	},
 	postSearch: function(req, res) {
 		var limit = (req.body.limit) ? req.body.limit : 10;
         var offset = (req.body.offset) ? req.body.offset : 0;
@@ -479,5 +520,83 @@ module.exports = {
 		.error(function(error){
 			res.json(500, {"status": "error", "message": error});
 		});
-	}
+	},
+	postShowHistory: function(req, res) {
+		var fHeader="V2_ItemController->postShowHistory";
+        var functionCode="M001";
+        var id = kiss.checkData(req.body.id)?req.body.id:'';
+        if(!kiss.checkListData(id))
+        {
+        	kiss.exlog(fHeader,'Loi param truyen den');
+        	res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'M001')});
+        	return;
+        }
+        console.log(id);
+        var sql =   "SELECT `cln_item_fees`.* ,cln_fee_types.`FEE_TYPE_NAME`                                "+
+					"FROM `cln_item_fees`                                                                   "+
+					"INNER JOIN `cln_fee_types`  ON cln_fee_types.`FEE_TYPE_ID`= cln_item_fees.`FEE_TYPE_ID`"+ 
+					"WHERE CLN_ITEM_ID = ?                                                                  "+
+					"ORDER BY `cln_item_fees`.FEE_START_DATE DESC                                           ";
+        kiss.executeQuery(req,sql,id,function(result){
+        	res.json({status:'success',data:result});
+        },function(err){
+            kiss.exlog(fHeader,"Loi truy van lay.",err);
+            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'M003')});
+        },true);
+	},
+
+	
+	/**
+     * tannv.dts@gmail.com
+     */
+    postGetItemFeeList:function(req,res)
+    {
+        var fHeader="v2_ItemFeeTypesController->postGetItemFeeList";
+        var functionCode="FN002";
+        var postData=kiss.checkData(req.body.postData)?req.body.postData:{};
+        var itemId=kiss.checkData(postData.itemId)?postData.itemId:'';
+        kiss.exlog(req.body);
+        if(!kiss.checkListData(itemId))
+        {
+            kiss.exlog(fHeader,'Loi data truyen den');
+            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
+            return;
+        }
+        
+        var sql=
+			"  SELECT t1.FEE_GROUP_ID, t1.FEE_GROUP_NAME, t1.FEE_GROUP_TYPE,                                        "+
+			"  t1.FEE_TYPE_ID, t1.FEE_TYPE_NAME,t2.ITEM_FEE_ID, t2.CLN_ITEM_ID,                                     "+
+			"  t2.FEE, t2.PERCENT, t2.FEE_START_DATE                                                                "+
+			"  FROM                                                                                                 "+
+			"  (                                                                                                    "+
+			" 	 SELECT DISTINCT feeGroup.`FEE_GROUP_ID`,feeGroup.`FEE_GROUP_NAME`,feeGroup.`FEE_GROUP_TYPE`,       "+
+			" 	 feeType.`FEE_TYPE_ID`,feeType.`FEE_TYPE_NAME`                                                      "+
+			" 	 FROM `cln_fee_group` feeGroup                                                                      "+
+			" 	 LEFT JOIN `cln_fee_types` feeType ON feeGroup.`FEE_GROUP_ID`=feeType.`FEE_GROUP_ID`                "+
+			" 	 LEFT JOIN `cln_item_fees` itemFee ON feeType.`FEE_TYPE_ID`=itemFee.`FEE_TYPE_ID`                   "+
+			" 	 WHERE feeGroup.`ISENABLE`=1                                                                        "+
+			" 	 AND (feeType.`ISENABLE`=1 OR feeType.`FEE_TYPE_ID` IS NULL)                                        "+
+			" 	                                                                                                    "+
+			"  ) t1                                                                                                 "+
+			"  LEFT JOIN                                                                                            "+
+			"  (                                                                                                    "+
+			" 	 SELECT DISTINCT feeType.`FEE_TYPE_ID`,feeType.`FEE_TYPE_NAME`,                                     "+
+			" 	 itemFee.`ITEM_FEE_ID`,itemFee.`CLN_ITEM_ID`,itemFee.`FEE`,itemFee.`PERCENT`,                       "+
+			" 	 itemFee.`FEE_START_DATE`                                                                           "+
+			" 	 FROM `cln_fee_types` feeType                                                                       "+
+			" 	 LEFT  JOIN `cln_item_fees` itemFee ON itemFee.`FEE_TYPE_ID`=feeType.`FEE_TYPE_ID`                  "+
+			" 	 WHERE  itemFee.`CLN_ITEM_ID`=?                                                                     "+
+			"  ) t2                                                                                                 "+
+			"  ON t1.FEE_TYPE_ID=t2.FEE_TYPE_ID                                                                     "+
+			"  ORDER BY t1.`FEE_GROUP_TYPE`,t1.`FEE_GROUP_NAME`,                                                    "+
+			"  t2.`FEE_TYPE_NAME`,t2.`FEE_START_DATE` DESC;                                                         ";
+        kiss.executeQuery(req,sql,[itemId],function(rows){
+            res.json({status:'success',data:rows});
+        },function(err){
+            kiss.exlog(fHeader,'Loi truy van lay fee list tuong ung item id',err);
+            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
+        },true);
+    },
+
+    
 }

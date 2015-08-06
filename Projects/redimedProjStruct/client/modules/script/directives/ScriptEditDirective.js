@@ -12,133 +12,78 @@ angular.module('app.loggedIn.script.directive.edit', [])
 			id: '=',
 			medicare:'='
 		},
-		link: function(scope, ele, attr){
+		controller: function($scope){
 
 			var user_id = $cookieStore.get('userInfo').id;
-			 
-			patientLoad = function(){
-				PatientService.get($stateParams.patient_id)
+			
+			var getPatientInfo = function(){
+				PatientService.getP($stateParams.patient_id)
 				.then(function(response){
-					console.log('chiênnnnnnnnnnnnnnnnnnnnnnnnn',scope.current_patient);
-					scope.patient.item = response.data;
-				}, function(error){})
-			}
+					$scope.patientData.info = response.data[0];
+				}, function(error){});
+			};
 
-			scope.patient = {
-				item: {},
-				load: function(){
-					patientLoad();
-				}
-			}
+			$scope.patientData = {
+				info: {},
+				getPatientInfo: function(){ getPatientInfo(); }
+			};
 
-			var load = function(){
-				scope.script_s = angular.copy(scope.medicare);
-				angular.forEach(scope.script_s, function(value_script, index_script){
-					scope.script_s[index_script].Checked = null;
-					scope.script_s[index_script].Created_by = user_id;
-					scope.script_s[index_script].Creation_date = moment().format('YYYY-MM-DD');
-					scope.script_s[index_script].Last_updated_by = user_id;
-					scope.script_s[index_script].Last_update_date = moment().format('YYYY-MM-DD');
-				});
-
-				ScriptModel.listpostHead(scope.id, $stateParams.cal_id).then(function(responser){
-					scope.list = angular.copy(responser.data);
-					angular.forEach(scope.list, function(value_script, index_script){
-						scope.list[index_script].start_date = ConfigService.convertToDate_F(scope.list[index_script].start_date);
-						scope.list[index_script].end_date = ConfigService.convertToDate_F(scope.list[index_script].end_date);
-					});
-
-					angular.forEach(scope.script_s, function(value_script, index_script){
-						var flag = true;	
-						angular.forEach(scope.list, function(value_s, index_s){
-							if(scope.script_s[index_script].medication_name == scope.list[index_s].medication_name){
-								flag = false;
-								return;
-							}
+			var loadInfo = function(){
+				//load info script
+				ScriptModel.byid($scope.id).then(function(response){
+					response.data.doctordate = moment(response.data.doctordate).format('DD/MM/YYYY');
+					response.data.patientDate = moment(response.data.patientDate).format('DD/MM/YYYY');
+					$scope.scriptData.info = response.data;
+					if ($scope.medicare) {
+						$scope.scriptData.info.medicare = angular.copy($scope.medicare);
+						// load medication
+						ScriptModel.listMedicationInScript($scope.id).then(function (data) {
+							if (data.status == 'success') {
+								var medicareInScript = [];
+								//set list sctipt
+								_.forEach(data.data,function (item) {
+									medicareInScript[item.id_medicare] = item.id_medicare;
+								});
+								//check list medicare in list script
+								_.forEach($scope.scriptData.info.medicare,function (item) {
+									if (medicareInScript[item.id]) {
+										item.Checked = 1;
+									};
+								})
+							};
 						});
-						if(flag){
-							scope.script.s_array.push(value_script);
-						}
-					});
+					}
+				}, function(error){
 
-
-				}, function(error){});
-
-
-				scope.$watch('id', function(success){
-					  scope.id = success;
 				});
-				ScriptModel.byid(scope.id).then(function(response){
-					
-					scope.script.form = angular.copy(response.data);
-					scope.script.form.doctordate = ConfigService.convertToDate_F(scope.script.form.doctordate);
-					scope.script.form.patientDate = ConfigService.convertToDate_F(scope.script.form.patientDate);
-					
-				}, function(error){});
 			}
 
-			var save = function(){
-
-				ConfigService.beforeSave(scope.script.errors);
-				scope.script.errors = [];
-				var postData = angular.copy(scope.script.form); 
-				postData.Patient_id = $stateParams.patient_id;
-				postData.CAL_ID = $stateParams.cal_id;
-				postData.Last_updated_by = user_id;
-				postData.ID = scope.id;
-				postData.Creation_date = moment().format('YYYY-MM-DD');
-				postData.Last_update_date =  moment().format('YYYY-MM-DD');
-				postData.doctordate = ConfigService.convertToDB(postData.doctordate);
-				postData.patientDate = ConfigService.convertToDB(postData.patientDate);
-
-				var postDatar = [];
-				angular.forEach(scope.script.s_array, function(values, indexs){
-					if(scope.script.s_array[indexs].Checked === "1"){
-						postDatar.push(values);
-					}
-				});
-				var postDatary = [];
-				angular.forEach(scope.list, function(valuesy, indexsy){
-					if(scope.list[indexsy].Checked === "0"){
-						postDatary.push(valuesy);
-					}
-				});
-
-				console.log('^^::::::::::::: ', postDatary);
-
-				ScriptModel.edit(postData)
-				.then(function(response){
+			var saveScript = function(){
+				ConfigService.beforeSave($scope.scriptData.errors);
+				$scope.scriptData.errors = [];
+				console.log('$scope.scriptData.info',$scope.scriptData.info);
+				ScriptModel.add($scope.scriptData.info).then(function(response){
 					toastr.success('Edited Successfully');
-					scope.success =  true;
-
-					angular.forEach(postDatar, function(value_p, index_p){
-						postDatar[index_p].start_date = ConfigService.convertToDB(postDatar[index_p].start_date);
-						postDatar[index_p].end_date = ConfigService.convertToDB(postDatar[index_p].end_date);
-						postDatar[index_p].ID_SCRIPT = scope.id;
-						postDatar[index_p].CAL_ID = $stateParams.cal_id;
-					});
-
-					ScriptModel.editHead(postDatar, postDatary)
-					.then(function(response){
-
-					}, function(error){})
-
+					if (data.status == 'success') {
+						if ($scope.success) {
+							$scope.success.runWhenFinish();
+						};
+					};
 				}, function(error){
-					scope.script.errors = angular.copy(error.data.errors);
-					ConfigService.beforeError(scope.script.errors);
+					$scope.scriptData.errors = angular.copy(error.data.errors);
+					ConfigService.beforeError($scope.scriptData.errors);
 				})
 
 			}
 
-			scope.script = {
-				s_array: [],
-				save: function(id){ save(); },
+			$scope.scriptData = {
+				saveScript: function(){ saveScript(); },
 				errors: [],
-				load: function(){ load(); },
-				form: {
-					ID: '',
-					Patient_id: '',
-					CAL_ID: '',
+				loadInfo: function(){ loadInfo(); },
+				info: {
+					ID: $scope.id,
+					Patient_id: $stateParams.patient_id,
+					CAL_ID: $stateParams.cal_id,
 					prescriber: '',
 					scriptNum: 0,
 					isRefNo: 0,
@@ -153,14 +98,11 @@ angular.module('app.loggedIn.script.directive.edit', [])
 					doctordate: '',
 					patientSign: '',
 					patientDate: '',
-					agentAddress: ''
+					medicare:[]
 				}
-
 			}
-
-			scope.patient.load();
-			scope.script.load();
-
+			$scope.patientData.getPatientInfo();
+			$scope.scriptData.loadInfo();
 		}//end link
 
 	}//end return

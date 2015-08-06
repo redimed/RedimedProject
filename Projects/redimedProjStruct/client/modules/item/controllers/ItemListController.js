@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.item.list.controller",[
 ])
-.controller("ItemListController", function($scope, $state, toastr, ItemService){
+.controller("ItemListController", function($scope, $state, toastr, ItemService,$modal){
 
         $scope.item_panel = {};
         $scope.itemInfo = {};
@@ -36,9 +36,37 @@ angular.module("app.loggedIn.item.list.controller",[
                 {
                     class: 'fa fa-info', title: 'Info',
                     callback: function(item){
-                        console.log(item)
-                            $scope.itemInfo.ITEM_ID = item.ITEM_ID;
-                            $scope.editForm.open();
+                        // console.log(item)
+                        $scope.itemInfo.ITEM_ID = item.ITEM_ID;
+                        // $scope.editForm.open();
+
+                        var modalInstance=$modal.open({
+                            templateUrl:'showItemTemplate',
+                            controller:function($scope,$modalInstance,options,editForm,itemInfo){
+                                $scope.options=options;
+                                $scope.editForm=editForm;
+                                $scope.itemInfo=itemInfo;
+
+                            },
+                            resolve:{
+                                options : function(){
+                                    return $scope.options;
+                                },
+                                editForm:function(){
+                                    return $scope.editForm;
+                                },
+                                itemInfo:function(){
+                                    return $scope.itemInfo;
+                                }
+                            },
+                            size:'lg'
+                        })
+                        // .result.then(function(response){
+                        //     if(response === 'success'){
+                        //          $scope.fee_types_panel.reload();
+                        //     }
+                        // })
+
                     }
                 },
                 {
@@ -47,6 +75,39 @@ angular.module("app.loggedIn.item.list.controller",[
                         $scope.items.select = item.ITEM_ID;
                         $scope.itemFees.panel.reload(item.ITEM_ID);
                         $scope.itemFees.open();
+                    }
+                },
+                {
+                    class: 'fa fa-history', title: 'Show History',
+                    callback: function(item){
+                         var modalInstance=$modal.open({
+                            templateUrl:'ShowHistory',
+                            controller:function($scope,$modalInstance,id){
+                                 $scope.cancel=function()
+                                {
+                                    $modalInstance.dismiss('cancel');
+                                }
+                               $scope.ShowHistory = {
+                                    success: false,
+                                    id:id
+                                }
+                                $scope.$watch('ShowHistory.success', function(success){
+                                    if(success){
+                                        $modalInstance.close('success');
+                                    }
+                                })
+                            },
+                            resolve:{
+                               id : function(){
+                                 return item.ITEM_CODE;
+                               }
+                            }
+                        })
+                        .result.then(function(response){
+                            if(response === 'success'){
+                                 $scope.fee_types_panel.reload();
+                            }
+                        })
                     }
                 },
             ],
@@ -60,21 +121,27 @@ angular.module("app.loggedIn.item.list.controller",[
         is_show: false,
         open: function(){
             this.is_show = true;
+            angular.element("#popupItemFee").modal('show');
         }, 
         close: function(){
             this.is_show = false;
         }, 
         panel: {}
     }
+    /*close edit item load directive edit*/
+    $('#popupItemFee').on('hidden.bs.modal', function (e) {
+        $scope.itemFees.close();
+    })
 
     /*
     *   ADD FORM
     */
-
+    console.log("options.taxes",$scope.options);
     $scope.addForm = {
         is_show: false,
         open: function(){
             this.is_show = true;
+            angular.element("#popupAddItem").modal('show');
         }, 
         close: function(){
             this.is_show = false;
@@ -83,19 +150,28 @@ angular.module("app.loggedIn.item.list.controller",[
                 $scope.item_panel.reload();
         }
     }
+    /*close edit item load directive edit*/
+    $('#popupAddItem').on('hidden.bs.modal', function (e) {
+        $scope.addForm.close();
+    })
 
  	$scope.editForm = {
-            is_show: false,
-            open: function () {
-                this.is_show = true;
-            },
-            close: function () {
-                this.is_show = false;
-            },
-            success: function (response) {
-                $scope.item_panel.reload();
-            }
+        is_show: false,
+        open: function () {
+            this.is_show = true;
+            angular.element("#popupEditItem").modal('show');
+        },
+        close: function () {
+            this.is_show = false;
+        },
+        success: function (response) {
+            $scope.item_panel.reload();
         }
+    }
+    /*close edit item load directive edit*/
+    $('#popupEditItem').on('hidden.bs.modal', function (e) {
+        $scope.editForm.close();
+    })
    /*
    *    IMPORT ITEMS FROM SOURCE
    */
@@ -106,5 +182,9 @@ angular.module("app.loggedIn.item.list.controller",[
             // console.log(response);
         });
    }
+
+
+
+
 
 })

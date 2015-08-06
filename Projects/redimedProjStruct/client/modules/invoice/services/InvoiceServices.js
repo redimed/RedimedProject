@@ -117,7 +117,61 @@ angular.module('app.loggedIn.invoice.services', [])
 		return result.post({patientId:patientId,calId:calId});
 	}
 	
+	/**
+	 * tannv.dts@gmail.com
+	 */
+	 
+	   mdtService.getitemfillterfeeid=function(postData)
+	{
+		var funcApi = mdtApi.all('invoice/getitemfillterfeeid');
+		return funcApi.post({data: postData});
+	}
+	  mdtService.getpatientbyid=function(postData)
+	{
+		var funcApi = mdtApi.all('invoice/getpatientbyid');
+		return funcApi.post({data: postData});
+	}
+	 mdtService.getFeegroupbyid=function(postData)
+	{
+		var funcApi = mdtApi.all('invoice/feegroupbyid');
+		return funcApi.post({data: postData});
+	}
+	mdtService.getinsurerbyid=function(postData)
+	{
+		var funcApi = mdtApi.all('invoice/getinsurerbyid');
+		return funcApi.post({data: postData});
+	}
+	mdtService.getFeegrouptype=function(postData)
+	{
+		var funcApi = mdtApi.all('invoice/feegrouptype');
+		return funcApi.post({data: postData});
+	}
 
+	mdtService.getFeeType=function(postData)
+	{
+		var funcApi = mdtApi.all('invoice/feetype');
+		return funcApi.post({data: postData});
+	}
+	mdtService.getSaveManual=function(postData)
+	{
+		var funcApi = mdtApi.all('invoice/savemanual');
+		return funcApi.post({data: postData});
+	}
+	mdtService.getEditManual=function(postData)
+	{
+		var funcApi = mdtApi.all('invoice/editmanual');
+		return funcApi.post({data: postData});
+	}
+	mdtService.getOnemanual=function(postData)
+	{
+		var funcApi = mdtApi.all('invoice/onemanual');
+		return funcApi.post({data: postData});
+	}
+	mdtService.getfeetypefillter=function(postData)
+	{
+		var funcApi = mdtApi.all('invoice/getfeetypefillter');
+		return funcApi.post({data: postData});
+	}
 	
 	mdtService.search = function(option){
 		var funcApi = mdtApi.all('search');

@@ -6,9 +6,12 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 		templateUrl: 'modules/appointment/directives/templates/calendar.html',
 		scope: {
 			options: '=',
-			search: '=',
+			search: '='
 		},
 		link: function(scope, elem, attrs){
+
+			var user_id = $cookieStore.get('userInfo').id;
+
 			scope.arrayAppid=[];
 			scope.oldColor=[];
 			scope.isKeyPressed = function($event){
@@ -371,6 +374,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 															scope.appointment.list[temp_index].doctors[doctor_row].patients.push({Patient_id: data.Patient_id, First_name: data.First_name, Sur_name: data.Sur_name, Outreferral: data.outreferral});
 															scope.appointment.list[temp_index].doctors[doctor_row].PATIENTS = 'ok';
 															scope.appointment.list[temp_index].doctors[doctor_row].IS_REFERRAL = data.IS_REFERRAL;
+															scope.appointment.list[temp_index].doctors[doctor_row].IS_BOOKABLE = data.IS_BOOKABLE;
 															return;
 														}
 														doctor_row++;
@@ -405,7 +409,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 									var doctors = [];
 									_.forEach(response.doctors, function(doctor){
 										if(doctor.DOCTOR_ID === data.DOCTOR_ID)
-											doctors.push({DOCTOR_ID: doctor.DOCTOR_ID, DOCTOR_NAME: doctor.NAME, SERVICE_ID: data.SERVICE_ID, CAL_ID: data.CAL_ID, IS_REFERRAL: data.IS_REFERRAL, SERVICE_COLOR: data.SERVICE_COLOR, PATIENTS: 'MESS_SYS_010', patients: [], CLINICAL_DEPT_ID: data.CLINICAL_DEPT_ID });
+											doctors.push({DOCTOR_ID: doctor.DOCTOR_ID, DOCTOR_NAME: doctor.NAME, SERVICE_ID: data.SERVICE_ID, CAL_ID: data.CAL_ID, IS_REFERRAL: data.IS_REFERRAL,IS_BOOKABLE:data.IS_BOOKABLE, SERVICE_COLOR: data.SERVICE_COLOR, PATIENTS: 'MESS_SYS_010', patients: [], CLINICAL_DEPT_ID: data.CLINICAL_DEPT_ID });
 										else
 											doctors.push({DOCTOR_ID: doctor.DOCTOR_ID, DOCTOR_NAME: doctor.NAME, PATIENTS: '###' });
 									})
@@ -443,6 +447,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 									scope.appointment.list[flagTheme].doctors[doctor_row].CAL_ID = data.CAL_ID;
 									scope.appointment.list[flagTheme].doctors[doctor_row].SERVICE_COLOR = data.SERVICE_COLOR;
 									scope.appointment.list[flagTheme].doctors[doctor_row].IS_REFERRAL = data.IS_REFERRAL;
+									scope.appointment.list[flagTheme].doctors[doctor_row].IS_BOOKABLE = data.IS_BOOKABLE;
 									scope.appointment.list[flagTheme].doctors[doctor_row].CLINICAL_DEPT_ID = data.CLINICAL_DEPT_ID;
 
 									if(scope.appointment.list[flagTheme].doctors[doctor_row].patients.length > 0){
@@ -456,7 +461,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 							var doctors = [];
 							_.forEach(response.doctors, function(doctor){
 								if(doctor.DOCTOR_ID === data.DOCTOR_ID)
-									doctors.push({DOCTOR_ID: doctor.DOCTOR_ID, DOCTOR_NAME: doctor.NAME, SERVICE_ID: data.SERVICE_ID, CAL_ID: data.CAL_ID, IS_REFERRAL: data.IS_REFERRAL, SERVICE_COLOR: data.SERVICE_COLOR, PATIENTS: 'MESS_SYS_010', patients: [], CLINICAL_DEPT_ID: data.CLINICAL_DEPT_ID });
+									doctors.push({DOCTOR_ID: doctor.DOCTOR_ID, DOCTOR_NAME: doctor.NAME, SERVICE_ID: data.SERVICE_ID, CAL_ID: data.CAL_ID, IS_REFERRAL: data.IS_REFERRAL,IS_BOOKABLE:data.IS_BOOKABLE, SERVICE_COLOR: data.SERVICE_COLOR, PATIENTS: 'MESS_SYS_010', patients: [], CLINICAL_DEPT_ID: data.CLINICAL_DEPT_ID });
 								else{
 									doctors.push({DOCTOR_ID: doctor.DOCTOR_ID, DOCTOR_NAME: doctor.NAME, PATIENTS: '###' });
 								}
@@ -618,14 +623,16 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 			}
 
 			var dialogAdd = function(app, col){
-				var modalInstance = $modal.open({
+				scope.appointment.load();
+				if (col.IS_BOOKABLE == 1) {
+					var modalInstance = $modal.open({
 					templateUrl: 'appointmentAdd',
 					controller: function($scope, $modalInstance, app, options, search){
 						$scope.appointment = {
 							app: app,
 							col: col
 						}
-
+						
 						$scope.options = options;
 						$scope.search = search;
 						//PARAMS
@@ -660,9 +667,9 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 							return scope.appointment.search;
 						}
 					}
-				});
+					});
 
-				modalInstance.result.then(function(patient){
+					modalInstance.result.then(function(patient){
 					if(patient){
 						scope.appointment.load();
 						scope.alertCenter.load();
@@ -882,7 +889,22 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 							}
 						})//result for close
 					}
-				})
+					})
+				}else{
+                    var modalInstance=$modal.open({
+                        templateUrl:'showNotificationNo',
+                        controller:function($scope,$modalInstance){
+                           
+                            $scope.cancel=function(){
+                                $modalInstance.dismiss('cancel');
+                            }
+                        }
+                    })
+                    .result.then(function(response){
+                      
+                    })
+                	
+				};
 			}
 
 			var onRightClick = function($event, app, col, patient){
@@ -961,7 +983,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 								})
 
 								if(alert_flag){
-									var object = {id: row.ALERT_ID, name: row.ALERT_NAME, color: row.SERVICE_COLOR, patient_alert: row.ID};
+									var object = {id: row.ALERT_ID, name: row.ALERT_NAME, color: row.SERVICE_COLOR, patient_alert: row.ID, Check: row.Check, User: row.User, isUser: row.isUser, Patients_id: row.Patients_id};
 									scope.alertCenter.list[flag].alert.push(object);
 								}
 
@@ -987,7 +1009,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 							var object = {Patient_id: row.Patient_id, First_name: row.First_name, Sur_name: row.Sur_name, alert: [], cal: []};
 
 							if(row.ALERT_ID){
-								object.alert.push({id: row.ALERT_ID, name: row.ALERT_NAME, color: row.SERVICE_COLOR});
+								object.alert.push({id: row.ALERT_ID, name: row.ALERT_NAME, color: row.SERVICE_COLOR, patient_alert: row.ID, Check: row.Check, User: row.User, isUser: row.isUser, Patients_id: row.Patients_id});
 							}
 
 							if(row.CAL_ID){
@@ -1016,7 +1038,78 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 				}
 			}
 
+			// get value check box notification
+			var search = {
+				id: 0,
+				isCheck: 0,
+				isUser: 0
+			}
+
+			// var list_search = {
+			// 	user_name: ''
+			// }
+
+			// Check box notification
+			var onCheck = function(row) {
+				//console.log('Row: ', row);
+				scope.alertCenter.search.id = row.patient_alert;
+				scope.alertCenter.search.isCheck = row.Check;
+				scope.alertCenter.search.isUser = user_id;
+				scope.alertCenter.search.Patients_id = row.Patients_id;
+				// console.log('Search: ', scope.alertCenter.search);
+				AppointmentModel.PostCheck(scope.alertCenter.search)
+				.then(function(response){
+
+					var temp = [];
+					var temp_r = [];
+					//console.log('###############: ', scope.alertCenter.list);
+					angular.forEach(scope.alertCenter.list, function(value, index) {
+						if(scope.alertCenter.list[index].Patient_id === scope.alertCenter.search.Patients_id) {
+							temp.push(value);
+						}
+					})
+					//console.log('#######################: ', temp[0].alert);
+					angular.forEach(temp[0].alert, function(values, indexs) {
+						if(temp[0].alert[indexs].patient_alert === scope.alertCenter.search.id) {
+							temp_r.push(values);		
+						}
+					})
+					//console.log('^^^^^^^^^^^^^^^^^^^^^: ', temp_r);
+
+					// //console.log('%%%%%%%%%%%%%%%%%%%%%%: ', scope.alertCenter.list.alert);
+					// // console.log('%%%%%%%%%%%%%%: ', temp_r);
+					// //scope.alertCenter.load();
+					// var f_search = {
+					// 	id: 0
+					// }
+					// angular.forEach(temp_r, function(valuer, indexr) {
+					// 	temp_r[indexr].
+					// })
+					AppointmentModel.PostUser(user_id)
+					.then(function(resp) {
+						angular.forEach(temp_r, function(valuer, indexr) {
+							temp_r[indexr].User = resp.data[0].User;
+						})
+						angular.forEach(scope.alertCenter.list, function(value_y, index_y) {
+							angular.forEach(temp_r, function(value_x, index_x) {
+								if( scope.alertCenter.list[index_y].Patient_id === temp_r[index_x].Patients_id ){
+									angular.forEach(scope.alertCenter.list[index_y].alert, function(value_a, index_a) {})
+								}
+							})
+						})
+						//scope.alertCenter.list.push(temp_r[0]);
+						//console.log('#################: ', scope.alertCenter.list);
+						//console.log('%%%%%%%%%%%%%%%%%%%%%%: ', scope.alertCenter.list);
+						//console.log('**************************: ', resp);
+						// scope.alertCenter.list_search.user_name = resp.data[0].user_name;
+					}, function(error){})
+				}, function(error){})
+			}
+			
 			scope.alertCenter = {
+				search: search,
+				//list_search: list_search,
+				onCheck: function(row){ onCheck(row); },
 				load: function(){ loadAlertCenter(); },
 				list: [],
 				arrow: false

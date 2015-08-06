@@ -28,6 +28,10 @@ angular.module("app.loggedIn.insurer.services", [])
         var instanceApi =  insurerApi.all('oneFollowPatient');
         return instanceApi.post({data: data});
     }
+    instanceService.getFeeGroup = function(data){
+        var instanceApi =  insurerApi.all('getFeeGroup');
+        return instanceApi.post({data: data});
+    }
 
     instanceService.oneFollowCompany = function(data){
         var instanceApi =  insurerApi.all('oneFollowCompany');

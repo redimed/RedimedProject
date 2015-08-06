@@ -21,7 +21,7 @@
 				<h3 class="form-section">Additional Information Settings</h3>
 				<div class="row">
 					<div class="col-md-4 col-sm-4 col-xs-4">
-						<label>
+						<label class="control-label">
 							<input type="checkbox" ng-model="header.is_have_resting_measurement" ng-checked="header.is_have_resting_measurement === 1">
 							Have Resting Measurements
 						</label>
@@ -107,13 +107,16 @@
 								<a href="javascript:;" class="collapse" data-original-title="" title="" style="color:white;">
 								
 								</a>
-								<a href="javascript:;" class="remove" data-original-title="" title="" style="color:white; background:none;" ng-click="removeLine(section, line)">
+								<a href="javascript:;" class="" data-original-title="" title="Clone" style="color:white; background:none;" ng-click="cloneToNewLine(section, line)">
+									<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+								</a>
+								<a href="javascript:;" class="remove" data-original-title="" title="Remove" style="color:white; background:none;" ng-click="removeLine(section, line)">
 									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 								</a>
-								<a href="javascript:;" class="" data-original-title="" title="" style="color:white; background:none;" ng-click="moveLineUp(line, section)" ng-hide="section.lines.indexOf(line)===0">
+								<a href="javascript:;" class="" data-original-title="" title="Move up" style="color:white; background:none;" ng-click="moveLineUp(line, section)" ng-hide="section.lines.indexOf(line)===0">
 									<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
 								</a>
-								<a href="javascript:;" class="" data-original-title="" title="" style="color:white; background:none;" ng-click="moveLineDown(line, section)" ng-hide="section.lines.indexOf(line)===section.lines.length-1">
+								<a href="javascript:;" class="" data-original-title="" title="Move down" style="color:white; background:none;" ng-click="moveLineDown(line, section)" ng-hide="section.lines.indexOf(line)===section.lines.length-1">
 									<span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
 								</a>
 							</div>

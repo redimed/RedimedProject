@@ -11,7 +11,7 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 			permission: '@',
 			//withoutPatient: '@',
 			onSavecheck: '&',
-			onClickRow: '&'
+			// onClickRow: '&'
 		},
 		templateUrl: 'modules/alert/directives/templates/patientList.html',
 		link: function(scope, elem, attrs){
@@ -39,26 +39,69 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 			}
 
 			var bysearch = {
+				page: 1,
+				max_size: 5,
+				limit: 15,
+				offset: 0,
 				patient_id: $stateParams.patient_id,
 				cal_id: $stateParams.cal_id
+			}
+
+			var searchlist = {
+				page: 1,
+				max_size: 5,
+				limit: 10,
+				offset: 0
+			}
+
+			// var searchcheck = {
+			// 	check: 0
+			// }
+
+			
+
+			scope.setPage = function (page) {
+				scope.alert.searchlist.offset = (page-1)*scope.alert.searchlist.limit;
+				scope.alert.load();
+			}
+
+			scope.onPage = function (page) {
+				scope.alert.bysearch.offset = (page-1)*scope.alert.bysearch.limit;
+				scope.alert.load();
 			}
 
 			var load = function(){
 
 				if(scope.action.edit == true){
 
-					AlertModel.postshowalertpatient(bysearch)
+					AlertModel.postshowalertpatient(scope.alert.bysearch)
 					.then(function(response) {
 						scope.alert.bylist = response.data;
+						scope.alert.count = response.count;
+						//console.log('@@@@@@@@@@: ', scope.alert.count);
 					}, function(error){})
 				}else{
+					// AlertModel.postlistalert(scope.alert.searchlist)
+					// .then(function(res) {
+					// 	//console.log(res.data);
+					// 	scope.alert.list = res.data;
+					// 	scope.alert.count_list = res.count;
+					// }, function(error) {})
 					AlertModel.showcompanyid($stateParams.patient_id)
 					.then(function(response) {
-						var company_id = response.data[0].company_id;
-							AlertModel.showalert(company_id)
-							.then(function(resp) {
-								scope.alert.list = resp.data;
-							}, function(error){})
+						
+						scope.alert.searchlist.company_id = response.data[0].company_id;
+						AlertModel.postlistalert(scope.alert.searchlist)
+						.then(function(res) {
+							scope.alert.list = res.data;
+							scope.alert.count_list = res.count;
+						}, function(error) {})
+						
+						// var company_id = response.data[0].company_id;
+						// 	AlertModel.showalert(company_id)
+						// 	.then(function(resp) {
+						// 		scope.alert.list = resp.data;
+						// 	}, function(error){})
 					}, function(error){ })
 				}
 				// if(typeof scope.withoutPatient !== 'undefined' && scope.withoutPatient){
@@ -142,6 +185,7 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 			}
 
 			var onCheckbox = function(option){
+				
 				if(option.value){
 					scope.alert.checkbox.push({patient_id: scope.patientId, cal_id: $stateParams.cal_id, alert_id: option.list.id});
 				}else{
@@ -155,20 +199,20 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 					})
 				}
 			}
-			var disablePatientAlert = function(l){
-				var postData = {
-					alert_id:l.id,
-					patient_id:$stateParams.patient_id,
-					cal_id:$stateParams.cal_id,
-					isEnable:l.isEnable
-				}
-				AlertModel.disablePatientAlert(postData)
-				.then(function(response){
-					scope.alert.load();
-				},function(error){
+			// var disablePatientAlert = function(l){
+			// 	var postData = {
+			// 		alert_id:l.id,
+			// 		patient_id:$stateParams.patient_id,
+			// 		cal_id:$stateParams.cal_id,
+			// 		isEnable:l.isEnable
+			// 	}
+			// 	AlertModel.disablePatientAlert(postData)
+			// 	.then(function(response){
+			// 		scope.alert.load();
+			// 	},function(error){
 
-				})
-			}
+			// 	})
+			// }
 			scope.alert = {
 				dialog: {
 					remove: function(list){
@@ -178,9 +222,12 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 						edit(list);
 					}
 				},
+				count: 0,
+				count_list: 0,
 				search: angular.copy(search),
-				bysearch: angular.copy(bysearch),
+				bysearch: bysearch,
 				load: function(){load();},
+				searchlist: searchlist,
 				list: [],
 				bylist: [],
 				checkbox: [],
@@ -188,7 +235,7 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 				onOrderBy: function(option){ onOrderBy(option); },
 				onPage: function(page){ onPage(page); },
 				onCheckbox: function(option){ onCheckbox(option); },
-				disablePatientAlert : function(l){disablePatientAlert(l);},
+				// disablePatientAlert : function(l){disablePatientAlert(l);},
 				checkedit:scope.action.edit
 			}
 
@@ -197,7 +244,6 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 			scope.$watch('reload', function(reload){
 				if(reload){
 					scope.alert.search = angular.copy(search);
-					scope.alert.bysearch = angular.copy(bysearch);
 					scope.alert.load();
 				}
 			})

@@ -23,10 +23,7 @@
                 }
            </style>
       <div class="modal-body">
-          <alert-patient-list patient-id="alert.Patient_id" cal-id="alert.CAL_ID" limit="alert.limit" reload="alert.reload" without-patient="true"
-              permission="{edit: false, remove: false, checkbox: true}"
-                on-click-row="alert.onClickRow(row)"
-               on-savecheck="alert.onSaveCheck(data)">
+          <alert-patient-list patient-id="alert.Patient_id" cal-id="alert.CAL_ID" limit="alert.limit" reload="alert.reload" without-patient="true" on-savecheck="alert.onSaveCheck(data)" permission="{edit: false, remove: false, checkbox: true}">
           </alert-patient-list>
       </div>
    </script>

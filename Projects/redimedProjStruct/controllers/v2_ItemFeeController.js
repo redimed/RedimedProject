@@ -8,6 +8,10 @@ var fund_fees_model = require('../v1_models/Cln_item_health_fund_fees.js');
 var type_fees_model = require('../v1_models/Cln_fee_types.js');
 var funds_model = require('../v1_models/Cln_private_fund.js');
 
+var kiss=require('./kissUtilsController');
+var errorCode=require('./errorCode');
+var controllerCode="RED_V2ItemFee";
+
 
 var general_process = function(req, res){
 	// PROCESS FILE UPLOAD
@@ -245,17 +249,34 @@ module.exports = {
 	*/
 
 	// SEARCH FEE GROUP 
+	// created by: tannv.dts@gmail.com
+	// modify: tannv.dts@gmail.com
 	postSearchGroupFees:function(req, res) {
+		var fHeader="v2_ItemFeeController->postSearchGroupFees";
+		var functionCode="FN001";
+		kiss.exlog(req.body);
 		var fields = req.body.fields;
+		//tannv begin
+		var searchs=req.body.search?req.body.search:{};
+		searchs.ISENABLE=1;
+		if(searchs.SHOW_ALL && searchs.SHOW_ALL==1)
+		{
+			delete searchs.ISENABLE;
+		}
+		delete searchs.SHOW_ALL;
+		//tannv end
 
 		db.FeeGroup.findAndCountAll({
 			// offset: offset,
 			// limit: limit,
-			attributes: fields
+			attributes: fields,
+			where:searchs,//tannv add
+			order:[["FEE_GROUP_TYPE","ASC"],["FEE_GROUP_NAME","ASC"],['ISENABLE','DESC']]//tannv add
 		}).success(function(result){
 			res.json({"status": "success", "list": result.rows, "count": result.count});
 		})
 		.error(function(error){
+			kiss.exlog(fHeader,error);
 			res.json(500, {"status": "error", "message": error});
 		});
 	},
@@ -356,6 +377,7 @@ module.exports = {
 		// var limit = (req.body.limit) ? req.body.limit : 10;
   //       var offset = (req.body.offset) ? req.body.offset : 0;
 		var fields = req.body.fields;
+		kiss.exlog(fields);
 		// var search_data = req.body.search;
 
 		db.FeeType.findAndCountAll({
@@ -521,4 +543,32 @@ module.exports = {
 			res.json(arr)
 		});
 	},
+
+	/**
+	 * Remove item fee
+	 * tannv.dts@gmail.com
+	 * 30-07-2015
+	 */
+	postRemoveItemFee:function(req,res){
+		var fHeader="v2_ItemFeeController->postRemoveItemFee";
+		var functionCode="FN002";
+		var itemFeeId=kiss.checkData(req.body.itemFeeId)?req.body.itemFeeId:'';
+		if(!kiss.checkListData(itemFeeId))
+		{
+			res.json({status:'success',msg:'not found item fee id'});
+			return;
+			// kiss.exlog(fHeader,'Loi data truyen den');
+			// res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
+			// return;
+		}
+		var sql="DELETE FROM `cln_item_fees` WHERE ITEM_FEE_ID=?";
+		kiss.executeQuery(req,sql,[itemFeeId],function(result){
+			res.json({status:'success'});
+		},function(err){
+			kiss.exlog(fHeader,'Loi truy van xoa item fee',err);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN002')});
+		},true)
+	}
+
+	
 }
