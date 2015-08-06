@@ -21,8 +21,11 @@ var invConst={
 //05-08-2015
 var testReport=false;
 function getUrlReport(){
-	if(testReport)
+	if(testReport==true)
+	{
 		return 'http://localhost:3003/RedimedJavaREST/api/document';
+		
+	}
 	else
 	{
 		return 'http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document';
