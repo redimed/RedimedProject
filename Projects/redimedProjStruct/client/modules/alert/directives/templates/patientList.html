@@ -66,7 +66,7 @@
 			</pagination>
 		</div>
 		<div style="text-align: right;" ng-show='alert.checkedit == true'>
-			<pagination boundary-links="true" total-items="alert.count" ng-model="alert.bysearch.page" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" items-per-page="alert.bysearch.limit" max-size="alert.bysearch.max_size" ng-change="onPaging(alert.bysearch.page)" >
+			<pagination boundary-links="true" total-items="alert.count" ng-model="alert.bysearch.page" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" items-per-page="alert.bysearch.limit" max-size="alert.bysearch.max_size" ng-change="onPage(alert.bysearch.page)" >
 			</pagination>
 		</div>
 	</div>

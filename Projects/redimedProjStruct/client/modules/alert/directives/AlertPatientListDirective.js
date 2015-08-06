@@ -65,7 +65,7 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 				scope.alert.load();
 			}
 
-			scope.onPaging = function (page) {
+			scope.onPage = function (page) {
 				scope.alert.bysearch.offset = (page-1)*scope.alert.bysearch.limit;
 				scope.alert.load();
 			}
@@ -74,10 +74,11 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 
 				if(scope.action.edit == true){
 
-					AlertModel.postshowalertpatient(bysearch)
+					AlertModel.postshowalertpatient(scope.alert.bysearch)
 					.then(function(response) {
-						scope.alert.count = response.count;
 						scope.alert.bylist = response.data;
+						scope.alert.count = response.count;
+						//console.log('@@@@@@@@@@: ', scope.alert.count);
 					}, function(error){})
 				}else{
 					// AlertModel.postlistalert(scope.alert.searchlist)
@@ -224,7 +225,7 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 				count: 0,
 				count_list: 0,
 				search: angular.copy(search),
-				bysearch: angular.copy(bysearch),
+				bysearch: bysearch,
 				load: function(){load();},
 				searchlist: searchlist,
 				list: [],
@@ -243,7 +244,6 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 			scope.$watch('reload', function(reload){
 				if(reload){
 					scope.alert.search = angular.copy(search);
-					scope.alert.bysearch = angular.copy(bysearch);
 					scope.alert.load();
 				}
 			})

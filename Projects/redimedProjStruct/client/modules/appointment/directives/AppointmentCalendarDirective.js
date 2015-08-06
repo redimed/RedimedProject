@@ -1019,6 +1019,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 				}
 			}
 
+			// get value check box notification
 			var search = {
 				id: 0,
 				isCheck: 0,
@@ -1029,6 +1030,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 			// 	user_name: ''
 			// }
 
+			// Check box notification
 			var onCheck = function(row) {
 				//console.log('Row: ', row);
 				scope.alertCenter.search.id = row.patient_alert;
@@ -1069,7 +1071,15 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 						angular.forEach(temp_r, function(valuer, indexr) {
 							temp_r[indexr].User = resp.data[0].User;
 						})
-						scope.alertCenter.list.push(temp_r);
+						angular.forEach(scope.alertCenter.list, function(value_y, index_y) {
+							angular.forEach(temp_r, function(value_x, index_x) {
+								if( scope.alertCenter.list[index_y].Patient_id === temp_r[index_x].Patients_id ){
+									angular.forEach(scope.alertCenter.list[index_y].alert, function(value_a, index_a) {})
+								}
+							})
+						})
+						//scope.alertCenter.list.push(temp_r[0]);
+						//console.log('#################: ', scope.alertCenter.list);
 						//console.log('%%%%%%%%%%%%%%%%%%%%%%: ', scope.alertCenter.list);
 						//console.log('**************************: ', resp);
 						// scope.alertCenter.list_search.user_name = resp.data[0].user_name;

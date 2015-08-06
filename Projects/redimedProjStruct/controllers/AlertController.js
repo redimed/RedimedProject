@@ -626,10 +626,11 @@ module.exports = {
 		.innerJoin('cln_alerts', 'cln_patient_alerts.alert_id', 'cln_alerts.id')
 		.limit(postData.limit)
 		.offset(postData.offset)
+		.orderBy('cln_patient_alerts.id', 'desc')
 		.toString();
 
 		var sql_count = knex('cln_patient_alerts')
-		.count('cln_patient_alerts.id as a')
+		.count('cln_alerts.id as a')
 		.where({
 			'cln_patient_alerts.patient_id': postData.patient_id,
 			'cln_patient_alerts.cal_id': postData.cal_id

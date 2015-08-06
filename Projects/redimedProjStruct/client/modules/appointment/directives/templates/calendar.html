@@ -85,11 +85,9 @@
     <div class="panel-body msg_container_base">
        <div ng-if="list.test !== 0 || list.alert.length !== 0" class="un_body_notification_list" ng-repeat="list in alertCenter.list">
 	       <div class="panelo">
-	    		<div>
-            		<span ng-if="list.alert.length > 0 || list.cal.length > 0" style="font-size: 16px;font-weight: bold;">
-				        <a href="javascript:;" style="text-decoration: none;"><span id="minim_chat_window" class="icon_minims">{{list.First_name}} {{list.Sur_name}}</span></a>
-				    </span>
-				</div>
+        		<span ng-if="list.alert.length > 0 || list.cal.length > 0" style="font-size: 16px;font-weight: bold;">
+			        <a href="javascript:;" style="text-decoration: none;"><span id="minim_chat_window" class="icon_minims">{{list.First_name}} {{list.Sur_name}}</span></a>
+			    </span>
 				<div class="panelor">
 					<ul ng-repeat="alert in list.alert" ng-if="list.alert.length > 0">
 				        <li style="color: {{alert.color}};">
