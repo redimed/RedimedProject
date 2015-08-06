@@ -78,6 +78,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 										line.comments.forEach(function(comment){
 											comment.PATIENT_ID = patient_id;
 											comment.CAL_ID = cal_id;
+											console.log($scope.header);
 										})
 									}
 								})
@@ -297,7 +298,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 				}
 				autoSummary(line);
 			}
-			else if($scope.header.TYPE = "Crown" && detail.VAL1_ISCHECKBOX === 12){
+			else if($scope.header.TYPE === "Crown" && detail.VAL1_ISCHECKBOX === 12){
 				console.log('this is line details index',line.details.indexOf(detail));
 				console.log('this is line details length',line.details.length);
 				if(line.details.indexOf(detail) === line.details.length - 1){
@@ -311,11 +312,18 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 					}
 					autoSummary(line);
 				}
-				
 			}
-		}	
-		if(line.SCORE_TYPE1 === 9 && (detail.VAL1_ISVALUE===7 || detail.VAL1_ISVALUE===8 || detail.VAL1_ISVALUE===9 || detail.VAL1_ISVALUE===10)){
-			var default_details_value = line.details[0].VAL1_VALUE;
+		}
+		if((line.SCORE_TYPE1 === 9) && (detail.VAL1_ISVALUE===7 || detail.VAL1_ISVALUE===8 || detail.VAL1_ISVALUE===9 || detail.VAL1_ISVALUE===10)){
+			var default_details_value = null;
+			if(detail.VAL2_ISVALUE === 7 || detail.VAL2_ISVALUE === 8 || detail.VAL2_ISVALUE === 9 || detail.VAL2_ISVALUE === 10){
+				if($scope.patient_info.Sex === "Male") default_details_value = line.details[0].VAL1_VALUE;
+				else {
+					line.details[0].VAL1_VALUE = line.details[0].VAL2_VALUE;
+					default_details_value = line.details[0].VAL1_VALUE;
+				}
+			}
+			else default_details_value = line.details[0].VAL1_VALUE;
 			var start_value = 5;
 			if(line.details === 2){
 				line.details[1].VAL1_VALUE = angular.copy(default_details_value);
@@ -553,7 +561,22 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 		}				
 	}
 	//End Auto rating functions
-
+	//Auto line rating watch
+	$scope.autoLineSummary = function(line){
+		if(line.SCORE_TYPE1 === 7 || line.SCORE_TYPE1 === 9 || line.SCORE_TYPE1 === 17 || line.SCORE_TYPE1 === 18 || line.SCORE_TYPE1 === 19){
+			if(line.RATING_VALUE1 === '0'){
+				line.RATE1 = "Unable";
+			}
+			else if(line.RATING_VALUE1 === '1'){
+				line.RATE1 = "Partial";
+			}
+			else if(line.RATING_VALUE1 === '2'){
+				line.RATE1 = "Able";
+			}
+			autoSummary(line);
+		}
+		
+	}
 	// Auto summary functions
 	var autoSummary = function(line){
 		console.log('this is line satis', line);

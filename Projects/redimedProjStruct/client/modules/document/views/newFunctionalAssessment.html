@@ -168,10 +168,10 @@
 								<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL1_ISVALUE===1 || detail.VAL1_ISVALUE===7 || detail.VAL1_ISVALUE===8 || detail.VAL1_ISVALUE===9 || detail.VAL1_ISVALUE===10">
 									<input type="text" class="form-control" ng-model="detail.VAL1_VALUE" ng-change="autoCalculationVal1(line, detail)">
 								</div>
-								<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL2_ISVALUE===1 || detail.VAL2_ISVALUE===7 || detail.VAL2_ISVALUE===8 || detail.VAL2_ISVALUE===9 || detail.VAL2_ISVALUE===10">
+								<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL2_ISVALUE===1 || (detail.VAL2_ISVALUE!==7 && detail.VAL2_ISVALUEQ==8 && detail.VAL2_ISVALUE===9 && detail.VAL2_ISVALUE===10)">
 									<label class="control-label pull-right" style="margin-top:10px;">{{detail.VAL2_NAME}}</label>
 								</div>
-								<div class="col-md-2 col-sm-2 col-xs-2" ng-if="detail.VAL2_ISVALUE===1 || detail.VAL2_ISVALUE===7 || detail.VAL2_ISVALUE===8 || detail.VAL2_ISVALUE===9 || detail.VAL2_ISVALUE===10">
+								<div class="col-md-2 col-sm-2 col-xs-2"ng-if="detail.VAL2_ISVALUE===1 || (detail.VAL2_ISVALUE!==7 && detail.VAL2_ISVALUEQ==8 && detail.VAL2_ISVALUE===9 && detail.VAL2_ISVALUE===10)">
 									<input type="text" class="form-control" ng-model="detail.VAL2_VALUE" ng-change="autoCalculationVal2(line)">
 								</div>
 								
@@ -506,13 +506,13 @@
 						</div>
 						<div class="col-md-4 col-sm-4 col-xs-4" ng-if="line.ISRATING1 === 1 && (line.SCORE_TYPE1 === 9 || line.SCORE_TYPE1 === 7 || line.SCORE_TYPE1 === 15 || line.SCORE_TYPE1 === 17 || line.SCORE_TYPE1 === 18 || line.SCORE_TYPE1 === 19)">
 							<label class="btn">
-								<input type="radio" ng-model="line.RATING_VALUE1" value="0"> UNABLE 
+								<input type="radio" ng-model="line.RATING_VALUE1" value="0" ng-change="autoLineSummary(line)"> UNABLE 
+							</label>
+							<label class="btn" ng-if="header.TYPE!=='Crown'">
+								<input type="radio" ng-model="line.RATING_VALUE1" value="1" ng-change="autoLineSummary(line)"> PARTIAL 
 							</label>
 							<label class="btn">
-								<input type="radio" ng-model="line.RATING_VALUE1" value="1"> PARTIAL 
-							</label>
-							<label class="btn">
-								<input type="radio" ng-model="line.RATING_VALUE1" value="2"> ABLE 
+								<input type="radio" ng-model="line.RATING_VALUE1" value="2" ng-change="autoLineSummary(line)"> ABLE 
 							</label>
 						</div>
 						<div class="col-md-2 col-sm-2 col-xs-2" ng-if="line.ISRATING2 === 1 && (line.SCORE_TYPE2 === 9 || line.SCORE_TYPE2 === 7 || line.SCORE_TYPE2 === 15 || line.SCORE_TYPE2 === 17 || line.SCORE_TYPE2 === 18 || line.SCORE_TYPE2 === 19)">
@@ -520,13 +520,13 @@
 						</div>
 						<div class="col-md-4 col-sm-4 col-xs-4" ng-if="line.ISRATING2 === 1 && (line.SCORE_TYPE2 === 9 || line.SCORE_TYPE2 === 7 || line.SCORE_TYPE2 === 15 || line.SCORE_TYPE2 === 17 || line.SCORE_TYPE2 === 18 || line.SCORE_TYPE2 === 19)">
 							<label class="btn">
-								<input type="radio" ng-model="line.RATING_VALUE2" value="0"> UNABLE 
+								<input type="radio" ng-model="line.RATING_VALUE2" value="0" ng-change="autoLineSummary(line)"> UNABLE 
+							</label>
+							<label class="btn" ng-if="header.TYPE!=='Crown'">
+								<input type="radio" ng-model="line.RATING_VALUE2" value="1" ng-change="autoLineSummary(line)"> PARTIAL 
 							</label>
 							<label class="btn">
-								<input type="radio" ng-model="line.RATING_VALUE2" value="1"> PARTIAL 
-							</label>
-							<label class="btn">
-								<input type="radio" ng-model="line.RATING_VALUE2" value="2"> ABLE 
+								<input type="radio" ng-model="line.RATING_VALUE2" value="2" ng-change="autoLineSummary(line)"> ABLE 
 							</label>
 						</div>
 						<!-- End Unable?Partial/Able Rating -->
