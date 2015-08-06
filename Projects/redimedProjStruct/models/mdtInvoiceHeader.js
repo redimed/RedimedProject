@@ -139,6 +139,9 @@ module.exports = function(sequelize, DataTypes){
                 mdtInvoiceHeader.belongsTo(models.FeeGroup,{
                 	as:'FeeGroup',foreignKey:'SOURCE_ID'
                 });
+                mdtInvoiceHeader.belongsTo(models.FeeType,{
+                	as:'FeeType',foreignKey:'FEE_TYPE'
+                });
                 // /**
                 //   * tannv.dts@gmail.com
                 //   */

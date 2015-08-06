@@ -1077,13 +1077,13 @@ angular.module("app.loggedIn.patient.consult.controller",[])
                  var t = {
                  	HEADER_ID:$scope.invoiceHeaderInfo.header_id,
                     ITEM_ID: item.ITEM_ID,
-                    PRICE: item.PRICE,
+                    // PRICE: item.PRICE, //tan comment
                     QUANTITY: item.QUANTITY,
-                    AMOUNT:item.PRICE*item.QUANTITY,
+                    // AMOUNT:item.PRICE*item.QUANTITY, // tan comment
                     TAX_ID:item.TAX_ID,
                     TAX_CODE:item.TAX_CODE,
                     TAX_RATE:item.TAX_RATE,
-                    TAX_AMOUNT:item.PRICE*item.QUANTITY*(item.TAX_RATE?item.TAX_RATE:0.0),
+                    // TAX_AMOUNT:item.PRICE*item.QUANTITY*(item.TAX_RATE?item.TAX_RATE:0.0), //tan comment
                     TIME_SPENT: !item.TIME_SPENT ? 0: item.TIME_SPENT,
                     IS_ENABLE: item.checked == '1' ? 1 : 0
                 }

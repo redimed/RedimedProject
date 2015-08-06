@@ -1,6 +1,6 @@
 angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 
-.directive('addmaunalInvoice', function($stateParams,$modal,PatientService,InvoiceHeaderModel, ConfigService, InvoiceService, ReceptionistService, toastr, $filter, $state, CompanyService){
+.directive('addmaunalInvoice', function($cookieStore,$stateParams,$modal,PatientService,InvoiceHeaderModel, ConfigService, InvoiceService, ReceptionistService, toastr, $filter, $state, CompanyService){
 	return {
 		restrict: 'EA',
 		scope:{
@@ -13,6 +13,7 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 		templateUrl: 'modules/invoice/directives/templates/manualAdd.html',
 		controller: function($scope) {
 			var arrGetBy = $filter('arrGetBy');
+			$scope.user_id = $cookieStore.get('userInfo').id;
 			$scope.modelObjectMap = {
 				FEE_GROUP_TYPE :null,
 				FEE_GROUP_ID:null,
@@ -36,7 +37,6 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 			$scope.InvoiceMap = {
 				lines:[]
 			}
-			console.log($scope.patientid);
 			if($scope.patientid){
 				$scope.patientTest = true;
 				var postDataPatient={
@@ -47,7 +47,10 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 					$scope.patientName = response.data[0].First_name + ' ' + response.data[0].Sur_name;
 				})
 			}
-			$scope.patientSearch = {
+			/*
+				DManh Create
+			*/
+			$scope.patientSearch = {//When Click Patient Search
 				open: function() {
 					$modal.open({
 						templateUrl: 'popupPatientSearch',
@@ -147,7 +150,10 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 					})
 				}
 			}
-			$scope.insurerSearch = {
+			/*
+				DManh Create
+			*/
+			$scope.insurerSearch = {//When Select Insurer From List Insurer
 				open: function() {
 					$scope.claim = null;
 					$modal.open({
@@ -195,7 +201,10 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 					})
 				}
 			}
-			$scope.claimSearch = {
+			/*
+				DManh Create
+			*/
+			$scope.claimSearch = {//When Cick Button Search Claim
 				open: function() {
 					$modal.open({
 						templateUrl: 'popupClaimSearchInsurer',
@@ -225,7 +234,7 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 								})
 							}
 							$scope.load();
-							$scope.showAddClaim = function(){
+							$scope.showAddClaim = function(){//Add New Claim
 			                    var modalInstance=$modal.open({
 			                        templateUrl:'popupAddClaim',
 			                        controller:function($scope,$modalInstance,insurers,patientData){
@@ -276,8 +285,11 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 					})
 				}
 			}
-			$scope.feeGroupTypeChange = function(value){
-				$scope.changeFeeType('');
+			/*
+				DManh Create
+			*/
+			$scope.feeGroupTypeChange = function(value){// When Choose Bill To
+				$scope.feeGroupNameChange('');
 				$scope.modelObjectMap.FEE_GROUP_TYPE = value;
 				$scope.insurers=null;
 				$scope.feeTypeID = null;
@@ -286,7 +298,10 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 
 				})
 			}
-			$scope.feeGroupNameChange = function(value){
+			/*
+				DManh Create
+			*/
+			$scope.feeGroupNameChange = function(value){//When Change Group Name
 				$scope.changeFeeType('');
 				$scope.InvoiceMap.lines = [];
 				$scope.modelObjectMap.FEE_TYPE_ID=null;
@@ -308,15 +323,20 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 					$scope.feeTypeID = response.data;
 				})
 			}
-			$scope.changeFeeType = function(value){
+			/*
+				DManh Create
+			*/
+			$scope.changeFeeType = function(value){//When CHoose Fee Type
 				$scope.InvoiceMap.lines = [];
 			}
+			/*
+				DManh Create
+			*/
 			$scope.itemSearch = {
 				open: function() {
 					$modal.open({
 						templateUrl:'popupChooseMaunalItem',
 						controller: function($scope,$modalInstance,FEE_TYPE_ID,ItemService){
-							
 							var search = {
 								page: 1,
 								limit: 7,
@@ -331,7 +351,6 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 							var load = function(){
 								 $scope.ItemAll.loading = true;
 								ItemService.insertManualLine(search).then(function(response){
-									
 									$scope.ItemAll.list = response.data;
 									$scope.ItemAll.count = response.count;
 								})
@@ -402,8 +421,7 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 							data[0].TIME_SPENT = 0;
 							data[0].IS_ENABLE = 1;
 							$scope.InvoiceMap.lines.push(data[0]);
-							function sortLine(a,b)
-							{
+							function sortLine(a,b){//Sort Array by FEE
 								if(a.FEE<b.FEE)
 									return 1;
 								else if(a.FEE>b.FEE)
@@ -430,7 +448,10 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 					})
 				}
 			}
-			$scope.amountBill = function() {
+			/*
+				DManh Create
+			*/
+			$scope.amountAll = function() {//cal amount = price * quantity
 				var amount = 0;
 				for(var i = 0, len = $scope.InvoiceMap.lines.length; i < len; ++i) {
 		 			var line = $scope.InvoiceMap.lines[i];
@@ -440,10 +461,39 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 
 		 		return Math.round(amount * 100) / 100;
 			}
+			/*
+				DManh Create
+			*/
+			$scope.taxAmountAll = function() {//cal amount_tax = price * quantity + tax_rate
+				var amount = 0;
+				for(var i = 0, len = $scope.InvoiceMap.lines.length; i < len; ++i) {
+		 			var line = $scope.InvoiceMap.lines[i];
+		 			line.AMOUNT = line.PRICE * line.QUANTITY*line.TAX_RATE;
+		 			amount +=  line.AMOUNT;
+		 		}
+
+		 		return Math.round(amount * 100) / 100;
+			}
+			/*
+				DManh Create
+			*/
+			$scope.totalAmount = function() {// cal totalAmount = amount * amount_tax
+				var amount = 0;
+				for(var i = 0, len = $scope.InvoiceMap.lines.length; i < len; ++i) {
+		 			var line = $scope.InvoiceMap.lines[i];
+		 			line.AMOUNT = line.PRICE * line.QUANTITY*line.TAX_RATE + line.PRICE * line.QUANTITY;
+		 			amount +=  line.AMOUNT;
+		 		}
+
+		 		return Math.round(amount * 100) / 100;
+			}
+			/*
+				DManh Create
+			*/
 			$scope.save = function() {
 				$scope.isSubmit = true;
                 if (!$scope.mainForm.$invalid) {
-                	if ($scope.modelObjectMap.FEE_GROUP_TYPE == 'private_fund') {
+                	if ($scope.modelObjectMap.FEE_GROUP_TYPE == 'private_fund') {//IS Private Fund
 					postData = {
 						Patient_id:$scope.patient.Patient_id,
 						SOURCE_TYPE:$scope.modelObjectMap.FEE_GROUP_TYPE,
@@ -455,7 +505,7 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 						claim_id:$scope.claim.Claim_id
 
 						}
-					}else{
+					}else{//Is Not Private Fund
 						postData = {
 							Patient_id:$scope.patient.Patient_id,
 							SOURCE_TYPE:$scope.modelObjectMap.FEE_GROUP_TYPE,
@@ -465,25 +515,31 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 							listLines:$scope.InvoiceMap.lines
 						}
 					};
-					if ($scope.checkedit !== true) {
-						postData.CREATION_DATE = moment().format('YYYY-MM-DD hh:mm:ss');
-						postData.LAST_UPDATE_DATE = moment().format('YYYY-MM-DD hh:mm:ss');
-						postData.STATUS = 'enter'
+					if ($scope.checkedit !== true) {// Is Edit Form
+						postData.CREATION_DATE = moment().format('YYYY-MM-DD HH:mm:ss');
+						postData.LAST_UPDATE_DATE = moment().format('YYYY-MM-DD HH:mm:ss');
+						postData.STATUS = 'enter';
+						postData.user_id = $scope.user_id;
 						InvoiceService.getSaveManual(postData).then(function(response){
 							$scope.success = true;
 						})
 
-					}else{
+					}else{//Is Add Form
 						postData.header_id = $scope.headerdata.header_id;
-						postData.LAST_UPDATE_DATE = moment().format('YYYY-MM-DD hh:mm:ss');
-						postData.STATUS = 'enter'
+						postData.LAST_UPDATE_DATE = moment().format('YYYY-MM-DD HH:mm:ss');
+						postData.STATUS = 'enter';
+						postData.user_id = $scope.user_id;
 						InvoiceService.getEditManual(postData).then(function(response){
+							toastr.success('Edit Manual Invoice Success !');
 							$scope.success = true;
 						})
 					};
 					
                 }
 			}
+			/*
+				DManh Create
+			*/
 			$scope.removeInvoiceLine = function(item){
 				for (var i = 0; i < $scope.InvoiceMap.lines.length; i++) {
 					if ($scope.InvoiceMap.lines[i].ITEM_ID == item.ITEM_ID) {
@@ -491,11 +547,11 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 					};
 				};
 			}
-			$scope.resetEdit = function(){
+			$scope.resetEdit = function(){//Button Reset Form Edit 
 				var postData = {
 					header_id : $scope.headerdata.header_id
 				}
-				InvoiceService.getOnemanual(postData).then(function(response){
+				InvoiceService.getOnemanual(postData).then(function(response){//Get Manual by Id
 					$scope.patientName = response.data[0].First_name +''+ response.data[0].Sur_name ;
 					$scope.patient = {
 						Patient_id :response.data[0].Patient_id,
@@ -505,8 +561,7 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 					$scope.feeGroupNameChange(response.data[0].groupFEE_GROUP_ID);
 					$scope.modelObjectMap.FEE_TYPE_ID = response.data[0].typesFEE_TYPE_ID;
 					$scope.InvoiceMap.lines = response.dataline;
-					function sortLine(a,b)
-					{
+					function sortLine(a,b){
 						if(a.FEE<b.FEE)
 							return 1;
 						else if(a.FEE>b.FEE)
@@ -515,33 +570,25 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 							return 0;
 					}
 					
-					if(response.data[0].FORMULA)
-					{
+					if(response.data[0].FORMULA){
 						$scope.FORMULA 	  = response.data[0].FORMULA;
 					}
-					else
-					{
+					else{
 						$scope.FORMULA 	  = "100";
 					}
 					$scope.FORMULACal = response.data[0].FORMULA.split(":");
 					$scope.InvoiceMap.lines.sort(sortLine);
-					for(var i=0;i<$scope.InvoiceMap.lines.length;i++)
-					{
-						if($scope.FORMULACal[i])
-						{
-							//$scope.InvoiceMap.lines[i].PRICE=$scope.InvoiceMap.lines[i].FEE*$scope.FORMULACal[i];
+					for(var i=0;i<$scope.InvoiceMap.lines.length;i++){
+						if($scope.FORMULACal[i]){
 							$scope.InvoiceMap.lines[i].Percent =$scope.FORMULACal[i];
 						}
-						else
-						{
-							//$scope.InvoiceMap.lines[i].PRICE=$scope.InvoiceMap.lines[i].FEE*$scope.FORMULACal[$scope.FORMULACal.length-1];
+						else{
 							$scope.InvoiceMap.lines[i].Percent =$scope.FORMULACal[$scope.FORMULACal.length-1];
 						}
 					}
 					for (var i = 0; i < $scope.InvoiceMap.lines.length; i++) {
 						$scope.InvoiceMap.lines[i].ITEM_NAME = $scope.InvoiceMap.lines[i].ITEM_NAME.substring(0, 50);
 					};
-					//console.log($scope.InvoiceMap.lines);
 					$scope.insurers = {
 						insurer_name : response.data[0].insurer_name,
 						id:response.data[0].Insurer_id
@@ -551,10 +598,15 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 					}
 				})
 			}
-			if ($scope.checkedit == true) {
+			if ($scope.checkedit == true) {//Check Edit False
 				$scope.resetEdit();
 				
 			};
+
+			$scope.printReport=function()
+			{				
+				window.open(getUrlReport()+"/redimedInvoice/"+$scope.headerdata.header_id);
+			}
 			
 		}
 	}//end return

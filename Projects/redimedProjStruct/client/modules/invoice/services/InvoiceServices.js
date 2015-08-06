@@ -120,6 +120,12 @@ angular.module('app.loggedIn.invoice.services', [])
 	/**
 	 * tannv.dts@gmail.com
 	 */
+	 
+	   mdtService.getitemfillterfeeid=function(postData)
+	{
+		var funcApi = mdtApi.all('invoice/getitemfillterfeeid');
+		return funcApi.post({data: postData});
+	}
 	  mdtService.getpatientbyid=function(postData)
 	{
 		var funcApi = mdtApi.all('invoice/getpatientbyid');
@@ -130,7 +136,11 @@ angular.module('app.loggedIn.invoice.services', [])
 		var funcApi = mdtApi.all('invoice/feegroupbyid');
 		return funcApi.post({data: postData});
 	}
-
+	mdtService.getinsurerbyid=function(postData)
+	{
+		var funcApi = mdtApi.all('invoice/getinsurerbyid');
+		return funcApi.post({data: postData});
+	}
 	mdtService.getFeegrouptype=function(postData)
 	{
 		var funcApi = mdtApi.all('invoice/feegrouptype');

@@ -585,7 +585,7 @@ module.exports = {
 			" 	 itemFee.`FEE_START_DATE`                                                                           "+
 			" 	 FROM `cln_fee_types` feeType                                                                       "+
 			" 	 LEFT  JOIN `cln_item_fees` itemFee ON itemFee.`FEE_TYPE_ID`=feeType.`FEE_TYPE_ID`                  "+
-			" 	 WHERE  itemFee.`CLN_ITEM_ID`=256                                                                   "+
+			" 	 WHERE  itemFee.`CLN_ITEM_ID`=?                                                                     "+
 			"  ) t2                                                                                                 "+
 			"  ON t1.FEE_TYPE_ID=t2.FEE_TYPE_ID                                                                     "+
 			"  ORDER BY t1.`FEE_GROUP_TYPE`,t1.`FEE_GROUP_NAME`,                                                    "+

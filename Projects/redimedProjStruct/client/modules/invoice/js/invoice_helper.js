@@ -10,5 +10,21 @@ var invConst={
 		public_hospital:{value:'public_hospital',haveStartDate:false,display:'Public Hospital'},//tannv: add
 		workcover:{value:'workcover',haveStartDate:false,display:'Workcover'}//tan add
 	},
+	feeGroupTypeAuto:{
+		private_fund:{value:'private_fund',display:'Private Fund',haveStartDate:true,sourceFileTypes:{txt:{value:'txt',display:'txt'}}},//tannv: giu nguyen group type cu
+		workcover:{value:'workcover',haveStartDate:false,display:'Workcover'}//tan add
+	},
 
 };
+
+//tannv.dts@gmail.com
+//05-08-2015
+var testReport=false;
+function getUrlReport(){
+	if(testReport)
+		return 'http://localhost:3003/RedimedJavaREST/api/document';
+	else
+	{
+		return 'http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document';
+	}
+}

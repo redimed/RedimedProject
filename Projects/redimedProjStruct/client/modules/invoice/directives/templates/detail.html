@@ -156,6 +156,46 @@
 
 						</div>
 						<!--claim_id-->
+						<div class="break-row"></div>
+						<div class="col-md-12">
+							<hr>
+						</div>
+						<!--BILL TO-->
+						<div class="col-md-3 col-sm-6 col-xs-12">
+							<div class="form-group">
+								<label class="un_tn_form_label un_tn_form_label_gray" style="width:100px">
+									Bill To
+								</label>
+								 <select class="form-control un_tn_form_control un_tn_form_control_gray" placeholder="Fee group type" name="fee_group" id="fee_group" ng-model="InvoiceMap.FEE_GROUP_TYPE" ng-options="value.value as value.display for (key,value) in feeGroupType" ng-change="feeGroupTypeChange(InvoiceMap.FEE_GROUP_TYPE)" required>
+					                <option value=''>-- Bill To --</option>
+					            </select>
+							</div>
+						</div>
+						<!--BILL TO-->
+						<!--FEE GROUP-->
+						<div class="col-md-3 col-sm-6 col-xs-12">
+							<div class="form-group">
+								<label class="un_tn_form_label un_tn_form_label_gray" style="width:100px">
+									Fee Group
+								</label>
+								<select class="form-control un_tn_form_control un_tn_form_control_gray" placeholder="Fee group type" name="fee_group_type" ng-model="InvoiceMap.FEE_GROUP_ID" ng-options="item.FEE_GROUP_ID as item.FEE_GROUP_NAME for item in feeGroupID" ng-change="feeGroupNameChange(InvoiceMap.FEE_GROUP_ID)" ng-required="InvoiceMap.FEE_GROUP_ID !== 'private_fund'">
+					                <option value=''>-- Group Fee --</option>
+					            </select>
+							</div>
+						</div>
+						<!--FEE GROUP-->
+						<!--Fee Type-->
+						<div class="col-md-3 col-sm-6 col-xs-12">
+							<div class="form-group">
+								<label class="un_tn_form_label un_tn_form_label_gray" style="width:100px">
+									Fee Type
+								</label>
+								<select class="form-control un_tn_form_control un_tn_form_control_gray" placeholder="Fee type" name="fee_type" ng-model="InvoiceMap.FEE_TYPE_ID" ng-options="item.FEE_TYPE_ID as item.FEE_TYPE_NAME for item in feeTypeID" ng-change="changeFeeType(InvoiceMap.FEE_TYPE_ID)">
+					                <option value=''>-- Fee Type --</option>
+					            </select>
+							</div>
+						</div>
+						<!--Fee Type-->
 					</form>
 				</div>
 			</div>

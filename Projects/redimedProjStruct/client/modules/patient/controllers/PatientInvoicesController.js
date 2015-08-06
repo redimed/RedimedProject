@@ -41,6 +41,7 @@ angular.module("app.loggedIn.patient.invoices.controller", [])
                 })
                 .result.then(function(response){
                    if (response.status == 'success') {
+                  ///  toastr.success('Edit Manual Invoice Success !');
                     $scope.invoicePanel.reload();
                    };
                 }) 
@@ -64,9 +65,65 @@ angular.module("app.loggedIn.patient.invoices.controller", [])
             {field: 'header_id', order: 'DESC', is_hide: true},
             {field: 'cal_id', is_hide: true},
             {field: 'STATUS', is_hide: true},
-            {field: 'Company_id', label: 'Company', type: 'custom', fn: function(item){
-            	if(item.company) return item.company.Company_name;
+                        {field: 'Patient_id', label: 'Patient', type: 'custom', fn: function(item){
+                if(item.patient) return item.patient.First_name;
             }},
+
+            {field:'SOURCE_ID',label:'Bill to',type:'custom',fn:function(item){
+                if(item.cal_id)
+                {
+                    if(item.Insurer_id)
+                    {
+                        if(item.insurer) 
+                            return 'Insurer:'+item.insurer.insurer_name;
+                        else
+                            return null;
+                    }
+                    else if(item.Company_id)
+                    {
+                        if(item.company) 
+                            return 'Company:'+item.company.Company_name;
+                        else
+                            return null;
+                    }
+                    else
+                    {
+                        if(item.patient)
+                        {
+                            return 'Patient:'+item.patient.First_name+" "+item.patient.Sur_name;
+                        }
+                        else
+                            return null;
+                    }
+                }
+                else
+                {
+                    if(item.FEE_GROUP_TYPE==itemConst.feeGroupType.private_fund.value)
+                    {
+                        if(item.insurer) 
+                            return itemConst.feeGroupType.private_fund.value+": "+item.insurer.insurer_name;
+                        else
+                            return null;
+                    }
+                    else
+                    {
+                        if(item.feeGroup)
+                            return item.feeGroup.FEE_GROUP_TYPE+": "+item.feeGroup.FEE_GROUP_NAME;
+                        else
+                            return null;
+                    }
+                }
+            }},
+
+            {field:'cal_id',label:'Invoice type',type:'custom',fn:function(item){
+                if(item.cal_id)
+                    return 'Auto';
+                else
+                    return 'Manual';
+            }},
+            // {field: 'Company_id', label: 'Company', type: 'custom', fn: function(item){
+            // 	if(item.company) return item.company.Company_name;
+            // }},
             {field: 'cal_id', label: 'From Time', type: 'custom', fn: function(item){
                 if(item.appointment){
                     return ConfigService.getCommonDatetime(item.appointment.FROM_TIME);
@@ -96,7 +153,7 @@ angular.module("app.loggedIn.patient.invoices.controller", [])
             	if(item.service) return item.service.SERVICE_NAME;
             }},
             {field: 'CREATION_DATE', label: 'Created Date', type: 'custom', fn: function(item){
-            	return ConfigService.getCommonDateDefault(item.CREATION_DATE);
+            	return moment(new Date(item.CREATION_DATE)).format('YYYY-MM-DD HH:mm:ss');
             }},
         ],
         search: {patient_id: patient_id, cal_id:-1},
@@ -111,7 +168,7 @@ angular.module("app.loggedIn.patient.invoices.controller", [])
         //     },
         // ],
 	};
-    $scope.showAddFormInvoice = function(){
+    $scope.showAddFormInvoice = function(){// Show Popup Add Manual
        var modalInstance=$modal.open({
             templateUrl:'popupAddManualInvoice',
             controller:function($scope,$modalInstance,options,patient_id){
@@ -142,6 +199,7 @@ angular.module("app.loggedIn.patient.invoices.controller", [])
         .result.then(function(response){
            if (response.status == 'success') {
             $scope.invoicePanel.reload();
+            toastr.success('Add Manual Invoice Success !');
            };
         }) 
     }

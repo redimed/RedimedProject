@@ -14,6 +14,7 @@ angular.module("app.loggedIn.item.detail.directive", [])
                  */
                 ConfigService.taxes_option().then(function(data){
                     $scope.taxes = data;
+                    exlog.log(data);
                 });
                 ConfigService.prefix_headers_option('item').then(function(data){
                     $scope.prefix_headers = data;
@@ -98,6 +99,7 @@ angular.module("app.loggedIn.item.detail.directive", [])
                             var postData = angular.copy(scope.modelObjectMap);
                             if (postData.TAX_ID) {
                                 _.filter(scope.taxes, function(n) {
+
                                     if (n.TAX_ID == postData.TAX_ID) {
                                         console.log('postData',postData);
                                         postData.TAX_CODE = n.TAX_CODE;
