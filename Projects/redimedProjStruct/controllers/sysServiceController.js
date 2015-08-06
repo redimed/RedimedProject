@@ -9,6 +9,7 @@ module.exports = {
 		var sql = 
 			" SELECT ss.* FROM cln_dept_services cds                                                  "+
 			" INNER JOIN sys_services ss ON ss.SERVICE_ID=cds.SERVICE_ID AND cds.CLINICAL_DEPT_ID=?   "+
+			" WHERE `IS_BOOKABLE` = 1 																  "+
 			" ORDER BY ss.`SERVICE_NAME`                                                              ";
 
 		kiss.executeQuery(req,sql,[dept_id],function(list){

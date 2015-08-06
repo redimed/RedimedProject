@@ -374,6 +374,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 															scope.appointment.list[temp_index].doctors[doctor_row].patients.push({Patient_id: data.Patient_id, First_name: data.First_name, Sur_name: data.Sur_name, Outreferral: data.outreferral});
 															scope.appointment.list[temp_index].doctors[doctor_row].PATIENTS = 'ok';
 															scope.appointment.list[temp_index].doctors[doctor_row].IS_REFERRAL = data.IS_REFERRAL;
+															scope.appointment.list[temp_index].doctors[doctor_row].IS_BOOKABLE = data.IS_BOOKABLE;
 															return;
 														}
 														doctor_row++;
@@ -408,7 +409,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 									var doctors = [];
 									_.forEach(response.doctors, function(doctor){
 										if(doctor.DOCTOR_ID === data.DOCTOR_ID)
-											doctors.push({DOCTOR_ID: doctor.DOCTOR_ID, DOCTOR_NAME: doctor.NAME, SERVICE_ID: data.SERVICE_ID, CAL_ID: data.CAL_ID, IS_REFERRAL: data.IS_REFERRAL, SERVICE_COLOR: data.SERVICE_COLOR, PATIENTS: 'MESS_SYS_010', patients: [], CLINICAL_DEPT_ID: data.CLINICAL_DEPT_ID });
+											doctors.push({DOCTOR_ID: doctor.DOCTOR_ID, DOCTOR_NAME: doctor.NAME, SERVICE_ID: data.SERVICE_ID, CAL_ID: data.CAL_ID, IS_REFERRAL: data.IS_REFERRAL,IS_BOOKABLE:data.IS_BOOKABLE, SERVICE_COLOR: data.SERVICE_COLOR, PATIENTS: 'MESS_SYS_010', patients: [], CLINICAL_DEPT_ID: data.CLINICAL_DEPT_ID });
 										else
 											doctors.push({DOCTOR_ID: doctor.DOCTOR_ID, DOCTOR_NAME: doctor.NAME, PATIENTS: '###' });
 									})
@@ -446,6 +447,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 									scope.appointment.list[flagTheme].doctors[doctor_row].CAL_ID = data.CAL_ID;
 									scope.appointment.list[flagTheme].doctors[doctor_row].SERVICE_COLOR = data.SERVICE_COLOR;
 									scope.appointment.list[flagTheme].doctors[doctor_row].IS_REFERRAL = data.IS_REFERRAL;
+									scope.appointment.list[flagTheme].doctors[doctor_row].IS_BOOKABLE = data.IS_BOOKABLE;
 									scope.appointment.list[flagTheme].doctors[doctor_row].CLINICAL_DEPT_ID = data.CLINICAL_DEPT_ID;
 
 									if(scope.appointment.list[flagTheme].doctors[doctor_row].patients.length > 0){
@@ -459,7 +461,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 							var doctors = [];
 							_.forEach(response.doctors, function(doctor){
 								if(doctor.DOCTOR_ID === data.DOCTOR_ID)
-									doctors.push({DOCTOR_ID: doctor.DOCTOR_ID, DOCTOR_NAME: doctor.NAME, SERVICE_ID: data.SERVICE_ID, CAL_ID: data.CAL_ID, IS_REFERRAL: data.IS_REFERRAL, SERVICE_COLOR: data.SERVICE_COLOR, PATIENTS: 'MESS_SYS_010', patients: [], CLINICAL_DEPT_ID: data.CLINICAL_DEPT_ID });
+									doctors.push({DOCTOR_ID: doctor.DOCTOR_ID, DOCTOR_NAME: doctor.NAME, SERVICE_ID: data.SERVICE_ID, CAL_ID: data.CAL_ID, IS_REFERRAL: data.IS_REFERRAL,IS_BOOKABLE:data.IS_BOOKABLE, SERVICE_COLOR: data.SERVICE_COLOR, PATIENTS: 'MESS_SYS_010', patients: [], CLINICAL_DEPT_ID: data.CLINICAL_DEPT_ID });
 								else{
 									doctors.push({DOCTOR_ID: doctor.DOCTOR_ID, DOCTOR_NAME: doctor.NAME, PATIENTS: '###' });
 								}
@@ -621,14 +623,16 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 			}
 
 			var dialogAdd = function(app, col){
-				var modalInstance = $modal.open({
+				scope.appointment.load();
+				if (col.IS_BOOKABLE == 1) {
+					var modalInstance = $modal.open({
 					templateUrl: 'appointmentAdd',
 					controller: function($scope, $modalInstance, app, options, search){
 						$scope.appointment = {
 							app: app,
 							col: col
 						}
-
+						
 						$scope.options = options;
 						$scope.search = search;
 						//PARAMS
@@ -663,9 +667,9 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 							return scope.appointment.search;
 						}
 					}
-				});
+					});
 
-				modalInstance.result.then(function(patient){
+					modalInstance.result.then(function(patient){
 					if(patient){
 						scope.appointment.load();
 						scope.alertCenter.load();
@@ -885,7 +889,22 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 							}
 						})//result for close
 					}
-				})
+					})
+				}else{
+                    var modalInstance=$modal.open({
+                        templateUrl:'showNotificationNo',
+                        controller:function($scope,$modalInstance){
+                           
+                            $scope.cancel=function(){
+                                $modalInstance.dismiss('cancel');
+                            }
+                        }
+                    })
+                    .result.then(function(response){
+                      
+                    })
+                	
+				};
 			}
 
 			var onRightClick = function($event, app, col, patient){

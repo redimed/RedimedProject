@@ -51,6 +51,8 @@ module.exports = {
 	getServiceColor:function(req,res){
 		var postData = req.body.data;
 		var sql = knex('sys_services')
+			// .where('IS_BOOKABLE',1)
+			.where('Isenable',1)
 			.toString();
 
 		db.sequelize.query(sql)
@@ -387,6 +389,7 @@ module.exports = {
 			'cln_appointment_calendar.STATUS',
 			'sys_services.SERVICE_NAME',
 			'sys_services.IS_REFERRAL',
+			'sys_services.IS_BOOKABLE',
 			'sys_services.SERVICE_COLOR',
 			'cln_appointment_calendar.DOCTOR_ID',
 			'cln_appointment_calendar.CAL_ID',
@@ -457,6 +460,7 @@ module.exports = {
 			'sys_services.SERVICE_NAME',
 			'sys_services.IS_REFERRAL',
 			'sys_services.SERVICE_COLOR',
+			'sys_services.IS_BOOKABLE',
 			'cln_appointment_calendar.DOCTOR_ID',
 			'cln_appointment_calendar.CAL_ID',
 			'cln_appointment_calendar.CLINICAL_DEPT_ID',
