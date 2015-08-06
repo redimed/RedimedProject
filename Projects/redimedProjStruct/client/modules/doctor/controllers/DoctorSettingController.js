@@ -1,9 +1,13 @@
 angular.module('app.loggedIn.doctor.setting.controller',[
 
 ])
-    .controller('DoctorSettingController',function($scope,toastr,mdtDoctorService,DoctorService,ReceptionistService,UserService,ConfigService){
+    .controller('DoctorSettingController',function($scope,toastr,OnlineBookingAdminService,mdtDoctorService,DoctorService,ReceptionistService,UserService,ConfigService){
 		$scope.userList = [];
+		$scope.roomList = [];
 		$scope.doctorInfo = null;
+		$scope.room = {
+			selectedRooms: null
+		}
 
 		$scope.doctorList = {
             select:0,
@@ -59,12 +63,39 @@ angular.module('app.loggedIn.doctor.setting.controller',[
 				$scope.siteList = rs.data;
 		})
 
+		$scope.siteChange = function(siteId){
+			$scope.roomList = [];
+			$scope.room.selectedRooms = null;
+			OnlineBookingAdminService.getAvailableRoom(siteId,$scope.doctorInfo.doctor_id).then(function(rs){
+				if(rs.status == 'success')
+				{
+					$scope.roomList = rs.data;
+					$scope.room.selectedRooms = $scope.doctorInfo.rooms.length > 0 ? $scope.doctorInfo.rooms : null;
+				}
+				
+			})
+		}
+
 		$scope.changeDoctor = function(item){
+			$scope.roomList = [];
+			$scope.room.selectedRooms = null;
 			DoctorService.getById(item.doctor_id).then(function(rs){
 				if(rs)
 				{
 					$scope.doctorInfo = rs;
 					$scope.doctorInfo.isOnline = (rs.isOnline == 1) ? '1' : '0';
+
+					OnlineBookingAdminService.getAvailableRoom($scope.doctorInfo.currentSite,item.doctor_id).then(function(rs){
+						if(rs.status == 'success')
+						{
+							$scope.roomList = rs.data;
+							if(typeof $scope.doctorInfo.rooms != 'undefined' && $scope.doctorInfo.rooms.length > 0)
+							{
+								$scope.doctorInfo.rooms = JSON.parse("[" + $scope.doctorInfo.rooms + "]");
+								$scope.room.selectedRooms = $scope.doctorInfo.rooms;
+							}
+						}
+					})
 				}
 				else
 					$scope.doctorInfo = null;
@@ -72,6 +103,15 @@ angular.module('app.loggedIn.doctor.setting.controller',[
 		}
 
 		$scope.submitClick = function(){
+			if($scope.room.selectedRooms.length > 0)
+			{
+				$scope.doctorInfo.rooms = [];
+				$scope.doctorInfo.rooms = $scope.room.selectedRooms;
+				$scope.doctorInfo.numsOfRoom = $scope.doctorInfo.rooms.length;
+			}
+			else
+				$scope.doctorInfo.rooms = [];
+			
 			var postData = angular.copy($scope.doctorInfo);
 			for(var key in postData){
 				if(postData[key] instanceof Date) postData[key] = ConfigService.getCommonDate(postData[key]);

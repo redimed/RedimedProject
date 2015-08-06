@@ -236,5 +236,113 @@ module.exports = {
                 res.json({status:'error'});
                 console.log(err);
             })
+    },
+    getRoomSite: function(req,res){
+        var site_id = req.body.site_id;
+
+        db.sequelize.query("SELECT r.* FROM redimedsites_room r WHERE r.site_id = ?",null,{raw:true},[site_id])
+            .success(function(data){
+                res.json(data);
+            })
+            .error(function(err){
+                res.json({'status':'error'});
+                console.log(err);
+            })
+    },
+    roomDetails: function(req,res){
+        var room_id = req.body.room_id;
+
+        db.RoomSite.find({where:{id: room_id}},{raw:true})
+            .success(function(room){
+                if(room)
+                    res.json({status:'success',data:room})
+                else
+                    res.json({status:'error'})
+            })
+            .error(function(err){
+                res.json({'status':'error'});
+                console.log(err);
+            })
+    },
+    editRoom: function(req,res){
+        var info = req.body.info;
+        var isEdit = req.body.isEdit;
+
+        if(!isEdit)
+        {
+            db.RoomSite.create(info)
+                .success(function(room){
+                    res.json({status:'success'})
+                })
+                .error(function(err){
+                    res.json({'status':'error'});
+                    console.log(err);
+                })
+        }
+        else
+        {
+            db.RoomSite.update({
+                room_name: info.room_name,
+                description: info.description,
+                isEnable: info.isEnable
+            },{id:info.id})
+                .success(function(room){
+                    res.json({status:'success'})
+                })
+                .error(function(err){
+                    res.json({'status':'error'});
+                    console.log(err);
+                })
+        }
+    },
+    availableRooms: function(req,res){
+        var site_id = req.body.site_id;
+        var doctor_id = req.body.doctor_id;
+
+        db.sequelize.query("SELECT d.* "+
+                            "FROM doctors_room d "+
+                            "WHERE d.`doctor_id` = ? AND DATE(d.`Creation_date`) = CURDATE()",null,{raw:true},[doctor_id])
+            .success(function(data){
+                if(data.length > 0)
+                {
+                    db.sequelize.query("SELECT r.* "+
+                                        "FROM redimedsites_room r "+
+                                        "WHERE r.`isEnable` = 1 AND r.`site_id` = ? "+
+                                        "AND r.`id` NOT IN (SELECT d.room_id FROM doctors_room d WHERE DATE(d.`Creation_date`) = CURDATE()) "+
+                                        "UNION "+
+                                        "SELECT r.* "+
+                                        "FROM redimedsites_room r "+
+                                        "WHERE r.`isEnable` = 1 AND r.`site_id` = ? "+
+                                        "AND r.id IN (SELECT d.room_id FROM doctors_room d WHERE d.`doctor_id` = ? AND DATE(d.`Creation_date`) = CURDATE())",
+                                        null,{raw:true},[site_id,site_id,doctor_id])
+                        .success(function(data){
+                            if(data.length > 0)
+                                res.json({status:'success',data: data});
+                            else
+                                res.json({status:'error'});
+                        })
+                        .error(function(err){
+                            res.json({'status':'error'});
+                            console.log(err);
+                        })
+                }
+                else
+                {
+                     db.sequelize.query("SELECT r.* FROM redimedsites_room r "+
+                           "WHERE r.`isEnable` = 1 AND r.`site_id` = ? "+
+                           "AND r.`id` NOT IN (SELECT d.room_id FROM doctors_room d WHERE DATE(d.`Creation_date`) = CURDATE())",
+                           null,{raw:true},[site_id])
+                        .success(function(data){
+                            if(data.length > 0)
+                                res.json({status:'success',data: data});
+                            else
+                                res.json({status:'error'});
+                        })
+                        .error(function(err){
+                            res.json({'status':'error'});
+                            console.log(err);
+                        })
+                }
+            })
     }
 };

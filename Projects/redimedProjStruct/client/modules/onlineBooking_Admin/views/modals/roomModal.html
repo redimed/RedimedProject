@@ -1,0 +1,53 @@
+<style type="text/css" class="ng-scope">
+    .modal.in .modal-dialog {
+        margin-top:50px;
+    }
+    .has-error .form-control {
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        border: 1px solid red;
+    }
+    .has-error .form-control:focus {
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        border: 1px solid red;
+    }
+</style>
+<div class="modal-body">
+    <div class="active">
+		<a href="index.html#tab_1" data-toggle="tab">
+			<label class="un-label-popup-header-m un-bg-label-333333">{{siteObj.Site_name}} : Add New Room</label>
+		</a>
+	</div>
+	<form name="roomForm" novalidate>
+		<div id="tab_1">
+			<div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div ng-class="{'has-error': roomForm.name.$invalid && isSubmit}">
+                        <label class="un-label-form-3 un-label-whidth-130">Room Name</label>
+                        <input ng-model="roomInfo.room_name" class="form-control input-sm select-outside ng-pristine ng-valid" required float-label id="name" name="name" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <label class="un-label-form-3 un-label-whidth-130">Description</label>
+                    <textarea ng-model="roomInfo.description" class="form-control input-sm select-outside ng-pristine ng-valid" float-label></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <label class="un-label-form-3 un-label-whidth-130">Enable</label>
+                    <br/>
+                    <input type="checkbox" id="isenable" name="isenable" class="mdt-checkbox" ng-model="roomInfo.isEnable" ng-true-value="1" ng-false-value="0">
+                    <label for="isenable" class="un-label-isenable form-control un-input-m-custom">Enable</label>
+                </div>
+            </div>
+		</div>
+        <div align="right" style ="margin-top: 15px;margin-right: 16px;">
+            <a href="javascript:;" class="un-button un-bgXam-colBlack" ng-click='cancelClick()'>Cancel</a>
+           <a href="javascript:;" ng-click="okClick(roomForm)" class="un-button un-bgBlack">Submit</a>
+        </div>
+    </form>
+	
+</div>

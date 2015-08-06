@@ -335,23 +335,26 @@
             </div>
         </div>
         <div class="tab-pane" id="tab_1_3">
+            <a href="javascript:;" class="btn btn-block btn-md green" ng-click="editRoom(null,false)">
+                <i class="fa fa-plus"></i>
+                Add New Room
+            </a>
             <div class="table-scrollable">
-                <table ng-table="tableParams2"  class="table table-hover table-bordered table-condensed  table-responsive">
-                    <tr style="white-space: nowrap; cursor: pointer;" align="center" ng-repeat="b in $data" ng-click="showCalendarDetail(b)" ng-class="{selected : b.cal_id === selectedCal}">
-                        <td data-title="'Site ID'">
-                            <label>{{b.site_id}}</label>
+                <table ng-table="tableParams5"  class="table table-hover table-bordered table-condensed  table-responsive">
+                    <tr style="white-space: nowrap; cursor: pointer;" align="center" ng-repeat="b in $data">
+                        <td data-title="'Room Name'" >
+                            <label>{{b.room_name}}</label>
                         </td>
-                        <td data-title="'From Time'" >
-                            <label>{{b.From_time | date:'dd/MM/yyyy - HH:mm'}}</label>
+                        <td data-title="'Room Description'" >
+                            <label>{{b.description == null ? 'N/A' : b.description}}</label>
                         </td>
-                        <td data-title="'To Time'" >
-                            <label>{{b.to_time | date:'dd/MM/yyyy - HH:mm'}}</label>
+                        <td data-title="'Enable'" width="30%">
+                            <input ng-if="b.isEnable == 1" type="checkbox" checked disabled />
+                            <input ng-if="b.isEnable == 0 || b.isEnable == null" type="checkbox" disabled />
                         </td>
-                        <td data-title="'Available'" >
-                            <label >{{b.available}}</label>
-                        </td>
-                        <td data-title="'Remain'" >
-                            <label>({{b.available - b.booking <= 0 ? 0 : b.available - b.booking}} available(s))</label>
+                        <td align="center" data-title="'Actions'">
+                            <a style="width: 75px" href="javascript:;" ng-click="editRoom(b,true)" class="btn btn-circle blue-steel btn-sm">
+                                <i class="fa fa-pencil"></i> Edit </a>
                         </td>
                     </tr>
                 </table>

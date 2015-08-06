@@ -55,7 +55,7 @@ gulp.task('common', function(){
 					'./client/jquery.flot.categories.min.js',
 					'./client/vendor/angular-svg-round-progressbar/build/roundProgress.js',
 					'./client/vendor/angular-flot/angular-flot.js',
-					'./client/vendor/angular-ui-select/dist/select.min.js',
+					'./client/vendor/angular-ui-select/dist/select.js',
 					'./client/vendor/chosen/chosen.jquery.min.js',
 					'./client/vendor/angular-chosen-localytics/chosen.js',
 					'./client/vendor/angular-touch/angular-touch.min.js',

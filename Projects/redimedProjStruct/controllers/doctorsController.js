@@ -634,9 +634,11 @@ module.exports =
 
         req.getConnection(function(err, connection){
             var query = connection.query(
-                "SELECT d.*"+
-                " FROM doctors d"+
-                " WHERE d.doctor_id="+id
+                "SELECT d.*, GROUP_CONCAT(r.`room_id`) AS rooms "+
+                " FROM doctors d "+
+                " LEFT JOIN doctors_room r ON d.`doctor_id` = r.`doctor_id` "+
+                " WHERE d.`doctor_id` = "+ id +
+                " AND DATE(r.`Creation_date`) = CURDATE()"
                 ,function(err,rows)
                 {
                     if(err)

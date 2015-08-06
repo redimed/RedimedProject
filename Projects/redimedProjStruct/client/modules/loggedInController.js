@@ -117,11 +117,9 @@ angular.module("app.loggedIn.controller",[
 
     function closeWindow(){
         var callingWindow= window.open('','RedimedCallingWindow', '');
-        callingWindow.focus();
         callingWindow.close();
 
         var whiteboardWindow = window.open('','RedimedWhiteboard', '');
-        whiteboardWindow.focus();
         whiteboardWindow.close();
     }
 

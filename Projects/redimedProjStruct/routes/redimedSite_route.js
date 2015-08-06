@@ -19,3 +19,8 @@ app.post('/api/redimedsite/state/suburb/edit',RedimedSiteController.updateSuburb
 app.post('/api/redimedsite/state/suburb/id',RedimedSiteController.suburbById);
 app.post('/api/redimedsite/state/suburb/insert',RedimedSiteController.newSuburb);
 
+app.post('/api/redimedsite/room',RedimedSiteController.getRoomSite);
+app.post('/api/redimedsite/room/details',RedimedSiteController.roomDetails);
+app.post('/api/redimedsite/room/edit',RedimedSiteController.editRoom);
+app.post('/api/redimedsite/room/available',RedimedSiteController.availableRooms);
+

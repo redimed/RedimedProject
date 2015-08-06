@@ -7,6 +7,7 @@ angular.module('app.loggedIn.booking.admin.site.controller',[])
         $scope.selectedCal = null;
         $scope.selectedState = null;
         $scope.selectedSuburb = null;
+        $scope.selectedSite = null;
 
         $scope.dateOptions = {
             formatYear: 'yy',
@@ -15,6 +16,7 @@ angular.module('app.loggedIn.booking.admin.site.controller',[])
         $scope.arr = [];
         $scope.arrState = [];
         $scope.arrSuburb = [];
+        $scope.dataRooms = [];
 
         $scope.info = {
             site_id: null,
@@ -117,8 +119,56 @@ angular.module('app.loggedIn.booking.admin.site.controller',[])
                 }
             });
 
+            $scope.tableParams5 = new ngTableParams({
+                page: 1,            // show first page
+                count: 10           // count per page
+            }, {
+                total: $scope.dataRooms.length, // length of data
+                getData: function($defer, params) {
+                    var filteredData = params.filter() ?
+                        $filter('filter')($scope.dataRooms, params.filter()) :
+                        $scope.dataRooms;
+
+                    var orderedData = params.sorting() ?
+                        $filter('orderBy')(filteredData, params.orderBy()) :
+                        $scope.dataRooms;
+
+                    params.total(orderedData.length);
+                    $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                }
+            });
 
         })
+
+        $scope.editRoom = function(roomInfo,isEdit){
+            var modalInstance = $modal.open({
+                templateUrl:'modules/onlineBooking_Admin/views/modals/roomModal.html',
+                controller:'RoomController',
+                size:'md',
+                resolve:{
+                    site:function(){
+                        return $scope.selectedSite;
+                    },
+                    isEdit: function(){
+                        return isEdit;
+                    },
+                    room: function(){
+                        return roomInfo;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function(){
+                OnlineBookingAdminService.getSiteRoom($scope.selectedId).then(function(data){
+                    $scope.rsRoom = data;
+                })
+
+                $scope.$watch('rsRoom',function(rs){
+                    $scope.dataRooms = rs;
+                    $scope.tableParams5.reload();
+                })
+            })
+        }
 
         $scope.addNewSite = function(){
             $state.go('loggedIn.admin_sites_new');
@@ -129,6 +179,7 @@ angular.module('app.loggedIn.booking.admin.site.controller',[])
         }
 
         $scope.showSiteCalendar = function(b){
+            $scope.selectedSite = b;
             $scope.selectedId = b.id;
             $scope.selectedCal = null;
             $scope.arr = [];
@@ -137,13 +188,17 @@ angular.module('app.loggedIn.booking.admin.site.controller',[])
             $scope.rs = [];
             $scope.rsState = [];
             $scope.rsSuburb = [];
+            $scope.rsRoom = [];
             OnlineBookingAdminService.getCalendarBySiteId(b.id).then(function(data){
                 $scope.rs = data;
-
             })
 
             OnlineBookingService.getSiteState(b.id).then(function(data){
                 $scope.rsState = data;
+            })
+
+            OnlineBookingAdminService.getSiteRoom(b.id).then(function(data){
+                $scope.rsRoom = data;
             })
 
             $scope.$watch('rs',function(rs){
@@ -159,6 +214,11 @@ angular.module('app.loggedIn.booking.admin.site.controller',[])
             $scope.$watch('rsSuburb',function(rs){
                 $scope.arrSuburb = rs;
                 $scope.tableParams4.reload();
+            })
+
+            $scope.$watch('rsRoom',function(rs){
+                $scope.dataRooms = rs;
+                $scope.tableParams5.reload();
             })
 
         }
@@ -328,6 +388,53 @@ angular.module('app.loggedIn.booking.admin.site.controller',[])
         }
 
 
+    })
+    .controller('RoomController',function($scope,toastr,$filter,$state,site,isEdit,room,$modalInstance,OnlineBookingAdminService){
+        $scope.siteObj = site != null ? site : null;
+        $scope.isEdit = isEdit != null ? isEdit : false;
+        $scope.roomObj = room != null ? room : null;
+
+        $scope.roomInfo = {
+            room_name: null,
+            description: null,
+            site_id: $scope.siteObj.id,
+            isEnable: '1'
+        }
+
+        if($scope.isEdit && room != null)
+        {
+            OnlineBookingAdminService.getRoom(room.id).then(function(rs){
+                if(rs.status == 'success')
+                {
+                    $scope.roomInfo = rs.data;
+                    $scope.roomInfo.isEnable = (rs.data.isEnable == 1) ? '1' : '0';
+                }
+                else
+                    toast.error("Cannot Get Room Data")
+            })
+        }
+
+        $scope.cancelClick = function(){
+            $modalInstance.close();
+        }
+
+        $scope.okClick = function(roomForm){
+            $scope.isSubmit = true;
+            if(roomForm.$invalid)
+                toastr.error("Please Input All Required Information!", "Error");
+            else
+            {
+                OnlineBookingAdminService.editRoom($scope.roomInfo,$scope.isEdit).then(function(rs){
+                    if(rs.status.toLowerCase() == 'success')
+                    {
+                        toastr.success("Success");
+                        $modalInstance.close();
+                    }
+                    else
+                        toastr.error("Error");
+                })
+            }
+        }
     })
 
     .controller('NewStateController',function($scope,$filter,$state,$modalInstance,OnlineBookingService,OnlineBookingAdminService,siteId, toastr){

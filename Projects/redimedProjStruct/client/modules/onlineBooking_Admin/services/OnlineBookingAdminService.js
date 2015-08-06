@@ -217,6 +217,10 @@ angular.module('app.loggedIn.booking.admin.services',[])
             return insert.post({info:info});
         }
 
+        adminBooking.getSiteRoom = function(site_id){
+            return api.all('redimedsite/room').post({site_id: site_id});
+        }
+
         adminBooking.delUserMenu = function(id){
             var del = api.all('users/menu/delete');
             return del.post({id:id});
@@ -238,6 +242,18 @@ angular.module('app.loggedIn.booking.admin.services',[])
         adminBooking.getDisable = function(data){
             var get = api.all('booking/getdisable');
             return get.post({data: data});
+        }
+
+        adminBooking.editRoom = function(roomInfo,isEdit){
+            return api.all('redimedsite/room/edit').post({info: roomInfo, isEdit: isEdit});
+        }
+
+        adminBooking.getRoom = function(id){
+            return api.all('redimedsite/room/details').post({room_id: id});
+        }
+
+        adminBooking.getAvailableRoom = function(siteId,doctorId){
+            return api.all('redimedsite/room/available').post({site_id: siteId,doctor_id:doctorId});
         }
 
         return adminBooking;

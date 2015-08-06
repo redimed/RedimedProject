@@ -23,7 +23,38 @@ module.exports = {
 		.success(function(detail){
 			if(!detail) res.json(500, {'status': 'error', 'message': 'Id Missing !!!'});
 			detail.updateAttributes(postData).success(function(updated){
-				res.json({'status': 'success', 'data': updated});
+				if(typeof postData.rooms != 'undefined' && postData.rooms.length > 0)
+				{
+					db.sequelize.query("DELETE FROM doctors_room WHERE doctor_id = ? AND DATE(`Creation_date`) = CURDATE()",null,{raw:true},[edit_id])
+						.success(function(){
+							var doctorRooms = [];
+							for(var i=0; i<postData.rooms.length;i++)
+							{
+								doctorRooms.push({doctor_id: edit_id, room_id: postData.rooms[i]})
+							}
+							db.DoctorRoom.bulkCreate(doctorRooms)
+								.success(function(){
+									res.json({'status': 'success', 'data': updated});
+								})
+								.error(function(error){
+									res.json(500, {'status': 'error', 'message': error});
+								})
+						})
+						.error(function(error){
+							res.json(500, {'status': 'error', 'message': error});
+						})
+				}
+				else
+				{
+					db.sequelize.query("DELETE FROM doctors_room WHERE doctor_id = ? AND DATE(`Creation_date`) = CURDATE()",null,{raw:true},[edit_id])
+						.success(function(){
+							res.json({'status': 'success', 'data': updated});
+						})
+						.error(function(error){
+							res.json(500, {'status': 'error', 'message': error});
+						})
+				}
+				
 			})
 			.error(function(error){
 				res.json(500, {'status': 'error', 'message': error});

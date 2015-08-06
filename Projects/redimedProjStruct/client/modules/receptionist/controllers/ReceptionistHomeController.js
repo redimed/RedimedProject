@@ -10,7 +10,6 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 	$scope.completeAppt = [];
 	$scope.injuryAppt = [];
 	$scope.checkedAppt = [];
-	$scope.doctors = [];
 
 	$scope.undoArr= [];
 	$scope.fromAppt = {};
@@ -137,7 +136,6 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 			$scope.completeAppt = [];
 			$scope.injuryAppt = [];
 			$scope.checkedAppt = [];
-			$scope.doctors = [];
 		}
 		else
 			getAppt($scope.apptDate,$scope.apptSite);
@@ -150,7 +148,6 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 		$scope.completeAppt = [];
 		$scope.injuryAppt = [];
 		$scope.checkedAppt = [];
-		$scope.doctors = [];
 		loadAlertCenter(site);
 		ReceptionistService.getAppointmentByDate(d,site).then(function(rs){
 			if(rs.status.toLowerCase() == 'success')
@@ -161,10 +158,7 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 				$scope.checkedAppt = rs.checkedIn;
 				ReceptionistService.getProgressAppt(d,site).then(function(rs){
 					if(rs.status.toLowerCase() == 'success')
-					{
 						$scope.progressAppt  = rs.data;
-						$scope.doctors = rs.doctorData;
-					}
 				})
 			}
 		})
@@ -185,6 +179,11 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 		},function(){
 			getAppt($scope.apptDate,$scope.apptSite);
 		})
+	}
+
+	$scope.changeRoom = function(fromRoom, toRoom)
+	{
+
 	}
 
 	$scope.changeAppt = function(appt,status){
@@ -224,12 +223,11 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 	        }, function(isConfirm) {
 	        	if(isConfirm)
 	        	{
-	        		var doctorId = (typeof doctor.appointment != 'undefined' && doctor.appointment.length > 0) ? doctor.appointment[0].doctor_id : doctor.doctor_id;
-	        		ReceptionistService.updateAppointment($scope.fromAppt,doctorId, 'progress').then(function(rs){
+	        		ReceptionistService.updateAppointment($scope.fromAppt,doctor, 'progress').then(function(rs){
 			        	if(rs.status == 'success')
 			        	{
 			        		toastr.success("Update Appointment Success!");
-			        		socket.emit('notifyDoctor',doctorId);
+			        		socket.emit('notifyDoctor',doctor.doctor_id);
 			        		socket.emit('notifyPatient',$scope.fromAppt.appt_id);
 			        		$scope.undoArr = [];
 			        		$scope.undoArr.push($scope.fromAppt);
