@@ -153,7 +153,8 @@ angular.module("app.loggedIn.patient.invoices.controller", [])
             	if(item.service) return item.service.SERVICE_NAME;
             }},
             {field: 'CREATION_DATE', label: 'Created Date', type: 'custom', fn: function(item){
-            	return moment(new Date(item.CREATION_DATE)).format('YYYY-MM-DD HH:mm:ss');
+            	// return moment.utc(new Date(item.CREATION_DATE)).format('DD-MM-YYYY HH:mm:ss');
+                return ConfigService.getCommonDatetime(item.CREATION_DATE);
             }},
         ],
         search: {patient_id: patient_id, cal_id:-1},
