@@ -128,7 +128,10 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			hand_therapist: null,
 			measurements: null,
 			medication: null,
-			consult_id: null
+			doctornote: null,
+			consult_id: null,
+			chooseNextAppt : null,
+			nextApptDate : null
 		}
 		/*
 		* phanquocchien.c1109g@gmail.com
@@ -148,7 +151,13 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 					$scope.consultInfo.attendance_record = data.data.attendance_record;		
 					$scope.consultInfo.communication_record = data.data.communication_record;		
 					$scope.consultInfo.hand_therapist = data.data.hand_therapist;		
-					$scope.consultInfo.consult_id = data.data.consult_id;	
+					$scope.consultInfo.doctornote = data.data.doctornote;		
+					$scope.consultInfo.consult_id = data.data.consult_id;
+					if (data.data.next_appt_date != null && data.data.next_appt_note != null) {
+						$scope.showNextAppt = '1';
+						$scope.consultInfo.chooseNextAppt = data.data.next_appt_note;
+						$scope.consultInfo.nextApptDate = new Date(data.data.next_appt_date);
+					}
 				}else{
 					ConsultationService.submitConsult($scope.consultInfo).then(function(res){
 						if(res.status == 'success')
@@ -617,7 +626,41 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 	            })
 			}
 		};
-
+		//phanquocchien.c1109g@gmail.com
+		//change date next appt
+		$scope.changeNextAppt = function () {
+			if ($scope.showNextAppt == 1) {
+				switch ($scope.consultInfo.chooseNextAppt) {
+				    case '1W':
+						$scope.consultInfo.nextApptDate = moment(new Date()).add(1,'w').toDate();
+				        break;
+				    case '2W':
+						$scope.consultInfo.nextApptDate = moment(new Date()).add(2,'w').toDate();
+				        break;
+				    case '3W':
+						$scope.consultInfo.nextApptDate = moment(new Date()).add(3,'w').toDate();
+				        break;
+				    case '1M':
+						$scope.consultInfo.nextApptDate = moment(new Date()).add(1,'M').toDate();
+				        break;
+				    case '2M':
+						$scope.consultInfo.nextApptDate = moment(new Date()).add(2,'M').toDate();
+				        break;
+				    case '3M':
+						$scope.consultInfo.nextApptDate = moment(new Date()).add(3,'M').toDate();
+				        break;
+				    case '6M':
+						$scope.consultInfo.nextApptDate = moment(new Date()).add(6,'M').toDate();
+				        break;
+					case 'Others':
+						$scope.consultInfo.nextApptDate = null;
+				        break;
+				}
+			}else{
+				$scope.consultInfo.chooseNextAppt = null;
+				$scope.consultInfo.nextApptDate = null;
+			};
+		}
 		$scope.medicationAction = function(type,info){
 			if(type == 'new')
 			{
@@ -1038,6 +1081,9 @@ angular.module("app.loggedIn.patient.consult.controller",[])
   			$scope.itemSearch.is_show = false;
 		})
         $scope.submitClick = function(){
+        	if ($scope.consultInfo.nextApptDate) {
+        		$scope.consultInfo.nextApptDate = moment($scope.consultInfo.nextApptDate).format('YYYY-MM-DD');
+        	};
 			var consultInfoTemp = angular.copy($scope.consultInfo);
 			consultInfoTemp.templates = $scope.templates;
 			ConsultationService.submitConsult(consultInfoTemp).then(function(res){
