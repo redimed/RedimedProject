@@ -365,12 +365,16 @@ module.exports = {
             attendance_record: info.attendance_record,
             communication_record: info.communication_record,
             diagnosis: info.diagnosis,
+            doctornote: info.doctornote,
+            next_appt_note: info.chooseNextAppt,
+            next_appt_date: info.nextApptDate,
             hand_therapist: info.hand_therapist,
             Last_update_date:moment().format("YYYY-MM-DD HH:mm:ss"),
             Creation_date:moment().format("YYYY-MM-DD HH:mm:ss"),
             Created_by:userId,
             Last_updated_by:userId
         };
+        
         kiss.executeInsertIfDupKeyUpdate(req,'cln_patient_consults',[insertRow],['!Creation_date','!Created_by'],function(data) {
             res.json({status:'success',data:data});
         },function (error) {

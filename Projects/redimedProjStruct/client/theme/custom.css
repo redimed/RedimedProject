@@ -4076,6 +4076,18 @@ label{
 .pagination>li {
     display: inline !important; 
 }
+.un_checkbox{
+    width: 25px;
+    height: 25px;
+    outline: 0;
+}
+.un_padding_top_23{
+    padding-top: 23px;
+}
+.un_label_checkbox{
+    position: relative;
+    top: -5px;
+}
 /*phanquocchien patient end*/
 
 .ql-container{
