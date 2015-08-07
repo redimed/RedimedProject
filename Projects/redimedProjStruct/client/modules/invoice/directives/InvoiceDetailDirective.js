@@ -17,7 +17,8 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 			/*
 			*	SEARCH DOCTOR
 			*/
-			$scope.feeGroupType=invConst.feeGroupTypeAuto;
+			// $scope.feeGroupType=invConst.feeGroupTypeAuto;//tannv.dts comment
+			$scope.feeGroupType=invConst.feeGroupType;
 			$scope.feeGroupID=[];
 			$scope.feeTypeID;
 			$scope.InvoiceMap = {
@@ -29,13 +30,13 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 				$scope.feeGroupNameChange('');
 				$scope.InvoiceMap.FEE_TYPE_ID = null;
 				if (value == 'private_fund') {
-					InvoiceService.getinsurerbyid({id:$scope.InvoiceMap.Insurer_id}).then(function(response){
+					InvoiceService.getFeeGroupByInsurer({id:$scope.InvoiceMap.Insurer_id}).then(function(response){
 						$scope.feeGroupID = response.data;
 						$scope.InvoiceMap.FEE_GROUP_ID = response.data[0].FEE_GROUP_ID;
 						$scope.feeGroupNameChange($scope.InvoiceMap.FEE_GROUP_ID);
 					})
 				}else{
-					InvoiceService.getFeegrouptype(value).then(function(response){
+					InvoiceService.getFeeGroupByType(value).then(function(response){
 						$scope.feeGroupID = response.data
 						
 					})
@@ -50,21 +51,66 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 				})
 			}
 			$scope.changeFeeType = function(value){//When CHoose Fee Type
-				var postData = {
-					FEE_TYPE_ID:value,
-					CurrentDate : new Date()
+				if(!value)
+				{
+					return;
 				}
-				console.log($scope.InvoiceMap.lines);
-				InvoiceService.getitemfillterfeeid(postData).then(function(response){
-					console.log(response.data);
-					for (var i = 0; i < $scope.InvoiceMap.lines.length; i++) {
-						for (var j = 0; j < response.data.length; j++) {
-							if($scope.InvoiceMap.lines[i].ITEM_ID == response.data[j].ITEM_ID){
-								$scope.InvoiceMap.lines[i].PRICE = response.data[j].FEE;
-							}
-						};
-					};
-				})
+				var postData = {
+					feeTypeId:value,
+					listItem:[]
+				}
+				for(var i=0;i<$scope.InvoiceMap.lines.length;i++){
+					postData.listItem.push($scope.InvoiceMap.lines[i].ITEM_ID);
+				}
+				InvoiceService.getCurrentFeeOfItems(postData)
+				.then(function(data){
+					if(data.status=='success')
+					{
+						toastr.success('Get current fee of items success','success');
+						var feeMap={};
+						for(var i=0;i<data.data.length;i++)
+						{
+							var item =data.data[i];
+							feeMap[item.ITEM_ID]={
+								FEE:item.FEE,
+								PERCENT:item.PERCENT,
+								FEE_START_DATE:item.FEE_START_DATE,
+								ITEM_CODE:item.ITEM_CODE,
+								TAX_ID:item.TAX_ID,
+								TAX_CODE:item.TAX_CODE,
+								TAX_RATE:item.TAX_RATE
+							};
+						}
+						for(var i=0;i<$scope.InvoiceMap.lines.length;i++)
+						{
+							var item=$scope.InvoiceMap.lines[i];
+							// exlog.alert(item.ITEM_ID)
+							item.PRICE=null;
+							item.PRICE=feeMap[item.ITEM_ID]?feeMap[item.ITEM_ID].FEE:null;
+							// alert($scope.InvoiceMap.lines.PRICE);
+						}
+					}
+					else
+					{
+						toastr.error('Get current fee of items fail.','error');
+						exlog.logErr('InvoiceDetailDirective->changeFeeType',data);
+					}
+				},function(err){
+					toastr.error('Get current fee of items fail.','error');
+					exlog.logErr('InvoiceDetailDirective->changeFeeType',err);
+				});
+
+
+				// console.log($scope.InvoiceMap.lines);
+				// InvoiceService.getitemfillterfeeid(postData).then(function(response){
+				// 	for (var i = 0; i < $scope.InvoiceMap.lines.length; i++) {
+				// 		for (var j = 0; j < response.data.length; j++) {
+				// 			if($scope.InvoiceMap.lines[i].ITEM_ID == response.data[j].ITEM_ID){
+				// 				$scope.InvoiceMap.lines[i].PRICE = response.data[j].FEE;
+				// 			}
+				// 		};
+				// 	};
+				// })
 			}
 			$scope.doctorSearch = {
 				open: function() {

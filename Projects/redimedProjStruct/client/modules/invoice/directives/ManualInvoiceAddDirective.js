@@ -293,7 +293,7 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 				$scope.modelObjectMap.FEE_GROUP_TYPE = value;
 				$scope.insurers=null;
 				$scope.feeTypeID = null;
-				InvoiceService.getFeegrouptype(value).then(function(response){
+				InvoiceService.getFeeGroupByType(value).then(function(response){
 					$scope.feeGroupID = response.data;
 
 				})

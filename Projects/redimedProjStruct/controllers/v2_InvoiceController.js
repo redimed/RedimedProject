@@ -1372,7 +1372,13 @@ module.exports = {
 			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
 		});
 	},
-	postFeegrouptype:function(req,res){//Get Fee Group by FEE_GROUP_TYPE
+
+	/**
+	 * Manh create postFeegrouptype
+	 * Tan change name -> postGetFeeGroupByType
+	 * changed date: 07-09-2015
+	 */
+	postGetFeeGroupByType:function(req,res){//Get Fee Group by FEE_GROUP_TYPE
 		var postData = req.body.data;
 		var fHeader="v2_InvoiceController->postFeegrouptype";
 		var functionCode='FN009';
@@ -1395,6 +1401,7 @@ module.exports = {
 			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
 		});
 	},
+
 	postFeetype:function(req,res){//Get FEE TYPE By FEE_GROUP_ID
 		var postData = req.body.data;
 		var fHeader="v2_InvoiceController->postFeetype";
@@ -1718,10 +1725,17 @@ module.exports = {
 			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
 		});
 	},
-	postGetinsurerbyid:function(req,res){
+
+	/**
+	 * Manh create postGetinsurerbyid
+	 * Tan change name-> postGetFeeGroupByInsurer
+	 * 
+	 * 
+	 */
+	postGetFeeGroupByInsurer:function(req,res){
 		var postData = req.body.data;
 		var fHeader="v2_InvoiceController->postGetinsurerbyid";
-		var functionCode='FN003';
+		var functionCode='FN017';
 		var postData=kiss.checkData(postData)?postData:'';
 		if(!kiss.checkListData(postData))
 		{
@@ -1730,7 +1744,11 @@ module.exports = {
 			return;
 		}
 		var sql=
-			"SELECT cln_insurers.*,cln_fee_group.FEE_GROUP_NAME FROM cln_insurers LEFT JOIN `cln_fee_group`  ON cln_insurers.`FEE_GROUP_ID`=cln_fee_group.`FEE_GROUP_ID` WHERE `id` = ?";
+			" SELECT insurer.*, feeGroup.`FEE_GROUP_NAME`          "+
+			" FROM `cln_insurers` insurer                          "+
+			" INNER JOIN `cln_fee_group` feeGroup                  "+
+			" ON insurer.`FEE_GROUP_ID`=feeGroup.`FEE_GROUP_ID`    "+
+			" WHERE `insurer`.`isenable`=1 AND insurer.`id`=?      ";
 		kiss.executeQuery(req,sql,[postData.id],function(rows){
 			res.json({status:'success',data:rows});
 		},function(err){
@@ -1738,11 +1756,12 @@ module.exports = {
 			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
 		});
 	},
+
 	postGetitemfillterfeeid:function(req,res){ //get Item  by FEE_TYPE_ID and ITEM_ID 
 		var postData = req.body.data;
 		console.log(postData);
 		var fHeader="v2_InvoiceController->postGetitemfillterfeeid";
-		var functionCode='FN003';
+		var functionCode='FN018';
 		var postData=kiss.checkData(postData)?postData:'';
 		if(!kiss.checkListData(postData))
 		{
@@ -1752,20 +1771,81 @@ module.exports = {
 		}
 		console.log(postData);
 		var sql=
-			"SELECT itemFee.`ITEM_FEE_ID`,itemFee.`FEE`,`itemFee`.`PERCENT`, 								   "+
-			"`item`.`ITEM_CODE`,`item`.`ITEM_ID`,`item`.`TAX_ID`,`sys_taxes`.`TAX_CODE`,`sys_taxes`.`TAX_RATE`,"+
-			"item.`ITEM_NAME`,itemFee.`FEE_START_DATE`,itemFee.`FEE_TYPE_ID`   								   "+
-			"FROM `cln_item_fees` itemFee                                       							   "+
-			"INNER JOIN `inv_items` item ON itemFee.`CLN_ITEM_ID`=item.`ITEM_ID`							   "+
-			"LEFT JOIN `sys_taxes`  ON item.`TAX_CODE`=sys_taxes.`TAX_CODE`     							   "+
-			"WHERE `itemFee`.`FEE_TYPE_ID`=?                                              					   "+
-			"AND itemFee.`FEE_START_DATE`<=?                                                                   "+
-			"ORDER BY itemFee.`FEE_START_DATE` DESC                                                            ";
+			" SELECT clnItemFee.`ITEM_FEE_ID`,clnItemFee.`FEE`,clnItemFee.`PERCENT`,clnItemFee.`FEE_START_DATE`,           "+
+			" item.`ITEM_ID`,item.`ITEM_CODE`,item.`TAX_ID`,item.`TAX_CODE`,item.`TAX_RATE`,                               "+
+			" item.`ITEM_NAME`                                                                                             "+
+			" FROM                                                                                                         "+
+			" (                                                                                                            "+
+			" 	SELECT itemFee.`FEE_TYPE_ID`, itemFee.`CLN_ITEM_ID`, MAX(itemFee.`FEE_START_DATE`) AS FEE_START_DATE       "+
+			" 	FROM `cln_item_fees` itemFee                                                                               "+
+			" 	WHERE itemFee.`FEE_TYPE_ID`=?                                                                             "+
+			" 	AND itemFee.`FEE_START_DATE`<=?                                                             "+
+			" 	GROUP BY itemFee.`FEE_TYPE_ID`, itemFee.`CLN_ITEM_ID`                                                      "+
+			" ) temp                                                                                                       "+
+			" INNER JOIN `cln_item_fees` clnItemFee                                                                        "+
+			" ON (temp.FEE_TYPE_ID=`clnItemFee`.`FEE_TYPE_ID`                                                              "+
+			" 	AND temp.CLN_ITEM_ID=`clnItemFee`.`CLN_ITEM_ID`                                                            "+
+			" 	AND temp.FEE_START_DATE=clnItemFee.`FEE_START_DATE`)                                                       "+
+			" INNER JOIN `inv_items` item ON clnItemFee.`CLN_ITEM_ID`=item.`ITEM_ID`                                       "+
+			" LEFT JOIN `sys_taxes` tax ON item.`TAX_ID`=tax.`TAX_ID`                                                      ";
 		kiss.executeQuery(req,sql,[postData.FEE_TYPE_ID,postData.CurrentDate],function(rows){
 			res.json({status:'success',data:rows});
 		},function(err){
 			kiss.exlog(fHeader,'Loi truy van lay thong tin thong qua',err);
 			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
 		});
+	},
+
+	/**
+	 * tannv.dts@gmail.com
+	 * 07-08-2015
+	 * lay fee cua list item id
+	 */
+	postGetCurrentFeeOfItems:function(req,res){
+		var fHeader="v2_InvoiceController->postGetCurrentFeeOfItems";
+		var functionCode="FN019";
+		var postData=kiss.checkData(req.body.postData)?req.body.postData:{};
+		var listItem=kiss.checkData(postData.listItem)?postData.listItem:null;
+		var feeTypeId=kiss.checkData(postData.feeTypeId)?postData.feeTypeId:[];
+		var currentTime=kiss.getCurrentTimeStr();
+		if(!kiss.checkListData(listItem,feeTypeId))
+		{
+			kiss.exlog(fHeader,'Loi data truyen den',postData);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
+			return;
+		}
+		if(listItem.length<1)
+		{
+			kiss.exlog(fHeader,'Loi danh sach item rong',postData);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN002')});
+			return;
+		}
+
+		var sql=
+			" SELECT clnItemFee.`ITEM_FEE_ID`,clnItemFee.`FEE`,clnItemFee.`PERCENT`,clnItemFee.`FEE_START_DATE`,          "+
+			" item.`ITEM_ID`,item.`ITEM_CODE`,item.`TAX_ID`,item.`TAX_CODE`,item.`TAX_RATE`,                              "+
+			" item.`ITEM_NAME`                                                                                            "+
+			" FROM                                                                                                        "+
+			" (                                                                                                           "+
+			" 	SELECT itemFee.`FEE_TYPE_ID`, itemFee.`CLN_ITEM_ID`, MAX(itemFee.`FEE_START_DATE`) AS FEE_START_DATE      "+
+			" 	FROM `cln_item_fees` itemFee                                                                              "+
+			" 	WHERE itemFee.`FEE_TYPE_ID`=?                                                                             "+
+			" 	AND itemFee.`FEE_START_DATE`<=?                                                                           "+
+			" 	AND itemFee.`CLN_ITEM_ID` IN (?)                                                                            "+
+			" 	GROUP BY itemFee.`FEE_TYPE_ID`, itemFee.`CLN_ITEM_ID`                                                     "+
+			" ) temp                                                                                                      "+
+			" INNER JOIN `cln_item_fees` clnItemFee                                                                       "+
+			" ON (temp.FEE_TYPE_ID=`clnItemFee`.`FEE_TYPE_ID`                                                             "+
+			" 	AND temp.CLN_ITEM_ID=`clnItemFee`.`CLN_ITEM_ID`                                                           "+
+			" 	AND temp.FEE_START_DATE=clnItemFee.`FEE_START_DATE`)                                                      "+
+			" INNER JOIN `inv_items` item ON clnItemFee.`CLN_ITEM_ID`=item.`ITEM_ID`                                      "+
+			" LEFT JOIN `sys_taxes` tax ON item.`TAX_ID`=tax.`TAX_ID`                                                     ";
+
+		kiss.executeQuery(req,sql,[feeTypeId,currentTime,listItem],function(rows){
+			res.json({status:'success',data:rows});
+		},function(err){
+			kiss.exlog(fHeader,'Loi truy van lay thong tin thong qua',err);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN003')});
+		},true);
 	},
 }
