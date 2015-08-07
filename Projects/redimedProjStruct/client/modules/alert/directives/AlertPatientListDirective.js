@@ -104,24 +104,24 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 						// 	}, function(error){})
 					}, function(error){ })
 				}
-				// if(typeof scope.withoutPatient !== 'undefined' && scope.withoutPatient){
-				// 	var postData = angular.copy(scope.alert.search);
+				if(typeof scope.withoutPatient !== 'undefined' && scope.withoutPatient){
+					var postData = angular.copy(scope.alert.search);
 
-				// 	console.log(postData);
-				// 	AlertModel.listNoFollowPatient(postData)
-				// 	.then(function(response){
-				// 		scope.alert.list = response.data;
-				// 		scope.alert.count = response.count;
-				// 	}, function(error){})
-				// }else{
-				// 	var postData = angular.copy(scope.alert.search);
+					console.log(postData);
+					AlertModel.listNoFollowPatient(postData)
+					.then(function(response){
+						scope.alert.list = response.data;
+						scope.alert.count = response.count;
+					}, function(error){})
+				}else{
+					var postData = angular.copy(scope.alert.search);
 
-				// 	AlertModel.listFollowPatient(postData)
-				// 	.then(function(response){
-				// 		scope.alert.list = response.data;
-				// 		scope.alert.count = response.count;
-				// 	}, function(error){})
-				// }
+					AlertModel.listFollowPatient(postData)
+					.then(function(response){
+						scope.alert.list = response.data;
+						scope.alert.count = response.count;
+					}, function(error){})
+				}
 			}
 
 			var onSearch = function(){

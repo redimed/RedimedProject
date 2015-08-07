@@ -4,15 +4,15 @@ angular.module("app.loggedIn.alert.model", [])
     var instanceService = {};
     var appApi = Restangular.all("api/meditek/v1/alert");
 
-    // instanceService.listFollowPatient = function (data) {
-    //     var detailApi = appApi.all("listFollowPatient");
-    //     return detailApi.post({data: data});
-    // }
+    instanceService.listFollowPatient = function (data) {
+        var detailApi = appApi.all("listFollowPatient");
+        return detailApi.post({data: data});
+    }
 
-    // instanceService.listNoFollowPatient = function (data) {
-    //     var detailApi = appApi.all("listNoFollowPatient");
-    //     return detailApi.post({data: data});
-    // }
+    instanceService.listNoFollowPatient = function (data) {
+        var detailApi = appApi.all("listNoFollowPatient");
+        return detailApi.post({data: data});
+    }
 
     instanceService.list = function (data) {
         var detailApi = appApi.all("list");
