@@ -181,9 +181,20 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 		})
 	}
 
-	$scope.changeRoom = function(fromRoom, toRoom)
-	{
+	$scope.doctorSetting = function(){
+		var modalInstance = $modal.open({
+                templateUrl:'modules/receptionist/views/modals/settingModal.html',
+                controller:'DoctorSettingController',
+                size:'lg'
+            });
 
+		modalInstance.result.then(function(){
+			getAppt($scope.apptDate,$scope.apptSite);
+			socket.emit('notifyReceptionist');
+		},function(){
+			getAppt($scope.apptDate,$scope.apptSite);
+			socket.emit('notifyReceptionist');
+		})
 	}
 
 	$scope.changeAppt = function(appt,status){
@@ -198,7 +209,10 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
         }, function() {
     		ReceptionistService.updateAppointment(appt, appt, status).then(function(rs){
 	        	if(rs.status == 'success')
+	        	{
 	        		toastr.success("Update Appointment Success!");
+	        		socket.emit('notifyReceptionist');
+	        	}
 	        })
 	        getAppt($scope.apptDate,$scope.apptSite);
 
@@ -229,6 +243,7 @@ angular.module("app.loggedIn.receptionist.home.controller", [])
 			        		toastr.success("Update Appointment Success!");
 			        		socket.emit('notifyDoctor',doctor.doctor_id);
 			        		socket.emit('notifyPatient',$scope.fromAppt.appt_id);
+			        		socket.emit('notifyReceptionist');
 			        		$scope.undoArr = [];
 			        		$scope.undoArr.push($scope.fromAppt);
 			        	}

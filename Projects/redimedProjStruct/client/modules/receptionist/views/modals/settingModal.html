@@ -1,0 +1,89 @@
+<style type="text/css" class="ng-scope">
+    .modal.in .modal-dialog {
+        margin-top:50px;
+    }
+    .has-error .form-control {
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        border: 1px solid red;
+    }
+    .has-error .form-control:focus {
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        border: 1px solid red;
+    }
+</style>
+<div class="modal-body">
+    <div class="active">
+        <a href="index.html#tab_1" data-toggle="tab">
+            <label class="un-label-popup-header-m un-bg-label-B41E46-m">Doctor Settings</label>
+        </a>
+    </div>
+
+    <div id="tab_1">
+        <div class="portlet light ">
+            <div class="portlet-title tabbable-line">
+                <div class="caption">
+                    <i class="fa fa-cogs"></i>
+                    <span class="caption-subject bold uppercase">
+                        Doctor Settings {{doctorInfo == null ? '' : ' : '+doctorInfo.NAME}} (Click to select doctor)
+                    </span>
+                </div>
+                <div class="actions">
+                    <a href="javascript:;" ng-class="{'disabled': doctorInfo == null}" ng-click="submitClick()" style="width: 120px;  background-color: #030303;margin-left: -126px;" class="btn pull-left un-submit">
+                        Save
+                    </a>        
+                </div>
+            </div>
+            <div class="portlet-body">
+                
+                <div class="row" ng-if="doctorInfo != null">
+                    <div class="col-md-4">
+                        <label for="currSite" class="un-label-form-3 un-label-whidth-130">Current Site</label>
+                        <select ng-options="s.id as s.Site_name for s in siteList" ng-change="siteChange(doctorInfo.currentSite)"
+                            name="currSite" ng-model="doctorInfo.currentSite" id="currSite" class="form-control input-sm select-outside ng-pristine ng-valid">
+                            <option value="" disabled selected>--Select Site--</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="currSite" class="un-label-form-3 un-label-whidth-130">Assistant</label>
+                        <select ng-options="s.id as s.user_name for s in userList" 
+                             ng-model="doctorInfo.assist_user" class="form-control input-sm select-outside ng-pristine ng-valid">
+                            <option value="" disabled selected>--Select User--</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="un-label-form-3 un-label-whidth-130">Is Online</label>
+                        <br/>
+                        <input type="checkbox" name="isonline" id="isonline" class="mdt-checkbox" ng-model="doctorInfo.isOnline" ng-true-value="1" ng-false-value="0">
+                        <label for="isonline" class="un-label-isenable form-control un-input-m-custom">Is Online</label>
+                    </div>
+                </div>
+                <br/>
+                <div class="row" ng-if="doctorInfo.currentSite != null">
+                    <div class="col-md-12 col-sm-12">
+                        <span>
+                            <label style="font-weight: bold;">Select Room:</label>
+                            &nbsp;&nbsp;
+                            <ui-select multiple ng-model="room.selectedRooms" theme="select2" ng-disabled="disabled" style="width: 800px;">
+                                <ui-select-match placeholder="Select rooms...">{{$item.room_name}}</ui-select-match>
+                                <ui-select-choices repeat="r.id as r in roomList | propsFilter: {room_name: $select.search}">
+                                  <div ng-bind-html="r.room_name | highlight: $select.search"></div>
+                                  <small>
+                                    Description: {{r.description}}
+                                  </small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </span>
+                    </div>
+                </div>
+                <br/>
+                <my-data-table options="doctorList.options" rowclick="changeDoctor" rowclass="doctorList.class" numrows="10"></my-data-table>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+
+</div>

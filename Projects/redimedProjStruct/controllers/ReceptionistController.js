@@ -84,7 +84,7 @@ module.exports = {
 							"INNER JOIN doctors_room r ON r.`doctor_id` = d.`doctor_id` "+
 							"INNER JOIN redimedsites_room rr ON r.`room_id` = rr.`id` "+
 							"WHERE d.`isOnline`=1 "+
-							"AND d.`currentSite`=? AND d.`numsOfRoom` > 0",null,{raw:true},[site])
+							"AND d.`currentSite`=? AND d.`numsOfRoom` > 0 AND DATE(r.Creation_date) = CURDATE()",null,{raw:true},[site])
 			.success(function(rooms){
 				if(rooms.length > 0)
 				{

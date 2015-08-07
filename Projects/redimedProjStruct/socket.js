@@ -47,7 +47,7 @@ module.exports = function(io,cookie,cookieParser) {
 
     io.use(parser);
 
-    db.User.update({socket: null})
+    db.User.update({socket: null,token: null})
         .success(function(){
             console.log("=====Server Restart=====");
         })
@@ -293,7 +293,8 @@ module.exports = function(io,cookie,cookieParser) {
                         {
                             socket.to(user.user_name.toLowerCase()+'--'+user.id).emit('forceLogout');
                             db.User.update({
-                                socket: null
+                                socket: null,
+                                token: null
                             },{id: user.id})
                                 .success(function(){
                                     getOnlineUser();
@@ -348,9 +349,11 @@ module.exports = function(io,cookie,cookieParser) {
 
 
         socket.on('logout', function (username,id,userType,info) {
-           db.sequelize.query("UPDATE `users` SET `socket` = NULL, socketMobile = NULL WHERE `user_name`=? AND `id`=?",null,{raw:true},[username,id])
+            db.User.update({
+                socket: null,
+                token: null
+            },{user_name:username, id: id})
                 .success(function(){
-                    
                    if(info != null && typeof(info) != "undefined")
                    {
                        var data = info[0];

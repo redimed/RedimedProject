@@ -10,7 +10,6 @@ angular.module('app.loggedIn.doctor.setting.controller',[
 		}
 
 		$scope.doctorList = {
-            select:0,
             class:function(doctor){
                 return {
                     selected: (doctor.doco == $scope.doctors.select)
@@ -70,7 +69,7 @@ angular.module('app.loggedIn.doctor.setting.controller',[
 				if(rs.status == 'success')
 				{
 					$scope.roomList = rs.data;
-					$scope.room.selectedRooms = $scope.doctorInfo.rooms.length > 0 ? $scope.doctorInfo.rooms : null;
+					$scope.room.selectedRooms = $scope.doctorInfo.rooms != null ? $scope.doctorInfo.rooms : null;
 				}
 				
 			})
@@ -89,7 +88,7 @@ angular.module('app.loggedIn.doctor.setting.controller',[
 						if(rs.status == 'success')
 						{
 							$scope.roomList = rs.data;
-							if(typeof $scope.doctorInfo.rooms != 'undefined' && $scope.doctorInfo.rooms.length > 0)
+							if($scope.doctorInfo.rooms != null && $scope.doctorInfo.rooms.length > 0)
 							{
 								$scope.doctorInfo.rooms = JSON.parse("[" + $scope.doctorInfo.rooms + "]");
 								$scope.room.selectedRooms = $scope.doctorInfo.rooms;

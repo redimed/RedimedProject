@@ -69,6 +69,8 @@ angular.module("app.loggedIn.controller",[
 
     $scope.isShow = true;
 
+    socket.removeAllListeners();
+
     socket.on('disconnect',function(){
         toastr.error("Disconnect From Server! Please Login Again!");
         closeWindow();
@@ -81,25 +83,6 @@ angular.module("app.loggedIn.controller",[
 
         $state.go("security.login",null,{location: "replace", reload: true});
     })
-
-    socket.on('reconnect', function() {
-        if ($cookieStore.get("userInfo"))
-            socket.emit("reconnected", $cookieStore.get("userInfo").id);
-    })
-
-    socket.on('reconnect_failed', function() {
-        toastr.error("Disconnect From Server! Please Login Again!");
-        closeWindow();
-        $cookieStore.remove("userInfo");
-        $cookieStore.remove("companyInfo");
-        $cookieStore.remove("doctorInfo");
-        $cookieStore.remove("fromState");
-        $cookieStore.remove("toState");
-        $cookieStore.remove("isRemember");
-
-        $state.go("security.login",null,{location: "replace", reload: true});
-    })
-
 
     $scope.$on('onBeforeUnload', function (e, confirmation) {
         confirmation.message = "Your sure want to leave this page!";

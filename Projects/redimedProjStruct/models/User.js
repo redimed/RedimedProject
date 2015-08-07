@@ -38,7 +38,7 @@ module.exports = function(sequelize, DataTypes) {
       img: DataTypes.TEXT,
       socket: DataTypes.STRING(500),
       socketMobile: DataTypes.STRING(500),
-      roomSession: DataTypes.STRING(500)
+      token: DataTypes.TEXT
 }, {
         tableName: 'users', // đặt tên bảng
         createdAt: 'Creation_date',

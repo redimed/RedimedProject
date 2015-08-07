@@ -61,11 +61,11 @@ angular.module("app", [
         var socket = io.connect('https://'+host+':'+port, {
             'reconnection': true,
             'reconnectionDelay': 1000,
-            'reconnectionDelayMax': 2000,
-            'reconnectionAttempts': 1000,
+            'reconnectionDelayMax': 5000,
+            'reconnectionAttempts': Infinity,
             'secure': true,
             'timeout': 1000,
-            'force new connection': false,
+            'forceNew': true,
 			'transports': ['websocket', 
                           'flashsocket', 
                           'htmlfile', 
@@ -212,6 +212,24 @@ angular.module("app", [
     socket.on('connect',function(){
         if ($cookieStore.get("userInfo"))
             socket.emit("reconnected", $cookieStore.get("userInfo").id);
+    })
+
+    socket.on('reconnect', function() {
+        if ($cookieStore.get("userInfo"))
+            socket.emit("reconnected", $cookieStore.get("userInfo").id);
+    })
+
+    socket.on('reconnect_failed', function() {
+        toastr.error("Disconnect From Server! Please Login Again!");
+        closeWindow();
+        $cookieStore.remove("userInfo");
+        $cookieStore.remove("companyInfo");
+        $cookieStore.remove("doctorInfo");
+        $cookieStore.remove("fromState");
+        $cookieStore.remove("toState");
+        $cookieStore.remove("isRemember");
+
+        $state.go("security.login",null,{location: "replace", reload: true});
     })
 
     $idle.watch();

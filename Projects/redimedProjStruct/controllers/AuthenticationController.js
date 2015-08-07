@@ -9,124 +9,83 @@ module.exports = {
     login: function(req,username,password,done) {
         var platform = req.body.platform != null || typeof req.body.platform != 'undefined' ? req.body.platform : null;
         var token = req.body.token != null || typeof req.body.token != 'undefined' ? req.body.token : null;
-
+        var secureToken = new Date().getTime();
         if (typeof username !== 'undefined' && username &&
             typeof password !== 'undefined' && password) {
             db.User.belongsTo(db.UserType,{foreignKey:'user_type'});
             db.User.find({
                 where: {user_name: username, isEnable:1},
                 include:[db.UserType]
-            },{raw: true}).success(function (data)
+            },{raw: true}).success(function (user)
             {
-                if(data)
+                if(user)
                 {
-                    bcrypt.compare(password.toString(), data.password, function (err, compareResult) {
+                    bcrypt.compare(password.toString(), user.password, function (err, compareResult) {
                         if (compareResult == true) {
-
-                            if(platform != null)
-                            {
-                                delete data["img"];
-
-                                db.UserToken.find({where:{user_id:data.id}},{raw:true})
-                                    .success(function(rs){
-                                        if(rs){
-                                            db.UserToken.update({
-                                                android_token: platform != null && platform.toLowerCase() == 'android' ? token : null,
-                                                ios_token: platform != null && platform.toLowerCase() == 'ios' ? token : null
-                                            },{user_id:data.id})
-                                                .success(function(){
-                                                    if(data.UserType.user_type == 'Company')
-                                                    {
-                                                        db.Company.find({where: {id: data.company_id}},{raw:true})
-                                                            .success(function(company){
-                                                                return done(null, {status: 'success',
-                                                                    msg: "Login Successfully!",
-                                                                    userInfo: data,
-                                                                    companyInfo: company
-                                                                });
-                                                            })
-                                                            .error(function(err){
-                                                                console.log(err);
-                                                            })
-                                                    }
-                                                    else
-                                                    {
-                                                        return done(null, {status: 'success',
-                                                            msg: "Login Successfully!",
-                                                            userInfo: data
-                                                        });
-                                                    }
-                                                })
-                                                .error(function(err){console.log(err)})
-                                        }
-                                        else
-                                        {
-                                            db.UserToken.create({
-                                                user_id : data.id,
-                                                user_type: data.UserType.id,
-                                                android_token: platform != null && platform.toLowerCase() == 'android' ? token : null,
-                                                ios_token: platform != null && platform.toLowerCase() == 'ios' ? token : null
-                                            })
-                                                .success(function()
-                                                {
-                                                    if(data.UserType.user_type == 'Company')
-                                                    {
-                                                        db.Company.find({where: {id: data.company_id}},{raw:true})
-                                                            .success(function(company){
-                                                                return done(null, {status: 'success',
-                                                                    msg: "Login Successfully!",
-                                                                    userInfo: data,
-                                                                    companyInfo: company
-                                                                });
-                                                            })
-                                                            .error(function(err){
-                                                                console.log(err);
-                                                            })
-                                                    }
-                                                    else
-                                                    {
-                                                        return done(null, {status: 'success',
-                                                            msg: "Login Successfully!",
-                                                            userInfo: data
-                                                        });
-                                                    }
-                                                })
-                                                .error(function(err){console.log(err)})
-                                        }
-                                    })
-                            }
-                            else
-                            {
-                                delete data["img"];
-
-                                if(data.UserType.user_type == 'Company')
+                            db.User.update({
+                                token: secureToken
+                            },{id: user.id})
+                            .success(function() {
+                                delete user["img"];
+                                if(platform != null)
                                 {
-                                    db.Company.find({where: {id: data.company_id}},{raw:true})
+                                    db.UserToken.find({where:{user_id:user.id}},{raw:true})
+                                        .success(function(rs){
+                                            if(rs){
+                                                db.UserToken.update({
+                                                    android_token: platform != null && platform.toLowerCase() == 'android' ? token : null,
+                                                    ios_token: platform != null && platform.toLowerCase() == 'ios' ? token : null
+                                                },{user_id:user.id})
+                                                    .success(function(){
+                                                        console.log("success");
+                                                    })
+                                                    .error(function(err){console.log(err)})
+                                            }
+                                            else
+                                            {
+                                                db.UserToken.create({
+                                                    user_id : user.id,
+                                                    user_type: user.UserType.id,
+                                                    android_token: platform != null && platform.toLowerCase() == 'android' ? token : null,
+                                                    ios_token: platform != null && platform.toLowerCase() == 'ios' ? token : null
+                                                })
+                                                    .success(function(){
+                                                         console.log("success");
+                                                    })
+                                                    .error(function(err){console.log(err)})
+                                            }
+                                        })
+                                }
+
+                                if(user.UserType.user_type == 'Company')
+                                {
+                                    db.Company.find({where: {id: user.company_id}},{raw:true})
                                         .success(function(company){
                                             return done(null, {status: 'success',
                                                 msg: "Login Successfully!",
-                                                userInfo: data,
-                                                companyInfo: company
+                                                userInfo: user,
+                                                companyInfo: company,
+                                                token: secureToken
                                             });
                                         })
                                         .error(function(err){
                                             console.log(err);
                                         })
                                 }
-
                                 else
                                 {
                                     return done(null, {status: 'success',
                                         msg: "Login Successfully!",
-                                        userInfo: data
+                                        userInfo: user,
+                                        token: secureToken
                                     });
                                 }
-                            }
+                            })
+                            .error(function(err){console.log(err)})
+                            
                         }
-                        else {
-
+                        else 
                             return done(null, false, {status: 'fail', msg: 'Wrong Username Or Password!'});
-                        }
                     });
                 }
                 else
@@ -164,7 +123,7 @@ module.exports = {
                                 user_type: type.ID,
                                 isEnable: 1
                             })
-                            .success(function(data){
+                            .success(function(user){
                                 res.json({status:'success',
                                     msg:'insert successfully'});
                             })
@@ -193,8 +152,8 @@ module.exports = {
     // loggedIn: function(req,res){
     //     var username = req.body.username;
     //     db.User.find({where:{user_name: username}},{raw:true})
-    //         .success(function(data){
-    //             req.isAuthenticated() ? res.json(data) : res.json(null);
+    //         .success(function(user){
+    //             req.isAuthenticated() ? res.json(user) : res.json(null);
     //         })
     //         .error(function(err){
     //             console.log(err);

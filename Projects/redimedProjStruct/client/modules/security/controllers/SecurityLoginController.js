@@ -12,7 +12,7 @@ angular.module("app.security.login.controller",[
         isRemember: false
     }
 
-    // socket.removeAllListeners();
+    socket.removeAllListeners();
 
     // SUBMIT LOGIN
     $scope.login = function(){
@@ -85,6 +85,7 @@ angular.module("app.security.login.controller",[
                             if (typeof response.companyInfo !== 'undefined')
                                 $cookieStore.put("companyInfo", response.companyInfo);
 
+                            $cookieStore.put("token",response.token);
 
                             //tannv.dts create
                             var gotoFunction=function()

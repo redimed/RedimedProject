@@ -396,6 +396,11 @@
 	        <div class="portlet-title re_bg_color_E0EFFF">
 	            <div class="caption">
 	                <span class="caption-subject re_color_005A59 bold">In Consult</span>
+	                &nbsp;&nbsp;
+	                <a ng-click="doctorSetting()" href="javascript:;" class="btn btn-sm blue">
+   						<i class="fa fa-cog"></i>&nbsp;
+   						Doctor Settings
+   					</a>
 	            </div>
 	            <div class="actions">
 	            	<button class="btn btn-md grey" ng-click="undoAction()" ng-disabled="undoArr.length == 0">
@@ -428,15 +433,25 @@
            						<div ng-style="{background:a.SERVICE_COLOR}" 
 	       					    style=" color: black; border-color: #7FA8CB;cursor: pointer;" 
 	       						class="re_bg_info appt-profile"
-	       						data-drag="{{a.appt_status != 'Cancelled' ? true : false}}" 
+	       						data-drag="true" 
 	       						data-jqyoui-options="{revert: 'invalid'}" 
 	       						jqyoui-draggable="{ animate:true, onStart: 'dragAppt(a)'}">
 		       						<div class="media">
+		       							<div class="corner" dropdown>
+		       								<span class="dropdown-toggle" data-toggle>
+			       								<i style="color:black" class="fa fa-caret-down"></i>
+			       							</span>
+			       							<ul class="dropdown-menu" role="menu">
+			       								<li>
+											    	<a ui-sref="loggedIn.patient.consult({patient_id: a.Patient_id, cal_id: a.CAL_ID})" href="javascript:;">Details</a>
+										    	</li>
+											</ul>
+		       							</div>
 		       							<div style="width: 50px; height: 50px;border-radius: 5px !important;" class="pull-left">
 		   									<img width="100%" height="100%" class="img-circle" ng-src="{{(a.avatar == null || a.avatar == '') ? 'theme/assets/icon.png' : r.appointment.avatar}}">
 					                    </div>
 					                    <div class="media-body">
-					                    	<span style="font-size: 15px;" class="media-heading bold" ui-sref="loggedIn.patient.consult({patient_id: a.Patient_id, cal_id: a.CAL_ID})">
+					                    	<span style="font-size: 15px;" class="media-heading bold" >
 					                    		{{a.patient_name}} - {{r.room_name}}
 				                    		</span>
 					                    	<div class="row" style="font-size: 10px;color: #585757;">
