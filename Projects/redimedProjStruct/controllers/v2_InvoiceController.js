@@ -52,26 +52,103 @@ module.exports = {
 		var appt = null, patient = null, patient_claim = null;
 
 		//tannv.dts@gmail.com begin---------------------------
-		// var sql="SELECT * FROM `cln_appointment_calendar` WHERE `CAL_ID`=?";
-		// kiss.executeQuery(req,sql,[cal_id],function(rows){
-		// 	if(rows.length>0)
-		// 	{
-		// 		appt = rows[0];
-		// 		var sql=""
-		// 	}
-		// 	else
-		// 	{
-		// 		kiss.exlog(fHeader,'thong tin appointment khong ton tai');
-		// 		res.json(500,{status:'error',error:errorCode.get(controllerCode,functionCode,'TN002')});
-		// 	}
-		// },function(err){
-		// 	kiss.exlog(fHeader,'Loi truy van lay thong tin appointment');
-		// 	res.json(500,{status:'error',error:errorCode.get(controllerCode,functionCode,'TN001')});
-		// });
+		var userInfo=kiss.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+		var userId=userInfo.id;
+		var currentTime=kiss.getCurrentTimeStr();
+		var sql="SELECT * FROM `cln_appointment_calendar` WHERE `CAL_ID`=?";
+		kiss.executeQuery(req,sql,[cal_id],function(rows){
+			if(rows.length>0)
+			{
+				appt = rows[0];
+				var sql="SELECT patient.* FROM `cln_patients` patient where patient.`Patient_id`=?";
+				kiss.executeQuery(req,sql,[patient_id],function(rows){
+					if(rows.length>0)
+					{
+						patient=rows[0];
+						var sql=
+							" SELECT patientClaim.*,claim.`insurer_id` FROM `cln_patient_claim` patientClaim  "+   
+							" INNER JOIN `cln_claims` claim ON patientClaim.`Claim_id`=claim.`Claim_id`       "+
+							" WHERE patientClaim.`Patient_id`=? AND patientClaim.`CAL_ID`=?                   ";
+						kiss.executeQuery(req,sql,[patient_id,cal_id],function(rows){
+							if(rows.length>0)
+							{
+								patient_claim=rows[0];
+							}
+							var sql=
+								" SELECT invoiceHeader.* FROM `cln_invoice_header` invoiceHeader  "+
+								" where invoiceHeader.`cal_id`=? AND invoiceHeader.`Patient_id`=?    ";
+							kiss.executeQuery(req,sql,[cal_id,patient_id],function(rows){
+								var insurer_id = null, company_id = null, claim_id = null, header_id=null;
+								if(rows.length>0)
+								{
+									header_id=rows[0].header_id;
+								}
+								company_id = patient.company_id;
+								if(patient_claim && patient_claim.insurer_id) {
+									// insurer_id = patient_claim.claim.insurer_site;//tan frame
+									insurer_id = patient_claim.insurer_id;//tan add
+									claim_id = patient_claim.Claim_id;
+								}
+
+								var invoice_header = {
+									header_id:header_id,
+									cal_id: cal_id,
+									claim_id: claim_id,
+									Patient_id: patient_id,
+									Company_id: company_id,
+									Insurer_id: insurer_id,
+									DOCTOR_ID: appt.DOCTOR_ID,
+									SERVICE_ID: appt.SERVICE_ID,
+									SITE_ID: appt.SITE_ID,
+									DEPT_ID: appt.CLINICAL_DEPT_ID,
+									STATUS: 'enter',
+									CREATED_BY:userId,
+									CREATION_DATE:currentTime,
+									LAST_UPDATED_BY:userId,
+									LAST_UPDATE_DATE:currentTime,
+								}
+
+								kiss.executeInsertIfDupKeyUpdate(req,'cln_invoice_header',[invoice_header],['!CREATED_BY','!CREATION_DATE'],function(result){
+									res.json({status:'success'});
+								},function(err){
+									kiss.exlog(fHeader,'Loi truy van insert duplicate update (invoiceHeader)',err);
+									res.json(500,{status:'error',error:errorCode.get(controllerCode,functionCode,'TN008')});
+								});
+							},function(err){
+								kiss.exlog(fHeader,'Loi truy van lay invoice header',err);
+								res.json(500,{status:'error',error:errorCode.get(controllerCode,functionCode,'TN007')});
+							});
+						},function(err){
+							kiss.exlog(fHeader,'Loi truy van lay thong tin patient Claim',err);
+							res.json(500,{status:'error',error:errorCode.get(controllerCode,functionCode,'TN005')});
+						});
+
+					}
+					else
+					{
+						kiss.exlog(fHeader,'Khong co patient nao tuong ung voi id patient');
+						res.json(500,{status:'error',error:errorCode.get(controllerCode,functionCode,'TN004')});
+					}
+				},function(err){
+					kiss.exlog(fHeader,'Loi truy van lay thong tin patient',err);
+					res.json(500,{status:'error',error:errorCode.get(controllerCode,functionCode,'TN003')});
+				});
+			}
+			else
+			{
+				kiss.exlog(fHeader,'thong tin appointment khong ton tai');
+				res.json(500,{status:'error',error:errorCode.get(controllerCode,functionCode,'TN002')});
+			}
+		},function(err){
+			kiss.exlog(fHeader,'Loi truy van lay thong tin appointment');
+			res.json(500,{status:'error',error:errorCode.get(controllerCode,functionCode,'TN001')});
+		});
 		//tannv.dts@gmail.com end-----------------------------
 
+
+		// tannv.dts comment old code
 		// GET APPT DEPTAIL
-		db.Appointment.find({
+		/*db.Appointment.find({
 			where: {CAL_ID: cal_id},
 		}).then(function(data){
 			appt = data;
@@ -144,7 +221,7 @@ module.exports = {
 		})
 		.error(function(error){
 			res.json(500, {"status": "error", "message": error});
-		});
+		});*/
 	},
 
 	/**
