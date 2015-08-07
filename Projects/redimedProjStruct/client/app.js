@@ -60,11 +60,11 @@ angular.module("app", [
 
         var socket = io.connect('https://'+host+':'+port, {
             'reconnection': true,
-            'reconnectionDelay': 500,
-            'reconnectionDelayMax': 1000,
+            'reconnectionDelay': 1000,
+            'reconnectionDelayMax': 2000,
             'reconnectionAttempts': 1000,
             'secure': true,
-            'timeout': 500,
+            'timeout': 1000,
             'force new connection': false,
 			'transports': ['websocket', 
                           'flashsocket', 

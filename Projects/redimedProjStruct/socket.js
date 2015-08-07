@@ -53,6 +53,7 @@ module.exports = function(io,cookie,cookieParser) {
         })
 
     io.on('connection', function (socket) {
+        socket.removeAllListeners();
 
         socket.on('reconnected',function(id){
             db.User.find({where:{id: id}},{raw:true})
@@ -73,8 +74,6 @@ module.exports = function(io,cookie,cookieParser) {
                     }
                 })
         })
-
-        socket.removeAllListeners();
 
         socket.on('disconnect',function(){
             var roomObj = io.sockets.adapter.rooms;
@@ -219,8 +218,6 @@ module.exports = function(io,cookie,cookieParser) {
                                            message.apiKey = apiKey;
                                            message.token = token;
 
-                                           // io.to(contact.socket)
-                                           //      .emit('messageReceived',currentUser.id ,currentUser.user_name, message);
                                             socket.to(contact.user_name.toLowerCase()+'--'+contact.id).emit('messageReceived',currentUser.id ,currentUser.user_name, message);
 
                                             // ==============GCM PUSH==============

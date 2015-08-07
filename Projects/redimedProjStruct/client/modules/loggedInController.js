@@ -69,8 +69,6 @@ angular.module("app.loggedIn.controller",[
 
     $scope.isShow = true;
 
-    socket.removeAllListeners();
-
     socket.on('disconnect',function(){
         toastr.error("Disconnect From Server! Please Login Again!");
         closeWindow();
