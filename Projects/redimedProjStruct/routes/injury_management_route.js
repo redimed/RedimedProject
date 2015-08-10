@@ -16,6 +16,7 @@ app.post('/api/im/edit',injuryController.editInjury);
 app.post('/api/im/upload',multipartMiddleware,injuryController.uploadInjuryPic);
 app.get('/api/im/list',injuryController.injuryList);
 app.post('/api/im/listByPatient',injuryController.injuryListByPatient);
+app.post('/api/im/countInjuryByPatient',injuryController.injuryCountByPatient);
 app.post('/api/im/listByDriver',injuryController.injuryListByDriver);
 app.post('/api/im/searchByDate',injuryController.searchByDate);
 app.post('/api/im/searchByDatePatient',injuryController.searchByDatePatient);
@@ -25,6 +26,7 @@ app.post('/api/im/register',injuryController.register);
 
 app.get('/api/im/getOnlineUsers',injuryController.getOnlineUsers);
 app.post('/api/im/getInjuryByCompany',injuryController.getInjuryByCompany);
+app.post('/api/im/countInjuryByCompany',injuryController.countInjurybyCompany);
 
 app.post('/api/im/allocateDriver',injuryController.allocateDriver);
 

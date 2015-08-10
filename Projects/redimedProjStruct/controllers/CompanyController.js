@@ -1036,9 +1036,12 @@ module.exports = {
                 console.log(err);
             })
     },
+
     getListPatient: function(req,res){
         var comId = req.body.companyId;
-        db.sequelize.query("SELECT * FROM cln_patients WHERE company_id = ? ORDER BY Creation_date DESC",null,{raw:true},[comId])
+        var currentRecord = req.body.currentRecord;
+        console.log("---------", currentRecord);
+        db.sequelize.query("SELECT * FROM cln_patients WHERE company_id = ? ORDER BY Creation_date DESC LIMIT ?,?",null,{raw:true},[comId, currentRecord, 10])
             .success(function(data){
                 res.json({status:'success',data:data});
             })
@@ -1046,6 +1049,20 @@ module.exports = {
                 res.json({status:'error'});
                 console.log(err);
             })
-    }
+    },
+
+    countPatients: function (req, res) {
+        var comId = req.body.companyId;
+        var sql = "SELECT COUNT(*) AS numberPatient FROM `cln_patients` p WHERE p.`company_id` = ?";
+        db.sequelize.query(sql, null, {raw:true}, [comId])
+            .success(function(data) {
+                res.json({status:'success', data:data[0]});
+                console.log("-----", data);
+            })
+            .error(function(err) {
+                res.json({status:'error'});
+                console.log(err);
+            })
+    },
 
 }

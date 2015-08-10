@@ -1,5 +1,4 @@
 var db = require('../models');
-
 var fs = require('fs');
 var util = require("util");
 var mime = require("mime");
@@ -125,7 +124,7 @@ module.exports = {
 
       },
       search : function(req,res) {
-          var comId = req.body.companyId;
+          var comId = req.body.injuryControllerId;
           db.sequelize.query("SELECT p.Patient_id, p.Title, p.First_name, p.Sur_name, p.Middle_name, p.DOB, p.Mobile FROM cln_patients p WHERE p.company_id = ?", null, {raw: true},[comId])
               .success(function (data) {
                   res.json({status: 'success', rs: data});
@@ -135,6 +134,7 @@ module.exports = {
                   console.log(err);
               })
       },
+
       getById: function(req,res){
           var id = req.body.id;
           db.Patient.find({where:{Patient_id: id}},{raw:true})
@@ -373,15 +373,31 @@ module.exports = {
     },
     injuryListByPatient: function(req,res){
       var patient_id = req.body.patient_id;
+      var currentRecord = req.body.currentRecord;
         db.sequelize.query("SELECT i.*, a.isPickUp,p.*, u.user_name as driverUser, u.Booking_Person as driverName " +
                             "FROM `im_injury` i " +
                             "INNER JOIN `cln_patients` p ON i.`patient_id` = p.`Patient_id` " +
                             "LEFT JOIN users u ON u.id = i.driver_id " +
                             "LEFT JOIN cln_appt_patients a ON i.injury_id = a.injury_id "+
                             "WHERE i.`cal_id` IS NULL AND i.patient_id = ? "+
-                            "ORDER BY  i.`STATUS` = 'New' DESC, i.`STATUS` = 'Picking' DESC, i.`STATUS` = 'Picked' DESC, i.`STATUS` = 'Done' DESC, i.`injury_date` DESC",null,{raw:true},[patient_id])
+                            "ORDER BY  i.`STATUS` = 'New' DESC, i.`STATUS` = 'Picking' DESC, i.`STATUS` = 'Picked' DESC, i.`STATUS` = 'Done' DESC, i.`injury_date` DESC LIMIT ?,?",null,{raw:true},[patient_id, currentRecord, 10])
             .success(function(data){
                 res.json({status:'success',data:data})
+            })
+            .error(function(err){
+                res.json({status:'error',error:err})
+            })
+    },
+    injuryCountByPatient: function(req,res){
+      var patient_id = req.body.patient_id;
+      // console.log("-----gggg", patient_id);
+      var sql = "SELECT COUNT(*) AS numberInjury FROM `im_injury` i " +
+                "INNER JOIN `cln_patients` p ON i.`patient_id` = p.`Patient_id` " +
+                "LEFT JOIN users u ON u.id = i.driver_id " +
+                "WHERE i.`cal_id` IS NULL AND i.patient_id = ? ";
+      db.sequelize.query(sql ,null,{raw:true},[patient_id])
+            .success(function(data){
+                res.json({status:'success',data:data[0]})
             })
             .error(function(err){
                 res.json({status:'error',error:err})
@@ -773,11 +789,11 @@ module.exports = {
     },
     getInjuryByCompany: function(req,res){
         var companyId = req.body.companyId;
-
+        var currentRecord = req.body.currentRecord;
         db.sequelize.query("SELECT i.*,p.*,CONCAT(IFNULL(p.Title,''), ' . ', IFNULL(p.`First_name`,''),' ',IFNULL(p.`Sur_name`,''),' ',IFNULL(p.`Middle_name`,'')) as FullName,c.Company_name as CompanyName,c.Addr as CompanyAddr, c.Industry FROM `im_injury` i " +
                             "INNER JOIN `cln_patients` p ON i.`patient_id` = p.`Patient_id` " +
                             "INNER JOIN companies c ON c.id = p.company_id " +
-                            "WHERE c.id = ? ORDER BY i.injury_date DESC",null,{raw:true},[companyId])
+                            "WHERE c.id = ? ORDER BY i.injury_date DESC LIMIT ?,?",null,{raw:true},[companyId, currentRecord, 10])
             .success(function(data){
                 res.json({status:'success',data:data})
             })
@@ -785,6 +801,22 @@ module.exports = {
                 res.json({status:'error',error:err})
             })
     },
+
+    countInjurybyCompany: function(req, res){
+      var companyId = req.body.companyId;
+      var sql = "SELECT COUNT(*) AS numberInjury FROM `im_injury` i " +
+                "INNER JOIN `cln_patients` p ON i.`patient_id` = p.`Patient_id` " +
+                "INNER JOIN companies c ON c.id = p.company_id " +
+                "WHERE c.id = ?";
+      db.sequelize.query(sql, null, {raw:true}, [companyId])
+          .success(function(data){
+                res.json({status:'success',data:data[0]})
+            })
+            .error(function(err){
+                res.json({status:'error'})
+            })
+    },
+
     getDevices: function(req,res){
       db.MedicalDevice.findAll({raw: true})
             .success(function(data){

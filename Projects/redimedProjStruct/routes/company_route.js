@@ -10,3 +10,4 @@ app.post('/api/company/new',CompanyController.insert);
 app.post('/api/company/edit',CompanyController.edit);
 app.post('/api/company/checkName',CompanyController.checkName);
 app.post('/api/company/patients',CompanyController.getListPatient);
+app.post('/api/company/countPatients',CompanyController.countPatients);
