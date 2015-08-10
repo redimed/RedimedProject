@@ -198,7 +198,9 @@ and line.SCORE_TYPE1=6]]>
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="5"/>
+				</textElement>
 				<text><![CDATA[Ability to hold position for 120 seconds.]]></text>
 			</staticText>
 			<staticText>
@@ -210,7 +212,9 @@ and line.SCORE_TYPE1=6]]>
 					<bottomPen lineWidth="1.0" lineColor="#F0F0F0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="5"/>
+				</textElement>
 				<text><![CDATA[Ability to hold position for 90 - 119 seconds.]]></text>
 			</staticText>
 			<staticText>
@@ -222,7 +226,9 @@ and line.SCORE_TYPE1=6]]>
 					<bottomPen lineWidth="1.0" lineColor="#F0F0F0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="5"/>
+				</textElement>
 				<text><![CDATA[Ability to hold position for 60 - 89 seconds.]]></text>
 			</staticText>
 			<staticText>
@@ -234,7 +240,9 @@ and line.SCORE_TYPE1=6]]>
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="5"/>
+				</textElement>
 				<text><![CDATA[Ability to hold position for less than 60 seconds.]]></text>
 			</staticText>
 			<staticText>

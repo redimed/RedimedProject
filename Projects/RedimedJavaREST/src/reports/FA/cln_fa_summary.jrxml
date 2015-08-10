@@ -12,7 +12,7 @@
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<property name="ireport.zoom" value="0.8467108950806659"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="16"/>
 	<parameter name="patient_id" class="java.lang.String"/>
 	<parameter name="cal_id" class="java.lang.String"/>
 	<parameter name="real_path" class="java.lang.String"/>
@@ -507,7 +507,7 @@ and header.FA_ID =  $P{fa_id}]]>
 				</ellipse>
 			</frame>
 		</band>
-		<band height="334">
+		<band height="53">
 			<printWhenExpression><![CDATA[$F{is_have_additional_test}==1]]></printWhenExpression>
 			<frame>
 				<reportElement x="0" y="0" width="555" height="53" uuid="48d71f87-3999-443f-a287-57d04a11637e"/>
@@ -607,7 +607,7 @@ and header.FA_ID =  $P{fa_id}]]>
 					<reportElement x="51" y="27" width="15" height="15" uuid="c043ec6f-2d68-46cb-9ef6-304e6d8e8fc3">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					</reportElement>
-					<imageExpression><![CDATA[$F{Att_Flexibility}==0 || $F{Att_Flexibility}==null ?$P{real_path}+"uncheck.png":$P{real_path}+"checked.png"]]></imageExpression>
+					<imageExpression><![CDATA[$F{Att_Flexibility}==0 || $F{Att_Flexibility}.intValue()==0?$P{real_path}+"uncheck.png":$P{real_path}+"checked.png"]]></imageExpression>
 				</image>
 			</frame>
 		</band>
