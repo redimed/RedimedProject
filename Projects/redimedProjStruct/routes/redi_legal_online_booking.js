@@ -148,7 +148,7 @@ app.get('/api/rlob/rl_form_ams5/select_Item_rl_form_ams5_bookingid', rlobBooking
 
 //user register
 //tannv.dts@gmail.com
-app.post('/api/rlob/register/insert-new-user',func.checkToken, rlRegisterController.insertNewUser);
+app.post('/api/rlob/register/insert-new-user', rlRegisterController.insertNewUser);
 app.post('/api/rlob/register/list-redilegal-users', rlRegisterController.getRedilegalUsers);
 app.post('/api/rlob/register/update-redilegal-user-status',func.checkToken, rlRegisterController.updateRedilegalUserStatus);
 app.post('/api/rlob/register/update-user-info',func.checkToken, rlRegisterController.updateUserInfo);
