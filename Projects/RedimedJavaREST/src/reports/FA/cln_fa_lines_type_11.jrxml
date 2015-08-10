@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2015-08-10T09:23:41 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cln_lines_type_11" pageWidth="575" pageHeight="842" columnWidth="555" leftMargin="0" rightMargin="20" topMargin="0" bottomMargin="0" uuid="5e4aaed7-373e-4e0c-a27f-8074a717fb36">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -140,11 +142,7 @@ and line.SCORE_TYPE1=11]]>
 		</groupHeader>
 	</group>
 	<detail>
-		<band height="83">
-			<image>
-				<reportElement x="92" y="0" width="390" height="83" uuid="0092b55f-f9e1-4e0b-9ee2-16003942f1c4"/>
-			</image>
-		</band>
+		<band height="83"/>
 		<band height="30">
 			<subreport>
 				<reportElement x="0" y="0" width="555" height="30" uuid="00f821d7-a8dc-47e7-9f23-321e7c44bb3f"/>
