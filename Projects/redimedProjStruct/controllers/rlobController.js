@@ -6,6 +6,9 @@ var moment=require('moment');
 var bcrypt = require('bcrypt-nodejs');
 var randomstr = require('randomstring');
 
+var errorCode=require('./errorCode');// tan add
+var controllerCode="RED_RLOB_CORE";
+
 /**
  * Xu ly cap nhat lai appointment fromTime va toTime
  * day la function con, la mot function chay trong 1 function beginTransaction truoc do
@@ -14,6 +17,8 @@ var randomstr = require('randomstring');
  */
 var saveBookingInfo=function(req,res)
 {
+	var fHeader="rlobController->saveBookingInfo";
+	var functionCode="FN002";
 	var userInfo=kiss.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
     var userId=kiss.checkData(userInfo.id)?userInfo.id:null;
 
@@ -46,7 +51,7 @@ var saveBookingInfo=function(req,res)
     			{
     				kiss.exlog("saveBookingInfo","Bi trung du lieu tai cln_appt_patients, patient nay da booking cal_id tu truoc roi");
             		kiss.rollback(req,function(){
-						res.json({status:"fail"});
+						res.json({status:"fail",error:errorCode.get(controllerCode,functionCode,'TN001'),msg:'Duplicate [patient,calendar]'});
 					});
     			}
     			else
@@ -133,20 +138,20 @@ var saveBookingInfo=function(req,res)
 								        		{
 								        			kiss.exlog("saveBookingInfo","Khong co appointment calendar nao duoc cap nhat status");
 								        			kiss.rollback(req,function(){
-						        						res.json({status:"fail"});
+						        						res.json({status:"fail",error:errorCode.get(controllerCode,functionCode,'TN002'),msg:'No appointment have changed status'});
 						        					});
 								        		}
 								        	},function(err){
 								        		kiss.exlog("saveBookingInfo","Loi cap nhat appointmentCalendarStatus");
 								        		kiss.rollback(req,function(){
-					        						res.json({status:"fail"});
+					        						res.json({status:"fail",error:errorCode.get(controllerCode,functionCode,'TN003'),msg:'Error when update appointment calendar status'});
 					        					});
 								        	})
 								        	
 								        },function(err){
 								        	kiss.exlog("saveBookingInfo","Loi insert booking info",err);
 								        	kiss.rollback(req,function(){
-				        						res.json({status:"fail"});
+				        						res.json({status:"fail",error:errorCode.get(controllerCode,functionCode,'TN004'),msg:'Error when insert booking info'});
 				        					});
 								        });
 								        
@@ -155,13 +160,13 @@ var saveBookingInfo=function(req,res)
 	                            	{
 	                            		kiss.exlog("saveBookingInfo","khong co cln_appointment_calendar duoc cap nhat");
 	                            		kiss.rollback(req,function(){
-			        						res.json({status:"fail"});
+			        						res.json({status:"fail",error:errorCode.get(controllerCode,functionCode,'TN005'),msg:'No appointment calendar have updated'});
 			        					});
 	                            	}
 	                            },function(err){
 	                            	kiss.exlog("saveBookingInfo","loi truy van cap nhat cln_appointment_calendar",err);
 	                            	kiss.rollback(req,function(){
-		        						res.json({status:"fail"});
+		        						res.json({status:"fail",error:errorCode.get(controllerCode,functionCode,'TN006'),msg:'Error when update appointment calendar'});
 		        					})
 	                            })
 	        				}
@@ -169,19 +174,19 @@ var saveBookingInfo=function(req,res)
 	        				{
 	        					kiss.exlog("saveBookingInfo","Khong co cln_appointment_calendar tuong ung");
 	        					kiss.rollback(req,function(){
-	        						res.json({status:"fail"});
+	        						res.json({status:"fail",error:errorCode.get(controllerCode,functionCode,'TN007'),msg:'No appointment calendar correspond'});
 	        					})
 	        				}
 	        			},function(err){
 	        				kiss.exlog("saveBookingInfo","Loi select cln_appointment_calendar",err);
 	        				kiss.rollback(req,function(){
-	        					res.json({status:"fail"});
+	        					res.json({status:"fail",error:errorCode.get(controllerCode,functionCode,'TN008'),msg:'Error when get appointment calendar.'});
 	        				})
 	        			})
     				},function(err){
     					kiss.exlog("saveBookingInfo","Khong the thuc thi insert cln_appt_patients",err);
     					kiss.rollback(req,function(){
-    						res.json({status:"fail"});
+    						res.json({status:"fail",error:errorCode.get(controllerCode,functionCode,'TN009'),msg:'Cannot insert appt_patients'});
     					});
     				});
     			}
@@ -189,20 +194,20 @@ var saveBookingInfo=function(req,res)
     		},function(err){
     			kiss.exlog("saveBookingInfo","loi select cln_appt_patients",err);
     			kiss.rollback(req,function(){
-    				res.json({status:'fail'});
+    				res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN010'),msg:'Error when select appt_patients.'});
     			});
     		})
     	},function(err){
     		kiss.exlog("saveBookingInfo","Loi khong the insert claim",err);
     		kiss.rollback(req,function(){
-    			res.json({status:'fail'});
+    			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN011'),msg:'Cannot insert claim.'});
     		})
     	})
 
     },function(err){
     	kiss.exlog("saveBookingInfo","Loi khong the insert patient",err);
     	kiss.rollback(req,function(){
-    		res.json({status:'fail'});
+    		res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN012'),msg:'Cannot insert patient.'});
     	})
     });
 }
@@ -349,7 +354,8 @@ var changeBookingCalendar=function(req,res)
  */
 var handlePeriodTimeAppointmentCalendar=function(req,res,functionNext)	
 {
-	
+	var fHeader="rlobController->handlePeriodTimeAppointmentCalendar";
+	var functionCode="FN001";
 	var handlePeriodInfo=kiss.checkData(req.body.handlePeriodInfo)?req.body.handlePeriodInfo:{};
 	var doctorId=kiss.checkData(handlePeriodInfo.doctorId)?handlePeriodInfo.doctorId:'';
 	var siteId=kiss.checkData(handlePeriodInfo.siteId)?handlePeriodInfo.siteId:'';
@@ -364,14 +370,14 @@ var handlePeriodTimeAppointmentCalendar=function(req,res,functionNext)
 	if(!kiss.checkListData(doctorId,siteId,selectedAppFromTime,rlTypeId))
 	{
 		kiss.exlog("handlePeriodTimeAppointmentCalendar","Loi data truyen den");
-		res.json({status:'fail'});
+		res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
 		return;
 	}
 
 	if(!rlobUtil.periodTimeOfRlType[rlTypeId])
 	{
 		kiss.exlog("handlePeriodTimeAppointmentCalendar","RL Type khong hop le!");
-		res.json({status:'fail'});
+		res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN002')});
 		return;
 	}
 	//Thoi gian can thiet 
@@ -405,7 +411,7 @@ var handlePeriodTimeAppointmentCalendar=function(req,res,functionNext)
 	            if(selectedItemPeriodTime<periodTimeDefault)
 	            {
 	            	kiss.exlog("handlePeriodTimeAppointmentCalendar","selectedSession con qua it thoi gian, nho hon khoang thoi gian mac dinh");
-	            	res.json({status:'fail'});
+	            	res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN003')});
 	            	return;
 	            }
 	            else
@@ -513,14 +519,14 @@ var handlePeriodTimeAppointmentCalendar=function(req,res,functionNext)
 		                    		{
 		                    			kiss.exlog("handlePeriodTimeAppointmentCalendar","updateAppointmentCalendar -> khong co dong nao duoc doi");
 		                    			kiss.rollback(req,function(){
-			                    			res.json({status:'fail'});
+			                    			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN004')});
 			                    		})
 		                    		}
 		                    	},function(err)
 		                    	{
 		                    		kiss.exlog("handlePeriodTimeAppointmentCalendar","updateAppointmentCalendar-> loi khi chay cau update",err);
 		                    		kiss.rollback(req,function(){
-		                    			res.json({status:'fail'});
+		                    			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN005'),msg:'Query update adjacent calendar fail.'});
 		                    		})
 		                    	})
 		                    }
@@ -536,7 +542,7 @@ var handlePeriodTimeAppointmentCalendar=function(req,res,functionNext)
 		                {
 		                	kiss.exlog("handlePeriodTimeAppointmentCalendar","session hien tai khong du thoi gian, nhung cung khong co session lien ke de bu tru");
 		                	kiss.rollback(req,function(){
-		                		res.json({status:'fail',msg:"session hien tai khong du thoi gian, nhung cung khong co session lien ke de bu tru"});
+		                		res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN006'),msg:'current session not enough time and have not adjacent session',msg_v:"session hien tai khong du thoi gian, nhung cung khong co session lien ke de bu tru"});
 		                	})
 		                }
 		            }
@@ -552,18 +558,18 @@ var handlePeriodTimeAppointmentCalendar=function(req,res,functionNext)
 			{
 				kiss.exlog("handlePeriodTimeAppointmentCalendar","Khong the booking voi session nay; vi khong the lay duoc thong tin session");
 				kiss.rollback(req,function(){
-	        		res.json({status:'fail'});
+	        		res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN007'),msg:'appointment calendar not exist.'});
 	        	});
 			}
 		},function(err){
 			kiss.exlog("handlePeriodTimeAppointmentCalendar","Loi truy van, truy van lay cac session",err);
 			kiss.rollback(req,function(){
-	    		res.json({status:'fail'});
+	    		res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN008'),msg:'query get list sessions fail.'});
 	    	})
 		},true);
 	},function(err){
 		kiss.exlog("handlePeriodTimeAppointmentCalendar","Khong the mo transaction",err);
-		res.json({status:'fail'});
+		res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN009'),msg:'Can not open transaction.'});
 	})
 	
 }
