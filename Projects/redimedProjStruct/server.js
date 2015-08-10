@@ -187,9 +187,9 @@ db.sequelize
         if (err) {
             throw err[0];
         } else {
-            // http.createServer(httpApp).listen(httpApp.get('port'), function() {
-            //     console.log('Express HTTP server listening on port ' + httpApp.get('port'));
-            // });
+             http.createServer(httpApp).listen(httpApp.get('port'), function() {
+                 console.log('Express HTTP server listening on port ' + httpApp.get('port'));
+             });
              
             httpsServer.listen(app.get('port'), function() {
                 console.log('Express HTTPS server listening on port ' + app.get('port'));
