@@ -758,7 +758,9 @@ module.exports = {
             return;
         }
         var sql=
-            " SELECT * FROM `cln_patient_consults` WHERE `patient_id` = ? AND `cal_id` = ? ";
+            " SELECT consul.*, cal.`FROM_TIME` FROM `cln_patient_consults` consul         "+
+            " INNER JOIN `cln_appointment_calendar` cal ON consul.`cal_id` = cal.`CAL_ID` "+
+            " WHERE consul.`patient_id` = ? AND consul.`cal_id` = ?                       ";
         kiss.executeQuery(req,sql,[patientId,calId],function(rows){
             if(rows.length>0)
             {

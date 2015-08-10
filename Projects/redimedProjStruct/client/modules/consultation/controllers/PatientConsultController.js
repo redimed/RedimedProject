@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.patient.consult.controller",[])
 
-	.controller("PatientConsultController",function(InjuryManagementService,DoctorService,$filter,$rootScope,$interval,$window,$document,$cookieStore,$scope,$state,$modal,InsurerService,toastr,socket,OTSession,ReceptionistService,$stateParams,ConsultationService,PatientService,UserService,$interval,InvoiceService){
+	.controller("PatientConsultController",function(AppointmentModel,InjuryManagementService,DoctorService,$filter,$rootScope,$interval,$window,$document,$cookieStore,$scope,$state,$modal,InsurerService,toastr,socket,OTSession,ReceptionistService,$stateParams,ConsultationService,PatientService,UserService,$interval,InvoiceService){
 
 		$scope.templates = [];
 
@@ -131,7 +131,8 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 			doctornote: null,
 			consult_id: null,
 			chooseNextAppt : null,
-			nextApptDate : null
+			nextApptDate : null,
+			FROM_TIME : null
 		}
 		/*
 		* phanquocchien.c1109g@gmail.com
@@ -140,6 +141,7 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 		$scope.loadConsultationInfo = function(){
 			ConsultationService.checkConsultation($scope.patient_id,$scope.cal_id).then(function(data){
 				if (data.status == 'success') {
+					console.log('aaaaaaaaaaaaaaaaaaaaaaaaa',data.data);
 					$scope.consultInfo.problem_id = data.data.problem_id;					
 					$scope.consultInfo.history = data.data.history;					
 					$scope.consultInfo.examination = data.data.examination;					
@@ -153,16 +155,25 @@ angular.module("app.loggedIn.patient.consult.controller",[])
 					$scope.consultInfo.hand_therapist = data.data.hand_therapist;		
 					$scope.consultInfo.doctornote = data.data.doctornote;		
 					$scope.consultInfo.consult_id = data.data.consult_id;
+					$scope.consultInfo.FROM_TIME = data.data.FROM_TIME;
+        			console.log('$scope.current_patient.FROM_TIME',moment($scope.consultInfo.FROM_TIME).format('YYYY-MM-DD'));
 					if (data.data.next_appt_date != null && data.data.next_appt_note != null) {
 						$scope.showNextAppt = '1';
 						$scope.consultInfo.chooseNextAppt = data.data.next_appt_note;
 						$scope.consultInfo.nextApptDate = new Date(data.data.next_appt_date);
 					}
+					$scope.alertCenter.load();
 				}else{
 					ConsultationService.submitConsult($scope.consultInfo).then(function(res){
 						if(res.status == 'success')
 						{
 							$scope.consultInfo.consult_id = res.data.insertId;
+							ConsultationService.checkConsultation($scope.patient_id,$scope.cal_id).then(function(data){
+								if (data.status == 'success') {
+									$scope.consultInfo.FROM_TIME = data.data.FROM_TIME;
+									$scope.alertCenter.load();
+								};
+							})
 						}
 					})
 				}
@@ -1393,7 +1404,157 @@ angular.module("app.loggedIn.patient.consult.controller",[])
         		toastr.error("Complete progress fail.");
         	});
         }
-        
+        //phanquocchien.c1109g@gmail.com
+        //Notification List
+		var loadAlertCenter = function(){
+			var postData = {
+				fromDate : moment($scope.consultInfo.FROM_TIME).format('YYYY-MM-DD'),
+				patient_id : $scope.patient_id
+			}
+			$scope.alertCenter.list = [];
+
+			AppointmentModel.alertCenterConsultation(postData)
+			.then(function(response){
+				_.forEach(response.data, function(row){
+					var flag = -1;
+					var i = 0;
+					_.forEach($scope.alertCenter.list, function(list){
+						if(list.Patient_id === row.Patient_id){
+							flag = i;
+							return;
+						}
+						i++;
+					})
+
+					if(flag !== -1){
+						if(row.ALERT_ID){
+							var alert_flag = true;
+							_.forEach($scope.alertCenter.list[flag].alert, function(alert){
+								if(alert.id === row.ALERT_ID){
+									alert_flag = false;
+								}
+							})
+
+							if(alert_flag){
+								var object = {id: row.ALERT_ID, name: row.ALERT_NAME, color: row.SERVICE_COLOR, patient_alert: row.ID, Check: row.Check, User: row.User, isUser: row.isUser, Patients_id: row.Patients_id};
+								$scope.alertCenter.list[flag].alert.push(object);
+							}
+
+							var cal_flag = true;
+							var i = 0;
+							_.forEach($scope.alertCenter.list[flag].cal, function(cal){
+								if(cal.CAL_ID === row.CAL_ID){
+									cal_flag = false;
+								}
+							})
+
+							if(cal_flag){
+								$scope.alertCenter.list[flag].test = row.IS_REFERRAL;
+								$scope.alertCenter.list[flag].cal.push({IS_REFERRAL: row.IS_REFERRAL, CAL_ID: row.CAL_ID, FROM_TIME: row.FROM_TIME, TO_TIME: row.TO_TIME, OUTREFERRAL: 'no', DOCTOR_ID: row.DOCTOR_ID});
+								if(row.outreferral_id){
+									var cal_length = $scope.alertCenter.list[flag].cal.length;
+									$scope.alertCenter.list[flag].cal[cal_length-1].OUTREFERRAL = 'yes';
+								}
+							}
+							/**/
+						}
+					}else{
+						var object = {Patient_id: row.Patient_id, First_name: row.First_name, Sur_name: row.Sur_name, alert: [], cal: []};
+
+						if(row.ALERT_ID){
+							object.alert.push({id: row.ALERT_ID, name: row.ALERT_NAME, color: row.SERVICE_COLOR, patient_alert: row.ID, Check: row.Check, User: row.User, isUser: row.isUser, Patients_id: row.Patients_id});
+						}
+
+						if(row.CAL_ID){
+							object.test = row.IS_REFERRAL;
+							object.cal.push({IS_REFERRAL: row.IS_REFERRAL, DOCTOR_ID: row.DOCTOR_ID, CAL_ID: row.CAL_ID, FROM_TIME: row.FROM_TIME, TO_TIME: row.TO_TIME, OUTREFERRAL: 'no'});
+							if(row.outreferral_id){
+								object.cal[0].OUTREFERRAL = 'yes';
+							}
+						}
+
+						$scope.alertCenter.list.push(object);
+					}
+
+				})
+			}, function(error){})
+		}
+
+		// get value check box notification
+		var search = {
+			id: 0,
+			isCheck: 0,
+			isUser: 0
+		}
+
+		// var list_search = {
+		// 	user_name: ''
+		// }
+		// Check box notification
+		var onCheck = function(row) {
+			//console.log('Row: ', row);
+			$scope.alertCenter.search.id = row.patient_alert;
+			$scope.alertCenter.search.isCheck = row.Check;
+			$scope.alertCenter.search.isUser = $scope.userInfo.id;
+			$scope.alertCenter.search.Patients_id = row.Patients_id;
+			// console.log('Search: ', scope.alertCenter.search);
+			AppointmentModel.PostCheck($scope.alertCenter.search)
+			.then(function(response){
+
+				var temp = [];
+				var temp_r = [];
+				//console.log('###############: ', scope.alertCenter.list);
+				angular.forEach($scope.alertCenter.list, function(value, index) {
+					if($scope.alertCenter.list[index].Patient_id === $scope.alertCenter.search.Patients_id) {
+						temp.push(value);
+					}
+				})
+				//console.log('#######################: ', temp[0].alert);
+				angular.forEach(temp[0].alert, function(values, indexs) {
+					if(temp[0].alert[indexs].patient_alert === $scope.alertCenter.search.id) {
+						temp_r.push(values);		
+					}
+				})
+				//console.log('^^^^^^^^^^^^^^^^^^^^^: ', temp_r);
+
+				// //console.log('%%%%%%%%%%%%%%%%%%%%%%: ', scope.alertCenter.list.alert);
+				// // console.log('%%%%%%%%%%%%%%: ', temp_r);
+				// //scope.alertCenter.load();
+				// var f_search = {
+				// 	id: 0
+				// }
+				// angular.forEach(temp_r, function(valuer, indexr) {
+				// 	temp_r[indexr].
+				// })
+				AppointmentModel.PostUser($scope.userInfo.id)
+				.then(function(resp) {
+					angular.forEach(temp_r, function(valuer, indexr) {
+						temp_r[indexr].User = resp.data[0].User;
+					})
+					angular.forEach($scope.alertCenter.list, function(value_y, index_y) {
+						angular.forEach(temp_r, function(value_x, index_x) {
+							if( $scope.alertCenter.list[index_y].Patient_id === temp_r[index_x].Patients_id ){
+								angular.forEach($scope.alertCenter.list[index_y].alert, function(value_a, index_a) {})
+							}
+						})
+					})
+					//scope.alertCenter.list.push(temp_r[0]);
+					//console.log('#################: ', scope.alertCenter.list);
+					//console.log('%%%%%%%%%%%%%%%%%%%%%%: ', scope.alertCenter.list);
+					//console.log('**************************: ', resp);
+					// scope.alertCenter.list_search.user_name = resp.data[0].user_name;
+				}, function(error){})
+			}, function(error){})
+		}
+		
+		$scope.alertCenter = {
+			search: search,
+			//list_search: list_search,
+			onCheck: function(row){ onCheck(row); },
+			load: function(){ loadAlertCenter(); },
+			list: [],
+			arrow: false
+		}			
 	})
 
 	.directive('dropzone', function () {

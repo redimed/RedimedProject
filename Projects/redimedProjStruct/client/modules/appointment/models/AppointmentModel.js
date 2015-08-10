@@ -28,6 +28,12 @@ angular.module('app.loggedIn.appointment.models', [])
 		var instanceApi = mainApi.all('alertCenter');
 		return instanceApi.post({data: data});	
 	}
+	//phanquocchien.c1109g@gmail.com
+	//alert Center Consultation
+	mainModel.alertCenterConsultation = function(data){
+		var instanceApi = mainApi.all('alertCenterConsultation');
+		return instanceApi.post({data: data});	
+	}
 
 	mainModel.alertSiteCenter = function(data){
 		var instanceApi = mainApi.all('alertSiteCenter');

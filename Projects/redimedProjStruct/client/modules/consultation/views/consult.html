@@ -2,9 +2,68 @@
     a {
         text-decoration: inherit;
     }
-</style>
-<!-- dsfasdf -->
+    .img-profile{
+      position: relative;
+      top: 50%;
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+    }
+    .appt-profile {
+        position: relative;
+        padding: 9px !important;
+    }
 
+    .appt-profile .corner {
+        position: absolute;
+        top: 5;
+        right: 10;
+    }
+
+    .panel{
+        margin-bottom: 0px;
+        position: fixed;
+         bottom: 0;
+         right: 0;
+         width: 350px !important;
+    }
+
+    .icon_minim{
+        padding:2px 10px;
+    }
+    .msg_container_base{
+      background: #e5e5e5;
+      margin: 0;
+      padding: 0 10px 10px;
+      max-height:300px;
+      overflow-x:hidden;
+    }
+    .top-bar {
+      background: #666;
+      color: white;
+      padding: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .msg_container_base::-webkit-scrollbar-track
+    {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        background-color: #F5F5F5;
+    }
+
+    .msg_container_base::-webkit-scrollbar
+    {
+        width: 12px;
+        background-color: #F5F5F5;
+    }
+
+    .msg_container_base::-webkit-scrollbar-thumb
+    {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+        background-color: #555;
+    }
+</style>
 <div class="row">
     <div class="col-md-10 col-sm-10 un-padding-right-0">
         
@@ -2087,3 +2146,63 @@
         <button type="button" class="btn btn-default" ng-click="cancel()">Close</button>
     </div>
 </script>
+<div style="z-index: 9;" class="panel panel-default">
+    <div class="panel-heading top-bar">
+        <div class="col-md-8 col-xs-8">
+            <h3 class="panel-title"><span class="glyphicon glyphicon-comment"></span> Notification List</h3>
+        </div>
+        <div class="col-md-4 col-xs-4" style="text-align: right;">
+            <a href="javascript:;"><span id="minim_chat_window" class="glyphicon glyphicon-minus icon_minim"></span></a>
+        </div>
+    </div>
+    <div class="panel-body msg_container_base">
+       <div ng-if="list.test !== 0 || list.alert.length !== 0" class="un_body_notification_list" ng-repeat="list in alertCenter.list">
+           <div class="panelo">
+                <span ng-if="list.alert.length > 0 || list.cal.length > 0" style="font-size: 16px;font-weight: bold;">
+                    <a href="javascript:;" style="text-decoration: none;"><span id="minim_chat_window" class="icon_minims">{{list.First_name}} {{list.Sur_name}}</span></a>
+                </span>
+                <div class="panelor">
+                    <ul ng-repeat="alert in list.alert" ng-if="list.alert.length > 0">
+                        <li style="color: {{alert.color}};">
+                            {{alert.name}} <input type="checkbox" ng-checked="alert.Check" ng-true-value=1 ng-false-value=0 ng-click="alertCenter.onCheck(alert)" />
+                            <span style="font-weight: bold" ng-if="alert.User != null">{{' - ' + alert.User}}</span>
+                            <span ng-if="alert.Check==0 && alert.isUser==0 && alert.User == null "></span>
+                        </li>
+                    </ul>
+                    <p ng-repeat="cal in list.cal" ng-if="list.cal.length > 0 && list.test === 1">
+                        <span ng-if="cal.IS_REFERRAL && cal.OUTREFERRAL === 'no'" style="margin-left: 10px;">
+                            {{cal.FROM_TIME}}-{{cal.TO_TIME}}:&nbsp
+                            There is no referral
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <!--<span ng-if="list.alert.length > 0 || list.cal.length > 0" style="font-size: 16px;font-weight: bold;">
+                {{list.First_name}} {{list.Sur_name}}
+            </span>
+            <div collapse="isCollapsed">
+                <ul ng-repeat="alert in list.alert" ng-if="list.alert.length > 0">
+                    <li style="color: {{alert.color}};">
+                        {{alert.name}} <input type="checkbox" ng-checked="alert.Check" ng-true-value=1 ng-false-value=0 ng-click="alertCenter.onCheck(alert)" />
+                        <span style="font-weight: bold">{{' - ' + alert.User}}</span>
+                        <span ng-if="alert.Check==0 && alert.isUser==0"></span>
+                    </li>
+                </ul>
+                <p ng-repeat="cal in list.cal" ng-if="list.cal.length > 0 && list.test === 1">
+                    <span ng-if="cal.IS_REFERRAL && cal.OUTREFERRAL === 'no'" style="margin-left: 10px;">
+                        {{cal.FROM_TIME}}-{{cal.TO_TIME}}:&nbsp
+                        There is no referral
+                    </span>
+                </p>
+            </div>-->
+        </div>
+        <div ng-if="alertCenter.list.length == 0">
+            <div style="text-align: center;">
+                <span style="font-size: 15px; font-style: italic;font-weight: bold;">      
+                    Empty Data
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
