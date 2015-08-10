@@ -648,7 +648,13 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 
 						$scope.$watch('patient', function(patient){
 							if(patient !== null){
-								$modalInstance.close(patient);								
+								if (patient !== -1) {
+									$modalInstance.close(patient);
+								}else{
+									$modalInstance.dismiss('cancel');
+								};	
+								
+
 							}
 						})
 					},
