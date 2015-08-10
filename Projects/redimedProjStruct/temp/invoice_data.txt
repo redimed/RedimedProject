@@ -1,0 +1,163 @@
+{
+  "cal_id": 7762,
+  "claim_id": 137,
+  "Patient_id": 866,
+  "Company_id": 1,
+  "Insurer_id": 1,
+  "DOCTOR_ID": 1,
+  "SITE_ID": 1,
+  "DEPT_ID": 2,
+  "SERVICE_ID": 1,
+  "INVOICE_NUMBER": null,
+  "INVOICE_DATE": null,
+  "CURRENCY_CODE": null,
+  "RATE_TYPE": null,
+  "RATE": null,
+  "STATUS": "enter",
+  "DESCRIPTION": null,
+  "DUE_DATE": null,
+  "AMOUNT": 0,
+  "TAX_AMOUNT": null,
+  "TOTAL_AMOUNT": null,
+  "BASE_AMOUNT": null,
+  "BASE_TAX_AMOUNT": null,
+  "BASE_TOTAL_AMOUNT": null,
+  "LAST_UPDATE_DATE": "2015-08-10T15:51:27.000Z",
+  "LAST_UPDATED_BY": 3,
+  "CREATION_DATE": "2015-08-10T15:18:01.000Z",
+  "CREATED_BY": 3,
+  "header_id": 295,
+  "SOURCE_TYPE": null,
+  "SOURCE_ID": null,
+  "FEE_TYPE": null,
+  "FORMULA": null,
+  "company": {
+    "Company_name": "Insurer Company",
+    "id": 1
+  },
+  "insurer": {
+    "insurer_name": "Prudential",
+    "id": 1
+  },
+  "site": {
+    "Site_name": "Belmont",
+    "id": 1
+  },
+  "doctor": {
+    "NAME": "Dr. Hanh Nguyen",
+    "CLINICAL_DEPT_ID": 2,
+    "doctor_id": 1
+  },
+  "service": {
+    "SERVICE_ID": 1,
+    "SERVICE_NAME": "Specialist"
+  },
+  "appointment": {
+    "FROM_TIME": "2015-08-10T09:00:00.000Z",
+    "TO_TIME": "2015-08-10T09:30:00.000Z",
+    "CAL_ID": 7762
+  },
+  "department": {
+    "CLINICAL_DEPT_NAME": "Doctor",
+    "CLINICAL_DEPT_ID": 2
+  },
+  "patient": {
+    "Title": "",
+    "Sur_name": "insurer",
+    "First_name": "test",
+    "Middle_name": "",
+    "Patient_id": 866,
+    "full_name": ". test insurer"
+  },
+  "claim": {
+    "Injury_name": "dau dau hong bit",
+    "Insurer": "Prudential",
+    "insurer_id": 1,
+    "Claim_id": 137
+  },
+  "lines": [
+    {
+      "line_id": 863,
+      "HEADER_ID": 295,
+      "ITEM_ID": 256,
+      "appt_item_id": null,
+      "PRICE": 0,
+      "QUANTITY": 1,
+      "TIME_SPENT": 0,
+      "DESCRIPTION": null,
+      "AMOUNT": 0,
+      "TAX_AMOUNT": 0,
+      "BASE_AMOUNT": null,
+      "BASE_TAX_AMOUNT": null,
+      "IS_ENABLE": 1,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null,
+      "TAX_ID": 84,
+      "TAX_CODE": "GST TEST 20%",
+      "TAX_RATE": 0.2,
+      "CREATION_DATE": null,
+      "LAST_UPDATE_DATE": null,
+      "invItem": {
+        "ITEM_CODE": "2996",
+        "ITEM_NAME": "aaa sultant physician or specialist practising in the specialty of pain medicine, as a member of a case conference team, to participate in a discharge case conference, where the conference time is at least 30 minutes, but less than 45 minutes, with a multidisciplinary team of at least two other formal care providers of different disciplines",
+        "ITEM_ID": 256
+      }
+    },
+    {
+      "line_id": 864,
+      "HEADER_ID": 295,
+      "ITEM_ID": 512,
+      "appt_item_id": null,
+      "PRICE": 0,
+      "QUANTITY": 1,
+      "TIME_SPENT": 0,
+      "DESCRIPTION": null,
+      "AMOUNT": 0,
+      "TAX_AMOUNT": 0,
+      "BASE_AMOUNT": null,
+      "BASE_TAX_AMOUNT": null,
+      "IS_ENABLE": 1,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null,
+      "TAX_ID": 84,
+      "TAX_CODE": "GST TEST 20%",
+      "TAX_RATE": 0.2,
+      "CREATION_DATE": null,
+      "LAST_UPDATE_DATE": null,
+      "invItem": {
+        "ITEM_CODE": "13210",
+        "ITEM_NAME": "Professional attendance on a patient by a specialist practising in his or her specialty if: (a) the attendance is by video conference; and (b) item 13209 applies to the attendance; and (c) the patient is not an admitted patient; and (d) the patient: (i) is located both: (a) within a telehealth eligible area; and (b) at the time of the attendance�at least 15 kms by road from the specialist; or (ii) is a care recipient in a residential care service; or (iii) is a patient of: (a) an Aboriginal Medical Service; (b) or an Aboriginal Community Controlled Health service for which a direction made under subsection 19 (2) of the act applies",
+        "ITEM_ID": 512
+      }
+    },
+    {
+      "line_id": 865,
+      "HEADER_ID": 295,
+      "ITEM_ID": 1024,
+      "appt_item_id": null,
+      "PRICE": 0,
+      "QUANTITY": 1,
+      "TIME_SPENT": 0,
+      "DESCRIPTION": null,
+      "AMOUNT": 0,
+      "TAX_AMOUNT": null,
+      "BASE_AMOUNT": null,
+      "BASE_TAX_AMOUNT": null,
+      "IS_ENABLE": 1,
+      "LAST_UPDATED_BY": null,
+      "CREATED_BY": null,
+      "TAX_ID": 86,
+      "TAX_CODE": null,
+      "TAX_RATE": null,
+      "CREATION_DATE": null,
+      "LAST_UPDATE_DATE": null,
+      "invItem": {
+        "ITEM_CODE": "21522",
+        "ITEM_NAME": "Initiation of management of anaesthesia for venous thrombectomy of the lower leg",
+        "ITEM_ID": 1024
+      }
+    }
+  ],
+  "feeGroup": null,
+  "feeType": null
+}
