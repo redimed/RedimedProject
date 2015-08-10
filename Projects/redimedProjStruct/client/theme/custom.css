@@ -2734,19 +2734,19 @@ label{
 }
 .un_red_button{
     background-color: rgb(180, 30, 71) !important;
-    box-shadow: 7px 7px 10px -8px rgba(0,0,0,0.75);
     border: 2px solid #ffffff;
     color: #ffffff;
     padding: 5px 15px;
     font-weight: bold;
+    font-size: 11px;
 }
 .un_blue_button{
     background-color: rgb(29, 51, 98) !important;
-    box-shadow: 7px 7px 10px -8px rgba(0,0,0,0.75);
     border: 2px solid #ffffff;
     color: #ffffff;
     padding: 5px 15px;
     font-weight: bold;
+    font-size: 11px;
 }
 .un_table_first{
     width: 100%;

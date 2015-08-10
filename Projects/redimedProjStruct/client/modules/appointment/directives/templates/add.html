@@ -1,109 +1,123 @@
-<div class="row">
+<div class="row" style="margin-bottom: 3px;" align="left">
 	<div class="col-md-12">
-		<button class="un_red_button" ng-click="app_patient.dialog.add()">Add Patient</button>
+		<button class="un-button un-bgBlack pull-right un-margin-bottom-6px" ng-click="app_patient.dialog.add()">Add Patient</button>
 		&nbsp&nbsp&nbsp
-		<button class="un_blue_button" ng-click="app_patient.dialog.select()">Select Patient</button>
+		<button class="un-button un-bgBlack pull-right un-margin-bottom-6px" ng-click="app_patient.dialog.select()">Select Patient</button>
 		&nbsp&nbsp&nbsp
-		<button class="un_blue_button" ng-click="app_patient.dialog.waitingListSelect()">Select Waiting List</button>
+		<button class="un-button un-bgBlack pull-right un-margin-bottom-6px" ng-click="app_patient.dialog.waitingListSelect()">Select Waiting List</button>
 	</div>
 </div>
-
-<div class="row">
-	<!-- PHONE -->
-	<div class="col-md-6">
-		<div class="form-group">
-			<label class="un_label">Phone</label>
-			<input id="PHONE" type="text" ng-model="appointment.form.PHONE" class="form-control un_back_input">
+<div style="margin:2px" class="un-padding-top-bottom-10 ">
+	<div class="row">
+		<!-- PHONE -->
+		<div class="col-md-3">
+			<div class="form-group">
+				<label class="un-label-form-3 un-label-whidth-130">First Name</label>
+				<input id="arr_objectNameFirst" type="text" ng-model="arr_objectNameFirst" class="form-control input-sm select-outside ng-pristine ng-valid">
+			</div>
 		</div>
-	</div>
-	<!-- END PHONE -->
-	<!-- APP TYPE -->
-	<div class="col-md-6">
-		<div class="form-group">
-			<label class="un_label">App Type</label>
-			<input id="APP_TYPE" type="text" ng-model="appointment.form.APP_TYPE" class="form-control un_back_input">
+		<!-- END PHONE -->
+		<!-- APP TYPE -->
+		<div class="col-md-3">
+			<div class="form-group">
+				<label class="un-label-form-3 un-label-whidth-130">Sur Name</label>
+				<input id="arr_objectNameFirst" type="text" ng-model="arr_objectNameLast" class="form-control input-sm select-outside ng-pristine ng-valid">
+			</div>
 		</div>
+		<!-- END APP TYPE -->
+		<!-- PHONE -->
+		<div class="col-md-3">
+			<div class="form-group">
+				<label class="un-label-form-3 un-label-whidth-130">Phone</label>
+				<input id="PHONE" type="text" ng-model="appointment.form.PHONE" class="form-control input-sm select-outside ng-pristine ng-valid">
+			</div>
+		</div>
+		<!-- END PHONE -->
+		<!-- APP TYPE -->
+		<div class="col-md-3">
+			<div class="form-group">
+				<label class="un-label-form-3 un-label-whidth-130">App Type</label>
+				<input id="APP_TYPE" type="text" ng-model="appointment.form.APP_TYPE" class="form-control input-sm select-outside ng-pristine ng-valid">
+			</div>
+		</div>
+		<!-- END APP TYPE -->
 	</div>
-	<!-- END APP TYPE -->
+	<div class="row">
+		<!-- STATUS -->
+		<div class="col-md-3">
+			<div class="form-group">
+				<label class="un-label-form-3 un-label-whidth-130">Status</label>
+				<input id="STATUS" type="text" ng-model="appointment.form.STATUS" class="form-control input-sm select-outside ng-pristine ng-valid">
+			</div>
+		</div>
+		<!-- END STATUS -->
+		<!-- AVAILABLE -->
+		<div class="col-md-3">
+			<div class="form-group">
+				<label class="un-label-form-3 un-label-whidth-130">Available</label>
+				<input id="AVAILABLE" type="text" ng-model="appointment.form.AVAILABLE" class="form-control input-sm select-outside ng-pristine ng-valid">
+			</div>
+		</div>
+		<!-- END AVAILABLE -->
+		<!-- ARR_TIME -->
+		<div class="col-md-3">
+			<div class="form-group">
+				<label class="un-label-form-3 un-label-whidth-130">Arrange Time</label>
+				<input id="ARR_TIME" custom-date ng-model="appointment.form.ARR_TIME" class="form-control input-sm select-outside ng-pristine ng-valid">
+			</div>
+		</div>
+		<!-- END ARR_TIME -->
+		<!-- ATTEND_TIME -->
+		<div class="col-md-3">
+			<div class="form-group">
+				<label class="un-label-form-3 un-label-whidth-130">Attend Time</label>
+				<input id="ATTEND_TIME" custom-date ng-model="appointment.form.ATTEND_TIME" class="form-control input-sm select-outside ng-pristine ng-valid">
+			</div>
+		</div>
+		<!-- END ATTEND_TIME -->
+		</div>
+		<div class="row">
+		<!-- BILL TO -->
+		<div class="col-md-3">
+			<div class="form-group">
+				<label class="un-label-form-3 un-label-whidth-130">Bill To</label>
+				<input id="bill_to" ng-model="appointment.form.bill_to" class="form-control input-sm select-outside ng-pristine ng-valid">
+			</div>
+		</div>
+		<!-- END BILL TO -->
+		<!-- ACCOUNT TYPE -->
+		<div class="col-md-3">
+			<div class="form-group">
+				<label class="un-label-form-3 un-label-whidth-130">Account Type</label>
+				<select id="ACC_TYPE" ng-model="appointment.form.ACC_TYPE" class="form-control input-sm select-outside ng-pristine ng-valid"
+					ng-options="acc.Account_id as acc.Account_name for acc in acc_type.list">
+				</select>
+			</div>
+		</div>
+		<!-- END ACCOUNT TYPE -->
+		<!-- SERVICE ID -->
+		<div class="col-md-3">
+			<div class="form-group">
+				<label class="un-label-form-3 un-label-whidth-130">Service</label>
+				<select id="SERVICE_ID" ng-model="appointment.form.SERVICE_ID" class="form-control input-sm select-outside ng-pristine ng-valid"
+					ng-options="s.SERVICE_ID as s.SERVICE_NAME for s in service.list">
+				</select>
+			</div>
+		</div>
+		<!-- END SERVICE ID -->
+		<!-- NOTES -->
+		<div class="col-md-3">
+			<div class="form-group">
+				<label class="un-label-form-3 un-label-whidth-130">Notes</label>
+				<input id="NOTES" style="resize: none;width:99%" ng-model="appointment.form.NOTES" 
+					class="form-control input-sm select-outside ng-pristine ng-valid">
+				</input>
+			</div>
+		</div>
+		<!-- END NOTES -->
+	</div>
 </div>
 <div class="row">
-	<!-- STATUS -->
-	<div class="col-md-6">
-		<div class="form-group">
-			<label class="un_label">Status</label>
-			<input id="STATUS" type="text" ng-model="appointment.form.STATUS" class="form-control un_back_input">
-		</div>
-	</div>
-	<!-- END STATUS -->
-	<!-- AVAILABLE -->
-	<div class="col-md-6">
-		<div class="form-group">
-			<label class="un_label">Available</label>
-			<input id="AVAILABLE" type="text" ng-model="appointment.form.AVAILABLE" class="form-control un_back_input">
-		</div>
-	</div>
-	<!-- END AVAILABLE -->
-</div>
-
-<div class="row">
-	<!-- ARR_TIME -->
-	<div class="col-md-6">
-		<div class="form-group">
-			<label class="un_label">Arrange Time</label>
-			<input id="ARR_TIME" custom-date ng-model="appointment.form.ARR_TIME" class="form-control un_back_input">
-		</div>
-	</div>
-	<!-- END ARR_TIME -->
-	<!-- ATTEND_TIME -->
-	<div class="col-md-6">
-		<div class="form-group">
-			<label class="un_label">Attend Time</label>
-			<input id="ATTEND_TIME" custom-date ng-model="appointment.form.ATTEND_TIME" class="form-control un_back_input">
-		</div>
-	</div>
-	<!-- END ATTEND_TIME -->
-</div>
-<div class="row">
-	<!-- BILL TO -->
-	<div class="col-md-6">
-		<div class="form-group">
-			<label class="un_label">Bill To</label>
-			<input id="bill_to" ng-model="appointment.form.bill_to" class="form-control un_back_input">
-		</div>
-	</div>
-	<!-- END BILL TO -->
-	<!-- ACCOUNT TYPE -->
-	<div class="col-md-6">
-		<div class="form-group">
-			<label class="un_label">Account Type</label>
-			<select id="ACC_TYPE" ng-model="appointment.form.ACC_TYPE" class="form-control un_back_input"
-				ng-options="acc.Account_id as acc.Account_name for acc in acc_type.list">
-			</select>
-		</div>
-	</div>
-	<!-- END ACCOUNT TYPE -->
-</div>
-
-<div class="row">
-	<!-- SERVICE ID -->
-	<div class="col-md-12">
-		<div class="form-group">
-			<label class="un_label">Service</label>
-			<select id="SERVICE_ID" ng-model="appointment.form.SERVICE_ID" class="form-control un_back_input"
-				ng-options="s.SERVICE_ID as s.SERVICE_NAME for s in service.list">
-			</select>
-		</div>
-	</div>
-	<!-- END SERVICE ID -->
-</div>
-<div class="row">
-	<!-- NOTES -->
-	<div class="col-md-12">
-		<div class="form-group">
-			<label class="un_label">Notes</label>
-			<textarea id="NOTES" style="resize: none;" ng-model="appointment.form.NOTES" 
-				class="form-control un_back_input">
-		</div>
-	</div>
-	<!-- END NOTES -->
+	<button class="un-button un-bgBlack pull-right un-margin-bottom-6px" style="width: 95px;" ng-click="cancel()">Cancel</button>
+	<button class="un-button un-bgBlack pull-right un-margin-bottom-6px"  style="width: 95px;" ng-click="Ok()">Ok</button>
 </div>

@@ -30,20 +30,22 @@ module.exports = {
 
 		var doctorSql=
 			" SELECT patient.*,`apptPatient`.`appt_status`, calendar.`FROM_TIME`,calendar.`TO_TIME`,          "+     
-			" calendar.`SERVICE_ID`,calendar.CAL_ID,calendar.DOCTOR_ID                                        "+     
+			" calendar.`SERVICE_ID`,calendar.CAL_ID,calendar.DOCTOR_ID , rr.`room_name`                                       "+     
 			" FROM `cln_patients` patient                                                                     "+     
 			" INNER JOIN `cln_appt_patients` apptPatient ON patient.`Patient_id`=apptPatient.`Patient_id`     "+     
-			" INNER JOIN `cln_appointment_calendar` calendar ON apptPatient.`CAL_ID`=calendar.`CAL_ID`        "+     
+			" INNER JOIN `cln_appointment_calendar` calendar ON apptPatient.`CAL_ID`=calendar.`CAL_ID`        "+ 
+			" LEFT JOIN redimedsites_room rr ON rr.`id` = apptPatient.`room_id` "+    
 			" WHERE calendar.`DOCTOR_ID`=? AND apptPatient.actual_doctor_id IS NULL                           "+
 			" AND DATE(calendar.`FROM_TIME`)>=? AND DATE(calendar.`FROM_TIME`)<=?                             "+
 			"                                                                                                 "+
 			" UNION                                                                                           "+
 			"                                                                                                 "+
 			" SELECT patient.*,`apptPatient`.`appt_status`, calendar.`FROM_TIME`,calendar.`TO_TIME`,          "+     
-			" calendar.`SERVICE_ID`,calendar.CAL_ID,calendar.DOCTOR_ID                                        "+     
+			" calendar.`SERVICE_ID`,calendar.CAL_ID,calendar.DOCTOR_ID , rr.`room_name`                                     "+     
 			" FROM `cln_patients` patient                                                                     "+     
 			" INNER JOIN `cln_appt_patients` apptPatient ON patient.`Patient_id`=apptPatient.`Patient_id`     "+     
-			" INNER JOIN `cln_appointment_calendar` calendar ON apptPatient.`CAL_ID`=calendar.`CAL_ID`        "+     
+			" INNER JOIN `cln_appointment_calendar` calendar ON apptPatient.`CAL_ID`=calendar.`CAL_ID`        "+
+			" LEFT JOIN redimedsites_room rr ON rr.`id` = apptPatient.`room_id` "+     
 			" WHERE apptPatient.actual_doctor_id =?                                                           "+
 			" AND DATE(calendar.`FROM_TIME`)>=? AND DATE(calendar.`FROM_TIME`)<=?                             "+
 			"                                                                                                 "+
@@ -52,29 +54,29 @@ module.exports = {
 
 		var assistantSql=
 			" SELECT patient.*,`apptPatient`.`appt_status`, calendar.`FROM_TIME`,calendar.`TO_TIME`,          "+     
-			" calendar.`SERVICE_ID`,calendar.CAL_ID,calendar.DOCTOR_ID, doc.NAME as DoctorName                                       "+     
+			" calendar.`SERVICE_ID`,calendar.CAL_ID,calendar.DOCTOR_ID, doc.NAME as DoctorName, rr.`room_name`                                       "+     
 			" FROM `cln_patients` patient                                                                     "+     
 			" INNER JOIN `cln_appt_patients` apptPatient ON patient.`Patient_id`=apptPatient.`Patient_id`     "+     
 			" INNER JOIN `cln_appointment_calendar` calendar ON apptPatient.`CAL_ID`=calendar.`CAL_ID`        "+  
-			" INNER JOIN doctors doc ON doc.doctor_id = calendar.DOCTOR_ID "+   
+			" INNER JOIN doctors doc ON doc.doctor_id = calendar.DOCTOR_ID "+ 
+			" LEFT JOIN redimedsites_room rr ON rr.`id` = apptPatient.`room_id` "+  
 			" WHERE calendar.`DOCTOR_ID` IN (SELECT d.doctor_id FROM doctors d WHERE d.assist_user = ?) AND apptPatient.actual_doctor_id IS NULL "+
 			" AND DATE(calendar.`FROM_TIME`)>=? AND DATE(calendar.`FROM_TIME`)<=?                             "+
 			"                                                                                                 "+
 			" UNION                                                                                           "+
 			"                                                                                                 "+
 			" SELECT patient.*,`apptPatient`.`appt_status`, calendar.`FROM_TIME`,calendar.`TO_TIME`,          "+     
-			" calendar.`SERVICE_ID`,calendar.CAL_ID,calendar.DOCTOR_ID, doc.NAME as DoctorName                                        "+     
+			" calendar.`SERVICE_ID`,calendar.CAL_ID,apptPatient.actual_doctor_id AS DOCTOR_ID, doc.NAME as DoctorName, rr.`room_name`                                        "+     
 			" FROM `cln_patients` patient                                                                     "+     
 			" INNER JOIN `cln_appt_patients` apptPatient ON patient.`Patient_id`=apptPatient.`Patient_id`     "+     
 			" INNER JOIN `cln_appointment_calendar` calendar ON apptPatient.`CAL_ID`=calendar.`CAL_ID`        "+  
-			" INNER JOIN doctors doc ON doc.doctor_id = calendar.DOCTOR_ID "+   
+			" INNER JOIN doctors doc ON doc.doctor_id = apptPatient.actual_doctor_id "+  
+			" LEFT JOIN redimedsites_room rr ON rr.`id` = apptPatient.`room_id` "+   
 			" WHERE apptPatient.actual_doctor_id IN (SELECT d.doctor_id FROM doctors d WHERE d.assist_user = ?)  "+
 			" AND DATE(calendar.`FROM_TIME`)>=? AND DATE(calendar.`FROM_TIME`)<=?                             "+
 			"                                                                                                 "+
 			" ORDER BY `FROM_TIME` ASC                                                                        ";
 
-		console.log(doctor_id==null?'========Assistant=======':'========Doctor========');
-		
 		kiss.executeQuery(req,(doctor_id==null?assistantSql:doctorSql),[(doctor_id==null?user_id:doctor_id),fromDate,toDate,(doctor_id==null?user_id:doctor_id),fromDate,toDate],function(rows){
 			res.json({status:'success',data:rows});
 		},function(err){

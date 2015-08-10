@@ -330,13 +330,20 @@
 </script>
 
 <script type="text/ng-template" id="appointmentAdd">
+	<style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+     </style>
 	<div class="modal-body">
+		<label class="un-label-popup-header-m un-bg-label-B41E46-m">Add Appointment</label>
 		<appointment-add params="appointment" search="search" patient="patient" options="options"></appointment-add>
 	</div>
 </script>
 
 <script type="text/ng-template" id="patientAdd">
 	<div class="modal-body">
+		
 		<patient-detail options="options" params="params" onsuccess="onsuccess" patient="onsuccess"></patient-detail>
 	</div>
 </script>

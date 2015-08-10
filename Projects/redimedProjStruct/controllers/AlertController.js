@@ -98,103 +98,103 @@ module.exports = {
 		.orderBy('cln_alerts.id', 'desc')
 
 	},
-	// postListNoFollowPatient: function(req, res){
-	// 	var postData = req.body.data;
+	postListNoFollowPatient: function(req, res){
+		var postData = req.body.data;
 
-	// 	var sql = knex('cln_alerts')
-	// 		.distinct(
-	// 			'cln_alerts.id',
-	// 			knex.raw('IFNULL(name,\'\') AS name'),
-	// 			knex.raw('IFNULL(description,\'\') AS description'),
-	// 			'cln_alerts.Creation_date'
-	// 		)
-	// 		.whereNotExists(function(){
-	// 			this.select('*').from('cln_patient_alerts')
-	// 			.whereRaw('cln_alerts.id = cln_patient_alerts.alert_id')
-	// 			.where('cln_patient_alerts.patient_id', postData.Patient_id)
-	// 			//.where('cln_patient_alerts.cal_id', postData.CAL_ID)
-	// 		})
-	// 		.where('cln_alerts.isenable', 1)
-	// 		.where(knex.raw('IFNULL(name,\'\') LIKE \'%'+postData.name+'%\''))
-	// 		.where(knex.raw('IFNULL(description,\'\') LIKE \'%'+postData.description+'%\''))
-	// 		.limit(postData.limit)
-	// 		.offset(postData.offset)
-	// 		.orderBy('cln_alerts.Creation_date', postData.Creation_date)
-	// 		.toString();
+		var sql = knex('cln_alerts')
+			.distinct(
+				'cln_alerts.id',
+				knex.raw('IFNULL(name,\'\') AS name'),
+				knex.raw('IFNULL(description,\'\') AS description'),
+				'cln_alerts.Creation_date'
+			)
+			.whereNotExists(function(){
+				this.select('*').from('cln_patient_alerts')
+				.whereRaw('cln_alerts.id = cln_patient_alerts.alert_id')
+				.where('cln_patient_alerts.patient_id', postData.Patient_id)
+				//.where('cln_patient_alerts.cal_id', postData.CAL_ID)
+			})
+			.where('cln_alerts.isenable', 1)
+			.where(knex.raw('IFNULL(name,\'\') LIKE \'%'+postData.name+'%\''))
+			.where(knex.raw('IFNULL(description,\'\') LIKE \'%'+postData.description+'%\''))
+			.limit(postData.limit)
+			.offset(postData.offset)
+			.orderBy('cln_alerts.Creation_date', postData.Creation_date)
+			.toString();
 
-	// 	var count_sql = knex('cln_alerts')
-	// 		.count('cln_alerts.id as a')
-	// 		.whereNotExists(function(){
-	// 			this.select('*').from('cln_patient_alerts')
-	// 			.whereRaw('cln_alerts.id = cln_patient_alerts.alert_id')
-	// 			.where('cln_patient_alerts.patient_id', postData.Patient_id)
-	// 			//.where('cln_patient_alerts.cal_id', postData.CAL_ID);
-	// 		})
-	// 		.where('cln_alerts.isenable', 1)
-	// 		.where(knex.raw('IFNULL(name,\'\') LIKE \'%'+postData.name+'%\''))
-	// 		.where(knex.raw('IFNULL(description,\'\') LIKE \'%'+postData.description+'%\''))
-	// 		.toString();
+		var count_sql = knex('cln_alerts')
+			.count('cln_alerts.id as a')
+			.whereNotExists(function(){
+				this.select('*').from('cln_patient_alerts')
+				.whereRaw('cln_alerts.id = cln_patient_alerts.alert_id')
+				.where('cln_patient_alerts.patient_id', postData.Patient_id)
+				//.where('cln_patient_alerts.cal_id', postData.CAL_ID);
+			})
+			.where('cln_alerts.isenable', 1)
+			.where(knex.raw('IFNULL(name,\'\') LIKE \'%'+postData.name+'%\''))
+			.where(knex.raw('IFNULL(description,\'\') LIKE \'%'+postData.description+'%\''))
+			.toString();
 
-	// 	db.sequelize.query(sql)
-	// 	.success(function(rows){
-	// 		db.sequelize.query(count_sql)
-	// 		.success(function(count){
-	// 			res.json({data: rows, count: count[0].a, sql: sql});
-	// 		})
-	// 		.error(function(error){
-	// 			res.json(500, {error: error});
-	// 		})
-	// 	})
-	// 	.error(function(error){
-	// 		res.json(500, {error: error});
-	// 	})
-	// },
+		db.sequelize.query(sql)
+		.success(function(rows){
+			db.sequelize.query(count_sql)
+			.success(function(count){
+				res.json({data: rows, count: count[0].a, sql: sql});
+			})
+			.error(function(error){
+				res.json(500, {error: error});
+			})
+		})
+		.error(function(error){
+			res.json(500, {error: error});
+		})
+	},
 
-	// postListFollowPatient: function(req, res){
-	// 	var postData = req.body.data;
+	postListFollowPatient: function(req, res){
+		var postData = req.body.data;
 
-	// 	var sql = knex('cln_alerts')
-	// 		.distinct(
-	// 			'cln_alerts.id',
-	// 			knex.raw('IFNULL(name,\'\') AS name'),
-	// 			knex.raw('IFNULL(description,\'\') AS description'),
-	// 			'cln_alerts.Creation_date'
-	// 		)
-	// 		.innerJoin('cln_patient_alerts', 'cln_alerts.id', 'cln_patient_alerts.alert_id')
-	// 		.where('cln_patient_alerts.patient_id', postData.Patient_id)
-	// 		//.where('cln_patient_alerts.cal_id', postData.CAL_ID)
-	// 		//.where('cln_alerts.isenable', 1)
-	// 		.where(knex.raw('IFNULL(name,\'\') LIKE \'%'+postData.name+'%\''))
-	// 		.where(knex.raw('IFNULL(description,\'\') LIKE \'%'+postData.description+'%\''))
-	// 		.limit(postData.limit)
-	// 		.offset(postData.offset)
-	// 		.orderBy('cln_alerts.Creation_date', postData.Creation_date)
-	// 		.toString();
+		var sql = knex('cln_alerts')
+			.distinct(
+				'cln_alerts.id',
+				knex.raw('IFNULL(name,\'\') AS name'),
+				knex.raw('IFNULL(description,\'\') AS description'),
+				'cln_alerts.Creation_date'
+			)
+			.innerJoin('cln_patient_alerts', 'cln_alerts.id', 'cln_patient_alerts.alert_id')
+			.where('cln_patient_alerts.patient_id', postData.Patient_id)
+			//.where('cln_patient_alerts.cal_id', postData.CAL_ID)
+			//.where('cln_alerts.isenable', 1)
+			.where(knex.raw('IFNULL(name,\'\') LIKE \'%'+postData.name+'%\''))
+			.where(knex.raw('IFNULL(description,\'\') LIKE \'%'+postData.description+'%\''))
+			.limit(postData.limit)
+			.offset(postData.offset)
+			.orderBy('cln_alerts.Creation_date', postData.Creation_date)
+			.toString();
 
-	// 	var count_sql = knex('cln_alerts')
-	// 		.count('cln_alerts.id as a')
-	// 		.innerJoin('cln_patient_alerts', 'cln_alerts.id', 'cln_patient_alerts.alert_id')
-	// 		.where('cln_patient_alerts.patient_id', postData.Patient_id)
-	// 		//.where('cln_patient_alerts.cal_id', postData.CAL_ID)
-	// 		//.where('cln_alerts.isenable', 1)
-	// 		.where(knex.raw('IFNULL(name,\'\') LIKE \'%'+postData.name+'%\''))
-	// 		.where(knex.raw('IFNULL(description,\'\') LIKE \'%'+postData.description+'%\''))
-	// 		.toString();
+		var count_sql = knex('cln_alerts')
+			.count('cln_alerts.id as a')
+			.innerJoin('cln_patient_alerts', 'cln_alerts.id', 'cln_patient_alerts.alert_id')
+			.where('cln_patient_alerts.patient_id', postData.Patient_id)
+			//.where('cln_patient_alerts.cal_id', postData.CAL_ID)
+			//.where('cln_alerts.isenable', 1)
+			.where(knex.raw('IFNULL(name,\'\') LIKE \'%'+postData.name+'%\''))
+			.where(knex.raw('IFNULL(description,\'\') LIKE \'%'+postData.description+'%\''))
+			.toString();
 
-	// 	db.sequelize.query(sql)
-	// 	.success(function(rows){
-	// 		db.sequelize.query(count_sql)
-	// 		.success(function(count){
-	// 			res.json({data: rows, count: count[0].a});
-	// 		})
-	// 		.error(function(error){
-	// 			res.json(500, {error: error});
-	// 		})
-	// 	})
-	// 	.error(function(error){
-	// 		res.json(500, {error: error});
-	// 	})
-	// },
+		db.sequelize.query(sql)
+		.success(function(rows){
+			db.sequelize.query(count_sql)
+			.success(function(count){
+				res.json({data: rows, count: count[0].a});
+			})
+			.error(function(error){
+				res.json(500, {error: error});
+			})
+		})
+		.error(function(error){
+			res.json(500, {error: error});
+		})
+	},
 
 	postEdit: function(req, res){
 		var postData = req.body.data;

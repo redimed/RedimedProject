@@ -513,6 +513,7 @@ angular.module('app.config', [])
             {id:4,label:'Cardiovascular Fitness',section:'Section 2: General Physical Capacity Assessment'},
             {id:6,label:'Core Strength',section:'Section 2: General Physical Capacity Assessment'},
             {id:12,label:'Lower Limb Function',section:'Section 2: General Physical Capacity Assessment'},
+            {id:31,label:'Lower Limb Function (no score)',section:'Section 2: General Physical Capacity Assessment'},
             {id:10,label:'Auto Max score and Rating',section:'Section 2: General Physical Capacity Assessment'},
             {id:21,label:'Ability Test without description (one comment for all details)', section:'Section 2: General Physical Capacity Assessment'},
 
