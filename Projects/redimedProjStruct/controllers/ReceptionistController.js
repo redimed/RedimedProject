@@ -16,7 +16,7 @@ module.exports = {
 							"LEFT JOIN doctors d ON c.`DOCTOR_ID` = d.`doctor_id` "+
 							"LEFT JOIN im_injury_appt_status s ON s.appt_id = a.id "+
 							"INNER JOIN sys_services e ON e.`SERVICE_ID` = c.`SERVICE_ID` "+
-							"LEFT JOIN `cln_patients` p ON a.`Patient_id` = p.`Patient_id` LEFT JOIN companies co ON p.`company_id` = co.id "+
+							"INNER JOIN `cln_patients` p ON a.`Patient_id` = p.`Patient_id` LEFT JOIN companies co ON p.`company_id` = co.id "+
 							"WHERE c.FROM_TIME BETWEEN ? AND DATE_ADD(?, INTERVAL 1 DAY) AND c.`SITE_ID` = ? "+
 							"ORDER BY c.`FROM_TIME`;", null, {raw:true}, [date,date,site])
 			.success(function(data){
