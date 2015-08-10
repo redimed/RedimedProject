@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cln_lines_type_7_9_header" pageWidth="255" pageHeight="842" columnWidth="255" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b22fa206-db29-4f1d-808e-fc0415f5a4f9">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cln_lines_type_7_9_header" pageWidth="355" pageHeight="842" columnWidth="355" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b22fa206-db29-4f1d-808e-fc0415f5a4f9">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="ireport.zoom" value="1.0"/>
@@ -32,6 +32,9 @@ and detail.ORD = 1]]>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="QUESTION" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DESCRIPTION" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="VAL1_NAME" class="java.lang.String">
@@ -114,6 +117,7 @@ and detail.ORD = 1]]>
 	</field>
 	<detail>
 		<band height="22">
+			<printWhenExpression><![CDATA[$F{VAL1_ISVALUE}!=$F{VAL2_ISVALUE}]]></printWhenExpression>
 			<textField>
 				<reportElement x="0" y="0" width="115" height="22" uuid="ed2a3759-74fe-42f4-a517-aad6187bf0b4"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -133,6 +137,26 @@ $F{VAL1_ISVALUE}==10?" g":"")]]></textFieldExpression>
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["up to "+$F{VAL2_VALUE}+" m"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="22">
+			<printWhenExpression><![CDATA[$F{VAL1_ISVALUE}==$F{VAL2_ISVALUE}]]></printWhenExpression>
+			<textField>
+				<reportElement x="0" y="0" width="355" height="22" uuid="1e5bffbb-0eee-45d5-a474-1eb59fecd8c6"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Job demand: "+$F{VAL1_VALUE}+
+($F{VAL1_ISVALUE}==7?" kgs":
+$F{VAL1_ISVALUE}==8?" m":
+$F{VAL1_ISVALUE}==9?" mm":
+$F{VAL1_ISVALUE}==10?" g":"")+"(male), "+
+$F{VAL2_VALUE}+
+($F{VAL2_ISVALUE}==7?" kgs":
+$F{VAL2_ISVALUE}==8?" m":
+$F{VAL2_ISVALUE}==9?" mm":
+$F{VAL2_ISVALUE}==10?" g":"")+"(female) "+
+$F{DESCRIPTION}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
