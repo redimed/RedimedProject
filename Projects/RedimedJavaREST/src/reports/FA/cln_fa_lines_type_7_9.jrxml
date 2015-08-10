@@ -136,7 +136,7 @@ and (line.SCORE_TYPE1=7 or line.SCORE_TYPE1=9 or line.SCORE_TYPE1=18 or line.SCO
 					<textFieldExpression><![CDATA[$F{QUESTION}]]></textFieldExpression>
 				</textField>
 				<subreport>
-					<reportElement x="300" y="28" width="255" height="22" uuid="4b588b70-f99e-45ef-a92d-2b84bd256176"/>
+					<reportElement x="200" y="28" width="355" height="22" uuid="4b588b70-f99e-45ef-a92d-2b84bd256176"/>
 					<subreportParameter name="patient_id">
 						<subreportParameterExpression><![CDATA[$P{patient_id}]]></subreportParameterExpression>
 					</subreportParameter>
