@@ -432,7 +432,8 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
         $scope.isSaving=false;
         $scope.save=function()
         {   
-            if($scope.loginInfo.company_id==undefined || $scope.loginInfo.company_id==null || $scope.loginInfo.company_id=='')
+            // if($scope.loginInfo.company_id==undefined || $scope.loginInfo.company_id==null || $scope.loginInfo.company_id=='')// tan comment
+            if(!$scope.companyInfo.id)// tannv.dts change
             {
                 rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"Create booking fail because the company is unknown!");
                 return;
@@ -572,10 +573,11 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
                 }
                 else
                 {
-                    $scope.showMsgDialog('.patient-detail-msg-dialog','Fail','fail','Create booking fail!');
+                    var error=JSON.stringify(data.error);
+                    $scope.showMsgDialog('.patient-detail-msg-dialog','Fail','fail','Create booking fail. '+error);
                 }
             },function(err){
-                $scope.showMsgDialog('.patient-detail-msg-dialog','Fail','fail','Create booking fail!');
+                $scope.showMsgDialog('.patient-detail-msg-dialog','Fail','fail','Create booking fail. Server error!');
             })
 
         }
