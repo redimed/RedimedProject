@@ -388,7 +388,7 @@
                                             </label>
                                             <textarea placeholder="" class="form-control" rows="2"
                                                       name="DESC_INJURY"
-                                                      ng-maxlength="200"
+                                                      ng-maxlength="2000"
                                                       ng-model="newBooking.DESC_INJURY" required/>
 
                                             <small class="help-block pull-right" ng-show="bookingForm.DESC_INJURY.$error.maxlength  && hadForcused">
@@ -447,7 +447,7 @@
                                     <div class="row form-group" show-errors='{showSuccess: true}'>
                                         <div class="col-md-12 col-sm-12">
                                             <textarea placeholder="Notes" class="form-control" rows="3" name="NOTES"
-                                                      ng-maxlength="200"
+                                                      ng-maxlength="2000"
                                                       ng-model="newBooking.NOTES"/>
                                             <small class="help-block pull-right" ng-show="bookingForm.NOTES.$error.maxlength  && hadForcused">
                                                 Notes cannot be longer than 200 characters.
