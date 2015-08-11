@@ -100,8 +100,8 @@ var multipartMiddleware = multipart();
 //-------------------------------------------
 
 app.use(function (req, res, next) {
-	req.k_sql = k_sql(req, res);
-	req.k_sql.isLog = 1;
+    req.k_sql = k_sql(req, res);
+    req.k_sql.isLog = 1;
     res.locals.k_sql = req.k_sql;
     next();
 });
@@ -187,9 +187,9 @@ db.sequelize
         if (err) {
             throw err[0];
         } else {
-             http.createServer(httpApp).listen(httpApp.get('port'), function() {
-                 console.log('Express HTTP server listening on port ' + httpApp.get('port'));
-             });
+            // http.createServer(httpApp).listen(httpApp.get('port'), function() {
+            //     console.log('Express HTTP server listening on port ' + httpApp.get('port'));
+            // });
              
             httpsServer.listen(app.get('port'), function() {
                 console.log('Express HTTPS server listening on port ' + app.get('port'));
@@ -200,4 +200,3 @@ db.sequelize
 );
 
 module.exports = app;
-
