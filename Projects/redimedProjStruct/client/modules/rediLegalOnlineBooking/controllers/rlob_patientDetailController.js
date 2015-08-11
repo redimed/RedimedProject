@@ -191,7 +191,7 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
             codeAddress();
         })
         .error(function (data) {
-            alert("insert fail");
+            alert("Cannot get location info.");
         })
         .finally(function() {
 
@@ -213,7 +213,7 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
 
             })
             .error(function (data) {
-                alert("insert fail");
+                alert("Cannot get doctor info.");
             })
             .finally(function() {
 
@@ -236,7 +236,7 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
                 }
             })
             .error(function (data) {
-                alert("insert fail");
+                alert("Cannot get appointment info.");
             })
             .finally(function() {
 
@@ -257,7 +257,7 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
 
             })
             .error(function (data) {
-                alert("insert fail");
+                alert("Cannot get rlType info.");
             })
             .finally(function() {
 
@@ -274,7 +274,7 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
                     selectedInfo.clnSpecialitySelected=data.data;
             })
             .error(function (data) {
-                alert("insert fail");
+                alert("Cannot get specialty of doctor.");
             })
             .finally(function() {
 
@@ -321,7 +321,7 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
                 $scope.newBooking.BOOKING_ID=data.key;
             })
             .error(function (data) {
-                alert("insert fail");
+                alert("Cannot create booking key.");
             })
             .finally(function() {
 
