@@ -8,6 +8,9 @@ var rlobUtil=require('./rlobUtilsController');
 var kiss=require('./kissUtilsController');
 var moment = require('moment');//tan add
 
+var errorCode=require('./errorCode');//tannv add
+var controllerCode="RED_APPOINTMENT-CALENDAR";
+
 module.exports =
 {
     bookingDelete: function(req, res){
@@ -428,27 +431,37 @@ module.exports =
         });
     },
     
+
+    /**
+     * created by: unknown
+     * edited by: tannv.dts
+     * edition date: 11-08-2015
+     */
     getAppointmentCalendarById:function(req,res)
     {
-        var calId=req.query.calId;
-        var sql='SELECT cal.* FROM `cln_appointment_calendar` cal WHERE cal.`CAL_ID`=?';
-        req.getConnection(function(err,connection)
+        var fHeader="clnAppointmentCalendarController->getAppointmentCalendarById";
+        var functionCode="FN001";
+        var calId=kiss.checkData(req.query.calId)?req.query.calId:'';
+        if(!kiss.checkListData(calId))
         {
-            var query = connection.query(sql,calId,function(err,rows)
+            kiss.exlog(fHeader,'Loi data truyen den', 'query',req.query);
+            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
+            return;
+        }
+        var sql='SELECT cal.* FROM `cln_appointment_calendar` cal WHERE cal.`CAL_ID`=?';
+        kiss.executeQuery(req,sql,[calId],function(rows){
+            if(rows.length>0)
             {
-                if(err)
-                {
-                    console.log("Error Selecting : %s ",err );
-                    res.json({status:'fail'});
-                }
-                else
-                {
-                    if(rows.length>0)
-                        res.json({status:'success',data:rows[0]});
-                    else
-                        res.json({status:'fail'});
-                }
-            });
+                res.json({status:'success',data:rows[0]});
+            }
+            else
+            {
+                kiss.exlog(fHeader,'Khong co appointment nao tuong ung voi id');
+                res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN003')});
+            }
+        },function(err){
+            kiss.exlog(fHeader,'Loi truy van select cln_appointment_calendar',err);
+            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN002')});
         });
     },
 
