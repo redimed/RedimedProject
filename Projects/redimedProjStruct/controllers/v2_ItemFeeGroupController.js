@@ -235,6 +235,7 @@ var parseValue=function(value,type,removeStr)
         }
         else
         {
+            
             return value;
         }
     }

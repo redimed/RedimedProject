@@ -667,7 +667,7 @@ module.exports = {
 					TIME_SPENT: line.TIME_SPENT,
 					// AMOUNT: line.AMOUNT,
 					// TAX_AMOUNT: line.TAX_AMOUNT,
-					IS_ENABLE: 1
+					IS_ENABLE: 1,
 					LAST_UPDATED_BY:userId,
 					CREATED_BY: userId,
 					TAX_ID: line.TAX_ID,

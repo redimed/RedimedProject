@@ -73,6 +73,70 @@ function checkListData()
     return true;
 }
 
+/**
+ * tannv.dts@gmail.com
+ * 10-08-2015
+ * Neu value=null||undefined||'' thi tra ve null
+ */
+function parseValue(value,type,removeStr)
+{
+    //xoa bo khoan trang truoc sau sau value
+    value=value.trim();
+    if(kiss.checkData(value))
+    {   
+        if(removeStr!=null)
+        {
+            value=value.replace(removeStr,'');
+        }
+        if(type=='date')
+        {
+            return moment(value,'DD.MM.YYYY').format("YYYY/MM/DD");
+        }
+        else if(type=='int')
+        {
+            var n=parseInt(value);
+            //kiem tra xem value co phai la so integer hay khong
+            // function isInt(n){
+            //     return Number(n) === n && n % 1 === 0;
+            // }
+            if(n === Number(n) && n % 1 === 0)
+            {
+                return n;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        else if(type=='float')
+        {
+            var n=parseFloat(value);
+            //kiem tra xem value co phai la so integer hay khong
+            // function isFloat(n){
+            //     return n === Number(n) && n % 1 !== 0;
+            // }
+            if(n === Number(n))
+            {
+                return n;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        else
+        {
+            
+            return value;
+        }
+    }
+    else
+    {
+        return null;
+    }
+    
+}
+
 
 /**
  * Ham thuc thi mot cau truy van
@@ -158,6 +222,10 @@ module.exports =
     checkData:checkData,
     
     checkListData:checkListData,
+
+    //tannv.dts
+    //10-08-2015
+    parseValue:parseValue,
 
     isEmpty:isEmpty,
 
