@@ -102,6 +102,7 @@ var model_sql = {
      * 26-06-2015
      */
     sql_insert_items_calendar: function (cal_id, patient_id, items) {
+        console.log('------------------------');
         var query_builder = squel.insert().into('cln_appt_items');
         var rows = [];
         for (var key in items) {

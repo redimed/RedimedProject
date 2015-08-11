@@ -313,6 +313,9 @@
 <!-- RIGHT CLICK DROPDOWN MENU -->
 <ul class="dropdown-menu" style="display: none; z-index: 9998; position: absolute; top: 0; left: 0;" id="popupMenu">
 	<li>
+		<a ng-click="appointment.dialog.rightEdit(appointment.selectedAppointment, appointment.selectedCol)">
+			Update Booking
+		</a>
 		<a ng-click="appointment.dialog.rightAdd(appointment.selectedAppointment, appointment.selectedCol)">
 			Make new Booking
 		</a>
@@ -326,6 +329,19 @@
 <script type="text/ng-template" id="waitingListAdd">
 	<div class="modal-body">
 		<waiting-list-add success="success" doctor-id="doctor_id" patient-id="patient_id"></waiting-list-add>
+	</div>
+</script>
+
+
+<script type="text/ng-template" id="appointmentEdit">
+	<style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+     </style>
+	<div class="modal-body">
+		<label class="un-label-popup-header-m un-bg-label-B41E46-m">Edit Appointment</label>
+		<appointment-add params="appointment" search="search" patient="patient" options="options" checkedit="true"></appointment-add>
 	</div>
 </script>
 

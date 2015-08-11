@@ -615,7 +615,90 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 					}
 				});
 			}
+			var dialogRightEdit = function(app, col){
+				angular.element("#popupMenu").css({'display':'none'});
+				var patient = scope.appointment.selectedPatient;
+				dialogEdit(app, col,patient);
+			}
+			var dialogEdit = function(app, col,patient){
+				scope.appointment.load();
+				if (col.IS_BOOKABLE == 1) {
+					var modalInstance = $modal.open({
+					templateUrl: 'appointmentEdit',
+					controller: function($scope, $modalInstance, app, options, search,col,patient){
+						$scope.appointment = {
+							app: app,
+							col: col,
+							patient:patient
+						}
+						$scope.options = options;
+						$scope.search = search;
+						//PARAMS
+						$scope.params = {
+							permission: {
+								create: true,
+								edit: false
+							}
+						}
+						//END PARAMS
 
+						$scope.patient = null;
+
+						$scope.$watch('patient', function(patient){
+							if(patient !== null){
+								if (patient !== -1) {
+									$modalInstance.close(patient);
+								}else{
+									$modalInstance.dismiss('cancel');
+								};	
+								
+
+							}
+						})
+					},
+					size: 'lg',
+					resolve: {
+						app: function(){
+							return app;
+						},
+						col: function(){
+							return col;
+						},
+						options: function(){
+							return scope.options;
+						},
+						search: function(){
+							return scope.appointment.search;
+						},
+						patient:function(){
+							return patient;
+						}
+					}
+					});
+
+					modalInstance.result.then(function(patient){
+						if(patient){
+							scope.appointment.load();
+							scope.alertCenter.load();
+							//toastr.success('Added Successfully');
+						}
+					})
+				}else{
+                    var modalInstance=$modal.open({
+                        templateUrl:'showNotificationNo',
+                        controller:function($scope,$modalInstance){
+                           
+                            $scope.cancel=function(){
+                                $modalInstance.dismiss('cancel');
+                            }
+                        }
+                    })
+                    .result.then(function(response){
+                      
+                    })
+                	
+				};
+			}
 			var dialogRightAdd = function(app, col){
 				angular.element("#popupMenu").css({'display':'none'});
 
@@ -632,7 +715,6 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 							app: app,
 							col: col
 						}
-						
 						$scope.options = options;
 						$scope.search = search;
 						//PARAMS
@@ -934,6 +1016,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 				onRightClick: function($event, app, col, patient){ onRightClick($event, app, col, patient) },
 				dialog: {
 					rightAdd: function(app, col){ dialogRightAdd(app, col) },
+					rightEdit:function(app,col){dialogRightEdit(app, col)},
 					add: function(app, col){ dialogAdd(app, col) },
 					chooseWaitingList: function(col){ dialogWaitingListAdd(col) }
 				},

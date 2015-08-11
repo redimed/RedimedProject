@@ -406,10 +406,63 @@ module.exports = {
 			commonFunction.commonError(error, 'ERR_SYS_003', res);
 		})
 	},*/
-
-	postAdd: function(req, res){
+	postGetCal:function(req,res){
 		var postData = req.body.data;
+		console.log(postData);
+		var fHeader="v2_InvoiceController->postGetCal";
+		var functionCode='FN003';
+		var postData=kiss.checkData(postData)?postData:'';
+		if(!kiss.checkListData(postData))
+		{
+			kiss.exlog(fHeader,"Loi data truyen den",req.body);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM002')});
+			return;
+		}
+		var sql=
+			"SELECT `cln_appt_patients`.*,`cln_patients`.`First_name`,`cln_patients`.`Sur_name`				"+
+			"FROM `cln_appt_patients`                                                                       "+
+			"INNER JOIN  `cln_patients` ON `cln_appt_patients`.`Patient_id` = `cln_patients`.`Patient_id`   "+
+			"WHERE `cln_appt_patients`.`CAL_ID` = ?                                                         "+
+			"AND `cln_appt_patients`.`Patient_id` = ?                                                       ";
+		kiss.executeQuery(req,sql,[postData.CAL_ID,postData.Patient_id],function(rows){
+			res.json({status:'success',data:rows});
+		},function(err){
+			kiss.exlog(fHeader,'Loi truy van lay thong tin thong qua',err);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
+		});
 
+	},
+	postEdit:function(req,res){
+		var postData  = req.body.data;
+		var sql = knex('cln_appt_patients')
+				.where('id',postData.cln_appt_patientsID)
+				.update({
+						Patient_id: postData.Patient_id,
+						CAL_ID: postData.form.CAL_ID,
+						PHONE:postData.form.PHONE,
+						APP_TYPE:postData.form.APP_TYPE,
+						STATUS:postData.form.STATUS,
+						AVAILABLE:postData.form.AVAILABLE,
+						ARR_TIME:postData.form.ARR_TIME,
+						ATTEND_TIME:postData.form.ATTEND_TIME,
+						bill_to:postData.form.bill_to,
+						ACC_TYPE:postData.form.ACC_TYPE,
+						SERVICE_ID:postData.form.SERVICE_ID,
+						NOTES:postData.form.NOTES,
+					})
+				.toString()
+		db.sequelize.query(sql)
+		.success(function(created){
+			res.json({data: 'success'});
+		})
+		.error(function(error){
+			res.status(500).json({error: error, sql: sql});
+		})
+
+	},
+	postAdd: function(req, res){
+
+		var postData = req.body.data;
 		var sql = knex('cln_appointment_calendar')
 			.where('cln_appointment_calendar.CAL_ID', postData.form.CAL_ID)
 			.update(postData.form)
@@ -418,7 +471,17 @@ module.exports = {
 		var sql_sub = knex('cln_appt_patients')
 			.insert({
 				Patient_id: postData.Patient_id,
-				CAL_ID: postData.form.CAL_ID
+				CAL_ID: postData.form.CAL_ID,
+				PHONE:postData.form.PHONE,
+				APP_TYPE:postData.form.APP_TYPE,
+				STATUS:postData.form.STATUS,
+				AVAILABLE:postData.form.AVAILABLE,
+				ARR_TIME:postData.form.ARR_TIME,
+				ATTEND_TIME:postData.form.ATTEND_TIME,
+				bill_to:postData.form.bill_to,
+				ACC_TYPE:postData.form.ACC_TYPE,
+				SERVICE_ID:postData.form.SERVICE_ID,
+				NOTES:postData.form.NOTES,
 			})
 			.toString();
 

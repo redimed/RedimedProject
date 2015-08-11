@@ -7,6 +7,7 @@ var url = config.defaultUrl+'appointment/';
 app.post(url+'load', AppointmentController.postLoad);
 app.post(url+'detailLoad', AppointmentController.postDetailLoad);
 app.post(url+'add', AppointmentController.postAdd);
+app.post(url+'edit',AppointmentController.postEdit);
 app.post(url+'leaveCal',AppointmentController.postLeaveCal);
 app.post(url+'one',AppointmentController.postOne);
 //tannv.dts@gmail.com
@@ -22,3 +23,4 @@ app.post(url+'changeService', AppointmentController.changeService);
 app.post(url+'changeStatus', AppointmentController.changeStatus);
 app.post(url+'postcheck', AppointmentController.postCheck);
 app.post(url+'postuser', AppointmentController.postUser);
+app.post(url+'postGetCal', AppointmentController.postGetCal);

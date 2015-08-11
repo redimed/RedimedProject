@@ -13,6 +13,14 @@ angular.module('app.loggedIn.appointment.models', [])
 		var instanceApi = mainApi.all('add');
 		return instanceApi.post({data: data});
 	}
+	mainModel.edit = function(data){
+		var instanceApi = mainApi.all('edit');
+		return instanceApi.post({data: data});
+	}
+	mainModel.postGetCal = function(data){
+		var instanceApi = mainApi.all('postGetCal');
+		return instanceApi.post({data: data});
+	}
 
 	mainModel.load = function(data){
 		var instanceApi = mainApi.all('load');

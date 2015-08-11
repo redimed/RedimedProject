@@ -457,9 +457,9 @@ module.exports = {
     },
     getAccountTypeList: function (req, res) {
         var query = squel.select()
-                .field('Account_id')
-                .field('Account_name')
-                .from('cln_account_type');
+                .field('FEE_TYPE_ID')
+                .field('FEE_TYPE_NAME')
+                .from('cln_fee_types');
         var sql = query.toString();
         req.getConnection(function (err, connection) {
             var query = connection.query(sql, function (err, data) {

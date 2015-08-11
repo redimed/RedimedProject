@@ -9,22 +9,22 @@
 </div>
 <div style="margin:2px" class="un-padding-top-bottom-10 ">
 	<div class="row">
-		<!-- PHONE -->
+		<!-- FIRST NAME -->
 		<div class="col-md-3">
 			<div class="form-group">
 				<label class="un-label-form-3 un-label-whidth-130">First Name</label>
-				<input id="arr_objectNameFirst" type="text" ng-model="arr_objectNameFirst" class="form-control input-sm select-outside ng-pristine ng-valid">
+				<input id="arr_objectNameFirst" type="text" ng-model="arr_objectNameFirst" class="form-control input-sm select-outside ng-pristine ng-valid" readonly>
 			</div>
 		</div>
-		<!-- END PHONE -->
-		<!-- APP TYPE -->
+		<!-- FIRST NAME -->
+		<!-- SUR NAME -->
 		<div class="col-md-3">
 			<div class="form-group">
 				<label class="un-label-form-3 un-label-whidth-130">Sur Name</label>
-				<input id="arr_objectNameFirst" type="text" ng-model="arr_objectNameLast" class="form-control input-sm select-outside ng-pristine ng-valid">
+				<input id="arr_objectNameFirst" type="text" ng-model="arr_objectNameLast" class="form-control input-sm select-outside ng-pristine ng-valid" readonly>
 			</div>
 		</div>
-		<!-- END APP TYPE -->
+		<!-- SUR NAME-->
 		<!-- PHONE -->
 		<div class="col-md-3">
 			<div class="form-group">
@@ -90,7 +90,7 @@
 			<div class="form-group">
 				<label class="un-label-form-3 un-label-whidth-130">Account Type</label>
 				<select id="ACC_TYPE" ng-model="appointment.form.ACC_TYPE" class="form-control input-sm select-outside ng-pristine ng-valid"
-					ng-options="acc.Account_id as acc.Account_name for acc in acc_type.list">
+					ng-options="acc.FEE_TYPE_ID as acc.FEE_TYPE_NAME for acc in acc_type.list">
 				</select>
 			</div>
 		</div>

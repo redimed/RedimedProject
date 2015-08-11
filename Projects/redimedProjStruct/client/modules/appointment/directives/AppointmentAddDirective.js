@@ -8,6 +8,7 @@ angular.module('app.loggedIn.appointment.directives.add', [])
 			patient: '=',
 			options: '=',
 			search: '=',
+			checkedit:'='
 		},
 		templateUrl: 'modules/appointment/directives/templates/add.html',
 		link: function(scope, elem, attrs){
@@ -24,6 +25,7 @@ angular.module('app.loggedIn.appointment.directives.add', [])
 				NOTES: ''
 			}
 			scope.row = null;
+			scope.cln_appt_patientsID=null;
 			scope.wattinglist = false;
 			var acc_type_load = function(){
 				ConfigService.account_type_option()
@@ -136,7 +138,32 @@ angular.module('app.loggedIn.appointment.directives.add', [])
 				})	
 			}
 			scope.Ok = function(){
-				var postData = ConfigService.convertToDB(scope.search.datepicker).toString();
+				if(scope.checkedit){
+					var postData = {
+						form: {},
+						Patient_id: null,
+						cln_appt_patientsID:scope.cln_appt_patientsID
+					}
+					postData.form = angular.copy(scope.appointment.form);
+					postData.form.ARR_TIME = ConfigService.convertToDB(postData.form.ARR_TIME);
+					postData.form.ATTEND_TIME = ConfigService.convertToDB(postData.form.ATTEND_TIME);
+					postData.form.CAL_ID = scope.params.col.CAL_ID;
+					if(scope.row){
+						postData.Patient_id = scope.row.Patient_id;
+					}else{
+						postData.Patient_id = scope.params.patient.Patient_id;
+					}
+					AppointmentModel.edit(postData)
+					.then(function(response){
+						scope.patient = {
+							Patient_id:postData.Patient_id,
+							First_name:scope.arr_objectNameFirst,
+							Sur_name:scope.arr_objectNameLast
+						}
+						toastr.success('Edit Successfully');
+					}, function(error){})
+				}else{
+					var postData = ConfigService.convertToDB(scope.search.datepicker).toString();
 					AppointmentModel.ApptG(postData).then(function(response){
 						if(scope.row){
 							var postData = {
@@ -144,13 +171,14 @@ angular.module('app.loggedIn.appointment.directives.add', [])
 								Patient_id: null
 							}
 							postData.form = angular.copy(scope.appointment.form);
-							postData.form.ARR_TIME = ConfigService.convertToDB(postData.ARR_TIME);
-							postData.form.ATTEND_TIME = ConfigService.convertToDB(postData.ATTEND_TIME);
+							postData.form.ARR_TIME = ConfigService.convertToDB(postData.form.ARR_TIME);
+							postData.form.ATTEND_TIME = ConfigService.convertToDB(postData.form.ATTEND_TIME);
 							postData.form.CAL_ID = scope.params.col.CAL_ID;
 							postData.Patient_id = scope.row.Patient_id;
 							AppointmentModel.add(postData)
 							.then(function(response){
 								scope.patient = scope.row;
+								toastr.success('Added Successfully');
 							}, function(error){})
 							if (scope.wattinglist == true) {
 								WaitingListModel.remove({id:scope.row.id})
@@ -159,6 +187,7 @@ angular.module('app.loggedIn.appointment.directives.add', [])
 							};						
 						}
 					}, function(error) {});
+				}
 			}
 			scope.cancel = function(){
 				scope.patient = -1;
@@ -187,6 +216,26 @@ angular.module('app.loggedIn.appointment.directives.add', [])
 					waitingListSelect: function(){ waitingListSelect(); }
 				}
 			}
+			if (scope.checkedit) {
+				
+				var postData = {
+					CAL_ID:scope.params.col.CAL_ID,
+					Patient_id:scope.params.patient.Patient_id
+				}
+				AppointmentModel.postGetCal(postData).then(function(response){
+					scope.acc_type.load();
+					scope.service.load();
+					scope.appointment.form = response.data[0];
+					scope.cln_appt_patientsID = response.data[0].id;
+					scope.appointment.form;
+					scope.appointment.form.ARR_TIME =ConfigService.convertToDate(scope.appointment.form.ARR_TIME);
+					scope.appointment.form.ATTEND_TIME =ConfigService.convertToDate(scope.appointment.form.ATTEND_TIME);
+					scope.arr_objectNameFirst = scope.appointment.form.First_name;
+					scope.arr_objectNameLast = scope.appointment.form.Sur_name;
+
+					
+				})
+			};
 		}
 	}//end return
 })
