@@ -337,7 +337,7 @@ WHERE header.`header_id`=$P{header_id}]]>
 			</textField>
 			<image>
 				<reportElement x="0" y="0" width="184" height="32" uuid="a06013e7-51f5-452f-a670-8a9c78ea3641"/>
-				<imageExpression><![CDATA["E:\\RedimedProject\\Projects\\RedimedJavaREST\\src\\reports\\redimedInvoice\\LOGO_21.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{real_path}+"\\LOGO_21.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>
