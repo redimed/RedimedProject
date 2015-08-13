@@ -27,7 +27,7 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 			$scope.claim;
 			$scope.feeGroupType=invConst.feeGroupType;
 			$scope.feeGroupID=[];
-			$scope.feeTypeID;
+			$scope.feeTypes=[];
 			$scope.FORMULA;
 			$scope.ArrayLineRoot =[];
 			$scope.ArrayInv_ITEM = {
@@ -197,7 +197,7 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 					})
 					.result.then(function(data){ 
 						$scope.insurers = data;
-						$scope.feeGroupNameChange($scope.insurers.FEE_GROUP_ID);
+						$scope.feeGroupChange($scope.insurers.FEE_GROUP_ID);
 					})
 				}
 			}
@@ -289,11 +289,11 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 				DManh Create
 			*/
 			$scope.feeGroupTypeChange = function(value){// When Choose Bill To
-				$scope.feeGroupNameChange('');
+				$scope.feeGroupChange('');
 				$scope.modelObjectMap.FEE_GROUP_TYPE = value;
 				$scope.insurers=null;
-				$scope.feeTypeID = null;
-				InvoiceService.getFeegrouptype(value).then(function(response){
+				$scope.feeTypes = null;
+				InvoiceService.getFeeGroupByType(value).then(function(response){
 					$scope.feeGroupID = response.data;
 
 				})
@@ -301,8 +301,8 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 			/*
 				DManh Create
 			*/
-			$scope.feeGroupNameChange = function(value){//When Change Group Name
-				$scope.changeFeeType('');
+			$scope.feeGroupChange = function(value){//When Change Group Name
+				$scope.feeTypeChange('');
 				$scope.InvoiceMap.lines = [];
 				$scope.modelObjectMap.FEE_TYPE_ID=null;
 				$scope.modelObjectMap.FEE_GROUP_ID = value;
@@ -326,7 +326,7 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 			/*
 				DManh Create
 			*/
-			$scope.changeFeeType = function(value){//When CHoose Fee Type
+			$scope.feeTypeChange = function(value){//When CHoose Fee Type
 				$scope.InvoiceMap.lines = [];
 			}
 			/*
@@ -406,21 +406,21 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 					.result.then(function(data){
 						var checkExit=0;
 						for (key in $scope.InvoiceMap.lines) {
-							if($scope.InvoiceMap.lines[key].ITEM_CODE == data[0].ITEM_CODE){
+							if($scope.InvoiceMap.lines[key].ITEM_CODE == data.ITEM_CODE){
 								checkExit ++;
 							}
 						};
 						$scope.FORMULACal= $scope.FORMULA.split(":");
 						if (checkExit == 0) {
-							$scope.ArrayInv_ITEM.ITEM_FEE_ID = data[0].ITEM_FEE_ID;
-							$scope.ArrayInv_ITEM.FEE = data[0].FEE;
+							$scope.ArrayInv_ITEM.ITEM_FEE_ID = data.ITEM_FEE_ID;
+							$scope.ArrayInv_ITEM.FEE = data.FEE;
 
-							data[0].ITEM_NAME = data[0].ITEM_NAME.substring(0, 50);
-							// data[0].PRICE = data[0].FEE;
-							data[0].QUANTITY = 1;
-							data[0].TIME_SPENT = 0;
-							data[0].IS_ENABLE = 1;
-							$scope.InvoiceMap.lines.push(data[0]);
+							data.ITEM_NAME = data.ITEM_NAME.substring(0, 50);
+							// data.PRICE = data.FEE;
+							data.QUANTITY = 1;
+							data.TIME_SPENT = 0;
+							data.IS_ENABLE = 1;
+							$scope.InvoiceMap.lines.push(data);
 							function sortLine(a,b){//Sort Array by FEE
 								if(a.FEE<b.FEE)
 									return 1;
@@ -558,7 +558,7 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 					}
 					$scope.feeGroupType=invConst.feeGroupType;
 					$scope.feeGroupTypeChange(response.data[0].SOURCE_TYPE);
-					$scope.feeGroupNameChange(response.data[0].groupFEE_GROUP_ID);
+					$scope.feeGroupChange(response.data[0].groupFEE_GROUP_ID);
 					$scope.modelObjectMap.FEE_TYPE_ID = response.data[0].typesFEE_TYPE_ID;
 					$scope.InvoiceMap.lines = response.dataline;
 					function sortLine(a,b){

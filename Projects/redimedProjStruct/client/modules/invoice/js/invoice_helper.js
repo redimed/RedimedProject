@@ -19,7 +19,7 @@ var invConst={
 
 //tannv.dts@gmail.com
 //05-08-2015
-var testReport=false;
+var testReport=true;
 function getUrlReport(){
 	if(testReport==true)
 	{

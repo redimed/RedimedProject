@@ -7,7 +7,7 @@ var bcrypt = require('bcrypt-nodejs');
 var randomstr = require('randomstring');
 
 var errorCode=require('./errorCode');// tan add
-var controllerCode="RED_RLOB_CORE";// tan add
+var controllerCode="RED_RLOB_CORE";
 
 /**
  * Xu ly cap nhat lai appointment fromTime va toTime
