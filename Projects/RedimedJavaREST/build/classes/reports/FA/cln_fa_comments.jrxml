@@ -83,10 +83,8 @@ AND comments.LINE_ID =$P{line_id}]]>
 				<textFieldExpression><![CDATA[$F{NAME}]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement x="20" y="0" width="15" height="15" uuid="09a87e50-a5f5-43f4-b817-b1fdb97bd341">
-					<printWhenExpression><![CDATA[$F{ISENABLE}==1]]></printWhenExpression>
-				</reportElement>
-				<imageExpression><![CDATA[$F{VALUE}.equals("0")?($P{real_path}+"uncheck.png"):($P{real_path}+"checked.png")]]></imageExpression>
+				<reportElement x="20" y="0" width="15" height="15" uuid="09a87e50-a5f5-43f4-b817-b1fdb97bd341"/>
+				<imageExpression><![CDATA[$F{VALUE}.equals("0") || $F{VALUE}.isEmpty()?($P{real_path}+"uncheck.png"):($P{real_path}+"checked.png")]]></imageExpression>
 			</image>
 		</band>
 		<band height="16">
