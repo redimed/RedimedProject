@@ -550,7 +550,6 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 			 * 06-07-2015
 			 * Xoa claim
 			 */
-			
 			scope.removeClaim=function()
 			{
 				var postData = {claim_id: null};
@@ -562,6 +561,11 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 						scope.InvoiceMap.claim_id = null;
 					}
 				})
+			}
+
+			scope.printReport=function()
+			{
+				window.open(getUrlReport()+"/redimedInvoice/"+scope.InvoiceMap.header_id);
 			}
 		}//end link
 	}//end return

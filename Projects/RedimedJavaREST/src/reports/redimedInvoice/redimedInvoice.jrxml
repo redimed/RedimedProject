@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="redimedInvoice" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="168e8d36-487b-4aba-bc68-541ef186d964">
 	<property name="ireport.zoom" value="1.1000000000000079"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="144"/>
+	<property name="ireport.y" value="2"/>
 	<parameter name="real_path" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -10,7 +10,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT header.`INVOICE_DATE`,header.`INVOICE_NUMBER`,
+		<![CDATA[SELECT header.`INVOICE_DATE`,header.`INVOICE_NUMBER`,header.`cal_id`,
  header.`SOURCE_TYPE`,header.`SOURCE_ID`,
  line.*,item.`ITEM_NAME`,item.`ITEM_CODE`,
  insurer.`id` AS INSURER_ID,insurer.`insurer_name` AS INSURER_NAME,insurer.`address` AS INSURER_ADDRESS,
@@ -37,6 +37,9 @@ WHERE header.`header_id`=$P{header_id}]]>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="INVOICE_NUMBER" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cal_id" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="SOURCE_TYPE" class="java.lang.String">
@@ -227,7 +230,7 @@ WHERE header.`header_id`=$P{header_id}]]>
 					<textElement textAlignment="Right"/>
 					<textFieldExpression><![CDATA[$V{TAX_AMOUNT_1}]]></textFieldExpression>
 				</textField>
-				<textField pattern="¤ #,##0.00">
+				<textField pattern="¤ #,##0.00" isBlankWhenNull="true">
 					<reportElement x="487" y="40" width="68" height="17" uuid="c1abd857-36f8-4683-9fbb-ce69291c7f5b"/>
 					<textElement textAlignment="Right">
 						<font isBold="true"/>
@@ -245,10 +248,6 @@ WHERE header.`header_id`=$P{header_id}]]>
 	</background>
 	<title>
 		<band height="228" splitType="Stretch">
-			<image>
-				<reportElement x="0" y="0" width="131" height="28" uuid="4b1e085b-ec1f-46a8-8063-fea1d99890f8"/>
-				<imageExpression><![CDATA["C:\\Users\\meditech\\Desktop\\redimedInvoice\\LOGO_21.png"]]></imageExpression>
-			</image>
 			<staticText>
 				<reportElement x="455" y="0" width="100" height="17" uuid="e9ffda99-548e-44f7-a9e4-5007f9e5e9f3"/>
 				<textElement textAlignment="Right">
@@ -318,11 +317,15 @@ WHERE header.`header_id`=$P{header_id}]]>
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement x="57" y="121" width="165" height="20" uuid="086490bb-17e4-40b7-b59f-15f446bfc4c5"/>
-				<textFieldExpression><![CDATA[$F{SOURCE_TYPE}=="private_fund"?$F{INSURER_NAME}.toUpperCase():$F{FEE_GROUP_NAME}.toUpperCase()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cal_id}==null
+?($F{SOURCE_TYPE}=="private_fund"?$F{INSURER_NAME}.toUpperCase():$F{FEE_GROUP_NAME}.toUpperCase())
+:($F{INSURER_ID}!=null?$F{INSURER_NAME}:$F{COMPANY_ID}!=null?$F{COMPANY_NAME}:$F{PATIENT_FIRST_NAME}+" "+$F{PATIENT_SURNAME})]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="57" y="141" width="165" height="46" uuid="26759da7-821a-4dbb-b62f-526858332a73"/>
-				<textFieldExpression><![CDATA[$F{SOURCE_TYPE}=="private_fund"?$F{INSURER_ADDRESS}.toUpperCase():$F{FEE_GROUP_ADDRESS}.toUpperCase()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cal_id}==null
+?($F{SOURCE_TYPE}=="private_fund"?$F{INSURER_ADDRESS}.toUpperCase():$F{FEE_GROUP_ADDRESS}.toUpperCase())
+:($F{INSURER_ID}!=null?$F{INSURER_ADDRESS}:$F{COMPANY_ID}!=null?$F{COMPANY_ADDRESS}:$F{PATIENT_ADDRESS1})]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
 				<reportElement x="395" y="121" width="100" height="16" uuid="1fa3c600-1676-40ae-91b3-ffc30c58ac18"/>
