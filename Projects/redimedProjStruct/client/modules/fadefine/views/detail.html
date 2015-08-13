@@ -97,6 +97,16 @@
 					</div>
 				</div>
 				<div class="portlet-body">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div class="col-md-4 col-sm-4 col-xs-4">
+								<label>
+									<input type="checkbox" ng-model="section.have_measure_info" ng-checked="section.have_measure_info === 1">
+									Have BMI info
+								</label>
+							</div>
+						</div>
+					</div>
 					<!-- This is for lines -->
 					<div ng-drop="true" class="portlet box blue-hoki" ng-repeat="line in section.lines" ng-hide="line.action==='delete'">
 						<div class="portlet-title">
