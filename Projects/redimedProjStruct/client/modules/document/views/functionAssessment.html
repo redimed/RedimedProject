@@ -25,24 +25,25 @@
 <div class="portlet box grey-cascade" ng-repeat="section in header.section">
 <div class="portlet-title">
     <div class="caption">
-        <i class="fa fa-gift"></i> {{section.section_name}}
+        <i class="fa fa-gift"></i> {{section.section_name}} 
     </div>
     <div class="tools">
         <a href="javascript:;" class="collapse">
         </a>
     </div>
+
 </div>
 <div class="portlet-body" ng-repeat="line in section.line">
 <div ng-if="line.line_type != 1" class="panel panel-default">
 <div class="panel-heading">
-    <h3 class="panel-title">{{line.line_name}}</h3>
+    <h3 class="panel-title">{{line.line_name}} eeeee</h3>
 </div>
 <div class="panel-body">
 <div ng-if="line.image != null">
     <img ng-src="{{line.image}}">
 </div>
 <div ng-repeat="detail in line.detail">
-    <ng-form name="numberForm">
+    <ng-form name="numberForm">s
         <label class="bold">{{detail.detail_name}}</label>
         <div ng-if="detail.image != null">
             <img ng-src="{{detail.image}}">
