@@ -659,24 +659,24 @@ module.exports = {
 			{
 				var line=lines[i];
 				var item={
-					line_id: line.line_id, 		
-					HEADER_ID: line.HEADER_ID,
-					ITEM_ID: line.ITEM_ID,	
-					PRICE: line.PRICE,	
-					QUANTITY: line.QUANTITY,
-					TIME_SPENT: line.TIME_SPENT,
+					line_id: kiss.parseValue(line.line_id,'int'), 		
+					HEADER_ID: kiss.parseValue(line.HEADER_ID,'int'),
+					ITEM_ID: kiss.parseValue(line.ITEM_ID,'int'),	
+					PRICE: kiss.parseValue(line.PRICE,'float'),	
+					QUANTITY: kiss.parseValue(line.QUANTITY,'float'),
+					TIME_SPENT: kiss.parseValue(line.TIME_SPENT,'int'),
 					// AMOUNT: line.AMOUNT,
 					// TAX_AMOUNT: line.TAX_AMOUNT,
 					IS_ENABLE: 1,
-					LAST_UPDATED_BY:userId,
-					CREATED_BY: userId,
-					TAX_ID: line.TAX_ID,
-					TAX_CODE: line.TAX_CODE,
-					TAX_RATE: line.TAX_RATE,
-					CREATION_DATE: currentTime,
-					LAST_UPDATE_DATE: currentTime,
-					ITEM_FEE_ID:line.ITEM_FEE_ID,
-					FEE:line.FEE,
+					LAST_UPDATED_BY:kiss.parseValue(userId,'int'),
+					CREATED_BY: kiss.parseValue(userId,'int'),
+					TAX_ID: kiss.parseValue(line.TAX_ID,'int'),
+					TAX_CODE: kiss.parseValue(line.TAX_CODE),
+					TAX_RATE: kiss.parseValue(line.TAX_RATE,'float'),
+					CREATION_DATE: kiss.parseValue(currentTime,'datetime'),
+					LAST_UPDATE_DATE: kiss.parseValue(currentTime,'datetime'),
+					ITEM_FEE_ID:kiss.parseValue(line.ITEM_FEE_ID,'int'),
+					FEE:kiss.parseValue(line.FEE,'float'),
 					BILL_PERCENT:'100'
 				};
 				if(kiss.checkData(item.PRICE,item.QUANTITY))
@@ -713,21 +713,21 @@ module.exports = {
 					{
 						var sql="UPDATE `cln_invoice_header` SET ? WHERE header_id= ?";
 						var invoiceHeaderUpdateInfo={
-							claim_id:claimId,
-							Company_id:companyId,
-							Insurer_id:insurerId,
-							DOCTOR_ID:doctorId,
-							SITE_ID:siteId,
-							DEPT_ID:deptId,
-							SERVICE_ID:serviceId,
-							STATUS: status,
-							SOURCE_TYPE:SOURCE_TYPE,
-							SOURCE_ID:SOURCE_ID,
-							FEE_TYPE:FEE_TYPE ,
+							claim_id:kiss.parseValue(claimId,'int'),
+							Company_id:kiss.parseValue(companyId,'int'),
+							Insurer_id:kiss.parseValue(insurerId,'int'),
+							DOCTOR_ID:kiss.parseValue(doctorId,'int'),
+							SITE_ID:kiss.parseValue(siteId,'int'),
+							DEPT_ID:kiss.parseValue(deptId,'int'),
+							SERVICE_ID:kiss.parseValue(serviceId,'int'),
+							STATUS: kiss.parseValue(status),
+							SOURCE_TYPE:kiss.parseValue(SOURCE_TYPE),
+							SOURCE_ID:kiss.parseValue(SOURCE_ID,'int'),
+							FEE_TYPE:kiss.parseValue(FEE_TYPE,'int') ,
 							FORMULA:'100:100:100'
 							// AMOUNT: totalAmount// tann comment
 						};
-						kiss.exlog(invoiceHeaderUpdateInfo);
+						// kiss.exlog(invoiceHeaderUpdateInfo);
 						kiss.executeQuery(req,sql,[invoiceHeaderUpdateInfo,invoiceHeaderId],function(result){
 							if(result.affectedRows>0)
 							{
@@ -1740,16 +1740,23 @@ module.exports = {
 			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
 		});
 	},
+
+	/**
+	 * created by: ducmanh
+	 * edited by: tannv.dts@gmail.com
+	 * edition date: 12-08-2015
+	 * Lay ra gia cua item tuong tuong voi item id, fee type va ngay
+	 */
 	postGetfeetypefillter:function(req,res){ //get Item  by FEE_TYPE_ID and ITEM_ID 
 		var postData = req.body.data;
 		console.log(postData);
 		var fHeader="v2_InvoiceController->postGetfeetypefillter";
 		var functionCode='FN014';
-		var postData=kiss.checkData(postData)?postData:'';
-		if(!kiss.checkListData(postData))
+		var postData=kiss.checkData(postData)?postData:{};
+		if(!kiss.checkListData(postData.ITEM_ID,postData.FEE_TYPE_ID,postData.CurrentDate))
 		{
 			kiss.exlog(fHeader,"Loi data truyen den",req.body);
-			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM002')});
+			res.json({status:'post-data-fail',error:errorCode.get(controllerCode,functionCode,'DM002')});
 			return;
 		}
 		var sql=
@@ -1764,7 +1771,14 @@ module.exports = {
 			"ORDER BY itemFee.`FEE_START_DATE` DESC                                                            "+
 			"LIMIT 1															                               ";
 		kiss.executeQuery(req,sql,[postData.ITEM_ID,postData.FEE_TYPE_ID,postData.CurrentDate],function(rows){
-			res.json({status:'success',data:rows});
+			if(rows.length>0)
+			{
+				res.json({status:'success',data:rows[0]});
+			}
+			else
+			{
+				res.json({status:'not-found'});
+			}
 		},function(err){
 			kiss.exlog(fHeader,'Loi truy van lay thong tin thong qua',err);
 			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});

@@ -81,16 +81,33 @@ function checkListData()
 function parseValue(value,type,removeStr)
 {
     //xoa bo khoan trang truoc sau sau value
-    value=value.trim();
-    if(kiss.checkData(value))
-    {   
-        if(removeStr!=null)
+    if(typeof value=='string') 
         {
+            value=value.trim();
             value=value.replace(removeStr,'');
         }
+    // value=value.trim();
+    if(checkData(value))
+    {   
         if(type=='date')
         {
-            return moment(value,'DD.MM.YYYY').format("YYYY/MM/DD");
+            if(moment(value,'YYYY-MM-DD').isValid())
+                return moment(value,'YYYY-MM-DD').format("YYYY/MM/DD");
+            if(moment(value,'YYYY.MM.DD').isValid())
+                return moment(value,'YYYY.MM.DD').format('YYYY/MM/DD');
+            if(moment(value,'YYYY/MM/DD').isValid())
+                return moment(value,'YYYY/MM/DD').format("YYYY/MM/DD");
+            return null;
+        }
+        else if(type=='datetime')
+        {
+            if(moment(value,'YYYY-MM-DD HH:mm:ss').isValid())
+                return moment(value,'YYYY-MM-DD HH:mm:ss').format("YYYY/MM/DD HH:mm:ss");
+            if(moment(value,'YYYY.MM.DD HH:mm:ss').isValid())
+                return moment(value,'YYYY.MM.DD HH:mm:ss').format('YYYY/MM/DD HH:mm:ss');
+            if(moment(value,'YYYY/MM/DD HH:mm:ss').isValid())
+                return moment(value,'YYYY/MM/DD HH:mm:ss').format("YYYY/MM/DD HH:mm:ss");
+            return null;
         }
         else if(type=='int')
         {

@@ -178,7 +178,7 @@
 								<label class="un_tn_form_label un_tn_form_label_gray" style="width:100px">
 									Fee Group
 								</label>
-								<select class="form-control un_tn_form_control un_tn_form_control_gray" placeholder="Fee group type" name="fee_group_type" ng-model="InvoiceMap.FEE_GROUP_ID" ng-options="item.FEE_GROUP_ID as item.FEE_GROUP_NAME for item in feeGroupID" ng-change="feeGroupNameChange(InvoiceMap.FEE_GROUP_ID)" ng-required="InvoiceMap.FEE_GROUP_ID !== 'private_fund'">
+								<select class="form-control un_tn_form_control un_tn_form_control_gray" placeholder="Fee group type" name="fee_group_type" ng-model="InvoiceMap.FEE_GROUP_ID" ng-options="item.FEE_GROUP_ID as item.FEE_GROUP_NAME for item in feeGroups" ng-change="feeGroupChange(InvoiceMap.FEE_GROUP_ID)" ng-required="InvoiceMap.FEE_GROUP_ID !== 'private_fund'">
 					                <option value=''>-- Group Fee --</option>
 					            </select>
 							</div>
@@ -190,7 +190,7 @@
 								<label class="un_tn_form_label un_tn_form_label_gray" style="width:100px">
 									Fee Type
 								</label>
-								<select class="form-control un_tn_form_control un_tn_form_control_gray" placeholder="Fee type" name="fee_type" ng-model="InvoiceMap.FEE_TYPE_ID" ng-options="item.FEE_TYPE_ID as item.FEE_TYPE_NAME for item in feeTypeID" ng-change="changeFeeType(InvoiceMap.FEE_TYPE_ID)">
+								<select class="form-control un_tn_form_control un_tn_form_control_gray" placeholder="Fee type" name="fee_type" ng-model="InvoiceMap.FEE_TYPE_ID" ng-options="item.FEE_TYPE_ID as item.FEE_TYPE_NAME for item in feeTypes" ng-change="feeTypeChange(InvoiceMap.FEE_TYPE_ID)">
 					                <option value=''>-- Fee Type --</option>
 					            </select>
 							</div>
@@ -272,9 +272,9 @@
 						<td style="width:220px!important">
 							<div style="display:inline">
 								<span style="float:left" ng-show="item.notSave" class="un_tn_asterisk">*</span>
-								<button style="float:left" class="un_tn_btn un_tn_btn_pink un_tn_btn_sm " ng-click="updateInvoiceLine(item)">
+								<!-- <button style="float:left" class="un_tn_btn un_tn_btn_pink un_tn_btn_sm " ng-click="updateInvoiceLine(item)">
 									Save
-								</button>
+								</button> -->
 
 								<button style="float:left" class="un_tn_btn un_tn_btn_gray un_tn_btn_sm  un_tn_btn_zip" ng-click="removeInvoiceLine(item)">
 									Remove
