@@ -1709,8 +1709,8 @@ module.exports = {
 			"cln_insurers.insurer_name,cln_claims.Claim_no															"+
 			" FROM `cln_invoice_header`                                                  							"+
 			" INNER JOIN `cln_patients`  ON cln_invoice_header.`Patient_id`=cln_patients.`Patient_id` 				"+
-			" INNER JOIN `cln_fee_group` ON cln_invoice_header.`SOURCE_ID`=cln_fee_group.`FEE_GROUP_ID`				"+
-			" INNER JOIN `cln_fee_types` ON cln_invoice_header.`FEE_TYPE`=cln_fee_types.`FEE_TYPE_ID` 				"+
+			" left JOIN `cln_fee_group` ON cln_invoice_header.`SOURCE_ID`=cln_fee_group.`FEE_GROUP_ID`				"+
+			" left JOIN `cln_fee_types` ON cln_invoice_header.`FEE_TYPE`=cln_fee_types.`FEE_TYPE_ID` 				"+
 			" LEFT JOIN `cln_insurers`  ON cln_invoice_header.`Insurer_id`=cln_insurers.`id` 						"+
 			" LEFT JOIN `cln_claims`    ON cln_invoice_header.`claim_id`=cln_claims.`Claim_id` 	        			"+
 			" WHERE header_id =? 												            						";

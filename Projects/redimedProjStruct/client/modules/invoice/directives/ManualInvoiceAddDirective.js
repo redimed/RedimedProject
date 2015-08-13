@@ -320,7 +320,7 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 					};
 				};
 				InvoiceService.getFeeType(value).then(function(response){
-					$scope.feeTypes = response.data;
+					$scope.feeTypeID = response.data;
 				})
 			}
 			/*

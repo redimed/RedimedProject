@@ -136,7 +136,7 @@ and (line.SCORE_TYPE1=7 or line.SCORE_TYPE1=9 or line.SCORE_TYPE1=18 or line.SCO
 					<textFieldExpression><![CDATA[$F{QUESTION}]]></textFieldExpression>
 				</textField>
 				<subreport>
-					<reportElement x="300" y="28" width="255" height="22" uuid="4b588b70-f99e-45ef-a92d-2b84bd256176"/>
+					<reportElement x="200" y="28" width="355" height="22" uuid="4b588b70-f99e-45ef-a92d-2b84bd256176"/>
 					<subreportParameter name="patient_id">
 						<subreportParameterExpression><![CDATA[$P{patient_id}]]></subreportParameterExpression>
 					</subreportParameter>
@@ -245,14 +245,18 @@ and (line.SCORE_TYPE1=7 or line.SCORE_TYPE1=9 or line.SCORE_TYPE1=18 or line.SCO
 					<text><![CDATA[UNABLE]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="0" y="22" width="100" height="22" uuid="057e928f-4541-4763-b07b-d7a1a1aa4837"/>
+					<reportElement x="0" y="22" width="100" height="22" uuid="057e928f-4541-4763-b07b-d7a1a1aa4837">
+						<printWhenExpression><![CDATA[$F{FA_ID}!=200]]></printWhenExpression>
+					</reportElement>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
 					<text><![CDATA[PARTIAL]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="0" y="44" width="100" height="22" uuid="0a43134e-8257-4c17-815d-934bc98412ff"/>
+					<reportElement x="0" y="44" width="100" height="22" uuid="0a43134e-8257-4c17-815d-934bc98412ff">
+						<printWhenExpression><![CDATA[$F{FA_ID}!=200]]></printWhenExpression>
+					</reportElement>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
@@ -276,7 +280,24 @@ and (line.SCORE_TYPE1=7 or line.SCORE_TYPE1=9 or line.SCORE_TYPE1=18 or line.SCO
 				</ellipse>
 				<ellipse>
 					<reportElement mode="Transparent" x="20" y="44" width="56" height="22" uuid="1dcfc73c-7f00-474e-a2ec-4c980c1ea51c">
-						<printWhenExpression><![CDATA[$F{RATING_VALUE1}==2]]></printWhenExpression>
+						<printWhenExpression><![CDATA[$F{RATING_VALUE1}==2 && $F{FA_ID}!=200]]></printWhenExpression>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="2.0" lineStyle="Solid"/>
+					</graphicElement>
+				</ellipse>
+				<staticText>
+					<reportElement x="0" y="23" width="100" height="22" uuid="6f1ea0c5-c8eb-4aa6-a5c5-ccab779c26cd">
+						<printWhenExpression><![CDATA[$F{FA_ID}==200]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[ABLE]]></text>
+				</staticText>
+				<ellipse>
+					<reportElement mode="Transparent" x="22" y="22" width="56" height="22" uuid="d2f3376d-2698-4a6d-9ae2-04a2612d1118">
+						<printWhenExpression><![CDATA[$F{RATING_VALUE1}==2 && $F{FA_ID}==200]]></printWhenExpression>
 					</reportElement>
 					<graphicElement>
 						<pen lineWidth="2.0" lineStyle="Solid"/>

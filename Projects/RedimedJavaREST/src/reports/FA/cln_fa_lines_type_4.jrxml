@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
+<!-- 2015-08-10T09:26:17 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cln_fa_lines_type_4" pageWidth="575" pageHeight="842" columnWidth="555" leftMargin="0" rightMargin="20" topMargin="0" bottomMargin="0" uuid="23f778ad-1c85-4f7e-ad8f-c7f4eeb3e2ca">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -218,10 +220,6 @@ and line.SCORE_TYPE1=4]]>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{real_path}+"cln_fa_lines_type_4_details.jasper"]]></subreportExpression>
 			</subreport>
-			<image>
-				<reportElement x="4" y="0" width="121" height="67" uuid="b48177ce-dceb-4ed9-a564-2c6c0fa1a81b"/>
-				<imageExpression><![CDATA[$P{real_path}+$F{PICTURE_REPORT}]]></imageExpression>
-			</image>
 		</band>
 		<band height="32">
 			<textField>

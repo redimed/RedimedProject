@@ -140,11 +140,7 @@ and line.SCORE_TYPE1=11]]>
 		</groupHeader>
 	</group>
 	<detail>
-		<band height="83">
-			<image>
-				<reportElement x="92" y="0" width="390" height="83" uuid="0092b55f-f9e1-4e0b-9ee2-16003942f1c4"/>
-			</image>
-		</band>
+		<band height="83"/>
 		<band height="30">
 			<subreport>
 				<reportElement x="0" y="0" width="555" height="30" uuid="00f821d7-a8dc-47e7-9f23-321e7c44bb3f"/>
@@ -339,42 +335,42 @@ and line.SCORE_TYPE1=11]]>
 				</graphicElement>
 			</ellipse>
 			<staticText>
-				<reportElement x="106" y="18" width="8" height="8" uuid="6ddcdf54-42d2-4903-9da7-bb52283b74f5"/>
+				<reportElement x="124" y="18" width="8" height="8" uuid="6ddcdf54-42d2-4903-9da7-bb52283b74f5"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
 				<text><![CDATA[o]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="91" y="34" width="8" height="8" uuid="c6fbb26a-bcd2-4bab-b413-d9ac212508e5"/>
+				<reportElement x="108" y="34" width="8" height="8" uuid="c6fbb26a-bcd2-4bab-b413-d9ac212508e5"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
 				<text><![CDATA[o]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="119" y="34" width="8" height="8" uuid="add1dec1-8dde-4c6a-8946-ef65c44b8ddf"/>
+				<reportElement x="136" y="34" width="8" height="8" uuid="add1dec1-8dde-4c6a-8946-ef65c44b8ddf"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
 				<text><![CDATA[o]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="91" y="50" width="8" height="8" uuid="40539786-3e76-4ae1-ad00-4d77c94aed49"/>
+				<reportElement x="107" y="50" width="8" height="8" uuid="40539786-3e76-4ae1-ad00-4d77c94aed49"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
 				<text><![CDATA[o]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="113" y="50" width="8" height="8" uuid="8dc9e656-4682-424c-be5a-bbd73daf0f54"/>
+				<reportElement x="129" y="50" width="8" height="8" uuid="8dc9e656-4682-424c-be5a-bbd73daf0f54"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
 				<text><![CDATA[o]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="104" y="66" width="8" height="8" uuid="0c2e8608-f152-4896-b807-98592264b04c"/>
+				<reportElement x="119" y="66" width="8" height="8" uuid="0c2e8608-f152-4896-b807-98592264b04c"/>
 				<textElement>
 					<font size="6"/>
 				</textElement>
