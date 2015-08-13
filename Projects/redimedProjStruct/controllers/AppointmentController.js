@@ -406,33 +406,71 @@ module.exports = {
 			commonFunction.commonError(error, 'ERR_SYS_003', res);
 		})
 	},*/
+	deleteClnAppPatient : function(req,res){
+		var postData = req.body.data;
+		var sql = knex('cln_appt_patients')
+			  	.where('id', postData.id)
+			  	.del()
+			  	.toString()
+	  	db.sequelize.query(sql)
+		.success(function(data){
+			res.json({data: 'success'});
+		})
+		.error(function(error){
+			res.status(500).json({status: 'error'});
+		})
+
+	},
 	postGetCal:function(req,res){
 		var postData = req.body.data;
-		console.log(postData);
-		var fHeader="v2_InvoiceController->postGetCal";
-		var functionCode='FN003';
-		var postData=kiss.checkData(postData)?postData:'';
-		if(!kiss.checkListData(postData))
-		{
-			kiss.exlog(fHeader,"Loi data truyen den",req.body);
-			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM002')});
-			return;
+		if(postData.CAL_ID !== -1){
+			var fHeader="v2_InvoiceController->postGetCal";
+			var functionCode='FN003';
+			var postData=kiss.checkData(postData)?postData:'';
+			if(!kiss.checkListData(postData))
+			{
+				kiss.exlog(fHeader,"Loi data truyen den",req.body);
+				res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM002')});
+				return;
+			}
+			var sql=
+				"SELECT `cln_appt_patients`.*,`cln_patients`.`First_name`,`cln_patients`.`Sur_name`				"+
+				"FROM `cln_appt_patients`                                                                       "+
+				"INNER JOIN  `cln_patients` ON `cln_appt_patients`.`Patient_id` = `cln_patients`.`Patient_id`   "+
+				"WHERE `cln_appt_patients`.`CAL_ID` = ?                                                         "+
+				"AND `cln_appt_patients`.`Patient_id` = ?                                                       ";
+			kiss.executeQuery(req,sql,[postData.CAL_ID,postData.Patient_id],function(rows){
+				res.json({status:'success',data:rows});
+			},function(err){
+				kiss.exlog(fHeader,'Loi truy van lay thong tin thong qua',err);
+				res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
+			});
+		}else{
+			var fHeader="v2_InvoiceController->postGetCal";
+			var functionCode='FN003';
+			var postData=kiss.checkData(postData)?postData:'';
+			if(!kiss.checkListData(postData))
+			{
+				kiss.exlog(fHeader,"Loi data truyen den",req.body);
+				res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM002')});
+				return;
+			}
+			var sql=
+				"SELECT `cln_appt_patients`.*,`cln_patients`.`First_name`,`cln_patients`.`Sur_name`				"+
+				"FROM `cln_appt_patients`                                                                       "+
+				"INNER JOIN  `cln_patients` ON `cln_appt_patients`.`Patient_id` = `cln_patients`.`Patient_id`   "+
+				"WHERE `cln_appt_patients`.`Patient_id` = ?                                                     ";
+			kiss.executeQuery(req,sql,[postData.Patient_id],function(rows){
+				res.json({status:'success',data:rows});
+			},function(err){
+				kiss.exlog(fHeader,'Loi truy van lay thong tin thong qua',err);
+				res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
+			});
 		}
-		var sql=
-			"SELECT `cln_appt_patients`.*,`cln_patients`.`First_name`,`cln_patients`.`Sur_name`				"+
-			"FROM `cln_appt_patients`                                                                       "+
-			"INNER JOIN  `cln_patients` ON `cln_appt_patients`.`Patient_id` = `cln_patients`.`Patient_id`   "+
-			"WHERE `cln_appt_patients`.`CAL_ID` = ?                                                         "+
-			"AND `cln_appt_patients`.`Patient_id` = ?                                                       ";
-		kiss.executeQuery(req,sql,[postData.CAL_ID,postData.Patient_id],function(rows){
-			res.json({status:'success',data:rows});
-		},function(err){
-			kiss.exlog(fHeader,'Loi truy van lay thong tin thong qua',err);
-			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
-		});
 
 	},
 	postEdit:function(req,res){
+
 		var postData  = req.body.data;
 		var sql = knex('cln_appt_patients')
 				.where('id',postData.cln_appt_patientsID)

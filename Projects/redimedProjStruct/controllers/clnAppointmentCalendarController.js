@@ -6,6 +6,10 @@ var db = require('../models');
 var common_functions = require("../functions");
 var rlobUtil=require('./rlobUtilsController');
 var kiss=require('./kissUtilsController');
+var moment = require('moment');//tan add
+
+var errorCode=require('./errorCode');//tannv add
+var controllerCode="RED_APPOINTMENT-CALENDAR";
 
 module.exports =
 {
@@ -279,6 +283,7 @@ module.exports =
         var sourceType=req.query.sourceType?req.query.sourceType:'%';
         var serviceId = rlobUtil.redilegalServiceId;
         var periodTimeDefault=rlobUtil.periodTimeDefault;
+        var currentDate=kiss.getCurrentDateStr();
         var sql = 
             " SELECT  DISTINCT DATE(h.`FROM_TIME`) AS APPOINTMENT_DATE                                                           "+
             " FROM      `cln_appointment_calendar` h                                                                             "+
@@ -292,13 +297,13 @@ module.exports =
             "   AND h.`SERVICE_ID` = ?                                                                                           "+
             "   AND                                                                                                              "+
             "   rltype.`SOURCE_TYPE` LIKE ? AND spec.`RL_TYPE_ID` LIKE ?  AND spec.`Specialties_name` LIKE ?                     "+
-            "   AND h.`DOCTOR_ID` LIKE ? AND h.`SITE_ID` LIKE ? AND h.`FROM_TIME` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)       "+
+            "   AND h.`DOCTOR_ID` LIKE ? AND h.`SITE_ID` LIKE ? AND h.`FROM_TIME` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY) and h.FROM_TIME>=?      "+
             "   AND MINUTE(TIMEDIFF(h.`TO_TIME`,h.`FROM_TIME`)) >=?                                                              "+
             "   AND d.Isenable=1 "+
             " ORDER BY APPOINTMENT_DATE ASC                                                                                      ";
             req.getConnection(function(err,connection)
             {
-                var query = connection.query(sql,[serviceId,sourceType,RL_TYPE_ID,Specialties_name,DOCTOR_ID,SITE_ID,STARTDATE,ENDDATE,periodTimeDefault],function(err,rows)
+                var query = connection.query(sql,[serviceId,sourceType,RL_TYPE_ID,Specialties_name,DOCTOR_ID,SITE_ID,STARTDATE,ENDDATE,currentDate,periodTimeDefault],function(err,rows)
                     {
                         if(err){
                             console.log("Error Selecting : %s ",err );
@@ -327,6 +332,7 @@ module.exports =
         var sourceType=req.query.sourceType?req.query.sourceType:'%';
         var serviceId = rlobUtil.redilegalServiceId;
         var periodTimeDefault=rlobUtil.periodTimeDefault;
+        var currentDate=kiss.getCurrentDateStr();
         var sql =
             " SELECT  DISTINCT h.*,CONCAT(DATE_FORMAT(h.`FROM_TIME`,'%H'),':',DATE_FORMAT(h.`FROM_TIME`,'%i')) AS appointment_time,    "+  
             "   `redimedsite`.`Site_name`,`redimedsite`.`Site_addr`, doctor.`NAME`,spec.`Specialties_id`,                              "+ 
@@ -342,11 +348,11 @@ module.exports =
             "   AND h.`SERVICE_ID` = ?                                                                                                 "+ 
             "   AND                                                                                                                    "+ 
             "   rltype.`SOURCE_TYPE` LIKE ? AND spec.`RL_TYPE_ID` LIKE ?  AND spec.`Specialties_name` LIKE ?                           "+ 
-            "   AND h.`DOCTOR_ID` LIKE ? AND h.`SITE_ID` LIKE ? AND DATE(h.`FROM_TIME`)=?                                              "+
+            "   AND h.`DOCTOR_ID` LIKE ? AND h.`SITE_ID` LIKE ? AND DATE(h.`FROM_TIME`)=? and date(h.FROM_TIME)>=?                                              "+
             "   AND MINUTE(TIMEDIFF(h.`TO_TIME`,h.`FROM_TIME`)) >=?                                                                    "+
             "   AND d.Isenable=1 "+
             " ORDER BY `appointment_time` ASC                                                                                          ";
-        kiss.executeQuery(req,sql,[serviceId,sourceType,RL_TYPE_ID,Specialties_name,DOCTOR_ID,SITE_ID,FROM_TIME,periodTimeDefault],function(rows){
+        kiss.executeQuery(req,sql,[serviceId,sourceType,RL_TYPE_ID,Specialties_name,DOCTOR_ID,SITE_ID,FROM_TIME,currentDate,periodTimeDefault],function(rows){
             res.json(rows);
         },function(err){
             kiss.exlog("getAppointmentCalendar","Loi truy van",err);
@@ -425,27 +431,37 @@ module.exports =
         });
     },
     
+
+    /**
+     * created by: unknown
+     * edited by: tannv.dts
+     * edition date: 11-08-2015
+     */
     getAppointmentCalendarById:function(req,res)
     {
-        var calId=req.query.calId;
-        var sql='SELECT cal.* FROM `cln_appointment_calendar` cal WHERE cal.`CAL_ID`=?';
-        req.getConnection(function(err,connection)
+        var fHeader="clnAppointmentCalendarController->getAppointmentCalendarById";
+        var functionCode="FN001";
+        var calId=kiss.checkData(req.query.calId)?req.query.calId:'';
+        if(!kiss.checkListData(calId))
         {
-            var query = connection.query(sql,calId,function(err,rows)
+            kiss.exlog(fHeader,'Loi data truyen den', 'query',req.query);
+            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
+            return;
+        }
+        var sql='SELECT cal.* FROM `cln_appointment_calendar` cal WHERE cal.`CAL_ID`=?';
+        kiss.executeQuery(req,sql,[calId],function(rows){
+            if(rows.length>0)
             {
-                if(err)
-                {
-                    console.log("Error Selecting : %s ",err );
-                    res.json({status:'fail'});
-                }
-                else
-                {
-                    if(rows.length>0)
-                        res.json({status:'success',data:rows[0]});
-                    else
-                        res.json({status:'fail'});
-                }
-            });
+                res.json({status:'success',data:rows[0]});
+            }
+            else
+            {
+                kiss.exlog(fHeader,'Khong co appointment nao tuong ung voi id');
+                res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN003')});
+            }
+        },function(err){
+            kiss.exlog(fHeader,'Loi truy van select cln_appointment_calendar',err);
+            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN002')});
         });
     },
 

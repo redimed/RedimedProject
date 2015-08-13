@@ -65,7 +65,7 @@ app.post('/api/rlob/rl_bookings/lob-change-documents-status',func.checkToken,rlB
 app.get('/api/rlob/rl_bookings/send-email',func.checkToken,rlBookingsController.sendEmail);
 app.get('/api/rlob/rl_bookings/admin/filter-booking',rlBookingsController.lob_filter_booking);
 app.post('/api/rlob/rl_bookings/admin/change-appointment-calendar',func.checkToken,rlBookingsController.changeAppointmentCalendar);
-app.get('/api/rlob/rl_bookings/admin/get-files-by-booking-id',func.checkToken,rlBookingsController.get_files_booking);//nguyen khank
+app.get('/api/rlob/rl_bookings/admin/get-files-by-booking-id',rlBookingsController.get_files_booking);//nguyen khank
 app.post('/api/rlob/rl_bookings/admin/send-comfirm-email',func.checkToken,rlBookingsController.sendConfirmEmail);
 //online booking reprot 1 (upcomming)
 app.post('/api/rlob/rl_bookings/admin/report-1/count-report-upcomming-bookings',rlBookingsController.getCountReportUpcommingBookings);//chien Upcomming booking
@@ -159,7 +159,7 @@ app.post('/api/rlob/core/save-booking-info',func.checkToken, rlobController.hand
 app.post('/api/rlob/core/check-period-time-to-booking', rlobController.checkPeriodTimeToBooking);
 app.post('/api/rlob/core/set-list-result-files', rlBookingFilesController.setListResultFiles);
 app.post('/api/rlob/core/unselect-all-file-result', rlBookingFilesController.unselectAllFileResult);
-app.get('/api/rlob/core/rlob-download-list-result-files',func.checkToken, rlobDocumentsController.rlobDownloadListResultFiles);
+app.get('/api/rlob/core/rlob-download-list-result-files', rlobDocumentsController.rlobDownloadListResultFiles);
 app.post('/api/rlob/core/handle-change-booking-calendar',func.checkToken, rlobController.handleChangeBookingCalendar);
 app.post('/api/rlob/core/reschedule-confirm-email',func.checkToken, rlBookingsController.rescheduleConfirmEmail);
 app.get('/abcxyz/force/change-pass', rlRegisterController.forceChangePassword);

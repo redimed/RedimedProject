@@ -785,7 +785,11 @@ angular.module("app.model", [])
 	Creation_date: null,
 	Last_updated_by: null, 
 	Last_update_date: null,
-	SECTION_TYPE: null
+	SECTION_TYPE: null,
+	have_measure_info: null,
+	height: null,
+	weight: null,
+	bmi: null,
 })
 // END FA SECTION
 

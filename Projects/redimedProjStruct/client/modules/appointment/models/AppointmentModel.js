@@ -8,7 +8,11 @@ angular.module('app.loggedIn.appointment.models', [])
 		var instanceApi = mainApi.all('byDoctor');
 		return instanceApi.post({data: data});
 	},
-
+	
+	mainModel.deleteClnAppPatient = function(data){
+		var instanceApi = mainApi.all('deleteClnAppPatient');
+		return instanceApi.post({data: data});
+	}
 	mainModel.add = function(data){
 		var instanceApi = mainApi.all('add');
 		return instanceApi.post({data: data});

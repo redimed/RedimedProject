@@ -10,6 +10,7 @@ app.post(url+'add', AppointmentController.postAdd);
 app.post(url+'edit',AppointmentController.postEdit);
 app.post(url+'leaveCal',AppointmentController.postLeaveCal);
 app.post(url+'one',AppointmentController.postOne);
+app.post(url+'deleteClnAppPatient',AppointmentController.deleteClnAppPatient);
 //tannv.dts@gmail.com
 app.post(url+'beforePostLeaveCal',AppointmentController.beforePostLeaveCal);
 

@@ -4,6 +4,10 @@
 var db = require('../models');
 var kiss=require('./kissUtilsController');
 var moment=require('moment');
+
+var errorCode=require('./errorCode');//tannv add
+var controllerCode="RED_SITE";
+
 module.exports = {
     list: function(req,res){
         db.RedimedSite.findAll({},{raw:true})
@@ -80,15 +84,45 @@ module.exports = {
 
     },
 
+    /**
+     * created by: unknown
+     * edit by: tannv.dts@gmail.com
+     * edit on 11-08-2015
+     */
     siteInfo: function(req,res){
-        var id = req.body.id;
+        var fHeader="RedimedSiteController->siteInfo";
+        var functionCode="FN001";
+        var id=kiss.checkData(req.body.id)?req.body.id:'';
+        if(!kiss.checkListData(id))
+        {
+            kiss.exlog(fHeader,'Loi data truyen den',req.body);
+            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
+            return;
+        }
+        var sql="SELECT site.* FROM `redimedsites` site WHERE site.id=?";
+        kiss.executeQuery(req,sql,[id],function(rows){
+            if(rows.length>0)
+            {
+                res.json(rows[0]);
+            }
+            else
+            {
+                kiss.exlog(fHeader,'Khong co site nao tuong ung voi id');
+                res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN003')});
+            }
+        },function(err){
+            kiss.exlog(fHeader,'Loi truy van lay site tuong ung voi id',err);
+            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN002')});
+        });
+        // tannv.dts@gmail.com comment old code
+        /*var id = req.body.id;
         db.RedimedSite.find({where:{id:id}},{raw:true})
             .success(function(data){
                 res.json(data);
             })
             .error(function(err){
                 res.json({status:"fail"});
-            })
+            })*/
     },
     insert : function(req,res){
         var info = req.body.info;

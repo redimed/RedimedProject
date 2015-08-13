@@ -6,6 +6,9 @@ var db = require('../models');
 var kiss=require('./kissUtilsController');
 var moment=require('moment');
 
+var errorCode=require('./errorCode');//tan add
+var controllerCode="RED_COMPANY";// tan add
+
 module.exports = {
     postgetFromTime:function(req,res){
          var postData = req.body.data;
@@ -961,13 +964,44 @@ module.exports = {
             res.json({status:'error',err:err});
         })
     },
+
+    /**
+     * created by: unknown
+     * edited by: tannv.dts
+     * edition date: 11-08-2015
+     */
     companyInfo: function(req,res){
-        var id = req.body.comId;
-        db.Company.find({where:{id:id}},{raw:true}).success(function(data){
+        var fHeader="CompanyController->companyInfo";
+        var functionCode="FN001";
+        var id = kiss.checkData(req.body.comId)?req.body.comId:'';
+        if(!kiss.checkListData(id))
+        {
+            kiss.exlog(fHeader,'Loi data truyen den','body',req.body);
+            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
+            return;
+        }
+        var sql="SELECT company.* FROM `companies` company WHERE company.`id`=?";
+        kiss.executeQuery(req,sql,[id],function(rows){
+            if(rows.length>0)
+            {
+                res.json(rows[0]);
+            }
+            else
+            {
+                kiss.exlog(fHeader,'Khong co company nao tuong ung voi id');
+                res.json({status:'error',error:errorCode.get(controllerCode,functionCode,'TN003')});
+            }
+        },function(err){
+            kiss.exlog(fHeader,'Loi truy van lay thong tin companies',err);
+            res.json({status:'error',error:errorCode.get(controllerCode,functionCode,'TN002')});
+        });
+
+        // tannv.dts comment old code
+        /*db.Company.find({where:{id:id}},{raw:true}).success(function(data){
             res.json(data);
         }).error(function(err){
             res.json({status:'error'});
-        })
+        })*/
     },
     insert: function(req,res){
         var info = req.body.info;

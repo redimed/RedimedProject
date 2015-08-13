@@ -5,6 +5,10 @@ var db = require('../models');
 var rlobUtil=require('./rlobUtilsController');
 var kiss=require('./kissUtilsController');
 var moment=require('moment');
+
+var errorCode=require('./errorCode');// tan add
+var controllerCode="RED_SPECIALTY";// tan add
+
 module.exports =
 {
     list:function(req,res){
@@ -55,30 +59,39 @@ module.exports =
         });
     },
 
+    /**
+     * created by: unknown
+     * edited by: tannv.dts@gmail.com
+     * edition date: 11-08-2015
+     */
     getSpecialityById:function(req,res)
     {
-        var specialityId=req.query.specialityId;
-        var sql="SELECT spec.* FROM `cln_specialties` spec WHERE spec.`Specialties_id`=?";
-        req.getConnection(function(err,connection)
+        var fHeader="cln_SpecialitiesController->getSpecialityById";
+        var functionCode="FN001";
+        var specialityId=kiss.checkData(req.query.specialityId)?req.query.specialityId:'';
+        if(!kiss.checkListData(specialityId))
         {
-
-            var query = connection.query(sql,specialityId,function(err,rows)
+            kiss.exlog(fHeader,'Loi data truyen den','query',req.query);
+            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
+            return;
+        }
+        var sql="SELECT spec.* FROM `cln_specialties` spec WHERE spec.`Specialties_id`=?";
+        kiss.executeQuery(req,sql,[specialityId],function(rows){
+            if(rows.length>0)
             {
-                if(err)
-                {
-                    res.json({status:'fail'});
-                }
-                else
-                {
-                    if(rows.length>0)
-                        res.json({status:'success',data:rows[0]});
-                    else
-                        res.json({status:'fail'});
-                }
-
-            });
+                res.json({status:'success',data:rows[0]});
+            }
+            else
+            {
+                kiss.exlog(fHeader,'Khong co specialty nao tuong ung voi id');
+                res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN003')});
+            }
+        },function(err){
+            kiss.exlog(fHeader,'Loi truy van lay thong tin specialty thong qua id',err);
+            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN002')});
         });
     },
+    
     getListSpecialties:function(req,res){
         var sql= 
             "SELECT sp.*,ty.`Rl_TYPE_NAME` FROM `cln_specialties` sp          "+        
