@@ -3,7 +3,11 @@ angular.module('app.loggedIn.appointment.models', [])
 .factory('AppointmentModel', function(Restangular){
 	var mainModel = {};
 	var mainApi = Restangular.all('api/meditek/v1/appointment');
-
+	
+	mainModel.alertCenterPatient = function(data){
+		var instanceApi = mainApi.all('alertCenterPatient');
+		return instanceApi.post({data: data});
+	},
 	mainModel.byDoctor = function(data){
 		var instanceApi = mainApi.all('byDoctor');
 		return instanceApi.post({data: data});

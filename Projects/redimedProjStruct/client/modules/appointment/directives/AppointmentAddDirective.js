@@ -1,3 +1,6 @@
+/*
+	add new booking,update booking when click on No patient in
+*/
 angular.module('app.loggedIn.appointment.directives.add', [])
 
 .directive('appointmentAdd', function(ConfigService, sysServiceService, AppointmentModel, WaitingListModel, $modal, $state, toastr){
@@ -29,19 +32,60 @@ angular.module('app.loggedIn.appointment.directives.add', [])
 			scope.ID_clAPPatient = null;
 			scope.CheckAddPatient = false;
 			scope.wattinglist = false;
+			/*Function acc_type_load : load list account type*/
 			var acc_type_load = function(){
 				ConfigService.account_type_option()
 				.then(function(response){
 					scope.acc_type.list = response.list;
 				}, function(error){})
 			}
-
+			/*Funtion serviceLoad load list service*/
 			var serviceLoad = function(){
 				sysServiceService.byClinicalDepartment(scope.params.col.CLINICAL_DEPT_ID).then(function(response){
   					scope.service.list = response.data;
 		  		}, function(error){})
 			}
-
+			scope.loadAlertCenterPatient = {
+				list : []
+			}
+			/*Funtion loadAlertCenterPatient : notification patient have next appointment*/
+			var loadAlertCenterPatient = function(){
+				AppointmentModel.alertCenterPatient()
+				.then(function(response){
+					scope.loadAlertCenterPatient.list = response.data;
+				})
+			}
+			loadAlertCenterPatient();
+			/*PatientAppHaveNext : show popup list patient have next appointment*/
+			var PatientAppHaveNext = function(){
+				$modal.open({
+					templateUrl: 'PatientAppHaveNext',
+					controller: function($scope, $modalInstance,list){
+						$scope.loadAlertCenterPatient = list;
+						$scope.clickOnRow = function(row){
+							$modalInstance.close(row);
+						}
+					},
+					resolve: {
+						list: function(){
+							return scope.loadAlertCenterPatient.list;
+						}
+					}
+				})
+				.result.then(function(row){
+					if(row){
+						scope.wattinglist = true;
+						scope.CheckAddPatient = false;
+						if (scope.ID_clAPPatient){
+							deleteClnAppPatient(scope.ID_clAPPatient);
+						} 
+						scope.row = row;
+						scope.arr_objectNameFirst = row.First_name;
+						scope.arr_objectNameLast = row.Sur_name;
+					}
+				})
+			}
+			/*waitingListSelect : list patient watting */
 			var waitingListSelect = function(){
 				$modal.open({
 					templateUrl: 'waitingListSelect',
@@ -64,7 +108,7 @@ angular.module('app.loggedIn.appointment.directives.add', [])
 					}
 				})
 			}
-
+			/*popup show add information patient*/
 			var patientAdd = function(){
 				$modal.open({
 					templateUrl: 'patientAdd',
@@ -117,6 +161,7 @@ angular.module('app.loggedIn.appointment.directives.add', [])
 					}
 				})
 			}
+			/*deleteClnAppPatient delete App Patient in table CLN_APP_PATIENT*/
 			var deleteClnAppPatient  = function(value){
 				AppointmentModel.deleteClnAppPatient({id:value}).then(function(response){
 					if (response.data = 'success'){
@@ -124,6 +169,7 @@ angular.module('app.loggedIn.appointment.directives.add', [])
 					}
 				})
 			}
+			/*PatientSelect : show popup list patient */
 			var patientSelect = function(){
 				$modal.open({
 					templateUrl: 'patientList',
@@ -146,7 +192,9 @@ angular.module('app.loggedIn.appointment.directives.add', [])
 					scope.arr_objectNameLast = row.Sur_name;
 				})	
 			}
+			/*funtion Ok : save when add appointment or edit appointment*/
 			scope.Ok = function(){
+				/*if when add new esle when edit*/
 				if (scope.CheckAddPatient === true) {
 					var Data = {
 						CAL_ID:scope.params.col.CAL_ID,
@@ -229,14 +277,17 @@ angular.module('app.loggedIn.appointment.directives.add', [])
 					}
 				};
 			}
+
+			/*when click cancel button*/
 			scope.cancel = function(){
 				scope.patient = -1;
 			}
+			/*call funtion loadd account type*/
 			scope.acc_type = {
 				load: function(){ acc_type_load(); },
 				list: []
 			}
-
+			/*call funtion load service type*/
 			scope.service = {
 				load: function(){ serviceLoad(); },
 				list: []
@@ -253,15 +304,17 @@ angular.module('app.loggedIn.appointment.directives.add', [])
 				dialog: {
 					add: function(){ patientAdd(); },
 					select: function(){ patientSelect(); },
-					waitingListSelect: function(){ waitingListSelect(); }
+					waitingListSelect: function(){ waitingListSelect(); },
+					PatientAppHaveNext:function(){PatientAppHaveNext();}
 				}
 			}
+			/*Check checkedit*/
 			if (scope.checkedit) {
-				
 				var postData = {
 					CAL_ID:scope.params.col.CAL_ID,
 					Patient_id:scope.params.patient.Patient_id
 				}
+				/*when load edit*/
 				AppointmentModel.postGetCal(postData).then(function(response){
 					scope.acc_type.load();
 					scope.service.load();

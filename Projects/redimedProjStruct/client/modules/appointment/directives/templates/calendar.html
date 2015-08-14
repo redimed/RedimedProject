@@ -73,6 +73,45 @@
 	<button class="un-button un-bgBlack pull-right un-margin-bottom-6px" ng-click="addPatient()">Add Patient</button>
 	</div>
 </div>
+<!-- <div class="panel panel-default" style="margin-right: 350px; width: 300px !important;">
+    <div class="panel-heading top-bar" style="background-color: red;">
+        <div class="col-md-8 col-xs-8">
+            <h3 class="panel-title"></span>List Patient</h3>
+        </div>
+        <div class="col-md-4 col-xs-4" style="text-align: right;">
+            <a href="javascript:;"><span id="minim_chat_window" class="glyphicon glyphicon-minus icon_minim"></span></a>
+        </div>
+    </div>
+    <div class="panel-body msg_container_base">
+    	<div ng-if="loadAlertCenterPatient.list.length !== 0">
+	    	<div>
+	    		<table class="mdt-table" style="margin-left:-9px;width: 110% !important;">
+	    			<thead>
+	    				<tr>
+	    					<th>Name Patient</th>
+	    					<th>Appointment Next</th>
+	    				</tr>
+	    			</thead>
+	    			<tbody>
+	    				<tr ng-repeat="list in loadAlertCenterPatient.list">
+	    					<td>{{list.First_name}}  {{list.Sur_name}}</td>
+	    					<td>{{list.next_appt_date |date: 'dd/MM/yyyy'}}</td>
+	    				</tr>
+	    			</tbody>
+	    		</table>
+	    	</div>
+    	</div>
+        <div ng-if="loadAlertCenterPatient.list.length == 0">
+	    	<div style="text-align: center;">
+                <span style="font-size: 15px; font-style: italic;font-weight: bold;">      
+                    Empty Data
+                </span>
+            </div>
+	    </div>
+    </div>
+</div> -->
+
+
 <div class="panel panel-default">
     <div class="panel-heading top-bar">
         <div class="col-md-8 col-xs-8">
@@ -367,6 +406,37 @@
 <script type="text/ng-template" id="patientList">
 	<div class="modal-body">	
 		<patient-search click-row="clickRow(row)"></patient-search>
+	</div>
+</script>
+
+<script type="text/ng-template" id="PatientAppHaveNext">
+	<style type="text/css">
+          .modal.in .modal-dialog {
+           margin-top:50px;
+          }
+    </style>
+	<div class="modal-body">
+		<label class="un-label-popup-header-m un-bg-label-B41E46-m">Select Patient</label>
+		<div class="row">
+			<div class="col-lg-12">
+				<table class="mdt-table">
+					<thead>
+						<tr>
+							<th>First Name</th>
+							<th>Sur Name</th>
+							<th>Appointment Next</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="list in loadAlertCenterPatient" ng-click="clickOnRow(list)">
+							<td>{{list.First_name}}</td>
+							<td>{{list.Sur_name}}</td>
+							<td>{{list.next_appt_date |date: 'dd/MM/yyyy'}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
 	</div>
 </script>
 

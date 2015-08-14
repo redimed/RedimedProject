@@ -1,3 +1,4 @@
+/*directive appointment calendar*/
 angular.module('app.loggedIn.appointment.directives.calendar', [])
 
 .directive('appointmentCalendar', function($modal, $timeout, $state, $cookieStore, $modal, toastr, AppointmentModel, mdtRedimedsitesService, mdtDeptService, ConfigService){
@@ -14,6 +15,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 
 			scope.arrayAppid=[];
 			scope.oldColor=[];
+			/*when click*/
 			scope.isKeyPressed = function($event){
 				e = event || window.event;
 				 if (e.altKey) {
@@ -82,7 +84,6 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 			    	 	};
 			    	 };
 			    }
-
 			}
 			scope.changeService = function(SERVICE_ID){
 				var postData=[]
@@ -1043,7 +1044,16 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 				list: [],
 				load: function(){ loadClinical(); }
 			}
-
+			var loadAlertCenterPatient = function(){
+				AppointmentModel.alertCenterPatient().then(function(response){
+					scope.loadAlertCenterPatient.list = response.data;
+				})
+			}
+			scope.loadAlertCenterPatient = {
+				load: function(){ loadAlertCenterPatient(); },
+				list: [],
+			}	
+			scope.loadAlertCenterPatient.load();
 			var loadAlertCenter = function(){
 				var postData = angular.copy(scope.appointment.search);
 				postData.datepicker = ConfigService.convertToDB(postData.datepicker);
