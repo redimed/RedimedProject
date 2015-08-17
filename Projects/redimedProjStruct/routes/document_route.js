@@ -24,7 +24,6 @@ var FleetController = require('./controllers/DocumentController/FleetController'
 var GroundSupportController = require('./controllers/DocumentController/GroundSupportController');
 var RampBaggageController = require('./controllers/DocumentController/RampBaggageController');
 var PEMedicalController = require('./controllers/DocumentController/PEMedicalController');
-var multipartMiddleware = multipart();
 
 app.post('/api/document/loadPatient', demoController.loadPatient);
 
@@ -200,8 +199,6 @@ app.post('/api/document/checkPEMedical', PEMedicalController.checkPEMedical);
 app.post('/api/document/insertPEMedical', PEMedicalController.insertPEMedical);
 app.post('/api/document/updatePEMedical',PEMedicalController.updatePEMedical);
 app.post('/api/document/deletePEMedical', PEMedicalController.deletePEMedical);
-app.post('/api/document/post-upload-file', multipartMiddleware, PEMedicalController.UploadFile);
-app.post('/api/document/DeleteFile',PEMedicalController.DeleteFile);
 // End
 
 //=================================== State WA  ========================================

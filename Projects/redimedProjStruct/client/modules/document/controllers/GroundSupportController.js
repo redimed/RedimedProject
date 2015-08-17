@@ -4,12 +4,12 @@ angular.module('app.loggedIn.document.QANTASgroundsupport.controllers',[])
             formatYear: 'yy',
             startingDay: 1
         };
-        $scope.patientInfo = localStorageService.get('tempPatient');
+        //$scope.patientInfo = localStorageService.get('tempPatient');
         CalID = $stateParams.cal_id; 
-        Patient_ID = $scope.patientInfo.Patient_id;
+        Patient_ID = $stateParams.patient_id;
         var oriInfo,clearInfo;
         $scope.isSignatureShow = false;
-        $scope.patientInfo.DOB = moment($scope.patientInfo.DOB).format('YYYY-MM-DD');
+        //$scope.patientInfo.DOB = moment($scope.patientInfo.DOB).format('YYYY-MM-DD');
          $scope.rates = [
           {id:0, name:'Excellent'},
           {id:1, name:'Very Good'},
@@ -154,6 +154,9 @@ angular.module('app.loggedIn.document.QANTASgroundsupport.controllers',[])
 
         $scope.insert = false;
         DocumentService.checkQANTAS_groundsupport(Patient_ID).then(function(response){
+            $scope.patientInfo = response['patientInfo'];
+            $scope.patientInfo.DOB = moment($scope.patientInfo.DOB).format('YYYY-MM-DD');
+            $scope.patientInfo.Sex==0||$scope.patientInfo.Sex=="Male"?$scope.patientInfo.Sex=0:$scope.patientInfo.Sex=1;
             if(response.status==="insert"){
               $scope.insert = true;
               $scope.isNew = true;

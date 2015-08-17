@@ -2,28 +2,44 @@ var db = require('../../models');
 module.exports = {
 	checkQANTAS_RampBaggage: function(req, res) {
 		var Patient_ID = req.body.Patient_ID;
-		var query_check = "SELECT * FROM qantas_rampbaggage "+
-						  "WHERE PATIENT_ID = :PATIENT_ID";
-		db.sequelize.query(query_check,null,{raw:true},{
-			PATIENT_ID : Patient_ID
+		var patient_check= "select First_name, Sur_name, Address1, DOB, Sex, Mobile, Email, Home_phone from cln_patients where Patient_ID =:Patient_ID "
+		var qantas_check = "select * from qantas_rampbaggage where PATIENT_ID = :PATIENT_ID";
+		db.sequelize.query(patient_check,null,{raw:true},{
+			Patient_ID:Patient_ID
 		})
-		.success(function(data){
-			if(data!==undefined && data!==null && data!=="" && data.length!==0){
+		.success(function(patientInfo){
+			if(patientInfo!==undefined && patientInfo!==null && patientInfo!=='' && patientInfo.length!==0){
+				db.sequelize.query(qantas_check,null,{raw:true},{
+				PATIENT_ID : Patient_ID
+			})
+			.success(function(data){
+				if(data!==undefined && data!==null && data!=="" && data.length!==0){
+					res.json({
+						status:"update",
+						data: data[0],
+						patientInfo:patientInfo[0]
+					});
+					return;
+				}
+				else{
+					res.json({
+						status:"insert",
+						patientInfo:patientInfo[0]
+					});
+					return;
+				}
+			})
+			.error(function(err){
+				console.log("*****ERROR: "+err+" *****");
 				res.json({
-					status:"update",
-					data: data[0]
+					status:"error"
 				});
 				return;
-			}
-			else{
-				res.json({
-					status:"insert"
-				});
-				return;
+			})
 			}
 		})
 		.error(function(err){
-			console.log("*****ERROR: "+err+" *****");
+			console.log("*****ERROR :"+err+" *****");
 			res.json({
 				status:"error"
 			});
