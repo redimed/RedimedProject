@@ -22,7 +22,8 @@ angular.module("app.loggedIn.document", [
     "app.loggedIn.document.detail.controllers",
     "app.loggedIn.document.addPatient.controllers",
     "app.loggedIn.document.form18.controllers",
-    "app.loggedIn.document.newFA.controllers"
+    "app.loggedIn.document.newFA.controllers",
+    "app.loggedIn.document.PEMedical.controllers"
 ])
     .config(function ($stateProvider) {
         $stateProvider
@@ -162,6 +163,12 @@ angular.module("app.loggedIn.document", [
                 templateUrl: "modules/document/views/functionAssessment.html",
                 controller: 'FAController'
 
+            })
+
+            .state("loggedIn.PEMedical", {
+                url: "/PEMedical/:patient_id/:cal_id",
+                templateUrl: "modules/document/views/PEMedical.html",
+                controller : 'PEMedicalController'
             })
 
 
