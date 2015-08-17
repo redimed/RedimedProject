@@ -4,6 +4,11 @@
 var db = require('../models');
 var kiss=require('./kissUtilsController');
 var moment=require('moment');
+
+var errorCode=require('./errorCode');// tan add
+var controllerCode="RED_RLTYPE";
+
+
 module.exports =
 {
     list:function(req,res)
@@ -26,28 +31,42 @@ module.exports =
             });
         });
     },
+
+    /**
+     * created by: unknown
+     * edited by: tannv.dts
+     * edition date: 11-08-2015
+     */
     getRlTypeById:function(req,res)
     {
-        var rlTypeId=req.query.rlTypeId;
-        var sql="SELECT rltype.* FROM `rl_types` rltype WHERE rltype.`RL_TYPE_ID`=?";
-        req.getConnection(function(err,connection)
+        var fHeader="rlTypesController->getRlTypeById";
+        var functionCode="FN001";
+        var rlTypeId=kiss.checkData(req.query.rlTypeId)?req.query.rlTypeId:'';
+        if(!kiss.checkListData(rlTypeId))
         {
-            var query = connection.query(sql,rlTypeId,function(err,rows)
+            kiss.exlog(fHeader,'Loi data truyen den','query',req.query);
+            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
+            return;
+        }
+
+        var sql="SELECT rltype.* FROM `rl_types` rltype WHERE rltype.`RL_TYPE_ID`=?";
+
+        kiss.executeQuery(req,sql,[rlTypeId],function(rows){
+            if(rows.length>0)
             {
-                if(err)
-                {
-                    res.json({status:'fail'});
-                }
-                else
-                {
-                    if(rows.length>0)
-                        res.json({status:'success',data:rows[0]});
-                    else
-                        res.json({status:'fail'});
-                }
-            });
-        });
+                res.json({status:'success',data:rows[0]});
+            }
+            else
+            {
+                kiss.exlog(fHeader,'khong co rlType nao tuong ung voi id');
+                res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN003')});
+            }
+        },function(err){
+            kiss.exlog(fHeader,'Loi truy van lay thong tin rlType',err);
+            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN002')});
+        });        
     },
+    
     getListRlTpyes:function(req,res){
         var sql= 
             "SELECT * FROM `rl_types` ORDER BY `ISENABLE` DESC";

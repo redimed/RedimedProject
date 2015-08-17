@@ -73,6 +73,87 @@ function checkListData()
     return true;
 }
 
+/**
+ * tannv.dts@gmail.com
+ * 10-08-2015
+ * Neu value=null||undefined||'' thi tra ve null
+ */
+function parseValue(value,type,removeStr)
+{
+    //xoa bo khoan trang truoc sau sau value
+    if(typeof value=='string') 
+        {
+            value=value.trim();
+            value=value.replace(removeStr,'');
+        }
+    // value=value.trim();
+    if(checkData(value))
+    {   
+        if(type=='date')
+        {
+            if(moment(value,'YYYY-MM-DD').isValid())
+                return moment(value,'YYYY-MM-DD').format("YYYY/MM/DD");
+            if(moment(value,'YYYY.MM.DD').isValid())
+                return moment(value,'YYYY.MM.DD').format('YYYY/MM/DD');
+            if(moment(value,'YYYY/MM/DD').isValid())
+                return moment(value,'YYYY/MM/DD').format("YYYY/MM/DD");
+            return null;
+        }
+        else if(type=='datetime')
+        {
+            if(moment(value,'YYYY-MM-DD HH:mm:ss').isValid())
+                return moment(value,'YYYY-MM-DD HH:mm:ss').format("YYYY/MM/DD HH:mm:ss");
+            if(moment(value,'YYYY.MM.DD HH:mm:ss').isValid())
+                return moment(value,'YYYY.MM.DD HH:mm:ss').format('YYYY/MM/DD HH:mm:ss');
+            if(moment(value,'YYYY/MM/DD HH:mm:ss').isValid())
+                return moment(value,'YYYY/MM/DD HH:mm:ss').format("YYYY/MM/DD HH:mm:ss");
+            return null;
+        }
+        else if(type=='int')
+        {
+            var n=parseInt(value);
+            //kiem tra xem value co phai la so integer hay khong
+            // function isInt(n){
+            //     return Number(n) === n && n % 1 === 0;
+            // }
+            if(n === Number(n) && n % 1 === 0)
+            {
+                return n;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        else if(type=='float')
+        {
+            var n=parseFloat(value);
+            //kiem tra xem value co phai la so integer hay khong
+            // function isFloat(n){
+            //     return n === Number(n) && n % 1 !== 0;
+            // }
+            if(n === Number(n))
+            {
+                return n;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        else
+        {
+            
+            return value;
+        }
+    }
+    else
+    {
+        return null;
+    }
+    
+}
+
 
 /**
  * Ham thuc thi mot cau truy van
@@ -158,6 +239,10 @@ module.exports =
     checkData:checkData,
     
     checkListData:checkListData,
+
+    //tannv.dts
+    //10-08-2015
+    parseValue:parseValue,
 
     isEmpty:isEmpty,
 

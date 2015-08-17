@@ -136,14 +136,16 @@ angular.module('app.loggedIn.invoice.services', [])
 		var funcApi = mdtApi.all('invoice/feegroupbyid');
 		return funcApi.post({data: postData});
 	}
-	mdtService.getinsurerbyid=function(postData)
+
+
+	mdtService.getFeeGroupByInsurer=function(postData)
 	{
-		var funcApi = mdtApi.all('invoice/getinsurerbyid');
+		var funcApi = mdtApi.all('invoice/get_fee_group_by_insurer');
 		return funcApi.post({data: postData});
 	}
-	mdtService.getFeegrouptype=function(postData)
+	mdtService.getFeeGroupByType=function(postData)
 	{
-		var funcApi = mdtApi.all('invoice/feegrouptype');
+		var funcApi = mdtApi.all('invoice/get_fee_group_by_type');
 		return funcApi.post({data: postData});
 	}
 
@@ -176,6 +178,18 @@ angular.module('app.loggedIn.invoice.services', [])
 	mdtService.search = function(option){
 		var funcApi = mdtApi.all('search');
 		return funcApi.post(option);
+	}
+
+	/**
+	 * tannv.dts@gmail.com
+	 * postData{feeTypeId,listItem}
+	 * Lay ra fee cua cac item theo ngay hien tai
+	 * 07-08-2015
+	 */
+	mdtService.getCurrentFeeOfItems=function(postData)
+	{
+		var funcApi = mdtApi.all('invoice/get_current_fee_of_items');
+		return funcApi.post({postData: postData});
 	}
 	return mdtService;
 })

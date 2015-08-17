@@ -8,6 +8,25 @@ var kiss=require('./kissUtilsController');
 var timeTableUtil=require('./timeTableUtilController');
 
 module.exports = {
+	alertCenterPatient : function(req,res){
+		var fHeader="v2_InvoiceController->alertCenterPatient";
+		var functionCode='FN020';
+		var sql=
+			"SELECT `cln_appt_patients`.* ,`cln_patients`.`First_name`,`cln_patients`.`Sur_name`,`cln_patient_consults`.`next_appt_date`,"+
+			"`cln_patient_consults`.`next_appt_note`                                                                                     "+
+			"FROM `cln_appt_patients`                                                                                                    "+
+			"INNER JOIN `cln_patient_consults` ON `cln_appt_patients`.`CAL_ID` = `cln_patient_consults`.`cal_id`                         "+
+			"AND `cln_appt_patients`.`Patient_id` = `cln_patient_consults`.`patient_id`                                                  "+
+			"INNER JOIN `cln_patients` ON `cln_appt_patients`.`Patient_id` = `cln_patients`.`Patient_id`                                 "+
+			"WHERE `cln_appt_patients`.`appt_status` = 'Completed'                                                                      ";
+		kiss.executeQuery(req,sql,null,function(rows){
+			res.json({status:'success',data:rows});
+		},function(err){
+			kiss.exlog(fHeader,'Loi truy van lay thong tin thong qua',err);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
+		});
+
+	},
 	changeStatus:function(req,res){
 		var postData  = req.body.data;
 		var sql = knex('cln_appointment_calendar')

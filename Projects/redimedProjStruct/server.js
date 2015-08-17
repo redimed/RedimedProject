@@ -95,8 +95,8 @@ app.use('/document/fa/images', express.static(documentImage));
 app.use(connection(mysql, config.get('mysql'), 'pool')); //**Config mysql middleware
 
 app.use(function (req, res, next) {
-    req.k_sql = k_sql(req, res);
-    req.k_sql.isLog = 1;
+	req.k_sql = k_sql(req, res);
+	req.k_sql.isLog = 1;
     res.locals.k_sql = req.k_sql;
     next();
 });
@@ -191,3 +191,4 @@ db.sequelize
 );
 
 module.exports = app;
+

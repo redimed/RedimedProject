@@ -24,7 +24,8 @@ angular.module('app.loggedIn.appointment.controllers.doctor', [])
 	$scope.loadAppointment = function(){
 		$scope.appointment.load({site_id: data.site_id, datepicker: $scope.appointment.pre.datepicker, doctor_id: $scope.appointment.pre.doctor_id, clinical_dept_id: $scope.appointment.pre.clinical_dept_id});
 	}
-
+	/*
+	*/
 	$scope.dialogWaitingListAdd = function(col){
 		angular.element("#popupMenu").css({'display':'none'});
 

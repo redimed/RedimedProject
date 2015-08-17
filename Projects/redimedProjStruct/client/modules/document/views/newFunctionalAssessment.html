@@ -127,6 +127,30 @@
 			<div class="caption">{{section.SECTION_NAME}}</div>
 		</div>
 		<div class="portlet-body">
+			<div class="panel panel-default" ng-if="section.have_measure_info===1">
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-2 col-sm-2 col-xs-2">
+							<label class="control-label pull-right" style="margin-top:10px;" >Height: </label>
+						</div>
+						<div class="col-md-2 col-sm-2 col-xs-2">
+							<input type="text" class="form-control" ng-model="section.height">
+						</div>
+						<div class="col-md-2 col-sm-2 col-xs-2">
+							<label class="control-label pull-right" style="margin-top:10px;" >Weight: </label>
+						</div>
+						<div class="col-md-2 col-sm-2 col-xs-2">
+							<input type="text" class="form-control" ng-model="section.weight">
+						</div>
+						<div class="col-md-2 col-sm-2 col-xs-2">
+							<label class="control-label pull-right" style="margin-top:10px;" >BMI: </label>
+						</div>
+						<div class="col-md-2 col-sm-2 col-xs-2">
+							<input type="text" class="form-control" ng-model="section.bmi">
+						</div>
+					</div>
+				</div>
+			</div>
 			<!-- this is line -->
 			<div class="portlet box grey-cascade" ng-repeat="line in section.lines" ng-if="line.LineType!==1">
 				<div class="portlet-title">

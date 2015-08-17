@@ -17,54 +17,128 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 			/*
 			*	SEARCH DOCTOR
 			*/
-			$scope.feeGroupType=invConst.feeGroupTypeAuto;
-			$scope.feeGroupID=[];
-			$scope.feeTypeID;
+			// $scope.feeGroupType=invConst.feeGroupTypeAuto;//tannv.dts comment
+			$scope.feeGroupType=invConst.feeGroupType;
+			$scope.feeGroups=[];
+			$scope.feeTypes=[];
 			$scope.InvoiceMap = {
 				FEE_GROUP_TYPE :null,
 				FEE_GROUP_ID:null,
 				FEE_TYPE_ID:null
 			}
+
+			/**
+			 * created by: duc manh
+			 * edited by: tannv.dts@gmail.com
+			 * edition date: tannv.dts@gmail.com
+			 * xu ly khi feeGroupType thay doi gia tri
+			 */
 			$scope.feeGroupTypeChange = function(value){// When Choose Bill To
-				$scope.feeGroupNameChange('');
+				//refresh list feeGroup
+				$scope.feeGroups=[];
+				$scope.InvoiceMap.FEE_GROUP_ID=null;
+				// $scope.feeGroupChange(null);
+				//refresh list feeType
+				$scope.InvoiceMap.feeTypes=[];
 				$scope.InvoiceMap.FEE_TYPE_ID = null;
+				// $scope.feeTypeChange(null);
 				if (value == 'private_fund') {
-					InvoiceService.getinsurerbyid({id:$scope.InvoiceMap.Insurer_id}).then(function(response){
-						$scope.feeGroupID = response.data;
+					InvoiceService.getFeeGroupByInsurer({id:$scope.InvoiceMap.Insurer_id}).then(function(response){
+						$scope.feeGroups = response.data;
 						$scope.InvoiceMap.FEE_GROUP_ID = response.data[0].FEE_GROUP_ID;
-						$scope.feeGroupNameChange($scope.InvoiceMap.FEE_GROUP_ID);
+						$scope.feeGroupChange($scope.InvoiceMap.FEE_GROUP_ID);
 					})
 				}else{
-					InvoiceService.getFeegrouptype(value).then(function(response){
-						$scope.feeGroupID = response.data
-						
+					InvoiceService.getFeeGroupByType(value).then(function(response){
+						$scope.feeGroups = response.data;
 					})
 				};
-				
-				
 			}
-			$scope.feeGroupNameChange = function(value){//When Change Group Name
+
+			/**
+			 * created by: duc manh
+			 * edited by: tannv.dts@gmail.com
+			 * edition date: 12-08-2015
+			 * ham xu ly feeGroup khi change gia tri
+			 */
+			$scope.feeGroupChange = function(value){//When Change Group Name
+				//refresh list feeType
+				$scope.InvoiceMap.feeTypes=[];
+				$scope.InvoiceMap.FEE_TYPE_ID = null;
+				// $scope.feeTypeChange(null);
 				InvoiceService.getFeeType(value).then(function(response){
-					$scope.feeTypeID = response.data;
-					
+					$scope.feeTypes = response.data;
 				})
 			}
-			$scope.changeFeeType = function(value){//When CHoose Fee Type
-				var postData = {
-					FEE_TYPE_ID:value,
-					CurrentDate : new Date()
+
+
+			/**
+			 * created by: duc manh
+			 * edited by: tannv.dts@gmail.com
+			 * edition date: 12-08-2015
+			 */
+			$scope.feeTypeChange = function(value){//When CHoose Fee Type
+				if(!value)
+				{
+					return;
 				}
-				console.log($scope.InvoiceMap.lines);
-				InvoiceService.getitemfillterfeeid(postData).then(function(response){
-					console.log(response.data);
-					for (var i = 0; i < $scope.InvoiceMap.lines.length; i++) {
-						for (var j = 0; j < response.data.length; j++) {
-							if($scope.InvoiceMap.lines[i].ITEM_ID == response.data[j].ITEM_ID){
-								$scope.InvoiceMap.lines[i].PRICE = response.data[j].FEE;
-							}
-						};
-					};
-				})
+				var postData = {
+					feeTypeId:value,
+					listItem:[]
+				}
+				//dua cac invoice line vao post data
+				for(var i=0;i<$scope.InvoiceMap.lines.length;i++){
+					postData.listItem.push($scope.InvoiceMap.lines[i].ITEM_ID);
+				}
+				InvoiceService.getCurrentFeeOfItems(postData)
+				.then(function(data){
+					if(data.status=='success')
+					{
+						toastr.success('Get current fee of items success','success');
+						var feeMap={};
+						for(var i=0;i<data.data.length;i++)
+						{
+							var item =data.data[i];
+							feeMap[item.ITEM_ID]={
+								FEE:item.FEE,
+								PERCENT:item.PERCENT,
+								FEE_START_DATE:item.FEE_START_DATE,
+								ITEM_CODE:item.ITEM_CODE,
+								TAX_ID:item.TAX_ID,
+								TAX_CODE:item.TAX_CODE,
+								TAX_RATE:item.TAX_RATE
+							};
+						}
+						for(var i=0;i<$scope.InvoiceMap.lines.length;i++)
+						{
+							var item=$scope.InvoiceMap.lines[i];
+							// exlog.alert(item.ITEM_ID)
+							item.PRICE=null;
+							item.PRICE=feeMap[item.ITEM_ID]?feeMap[item.ITEM_ID].FEE:null;
+							// alert($scope.InvoiceMap.lines.PRICE);
+						}
+					}
+					else
+					{
+						toastr.error('Get current fee of items fail.','error');
+						exlog.logErr('InvoiceDetailDirective->feeTypeChange',data);
+					}
+				},function(err){
+					toastr.error('Get current fee of items fail.','error');
+					exlog.logErr('InvoiceDetailDirective->feeTypeChange',err);
+				});
+
+
+				// console.log($scope.InvoiceMap.lines);
+				// InvoiceService.getitemfillterfeeid(postData).then(function(response){
+				// 	for (var i = 0; i < $scope.InvoiceMap.lines.length; i++) {
+				// 		for (var j = 0; j < response.data.length; j++) {
+				// 			if($scope.InvoiceMap.lines[i].ITEM_ID == response.data[j].ITEM_ID){
+				// 				$scope.InvoiceMap.lines[i].PRICE = response.data[j].FEE;
+				// 			}
+				// 		};
+				// 	};
+				// })
 			}
 			$scope.doctorSearch = {
 				open: function() {
@@ -179,14 +253,56 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 						if(t_item) {
 							return;
 						}
+
+						var newLine=data.item;
+						//tannv.dts@gmail.com
+						//12-08-2015
+						newLine.HEADER_ID=$scope.InvoiceMap.header_id;
+						newLine.QUANTITY = 1;
+						newLine.PRICE = 0;
+                        newLine.has_price = false;
+						newLine.AMOUNT=0;
+						newLine.TIME_SPENT = 0;
+						newLine.IS_ENABLE=1;
+						newLine.invItem = {ITEM_CODE : data.item.ITEM_CODE, ITEM_NAME: data.item.ITEM_NAME };
+						
+						var postData = {
+							ITEM_ID:newLine.ITEM_ID,
+							FEE_TYPE_ID:$scope.InvoiceMap.FEE_TYPE_ID,
+							CurrentDate :  moment().format('YYYY-MM-DD hh:mm:ss')
+						}
+						InvoiceService.getfeetypefillter(postData).then(function(data){
+							if(data.status=='post-data-fail')
+							{
+								toastr.warning('Fee type no selected');
+								$scope.InvoiceMap.lines.push(newLine);
+							}
+							else if(data.status=='not-found')
+							{
+								toastr.warning('Price of item not found');
+								$scope.InvoiceMap.lines.push(newLine);
+							}
+							else if(data.status=='success')
+							{
+								var fee=data.data;
+								newLine.FEE=fee.FEE;
+								newLine.PRICE=fee.FEE;
+								newLine.ITEM_FEE_ID=fee.ITEM_FEE_ID;
+								newLine.has_price=true;
+								$scope.InvoiceMap.lines.push(newLine);
+							}
+							else
+							{
+								toastr.error('Error when get price for item');
+							}
+							
+						})
+						//------------------------------- end
+						//
+						
 						// item.ITEM_NAME = item.ITEM_NAME.substring(0, 50);// tan comment
-						data.item.QUANTITY = 1;
-						data.item.TIME_SPENT = 0;
-						data.item.IS_ENABLE = 1;
-
-						data.item.invItem = {ITEM_CODE : data.item.ITEM_CODE, ITEM_NAME: data.item.ITEM_NAME };
-
-						ReceptionistService.itemFeeAppt($scope.InvoiceMap.SERVICE_ID,[data.item.ITEM_ID]).then(function(response){
+						// tannv.dts@gmail.com comment
+						/*ReceptionistService.itemFeeAppt($scope.InvoiceMap.SERVICE_ID,[data.item.ITEM_ID]).then(function(response){
 
 		                    if(response.list.length > 0) {
 		                        data.item.PRICE = response.list[0].SCHEDULE_FEE
@@ -222,7 +338,7 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 		                    	toastr.error('Add fail.','Error');
 		                    	exlog.logErr(err);
 		                    })
-		                });
+		                });*/
 					});
 				}
 			};
@@ -251,7 +367,7 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 							scope.InvoiceMap.FEE_GROUP_ID = response.data.feeGroup.FEE_GROUP_ID;
 						};
 						if ( response.data.feeType) {
-							scope.feeGroupNameChange(scope.InvoiceMap.FEE_GROUP_ID);
+							scope.feeGroupChange(scope.InvoiceMap.FEE_GROUP_ID);
 							scope.InvoiceMap.FEE_TYPE_ID = response.data.feeType.FEE_TYPE_ID;
 						};
 						
@@ -335,7 +451,20 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 			 * Xoa invoice line, xoa appt item
 			 */
 			scope.removeInvoiceLine=function(item){
-				var modalInstance = $modal.open({
+				var index=-1;
+				for(var i=0;i<scope.InvoiceMap.lines.length;i++)
+				{
+					var line=scope.InvoiceMap.lines[i];
+					if(line.ITEM_ID==item.ITEM_ID)
+					{
+						index=i;
+						break;
+					}
+				}
+				scope.InvoiceMap.lines.splice(index,1);
+				//tannv.dts comment
+				//12-08-2015
+				/*var modalInstance = $modal.open({
 					templateUrl: 'notifyToRemoveInvoiceLine',
 					controller: function($scope, $modalInstance){
 						$scope.ok = function(){
@@ -371,7 +500,7 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 						toastr.error('Remove fail.', 'Error');
 						exlog.logErr(err);
 					})
-				})
+				})*/
 			}
 
 			/**
@@ -421,7 +550,6 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 			 * 06-07-2015
 			 * Xoa claim
 			 */
-			
 			scope.removeClaim=function()
 			{
 				var postData = {claim_id: null};
@@ -433,6 +561,11 @@ angular.module('app.loggedIn.invoice.detail.directive', [])
 						scope.InvoiceMap.claim_id = null;
 					}
 				})
+			}
+
+			scope.printReport=function()
+			{
+				window.open(getUrlReport()+"/redimedInvoice/"+scope.InvoiceMap.header_id);
 			}
 		}//end link
 	}//end return

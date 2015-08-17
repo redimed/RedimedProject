@@ -10,6 +10,10 @@ squel.useFlavour('mysql');
 var kiss=require('./kissUtilsController');
 var moment=require('moment');
 
+var controllerCode="RED_DOCTOR";// tan add
+var errorCode=require('./errorCode');//tan add
+
+
 
 module.exports =
 {
@@ -864,12 +868,36 @@ module.exports =
         });
     },
 
-//tannv.dts@gmail.com
+    //tannv.dts@gmail.com
     getDoctorById:function(req,res)
     {
-        var doctorId=req.query.doctorId;
+        var fHeader="doctorsController->getDoctorById";
+        var functionCode="FN001";
+        var doctorId=kiss.checkData(req.query.doctorId)?req.query.doctorId:'';
+        if(!kiss.checkListData(doctorId))
+        {
+            kiss.exlog(fHeader,'Loi data truyen den','query',req.query);
+            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
+            return;
+        }
         var sql='SELECT doctor.`doctor_id`,doctor.`NAME` FROM `doctors` doctor WHERE doctor.`doctor_id`=?';
-        req.getConnection(function(err,connection)
+        kiss.executeQuery(req,sql,[doctorId],function(rows){
+            if(rows.length>0)
+            {
+                res.json({status:'success',data:rows[0]});
+            }
+            else
+            {
+                kiss.exlog(fHeader,'Khong co doctor nao tuong ung voi id');
+                res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN003')});
+            }
+        },function(err){
+            kiss.exlog(fHeader,'Loi truy van lay thong tin doctor thong qua id',err);
+            res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN002')});
+        });
+
+        //tannv.dts@gmail.com comment old code
+        /*req.getConnection(function(err,connection)
         {
 
             var query = connection.query(sql,doctorId,function(err,rows)
@@ -888,6 +916,6 @@ module.exports =
                 }
 
             });
-        });
+        });*/
     }
 }

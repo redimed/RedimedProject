@@ -11,7 +11,7 @@
 	<parameter name="real_path" class="java.lang.String"/>
 	<parameter name="sub_report_dir" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select  section.SECTION_NAME, line.QUESTION, line.LINE_ID
+		<![CDATA[select  section.*, line.QUESTION, line.LINE_ID
 from `cln_fa_df_sections` section
 inner join `cln_fa_df_lines` line on line.SECTION_ID = section.SECTION_ID
 where section.ISENABLE = 1
@@ -24,7 +24,55 @@ and line.CAL_ID =  $P{cal_id}
 and line.SECTION_ID =  $P{section_id}
 and line.LineType != 1]]>
 	</queryString>
+	<field name="PATIENT_ID" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CAL_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SECTION_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FA_ID" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="SECTION_NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ISENABLE" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ORD" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="USER_TYPE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Created_by" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Creation_date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Last_updated_by" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Last_update_date" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SECTION_TYPE" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="have_measure_info" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="height" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="weight" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bmi" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="QUESTION" class="java.lang.String">
@@ -35,9 +83,9 @@ and line.LineType != 1]]>
 	</field>
 	<group name="section_type0_group">
 		<groupHeader>
-			<band height="70">
+			<band height="114">
 				<staticText>
-					<reportElement x="-20" y="52" width="140" height="18" uuid="a4551ebc-ab95-4be7-92fa-6ef58b64a295">
+					<reportElement x="-20" y="96" width="140" height="18" uuid="a4551ebc-ab95-4be7-92fa-6ef58b64a295">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
@@ -54,7 +102,7 @@ and line.LineType != 1]]>
 					<text><![CDATA[Region]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="120" y="52" width="140" height="18" uuid="2055dcde-472c-4bc9-849d-f264d8176042">
+					<reportElement x="120" y="96" width="140" height="18" uuid="2055dcde-472c-4bc9-849d-f264d8176042">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
@@ -71,7 +119,7 @@ and line.LineType != 1]]>
 					<text><![CDATA[Movement]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="260" y="52" width="140" height="18" uuid="98d85ca5-859b-4a69-a93a-b0eb9e8b050f">
+					<reportElement x="260" y="96" width="140" height="18" uuid="98d85ca5-859b-4a69-a93a-b0eb9e8b050f">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					</reportElement>
 					<box>
@@ -87,7 +135,7 @@ and line.LineType != 1]]>
 					<text><![CDATA[Measurement]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="400" y="52" width="140" height="18" uuid="817d5935-106d-4a61-a5a6-49d485e7d888">
+					<reportElement x="400" y="96" width="140" height="18" uuid="817d5935-106d-4a61-a5a6-49d485e7d888">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					</reportElement>
 					<box>
@@ -115,6 +163,32 @@ and line.LineType != 1]]>
 						<font isBold="true" isUnderline="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{SECTION_NAME}]]></textFieldExpression>
+				</textField>
+				<frame>
+					<reportElement x="20" y="50" width="402" height="15" uuid="43a175f1-ac93-4bd0-93c8-12a01dfe69cb">
+						<printWhenExpression><![CDATA[$F{have_measure_info}==1]]></printWhenExpression>
+					</reportElement>
+				</frame>
+				<textField>
+					<reportElement x="34" y="50" width="113" height="15" uuid="665f9807-cf43-4fe8-90ca-736f60cd08ec"/>
+					<textElement markup="none">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Height: " + $F{height}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="169" y="50" width="129" height="15" uuid="b51867d4-48aa-420a-9f36-49f0b3b1ac4e"/>
+					<textElement markup="none">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Weight: "+ $F{weight}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="323" y="50" width="87" height="15" uuid="c646a3a4-dd87-4077-abb2-b4d57adba916"/>
+					<textElement markup="none">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["BMI: "+ $F{bmi}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>

@@ -648,399 +648,458 @@ module.exports = {
 		var SOURCE_TYPE=kiss.checkData(postData.FEE_GROUP_TYPE)?postData.FEE_GROUP_TYPE:'';
 		var SOURCE_ID=kiss.checkData(postData.FEE_GROUP_ID)?postData.FEE_GROUP_ID:'';
 		var FEE_TYPE=kiss.checkData(postData.FEE_TYPE_ID)?postData.FEE_TYPE_ID:'';
+		var lines=kiss.checkData(postData.lines)?postData.lines:[];
+		var userInfo=kiss.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
+        var userId=kiss.checkData(userInfo.id)?userInfo.id:null;
+        var currentTime=kiss.getCurrentTimeStr();
+		if(lines.length>0)
+		{
+			var insertLines=[];
+			for(var i=0;i<lines.length>0;i++)
+			{
+				var line=lines[i];
+				var item={
+					line_id: kiss.parseValue(line.line_id,'int'), 		
+					HEADER_ID: kiss.parseValue(line.HEADER_ID,'int'),
+					ITEM_ID: kiss.parseValue(line.ITEM_ID,'int'),	
+					PRICE: kiss.parseValue(line.PRICE,'float'),	
+					QUANTITY: kiss.parseValue(line.QUANTITY,'float'),
+					TIME_SPENT: kiss.parseValue(line.TIME_SPENT,'int'),
+					AMOUNT: null,
+					TAX_AMOUNT: null,
+					IS_ENABLE: 1,
+					LAST_UPDATED_BY:kiss.parseValue(userId,'int'),
+					CREATED_BY: kiss.parseValue(userId,'int'),
+					TAX_ID: kiss.parseValue(line.TAX_ID,'int'),
+					TAX_CODE: kiss.parseValue(line.TAX_CODE),
+					TAX_RATE: kiss.parseValue(line.TAX_RATE,'float'),
+					CREATION_DATE: kiss.parseValue(currentTime,'datetime'),
+					LAST_UPDATE_DATE: kiss.parseValue(currentTime,'datetime'),
+					ITEM_FEE_ID:kiss.parseValue(line.ITEM_FEE_ID,'int'),
+					FEE:kiss.parseValue(line.FEE,'float'),
+					BILL_PERCENT:'100',
+
+				};
+				if(kiss.checkListData(item.PRICE,item.QUANTITY))
+				{
+					item.AMOUNT=item.PRICE*item.QUANTITY;
+				}
+				if(kiss.checkListData(item.TAX_ID,item.TAX_RATE,item.AMOUNT))
+				{
+					item.TAX_AMOUNT=item.AMOUNT*item.TAX_RATE;
+				}
+				insertLines.push(item);
+			}
+		}
+		else
+		{
+			kiss.exlog(fHeader,'invoice khong co invoice line');
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN021')});
+			return;
+		}
+		// kiss.exFileJSON(postData,'invoice_data.txt');
 		kiss.beginTransaction(req,function(){
 		var sql=
-			" SELECT line.`HEADER_ID`, COUNT(line.`line_id`) AS TOTAL_LINES,   "+
-			" SUM (line.`AMOUNT`) AS TOTAL_AMOUNT                              "+
-			" FROM `cln_invoice_lines` line                                    "+
-			" WHERE line.`HEADER_ID`=? AND line.`IS_ENABLE`=1                  "+
-			" GROUP BY line.`HEADER_ID`                                        ";
+			" SELECT header.`header_id`, COUNT(line.`line_id`) AS TOTAL_LINES,     "+
+			" IFNULL(SUM (line.`AMOUNT`),0) AS TOTAL_AMOUNT                        "+    
+			" FROM `cln_invoice_header` header LEFT JOIN `cln_invoice_lines` line  "+  
+			" ON (header.`header_id`=line.`HEADER_ID` AND line.`IS_ENABLE`=1)      "+             
+			" WHERE header.`header_id`=299                                         "+
+			" GROUP BY line.`HEADER_ID`                                            ";
 			kiss.executeQuery(req,sql,[invoiceHeaderId],function(rows){
 				if(rows.length>0)
 				{
 					var totalLine=rows[0].TOTAL_LINES;
 					var totalAmount=rows[0].TOTAL_AMOUNT;
-					if(totalLine>0)
-					{
-						var sql="UPDATE `cln_invoice_header` SET ? WHERE header_id= ?";
-						var invoiceHeaderUpdateInfo={
-							claim_id:claimId,
-							Company_id:companyId,
-							Insurer_id:insurerId,
-							DOCTOR_ID:doctorId,
-							SITE_ID:siteId,
-							DEPT_ID:deptId,
-							SERVICE_ID:serviceId,
-							STATUS: status,
-							SOURCE_TYPE:SOURCE_TYPE,
-							SOURCE_ID:SOURCE_ID,
-							FEE_TYPE:FEE_TYPE ,
-							FORMULA:'100:100:100'
-							// AMOUNT: totalAmount// tann comment
-						};
-						kiss.exlog(invoiceHeaderUpdateInfo);
-						kiss.executeQuery(req,sql,[invoiceHeaderUpdateInfo,invoiceHeaderId],function(result){
-							if(result.affectedRows>0)
-							{
-								//tannv.dts 
-								//29-06-2015
-								//---------------------------------------------------------------------
-								//---------------------------------------------------------------------
-								//---------------------------------------------------------------------
-								/*invoiceUtil.getNewInvoiceNumber(req,function(newInvoiceNo){
-									db.mdtInvoiceHeader.update({INVOICE_NUMBER:newInvoiceNo},{header_id:header_id})
-									.then(function(result){
-										
-									},function(err){
+					var sql="UPDATE `cln_invoice_header` SET ? WHERE header_id= ?";
+					var invoiceHeaderUpdateInfo={
+						claim_id:kiss.parseValue(claimId,'int'),
+						Company_id:kiss.parseValue(companyId,'int'),
+						Insurer_id:kiss.parseValue(insurerId,'int'),
+						DOCTOR_ID:kiss.parseValue(doctorId,'int'),
+						SITE_ID:kiss.parseValue(siteId,'int'),
+						DEPT_ID:kiss.parseValue(deptId,'int'),
+						SERVICE_ID:kiss.parseValue(serviceId,'int'),
+						STATUS: kiss.parseValue(status),
+						SOURCE_TYPE:kiss.parseValue(SOURCE_TYPE),
+						SOURCE_ID:kiss.parseValue(SOURCE_ID,'int'),
+						FEE_TYPE:kiss.parseValue(FEE_TYPE,'int') ,
+						FORMULA:'100:100:100'
+						// AMOUNT: totalAmount// tann comment
+					};
+					// kiss.exlog(invoiceHeaderUpdateInfo);
+					kiss.executeQuery(req,sql,[invoiceHeaderUpdateInfo,invoiceHeaderId],function(result){
+						if(result.affectedRows>0)
+						{
+							var sql="DELETE FROM `cln_invoice_lines` WHERE HEADER_ID=?";
+							kiss.executeQuery(req,sql,[invoiceHeaderId],function(result){
+								kiss.executeInsert(req,'cln_invoice_lines',insertLines,function(result){
+									if(status=='done')
+									{
+										invoiceUtil.getNewInvoiceNumber(req,function(newInvoiceNo){
+											var sql="UPDATE `cln_invoice_header` SET ? WHERE header_id= ?";
+											var invoiceDate=moment();
+											var invoiceHeaderUpdateDone={
+												INVOICE_NUMBER:newInvoiceNo,
+												INVOICE_DATE:invoiceDate.format("YYYY/MM/DD HH:mm:ss")
+											}
+											invoiceHeaderUpdateInfo.INVOICE_NUMBER=newInvoiceNo;
+											invoiceHeaderUpdateInfo.INVOICE_DATE=invoiceDate.toDate();//javascript date
+											kiss.executeQuery(req,sql,[invoiceHeaderUpdateDone,invoiceHeaderId],function(result){
+												var customerInfo={};
+												var listItemInfo=[];
+												var listInvoiceLine=[];
+												function getCustomerInfo()
+												{
+													console.log(">>>>>>>>>>>>>>>>>getCustomerInfo");
+													var customerInfo={};
+													var q = $q.defer();
+													if(kiss.checkData(invoiceHeaderUpdateInfo.claim_id))
+													{
+														kiss.exlog(fHeader,">>>>>>>>>>>>>>>>>","this is insurer");
+														//patient co insurer
+														var sql="SELECT insurer.* FROM `cln_insurers` insurer WHERE insurer.`id`=?";
+														kiss.executeQuery(req,sql,[invoiceHeaderUpdateInfo.Insurer_id],function(rows){
+															if(rows.length>0)
+															{
+																var insurer=rows[0];
+																customerInfo.pVsName=insurer.insurer_name;
+																customerInfo.pAddress=insurer.address;
+																customerInfo.pCusChar20=insurer.id;
+																customerInfo.pCusNumber1=insurer.id;
+																customerInfo.pVsSiteName=insurer.insurer_name;
+																customerInfo.pAddressLine1=insurer.address;
+																customerInfo.pCountry=insurer.country;
+																customerInfo.pPhone=insurer.phone;
+																q.resolve(customerInfo);
+															}
+															else
+															{
+																kiss.exlog(fHeader,'Khong ton tai thong tin insurer');
+																kiss.rollback(req,function(){
+																	res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN008')});
+																})
+																q.reject();
+															}
+															
+														},function(err){
+															kiss.exlog(fHeader,'Loi truy van lay thong tin insurer',err);
+															kiss.rollback(req,function(){
+																res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN007')});
+															})
+															q.reject();
+														})
+													}else if(kiss.checkData(invoiceHeaderUpdateInfo.Company_id))
+													{
+														kiss.exlog(fHeader,">>>>>>>>>>>>>>>>>","this is company");
+														var sql="SELECT company.* FROM `companies` company WHERE company.`id`=?";
+														kiss.executeQuery(req,sql,[invoiceHeaderUpdateInfo.Company_id],function(rows){
+															if(rows.length>0)
+															{
+																var company=rows[0];
+																customerInfo.pVsName=company.Company_name;
+																customerInfo.pAddress=company.Addr;
+																customerInfo.pCusChar20=company.id;
+																customerInfo.pCusNumber1=company.id;
+																customerInfo.pVsSiteName=company.Company_name;
+																customerInfo.pAddressLine1=company.Addr;
+																customerInfo.pCountry=null;
+																customerInfo.pPhone=company.Phone;
+																q.resolve(customerInfo);
+															}
+															else
+															{
+																kiss.exlog(fHeader,'Khong ton tai thong tin company');
+																kiss.rollback(req,function(){
+																	res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN010')});
+																})
+																q.reject();
+															}
+														},function(err){
+															kiss.exlog(fHeader,'Loi truy van lay thong tin company',err);
+															kiss.rollback(req,function(){
+																res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN009')});
+															})
+															q.reject();
+														});
+													}
+													else
+													{
+														kiss.exlog(fHeader,">>>>>>>>>>>>>>>>>","this is patient");
+														var sql="SELECT patient.* FROM `cln_patients` patient WHERE patient.`Patient_id`=?";
+														kiss.executeQuery(req,sql,[patientId],function(rows){
+															if(rows.length>0){
+																var patient=rows[0];
+																customerInfo.pVsName=patient.First_name+' '+patient.Sur_name;
+																customerInfo.pAddress=patient.Address1;
+																customerInfo.pCusChar20=patient.Patient_id;
+																customerInfo.pCusNumber1=patient.Patient_id;
+																customerInfo.pVsSiteName=patient.First_name+' '+patient.Sur_name;
+																customerInfo.pAddressLine1=patient.Address2;
+																customerInfo.pCountry=patient.Country;
+																customerInfo.pPhone=patient.Mobile;
+																q.resolve(customerInfo);
+															}
+															else
+															{
+																kiss.exlog(fHeader,'Thong tin patient khong ton tai');
+																kiss.rollback(req,function(){
+																	res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN012')});
+																})
+																q.reject();
+															}
+														},function(err){
+															kiss.exlog(fHeader,'Loi truy van lay thong tin patient',err);
+															kiss.rollback(req,function(){
+																res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN011')});
+															});
+															q.reject();
+														})
+													}
 
+													return q.promise;
+												}
+
+												function getListItemInfo()
+												{
+													
+													console.log(">>>>>>>>>>>>>>>>>getListItemInfo");
+													var q = $q.defer();
+													var listItemInfo=[];
+													var sql=
+														" SELECT item.*                                                  "+
+														" FROM `cln_invoice_lines` line                                  "+
+														" INNER JOIN `inv_items` item ON line.`ITEM_ID`=item.`ITEM_ID`   "+
+														" WHERE line.`HEADER_ID`=? AND line.`IS_ENABLE`=1;               ";
+													kiss.executeQuery(req,sql,[invoiceHeaderId],function(rows){
+														if(rows.length>0)
+														{
+															for(var i=0;i<rows.length;i++)
+															{
+																var row=rows[i];
+																var item={};
+																item.pOldItemNumber=row.ITEM_ID;
+																item.pOldItemNumber2=row.ITEM_CODE;
+																item.pPrimaryUom=row.UOM?row.UOM:'N/A';
+																item.pItemName1=row.ITEM_NAME.length<=2000?row.ITEM_NAME:row.ITEM_NAME.substring(0,1997)+"...";
+																listItemInfo.push(item);
+															}
+															//q.resolve({list:listItemInfo});
+															q.resolve(listItemInfo);
+														}
+														else
+														{
+															kiss.exlog(fHeader,'invoice chua co items');
+															kiss.rollback(req,function(){
+																res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN014')});
+															})
+															q.reject();
+														}
+													},function(err){
+														kiss.exlog(fHeader,'Loi truy van lay thong tin items',err);
+														kiss.rollback(req,function(){
+															res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN013')});
+														})
+														q.reject();
+													});
+													return q.promise;
+												}
+
+												function getListInvoiceLine()
+												{
+													console.log(">>>>>>>>>>>>>>>>>getListInvoiceLine");
+													var q = $q.defer();
+													var listInvoiceLine=[];
+													var sql=
+														" SELECT line.*,patient.`First_name`,patient.`Sur_name`,claim.`Claim_no`          "+              
+														" FROM `cln_invoice_lines` line                                                   "+
+														" INNER JOIN `cln_invoice_header` header ON line.`HEADER_ID`=header.`header_id`   "+
+														" INNER JOIN `cln_patients` patient ON patient.`Patient_id`=header.`Patient_id`   "+
+														" LEFT JOIN `cln_claims` claim ON header.`claim_id`=claim.`Claim_id`              "+
+														" WHERE line.`HEADER_ID`=? AND line.`IS_ENABLE`=1                                 ";
+													kiss.executeQuery(req,sql,[invoiceHeaderId],function(rows){
+														if(rows.length>0)
+														{
+															for(var i=0;i<rows.length;i++)
+															{
+																var row=rows[i];
+																var amount=kiss.checkData(row.AMOUNT)?row.AMOUNT:0;
+																var taxRate=kiss.checkData(row.TAX_RATE)?row.TAX_RATE:0;
+																var taxAmount=kiss.checkData(row.TAX_AMOUNT)?row.TAX_AMOUNT:0;
+																var item={
+																	headerId:invoiceHeaderId,
+																	lineId:row.line_id,
+																	invoiceNumber:invoiceHeaderUpdateInfo.INVOICE_NUMBER,
+																	invoiceDate:invoiceHeaderUpdateInfo.INVOICE_DATE,
+																	patientId:patientId,
+																	patientName:row.First_name+' '+row.Sur_name,
+																	companyId:companyId,
+																	insurerId:insurerId,
+																	claimNo:row.Claim_no,
+																	taxId:row.TAX_ID,
+																	taxRate:taxRate,
+																	itemId:row.ITEM_ID,
+																	price:row.PRICE,
+																	quantity:row.QUANTITY,
+																	amount:amount,
+																	taxAmount:taxAmount,
+																	totalAmount:amount+taxAmount,
+																	status:invoiceUtil.invoiceErpStatus.open
+																};
+																listInvoiceLine.push(item);
+															}
+															q.resolve(listInvoiceLine);
+														}
+														else
+														{
+															kiss.exlog(fHeader,'Invoice chua co line');
+															kiss.rollback(req,function(){
+																res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN016')});
+															})
+															q.reject();
+														}
+													},function(err){
+														kiss.exlog(fHeader,'Loi truy van lay thong tin invoice line',err);
+														kiss.rollback(req,function(){
+															res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN015')});
+														});
+														q.reject();
+													});
+													return q.promise;
+												}
+
+												getCustomerInfo()
+												.then(function(data){
+													customerInfo=data;
+													return getListItemInfo();
+												})
+												.then(function(data){
+													listItemInfo=data;
+													return getListInvoiceLine();
+												})
+												.then(function(data){
+													listInvoiceLine=data;
+													ERP_REST.addInvoiceCustomer(customerInfo)
+													.then(function(data){
+														kiss.exFileJSON(data.data,'addInvoiceCustomer.txt');
+														if(data.data==true)
+														{
+															kiss.exlog(fHeader,'Add customer to erp thanh cong');
+															return ERP_REST.addInvoiceItems(listItemInfo);
+														}
+														else
+														{
+															kiss.exlog(fHeader,'Loi insert customer den erp');
+															kiss.rollback(req,function(){
+																res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN017')});
+															});
+														}
+													})
+													.then(function(data){
+														kiss.exFileJSON(data.data,'addInvoiceItems.txt');
+														if(data.data==true)
+														{
+															kiss.exlog(fHeader,'Add items to erp thanh cong');
+															return ERP_REST.addInvoiceLines(listInvoiceLine);
+														}
+														else
+														{
+															kiss.exlog(fHeader,'Loi insert items den erp');
+															kiss.rollback(req,function(){
+																res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN018')});
+															});
+														}
+													})
+													.then(function(data){
+														kiss.exFileJSON(data.data,'addInvoiceLines.txt');
+														if(data.data==true)
+														{
+															kiss.exlog(fHeader,'Add lines to erp thanh cong');
+															kiss.commit(req,function(){
+																res.json({status:'success'});
+															},function(err){
+																kiss.exlog(fHeader,'Loi commit',err);
+																res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN020')});
+															})
+														}
+														else
+														{
+															kiss.exlog(fHeader,'Loi insert lines den erp');
+															kiss.rollback(req,function(){
+																res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN019')});
+															});
+														}
+													})
+												})
+
+												
+											},function(err){
+												kiss.exlog(fHeader,'Loi truy van cap nhat invoice number',err);
+												kiss.rollback(req,function(){
+													res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN006')});
+												});
+											});
+										},function(err){
+											kiss.exlog(fHeader,'Khong the tao invoice number',err);
+											kiss.rollback(req,function(){
+												res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN005')});
+											})
+										})
+									}
+									else
+									{
+										kiss.commit(req,function(){
+											res.json({status:'success'});
+										},function(err){
+											kiss.exlog(fHeader,'Loi commit',err);
+											res.json({status:'fail'});
+										})
+									}
+								},function(err){
+									kiss.exlog(fHeader,'Loi truy van insert invoice lines',err);
+									kiss.rollback(req,function(){
+										res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN023')});
 									});
+								});
+							},function(err){
+								kiss.exlog(fHeader,'Loi truy van xoa cac invoice line cua header',err);
+								kiss.rollback(req,function(){
+									res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN022')});
+								});
+							});
+							//tannv.dts 
+							//29-06-2015
+							//---------------------------------------------------------------------
+							//---------------------------------------------------------------------
+							//---------------------------------------------------------------------
+							/*invoiceUtil.getNewInvoiceNumber(req,function(newInvoiceNo){
+								db.mdtInvoiceHeader.update({INVOICE_NUMBER:newInvoiceNo},{header_id:header_id})
+								.then(function(result){
+									
 								},function(err){
 
-								})*/
+								});
+							},function(err){
 
-								if(status=='done')
-								{
-									invoiceUtil.getNewInvoiceNumber(req,function(newInvoiceNo){
-										var sql="UPDATE `cln_invoice_header` SET ? WHERE header_id= ?";
-										var invoiceDate=moment();
-										var invoiceHeaderUpdateDone={
-											INVOICE_NUMBER:newInvoiceNo,
-											INVOICE_DATE:invoiceDate.format("YYYY/MM/DD HH:mm:ss")
-										}
-										invoiceHeaderUpdateInfo.INVOICE_NUMBER=newInvoiceNo;
-										invoiceHeaderUpdateInfo.INVOICE_DATE=invoiceDate.toDate();//javascript date
-										kiss.executeQuery(req,sql,[invoiceHeaderUpdateDone,invoiceHeaderId],function(result){
-											var customerInfo={};
-											var listItemInfo=[];
-											var listInvoiceLine=[];
-											function getCustomerInfo()
-											{
-												console.log(">>>>>>>>>>>>>>>>>getCustomerInfo");
-												var customerInfo={};
-												var q = $q.defer();
-												if(kiss.checkData(invoiceHeaderUpdateInfo.claim_id))
-												{
-													kiss.exlog(fHeader,">>>>>>>>>>>>>>>>>","this is insurer");
-													//patient co insurer
-													var sql="SELECT insurer.* FROM `cln_insurers` insurer WHERE insurer.`id`=?";
-													kiss.executeQuery(req,sql,[invoiceHeaderUpdateInfo.Insurer_id],function(rows){
-														if(rows.length>0)
-														{
-															var insurer=rows[0];
-															customerInfo.pVsName=insurer.insurer_name;
-															customerInfo.pAddress=insurer.address;
-															customerInfo.pCusChar20=insurer.id;
-															customerInfo.pCusNumber1=insurer.id;
-															customerInfo.pVsSiteName=insurer.insurer_name;
-															customerInfo.pAddressLine1=insurer.address;
-															customerInfo.pCountry=insurer.country;
-															customerInfo.pPhone=insurer.phone;
-															q.resolve(customerInfo);
-														}
-														else
-														{
-															kiss.exlog(fHeader,'Khong ton tai thong tin insurer');
-															kiss.rollback(req,function(){
-																res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN008')});
-															})
-															q.reject();
-														}
-														
-													},function(err){
-														kiss.exlog(fHeader,'Loi truy van lay thong tin insurer',err);
-														kiss.rollback(req,function(){
-															res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN007')});
-														})
-														q.reject();
-													})
-												}else if(kiss.checkData(invoiceHeaderUpdateInfo.Company_id))
-												{
-													kiss.exlog(fHeader,">>>>>>>>>>>>>>>>>","this is company");
-													var sql="SELECT company.* FROM `companies` company WHERE company.`id`=?";
-													kiss.executeQuery(req,sql,[invoiceHeaderUpdateInfo.Company_id],function(rows){
-														if(rows.length>0)
-														{
-															var company=rows[0];
-															customerInfo.pVsName=company.Company_name;
-															customerInfo.pAddress=company.Addr;
-															customerInfo.pCusChar20=company.id;
-															customerInfo.pCusNumber1=company.id;
-															customerInfo.pVsSiteName=company.Company_name;
-															customerInfo.pAddressLine1=company.Addr;
-															customerInfo.pCountry=null;
-															customerInfo.pPhone=company.Phone;
-															q.resolve(customerInfo);
-														}
-														else
-														{
-															kiss.exlog(fHeader,'Khong ton tai thong tin company');
-															kiss.rollback(req,function(){
-																res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN010')});
-															})
-															q.reject();
-														}
-													},function(err){
-														kiss.exlog(fHeader,'Loi truy van lay thong tin company',err);
-														kiss.rollback(req,function(){
-															res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN009')});
-														})
-														q.reject();
-													});
-												}
-												else
-												{
-													kiss.exlog(fHeader,">>>>>>>>>>>>>>>>>","this is patient");
-													var sql="SELECT patient.* FROM `cln_patients` patient WHERE patient.`Patient_id`=?";
-													kiss.executeQuery(req,sql,[patientId],function(rows){
-														if(rows.length>0){
-															var patient=rows[0];
-															customerInfo.pVsName=patient.First_name+' '+patient.Sur_name;
-															customerInfo.pAddress=patient.Address1;
-															customerInfo.pCusChar20=patient.Patient_id;
-															customerInfo.pCusNumber1=patient.Patient_id;
-															customerInfo.pVsSiteName=patient.First_name+' '+patient.Sur_name;
-															customerInfo.pAddressLine1=patient.Address2;
-															customerInfo.pCountry=patient.Country;
-															customerInfo.pPhone=patient.Mobile;
-															q.resolve(customerInfo);
-														}
-														else
-														{
-															kiss.exlog(fHeader,'Thong tin patient khong ton tai');
-															kiss.rollback(req,function(){
-																res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN012')});
-															})
-															q.reject();
-														}
-													},function(err){
-														kiss.exlog(fHeader,'Loi truy van lay thong tin patient',err);
-														kiss.rollback(req,function(){
-															res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN011')});
-														});
-														q.reject();
-													})
-												}
+							})*/
 
-												return q.promise;
-											}
+							
 
-											function getListItemInfo()
-											{
-												
-												console.log(">>>>>>>>>>>>>>>>>getListItemInfo");
-												var q = $q.defer();
-												var listItemInfo=[];
-												var sql=
-													" SELECT item.*                                                  "+
-													" FROM `cln_invoice_lines` line                                  "+
-													" INNER JOIN `inv_items` item ON line.`ITEM_ID`=item.`ITEM_ID`   "+
-													" WHERE line.`HEADER_ID`=? AND line.`IS_ENABLE`=1;               ";
-												kiss.executeQuery(req,sql,[invoiceHeaderId],function(rows){
-													if(rows.length>0)
-													{
-														for(var i=0;i<rows.length;i++)
-														{
-															var row=rows[i];
-															var item={};
-															item.pOldItemNumber=row.ITEM_ID;
-															item.pOldItemNumber2=row.ITEM_CODE;
-															item.pPrimaryUom=row.UOM?row.UOM:'N/A';
-															item.pItemName1=row.ITEM_NAME.length<=2000?row.ITEM_NAME:row.ITEM_NAME.substring(0,1997)+"...";
-															listItemInfo.push(item);
-														}
-														//q.resolve({list:listItemInfo});
-														q.resolve(listItemInfo);
-													}
-													else
-													{
-														kiss.exlog(fHeader,'invoice chua co items');
-														kiss.rollback(req,function(){
-															res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN014')});
-														})
-														q.reject();
-													}
-												},function(err){
-													kiss.exlog(fHeader,'Loi truy van lay thong tin items',err);
-													kiss.rollback(req,function(){
-														res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN013')});
-													})
-													q.reject();
-												});
-												return q.promise;
-											}
-
-											function getListInvoiceLine()
-											{
-												console.log(">>>>>>>>>>>>>>>>>getListInvoiceLine");
-												var q = $q.defer();
-												var listInvoiceLine=[];
-												var sql=
-													" SELECT line.*,patient.`First_name`,patient.`Sur_name`,claim.`Claim_no`          "+              
-													" FROM `cln_invoice_lines` line                                                   "+
-													" INNER JOIN `cln_invoice_header` header ON line.`HEADER_ID`=header.`header_id`   "+
-													" INNER JOIN `cln_patients` patient ON patient.`Patient_id`=header.`Patient_id`   "+
-													" LEFT JOIN `cln_claims` claim ON header.`claim_id`=claim.`Claim_id`              "+
-													" WHERE line.`HEADER_ID`=? AND line.`IS_ENABLE`=1                                 ";
-												kiss.executeQuery(req,sql,[invoiceHeaderId],function(rows){
-													if(rows.length>0)
-													{
-														for(var i=0;i<rows.length;i++)
-														{
-															var row=rows[i];
-															var amount=kiss.checkData(row.AMOUNT)?row.AMOUNT:0;
-															var taxRate=kiss.checkData(row.TAX_RATE)?row.TAX_RATE:0;
-															var taxAmount=kiss.checkData(row.TAX_AMOUNT)?row.TAX_AMOUNT:0;
-															var item={
-																headerId:invoiceHeaderId,
-																lineId:row.line_id,
-																invoiceNumber:invoiceHeaderUpdateInfo.INVOICE_NUMBER,
-																invoiceDate:invoiceHeaderUpdateInfo.INVOICE_DATE,
-																patientId:patientId,
-																patientName:row.First_name+' '+row.Sur_name,
-																companyId:companyId,
-																insurerId:insurerId,
-																claimNo:row.Claim_no,
-																taxId:row.TAX_ID,
-																taxRate:taxRate,
-																itemId:row.ITEM_ID,
-																price:row.PRICE,
-																quantity:row.QUANTITY,
-																amount:amount,
-																taxAmount:taxAmount,
-																totalAmount:amount+taxAmount,
-																status:invoiceUtil.invoiceErpStatus.open
-															};
-															listInvoiceLine.push(item);
-														}
-														q.resolve(listInvoiceLine);
-													}
-													else
-													{
-														kiss.exlog(fHeader,'Invoice chua co line');
-														kiss.rollback(req,function(){
-															res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN016')});
-														})
-														q.reject();
-													}
-												},function(err){
-													kiss.exlog(fHeader,'Loi truy van lay thong tin invoice line',err);
-													kiss.rollback(req,function(){
-														res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN015')});
-													});
-													q.reject();
-												});
-												return q.promise;
-											}
-
-											getCustomerInfo()
-											.then(function(data){
-												customerInfo=data;
-												return getListItemInfo();
-											})
-											.then(function(data){
-												listItemInfo=data;
-												return getListInvoiceLine();
-											})
-											.then(function(data){
-												listInvoiceLine=data;
-												ERP_REST.addInvoiceCustomer(customerInfo)
-												.then(function(data){
-													kiss.exFileJSON(data.data,'addInvoiceCustomer.txt');
-													if(data.data==true)
-													{
-														kiss.exlog(fHeader,'Add customer to erp thanh cong');
-														return ERP_REST.addInvoiceItems(listItemInfo);
-													}
-													else
-													{
-														kiss.exlog(fHeader,'Loi insert customer den erp');
-														kiss.rollback(req,function(){
-															res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN017')});
-														});
-													}
-												})
-												.then(function(data){
-													kiss.exFileJSON(data.data,'addInvoiceItems.txt');
-													if(data.data==true)
-													{
-														kiss.exlog(fHeader,'Add items to erp thanh cong');
-														return ERP_REST.addInvoiceLines(listInvoiceLine);
-													}
-													else
-													{
-														kiss.exlog(fHeader,'Loi insert items den erp');
-														kiss.rollback(req,function(){
-															res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN018')});
-														});
-													}
-												})
-												.then(function(data){
-													kiss.exFileJSON(data.data,'addInvoiceLines.txt');
-													if(data.data==true)
-													{
-														kiss.exlog(fHeader,'Add lines to erp thanh cong');
-														kiss.commit(req,function(){
-															res.json({status:'success'});
-														},function(err){
-															kiss.exlog(fHeader,'Loi commit',err);
-															res.json({status:'fail'});
-														})
-													}
-													else
-													{
-														kiss.exlog(fHeader,'Loi insert lines den erp');
-														kiss.rollback(req,function(){
-															res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN019')});
-														});
-													}
-												})
-											})
-
-											
-										},function(err){
-											kiss.exlog(fHeader,'Loi truy van cap nhat invoice number',err);
-											kiss.rollback(req,function(){
-												res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN006')});
-											});
-										});
-									},function(err){
-										kiss.exlog(fHeader,'Khong the tao invoice number',err);
-										kiss.rollback(req,function(){
-											res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN005')});
-										})
-									})
-								}
-								else
-								{
-									kiss.commit(req,function(){
-										res.json({status:'success'});
-									},function(err){
-										kiss.exlog(fHeader,'Loi commit',err);
-										res.json({status:'fail'});
-									})
-								}
-
-							}
-							else
-							{
-								kiss.exlog(fHeader,'Khong co invoice header nao duoc cap nhat');
-								kiss.rollback(req,function(){
-									res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN004')});
-								})
-							}
-
-						},function(err){
-							kiss.exlog(fHeader,'Loi truy van cap nhat cln_invoice_header',err);
+						}
+						else
+						{
+							kiss.exlog(fHeader,'Khong co invoice header nao duoc cap nhat');
 							kiss.rollback(req,function(){
-								res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN003')});
-							});
-						},true)
-					}
-					else
-					{
-						kiss.exlog(fHeader,"Invoice chua co item");
-						res.json({status:'no-lines'});
-					}
+								res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN004')});
+							})
+						}
+
+					},function(err){
+						kiss.exlog(fHeader,'Loi truy van cap nhat cln_invoice_header',err);
+						kiss.rollback(req,function(){
+							res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN003')});
+						});
+					},true)
 				}
 				else
 				{
@@ -1372,7 +1431,13 @@ module.exports = {
 			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
 		});
 	},
-	postFeegrouptype:function(req,res){//Get Fee Group by FEE_GROUP_TYPE
+
+	/**
+	 * Manh create postFeegrouptype
+	 * Tan change name -> postGetFeeGroupByType
+	 * changed date: 07-09-2015
+	 */
+	postGetFeeGroupByType:function(req,res){//Get Fee Group by FEE_GROUP_TYPE
 		var postData = req.body.data;
 		var fHeader="v2_InvoiceController->postFeegrouptype";
 		var functionCode='FN009';
@@ -1395,6 +1460,7 @@ module.exports = {
 			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
 		});
 	},
+
 	postFeetype:function(req,res){//Get FEE TYPE By FEE_GROUP_ID
 		var postData = req.body.data;
 		var fHeader="v2_InvoiceController->postFeetype";
@@ -1643,8 +1709,8 @@ module.exports = {
 			"cln_insurers.insurer_name,cln_claims.Claim_no															"+
 			" FROM `cln_invoice_header`                                                  							"+
 			" INNER JOIN `cln_patients`  ON cln_invoice_header.`Patient_id`=cln_patients.`Patient_id` 				"+
-			" INNER JOIN `cln_fee_group` ON cln_invoice_header.`SOURCE_ID`=cln_fee_group.`FEE_GROUP_ID`				"+
-			" INNER JOIN `cln_fee_types` ON cln_invoice_header.`FEE_TYPE`=cln_fee_types.`FEE_TYPE_ID` 				"+
+			" left JOIN `cln_fee_group` ON cln_invoice_header.`SOURCE_ID`=cln_fee_group.`FEE_GROUP_ID`				"+
+			" left JOIN `cln_fee_types` ON cln_invoice_header.`FEE_TYPE`=cln_fee_types.`FEE_TYPE_ID` 				"+
 			" LEFT JOIN `cln_insurers`  ON cln_invoice_header.`Insurer_id`=cln_insurers.`id` 						"+
 			" LEFT JOIN `cln_claims`    ON cln_invoice_header.`claim_id`=cln_claims.`Claim_id` 	        			"+
 			" WHERE header_id =? 												            						";
@@ -1668,16 +1734,23 @@ module.exports = {
 			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
 		});
 	},
+
+	/**
+	 * created by: ducmanh
+	 * edited by: tannv.dts@gmail.com
+	 * edition date: 12-08-2015
+	 * Lay ra gia cua item tuong tuong voi item id, fee type va ngay
+	 */
 	postGetfeetypefillter:function(req,res){ //get Item  by FEE_TYPE_ID and ITEM_ID 
 		var postData = req.body.data;
 		console.log(postData);
 		var fHeader="v2_InvoiceController->postGetfeetypefillter";
 		var functionCode='FN014';
-		var postData=kiss.checkData(postData)?postData:'';
-		if(!kiss.checkListData(postData))
+		var postData=kiss.checkData(postData)?postData:{};
+		if(!kiss.checkListData(postData.ITEM_ID,postData.FEE_TYPE_ID,postData.CurrentDate))
 		{
 			kiss.exlog(fHeader,"Loi data truyen den",req.body);
-			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM002')});
+			res.json({status:'post-data-fail',error:errorCode.get(controllerCode,functionCode,'DM002')});
 			return;
 		}
 		var sql=
@@ -1692,7 +1765,14 @@ module.exports = {
 			"ORDER BY itemFee.`FEE_START_DATE` DESC                                                            "+
 			"LIMIT 1															                               ";
 		kiss.executeQuery(req,sql,[postData.ITEM_ID,postData.FEE_TYPE_ID,postData.CurrentDate],function(rows){
-			res.json({status:'success',data:rows});
+			if(rows.length>0)
+			{
+				res.json({status:'success',data:rows[0]});
+			}
+			else
+			{
+				res.json({status:'not-found'});
+			}
 		},function(err){
 			kiss.exlog(fHeader,'Loi truy van lay thong tin thong qua',err);
 			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
@@ -1718,10 +1798,17 @@ module.exports = {
 			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
 		});
 	},
-	postGetinsurerbyid:function(req,res){
+
+	/**
+	 * Manh create postGetinsurerbyid
+	 * Tan change name-> postGetFeeGroupByInsurer
+	 * 
+	 * 
+	 */
+	postGetFeeGroupByInsurer:function(req,res){
 		var postData = req.body.data;
 		var fHeader="v2_InvoiceController->postGetinsurerbyid";
-		var functionCode='FN003';
+		var functionCode='FN017';
 		var postData=kiss.checkData(postData)?postData:'';
 		if(!kiss.checkListData(postData))
 		{
@@ -1730,7 +1817,11 @@ module.exports = {
 			return;
 		}
 		var sql=
-			"SELECT cln_insurers.*,cln_fee_group.FEE_GROUP_NAME FROM cln_insurers LEFT JOIN `cln_fee_group`  ON cln_insurers.`FEE_GROUP_ID`=cln_fee_group.`FEE_GROUP_ID` WHERE `id` = ?";
+			" SELECT insurer.*, feeGroup.`FEE_GROUP_NAME`          "+
+			" FROM `cln_insurers` insurer                          "+
+			" INNER JOIN `cln_fee_group` feeGroup                  "+
+			" ON insurer.`FEE_GROUP_ID`=feeGroup.`FEE_GROUP_ID`    "+
+			" WHERE `insurer`.`isenable`=1 AND insurer.`id`=?      ";
 		kiss.executeQuery(req,sql,[postData.id],function(rows){
 			res.json({status:'success',data:rows});
 		},function(err){
@@ -1738,11 +1829,12 @@ module.exports = {
 			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
 		});
 	},
+
 	postGetitemfillterfeeid:function(req,res){ //get Item  by FEE_TYPE_ID and ITEM_ID 
 		var postData = req.body.data;
 		console.log(postData);
 		var fHeader="v2_InvoiceController->postGetitemfillterfeeid";
-		var functionCode='FN003';
+		var functionCode='FN018';
 		var postData=kiss.checkData(postData)?postData:'';
 		if(!kiss.checkListData(postData))
 		{
@@ -1752,20 +1844,81 @@ module.exports = {
 		}
 		console.log(postData);
 		var sql=
-			"SELECT itemFee.`ITEM_FEE_ID`,itemFee.`FEE`,`itemFee`.`PERCENT`, 								   "+
-			"`item`.`ITEM_CODE`,`item`.`ITEM_ID`,`item`.`TAX_ID`,`sys_taxes`.`TAX_CODE`,`sys_taxes`.`TAX_RATE`,"+
-			"item.`ITEM_NAME`,itemFee.`FEE_START_DATE`,itemFee.`FEE_TYPE_ID`   								   "+
-			"FROM `cln_item_fees` itemFee                                       							   "+
-			"INNER JOIN `inv_items` item ON itemFee.`CLN_ITEM_ID`=item.`ITEM_ID`							   "+
-			"LEFT JOIN `sys_taxes`  ON item.`TAX_CODE`=sys_taxes.`TAX_CODE`     							   "+
-			"WHERE `itemFee`.`FEE_TYPE_ID`=?                                              					   "+
-			"AND itemFee.`FEE_START_DATE`<=?                                                                   "+
-			"ORDER BY itemFee.`FEE_START_DATE` DESC                                                            ";
+			" SELECT clnItemFee.`ITEM_FEE_ID`,clnItemFee.`FEE`,clnItemFee.`PERCENT`,clnItemFee.`FEE_START_DATE`,           "+
+			" item.`ITEM_ID`,item.`ITEM_CODE`,item.`TAX_ID`,item.`TAX_CODE`,item.`TAX_RATE`,                               "+
+			" item.`ITEM_NAME`                                                                                             "+
+			" FROM                                                                                                         "+
+			" (                                                                                                            "+
+			" 	SELECT itemFee.`FEE_TYPE_ID`, itemFee.`CLN_ITEM_ID`, MAX(itemFee.`FEE_START_DATE`) AS FEE_START_DATE       "+
+			" 	FROM `cln_item_fees` itemFee                                                                               "+
+			" 	WHERE itemFee.`FEE_TYPE_ID`=?                                                                             "+
+			" 	AND itemFee.`FEE_START_DATE`<=?                                                             "+
+			" 	GROUP BY itemFee.`FEE_TYPE_ID`, itemFee.`CLN_ITEM_ID`                                                      "+
+			" ) temp                                                                                                       "+
+			" INNER JOIN `cln_item_fees` clnItemFee                                                                        "+
+			" ON (temp.FEE_TYPE_ID=`clnItemFee`.`FEE_TYPE_ID`                                                              "+
+			" 	AND temp.CLN_ITEM_ID=`clnItemFee`.`CLN_ITEM_ID`                                                            "+
+			" 	AND temp.FEE_START_DATE=clnItemFee.`FEE_START_DATE`)                                                       "+
+			" INNER JOIN `inv_items` item ON clnItemFee.`CLN_ITEM_ID`=item.`ITEM_ID`                                       "+
+			" LEFT JOIN `sys_taxes` tax ON item.`TAX_ID`=tax.`TAX_ID`                                                      ";
 		kiss.executeQuery(req,sql,[postData.FEE_TYPE_ID,postData.CurrentDate],function(rows){
 			res.json({status:'success',data:rows});
 		},function(err){
 			kiss.exlog(fHeader,'Loi truy van lay thong tin thong qua',err);
 			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
 		});
+	},
+
+	/**
+	 * tannv.dts@gmail.com
+	 * 07-08-2015
+	 * lay fee cua list item id
+	 */
+	postGetCurrentFeeOfItems:function(req,res){
+		var fHeader="v2_InvoiceController->postGetCurrentFeeOfItems";
+		var functionCode="FN019";
+		var postData=kiss.checkData(req.body.postData)?req.body.postData:{};
+		var listItem=kiss.checkData(postData.listItem)?postData.listItem:null;
+		var feeTypeId=kiss.checkData(postData.feeTypeId)?postData.feeTypeId:[];
+		var currentTime=kiss.getCurrentTimeStr();
+		if(!kiss.checkListData(listItem,feeTypeId))
+		{
+			kiss.exlog(fHeader,'Loi data truyen den',postData);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
+			return;
+		}
+		if(listItem.length<1)
+		{
+			kiss.exlog(fHeader,'Loi danh sach item rong',postData);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN002')});
+			return;
+		}
+
+		var sql=
+			" SELECT clnItemFee.`ITEM_FEE_ID`,clnItemFee.`FEE`,clnItemFee.`PERCENT`,clnItemFee.`FEE_START_DATE`,          "+
+			" item.`ITEM_ID`,item.`ITEM_CODE`,item.`TAX_ID`,item.`TAX_CODE`,item.`TAX_RATE`,                              "+
+			" item.`ITEM_NAME`                                                                                            "+
+			" FROM                                                                                                        "+
+			" (                                                                                                           "+
+			" 	SELECT itemFee.`FEE_TYPE_ID`, itemFee.`CLN_ITEM_ID`, MAX(itemFee.`FEE_START_DATE`) AS FEE_START_DATE      "+
+			" 	FROM `cln_item_fees` itemFee                                                                              "+
+			" 	WHERE itemFee.`FEE_TYPE_ID`=?                                                                             "+
+			" 	AND itemFee.`FEE_START_DATE`<=?                                                                           "+
+			" 	AND itemFee.`CLN_ITEM_ID` IN (?)                                                                            "+
+			" 	GROUP BY itemFee.`FEE_TYPE_ID`, itemFee.`CLN_ITEM_ID`                                                     "+
+			" ) temp                                                                                                      "+
+			" INNER JOIN `cln_item_fees` clnItemFee                                                                       "+
+			" ON (temp.FEE_TYPE_ID=`clnItemFee`.`FEE_TYPE_ID`                                                             "+
+			" 	AND temp.CLN_ITEM_ID=`clnItemFee`.`CLN_ITEM_ID`                                                           "+
+			" 	AND temp.FEE_START_DATE=clnItemFee.`FEE_START_DATE`)                                                      "+
+			" INNER JOIN `inv_items` item ON clnItemFee.`CLN_ITEM_ID`=item.`ITEM_ID`                                      "+
+			" LEFT JOIN `sys_taxes` tax ON item.`TAX_ID`=tax.`TAX_ID`                                                     ";
+
+		kiss.executeQuery(req,sql,[feeTypeId,currentTime,listItem],function(rows){
+			res.json({status:'success',data:rows});
+		},function(err){
+			kiss.exlog(fHeader,'Loi truy van lay thong tin thong qua',err);
+			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN003')});
+		},true);
 	},
 }
