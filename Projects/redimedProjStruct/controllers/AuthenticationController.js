@@ -21,7 +21,11 @@ module.exports = {
                 if(user)
                 {
                     bcrypt.compare(password.toString(), user.password, function (err, compareResult) {
-                        if (compareResult == true) {
+                        if (compareResult) 
+                        {
+                            if(user.socket != null)
+                                return done(null, {status:'error',check:true,message: 'Your Account Already Login! Please Click Login Again!'});
+
                             db.User.update({
                                 token: secureToken
                             },{id: user.id})
@@ -82,16 +86,13 @@ module.exports = {
                                 }
                             })
                             .error(function(err){console.log(err)})
-                            
                         }
                         else 
-                            return done(null, false, {status: 'fail', msg: 'Wrong Username Or Password!'});
+                            return done(null, {status:'error',check:false,message: 'Wrong Username Or Password!'});
                     });
                 }
                 else
-                {
-                    return done(null, false, {status: 'fail', msg: 'Wrong Username Or Password!'});
-                }
+                    return done(null, {status:'error',check:false,message: 'Wrong Username Or Password!'});
             });
 
         }
@@ -148,16 +149,5 @@ module.exports = {
         else
             next();
     }
-    // ,
-    // loggedIn: function(req,res){
-    //     var username = req.body.username;
-    //     db.User.find({where:{user_name: username}},{raw:true})
-    //         .success(function(user){
-    //             req.isAuthenticated() ? res.json(user) : res.json(null);
-    //         })
-    //         .error(function(err){
-    //             console.log(err);
-    //         })
-    // }
 
 };

@@ -7,7 +7,6 @@ gulp.task('common', function(){
 					'./client/vendor/jquery-ui/ui/jquery-ui.js', 
 					'./client/lib/jquery.ui.touch-punch.js', 
 					'./client/theme/assets/global/plugins/bootstrap/js/bootstrap.min.js',
-					'./client/lib/apiRTC-latest.min.js',
 					'./client/lib/wysiwyg.js/src/wysiwyg.js',
 					'./client/lib/wysiwyg.js/src/wysiwyg-editor.js',
 					'./client/vendor/angular/angular.js',

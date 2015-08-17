@@ -1,17 +1,21 @@
-var _ = require('lodash-node');
-var db = require('./models');
-var parser = require('socket.io-cookie');
+// **Socket.js:**
+// **Description: Contains all handlers for socket.io, include emit and listener handlers.
 
-var apiKey = "45279332";
-var apiSecret = "8d7639ab2088de84784beab28b3167f78a08c674";
+var _ = require('lodash-node'); //**lodash-node: Lodash module bundles for Node.js
+var db = require('./models'); //**Include models folder into this.
+var parser = require('socket.io-cookie'); //**socket.io-cookie: Cookie parser middleware for socket.io
 
-var OpenTok = require('opentok'),
-    opentok = new OpenTok(apiKey, apiSecret);
+var apiKey = "45279332"; //**API Key use for OpenTok API (WebRTC)
+var apiSecret = "8d7639ab2088de84784beab28b3167f78a08c674"; //**API Secret Key use for OpenTok API (WebRTC)
 
-var gcm = require('node-gcm');
-var apns = require('apn');
-var sender = new gcm.Sender('AIzaSyDsSoqkX45rZt7woK_wLS-E34cOc0nat9Y');
+var OpenTok = require('opentok'), //**opentok: This is a WebRTC platform for embedding live video call into application.
+    opentok = new OpenTok(apiKey, apiSecret); //**Create new OpenTok instance with API Key & API Secret
 
+var gcm = require('node-gcm'); //**node-gcm: A Node.JS wrapper library-port for Google Cloud Messaging for Android
+var apns = require('apn'); //**apn: An interface to the Apple Push Notification service for Node.js
+var sender = new gcm.Sender('AIzaSyDsSoqkX45rZt7woK_wLS-E34cOc0nat9Y'); //**Create new instance of GCM with API Key
+
+//**APN configure options
 var options = {
         cert: 'key/APN/PushCert.pem',                                                    
         key:  'key/APN/PushKey.pem',                                                     
@@ -23,14 +27,14 @@ var options = {
         autoAdjustCache: true,                         
     }
 
-var apnsConnection = new apns.Connection(options);
+var apnsConnection = new apns.Connection(options); //**Create new instance of APN with above options
 
+//** Start APN events handlers
 function log(type) {
     return function() {
         console.log(type, arguments);
     }
 }
-
 apnsConnection.on('error', log('error'));
 apnsConnection.on('transmitted', log('transmitted'));
 apnsConnection.on('timeout', log('timeout'));
@@ -40,13 +44,21 @@ apnsConnection.on('socketError', log('socketError'));
 apnsConnection.on('transmissionError', log('transmissionError'));
 apnsConnection.on('cacheTooSmall', log('cacheTooSmall')); 
 apnsConnection.on('completed',log('completed'));
+//** End APN events handlers
+
+// **==========Start Socket.io events handlers===========
+// **params: {
+//     io: socket.io instance,
+//     cookie: cookie instance,
+//     cookieParser: cookie-parser instance
+// }**
 
 module.exports = function(io,cookie,cookieParser) {
-    var userList = [];
-    var driverArr = [];
+    var userList = []; //**Array contains all online users
+    var driverArr = []; //**Array contains all drivers
 
-    io.use(parser);
-
+    io.use(parser); //**Middleware for socket.io
+    
     db.User.update({socket: null,token: null})
         .success(function(){
             console.log("=====Server Restart=====");
@@ -55,22 +67,49 @@ module.exports = function(io,cookie,cookieParser) {
     io.on('connection', function (socket) {
         socket.removeAllListeners();
 
+        // **Function: getOnlineUser()
+        // **Params: null
+        // **Description: Get list of all online users and send to client
+        function getOnlineUser(){
+            userList = [];
+            db.User.belongsTo(db.UserType,{foreignKey:'user_type'});
+            db.User.findAll({where: "socket IS NOT NULL",include:[db.UserType]},{raw:true})
+                .success(function(data){
+                    for (var i = 0; i < data.length; i++) {
+                        userList.push({
+                            id: data[i].id,
+                            username: data[i].user_name,
+                            socket: data[i].socket,
+                            img: data[i].img,
+                            fullName: data[i].Booking_Person,
+                            userType: data[i].UserType.user_type
+                        });
+                    }
+                    io.sockets.emit('online', userList);
+                    io.sockets.emit('driverLocation',driverArr);
+                })
+                .error(function(err){
+                    console.log(err);
+                })
+        };
+
+        function updateUser(options,conditions){
+            db.User.update(options,typeof conditions != 'undefined' ? conditions : null)
+                .success(function(){
+                    getOnlineUser();
+                })
+                .error(function(err){
+                    console.log(err);
+                })
+        };
+
         socket.on('reconnected',function(id){
             db.User.find({where:{id: id}},{raw:true})
                 .success(function(user){
                     if(user)
                     {
                         socket.join(user.user_name.toLowerCase()+'--'+user.id);
-                        db.User.update({
-                            socket: socket.id
-                        },{id:id})
-                            .success(function(){
-                                getOnlineUser();
-                            })
-                            .error(function(err){
-                                console.log(err);
-                            })
-                        
+                        updateUser({socket: socket.id},{id:id})
                     }
                 })
         })
@@ -90,25 +129,9 @@ module.exports = function(io,cookie,cookieParser) {
 	   		}
 
             if(arrUser.length > 0)
-            {
-                db.sequelize.query("UPDATE users SET socket = null WHERE id NOT IN (?)",null,{raw:true},[arrUser])
-                    .success(function(){
-                        getOnlineUser();
-                    })
-                    .error(function(err){
-                        console.log(err);
-                    })
-            }
+                updateUser({socket: null},["id NOT IN (?)",arrUser]);
             else
-            {
-                db.User.update({socket: null})
-                    .success(function(){
-                        getOnlineUser();
-                    })
-                    .error(function(err){
-                        console.log(err);
-                    })
-            }
+                updateUser({socket: null});
         })
 
         socket.on('notifyPatient',function(apptId){
@@ -292,16 +315,7 @@ module.exports = function(io,cookie,cookieParser) {
                         if(user.socket != null)
                         {
                             socket.to(user.user_name.toLowerCase()+'--'+user.id).emit('forceLogout');
-                            db.User.update({
-                                socket: null,
-                                token: null
-                            },{id: user.id})
-                                .success(function(){
-                                    getOnlineUser();
-                                })
-                                .error(function(err){
-                                    console.log(err);
-                                })
+                            updateUser({socket:null,token:null},{id:user.id});
                         }
                     }
                 })
@@ -310,43 +324,16 @@ module.exports = function(io,cookie,cookieParser) {
                 })
         })
 
-        socket.on('checkLogin',function(username){
-            db.User.find({where:{user_name:username}},{raw:true})
-                .success(function(user){
-                    if(user)
-                    {
-                        if(user.socket == null)
-                            socket.emit('isSuccess');
-                        else
-                            socket.emit('isError');                        
-                    }
-                })
-                .error(function(err){
-                    console.log(err);
-                })
-        });
-
-        socket.on('updateSocketLogin',function(username){
-            db.User.find({where:{user_name: username}},{raw:true})
+        socket.on('updateSocketLogin',function(id){
+            db.User.find({where:{id: id}},{raw:true})
                 .success(function(user){
                     if(user)
                     {
                         socket.join(user.user_name.toLowerCase()+'--'+user.id);
-                        db.User.update({
-                            socket: socket.id
-                        },{user_name: username})
-                            .success(function(){
-                                getOnlineUser();
-                                socket.emit('login_success')
-                            })
-                            .error(function(err){
-                                console.log(err);
-                            })
+                        updateUser({socket: socket.id},{id: user.id});
                     }
                 })
-
         })
-
 
         socket.on('logout', function (username,id,userType,info) {
             db.User.update({
@@ -410,7 +397,6 @@ module.exports = function(io,cookie,cookieParser) {
                 })
         });
         
-        
         socket.on('location',function(data){
             if(data[0].userType.toLowerCase() == 'driver')
             {
@@ -459,30 +445,10 @@ module.exports = function(io,cookie,cookieParser) {
 
         })
 
-        function getOnlineUser(){
-            userList = [];
-            db.User.belongsTo(db.UserType,{foreignKey:'user_type'});
-            db.User.findAll({where: "socket IS NOT NULL",include:[db.UserType]},{raw:true})
-                .success(function(data){
-                    for (var i = 0; i < data.length; i++) {
-                        userList.push({
-                            id: data[i].id,
-                            username: data[i].user_name,
-                            socket: data[i].socket,
-                            img: data[i].img,
-                            fullName: data[i].Booking_Person,
-                            userType: data[i].UserType.user_type
-                        });
-                    }
-                    io.sockets.emit('online', userList);
-                    io.sockets.emit('driverLocation',driverArr);
-                })
-                .error(function(err){
-                    console.log(err);
-                })
-        };
+        
     });
 };
+// **==========End Socket.io events handlers==============
 
 
 

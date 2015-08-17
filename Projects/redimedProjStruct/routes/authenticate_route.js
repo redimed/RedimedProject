@@ -28,11 +28,6 @@ app.post('/api/users/login', passport.authenticate('local'),function(req, res) {
     }
 );
 
-app.all('/api/users/logout', function(req, res) {
-    req.logout();
-    res.redirect('/');
-});
-
 app.post('/api/users/register',AuthenticationController.register);
 
 app.get('/api/users/loggedin', function(req, res) {
