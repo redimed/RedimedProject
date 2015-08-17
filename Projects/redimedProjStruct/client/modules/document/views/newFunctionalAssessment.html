@@ -163,6 +163,7 @@
 							<img ng-src="{{line.previewPath}}" height="100px" />
 						</div>
 					</div>
+
 					<!-- this is end line image -->
 					<div ng-repeat="detail in line.details">
 						<ng-form name="detailForm">
@@ -553,7 +554,120 @@
 								<input type="radio" ng-model="line.RATING_VALUE2" value="2" ng-change="autoLineSummary(line)"> ABLE 
 							</label>
 						</div>
-						<!-- End Unable?Partial/Able Rating -->
+						<!-- End Unable/Partial/Able Rating -->
+						<!-- Postural Assessment  -->
+						<div ng-if="line.SCORE_TYPE1 === 32">
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<label class="control-label"><b>OBSERVATIONS (Posterior view) </b></label>
+							</div>
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<label class="col-md-3 col-sm-3 col-xs-3">
+									<input type="radio" ng-model="line.posterior_head" value="0" > Head erect 
+								</label>
+								<label class="col-md-3 col-sm-3 col-xs-3">
+									<input type="radio" ng-model="line.posterior_head" value="1" > Head twisted slightly    
+								</label>
+								<label class="col-md-3 col-sm-3 col-xs-3">
+									<input type="radio" ng-model="line.posterior_head" value="2" > Head twisted markedly  
+								</label>
+							</div>
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<label class="col-md-3 col-sm-3 col-xs-3">
+									<input type="radio" ng-model="line.posterior_shoulders" value="0" > Shoulders level
+								</label>
+								<label class="col-md-3 col-sm-3 col-xs-3">
+									<input type="radio" ng-model="line.posterior_shoulders" value="1" > One slightly elevated 
+								</label>
+								<label class="col-md-3 col-sm-3 col-xs-3">
+									<input type="radio" ng-model="line.posterior_shoulders" value="2" > One markedly elevated 
+								</label>
+							</div>
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<label class="col-md-3 col-sm-3 col-xs-3">
+									<input type="radio" ng-model="line.posterior_spine" value="0" > Spine straight          
+								</label>
+								<label class="col-md-3 col-sm-3 col-xs-3">
+									<input type="radio" ng-model="line.posterior_spine" value="1" > Spine slightly curved
+								</label>
+								<label class="col-md-3 col-sm-3 col-xs-3">
+									<input type="radio" ng-model="line.posterior_spine" value="2" > Spine markedly curved
+								</label>
+							</div>
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<label class="col-md-3 col-sm-3 col-xs-3">
+									<input type="radio" ng-model="line.posterior_hips" value="0" > Hips level
+								</label>
+								<label class="col-md-3 col-sm-3 col-xs-3">
+									<input type="radio" ng-model="line.posterior_hips" value="1" > One side slightly higher
+								</label>
+								<label class="col-md-3 col-sm-3 col-xs-3">
+									<input type="radio" ng-model="line.posterior_hips" value="2" > One side markedly higher
+								</label>
+							</div>
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<label class="col-md-3 col-sm-3 col-xs-3">
+									<input type="radio" ng-model="line.posterior_scapulae" value="0" > Scapulae normal
+								</label>
+								<label class="col-md-3 col-sm-3 col-xs-3">
+									<input type="radio" ng-model="line.posterior_scapulae" value="1" > Scapulae protracted
+								</label>
+								<label class="col-md-3 col-sm-3 col-xs-3">
+									<input type="radio" ng-model="line.posterior_scapulae" value="2" > Scapulae retracted
+								</label>
+								<label class="col-md-3 col-sm-3 col-xs-3">
+									<input type="radio" ng-model="line.posterior_scapulae" value="3" > Scapulae elevated
+								</label>
+							</div>
+
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<label class="control-label"><b>OBSERVATIONS (Lateral view) </b></label>
+							</div>
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<label class="col-md-3 col-sm-3 col-xs-3">
+									<input type="radio" ng-model="line.lateral_neck" value="0" > Neck straight, chin in
+								</label>
+								<label class="col-md-3 col-sm-3 col-xs-3">
+									<input type="radio" ng-model="line.lateral_neck" value="1" > Neck slightly forward, chin slightly out
+								</label>
+								<label class="col-md-3 col-sm-3 col-xs-3">
+									<input type="radio" ng-model="line.lateral_neck" value="2" > Neck markedly forward chin markedly out
+								</label>
+							</div>
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<label class="col-md-3 col-sm-3 col-xs-3">
+									<input type="radio" ng-model="line.lateral_shoulders" value="0" > Shoulders centered
+								</label>
+								<label class="col-md-3 col-sm-3 col-xs-3">
+									<input type="radio" ng-model="line.lateral_shoulders" value="1" > Shoulders slightly forward 
+								</label>
+								<label class="col-md-3 col-sm-3 col-xs-3">
+									<input type="radio" ng-model="line.lateral_shoulders" value="2" > Shoulders markedly forward 
+								</label>
+							</div>
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<label class="col-md-3 col-sm-3 col-xs-3">
+									<input type="radio" ng-model="line.lateral_upper_back" value="0" > Upper back normally rounded         
+								</label>
+								<label class="col-md-3 col-sm-3 col-xs-3">
+									<input type="radio" ng-model="line.lateral_upper_back" value="1" > Upper back slightly rounded
+								</label>
+								<label class="col-md-3 col-sm-3 col-xs-3">
+									<input type="radio" ng-model="line.lateral_upper_back" value="2" > Upper back markedly rounded
+								</label>
+							</div>
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<label class="col-md-3 col-sm-3 col-xs-3">
+									<input type="radio" ng-model="line.lateral_lower_back" value="0" > Lower back normally curved
+								</label>
+								<label class="col-md-3 col-sm-3 col-xs-3">
+									<input type="radio" ng-model="line.lateral_lower_back" value="1" > Lower back slightly hollow
+								</label>
+								<label class="col-md-3 col-sm-3 col-xs-3">
+									<input type="radio" ng-model="line.lateral_lower_back" value="2" > Lower back markedly hollow
+								</label>
+							</div>
+						</div>	
+						<!-- End Postural Assessment  -->
 					</div>
 
 					<!-- Heart Rate Rating -->

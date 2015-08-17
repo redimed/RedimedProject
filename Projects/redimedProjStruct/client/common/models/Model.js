@@ -827,7 +827,16 @@ angular.module("app.model", [])
 	VAL1_VALUE_HEADER: '',
 	VAL2_NAME_HEADER: '',
 	VAL2_VALUE_HEADER: '',
-	IS_SHOW_RANKING_TABLE: null
+	IS_SHOW_RANKING_TABLE: null,
+	posterior_head: null,
+	posterior_shoulders: null,
+	posterior_spine: null,
+	posterior_hips: null,
+	posterior_scapulae: null,
+	lateral_neck: null,
+	lateral_shoulders: null,
+	lateral_upper_back: null,
+	lateral_lower_back: null,
 })
 // END FA LINE
 
