@@ -17,7 +17,6 @@ angular.module("app.loggedIn.patient.detail.master.controller", [])
         		toastr.error("Only jpg, jpeg and png accepted","Invalid format!");
         		this.queue = [];
         	}
-        	
         },
         onCompleteItem: function(item, response, status, headers){
         	if(response.status==="success" && response.isEditMode===true){

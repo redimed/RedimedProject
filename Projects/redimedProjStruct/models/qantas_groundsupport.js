@@ -1,6 +1,7 @@
 module.exports = function(sequelize,DataTypes){
     var qantas_groundsupport = sequelize.define('qantas_groundsupport',{
-        PATIENT_ID:{type:DataTypes.INTEGER(11), primaryKey:true},
+        ID:{type:DataTypes.INTEGER(11), primaryKey:true},
+        PATIENT_ID:DataTypes.INTEGER(11),
         CAL_ID:DataTypes.INTEGER(11),
         check1:DataTypes.STRING(2),
         check2:DataTypes.STRING(2),
@@ -132,7 +133,10 @@ module.exports = function(sequelize,DataTypes){
         group4_comment4:DataTypes.STRING(100),
         group4_comment5:DataTypes.STRING(100),
         dateChose:DataTypes.DATE,
-        PATIENT_SIGN:DataTypes.STRING(100)
+        PATIENT_SIGN:DataTypes.STRING(100),
+        PATIENT_SIGN1:DataTypes.TEXT,
+        assessor:DataTypes.STRING(100),
+        age2:DataTypes.STRING(100)
     },{
         tableName: 'qantas_groundsupport', // đặt tên bảng
         createdAt: 'Creation_date',

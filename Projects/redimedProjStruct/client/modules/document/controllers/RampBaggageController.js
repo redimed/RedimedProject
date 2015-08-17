@@ -17,6 +17,10 @@ angular.module('app.loggedIn.document.QANTASrampbaggage.controllers',[])
           {id:3, name:'Average'},
           {id:4, name:'Poor'}
         ];
+        $scope.isSignatureShow  = [
+            {id:0,isShow:false},
+            {id:1,isShow:false}
+        ];
         function getAge(dateString) {
             var now = new Date();
             var birthDate = new Date(dateString);
@@ -28,12 +32,16 @@ angular.module('app.loggedIn.document.QANTASrampbaggage.controllers',[])
             return age;
         }
         $scope.mathBPM = function(value){
+          if($scope.info.group3_sec2_value2==null || $scope.info.group3_sec2_value2==''){
+            $scope.info.check25 = null;
+            $scope.info.group3_sec2_value2=null;
+          }
           if(isNaN(value)==false){
             if(value==null||value.length==0||value<0){
-              $scope.info.group3_sec2_rate ="";
+              $scope.info.group3_sec2_rate =null;
             }
             else{
-              if(value<71&&value>=0){
+              if(value<71&&value>0){
                 $scope.info.group3_sec2_rate ="Excellent";
               }
               else if(value>=71&&value<=102){
@@ -52,20 +60,24 @@ angular.module('app.loggedIn.document.QANTASrampbaggage.controllers',[])
           }
         }
 
-        $scope.showSignature = function(){
-          $scope.isSignatureShow = true;
+        $scope.showSignature = function(value){
+            $scope.isSignatureShow[value].isShow = true;
+        }
+        $scope.okClick = function (value) {
+            $scope.isSignatureShow[value].isShow = false;
         }
 
-        $scope.okClick = function () {
-          $scope.isSignatureShow = false;
+        $scope.cancelClick = function (value) {
+            $scope.isSignatureShow[value].isShow = false;
         }
 
-        $scope.cancelClick = function () {
-            $scope.isSignatureShow = false;
-        }
-
-        $scope.clearClick = function () {
-            $scope.info.PATIENT_SIGN = '';
+        $scope.clearClick = function (value) {
+            if(value == 0){
+               $scope.info.PATIENT_SIGN  = '';
+            }
+            else if(value == 1){
+                $scope.info.PATIENT_SIGN1 = '';
+            }
         }
 
         $scope.infoChanged = function() {
@@ -119,7 +131,7 @@ angular.module('app.loggedIn.document.QANTASrampbaggage.controllers',[])
           },
           function(isConfirm) {
             if (isConfirm) {
-              DocumentService.deleteQANTAS_RampBaggage(Patient_ID,CalID).then(function(response){
+              DocumentService.deleteQANTAS_RampBaggage(Patient_ID).then(function(response){
                 if(response.status==="success"){
                   swal("Deleted!", "Delete Successfully.", "success");
                   $state.go('loggedIn.listall', null, {
@@ -141,7 +153,7 @@ angular.module('app.loggedIn.document.QANTASrampbaggage.controllers',[])
         }
 
         $scope.insert = false;
-        DocumentService.checkQANTAS_RampBaggage(Patient_ID,CalID).then(function(response){
+        DocumentService.checkQANTAS_RampBaggage(Patient_ID).then(function(response){
             if(response.status==="insert"){
               $scope.insert = true;
               $scope.isNew = true;
@@ -208,7 +220,7 @@ angular.module('app.loggedIn.document.QANTASrampbaggage.controllers',[])
                 group3_sec2_comment4:null,
                 group3_sec2_comment5:null,
                 group3_sec2_comment6:null,
-                group3_sec2_rate1:null,
+                group3_sec2_rate:null,
                 group3_sec2_value1:null,
                 group3_sec2_value2:null,
                 group3_sec3_checkL_1:null,
@@ -275,7 +287,10 @@ angular.module('app.loggedIn.document.QANTASrampbaggage.controllers',[])
                 group4_comment4:null,
                 group4_comment5:null,
                 dateChose:null,
-                PATIENT_SIGN:null
+                PATIENT_SIGN:null,
+                PATIENT_SIGN1:null,
+                assessor:null,
+                age2:null
               };
               $scope.info.group3_sec2_value1 = parseInt((220 - getAge($scope.patientInfo.DOB))*0.85);
               oriInfo = angular.copy($scope.info);         
@@ -357,7 +372,7 @@ angular.module('app.loggedIn.document.QANTASrampbaggage.controllers',[])
                 group3_sec2_comment4:null,
                 group3_sec2_comment5:null,
                 group3_sec2_comment6:null,
-                group3_sec2_rate1:null,
+                group3_sec2_rate:null,
                 group3_sec2_value1:null,
                 group3_sec2_value2:null,
                 group3_sec3_checkL_1:null,
@@ -424,16 +439,270 @@ angular.module('app.loggedIn.document.QANTASrampbaggage.controllers',[])
                 group4_comment4:null,
                 group4_comment5:null,
                 dateChose:null,
-                PATIENT_SIGN:null
+                PATIENT_SIGN:null,
+                PATIENT_SIGN1:null,
+                assessor:null,
+                age2:null
               };
               clearInfo.group3_sec2_value1 = parseInt((220 - getAge($scope.patientInfo.DOB))*0.85);
             }
         });
         
-        
+        $scope.clearcheck = function(id){
+            if(id == 1){
+                if($scope.info.group3_sec3_checkL_1=='0' && $scope.info.group3_sec3_checkR_1=='0'  ||
+                   $scope.info.group3_sec3_checkR_1=='0' && $scope.info.group3_sec3_checkL_1==null ||
+                   $scope.info.group3_sec3_checkL_1=='0' && $scope.info.group3_sec3_checkR_1==null){
+                    $scope.info.group3_sec3_comment1 = null;
+                    $scope.info.check26 = null;
+                    if($scope.info.group3_sec3_checkL_1==0 || $scope.info.group3_sec3_checkR_1==0){
+                        $scope.info.group3_sec3_checkL_1=null;
+                        $scope.info.group3_sec3_checkR_1=null;
+                    }
+                }
+            }
+            else if(id == 2){
+                if($scope.info.group3_sec3_checkL_2=='0' && $scope.info.group3_sec3_checkR_2=='0'  ||
+                   $scope.info.group3_sec3_checkR_2=='0' && $scope.info.group3_sec3_checkL_2==null ||
+                   $scope.info.group3_sec3_checkL_2=='0' && $scope.info.group3_sec3_checkR_2==null){
+                    $scope.info.group3_sec3_comment2 = null;
+                    $scope.info.check27 = null;
+                    if($scope.info.group3_sec3_checkL_2==0 || $scope.info.group3_sec3_checkR_2==0){
+                        $scope.info.group3_sec3_checkL_2=null;
+                        $scope.info.group3_sec3_checkR_2=null;
+                    }
+                }
+            }
+            else if(id == 3){
+                if($scope.info.group3_sec3_checkL_3=='0' && $scope.info.group3_sec3_checkR_3=='0'  ||
+                   $scope.info.group3_sec3_checkR_3=='0' && $scope.info.group3_sec3_checkL_3==null ||
+                   $scope.info.group3_sec3_checkL_3=='0' && $scope.info.group3_sec3_checkR_3==null){
+                    $scope.info.group3_sec3_comment3 = null;
+                    $scope.info.check28 = null;
+                    if($scope.info.group3_sec3_checkL_3==0 || $scope.info.group3_sec3_checkR_3==0){
+                        $scope.info.group3_sec3_checkL_3=null;
+                        $scope.info.group3_sec3_checkR_3=null;
+                    }
+                }
+            }
+            else if(id == 4){
+                if($scope.info.group3_sec3_checkL_4=='0' && $scope.info.group3_sec3_checkR_4=='0'  ||
+                   $scope.info.group3_sec3_checkR_4=='0' && $scope.info.group3_sec3_checkL_4==null ||
+                   $scope.info.group3_sec3_checkL_4=='0' && $scope.info.group3_sec3_checkR_4==null){
+                    $scope.info.group3_sec3_comment4 = null;
+                    $scope.info.check29 = null;
+                    if($scope.info.group3_sec3_checkL_4==0 || $scope.info.group3_sec3_checkR_4==0){
+                        $scope.info.group3_sec3_checkL_4=null;
+                        $scope.info.group3_sec3_checkR_4=null;
+                    }
+                }
+            }
+            else if(id == 5){
+                if($scope.info.group3_sec3_checkL_5=='0' && $scope.info.group3_sec3_checkR_5=='0'  ||
+                   $scope.info.group3_sec3_checkR_5=='0' && $scope.info.group3_sec3_checkL_5==null ||
+                   $scope.info.group3_sec3_checkL_5=='0' && $scope.info.group3_sec3_checkR_5==null){
+                    $scope.info.group3_sec3_comment5 = null;
+                    $scope.info.check30 = null;
+                    if($scope.info.group3_sec3_checkL_5==0 || $scope.info.group3_sec3_checkR_5==0){
+                        $scope.info.group3_sec3_checkL_5=null;
+                        $scope.info.group3_sec3_checkR_5=null;
+                    }
+                }
+            }
+            else if(id == 6){
+                if($scope.info.group3_sec3_checkL_6=='0' && $scope.info.group3_sec3_checkR_6=='0'  ||
+                   $scope.info.group3_sec3_checkR_6=='0' && $scope.info.group3_sec3_checkL_6==null ||
+                   $scope.info.group3_sec3_checkL_6=='0' && $scope.info.group3_sec3_checkR_6==null){
+                    $scope.info.group3_sec3_comment6 = null;
+                    $scope.info.check31 = null;
+                    if($scope.info.group3_sec3_checkL_6==0 || $scope.info.group3_sec3_checkR_6==0){
+                        $scope.info.group3_sec3_checkL_6=null;
+                        $scope.info.group3_sec3_checkR_6=null;
+                    }
+                }
+            }
+            else if(id == 7){
+                if($scope.info.group3_sec3_checkL_7=='0' && $scope.info.group3_sec3_checkR_7=='0'  ||
+                   $scope.info.group3_sec3_checkR_7=='0' && $scope.info.group3_sec3_checkL_7==null ||
+                   $scope.info.group3_sec3_checkL_7=='0' && $scope.info.group3_sec3_checkR_7==null){
+                    $scope.info.group3_sec3_comment7 = null;
+                    $scope.info.check32 = null;
+                    if($scope.info.group3_sec3_checkL_7==0 || $scope.info.group3_sec3_checkR_7==0){
+                        $scope.info.group3_sec3_checkL_7=null;
+                        $scope.info.group3_sec3_checkR_7=null;
+                    }
+                }
+            }
+            else if(id == 8){
+                if($scope.info.group3_sec3_checkL_8=='0' && $scope.info.group3_sec3_checkR_8=='0'  ||
+                   $scope.info.group3_sec3_checkR_8=='0' && $scope.info.group3_sec3_checkL_8==null ||
+                   $scope.info.group3_sec3_checkL_8=='0' && $scope.info.group3_sec3_checkR_8==null){
+                    $scope.info.group3_sec3_comment8 = null;
+                    $scope.info.check33 = null;
+                    if($scope.info.group3_sec3_checkL_8==0 || $scope.info.group3_sec3_checkR_8==0){
+                        $scope.info.group3_sec3_checkL_8=null;
+                        $scope.info.group3_sec3_checkR_8=null;
+                    }
+                }
+            }
+            else if(id == 9){
+                if($scope.info.group3_sec3_checkL_9=='0' && $scope.info.group3_sec3_checkR_9=='0'  ||
+                   $scope.info.group3_sec3_checkR_9=='0' && $scope.info.group3_sec3_checkL_9==null ||
+                   $scope.info.group3_sec3_checkL_9=='0' && $scope.info.group3_sec3_checkR_9==null){
+                    $scope.info.group3_sec3_comment9 = null;
+                    $scope.info.check34 = null;
+                    if($scope.info.group3_sec3_checkL_9==0 || $scope.info.group3_sec3_checkR_9==0){
+                        $scope.info.group3_sec3_checkL_9=null;
+                        $scope.info.group3_sec3_checkR_9=null;
+                    }
+                }
+            }
+            else if(id == 10){
+                if($scope.info.group3_sec3_checkL_10=='0' && $scope.info.group3_sec3_checkR_10=='0'  ||
+                   $scope.info.group3_sec3_checkR_10=='0' && $scope.info.group3_sec3_checkL_10==null ||
+                   $scope.info.group3_sec3_checkL_10=='0' && $scope.info.group3_sec3_checkR_10==null){
+                    $scope.info.group3_sec3_comment10 = null;
+                    $scope.info.check35 = null;
+                    if($scope.info.group3_sec3_checkL_10==0 || $scope.info.group3_sec3_checkR_10==0){
+                        $scope.info.group3_sec3_checkL_10=null;
+                        $scope.info.group3_sec3_checkR_10=null;
+                    }
+                }
+            }
+            else if(id == 11){
+                if($scope.info.group3_sec3_checkL_11=='0' && $scope.info.group3_sec3_checkR_11=='0'  ||
+                   $scope.info.group3_sec3_checkR_11=='0' && $scope.info.group3_sec3_checkL_11==null ||
+                   $scope.info.group3_sec3_checkL_11=='0' && $scope.info.group3_sec3_checkR_11==null){
+                    $scope.info.group3_sec3_comment11 = null;
+                    $scope.info.check36 = null;
+                    if($scope.info.group3_sec3_checkL_11==0 || $scope.info.group3_sec3_checkR_11==0){
+                        $scope.info.group3_sec3_checkL_11=null;
+                        $scope.info.group3_sec3_checkR_11=null;
+                    }
+                }
+            }
+            else if(id == 12){
+                if($scope.info.group3_sec3_checkL_12=='0' && $scope.info.group3_sec3_checkR_12=='0'  ||
+                   $scope.info.group3_sec3_checkR_12=='0' && $scope.info.group3_sec3_checkL_12==null ||
+                   $scope.info.group3_sec3_checkL_12=='0' && $scope.info.group3_sec3_checkR_12==null){
+                    $scope.info.group3_sec3_comment12 = null;
+                    $scope.info.check37 = null;
+                    if($scope.info.group3_sec3_checkL_12==0 || $scope.info.group3_sec3_checkR_12==0){
+                        $scope.info.group3_sec3_checkL_12=null;
+                        $scope.info.group3_sec3_checkR_12=null;
+                    }
+                }
+            }
+            else if(id == 13){
+                if($scope.info.group4_checkbox1=='0' || $scope.info.group4_checkbox1==null){
+                    $scope.info.group4_comment1=null;
+                    $scope.info.group4_checkbox1=null;
+                }
+            }
+            else if(id == 14){
+                if($scope.info.group4_checkbox2=='0' || $scope.info.group4_checkbox2==null){
+                    $scope.info.group4_comment2=null;
+                    $scope.info.group4_checkbox2=null;
+                }
+            }
+            else if(id == 15){
+                if($scope.info.group4_checkbox3=='0' || $scope.info.group4_checkbox3==null){
+                    $scope.info.group4_comment3=null;
+                    $scope.info.group4_comment4=null;
+                    $scope.info.group4_checkbox3=null;
+                }
+            }
+            else if(id == 16){
+                if($scope.info.group4_checkbox4=='0' || $scope.info.group4_checkbox4==null){
+                    $scope.info.group4_comment5=null;
+                    $scope.info.group4_checkbox4=null;
+                }
+            }
+
+        }
+        $scope.clearform = function(id){
+            if(id == 1){
+                if($scope.info.group3_sec1_value1==null || $scope.info.group3_sec1_value1==''){
+                    $scope.info.group3_sec1_comment1=null;
+                    $scope.info.check23 = null;
+                    $scope.info.group3_sec1_value1=null;
+                }
+            }
+            else if(id == 2){
+                if($scope.info.group3_sec1_value2==null || $scope.info.group3_sec1_value2==''){
+                    $scope.info.group3_sec1_comment2=null;
+                    $scope.info.check24 = null;
+                    $scope.info.group3_sec1_value2=null;
+                }
+            }
+            else if(id == 3){
+                if($scope.info.group3_sec5_value1==''){
+                    $scope.info.check46 = null;
+                    $scope.info.group3_sec5_comment1 = null;
+                    $scope.info.group3_sec5_value1=null;
+                }
+            }
+            else if(id == 4){
+                if($scope.info.group3_sec5_value2==''){
+                    $scope.info.check47 = null;
+                    $scope.info.group3_sec5_comment2 = null;
+                    $scope.info.group3_sec5_value2=null;
+                }
+            }
+            else if(id == 5){
+                if($scope.info.group3_sec5_value3==''){
+                    $scope.info.check48 = null;
+                    $scope.info.group3_sec5_comment3 = null;
+                    $scope.info.group3_sec5_value3=null;
+                }
+            }
+            else if(id == 6){
+                if($scope.info.group3_sec5_value4==''){
+                    $scope.info.check49 = null;
+                    $scope.info.group3_sec5_comment4 = null;
+                    $scope.info.group3_sec5_value4=null;
+                }
+            }
+            else if(id == 7){
+                if($scope.info.group3_sec2_comment1==''){
+                    $scope.info.group3_sec2_comment1=null;
+                }
+            }
+            else if(id == 8){
+                if($scope.info.group3_sec2_comment2==''){
+                    $scope.info.group3_sec2_comment2=null;
+                }
+            }
+            else if(id == 9){
+                if($scope.info.group3_sec2_comment3==''){
+                    $scope.info.group3_sec2_comment3=null;
+                }
+            }
+            else if(id == 10){
+                if($scope.info.group3_sec2_comment4==''){
+                    $scope.info.group3_sec2_comment4=null;
+                }
+            }
+            else if(id == 11){
+                if($scope.info.group3_sec2_comment5==''){
+                    $scope.info.group3_sec2_comment5=null;
+                }
+            }
+            else if(id == 12){
+                if($scope.info.group3_sec2_comment6==''){
+                    $scope.info.group3_sec2_comment6=null;
+                }
+            }
+        }
+
         $scope.submitQANTAS_rampbaggage = function(QANTAS_rampbaggage){
+         if(QANTAS_rampbaggage.$invalid){
+            toastr.error('ERROR','x!!');
+         }
+         else{
           if($scope.insert==true){
             $scope.info.dateChose = $scope.dateChose?$scope.dateChose:null;
+            $scope.info.age2 = getAge($scope.patientInfo.DOB);
             console.log($scope.info);
             DocumentService.insertQANTAS_RampBaggage($scope.info).then(function(response){
               if(response.status==="success"){
@@ -452,6 +721,7 @@ angular.module('app.loggedIn.document.QANTASrampbaggage.controllers',[])
           }
           else{
             $scope.info.dateChose = $scope.dateChose;
+            $scope.info.age2 = getAge($scope.patientInfo.DOB);
             DocumentService.updateQANTAS_RampBaggage($scope.info).then(function(response){
               
               if(response.status==="success"){
@@ -468,5 +738,6 @@ angular.module('app.loggedIn.document.QANTASrampbaggage.controllers',[])
               }
             })
           }
+         }
         };
   });

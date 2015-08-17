@@ -2,12 +2,10 @@ var db = require('../../models');
 module.exports = {
 	checkQANTAS_RampBaggage: function(req, res) {
 		var Patient_ID = req.body.Patient_ID;
-		var CalID = req.body.CalID;
 		var query_check = "SELECT * FROM qantas_rampbaggage "+
-						  "WHERE PATIENT_ID = :PATIENT_ID AND CAL_ID = :CAL_ID";
+						  "WHERE PATIENT_ID = :PATIENT_ID";
 		db.sequelize.query(query_check,null,{raw:true},{
-			PATIENT_ID : Patient_ID,
-			CAL_ID     : CalID
+			PATIENT_ID : Patient_ID
 		})
 		.success(function(data){
 			if(data!==undefined && data!==null && data!=="" && data.length!==0){
@@ -166,7 +164,10 @@ module.exports = {
 			group4_comment4:info.group4_comment4,
 			group4_comment5:info.group4_comment5,
 			dateChose:info.dateChose,
-			PATIENT_SIGN:info.PATIENT_SIGN
+			PATIENT_SIGN:info.PATIENT_SIGN,
+			PATIENT_SIGN1:info.PATIENT_SIGN1,
+			assessor:info.assessor,
+			age2:info.age2
 		},{
 			raw : true
 		})
@@ -187,6 +188,7 @@ module.exports = {
 
 	updateQANTAS_RampBaggage: function(req, res) {
 		var info = req.body.info;
+		console.log(info);
 		db.qantas_rampbaggage.update({
 			check1: info.check1,
 			check2: info.check2,
@@ -315,7 +317,10 @@ module.exports = {
 			group4_comment4:info.group4_comment4,
 			group4_comment5:info.group4_comment5,
 			dateChose:info.dateChose,
-			PATIENT_SIGN:info.PATIENT_SIGN
+			PATIENT_SIGN:info.PATIENT_SIGN,
+			PATIENT_SIGN1:info.PATIENT_SIGN1,
+			assessor:info.assessor,
+			age2:info.age2
 		},{
 			PATIENT_ID: info.PATIENT_ID,
 			CAL_ID    : info.CAL_ID
@@ -339,10 +344,9 @@ module.exports = {
 		var Patient_ID = req.body.Patient_ID;
 		var CalID = req.body.CalID;
 		var query_delete= "delete from qantas_rampbaggage "+
-						  "where PATIENT_ID = :PATIENT_ID and CAL_ID = :CAL_ID";
+						  "where PATIENT_ID = :PATIENT_ID";
 		db.sequelize.query(query_delete,null,{raw : true},{
-			PATIENT_ID: Patient_ID,
-			CAL_ID: CalID
+			PATIENT_ID: Patient_ID
 		})
 		.success(function(delete_success){
 			res.json({

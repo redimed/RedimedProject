@@ -132,7 +132,8 @@ module.exports = {
 			dateChose:info.dateChose,
 			PATIENT_SIGN:info.PATIENT_SIGN,
 			PATIENT_SIGN1:info.PATIENT_SIGN1,
-			assessor:info.assessor
+			assessor:info.assessor,
+			age2:info.age2
 			},{
 				raw : true
 		})
@@ -153,14 +154,12 @@ module.exports = {
 
 	checkQANTAS_CS: function(req, res){
 		var Patient_ID = req.body.Patient_ID;
-		var CalID = req.body.CalID;
 		// console.log(Patient_ID);
 		// console.log(CalID);
 		var query_check = "SELECT * FROM qantas_cs"+
-					" WHERE PATIENT_ID = :PATIENT_ID AND CAL_ID = :CAL_ID";
+					" WHERE PATIENT_ID = :PATIENT_ID";
 		db.sequelize.query(query_check,null,{raw:true},{
-			PATIENT_ID : Patient_ID,
-			CAL_ID     : CalID
+			PATIENT_ID : Patient_ID
 		})
 			.success(function(data){
 				if(data!==undefined&&data!==null&&data!==""&&data.length!==0){
@@ -315,7 +314,8 @@ module.exports = {
 			dateChose:info.dateChose,
 			PATIENT_SIGN:info.PATIENT_SIGN,
 			PATIENT_SIGN1:info.PATIENT_SIGN1,
-			assessor:info.assessor
+			assessor:info.assessor,
+			age2:info.age2
 			},{
 				PATIENT_ID:info.PATIENT_ID,
 				CAL_ID:info.CAL_ID
@@ -337,12 +337,10 @@ module.exports = {
 
 	deleteQANTAS_CS: function(req, res){
 		var Patient_ID = req.body.Patient_ID;
-		var CalID = req.body.CalID;
 		var query_delete = "delete from qantas_cs "+
-						   "where PATIENT_ID = :PATIENT_ID and CAL_ID = :CAL_ID";
+						   "where PATIENT_ID = :PATIENT_ID";
 		db.sequelize.query(query_delete,null,{raw:true},{
-			PATIENT_ID: Patient_ID,
-			CAL_ID: CalID
+			PATIENT_ID: Patient_ID
 		})
 		.success(function(delete_success){
 			res.json({

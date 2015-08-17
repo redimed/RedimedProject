@@ -1,6 +1,7 @@
 module.exports = function(sequelize,DataTypes){
     var pemedical_doc = sequelize.define('pemedical_doc',{
-        PATIENT_ID:{type:DataTypes.INTEGER(11), primaryKey:true},
+        ID:{type:DataTypes.INTEGER(11), primaryKey:true},
+        PATIENT_ID:DataTypes.INTEGER(11),
         CAL_ID:DataTypes.INTEGER(11),
         header_check:DataTypes.STRING(2),
         part1_sec1_comment1:DataTypes.STRING(100),
@@ -238,6 +239,8 @@ module.exports = function(sequelize,DataTypes){
         part5_sec2_value11:DataTypes.STRING(2),
         part5_sec2_value12:DataTypes.STRING(2),
         part5_sec2_value13:DataTypes.STRING(2),
+        part5_sec2_comment1:DataTypes.STRING(100),
+        part5_sec2_comment2:DataTypes.INTEGER(11),
         part5_sec3_value1:DataTypes.STRING(100),
         part6_img_file_name:DataTypes.TEXT,
         part7_sec1_value1:DataTypes.STRING(100),

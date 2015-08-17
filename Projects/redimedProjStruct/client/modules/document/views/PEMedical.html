@@ -621,7 +621,7 @@
 		        				<span style="color: red;" ng-show="PEMedicalForm.part1_sec3_comment1.$error.maxlength">Too long!!</span>
 		        			</div>
 		        			<div class="col-md-2 col-sm-2">
-		        				<label style="margin-top: 3%;">How often do you exercise?</label>{{PEMedicalForm.part1_sec3_comment1.$error}}
+		        				<label style="margin-top: 3%;">How often do you exercise?</label>
 		        			</div>
 		        			<div class="col-md-2 col-sm-2">
 		        				<select ng-model="info.part1_sec3_rate1" name="part1_sec3_rate1"  ng-options="rate.id as rate.name for rate in part1_rate1" class="form-control" ng-class="{'is_error':!PEMedicalForm.part1_sec3_comment1.$error.required && PEMedicalForm.part1_sec3_rate1.$invalid}" ng-required="info.part1_sec3_comment1.length!==0 && info.part1_sec3_comment1!==null&&info.part1_sec3_comment1!==undefined" ng-disabled="info.part1_sec3_comment1===undefined || info.part1_sec3_comment1===null || info.part1_sec3_comment1===''"></select>
@@ -837,7 +837,7 @@
 		        			</div>
 		        			<div class="col-md-2 col-sm-2">
 		        				<label style="float:left;margin-top: 3%;">Specify:&nbsp;</label>
-		        				<input name="part1_sec4_value1" type="number" min="0" ng-model="info.part1_sec4_value1" class="form-control" style="width: 50%;">
+		        				<input name="part1_sec4_value1" type="number" min="0" max="24" ng-model="info.part1_sec4_value1" class="form-control" style="width: 50%;">
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">&nbsp;</div>
 		        			<div class="col-md-3 col-sm-3">
@@ -845,7 +845,7 @@
 		        			</div>
 		        			<div class="col-md-2 col-sm-2">
 		        				<label style="float:left;margin-top: 3%;">Specify:&nbsp;</label>
-		        				<input name="part1_sec4_value2" type="number" min="0" ng-model="info.part1_sec4_value2" class="form-control" style="width: 50%;">
+		        				<input name="part1_sec4_value2" type="number" min="0" max="24" ng-model="info.part1_sec4_value2" class="form-control" style="width: 50%;">
 		        			</div>
 		        		</div>
 		        		<div class="col-md-12 col-sm-12">
@@ -855,7 +855,7 @@
 		        			</div>
 		        			<div class="col-md-2 col-sm-2">
 		        				<label style="float:left;margin-top: 3%;">Specify:&nbsp;</label>
-		        				<input name="part1_sec4_value3" type="number" min="0" ng-model="info.part1_sec4_value3" class="form-control" style="width: 50%;float: left;">
+		        				<input name="part1_sec4_value3" type="number" min="0" max="24" ng-model="info.part1_sec4_value3" class="form-control" style="width: 50%;float: left;">
 		        				<label style="margin-top: 3%;"> &nbsp; Hours</label>
 		        			</div>
 		        			<div class="col-md-1 col-sm-1">&nbsp;</div>
@@ -864,7 +864,7 @@
 		        			</div>
 		        			<div class="col-md-2 col-sm-2">
 		        				<label style="float:left;margin-top: 3%;">Specify:&nbsp;</label>
-		        				<input name="part1_sec4_value4" type="number" min="0" ng-model="info.part1_sec4_value4" class="form-control" style="width: 50%;float: left;">
+		        				<input name="part1_sec4_value4" type="number" min="0" max="24" ng-model="info.part1_sec4_value4" class="form-control" style="width: 50%;float: left;">
 		        				<label style="margin-top: 3%;"> &nbsp; Hours</label>
 		        			</div>
 		        		</div>
@@ -3498,6 +3498,37 @@
 				        		<input ng-model="dateChose1" type="text" class="form-control input-sm" name="dob46" datepicker-popup="dd/MM/yyyy" is-open="openDOB46" ng-click="openDOB46 = true" datepicker-options="dateOptions46" close-text="Close" style="text-align:center;font-weight:bold;color:blue;">
 				        	</div>
 		        		</div>
+		        		<div class="col-md-12 col-sm-12">
+		        			<div class="col-md-2 col-sm-2">
+		        				<label class="bold">ALCOHOL</label>
+		        			</div>
+		        		</div>
+		        		<div class="col-md-12 col-sm-12">
+		        			<div class="col-md-1 col-sm-1">&nbsp;</div>
+		        			<div class="col-md-3 col-sm-3">
+		        				<label style="margin-top: 1%">Breathalyser Serial No:</label>
+		        			</div>
+		        			<div class="col-md-2 col-sm-2">
+		        				<label>Calibration Expiry:</label>
+		        			</div>
+		        			<div class="col-md-2 col-sm-2">
+		        				<input type="text" name="part5_sec2_comment1" ng-model="info.part5_sec2_comment1" class="form-control" ng-maxlength="5" ng-class="{'is_error':PEMedicalForm.part5_sec2_comment1.$error.maxlength}" />
+		        				<span ng-show="PEMedicalForm.part5_sec2_comment1.$error.maxlength" style="color: red;">Too long!!</span>
+		        			</div>
+		        		</div>
+		        		<div class="col-md-12 col-sm-12">
+		        			<div class="col-md-1 col-sm-1">&nbsp;</div>
+		        			<div class="col-md-5 col-sm-5">
+		        				<label style="margin-top: 1%">Blood Alcohol Content:</label>
+		        			</div>
+		        			<div class="col-md-1 col-sm-1">
+		        				<input type="number" name="part5_sec2_comment2" ng-model="info.part5_sec2_comment2" min="0" max="100" class="form-control" ng-pattern="/^[0-9]+$/" ng-class="{'is_error':PEMedicalForm.part5_sec2_comment2.$error.pattern}"  />
+		        				<span ng-show="PEMedicalForm.part5_sec2_comment2.$error.pattern" style="color: red;">Must be a number!!</span>
+		        			</div>
+		        			<div class="col-md-1 col-sm-1">
+		        				<label style="margin-top: 7%; margin-left: -25%;">% BAC</label>
+		        			</div>
+		        		</div>
 		        	</div>
 		        </div>
 		    </div>
@@ -3585,24 +3616,7 @@
             </div>
         </div>
        	<div class="portlet-body">
-       		<div class="row">
-       			<div class="col-md-12 col-sm-12">
-       				<div class="col-md-4 col-sm-4">
-	       				<a ng-click="clickShowFile(indexItem, info.ITEM_ID)">
-		                	<label class="caption-subject bold font-blue-hoki">&nbsp; Attach Audiometric & Sprirometry Results Here</label>
-		                </a>
-       					
-       				</div>
-       			</div>
-       		</div>
-       		<div class="row">
-       			<!-- INPUT FILE -->
-       			<div class="col-md-12 col-sm-12">
-	                <input type="file" ng-model="info.part6_img_file_name" file-upload />
-	                <img ng-src="{{info.part6_img_file_name}}" ng-show="info.part6_img_file_name!==null&&info.part6_img_file_name!==undefined" style="width: 60%; height:60%">
-            	</div>
-                <!-- END INPUT FILE -->
-       		</div>
+       		<!-- waiting for update -->
        	</div>
     </div>
 	<!-- end part6 -->
@@ -3687,7 +3701,7 @@
 		        			<div class="col-md-1 col-sm-1">&nbsp;</div>
 		        			<div class="col-md-2 col-sm-2"><label class="bold">Site</label></div>
 		        			<div class="col-md-2 col-sm-2">
-		        				<input name="part7_sec2_value1" type="text" ng-model="info.part7_sec2_value2" ng-disabled="true" class="form-control" style="margin-top: -2%;" />
+		        				<input name="part7_sec2_value2" type="text" ng-model="info.part7_sec2_value2" ng-disabled="true" class="form-control" style="margin-top: -2%;" />
 		        			</div>
 		        		</div>
 		        		<div class="col-md-12 col-sm-12">&nbsp;</div>
@@ -3990,12 +4004,12 @@
             		ng-disabled="infoChanged()||!infoClear()"
                     class="btn green pull-right">{{insert?"Add New":"Update"}}
             </button>
-            <!-- <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/MA/{{info.MA_ID}}"
+            <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/PEMedical/{{info.PATIENT_ID}}"
                type="a"
                target="_blank"
                ng-disabled="isNew || infoChanged()"
                class="btn btn-primary blue pull-right">Print PDF
-            </a> -->
+            </a>
             <a ng-disabled="infoChanged()" ng-click="resetForm()" class="btn btn-info pull-right">Reset
             </a>
             <a ng-disabled="!infoClear()" ng-click="clearForm()" class="btn btn-warning pull-right">Clear

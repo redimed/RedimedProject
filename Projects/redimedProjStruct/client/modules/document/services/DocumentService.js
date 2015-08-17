@@ -744,9 +744,9 @@ angular.module('app.loggedIn.document.services', [])
             return insertQANTAS_CS_api.post({info: obj});
         }
 
-        documentService.checkQANTAS_CS = function(Patient_ID,CalID){
+        documentService.checkQANTAS_CS = function(Patient_ID){
             var checkQANTAS_CS_api = api.all("document/checkQANTAS_CS");
-            return checkQANTAS_CS_api.post({Patient_ID:Patient_ID,CalID:CalID});
+            return checkQANTAS_CS_api.post({Patient_ID:Patient_ID});
         }
 
         documentService.updateQANTAS_CS = function(obj){
@@ -754,18 +754,18 @@ angular.module('app.loggedIn.document.services', [])
             return updateQANTAS_CS_api.post({info: obj});
         }
 
-        documentService.deleteQANTAS_CS = function(Patient_ID,CalID){
+        documentService.deleteQANTAS_CS = function(Patient_ID){
             var deleteQANTAS_CS_api = api.all("document/deleteQANTAS_CS");
-            return deleteQANTAS_CS_api.post({Patient_ID:Patient_ID,CalID:CalID});
+            return deleteQANTAS_CS_api.post({Patient_ID:Patient_ID});
         }
 
         //********************end QANTAS_CS**************************************
 
         //***********************QANTAS_Fleet************************************
 
-        documentService.checkQANTAS_Fleet = function(Patient_ID,CalID){
+        documentService.checkQANTAS_Fleet = function(Patient_ID){
             var checkQANTAS_Fleet_api = api.all('document/checkQANTAS_Fleet');
-            return checkQANTAS_Fleet_api.post({Patient_ID:Patient_ID,CalID:CalID});
+            return checkQANTAS_Fleet_api.post({Patient_ID:Patient_ID});
         }
 
         documentService.insertQANTAS_Fleet = function(obj){
@@ -778,18 +778,18 @@ angular.module('app.loggedIn.document.services', [])
             return updateQANTAS_Fleet_api.post({info: obj});
         }
 
-        documentService.deleteQANTAS_Fleet = function(Patient_ID,CalID){
+        documentService.deleteQANTAS_Fleet = function(Patient_ID){
             var deleteQANTAS_Fleet_api = api.all('document/deleteQANTAS_Fleet');
-            return deleteQANTAS_Fleet_api.post({Patient_ID:Patient_ID,CalID:CalID});
+            return deleteQANTAS_Fleet_api.post({Patient_ID:Patient_ID,});
         }
 
         //*******************end QANTAS_Fleet************************************
 
         //******************QANTAS_groundsupport*********************************
 
-        documentService.checkQANTAS_groundsupport = function(Patient_ID,CalID){
+        documentService.checkQANTAS_groundsupport = function(Patient_ID){
             var checkQANTAS_groundsupport_api = api.all('document/checkQANTAS_groundsupport');
-            return checkQANTAS_groundsupport_api.post({Patient_ID:Patient_ID,CalID:CalID});
+            return checkQANTAS_groundsupport_api.post({Patient_ID:Patient_ID});
         }
 
         documentService.insertQANTAS_groundsupport = function(obj){
@@ -802,18 +802,18 @@ angular.module('app.loggedIn.document.services', [])
             return updateQANTAS_groundsupport_api.post({info:obj});
         }
 
-        documentService.deleteQANTAS_groundsupport = function(Patient_ID,CalID){
+        documentService.deleteQANTAS_groundsupport = function(Patient_ID){
             var deleteQANTAS_groundsupport_api = api.all('document/deleteQANTAS_groundsupport');
-            return deleteQANTAS_groundsupport_api.post({Patient_ID:Patient_ID,CalID:CalID});
+            return deleteQANTAS_groundsupport_api.post({Patient_ID:Patient_ID});
         }
 
         //******************end QANTAS_groundsupport*****************************
 
         //******************QANTAS_RampBaggage***********************************
 
-        documentService.checkQANTAS_RampBaggage = function(Patient_ID,CalID){
+        documentService.checkQANTAS_RampBaggage = function(Patient_ID){
             var checkQANTAS_RampBaggage_api = api.all('document/checkQANTAS_RampBaggage');
-            return checkQANTAS_RampBaggage_api.post({Patient_ID:Patient_ID,CalID:CalID});
+            return checkQANTAS_RampBaggage_api.post({Patient_ID:Patient_ID});
         }
 
         documentService.insertQANTAS_RampBaggage = function(obj){
@@ -826,9 +826,9 @@ angular.module('app.loggedIn.document.services', [])
             return updateQANTAS_RampBaggage_api.post({info:obj});
         }
 
-        documentService.deleteQANTAS_RampBaggage = function(Patient_ID,CalID){
+        documentService.deleteQANTAS_RampBaggage = function(Patient_ID){
             var deleteQANTAS_RampBaggage_api = api.all('document/deleteQANTAS_RampBaggage');
-            return deleteQANTAS_RampBaggage_api.post({Patient_ID:Patient_ID,CalID:CalID});
+            return deleteQANTAS_RampBaggage_api.post({Patient_ID:Patient_ID});
         }
 
         //******************end QANTAS_RampBaggage*******************************

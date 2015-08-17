@@ -168,8 +168,8 @@ angular.module('app.loggedIn.document.PEMedical.controllers',[])
     	}
     }
     $scope.math_part3 = function(id) {
+        var value = 0;
     	if(id == 1) {
-	    	value = 0;
 	    	v1 = $scope.info.part3_sec4_rate1==null?0:parseInt($scope.info.part3_sec4_rate1);
 	    	v2 = $scope.info.part3_sec4_rate2==null?0:parseInt($scope.info.part3_sec4_rate2);
 	    	v3 = $scope.info.part3_sec4_rate3==null?0:parseInt($scope.info.part3_sec4_rate3);
@@ -191,7 +191,6 @@ angular.module('app.loggedIn.document.PEMedical.controllers',[])
 	    	}
     	}
     	else if(id == 2) {
-    		value = 0;
 	    	v1 = $scope.info.part3_sec5_rate1==null?0:parseInt($scope.info.part3_sec5_rate1);
 	    	v2 = $scope.info.part3_sec5_rate2==null?0:parseInt($scope.info.part3_sec5_rate2);
 	    	v3 = $scope.info.part3_sec5_rate3==null?0:parseInt($scope.info.part3_sec5_rate3);
@@ -213,7 +212,6 @@ angular.module('app.loggedIn.document.PEMedical.controllers',[])
 	    	}
     	}
     	else if(id == 3) {
-    		value = 0;
 	    	v1 = $scope.info.part3_sec6_rate1==null?0:parseInt($scope.info.part3_sec6_rate1);
 	    	v2 = $scope.info.part3_sec6_rate2==null?0:parseInt($scope.info.part3_sec6_rate2);
 	    	v3 = $scope.info.part3_sec6_rate3==null?0:parseInt($scope.info.part3_sec6_rate3);
@@ -235,7 +233,6 @@ angular.module('app.loggedIn.document.PEMedical.controllers',[])
 	    	}
     	}
     	else if(id == 4) {
-    		value = 0;
 	    	v1 = $scope.info.part3_sec7_rate1==null?0:parseInt($scope.info.part3_sec7_rate1);
 	    	v2 = $scope.info.part3_sec7_rate2==null?0:parseInt($scope.info.part3_sec7_rate2);
 	    	v3 = $scope.info.part3_sec7_rate3==null?0:parseInt($scope.info.part3_sec7_rate3);
@@ -374,114 +371,34 @@ angular.module('app.loggedIn.document.PEMedical.controllers',[])
           });
         }
 
-        $scope.uploader = new FileUploader({
-        	url:"/api/document/post-upload-file",
-        	method:"POST",
-        	autoUpload:true,
-        	formData: [{
-                        userId: Patient_ID
-                    }],
-        	isHTML5:true,
-        	isUploading:true,
-        	filters:[{
-	        	name:'img_filter',
-	        	fn: function(item){
-	        		if(item.type === 'image/jpeg' || item.type === 'image/png') return true;
-	        		else {
-	        			toastr.error('Only jpg, jpeg and png allowed!','Error!');
-	        			return false;
-	        		}
-	        	}
-	        }],
-        });
-        $scope.uploader.filters.push({
-        	name: 'imagefilter',
-        	fn: function(item) {
-        		return item.type == 'image/jpeg' || item.type == 'image/png';
-        	}
-        });
-        $scope.uploader.filters.push({
-            name: "limitFile",
-            fn: function(item /*{File|FileLikeObject}*/ , options) {
-                return (this.queue.length < 2);
-            }
-        });
-
-        $scope.uploader.filters.push({
-            name: "limitSize",
-                    fn: function(item) {
-                         return item.size  < 1000000;
-                        // return true;
-                    }
-        });
-        $scope.uploader.onSuccessItem = function(fileItem, response, status, headers) {
-        	$scope.info.file_name = fileItem.file.name;
-        	$scope.path = {
-				realPath : ".\\uploadFile\\allPEMedicalFileUpload\\800\\"+$scope.info.file_name,
-				previewPath : 'https://'+location.host+'/document/pemedical/images/'+$scope.info.file_name
-			};
-        };  
-        $scope.uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/ , filter, options) {
-                    //CHECK FILTER
-            if (filter.name === "folder") {
-                swal({
-                    title: "Limit 1 file to upload.",
-                    type: "warning",
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "Yes",
-                    closeOnConfirm: true
-                });
-            } else if (filter.name === "queueLimit") {
-                swal({
-                    title: "The file you are trying to send exceeds the 10MB attachment limit.",
-                    type: "warning",
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "Yes",
-                    closeOnConfirm: true
-                });
-            }
-                    //END FILTER
-
-                    //ERR
-            else {
-                toastr.error("Upload file " + item.name + " fail!", "Error");
-            }
-                    //END ERR
-        };   
-        $scope.removeItem = function() {
-            swal({
-                title: "Are you sure detele this file!",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes",
-                closeOnConfirm: true
-            }, function(isConfirm) {
-                if (isConfirm) {
-                	angular.forEach($scope.uploader.queue, function(value, index) {
-                        if (value.formData[0].userId === Patient_ID) {
-                            $scope.uploader.removeFromQueue(index);
-                        }
-                    });
-                    //DELETE FROM DATABASE
-                    DocumentService.DeleteFile(Patient_ID).then(function(response) {
-                    	$scope.info.file_name = null;
-                    	
-                    });
+        $scope.avt_path = '';
+        var uploader = $scope.uploader = new FileUploader({
+            url:'/api/document/post-upload-file',
+            autoUpload:false,
+            removeAfterUpload:true,
+            onAfterAddingFile: function(item){
+                var arr   = item.file.name.split(".");
+                var check = arr[arr.length-1];
+                if(check == "jpg" || check == "jpeg" || check =="png"){
+                    if(this.queue.length > 1)
+                        this.queue.splice(0,1);
                 }
-            });
+                else{
+                    toastr.error("Only jpg, jpeg and png accepted","error format!");
+                    this.queue = [];
+                }
+            }
+        });
+        if(!!$stateParams.patient_id){
+            uploader.formData[0] = {patient_id: $stateParams.patient_id, file_name:(new Date()).getTime(), editMode:true};
+        }
+
+        $scope.openUploader = function(){
+             $timeout(function () {
+                $('#patient_photo_upload').click();
+            }, 100);
         };
-		//CALL CLICK SHOW FILE
-        $scope.clickShowFile = function(itemIndex, itemId){
-            $timeout(function() {
-                document.getElementById('uploadpemedical').click();
-                $scope.clicked = true;
-                //SET CURRENT TASK
-                $scope.currentItemId = itemId;
-                //END SET
-            }, 0);
-        };
-                //END SHOW FILE
+
 
         $scope.insert = false;
         DocumentService.checkPEMedical(Patient_ID,CalID,company_id).then(function(response){
@@ -684,9 +601,6 @@ angular.module('app.loggedIn.document.PEMedical.controllers',[])
 					part3_sec2_rate1:null,
 					part3_sec3_comment1:null,
 					part3_sec3_value1:null,
-					part3_sec3_value2:null,
-					part3_sec3_value3:null,
-					part3_sec3_value4:null,
 					part3_sec4_rate1:null,
 					part3_sec4_rate2:null,
 					part3_sec4_rate3:null,
@@ -728,6 +642,8 @@ angular.module('app.loggedIn.document.PEMedical.controllers',[])
 					part5_sec2_value11:null,
 					part5_sec2_value12:null,
 					part5_sec2_value13:null,
+                    part5_sec2_comment1:null,
+                    part5_sec2_comment2:null,
 					part5_sec3_value1:null,
 					part6_img_file_name:null,
 					part7_sec1_value1:null,
@@ -967,9 +883,6 @@ angular.module('app.loggedIn.document.PEMedical.controllers',[])
 					part3_sec2_rate1:null,
 					part3_sec3_comment1:null,
 					part3_sec3_value1:null,
-					part3_sec3_value2:null,
-					part3_sec3_value3:null,
-					part3_sec3_value4:null,
 					part3_sec4_rate1:null,
 					part3_sec4_rate2:null,
 					part3_sec4_rate3:null,
@@ -1011,6 +924,8 @@ angular.module('app.loggedIn.document.PEMedical.controllers',[])
 					part5_sec2_value11:null,
 					part5_sec2_value12:null,
 					part5_sec2_value13:null,
+                    part5_sec2_comment1:null,
+                    part5_sec2_comment2:null,
 					part5_sec3_value1:null,
 					part6_img_file_name:null,
 					part7_sec1_value1:null,

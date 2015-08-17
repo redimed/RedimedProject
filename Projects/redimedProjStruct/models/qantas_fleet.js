@@ -1,6 +1,7 @@
 module.exports = function(sequelize,DataTypes){
     var qantas_fleet = sequelize.define('qantas_fleet',{
-        PATIENT_ID:{type:DataTypes.INTEGER(11), primaryKey:true},
+        ID:{type:DataTypes.INTEGER(11), primaryKey:true},
+        PATIENT_ID:DataTypes.INTEGER(11),
         CAL_ID:DataTypes.INTEGER(11),
         check1:DataTypes.STRING(2),
         check2:DataTypes.STRING(2),
@@ -135,7 +136,8 @@ module.exports = function(sequelize,DataTypes){
         dateChose:DataTypes.DATE,
         PATIENT_SIGN:DataTypes.TEXT,
         PATIENT_SIGN1:DataTypes.TEXT,
-        assessor:DataTypes.STRING(100)
+        assessor:DataTypes.STRING(100),
+        age2:DataTypes.STRING(100)
     },{
         tableName: 'qantas_fleet', // đặt tên bảng
         createdAt: 'Creation_date',
