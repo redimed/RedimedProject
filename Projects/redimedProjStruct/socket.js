@@ -59,23 +59,35 @@ module.exports = function(io,cookie,cookieParser) {
 
     io.use(parser); //**Middleware for socket.io
     
+    //**Set all users socket to null when restart server
     db.User.update({socket: null,token: null})
         .success(function(){
             console.log("=====Server Restart=====");
         })
+    
+    //**Socket.io main event:
+    //**socket.on('event name',callback()) : Listener handle event.
+    //**socket.emit('event name',args1,args2,...): Emit an event to this socket.
+    //**socket.to('room name or socket id').emit('event name',args1,args2,...): Emit an event to specific room or socket.
+    //**socket.join('room name'): Join socket to specific room.
+    //**io.sockets.emit('event name',args1,args2,...): Broadcast an event to all sockets.
 
+    //**Socket.io listener when receive any connection from client
     io.on('connection', function (socket) {
-        socket.removeAllListeners();
+        socket.removeAllListeners(); //**Remove all listeners of socket
 
         // **Function: getOnlineUser()
         // **Params: null
         // **Description: Get list of all online users and send to client
         function getOnlineUser(){
-            userList = [];
+            userList = []; //**Init an empty userList variable.
+
+            //**Get all users which socket is not null. If socket not null means that user is online.
             db.User.belongsTo(db.UserType,{foreignKey:'user_type'});
             db.User.findAll({where: "socket IS NOT NULL",include:[db.UserType]},{raw:true})
                 .success(function(data){
                     for (var i = 0; i < data.length; i++) {
+                        //**Push each user object to userList array.
                         userList.push({
                             id: data[i].id,
                             username: data[i].user_name,
@@ -85,7 +97,10 @@ module.exports = function(io,cookie,cookieParser) {
                             userType: data[i].UserType.user_type
                         });
                     }
+
+                    //**Broadcast 'online' event with userList array to all clients.
                     io.sockets.emit('online', userList);
+                    //**Broadcast 'driverLocation' event with driverArr array to all clients.
                     io.sockets.emit('driverLocation',driverArr);
                 })
                 .error(function(err){
@@ -93,6 +108,12 @@ module.exports = function(io,cookie,cookieParser) {
                 })
         };
 
+        // **Function: updateUser()
+        // **Params: {
+            // options: update options,
+            // conditions: update conditions (WHERE query)
+        // }
+        // **Description: Update user details.
         function updateUser(options,conditions){
             db.User.update(options,typeof conditions != 'undefined' ? conditions : null)
                 .success(function(){
@@ -103,6 +124,7 @@ module.exports = function(io,cookie,cookieParser) {
                 })
         };
 
+        //**'reconneced': listen when socket has reconnected successfully to server. 
         socket.on('reconnected',function(id){
             db.User.find({where:{id: id}},{raw:true})
                 .success(function(user){
