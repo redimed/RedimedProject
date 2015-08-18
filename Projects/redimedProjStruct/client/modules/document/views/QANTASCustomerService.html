@@ -1956,12 +1956,12 @@
             		ng-disabled="infoChanged()||!infoClear()"
                     class="btn green pull-right">{{insert?"Add New":"Update"}}
             </button>
-            <!-- <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/MA/{{info.MA_ID}}"
+            <a href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/qantas_cs/{{info.PATIENT_ID}}/{{info.CAL_ID}}"
                type="button"
                target="_blank"
                ng-disabled="isNew || infoChanged()"
                class="btn btn-primary blue pull-right">Print PDF
-            </a> -->
+            </a>
             <a ng-disabled="infoChanged()" ng-click="resetForm()" class="btn btn-info pull-right">Reset
             </a>
             <a ng-disabled="!infoClear()" ng-click="clearForm()" class="btn btn-warning pull-right">Clear
