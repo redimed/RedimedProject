@@ -6,35 +6,78 @@ module.exports = {
 	checkPEMedical: function(req, res) {
 		var Patient_ID = req.body.Patient_ID;
 		var CalID = req.body.CalID;
-		var company_id = req.body.company_id?req.body.company_id:null;
 		console.log(Patient_ID);
 		console.log(CalID);
+		var sql_get_patientInfo="select First_name, Sur_name, Address1, DOB, Sex, Mobile, company_id from cln_patients where Patient_ID =:Patient_ID ";
 		var sql_get_company_name="select Company_name,Site_name,Phone,Email from companies where id =:company_id ";
 		var sql_check1 ="select * from pemedical_doc where PATIENT_ID =:Patient_ID";
-		if(company_id!=null){
-			db.sequelize.query(sql_get_company_name,null,{raw:true},{
-				company_id : company_id
-			})
-			.success(function(company_data){
-				if(company_data!==undefined){
-					db.sequelize.query(sql_check1,null,{raw:true},{
-						Patient_ID:Patient_ID
+		db.sequelize.query(sql_get_patientInfo,null,{raw:true},{
+			Patient_ID:Patient_ID
+		})
+		.success(function(patientInfo){
+			if(patientInfo!==undefined && patientInfo!==null && patientInfo!=='' && patientInfo.length!==0){
+				if(patientInfo[0].company_id!=null){
+					db.sequelize.query(sql_get_company_name,null,{raw:true},{
+						company_id:patientInfo[0].company_id
 					})
-					.success(function(data){
-						if(data!==undefined && data!==null && data!=='' && data.length!==0){
-							res.json({
-								status:"update",
-								data:data[0],
-								company:company_data[0]==null?null:company_data[0]
-							});
-							return;
+					.success(function(company_data){
+						if(company_data!==undefined && company_data!==null && company_data!=='' && company_data.length!==0){
+							db.sequelize.query(sql_check1,null,{raw:true},{
+								Patient_ID:Patient_ID
+							})
+							.success(function(data){
+								if(data!==undefined && data!==null && data!=='' && data.length!==0){
+									res.json({
+										status:"update",
+										data:data[0],
+										company:company_data[0]==null?null:company_data[0],
+										patientInfo:patientInfo[0]==null?null:patientInfo[0]
+									});
+									return;
+								}
+								else{
+									res.json({
+										status:"insert",
+										company:company_data[0]==null?null:company_data[0],
+										patientInfo:patientInfo[0]==null?null:patientInfo[0]
+									})
+								}
+							})
+							.error(function(err){
+								console.log("*****ERROR :"+err+" *****");
+								res.json({
+									status:"error"
+								});
+								return;
+							})
 						}
 						else{
-							res.json({
-								status:"insert",
-								company:company_data[0]==null?null:company_data[0]
-							});
-							return;
+							db.sequelize.query(sql_check1,null,{raw:true},{
+								Patient_ID:Patient_ID
+							})
+							.success(function(data){
+								if(data!==undefined && data!==null && data!=='' && data.length!==0){
+									res.json({
+										status:"update",
+										data:data[0],
+										patientInfo:patientInfo[0]==null?null:patientInfo[0]
+									});
+									return;
+								}
+								else{
+									res.json({
+										status:"insert",
+										patientInfo:patientInfo[0]==null?null:patientInfo[0]
+									})
+								}
+							})
+							.error(function(err){
+								console.log("*****ERROR :"+err+" *****");
+								res.json({
+									status:"error"
+								});
+								return;
+							})
 						}
 					})
 					.error(function(err){
@@ -45,44 +88,15 @@ module.exports = {
 						return;
 					})
 				}
-			})
-			.error(function(err){
-				console.log("*****ERROR : "+err+" *****");
-				res.json({
-					status:"error"
-				});
-				return;
-			})
-		}
-		else{
-			db.sequelize.query(sql_check1,null,{raw:true},{
-				Patient_ID:Patient_ID
-			})
-			.success(function(data){
-				if(data!==undefined && data!==null && data!=='' && data.length!==0){
-					res.json({
-						status:"update",
-						data:data[0]
-					});
-					return;
-				}
-				else{
-					res.json({
-						status:"insert"
-					});
-					return;
-				}
-			})
-			.error(function(err){
-				console.log("*****ERROR: "+err+" *****");
-				res.json({
-					status:"error"
-				});
-				return;
-			})
-		}
-		
-		
+			}
+		})
+		.error(function(err){
+			console.log("*****ERROR: "+err+" *****");
+			res.json({
+				status:"error"
+			});
+			return;
+		})
 	},
 
 	insertPEMedical: function(req, res) {
@@ -680,118 +694,5 @@ module.exports = {
 			return;
 		})
 	},
-
-	UploadFile: function(req, res) {
-        var id_task_week = null;
-        console.log(__dirname);
-        console.log(req.files);
-        var tagetFolder = 'UploadFile\\allPEMedicalFileUpload';
-        tagetFolder = __dirname.substr(0, __dirname.search("controllers")) + tagetFolder;
-        var tmp_path = req.files.file.path;
-        var taget_path = tagetFolder + "\\" + req.files.file.name;
-        fs.rename(tmp_path, taget_path, function(err) {
-        if (err) {
-            throw err;
-            res.json({
-               	status: "error"
-            });
-            return;
-        }
-        fs.unlink(tmp_path, function() {
-            if (err) {
-                throw err;
-                res.json({
-                	status: "error"
-                });
-                return;
-            } else {
-                //INSERT PATH FILE
-                var sql_check ="select * from pemedical_file where created_by =:Patient_ID";
-                db.sequelize.query(sql_check,null,{raw : true},{
-                   	Patient_ID : req.body.userId
-                })
-                .success(function(check_success){
-            		if(check_success!==undefined && check_success!==null && check_success!=='' && check_success.length!==0){
-            			db.pemedical_file.update({
-            				path_file: taget_path,
-	                        file_name: req.files.file.name,
-	                        file_size: req.files.file.size
-            			},{
-            				created_by : req.body.userId
-            			})
-            			.success(function(result){
-            				console.log("Upload file to " + taget_path + " - " + req.files.file.size + ' byte');
-	                        res.json({
-	                            status: "success",
-	                            path: taget_path
-	                        });
-	                        return;
-            			})
-            			.error(function(err){
-            				console.log("*****ERROR :"+err+" *****");
-            				res.json({
-            					status:"error"
-            				});
-            				return;
-            			})
-            		}
-            		else{
-            			db.pemedical_file.create({
-	                        path_file: taget_path,
-	                        file_name: req.files.file.name,
-	                        file_size: req.files.file.size,
-	                        created_by: req.body.userId
-	                    })
-	                    .success(function(result) {
-	                        console.log("Upload file to " + taget_path + " - " + req.files.file.size + ' byte');
-	                        res.json({
-	                            status: "success",
-	                            path: taget_path
-	                        });
-	                        return;
-	                    })
-	                    .error(function(err) {
-	                        console.log("*****ERROR:" + err + "*****");
-	                            res.json({
-	                                status: "error"
-	                            });
-	                            return;
-	                    });
-            		}
-                })
-                .error(function(err){
-                    console.log("*****ERROR: "+err+" *****");
-                    res.json({
-                        status:"error"
-                    });
-                    return;
-                })
-                //END INSERT
-            }
-        });
-    });
-
-}, 
-	DeleteFile: function(req, res) {
-		var id = req.body.id;
-		console.log(id);
-		var sql_delete ="delete from pemedical_file where created_by =:id";
-		db.sequelize.query(sql_delete,null,{raw : true},{
-			id : id
-		})
-		.success(function(delete_success){
-			res.json({
-				status:"success"
-			});
-			return;
-		})
-		.error(function(err){
-			console.log("*****ERROR: "+err+" *****");
-			res.json({
-				status:"error"
-			});
-			return;
-		})
-	}
 
 };

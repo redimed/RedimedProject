@@ -19,6 +19,11 @@ var gorgonMAController = require('./controllers/DocumentController/gorgonMAContr
 var COEController = require('./controllers/DocumentController/COEController');
 var demoController = require('./controllers/DocumentController/demoController');
 var newFAController = require('./controllers/DocumentController/newFAController');
+var CSController = require('./controllers/DocumentController/CSController');
+var FleetController = require('./controllers/DocumentController/FleetController');
+var GroundSupportController = require('./controllers/DocumentController/GroundSupportController');
+var RampBaggageController = require('./controllers/DocumentController/RampBaggageController');
+var PEMedicalController = require('./controllers/DocumentController/PEMedicalController');
 
 app.post('/api/document/loadPatient', demoController.loadPatient);
 
@@ -160,6 +165,41 @@ app.post('/api/document/editGGMH', gorgonMHController.editGGMH);
 /**
  * end gorgon medical history
  */
+
+ // Begin QANTAS_CS Assessment
+app.post('/api/document/insertQANTAS_CS', CSController.insertQANTAS_CS);
+app.post('/api/document/checkQANTAS_CS', CSController.checkQANTAS_CS);
+app.post('/api/document/updateQANTAS_CS',CSController.updateQANTAS_CS);
+app.post('/api/document/deleteQANTAS_CS',CSController.deleteQANTAS_CS);
+// End
+
+// Begin QANTAS_Fleet Assessment
+app.post('/api/document/insertQANTAS_Fleet', FleetController.insertQANTAS_Fleet);
+app.post('/api/document/checkQANTAS_Fleet', FleetController.checkQANTAS_Fleet);
+app.post('/api/document/updateQANTAS_Fleet',FleetController.updateQANTAS_Fleet);
+app.post('/api/document/deleteQANTAS_Fleet',FleetController.deleteQANTAS_Fleet);
+// End
+
+// Begin QANTAS_GroundSupport Assessment
+app.post('/api/document/insertQANTAS_groundsupport', GroundSupportController.insertQANTAS_groundsupport);
+app.post('/api/document/checkQANTAS_groundsupport', GroundSupportController.checkQANTAS_groundsupport);
+app.post('/api/document/updateQANTAS_groundsupport',GroundSupportController.updateQANTAS_groundsupport);
+app.post('/api/document/deleteQANTAS_groundsupport', GroundSupportController.deleteQANTAS_groundsupport);
+// End
+
+// Begin QANTAS_RampBaggage Assessment
+app.post('/api/document/insertQANTAS_RampBaggage', RampBaggageController.insertQANTAS_RampBaggage);
+app.post('/api/document/checkQANTAS_RampBaggage', RampBaggageController.checkQANTAS_RampBaggage);
+app.post('/api/document/updateQANTAS_RampBaggage',RampBaggageController.updateQANTAS_RampBaggage);
+app.post('/api/document/deleteQANTAS_RampBaggage', RampBaggageController.deleteQANTAS_RampBaggage);
+// End
+
+// Begin PEMedical
+app.post('/api/document/checkPEMedical', PEMedicalController.checkPEMedical);
+app.post('/api/document/insertPEMedical', PEMedicalController.insertPEMedical);
+app.post('/api/document/updatePEMedical',PEMedicalController.updatePEMedical);
+app.post('/api/document/deletePEMedical', PEMedicalController.deletePEMedical);
+// End
 
 //=================================== State WA  ========================================
 var FirstWAController = require('./controllers/WaWorkCoverFirstController');

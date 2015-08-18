@@ -2,12 +2,12 @@ angular.module('app.loggedIn.document.PEMedical.controllers',[])
 .controller("PEMedicalController",function($scope, $sce, $filter, DocumentService, ConfigService, $http, $cookieStore, $state, toastr, $timeout, $stateParams, localStorageService,FileUploader){
 	$scope.patientInfo = localStorageService.get('tempPatient');
     CalID = $stateParams.cal_id; 
-    Patient_ID = $scope.patientInfo.Patient_id;
-    company_id = $scope.patientInfo.company_id;
+    Patient_ID = $stateParams.patient_id;
+    //company_id = $scope.patientInfo.company_id;
     $scope.path ={};
     $scope.isSubmit = false;
     var oriInfo,clearInfo,height,weight,value;
-    $scope.patientInfo.DOB = moment($scope.patientInfo.DOB).format('YYYY-MM-DD');
+    //$scope.patientInfo.DOB = moment($scope.patientInfo.DOB).format('YYYY-MM-DD');
     $scope.isSignatureShow  = [
     {id:0,isShow:false},
     {id:1,isShow:false},
@@ -401,7 +401,9 @@ angular.module('app.loggedIn.document.PEMedical.controllers',[])
 
 
         $scope.insert = false;
-        DocumentService.checkPEMedical(Patient_ID,CalID,company_id).then(function(response){
+        DocumentService.checkPEMedical(Patient_ID,CalID).then(function(response){
+            $scope.patientInfo = response['patientInfo'];
+            $scope.patientInfo.DOB = moment($scope.patientInfo.DOB).format('YYYY-MM-DD');
             if(response.status==="insert"){
             	$scope.insert = true;
             	$scope.isNew = true;
@@ -649,7 +651,7 @@ angular.module('app.loggedIn.document.PEMedical.controllers',[])
 					part7_sec1_value1:null,
 					part7_sec1_value2:null,
 					part7_sec1_value3:null,
-					part7_sec2_value1:$scope.patientInfo.company_id?response['company'].Company_name:null,
+					part7_sec2_value1:$scope.patientInfo.company_id?response['company'].company_name:null,
 					part7_sec2_value2:$scope.patientInfo.company_id?response['company'].Site_name:null,
 					part7_sec2_value3:$scope.patientInfo.company_id?response['company'].Email:null,
                     part7_sec2_value4:$scope.patientInfo.company_id?response['company'].Phone:null,

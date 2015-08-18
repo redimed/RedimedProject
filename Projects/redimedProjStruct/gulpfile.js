@@ -297,7 +297,11 @@ gulp.task('document', function(){
 					 './client/modules/document/controllers/addPatientController.js',
 					 './client/modules/document/controllers/COEController.js',
 					 './client/modules/document/controllers/newFAController.js',
-					 './client/modules/document/controllers/PEMedicalController.js'
+					 './client/modules/document/controllers/PEMedicalController.js',
+					 './client/modules/document/controllers/CSController.js',
+					 './client/modules/document/controllers/FleetController.js',
+					 './client/modules/document/controllers/GroundSupportController.js',
+					 './client/modules/document/controllers/RampBaggageController.js'
 	])
 	.pipe(concat('document.js'))
 	.pipe(uglify({mangle: false}))
