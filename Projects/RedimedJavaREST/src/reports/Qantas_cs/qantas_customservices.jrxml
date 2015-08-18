@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-08-18T09:58:50 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="qantas_rampbaggage" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0e7ab213-d16c-402e-9f0a-2d1894e3f2ff">
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sakila Local Connection"/>
@@ -30,9 +28,13 @@ p.Mobile,
 p.Email
 from qantas_cs q
 inner join cln_patients p on p.Patient_id = q.PATIENT_ID
-where q.PATIENT_ID =  $P{patient_id}]]>
+where q.PATIENT_ID =  $P{patient_id} and
+      q.CAL_ID     =  $P{cal_id}]]>
 	</queryString>
-	<field name="PATIENT_ID" class="java.lang.Long">
+	<field name="ID" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PATIENT_ID" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="CAL_ID" class="java.lang.Integer">
