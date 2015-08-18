@@ -6,6 +6,9 @@
 var moment=require('moment');
 var jf = require('jsonfile');
 var util = require('util');
+var winston = require('winston');
+var path = require('path');
+
 
 /**
  * Xuat log
@@ -731,5 +734,33 @@ module.exports =
             str=str+arguments[i];
         }
         return str;
+    },
+    /*
+    * phanquocchien.c1109g@gmail.com
+    * su dung winston de ghi ra file log erro
+    * 12-08-2015
+    */
+    logErrorFile:function (req,errorList) {
+        var urlApi = req.route.path;
+        if (req.body.data) {
+            var listError = req.body.data;
+        }else{
+            var listError = errorList;
+        };
+        listError.api = urlApi;
+        var logname = moment().format("DD-MM-YYYY").toString().concat('.log');
+        var logger = new (winston.Logger)({
+            transports: [
+                new (winston.transports.File)({ 
+                    filename: path.join(__dirname, '..', 'log', logname),
+                    handleExceptions: true,
+                    timestamp: function() {
+                        return moment().format("DD-MM-YYYY HH:mm:ss");
+                    }
+                })
+            ]
+        }); 
+        logger.handleExceptions();
+        logger.error(listError);
     }
 }

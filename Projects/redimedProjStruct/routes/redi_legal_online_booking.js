@@ -14,6 +14,7 @@ var rlobBookingPaperlessController=require('./controllers/rlobBookingPaperlessCo
 var rlRegisterController=require('./controllers/rlRegisterController');
 var rlobController=require('./controllers/rlobController');
 var rlobBookingMobileController=require('./controllers/rlobBookingMobileController');
+var kissUtilsController=require('./controllers/kissUtilsController');
 var func=require('./functions');
 //-------------------------------------------------------------
 
@@ -50,6 +51,7 @@ app.get('/api/rlob/appointment-calendar/list',clnAppointmentCalendarController.l
 app.get('/api/rlob/appointment-calendar/get-list-date-appointment-calendar',clnAppointmentCalendarController.getListDateAppointmentCalendar);
 app.get('/api/rlob/appointment-calendar/get-appointment-calendar',clnAppointmentCalendarController.getAppointmentCalendar);
 app.get('/api/rlob/appointment-calendar/get-appointment-calendar-not-service',clnAppointmentCalendarController.getAppointmentCalendarNotService);
+app.get('/api/rlob/appointment-calendar/get-appointment-calendar-mobile',clnAppointmentCalendarController.getAppointmentCalendarMobile);
 app.get('/api/rlob/appointment-calendar/check-same-doctor',clnAppointmentCalendarController.checkSameDoctor);
 app.get('/api/rlob/appointment-calendar/get-by-id',clnAppointmentCalendarController.getAppointmentCalendarById);
 
@@ -173,3 +175,5 @@ app.post('/api/rlob/sponsor/upload',multipartMiddleware, rlobBookingMobileContro
 
 //phanquocchien.c1109g@mail.com
 app.post('/api/rlob/cln_appt_patients/add', rlBookingsController.addApptPatient);
+// log error client
+app.get('/api/log-error', kissUtilsController.logErrorFile);
