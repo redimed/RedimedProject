@@ -4,6 +4,10 @@ angular.module('app.loggedIn.appointment.models', [])
 	var mainModel = {};
 	var mainApi = Restangular.all('api/meditek/v1/appointment');
 	
+	mainModel.checkNextAppointment = function(data){
+		var instanceApi = mainApi.all('checkNextAppointment');
+		return instanceApi.post({data: data});
+	},
 	mainModel.alertCenterPatient = function(data){
 		var instanceApi = mainApi.all('alertCenterPatient');
 		return instanceApi.post({data: data});

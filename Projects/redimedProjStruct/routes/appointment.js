@@ -26,3 +26,4 @@ app.post(url+'changeStatus', AppointmentController.changeStatus);
 app.post(url+'postcheck', AppointmentController.postCheck);
 app.post(url+'postuser', AppointmentController.postUser);
 app.post(url+'postGetCal', AppointmentController.postGetCal);
+app.post(url+'checkNextAppointment', AppointmentController.checkNextAppointment);

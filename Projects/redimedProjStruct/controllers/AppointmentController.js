@@ -11,17 +11,37 @@ var errorCode=require('./errorCode');//tan add
 var controllerCode="RED_APPOINTMENT";//tan add
 
 module.exports = {
+	checkNextAppointment: function(req,res){
+		var postData  = req.body.data;
+		console.log(postData);
+		var sql = knex('cln_patient_consults')
+				.where('cal_id',postData.cal_id)
+				.where('patient_id',postData.patient_id)
+				.update({
+					'next_appt_date':null,
+					'next_appt_note':null
+				})
+				.toString();
+		db.sequelize.query(sql)
+		.success(function(rows){
+			res.json({data: rows,sql:sql});
+		})
+		.error(function(error){
+			res.status(500).json({error: error, sql: sql});
+		})
+	},
 	alertCenterPatient : function(req,res){
-		var fHeader="AppointmentController->alertCenterPatient";
+		var fHeader="v2_InvoiceController->alertCenterPatient";
 		var functionCode='FN020';
 		var sql=
-			"SELECT `cln_appt_patients`.* ,`cln_patients`.`First_name`,`cln_patients`.`Sur_name`,`cln_patient_consults`.`next_appt_date`,"+
-			"`cln_patient_consults`.`next_appt_note`                                                                                     "+
-			"FROM `cln_appt_patients`                                                                                                    "+
-			"INNER JOIN `cln_patient_consults` ON `cln_appt_patients`.`CAL_ID` = `cln_patient_consults`.`cal_id`                         "+
-			"AND `cln_appt_patients`.`Patient_id` = `cln_patient_consults`.`patient_id`                                                  "+
-			"INNER JOIN `cln_patients` ON `cln_appt_patients`.`Patient_id` = `cln_patients`.`Patient_id`                                 "+
-			"WHERE `cln_appt_patients`.`appt_status` = 'Completed'                                                                      ";
+			"SELECT `cln_appt_patients`.* ,`cln_patients`.`First_name`,`cln_patients`.`Sur_name`,`cln_patient_consults`.`next_appt_date`, "+
+			"`cln_patient_consults`.`next_appt_note`                                                                                      "+
+			"FROM `cln_appt_patients`                                                                                                     "+
+			"INNER JOIN `cln_patient_consults` ON `cln_appt_patients`.`CAL_ID` = `cln_patient_consults`.`cal_id`                          "+
+			"AND `cln_appt_patients`.`Patient_id` = `cln_patient_consults`.`patient_id`                                                   "+
+			"AND `cln_patient_consults`.`next_appt_date` IS NOT NULL                                                                      "+
+			"INNER JOIN `cln_patients` ON `cln_appt_patients`.`Patient_id` = `cln_patients`.`Patient_id`                                  "+
+			"WHERE `cln_appt_patients`.`appt_status` = 'Completed'                                                                        ";
 		kiss.executeQuery(req,sql,null,function(rows){
 			res.json({status:'success',data:rows});
 		},function(err){
