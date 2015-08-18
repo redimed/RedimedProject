@@ -7,9 +7,12 @@ var _ = require('lodash');
 var kiss=require('./kissUtilsController');
 var timeTableUtil=require('./timeTableUtilController');
 
+var errorCode=require('./errorCode');//tan add
+var controllerCode="RED_APPOINTMENT";//tan add
+
 module.exports = {
 	alertCenterPatient : function(req,res){
-		var fHeader="v2_InvoiceController->alertCenterPatient";
+		var fHeader="AppointmentController->alertCenterPatient";
 		var functionCode='FN020';
 		var sql=
 			"SELECT `cln_appt_patients`.* ,`cln_patients`.`First_name`,`cln_patients`.`Sur_name`,`cln_patient_consults`.`next_appt_date`,"+

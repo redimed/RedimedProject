@@ -530,6 +530,7 @@ angular.module('app.config', [])
             {id:29,label:'Other Job-Specific Functional Task Assessment (No Job Demand and Rating)',section:'Section 3: Job-Specific Functional Task Assessment'},
             {id:30,label:'Minnesota Test', section:'Section 3: Job-Specific Functional Task Assessment'},
             {id:8,label:'Functional Task Rating',section:'Section 3: Job-Specific Functional Task Assessment'},
+            {id:32,label:'Postural Assessment', section:'Section 3: Job-Specific Functional Task Assessment'},
 
             {id:5,label:'Summary Rating and Score (with overall)',section:'Summary section'},
             {id:24,label:'Summary Rating Only (with overall)', section:'Summary section'},

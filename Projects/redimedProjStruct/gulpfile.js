@@ -297,6 +297,7 @@ gulp.task('document', function(){
 					 './client/modules/document/controllers/addPatientController.js',
 					 './client/modules/document/controllers/COEController.js',
 					 './client/modules/document/controllers/newFAController.js',
+					 './client/modules/document/controllers/PEMedicalController.js'
 	])
 	.pipe(concat('document.js'))
 	.pipe(uglify({mangle: false}))
