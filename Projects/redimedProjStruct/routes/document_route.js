@@ -11,7 +11,7 @@ var SA1Controller = require('./controllers/DocumentController/SA1Controller');
 var SA2Controller = require('./controllers/DocumentController/SA2Controller');
 var Cat3Controller = require('./controllers/DocumentController/Cat3Controller');
 var Cat2Controller = require('./controllers/DocumentController/Cat2Controller');
-// var UQController = require('./controllers/DocumentController/UQController');
+var UQController = require('./controllers/DocumentController/UQController');
 var gorgonMHController = require('./controllers/DocumentController/gorgonMHController');
 var form18Controller = require('./controllers/DocumentController/form18Controller');
 var gorgonFAController = require('./controllers/DocumentController/gorgonFAController');
@@ -67,9 +67,9 @@ app.post('/api/document/updateIDS', IDSController.updateIDS);
 // end
 
 // Begin User Question
-// app.post('/api/document/insertUQ', UQController.insertUQ);
-// app.post('/api/document/updateUQ', UQController.updateUQ);
-// app.post('/api/document/checkUser', UQController.checkUser);
+app.post('/api/document/insertUQ', UQController.insertUQ);
+app.post('/api/document/updateUQ', UQController.updateUQ);
+app.post('/api/document/checkUser', UQController.checkUser);
 // end
 
 // Begin COE
