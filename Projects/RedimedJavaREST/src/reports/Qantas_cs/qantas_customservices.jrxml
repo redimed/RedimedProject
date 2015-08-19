@@ -2,9 +2,9 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="qantas_rampbaggage" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0e7ab213-d16c-402e-9f0a-2d1894e3f2ff">
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sakila Local Connection"/>
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="4192"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<parameter name="patient_id" class="java.lang.String">
@@ -1862,28 +1862,28 @@ where q.PATIENT_ID =  $P{patient_id} and
 				<textFieldExpression><![CDATA[$F{group3_sec4_comment1}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="263" y="533" width="32" height="13" uuid="f82de77a-1323-4d27-9bdb-44bb1d0aa295">
+				<reportElement mode="Transparent" x="263" y="532" width="32" height="13" uuid="f82de77a-1323-4d27-9bdb-44bb1d0aa295">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{group3_sec5_value1}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="263" y="558" width="32" height="13" uuid="1f155a64-c015-45eb-b58c-07d75c6fe445">
+				<reportElement mode="Transparent" x="263" y="557" width="32" height="13" uuid="1f155a64-c015-45eb-b58c-07d75c6fe445">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{group3_sec5_value2}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="263" y="583" width="32" height="13" uuid="a35b021e-6ff1-4535-b1fb-82a5c0544ee0">
+				<reportElement mode="Transparent" x="263" y="582" width="32" height="13" uuid="a35b021e-6ff1-4535-b1fb-82a5c0544ee0">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{group3_sec5_value3}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="263" y="608" width="32" height="13" uuid="65211fd7-2102-401d-b550-6100e38eec04">
+				<reportElement mode="Transparent" x="263" y="607" width="32" height="13" uuid="65211fd7-2102-401d-b550-6100e38eec04">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>

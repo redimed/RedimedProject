@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-08-18T10:46:13 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="qantas_rampbaggage" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0e7ab213-d16c-402e-9f0a-2d1894e3f2ff">
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sakila Local Connection"/>
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="136"/>
+	<property name="ireport.y" value="544"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<parameter name="patient_id" class="java.lang.Integer">
@@ -30,9 +28,13 @@ p.Mobile,
 p.Email
 from qantas_fleet q
 inner join cln_patients p on p.Patient_id = q.PATIENT_ID
-where q.PATIENT_ID =  $P{patient_id}]]>
+where q.PATIENT_ID =  $P{patient_id} and
+q.CAL_ID = $P{cal_id}]]>
 	</queryString>
-	<field name="PATIENT_ID" class="java.lang.Long">
+	<field name="ID" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PATIENT_ID" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="CAL_ID" class="java.lang.Integer">
@@ -819,7 +821,7 @@ where q.PATIENT_ID =  $P{patient_id}]]>
 				<text><![CDATA[X]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="510" y="400" width="28" height="19" uuid="85316460-90c1-4ca8-ab03-e7a39609eb16">
+				<reportElement x="510" y="400" width="28" height="19" isPrintWhenDetailOverflows="true" uuid="85316460-90c1-4ca8-ab03-e7a39609eb16">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 					<printWhenExpression><![CDATA[$F{check2}.equals("0")]]></printWhenExpression>
@@ -830,7 +832,7 @@ where q.PATIENT_ID =  $P{patient_id}]]>
 				<text><![CDATA[X]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="539" y="400" width="28" height="19" uuid="e2c9f51f-f4f6-49f4-a715-73eed4a01815">
+				<reportElement x="539" y="400" width="28" height="19" isPrintWhenDetailOverflows="true" uuid="e2c9f51f-f4f6-49f4-a715-73eed4a01815">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					<printWhenExpression><![CDATA[$F{check2}.equals("1")]]></printWhenExpression>
@@ -1654,28 +1656,28 @@ where q.PATIENT_ID =  $P{patient_id}]]>
 				<text><![CDATA[X]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="257" y="560" width="32" height="13" uuid="f82de77a-1323-4d27-9bdb-44bb1d0aa295">
+				<reportElement mode="Transparent" x="257" y="558" width="32" height="13" uuid="f82de77a-1323-4d27-9bdb-44bb1d0aa295">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{group3_sec5_value1}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="257" y="583" width="32" height="13" uuid="1f155a64-c015-45eb-b58c-07d75c6fe445">
+				<reportElement mode="Transparent" x="257" y="581" width="32" height="13" uuid="1f155a64-c015-45eb-b58c-07d75c6fe445">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{group3_sec5_value2}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="257" y="606" width="32" height="13" uuid="a35b021e-6ff1-4535-b1fb-82a5c0544ee0">
+				<reportElement mode="Transparent" x="257" y="604" width="32" height="13" uuid="a35b021e-6ff1-4535-b1fb-82a5c0544ee0">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
 				<textFieldExpression><![CDATA[$F{group3_sec5_value3}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="257" y="630" width="32" height="13" uuid="65211fd7-2102-401d-b550-6100e38eec04">
+				<reportElement mode="Transparent" x="257" y="628" width="32" height="13" uuid="65211fd7-2102-401d-b550-6100e38eec04">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
@@ -2257,12 +2259,12 @@ where q.PATIENT_ID =  $P{patient_id}]]>
 				<textFieldExpression><![CDATA[$F{group4_comment1}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="354" y="263" width="212" height="74" uuid="7fe7466f-e02b-47fa-8f8b-e809f4026354">
+				<reportElement mode="Transparent" x="355" y="262" width="212" height="74" uuid="7fe7466f-e02b-47fa-8f8b-e809f4026354">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box leftPadding="10">
-					<leftPen lineWidth="0.4"/>
+					<leftPen lineWidth="0.0"/>
 				</box>
 				<textElement>
 					<paragraph lineSpacing="AtLeast" lineSpacingSize="16.0"/>
@@ -2270,7 +2272,7 @@ where q.PATIENT_ID =  $P{patient_id}]]>
 				<textFieldExpression><![CDATA[$F{group4_comment2}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="354" y="364" width="212" height="42" uuid="9beb962d-b68e-49e1-a727-4194846c43f9">
+				<reportElement mode="Transparent" x="354" y="363" width="212" height="42" uuid="9beb962d-b68e-49e1-a727-4194846c43f9">
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 				</reportElement>
 				<box topPadding="0" leftPadding="10">
@@ -2295,7 +2297,7 @@ where q.PATIENT_ID =  $P{patient_id}]]>
 				<textFieldExpression><![CDATA[$F{group4_comment4}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="354" y="489" width="212" height="51" uuid="243af19a-450c-44f5-8329-a2d6689cb1ba">
+				<reportElement mode="Transparent" x="354" y="488" width="212" height="51" uuid="243af19a-450c-44f5-8329-a2d6689cb1ba">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<box leftPadding="10">

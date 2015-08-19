@@ -2,9 +2,9 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="qantas_rampbaggage" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0e7ab213-d16c-402e-9f0a-2d1894e3f2ff">
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sakila Local Connection"/>
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="2675"/>
+	<property name="ireport.y" value="1347"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<parameter name="patient_id" class="java.lang.String">
@@ -1088,6 +1088,7 @@ where q.PATIENT_ID =  $P{patient_id} AND q.CAL_ID =  $P{cal_id}]]>
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{group3_sec1_value1}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
@@ -1212,6 +1213,7 @@ where q.PATIENT_ID =  $P{patient_id} AND q.CAL_ID =  $P{cal_id}]]>
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{group3_sec1_value2}]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -1873,28 +1875,28 @@ where q.PATIENT_ID =  $P{patient_id} AND q.CAL_ID =  $P{cal_id}]]>
 				<textFieldExpression><![CDATA[$F{group3_sec4_comment1}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="263" y="507" width="32" height="13" uuid="f82de77a-1323-4d27-9bdb-44bb1d0aa295">
+				<reportElement mode="Transparent" x="263" y="506" width="32" height="13" uuid="f82de77a-1323-4d27-9bdb-44bb1d0aa295">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{group3_sec5_value1}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="263" y="532" width="32" height="13" uuid="1f155a64-c015-45eb-b58c-07d75c6fe445">
+				<reportElement mode="Transparent" x="263" y="531" width="32" height="13" uuid="1f155a64-c015-45eb-b58c-07d75c6fe445">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{group3_sec5_value2}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="263" y="557" width="32" height="13" uuid="a35b021e-6ff1-4535-b1fb-82a5c0544ee0">
+				<reportElement mode="Transparent" x="263" y="557" width="32" height="13" uuid="a35b021e-6ff1-4535-b1fb-82a5c0544ee0">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{group3_sec5_value3}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Opaque" x="263" y="582" width="32" height="13" uuid="65211fd7-2102-401d-b550-6100e38eec04">
+				<reportElement mode="Transparent" x="263" y="582" width="32" height="13" uuid="65211fd7-2102-401d-b550-6100e38eec04">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
@@ -2070,7 +2072,7 @@ where q.PATIENT_ID =  $P{patient_id} AND q.CAL_ID =  $P{cal_id}]]>
 				<textFieldExpression><![CDATA[$F{group4_comment1}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="355" y="236" width="211" height="53" uuid="7fe7466f-e02b-47fa-8f8b-e809f4026354">
+				<reportElement mode="Transparent" x="355" y="235" width="211" height="53" uuid="7fe7466f-e02b-47fa-8f8b-e809f4026354">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<box leftPadding="10"/>
@@ -2080,7 +2082,7 @@ where q.PATIENT_ID =  $P{patient_id} AND q.CAL_ID =  $P{cal_id}]]>
 				<textFieldExpression><![CDATA[$F{group4_comment2}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="355" y="318" width="211" height="53" uuid="9beb962d-b68e-49e1-a727-4194846c43f9"/>
+				<reportElement mode="Transparent" x="355" y="317" width="211" height="53" uuid="9beb962d-b68e-49e1-a727-4194846c43f9"/>
 				<box topPadding="0" leftPadding="10"/>
 				<textElement>
 					<paragraph lineSpacing="AtLeast" lineSpacingSize="16.0"/>
@@ -2088,7 +2090,7 @@ where q.PATIENT_ID =  $P{patient_id} AND q.CAL_ID =  $P{cal_id}]]>
 				<textFieldExpression><![CDATA[$F{group4_comment3}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="355" y="394" width="211" height="52" uuid="48b1175a-3896-4c19-82f6-b796b3de19a6"/>
+				<reportElement mode="Transparent" x="355" y="393" width="211" height="52" uuid="48b1175a-3896-4c19-82f6-b796b3de19a6"/>
 				<box leftPadding="10"/>
 				<textElement>
 					<paragraph lineSpacing="AtLeast" lineSpacingSize="16.0"/>
@@ -2096,7 +2098,7 @@ where q.PATIENT_ID =  $P{patient_id} AND q.CAL_ID =  $P{cal_id}]]>
 				<textFieldExpression><![CDATA[$F{group4_comment4}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement mode="Transparent" x="355" y="474" width="211" height="65" uuid="243af19a-450c-44f5-8329-a2d6689cb1ba"/>
+				<reportElement mode="Transparent" x="355" y="473" width="211" height="65" uuid="243af19a-450c-44f5-8329-a2d6689cb1ba"/>
 				<box leftPadding="10"/>
 				<textElement>
 					<paragraph lineSpacing="AtLeast" lineSpacingSize="16.0"/>
