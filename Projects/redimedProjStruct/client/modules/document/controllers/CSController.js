@@ -4,13 +4,10 @@ angular.module('app.loggedIn.document.QANTAScustomerservice.controllers',[])
             formatYear: 'yy',
             startingDay: 1
         };
-        //$scope.patientInfo = localStorageService.get('tempPatient');
         CalID = $stateParams.cal_id; 
         Patient_ID = $stateParams.patient_id;
         $scope.isSignatureShow = false;
-        //console.log($scope.patientInfo);
         var oriInfo,clearInfo;
-        //$scope.patientInfo.DOB = moment($scope.patientInfo.DOB).format('YYYY-MM-DD');
          $scope.rates = [
           {id:0, name:'Excellent'},
           {id:1, name:'Very Good'},
@@ -42,20 +39,39 @@ angular.module('app.loggedIn.document.QANTAScustomerservice.controllers',[])
               $scope.info.group3_sec2_rate =null;
             }
             else{
-              if(value<71&&value>0){
-                $scope.info.group3_sec2_rate ="Excellent";
-              }
-              else if(value>=71&&value<=102){
-                $scope.info.group3_sec2_rate ="Good";
-              }
-              else if(value>=103&&value<=117){
-                $scope.info.group3_sec2_rate ="Average";
-              }
-              else if(value>=118&&value<=147){
-                $scope.info.group3_sec2_rate ="Below Average";
+              if($scope.patientInfo.Sex==0 || $scope.patientInfo.Sex=="Male"){
+                if(value<71&&value>0){
+                  $scope.info.group3_sec2_rate ="Excellent";
+                }
+                else if(value>=71&&value<=102){
+                  $scope.info.group3_sec2_rate ="Good";
+                }
+                else if(value>=103&&value<=117){
+                  $scope.info.group3_sec2_rate ="Average";
+                }
+                else if(value>=118&&value<=147){
+                  $scope.info.group3_sec2_rate ="Below Average";
+                }
+                else{
+                  $scope.info.group3_sec2_rate ="Poor";
+                }
               }
               else{
-                $scope.info.group3_sec2_rate ="Poor";
+                if(value<97&&value>0){
+                  $scope.info.group3_sec2_rate ="Excellent";
+                }
+                else if(value>=97&&value<=127){
+                  $scope.info.group3_sec2_rate ="Good";
+                }
+                else if(value>=128&&value<=142){
+                  $scope.info.group3_sec2_rate ="Average";
+                }
+                else if(value>=143&&value<=171){
+                  $scope.info.group3_sec2_rate ="Below Average";
+                }
+                else{
+                  $scope.info.group3_sec2_rate ="Poor";
+                }
               }
             }
           }
