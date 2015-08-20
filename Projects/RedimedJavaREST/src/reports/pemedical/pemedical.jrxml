@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="11de7c87-5503-43b6-9dc6-6f0b89284ea4">
-	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="4038"/>
+	<property name="ireport.y" value="2592"/>
 	<import value="javax.imageio.ImageIO"/>
 	<import value="org.apache.commons.codec.binary.Base64"/>
 	<parameter name="patient_id" class="java.lang.Integer">
@@ -1814,7 +1814,7 @@ where q.PATIENT_ID =  $P{patient_id}]]>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement>
-					<paragraph lineSpacing="AtLeast" lineSpacingSize="25.0"/>
+					<paragraph lineSpacing="AtLeast" lineSpacingSize="16.0" leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{part1_sec2_comment1}]]></textFieldExpression>
 			</textField>
@@ -1824,7 +1824,7 @@ where q.PATIENT_ID =  $P{patient_id}]]>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<textElement>
-					<paragraph lineSpacing="AtLeast" lineSpacingSize="25.0"/>
+					<paragraph lineSpacing="AtLeast" lineSpacingSize="16.0" leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{part1_sec2_comment2}]]></textFieldExpression>
 			</textField>
@@ -2112,13 +2112,13 @@ where q.PATIENT_ID =  $P{patient_id}]]>
 			<textField>
 				<reportElement x="421" y="346" width="100" height="17" uuid="8940faf0-0d04-42b0-a8ce-98b5dfb8a31e"/>
 				<box leftPadding="8"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{part1_sec4_value3}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="421" y="363" width="100" height="17" uuid="9ed55ea3-49ef-42c2-a157-83d00b27464e"/>
 				<box leftPadding="8"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{part1_sec4_value4}]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -2314,8 +2314,8 @@ where q.PATIENT_ID =  $P{patient_id}]]>
 				<reportElement mode="Transparent" x="37" y="576" width="310" height="35" uuid="1109cb92-2953-4925-894f-21fbf09dd049">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
-				<textElement>
-					<paragraph lineSpacing="AtLeast" lineSpacingSize="25.0"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<paragraph lineSpacing="AtLeast" lineSpacingSize="16.0" leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{part1_sec5_comment1}]]></textFieldExpression>
 			</textField>
@@ -2333,6 +2333,9 @@ where q.PATIENT_ID =  $P{patient_id}]]>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<paragraph leftIndent="10"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{part1_sec5_comment2}]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -2401,12 +2404,15 @@ where q.PATIENT_ID =  $P{patient_id}]]>
 			<textField>
 				<reportElement mode="Transparent" x="37" y="759" width="309" height="35" uuid="9ae36f52-f637-45d8-8421-b7d1e064730d"/>
 				<textElement>
-					<paragraph lineSpacing="AtLeast" lineSpacingSize="25.0"/>
+					<paragraph lineSpacing="AtLeast" lineSpacingSize="16.0" leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{part1_sec6_comment1}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="348" y="759" width="209" height="17" uuid="16f82b47-bf9d-4893-bbd1-aed4941fc7d8"/>
+				<textElement>
+					<paragraph leftIndent="10"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{part1_sec6_comment2}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -2456,7 +2462,7 @@ where q.PATIENT_ID =  $P{patient_id}]]>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<textElement>
-					<paragraph lineSpacing="AtLeast" lineSpacingSize="25.0"/>
+					<paragraph lineSpacing="AtLeast" lineSpacingSize="16.0" leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{part1_sec7_comment1}]]></textFieldExpression>
 			</textField>
@@ -2500,14 +2506,17 @@ where q.PATIENT_ID =  $P{patient_id}]]>
 			</image>
 			<textField>
 				<reportElement x="146" y="82" width="100" height="17" uuid="51b8f05b-f54c-43e6-9b0e-a8bcc360f868"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{part2_sec1_value1}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="146" y="99" width="100" height="17" uuid="eaa5f8f7-1072-4975-bc6f-fe1597675d74"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{part2_sec1_value2}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="70" y="117" width="49" height="17" uuid="540c30cb-7e9f-4ae4-8f4a-6307b054a964"/>
+				<reportElement x="72" y="119" width="49" height="17" uuid="540c30cb-7e9f-4ae4-8f4a-6307b054a964"/>
+				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[Math.round(($F{part2_sec1_value2}*10000)/($F{part2_sec1_value1}*$F{part2_sec1_value1}))]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -2548,14 +2557,17 @@ where q.PATIENT_ID =  $P{patient_id}]]>
 			</staticText>
 			<textField>
 				<reportElement x="421" y="82" width="100" height="17" uuid="bcceadf7-6abf-4ee9-9802-afe5e57896ed"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{part2_sec2_value1}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="421" y="99" width="100" height="17" uuid="33573945-5e9b-4527-9243-857adb7da663"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{part2_sec2_value2}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="421" y="118" width="100" height="17" uuid="e8f61ab6-3162-48c4-bc2a-ad2ddff99f71"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{part2_sec2_value3}]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -2694,34 +2706,42 @@ where q.PATIENT_ID =  $P{patient_id}]]>
 			</staticText>
 			<textField>
 				<reportElement x="173" y="284" width="54" height="15" uuid="967896dc-0013-4bef-9324-8344aa635a72"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{part2_sec5_value1}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="173" y="299" width="54" height="15" uuid="3c9ec68a-8d45-48a7-9270-4f5278e6bd84"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{part2_sec5_value3}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="173" y="314" width="54" height="15" uuid="bb1b650f-108d-4a34-99d8-058ff34fc789"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{part2_sec5_value5}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="173" y="329" width="54" height="15" uuid="03d3787a-26a9-49b2-8f35-6c5b66d17f42"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{part2_sec5_value7}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="226" y="284" width="46" height="15" uuid="7ce93454-da32-4f8b-b087-322b3a14a5bf"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{part2_sec5_value2}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="226" y="299" width="46" height="15" uuid="6ea79bb8-bce4-44b3-ba8b-df74fae687de"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{part2_sec5_value4}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="226" y="314" width="46" height="15" uuid="784e47ad-726c-4c3e-908d-4ba56ea1bfb5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{part2_sec5_value6}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="226" y="329" width="46" height="15" uuid="24ac6af9-cefc-4c7d-9135-b338b8ad1c29"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{part2_sec5_value8}]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -3014,18 +3034,22 @@ where q.PATIENT_ID =  $P{patient_id}]]>
 			</staticText>
 			<textField>
 				<reportElement x="442" y="514" width="55" height="14" uuid="065c661a-c16b-4e12-9d4f-9469dec5160f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{part2_sec8_value1}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="442" y="528" width="55" height="14" uuid="47e9ee8d-3616-4c9f-82dc-47c40717f3df"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{part2_sec8_value3}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="497" y="514" width="55" height="14" uuid="cf58d462-b2b6-4310-8f1b-0bfbd4aca264"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{part2_sec8_value2}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="497" y="528" width="55" height="14" uuid="e640ddee-3c5f-4b14-b250-0a054afc1c31"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{part2_sec8_value4}]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -3210,16 +3234,18 @@ where q.PATIENT_ID =  $P{patient_id}]]>
 			</staticText>
 			<textField>
 				<reportElement x="234" y="761" width="42" height="17" uuid="865c8953-89c6-4408-8e29-0ff8df11dfd0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{part2_sec9_value1}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="234" y="779" width="42" height="17" uuid="81115126-789b-4502-b35e-b486ea12455f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{part2_sec9_value2}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="326" y="585" width="231" height="193" uuid="c06e7c00-007a-43df-bbd0-22e32d760b0c"/>
 				<textElement>
-					<paragraph lineSpacing="AtLeast" lineSpacingSize="25.0"/>
+					<paragraph lineSpacing="AtLeast" lineSpacingSize="16.0" leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{part2_sec10_comment1}]]></textFieldExpression>
 			</textField>
@@ -3366,7 +3392,7 @@ where q.PATIENT_ID =  $P{patient_id}]]>
 			<textField>
 				<reportElement x="38" y="280" width="520" height="279" uuid="12a9f405-4c5a-44a9-8436-2117c3d0dbdb"/>
 				<textElement>
-					<paragraph lineSpacing="AtLeast" lineSpacingSize="25.0"/>
+					<paragraph lineSpacing="AtLeast" lineSpacingSize="16.0" leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{part3_sec3_comment1}]]></textFieldExpression>
 			</textField>
@@ -3394,35 +3420,35 @@ where q.PATIENT_ID =  $P{patient_id}]]>
 			</image>
 			<textField>
 				<reportElement x="112" y="159" width="20" height="10" uuid="1f8776cf-e126-48ed-a01c-97121ecececd"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{part3_sec4_rate1}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="112" y="172" width="20" height="10" uuid="044207de-1b1f-4e00-87a8-7607d6d2d566"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{part3_sec4_rate2}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="112" y="185" width="20" height="10" uuid="d659e389-feaf-473e-976d-448ce802a01f"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{part3_sec4_rate3}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="112" y="198" width="20" height="10" uuid="fee0f940-545f-4d71-887d-8df731101566"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{part3_sec4_rate4}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="112" y="209" width="20" height="10" uuid="f94ef71a-c84f-4d7b-8f23-e4b2233f8b7a"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{part3_sec4_rate1}+$F{part3_sec4_rate2}+$F{part3_sec4_rate3}+$F{part3_sec4_rate4}]]></textFieldExpression>
@@ -3430,7 +3456,7 @@ where q.PATIENT_ID =  $P{patient_id}]]>
 			<textField>
 				<reportElement x="205" y="158" width="369" height="63" uuid="b8ef782e-18ab-438e-a4b2-74f926d7143e"/>
 				<textElement>
-					<paragraph lineSpacing="AtLeast" lineSpacingSize="25.0"/>
+					<paragraph lineSpacing="AtLeast" lineSpacingSize="16.0" leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{part3_sec4_comment1}]]></textFieldExpression>
 			</textField>
@@ -3550,7 +3576,7 @@ where q.PATIENT_ID =  $P{patient_id}]]>
 			<textField>
 				<reportElement x="205" y="159" width="369" height="61" uuid="9e87358f-18a5-4432-8048-681a9d641e1d"/>
 				<textElement>
-					<paragraph lineSpacing="AtLeast" lineSpacingSize="25.0"/>
+					<paragraph lineSpacing="AtLeast" lineSpacingSize="16.0" leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{part3_sec5_comment1}]]></textFieldExpression>
 			</textField>
@@ -3598,7 +3624,7 @@ where q.PATIENT_ID =  $P{patient_id}]]>
 			<textField>
 				<reportElement x="205" y="178" width="369" height="61" uuid="d5e62a05-42ae-4793-af2f-82d01ada1bd9"/>
 				<textElement>
-					<paragraph lineSpacing="AtLeast" lineSpacingSize="25.0"/>
+					<paragraph lineSpacing="AtLeast" lineSpacingSize="16.0" leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{part3_sec6_comment1}]]></textFieldExpression>
 			</textField>
@@ -3645,35 +3671,35 @@ where q.PATIENT_ID =  $P{patient_id}]]>
 				<imageExpression><![CDATA[$P{realPath}+"pemedical10.png"]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement x="117" y="140" width="21" height="10" uuid="43cb8297-cfc7-45ac-9f8b-2a3ad97448a2"/>
+				<reportElement x="117" y="139" width="21" height="10" uuid="43cb8297-cfc7-45ac-9f8b-2a3ad97448a2"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{part3_sec7_rate1}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="117" y="152" width="21" height="10" uuid="1764c6a5-7b1c-4094-ab5b-194ef3c26ad7"/>
+				<reportElement x="117" y="151" width="21" height="10" uuid="1764c6a5-7b1c-4094-ab5b-194ef3c26ad7"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{part3_sec7_rate2}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="117" y="164" width="21" height="10" uuid="2e2778d7-1055-4912-a0b5-68fd01a28145"/>
+				<reportElement x="117" y="163" width="21" height="10" uuid="2e2778d7-1055-4912-a0b5-68fd01a28145"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{part3_sec7_rate3}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="117" y="176" width="21" height="10" uuid="5e3675cc-16f7-4e66-9fcd-c61f785aabd6"/>
+				<reportElement x="117" y="175" width="21" height="10" uuid="5e3675cc-16f7-4e66-9fcd-c61f785aabd6"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{part3_sec7_rate4}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="117" y="189" width="21" height="10" uuid="cde19fdc-8dde-480f-91c6-755cbf87899d"/>
+				<reportElement x="117" y="188" width="21" height="10" uuid="cde19fdc-8dde-480f-91c6-755cbf87899d"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
@@ -3682,7 +3708,7 @@ where q.PATIENT_ID =  $P{patient_id}]]>
 			<textField>
 				<reportElement x="205" y="138" width="369" height="61" uuid="27027353-23eb-4bc9-9470-d6439e4f7eb6"/>
 				<textElement>
-					<paragraph lineSpacing="AtLeast" lineSpacingSize="25.0"/>
+					<paragraph lineSpacing="AtLeast" lineSpacingSize="18.0" leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{part3_sec7_comment1}]]></textFieldExpression>
 			</textField>
@@ -3883,12 +3909,12 @@ where q.PATIENT_ID =  $P{patient_id}]]>
 			</textField>
 			<textField>
 				<reportElement x="503" y="444" width="55" height="17" uuid="832aa120-8aaf-493c-8084-0516f4f97baf"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{part5_sec2_comment1}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="460" y="462" width="50" height="17" uuid="e04d5d4d-2025-44d9-ae59-32b84d4a7835"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{part5_sec2_comment2}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -3982,7 +4008,7 @@ where q.PATIENT_ID =  $P{patient_id}]]>
 			<textField>
 				<reportElement x="38" y="586" width="519" height="69" uuid="73c06ca3-b0dc-44f6-bbdf-c83fbfff2173"/>
 				<textElement>
-					<paragraph lineSpacing="AtLeast" lineSpacingSize="25.0"/>
+					<paragraph lineSpacing="AtLeast" lineSpacingSize="16.0" leftIndent="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{part7_sec3_comment1}]]></textFieldExpression>
 			</textField>

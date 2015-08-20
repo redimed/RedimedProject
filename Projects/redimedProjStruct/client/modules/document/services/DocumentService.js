@@ -739,10 +739,106 @@ angular.module('app.loggedIn.document.services', [])
             };
         }
 
+        //*********************QANTAS_CS***************************************** 
+
+        documentService.insertQANTAS_CS = function(obj){
+            var insertQANTAS_CS_api = api.all('document/insertQANTAS_CS');
+            return insertQANTAS_CS_api.post({info: obj});
+        }
+
+        documentService.checkQANTAS_CS = function(Patient_ID){
+            var checkQANTAS_CS_api = api.all("document/checkQANTAS_CS");
+            return checkQANTAS_CS_api.post({Patient_ID:Patient_ID});
+        }
+
+        documentService.updateQANTAS_CS = function(obj){
+            var updateQANTAS_CS_api = api.all("document/updateQANTAS_CS");
+            return updateQANTAS_CS_api.post({info: obj});
+        }
+
+        documentService.deleteQANTAS_CS = function(Patient_ID){
+            var deleteQANTAS_CS_api = api.all("document/deleteQANTAS_CS");
+            return deleteQANTAS_CS_api.post({Patient_ID:Patient_ID});
+        }
+
+        //********************end QANTAS_CS**************************************
+
+        //***********************QANTAS_Fleet************************************
+
+        documentService.checkQANTAS_Fleet = function(Patient_ID){
+            var checkQANTAS_Fleet_api = api.all('document/checkQANTAS_Fleet');
+            return checkQANTAS_Fleet_api.post({Patient_ID:Patient_ID});
+        }
+
+        documentService.insertQANTAS_Fleet = function(obj){
+            var insertQANTAS_Fleet_api = api.all('document/insertQANTAS_Fleet');
+            return insertQANTAS_Fleet_api.post({info: obj});
+        }
+
+        documentService.updateQANTAS_Fleet = function(obj){
+            var updateQANTAS_Fleet_api = api.all("document/updateQANTAS_Fleet");
+            return updateQANTAS_Fleet_api.post({info: obj});
+        }
+
+        documentService.deleteQANTAS_Fleet = function(Patient_ID){
+            var deleteQANTAS_Fleet_api = api.all('document/deleteQANTAS_Fleet');
+            return deleteQANTAS_Fleet_api.post({Patient_ID:Patient_ID,});
+        }
+
+        //*******************end QANTAS_Fleet************************************
+
+        //******************QANTAS_groundsupport*********************************
+
+        documentService.checkQANTAS_groundsupport = function(Patient_ID){
+            var checkQANTAS_groundsupport_api = api.all('document/checkQANTAS_groundsupport');
+            return checkQANTAS_groundsupport_api.post({Patient_ID:Patient_ID});
+        }
+
+        documentService.insertQANTAS_groundsupport = function(obj){
+            var insertQANTAS_groundsupport_api = api.all('document/insertQANTAS_groundsupport');
+            return insertQANTAS_groundsupport_api.post({info:obj});
+        }
+
+        documentService.updateQANTAS_groundsupport = function(obj){
+            var updateQANTAS_groundsupport_api = api.all('document/updateQANTAS_groundsupport');
+            return updateQANTAS_groundsupport_api.post({info:obj});
+        }
+
+        documentService.deleteQANTAS_groundsupport = function(Patient_ID){
+            var deleteQANTAS_groundsupport_api = api.all('document/deleteQANTAS_groundsupport');
+            return deleteQANTAS_groundsupport_api.post({Patient_ID:Patient_ID});
+        }
+
+        //******************end QANTAS_groundsupport*****************************
+
+        //******************QANTAS_RampBaggage***********************************
+
+        documentService.checkQANTAS_RampBaggage = function(Patient_ID){
+            var checkQANTAS_RampBaggage_api = api.all('document/checkQANTAS_RampBaggage');
+            return checkQANTAS_RampBaggage_api.post({Patient_ID:Patient_ID});
+        }
+
+        documentService.insertQANTAS_RampBaggage = function(obj){
+            var insertQANTAS_RampBaggage_api = api.all('document/insertQANTAS_RampBaggage');
+            return insertQANTAS_RampBaggage_api.post({info:obj});
+        }
+
+        documentService.updateQANTAS_RampBaggage = function(obj){
+            var updateQANTAS_RampBaggage_api = api.all('document/updateQANTAS_RampBaggage');
+            return updateQANTAS_RampBaggage_api.post({info:obj});
+        }
+
+        documentService.deleteQANTAS_RampBaggage = function(Patient_ID){
+            var deleteQANTAS_RampBaggage_api = api.all('document/deleteQANTAS_RampBaggage');
+            return deleteQANTAS_RampBaggage_api.post({Patient_ID:Patient_ID});
+        }
+
+        //******************end QANTAS_RampBaggage*******************************
+
         //******************PEMedical********************************************
-        documentService.checkPEMedical = function(Patient_ID,CalID,company_id){
+        documentService.checkPEMedical = function(Patient_ID,CalID){
             var checkPEMedical_api = api.all('document/checkPEMedical');
-            return checkPEMedical_api.post({Patient_ID:Patient_ID,CalID:CalID,company_id:company_id});
+            return checkPEMedical_api.post({Patient_ID:Patient_ID,CalID:CalID});
         }
 
         documentService.insertPEMedical = function(obj){

@@ -15,7 +15,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 
 			scope.arrayAppid=[];
 			scope.oldColor=[];
-			/*when click*/
+			/*when click right mouse*/
 			scope.isKeyPressed = function($event){
 				e = event || window.event;
 				 if (e.altKey) {
@@ -85,6 +85,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 			    	 };
 			    }
 			}
+			/*Changle serveice*/
 			scope.changeService = function(SERVICE_ID){
 				var postData=[]
 				for (var i = 0; i < scope.arrayAppid.length; i++) {
@@ -112,6 +113,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 					});
 				};
 			}
+			/*changle status for appointment*/
 			scope.changeStatusFor = function(status){
 				for (var i = 0; i < scope.arrayAppid.length; i++) {
 		       		postData = {
@@ -157,6 +159,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 				angular.element("#changeStatus").css({'display':'none'});
 			})
 			scope.servicedata ={};
+			/*get service in sys_service*/
 			scope.getServiceColor = function(){
 				AppointmentModel.getServiceColor('data')
 				.then(function(response){
@@ -166,7 +169,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 				})
 			}
 			scope.getServiceColor();
-		
+			/*when click add new patient*/
 			scope.addPatient = function(){
 				var modalInstance = $modal.open({
 					templateUrl: 'addPatient',
@@ -195,12 +198,13 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 					}
 				})
 			}
+			/*go to doctor calendar*/
 			scope.goToCalendarDetail = function(doctor){
 				$cookieStore.put('appointment', scope.appointment.search);
 
 				$state.go('loggedIn.appointment_doctor', {doctorId: doctor.DOCTOR_ID});
 			}
-
+			/*add minutes in avaliable hour*/
 			scope.extendMinutes = function(hour, minute){
 				hour = scope.convertToSeconds(hour);
 				var seconds = hour+minute*60;
@@ -214,14 +218,14 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 			    var time    = hours+':'+minutes;
 			    return time;
 			}
-
+			/*convert time to seconds*/
 			scope.convertToSeconds = function(time){
 				var hour = parseInt(time.substring(0, 2));
 			    var minute = parseInt(time.substring(3));
 
 			    return hour*3600+minute*60;
 			}
-
+			/*compare two hour*/
 			scope.differentTimeHours = function(hourOne, hourSecond){
 				if(hourSecond !== 0){
 					hourOne = scope.convertToSeconds(hourOne);
@@ -232,7 +236,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 					return 0;
 				}
 			}
-
+			/*Dropdown alert */
 			scope.showDropdown = function(patient, col){
 				$modal.open({
 					templateUrl: 'notifyAlert',
@@ -271,7 +275,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 					}
 				})
 			}
-
+			/*Go to detail patient default consultation*/
 			scope.goToAppDetail = function(CAL_ID, Patient_id){
 				$state.go('loggedIn.patient.consult', {cal_id: CAL_ID, patient_id: Patient_id});
 
@@ -283,21 +287,21 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 				site_id: 1,
 				clinical_dept_id: ''
 			}
-
+			/*Load redimed site service*/
 			var loadSite = function(){
 				mdtRedimedsitesService.list()
 				.then(function(response){
 					scope.site.list = response.data;
 				}, function(error){})
 			}
-
+			/*load clinical dept*/
 			var loadClinical = function(){
 				mdtDeptService.listAll()
 				.then(function(response){
 					scope.clinicalDept.list = response.data;
 				}, function(error){})
 			}
-
+			/*Load all calendar in appointment*/
 			var load = function(){
 				var postData = angular.copy(scope.appointment.search);
 				postData.datepicker = ConfigService.convertToDB(postData.datepicker);
@@ -585,7 +589,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 
 				}, function(error){})
 			}
-
+			/*load list patient in status watting*/
 			var dialogWaitingListAdd = function(col){
 				angular.element("#popupMenu").css({'display':'none'});
 
@@ -616,11 +620,13 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 					}
 				});
 			}
+			/*when click right Update booking*/
 			var dialogRightEdit = function(app, col){
 				angular.element("#popupMenu").css({'display':'none'});
 				var patient = scope.appointment.selectedPatient;
 				dialogEdit(app, col,patient);
 			}
+			/* show popup edit booking appointment*/
 			var dialogEdit = function(app, col,patient){
 				scope.appointment.load();
 				if (col.IS_BOOKABLE == 1) {
@@ -679,6 +685,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 
 					modalInstance.result.then(function(patient){
 						if(patient){
+							scope.loadAlertCenterPatient.load();
 							scope.appointment.load();
 							scope.alertCenter.load();
 							//toastr.success('Added Successfully');
@@ -700,12 +707,13 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
                 	
 				};
 			}
+			/*right click make new booking*/
 			var dialogRightAdd = function(app, col){
 				angular.element("#popupMenu").css({'display':'none'});
 
 				dialogAdd(app, col);
 			}
-
+			/*show popup add new appointment*/
 			var dialogAdd = function(app, col){
 				scope.appointment.load();
 				if (col.IS_BOOKABLE == 1) {
@@ -760,6 +768,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 
 					modalInstance.result.then(function(patient){
 					if(patient){
+						scope.loadAlertCenterPatient.load();
 						scope.appointment.load();
 						scope.alertCenter.load();
 						toastr.success('Added Successfully');
@@ -1007,9 +1016,6 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 				scope.appointment.selectedCol = angular.copy(col);
 				scope.appointment.selectedPatient = angular.copy(patient);
 			}
-
-			
-
 			scope.appointment = {
 				selectedAppointment: {},
 				selectedCol: {},
@@ -1030,7 +1036,7 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 				scope.appointment.search = $cookieStore.get('appointment');
 				$cookieStore.remove('appointment');
 			}
-
+			/*Load site*/
 			scope.site = {
 				list: [],
 				load: function(){ loadSite(); }
@@ -1044,16 +1050,20 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 				list: [],
 				load: function(){ loadClinical(); }
 			}
+			/*load list patient have next appointment*/
 			var loadAlertCenterPatient = function(){
 				AppointmentModel.alertCenterPatient().then(function(response){
 					scope.loadAlertCenterPatient.list = response.data;
 				})
 			}
+			/*call funtion load list patient have next appointment*/
 			scope.loadAlertCenterPatient = {
 				load: function(){ loadAlertCenterPatient(); },
 				list: [],
 			}	
 			scope.loadAlertCenterPatient.load();
+
+			/*load list notification*/
 			var loadAlertCenter = function(){
 				var postData = angular.copy(scope.appointment.search);
 				postData.datepicker = ConfigService.convertToDB(postData.datepicker);
@@ -1125,7 +1135,6 @@ angular.module('app.loggedIn.appointment.directives.calendar', [])
 					})
 				}, function(error){})
 			}
-
 			scope.clickArrow = function(){
 				scope.alertCenter.arrow = !scope.alertCenter.arrow;
 				if(scope.alertCenter.arrow){

@@ -50,7 +50,8 @@ module.exports = {
     //phanquocchien.c1109g@gmail.com
     rlobListMobile:function(req,res)
     {
-        var date=kiss.checkData(req.body.date)?req.body.date:'';
+        var date=kiss.checkData(req.body.date)?moment(req.body.date).format("YYYY-MM-DD"):'';
+        var serviceId=kiss.checkData(req.body.serviceId)?req.body.serviceId:'';
         if(!kiss.checkListData(date))
         {
             kiss.exlog("rlobListMobile","Loi data truyen den");
@@ -63,12 +64,13 @@ module.exports = {
             " INNER JOIN `redimedsites` redimedsite ON h.`SITE_ID`=`redimedsite`.id  "+
             " LEFT JOIN `cln_appt_patients` patient ON h.`CAL_ID` = patient.`CAL_ID` "+                   
             " WHERE patient.`Patient_id` IS NULL                                     "+
+            " AND h.SERVICE_ID = ?                                                   "+
             " AND DATE(h.`FROM_TIME`)= ?                                             "+
             " AND MINUTE(TIMEDIFF(h.`TO_TIME`,h.`FROM_TIME`)) >0                     ";
         req.getConnection(function(err,connection)
         {
 
-            var query = connection.query(sql,[moment(date).format("YYYY-MM-DD")],function(err,rows)
+            var query = connection.query(sql,[serviceId,date],function(err,rows)
             {
                 if(err)
                 {

@@ -32,6 +32,7 @@ angular.module('app.loggedIn.appointment.directives.add', [])
 			scope.ID_clAPPatient = null;
 			scope.CheckAddPatient = false;
 			scope.wattinglist = false;
+			scope.nextAppointment = null;
 			/*Function acc_type_load : load list account type*/
 			var acc_type_load = function(){
 				ConfigService.account_type_option()
@@ -74,8 +75,10 @@ angular.module('app.loggedIn.appointment.directives.add', [])
 				})
 				.result.then(function(row){
 					if(row){
+						console.log(row);
 						scope.wattinglist = true;
 						scope.CheckAddPatient = false;
+						scope.nextAppointment = row;
 						if (scope.ID_clAPPatient){
 							deleteClnAppPatient(scope.ID_clAPPatient);
 						} 
@@ -99,6 +102,7 @@ angular.module('app.loggedIn.appointment.directives.add', [])
 					if(row){
 						scope.wattinglist = true;
 						scope.CheckAddPatient = false;
+						scope.nextAppointment = null;
 						if (scope.ID_clAPPatient){
 							deleteClnAppPatient(scope.ID_clAPPatient);
 						} 
@@ -156,6 +160,7 @@ angular.module('app.loggedIn.appointment.directives.add', [])
 						scope.row = status;
 						scope.CheckAddPatient = true;
 						scope.wattinglist = false;
+						scope.nextAppointment = null;
 						scope.arr_objectNameFirst = status.First_name;
 						scope.arr_objectNameLast = status.Sur_name;
 					}
@@ -185,6 +190,7 @@ angular.module('app.loggedIn.appointment.directives.add', [])
 					scope.row = row;
 					scope.CheckAddPatient = false;
 					scope.wattinglist = false;
+					scope.nextAppointment = null;
 					if (scope.ID_clAPPatient){
 						deleteClnAppPatient(scope.ID_clAPPatient);
 					} 
@@ -226,6 +232,14 @@ angular.module('app.loggedIn.appointment.directives.add', [])
 					
 				}else{
 					if(scope.checkedit == true){
+						if (scope.nextAppointment) {
+							var dataUpdateNextApp = {
+							cal_id : scope.nextAppointment.CAL_ID,
+							patient_id :scope.nextAppointment.Patient_id
+							}
+							AppointmentModel.checkNextAppointment(dataUpdateNextApp).then(function(response){
+							})
+						};
 						var postData = {
 							form: {},
 							Patient_id: null,
@@ -250,6 +264,14 @@ angular.module('app.loggedIn.appointment.directives.add', [])
 							toastr.success('Edit Successfully');
 						}, function(error){})
 					}else{
+						if (scope.nextAppointment) {
+							var dataUpdateNextApp = {
+							cal_id : scope.nextAppointment.CAL_ID,
+							patient_id :scope.nextAppointment.Patient_id
+							}
+							AppointmentModel.checkNextAppointment(dataUpdateNextApp).then(function(response){
+							})
+						};
 						var postData = ConfigService.convertToDB(scope.search.datepicker).toString();
 						AppointmentModel.ApptG(postData).then(function(response){
 							if(scope.row){

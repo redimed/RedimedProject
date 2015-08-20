@@ -6,7 +6,7 @@
             <div class="note note-success note-bordered">
                 <label class="ng-binding">
                     <label class="bold">Name:</label> &nbsp; {{patientInfo.First_name}} {{patientInfo.Middle_name}} {{patientInfo.Sur_name}}<br>
-                    <label class="bold">Sex:</label> &nbsp; {{patientInfo.Sex==0?"Male":"Female"}}<br>
+                    <label class="bold">Sex:</label> &nbsp; {{patientInfo.Sex==0||patientInfo.Sex=="Male"?"Male":"Female"}}<br>
                     <label class="bold">DOB:</label> &nbsp; {{patientInfo.DOB}}<br>
                     <label class="bold"> Adress:</label> &nbsp; {{patientInfo.Address1}}<br>
                     <label class="bold">PhoneNumber:</label> &nbsp; {{patientInfo.Mobile}}<br>
