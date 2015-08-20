@@ -39,7 +39,7 @@ angular.module('app.loggedIn.document.QANTAScustomerservice.controllers',[])
               $scope.info.group3_sec2_rate =null;
             }
             else{
-              if($scope.patientInfo.Sex==0 || $scope.patientInfo.Sex=="Male"){
+              if($scope.info.Sex==0){
                 if(value<71&&value>0){
                   $scope.info.group3_sec2_rate ="Excellent";
                 }
@@ -56,7 +56,7 @@ angular.module('app.loggedIn.document.QANTAScustomerservice.controllers',[])
                   $scope.info.group3_sec2_rate ="Poor";
                 }
               }
-              else{
+              else if($scope.info.Sex==1){
                 if(value<97&&value>0){
                   $scope.info.group3_sec2_rate ="Excellent";
                 }
