@@ -50,20 +50,27 @@ var ssl_options = {
 var app = express(); //**Create new ExpressJS instance for HTTPS.
 var httpApp = express(); //**Create new ExpressJS instance for HTTP.
 var httpsServer = https.createServer(ssl_options,app); //**Create server for HTTPS
+var httpServer = http.Server(httpApp);
 
-httpApp.set('port', process.env.PORT || 80); //**Set listening port for httpApp
-//**Redirect http to https
-httpApp.get("*", function (req, res, next) {
-    res.redirect("https://" + req.headers.host + req.path);
-}); 
-
-var io = require('socket.io')(httpsServer); //**socket.io: Socket.IO enables real-time bidirectional event-based communication.
+var io = require('socket.io')(httpsServer,{
+    'transports':  ['websocket', 
+                  'flashsocket', 
+                  'htmlfile', 
+                  'xhr-polling', 
+                  'jsonp-polling', 
+                  'polling']
+}); //**socket.io: Socket.IO enables real-time bidirectional event-based communication.
 require('./socket')(io,cookie,cookieParser); //**Incluce socket.js file with params
 
 var clientDir = path.join(__dirname, 'client'); //**Declare variable for client directory
 var uploadedFile = path.join(__dirname, 'uploadFile/PatientPicture/'); //**Declare variable for upload directory
 var documentImage = path.join(__dirname, 'download/documentImage/'); //**Declare variable for document image directory
 
+httpApp.set('port', process.env.PORT || 3000); //**Set listening port for httpApp
+//**Redirect http to https
+httpApp.get("*", function (req, res, next) {
+    res.redirect("https://" + req.headers.host + req.path);
+}); 
 app.set('port', process.env.PORT || 3000); //**Set listening port for app.
 app.enable('trust proxy'); //**Enable 'trust proxy' option for Express
 app.use(useragent.express()); //**Use useragent middleware for Express
@@ -178,7 +185,7 @@ db.sequelize
         if (err) {
             throw err[0];
         } else {
-            // http.createServer(httpApp).listen(httpApp.get('port'), function() {
+            // httpServer.listen(httpApp.get('port'), function() {
             //     console.log('Express HTTP server listening on port ' + httpApp.get('port'));
             // });
              

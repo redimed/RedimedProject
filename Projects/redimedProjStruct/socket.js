@@ -59,6 +59,7 @@ module.exports = function(io,cookie,cookieParser) {
 
     io.use(parser); //**Middleware for socket.io
     
+    
     //**Set all users socket to null when restart server
     db.User.update({socket: null,token: null})
         .success(function(){

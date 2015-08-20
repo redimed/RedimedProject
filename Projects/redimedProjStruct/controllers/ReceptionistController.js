@@ -24,44 +24,30 @@ module.exports = {
 				var apptComplete = [];
 				var apptInjury = [];
 				var apptChecked = [];
-				var resultUpcoming = [];
 
 				if(data.length > 0)
 				{
 					for (var i = 0; i < data.length; i++) 
 					{
 						var item = data[i];
-						var status;
-						var arrName = [];
-						arrName.push(item.Title,item.First_name,item.Sur_name,item.Middle_name);
+						var arrName = [item.Title,item.First_name,item.Sur_name,item.Middle_name];
 						item.patient_name = arrName.join(' ');
 						item.checkedin_start_time = moment.utc(item.checkedin_start_time).format('YYYY-MM-DD HH:mm:ss');
+						var status = item.appt_status != null ? item.appt_status.toLowerCase() : null;
 
-						if(item.appt_status != null)
-							status = item.appt_status.toLowerCase();
-
-						if(item.appt_id != null 
-						   && (status == 'checked in'))
-							apptChecked.push(item);
-
-						if(item.appt_id != null 
-						   && (status == 'booking' || status == 'cancelled' || item.appt_status == null))
-							apptUpcoming.push(item);
-					
-						if(item.appt_id != null && status == 'completed')
-							apptComplete.push(item);
-
-						if(item.appt_id != null && status == 'emergency')
-							apptInjury.push(item);
+						if(item.appt_id != null)
+						{
+							if(status == 'checked in')
+								apptChecked.push(item);
+							else if(status == 'booking' || status == 'cancelled' || status == null)
+								apptUpcoming.push(item);
+							else if(status == 'completed')
+								apptComplete.push(item);
+							else if(status == 'emergency')
+								apptInjury.push(item);
+						}
+						
 					};
-
-					resultUpcoming = _.chain(apptUpcoming)
-						.groupBy("FROM_TIME")
-						.pairs()
-						.map(function(currentItem){
-					        return _.object(_.zip(["time", "appointment"], currentItem));
-						})
-						.value();
 				}
 
 				res.json({status:'success',
@@ -166,90 +152,56 @@ module.exports = {
 		var fromAppt = req.body.fromAppt;
 		var toAppt = req.body.toAppt;
 		var state = req.body.state;
+		var opts = {};
 
 		if(state.toLowerCase() == 'consult' || state.toLowerCase() == 'pickup')
-		{
-			var isPickUp = state.toLowerCase() == 'consult' ? 0 : 1;
-			db.sequelize.query("UPDATE cln_appt_patients SET isPickUp = ? WHERE id = ?",
-						null,{raw:true},[isPickUp, fromAppt.appt_id])
-				.success(function(){
-					if(state.toLowerCase() == 'pickup')
-					{
-						db.sequelize.query("INSERT INTO im_injury_appt_status(appt_id,appt_status,waiting_start_time) "+
-										   "VALUES(?,?,?)",null,{raw:true},[fromAppt.appt_id,'Wating For Picking',moment().format('YYYY-MM-DD HH:mm:ss')])
-						.success(function(){
-							res.json({status:'success'});
-						})
-						.error(function(err){
-							res.json({status:'error'});
-							console.log(err);
-						})
-					}
-					else
-						res.json({status:'success'});
-					
-				})
-				.error(function(err){
-					res.json({status:'error'});
-					console.log(err);
-				})
-		}
-
+			opts = {'isPickUp': state.toLowerCase() == 'consult' ? 0 : 1};
 		else if(state.toLowerCase() == 'checked')
-		{
-			db.sequelize.query("UPDATE cln_appt_patients SET CAL_ID = ?, appt_status = ?, checkedin_start_time = ? WHERE id = ?",
-						null,{raw:true},[toAppt.CAL_ID, 'Checked In', moment().format('YYYY-MM-DD HH:mm:ss'), fromAppt.appt_id])
-				.success(function(){
-					res.json({status:'success'});
-				})
-				.error(function(err){
-					res.json({status:'error'});
-					console.log(err);
-				})
-		}
+			opts = {
+				'CAL_ID': toAppt.CAL_ID,
+				'appt_status': 'Checked In',
+				'checkedin_start_time':  moment().format('YYYY-MM-DD HH:mm:ss')
+			};
 		else if(state.toLowerCase() == 'progress')
-		{
-			var status = '';
-
-			if(fromAppt.appt_status.toLowerCase() == 'emergency')
-				status = 'Urgent';
-			else
-				status = 'Waiting';
-
-			db.sequelize.query("UPDATE cln_appt_patients SET appt_status = ?, actual_doctor_id = ? , checkedin_end_time = ?, room_id = ? WHERE id = ?",
-						null,{raw:true},[status, toAppt.doctor_id , moment().format('YYYY-MM-DD HH:mm:ss'),toAppt.room_id, fromAppt.appt_id])
-				.success(function(){
-					res.json({status:'success'});
-				})
-				.error(function(err){
-					res.json({status:'error'});
-					console.log(err);
-				})
-		}
+			opts = {
+				'actual_doctor_id': toAppt.doctor_id,
+				'appt_status': fromAppt.appt_status.toLowerCase() == 'emergency' ? 'Urgent' : 'Waiting',
+				'checkedin_end_time': moment().format('YYYY-MM-DD HH:mm:ss'),
+				'room_id': toAppt.room_id
+			};
 		else if(state.toLowerCase() == 'cancel')
-		{
-			db.sequelize.query("UPDATE cln_appt_patients SET CAL_ID = ?, appt_status = ? WHERE id = ?",
-						null,{raw:true},[toAppt.CAL_ID, 'Cancelled', fromAppt.appt_id])
-				.success(function(){
-					res.json({status:'success'});
-				})
-				.error(function(err){
-					res.json({status:'error'});
-					console.log(err);
-				})
-		}
+			opts = {
+				'CAL_ID': toAppt.CAL_ID,
+				'appt_status': 'Cancelled'
+			};
 		else if(state.toLowerCase() == 'undo')
-		{
-			db.sequelize.query("UPDATE cln_appt_patients SET appt_status = ?, actual_doctor_id = ?,checkedin_start_time = ? , checkedin_end_time = ? WHERE id = ?",
-						null,{raw:true},[fromAppt.appt_status ,null ,(fromAppt.appt_status == 'Checked In' ? fromAppt.checkedin_start_time : null) , null, fromAppt.appt_id])
-				.success(function(){
+			opts = {
+				'appt_status': fromAppt.appt_status,
+				'actual_doctor_id': null,
+				'checkedin_start_time': (fromAppt.appt_status == 'Checked In' ? fromAppt.checkedin_start_time : null),
+				'checkedin_end_time': null
+			};
+
+		db.ApptPatient.update(opts,{'id': fromAppt.appt_id})
+			.success(function(){
+				if(state.toLowerCase() == 'pickup')
+				{
+					db.sequelize.query("INSERT INTO im_injury_appt_status(appt_id,appt_status,waiting_start_time) "+
+									   "VALUES(?,?,?)",null,{raw:true},[fromAppt.appt_id,'Wating For Picking',moment().format('YYYY-MM-DD HH:mm:ss')])
+					.success(function(){
+						res.json({status:'success'});
+					})
+					.error(function(err){
+						res.json({status:'error'});
+						console.log(err);
+					})
+				}
+				else
 					res.json({status:'success'});
-				})
-				.error(function(err){
-					res.json({status:'error'});
-					console.log(err);
-				})
-		}
-		
+			})
+			.error(function(err){
+				res.json({status:'error'});
+				console.log(err);
+			})
 	}
 }
