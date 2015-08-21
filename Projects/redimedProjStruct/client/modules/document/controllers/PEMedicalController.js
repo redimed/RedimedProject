@@ -3,11 +3,9 @@ angular.module('app.loggedIn.document.PEMedical.controllers',[])
 	$scope.patientInfo = localStorageService.get('tempPatient');
     CalID = $stateParams.cal_id; 
     Patient_ID = $stateParams.patient_id;
-    //company_id = $scope.patientInfo.company_id;
     $scope.path ={};
     $scope.isSubmit = false;
     var oriInfo,clearInfo,height,weight,value;
-    //$scope.patientInfo.DOB = moment($scope.patientInfo.DOB).format('YYYY-MM-DD');
     $scope.isSignatureShow  = [
     {id:0,isShow:false},
     {id:1,isShow:false},
