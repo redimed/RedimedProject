@@ -790,6 +790,43 @@ module.exports =
     },
 
     //phanquocchien.c1109g@gmail.com
+    // get doctor not service
+    getDoctorForSourceTypeNotServiceMobile:function(req,res)
+    {
+        var date=kiss.checkData(req.body.date)?moment(req.body.date).format("YYYY-MM-DD"):'';
+        if(!kiss.checkListData(date))
+        {
+            kiss.exlog("getDoctorForSourceTypeMobile","Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
+        var sql=
+            " SELECT DISTINCT `doctor`.`doctor_id`,`doctor`.`NAME`                    "+
+            " FROM      `cln_appointment_calendar` h                                  "+
+            " INNER JOIN `doctors` doctor ON doctor.`doctor_id`=h.`DOCTOR_ID`         "+
+            " LEFT JOIN `cln_appt_patients` patient ON h.`CAL_ID` = patient.`CAL_ID`  "+                          
+            " WHERE patient.`Patient_id` IS NULL                                      "+
+            " AND DATE(h.`FROM_TIME`)= ?                                              "+
+            " AND MINUTE(TIMEDIFF(h.`TO_TIME`,h.`FROM_TIME`)) >0                      ";
+        req.getConnection(function(err,connection)
+        {
+
+            var query = connection.query(sql,[date],function(err,rows)
+            {
+                if(err)
+                {
+                    res.json({status:'fail'})
+                }
+                else
+                {
+                    res.json({status:'success',data:rows})
+                }
+
+            });
+        });
+    },
+    //phanquocchien.c1109g@gmail.com
+    // get doctor calendar
     getDoctorForSourceTypeMobile:function(req,res)
     {
         var date=kiss.checkData(req.body.date)?moment(req.body.date).format("YYYY-MM-DD"):'';

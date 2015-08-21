@@ -48,6 +48,7 @@ module.exports = {
 
     },
     //phanquocchien.c1109g@gmail.com
+    //get list service 
     rlobListMobile:function(req,res)
     {
         var date=kiss.checkData(req.body.date)?moment(req.body.date).format("YYYY-MM-DD"):'';
@@ -71,6 +72,43 @@ module.exports = {
         {
 
             var query = connection.query(sql,[serviceId,date],function(err,rows)
+            {
+                if(err)
+                {
+                    res.json({status:'fail'})
+                }
+                else
+                {
+                    res.json({status:'success',data:rows})
+                }
+
+            });
+        });
+
+    },
+    //phanquocchien.c1109g@gmail.com
+    //get list location not service 
+    rlobListLocationNotService:function(req,res)
+    {
+        var date=kiss.checkData(req.body.date)?moment(req.body.date).format("YYYY-MM-DD"):'';
+        if(!kiss.checkListData(date))
+        {
+            kiss.exlog("rlobListMobile","Loi data truyen den");
+            res.json({status:'fail'});
+            return;
+        }
+        var sql=
+            " SELECT DISTINCT `redimedsite`.`Site_name`,`redimedsite`.`id`           "+
+            " FROM      `cln_appointment_calendar` h                                 "+
+            " INNER JOIN `redimedsites` redimedsite ON h.`SITE_ID`=`redimedsite`.id  "+
+            " LEFT JOIN `cln_appt_patients` patient ON h.`CAL_ID` = patient.`CAL_ID` "+                   
+            " WHERE patient.`Patient_id` IS NULL                                     "+
+            " AND DATE(h.`FROM_TIME`)= ?                                             "+
+            " AND MINUTE(TIMEDIFF(h.`TO_TIME`,h.`FROM_TIME`)) >0                     ";
+        req.getConnection(function(err,connection)
+        {
+
+            var query = connection.query(sql,[date],function(err,rows)
             {
                 if(err)
                 {

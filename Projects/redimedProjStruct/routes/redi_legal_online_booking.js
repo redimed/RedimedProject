@@ -21,6 +21,7 @@ var func=require('./functions');
 //redimedsites
 app.get('/api/rlob/redimedsites/list',RedimedSiteController.rlobList);
 app.post('/api/rlob/redimedsites/list-mobile',RedimedSiteController.rlobListMobile);//chien
+app.post('/api/rlob/redimedsites/list-location-not-service',RedimedSiteController.rlobListLocationNotService);//chien
 
 //rlType
 app.get('/api/rlob/rl_types/list',rlTypesController.list);
@@ -44,6 +45,7 @@ app.get('/api/rlob/doctors/get-doctors-info-by-userid',doctorsController.getDoct
 app.get('/api/rlob/doctors/get-doctors-by-id',doctorsController.getDoctorById);
 app.get('/api/rlob/doctors/get-doctors-for-source-type',doctorsController.getDoctorForSourceType);
 app.post('/api/rlob/doctors/get-doctors-for-source-type-mobile',doctorsController.getDoctorForSourceTypeMobile);//chien
+app.post('/api/rlob/doctors/get-doctors-for-source-type-not-service-mobile',doctorsController.getDoctorForSourceTypeNotServiceMobile);//chien
 
 
 //cln_appointment-calendar

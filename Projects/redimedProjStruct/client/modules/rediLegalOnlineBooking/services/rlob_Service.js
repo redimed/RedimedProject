@@ -356,7 +356,7 @@ angular.module('app.loggedIn.rlob.services',[])
         //list doctor mobile
         rlobService.ListDoctorMobile=function(date)
         {
-            var result=api.all('rlob/doctors/get-doctors-for-source-type-mobile');
+            var result=api.all('rlob/doctors/get-doctors-for-source-type-not-service-mobile');
             return result.post({date:date});
         }
         //chien 
@@ -364,7 +364,7 @@ angular.module('app.loggedIn.rlob.services',[])
         //list location mobile
         rlobService.ListLocationMobile=function(date)
         {
-            var result=api.all('rlob/redimedsites/list-mobile');
+            var result=api.all('rlob/redimedsites/list-location-not-service');
             return result.post({date:date});
         }
 
