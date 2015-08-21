@@ -308,7 +308,7 @@ angular.module('app.loggedIn.document.QANTAScustomerservice.controllers',[])
                     assessor:null,
                     age2:null
                 };
-                if($scope.patientInfo.Sex=="Male"){
+                if($scope.patientInfo.Sex=="Male" || $scope.patientInfo.Sex==0){
                     $scope.info.Sex = 0;
                 }
                 else{
