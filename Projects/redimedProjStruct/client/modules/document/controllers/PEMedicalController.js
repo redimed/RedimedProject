@@ -3,11 +3,9 @@ angular.module('app.loggedIn.document.PEMedical.controllers',[])
 	$scope.patientInfo = localStorageService.get('tempPatient');
     CalID = $stateParams.cal_id; 
     Patient_ID = $stateParams.patient_id;
-    //company_id = $scope.patientInfo.company_id;
     $scope.path ={};
     $scope.isSubmit = false;
     var oriInfo,clearInfo,height,weight,value;
-    //$scope.patientInfo.DOB = moment($scope.patientInfo.DOB).format('YYYY-MM-DD');
     $scope.isSignatureShow  = [
     {id:0,isShow:false},
     {id:1,isShow:false},
@@ -370,35 +368,6 @@ angular.module('app.loggedIn.document.PEMedical.controllers',[])
             }
           });
         }
-
-        $scope.avt_path = '';
-        var uploader = $scope.uploader = new FileUploader({
-            url:'/api/document/post-upload-file',
-            autoUpload:false,
-            removeAfterUpload:true,
-            onAfterAddingFile: function(item){
-                var arr   = item.file.name.split(".");
-                var check = arr[arr.length-1];
-                if(check == "jpg" || check == "jpeg" || check =="png"){
-                    if(this.queue.length > 1)
-                        this.queue.splice(0,1);
-                }
-                else{
-                    toastr.error("Only jpg, jpeg and png accepted","error format!");
-                    this.queue = [];
-                }
-            }
-        });
-        if(!!$stateParams.patient_id){
-            uploader.formData[0] = {patient_id: $stateParams.patient_id, file_name:(new Date()).getTime(), editMode:true};
-        }
-
-        $scope.openUploader = function(){
-             $timeout(function () {
-                $('#patient_photo_upload').click();
-            }, 100);
-        };
-
 
         $scope.insert = false;
         DocumentService.checkPEMedical(Patient_ID,CalID).then(function(response){

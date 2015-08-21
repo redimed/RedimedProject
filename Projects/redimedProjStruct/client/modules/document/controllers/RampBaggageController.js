@@ -4,12 +4,10 @@ angular.module('app.loggedIn.document.QANTASrampbaggage.controllers',[])
             formatYear: 'yy',
             startingDay: 1
         };
-        //$scope.patientInfo = localStorageService.get('tempPatient');
         CalID = $stateParams.cal_id; 
         Patient_ID = $stateParams.patient_id;
         var oriInfo,clearInfo;
         $scope.isSignatureShow = false;
-        //$scope.patientInfo.DOB = moment($scope.patientInfo.DOB).format('YYYY-MM-DD');
          $scope.rates = [
           {id:0, name:'Excellent'},
           {id:1, name:'Very Good'},
