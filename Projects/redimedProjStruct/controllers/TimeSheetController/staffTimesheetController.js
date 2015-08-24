@@ -6,9 +6,16 @@ var FunctionSendMail = require("./sendMailSystemController");
 var functionForTimesheet = require("./functionForTimesheet");
 //END EXPORTS
 module.exports = {
+
+    /// addAllTask: create a new timesheet and add a task list into it
+    // input: new timesheet data, task list data
+    // output:  - success: send confirmation notification and success message
+    //          - fail: send error message
     addAllTask: function(req, res) {
         var allTask = req.body.allTask;
         var info = req.body.info;
+
+        // add new timesheet with request data 
         db.timeTaskWeek.create({
                 start_date: info.startWeek,
                 end_date: info.endWeek,
@@ -22,29 +29,31 @@ module.exports = {
                 raw: true
             })
             .success(function(data) {
+                // Add list tasks to created timesheet
                 db.timeTaskWeek.max('task_week_id')
                     .success(function(max) {
                         db.timeTasks.max('tasks_id')
                             .success(function(id) {
                                 var tId = id;
-                                for (var task in allTask) {
+                                // INSERT TASK LIST TO TIMESHEET
+                             for (var task in allTask) {
                                     tId = tId + 1;
                                     chainer.add(
                                         db.timeTasks.create({
                                             tasks_id: tId,
                                             tasks_week_id: max,
-                                            "department_code_id": allTask[task].department_code_id,
-                                            "task": allTask[task].task,
-                                            "isParent": allTask[task].isParent,
-                                            "order": allTask[task].order,
-                                            "date": moment(allTask[task].date).format('YYYY-MM-DD'),
-                                            "location_id": allTask[task].location_id,
-                                            "activity_id": allTask[task].activity_id,
-                                            "time_charge": allTask[task].time_temp
+                                            department_code_id: allTask[task].department_code_id,
+                                            task: allTask[task].task,
+                                            isParent: allTask[task].isParent,
+                                            order: allTask[task].order,
+                                            date: moment(allTask[task].date).format('YYYY-MM-DD'),
+                                            location_id: allTask[task].location_id,
+                                            activity_id: allTask[task].activity_id,
+                                            time_charge: allTask[task].time_temp
                                         })
                                     )
 
-                                    //INSERT ITEM
+                                    //INSERT ITEM LIST TO TASK
                                     if (allTask[task].item.length > 0) {
                                         for (var i = 0; i < allTask[task].item.length; i++) {
                                             var a = allTask[task].item[i];
@@ -59,10 +68,10 @@ module.exports = {
                                                 })
                                             )
 
-                                            //INSERT FILE
+                                            //INSERT FILE LIST TO TASK ITEM
                                             if (a.fileUpload !== undefined &&
                                                 a.fileUpload.length > 0) {
-
+                                                // add list file attachment to task item
                                                 for (var keyFile = 0; keyFile < a.fileUpload.length; keyFile++) {
                                                     chainer.add(
                                                         db.time_item_file.create({
