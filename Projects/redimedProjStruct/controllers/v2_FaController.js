@@ -55,7 +55,6 @@ module.exports = {
 
 	postFaChooseSearch: function(req,res){
 		var postData = req.body;
-		console.log('this is postData', postData);
 		var patient_id = postData.search.patient_id;
 		var cal_id = postData.search.cal_id;
 
@@ -120,37 +119,6 @@ module.exports = {
 		})
 	},
 
-	// postInsertHeader: function(req,res){
-	// 	knex.transaction(function(trx){
-	// 		knex('sys_fa_df_headers')
-	// 		.insert(
-	// 			{FA_ID:27}
-	// 		)
-	// 		.transacting(trx)
-	// 		.then(function(res1){
-	// 			return knex('sys_fa_df_headers')
-	// 			.insert([
-	// 				{FA_ID:28},
-	// 				{FA_ID:29},
-	// 				{FA_ID:30}
-	// 			])
-	// 			.transacting(trx)
-	// 			.then(function(res2){
-	// 				console.log("this is res 2",res2);
-	// 			})
-	// 		})
-	// 		.then(trx.commit)
-	// 		.catch(trx.rollback);
-	// 	})
-	// 	.then(function(inserts){
-	// 		console.log(inserts.length + ' new records saved.');
-	// 		res.end();
-	// 	})
-	// 	.catch(function(error){
-	// 		console.log("no record saved due to an unexpected error");
-	// 		res.end();
-	// 	})
-	// }
 
 	postInsert: function(req,res){
 		knex.transaction(function(trx){
@@ -238,7 +206,6 @@ module.exports = {
 			res.json({status:'success'});
 		})
 		.catch(function(error){
-			console.log("insert failed due to unexpected error", error);
 			res.json(500,{status:'error'});
 		})
 	},
@@ -311,90 +278,6 @@ module.exports = {
 		})
 	},
 
-	// postGet: function(req,res){
-	// 	var getResult = {};
-	// 	var headerId = req.body.id;
-	// 	//get header
-	// 	knex
-	// 	.select()
-	// 	.from('sys_fa_df_headers')
-	// 	.where({FA_ID: headerId})
-	// 	.then(function(getHeaderRes){
-	// 		getResult = getHeaderRes[0];
-	// 		//get sections of header
-	// 		knex
-	// 		.select()
-	// 		.from('sys_fa_df_sections')
-	// 		.where({FA_ID: headerId})
-	// 		.orderBy('ORD')
-	// 		.then(function(getSectionsRes){
-	// 			if(getSectionsRes.length===0){
-	// 				res.json(500,{status: 'failed'}) 
-	// 			}
-	// 			else{
-	// 				getResult.sections = getSectionsRes;
-	// 				getResult.sections.forEach(function(section){
-	// 					//get lines in sections
-	// 					knex
-	// 					.select()
-	// 					.from('sys_fa_df_lines')
-	// 					.where({
-	// 						SECTION_ID: section.SECTION_ID,
-	// 						FA_ID: headerId
-	// 					})
-	// 					.orderBy('ORD')
-	// 					.then(function(getLinesRes){
-	// 							if(getLinesRes.length>0){
-	// 								section.lines = getLinesRes;
-	// 								section.lines.forEach(function(line, index){
-	// 								//get line details
-	// 									knex
-	// 									.select()
-	// 									.from('sys_fa_df_line_details')
-	// 									.where({LINE_ID: line.LINE_ID})
-	// 									.orderBy('ORD')
-	// 									.then(function(getDetailsRes){
-	// 										line.details = getDetailsRes;
-	// 										//get line comment
-	// 										knex
-	// 										.select()
-	// 										.from('sys_fa_df_comments')
-	// 										.where({LINE_ID: line.LINE_ID})
-	// 										.then(function(getCommentsRes){
-	// 											line.comments = getCommentsRes;
-	// 											if(getSectionsRes.indexOf(section)===getSectionsRes.length-1 && getLinesRes.indexOf(line)===getLinesRes.length-1){
-	// 												res.json({status:'success',data:getResult});
-	// 											}
-	// 										})
-	// 										.error(function(err){
-	// 											res.json(500, {status: 'failed', error: err})
-	// 										})
-	// 									})
-	// 									.error(function(err){
-	// 										res.json(500, {status: 'failed', error: err})
-	// 									})
-	// 								})
-	// 							}
-	// 							// else{
-	// 							// 	res.json
-	// 							// }
-
-	// 					})
-						
-	// 					.error(function(err){
-	// 						res.json(500, {status: 'failed', error: err})
-	// 					})
-	// 				})
-	// 			}
-	// 		})
-	// 		.error(function(err){
-	// 			res.json(500, {status: 'failed', error: err})
-	// 		})
-	// 	})
-	// 	.error(function(err){
-	// 		res.json(500, {status: 'failed', error: err})
-	// 	})
-	// }
 
 	postGetHeaderAndSections: function(req,res){
 		var getResult = {};
@@ -464,7 +347,6 @@ module.exports = {
 			.from('sys_fa_df_comments')
 			.where({LINE_ID: lineId})
 			.then(function(commentRes){
-				console.log('those are comments', commentRes)
 				res.json({
 					status: 'success',
 					data:{
@@ -490,7 +372,6 @@ module.exports = {
 				delete updateHeader.sections;
 				delete updateHeader.action;
 				delete updateHeader.ASSESSED_SIGN;
-				console.log(updateHeader);
 				//update header
 				knex('sys_fa_df_headers')
 				.where({FA_ID: header.FA_ID})
@@ -670,7 +551,6 @@ module.exports = {
 							var updateDetail = extend({},detail);
 							delete updateDetail.action;
 							//update detail
-							console.log(updateDetail);
 							knex('sys_fa_df_line_details')
 							.where({DETAIL_ID: updateDetail.DETAIL_ID})
 							.update(updateDetail)
@@ -759,7 +639,6 @@ module.exports = {
 						}
 						else{
 							//delete comment
-							console.log('this is comment', comment);
 							knex('sys_fa_df_comments')
 							.where({FA_COMMENT_ID: comment.FA_COMMENT_ID})
 							.del()
@@ -813,188 +692,4 @@ module.exports = {
 
 	}
 
-	// postEdit: function(req,res){
-	// 	var editData = req.body;
-	// 	var header = extend({},req.body);
-	// 	delete header.sections;
-	// 	delete header.action;
-	// 	console.log('this is edit data', header);
-	// 	//edit header
-	// 	knex('sys_fa_df_headers')
-	// 	.where({FA_ID: header.FA_ID})
-	// 	.update(header)
-	// 	.then(function(headerRes){
-	// 		//update sections
-	// 		var sections = editData.sections;
-	// 		sections.forEach(function(section){
-	// 			var updateSection = extend({},section);
-	// 			if(updateSection.action==='edit'){
-	// 				//edit operation
-	// 				delete updateSection.action;
-	// 				delete updateSection.lines;
-	// 				knex('sys_fa_df_sections')
-	// 				.where({SECTION_ID: updateSection.SECTION_ID})
-	// 				.update(updateSection)
-	// 				.then(function(sectionRes){
-	// 					//update lines
-	// 					if(section.lines.length===0){
-	// 						if(editData.sections.indexOf(section)===editData.sections.length-1) res.json({status:'success'});
-	// 					}
-	// 					else{
-	// 						var lines = section.lines;
-	// 						//update lines
-	// 						lines.forEach(function(line){
-	// 							var updateLine = extend({},line);
-	// 							if(updateLine.action==='edit'){
-	// 								//edit line operation
-	// 								delete updateLine.details;
-	// 								delete updateLine.comments;
-	// 								delete updateLine.action;
-	// 								knex('sys_fa_df_lines')
-	// 								.where({LINE_ID: updateLine.LINE_ID})
-	// 								.update(updateLine)
-	// 								.then(function(lineRes){
-	// 									//update detail and comment
-	// 									if(line.details.length===0 && line.comments.length===0){
-	// 										if(section.lines.indexOf(line)===section.lines.length-1 && editData.sections.indexOf(section)===editData.sections.length-1) res.json({status:'success'});
-	// 									}
-	// 									else{
-	// 										if(line.details.length!==0){
-	// 											var details = line.details;
-	// 											var insertDetail = [];
-	// 											var deleteDetail = [];
-	// 											var editDetail = [];
-	// 											for(var i = 0; i<details.length; i++){
-	// 												if(details[i].action==='add'){
-	// 													delete details[i].action;
-	// 													details[i].LINE_ID = line.LINE_ID;
-	// 													insertDetail.push(details[i]);
-	// 												}
-	// 												else if(details[i].action==='edit'){
-	// 													delete details[i].action;
-	// 													editDetail.push(details[i]);
-	// 												}
-	// 												else {
-	// 													deleteDetail.push(details[i].DETAIL_ID)
-	// 												}
-	// 											}
-	// 											//edit existing details
-	// 											knex('sys_fa_df_line_details')
-	// 											.
-	// 										}
-	// 									}
-	// 								})
-	// 								.error(function(err){
-	// 									res.json(500,{status:'error', error:err});
-	// 								})
-	// 							}
-	// 							else if(updateLine.action==='add'){
-	// 								//insert line operation
-	// 							}
-	// 							else{
-	// 								//delete line operation
-	// 							}
-	// 						})
-	// 					}
-	// 				})
-	// 				.error(function(err){
-	// 					res.json(500,{status:'error', error:err});
-	// 				})
-	// 			}
-	// 			else if(updateSection.action = 'add'){
-	// 				//insert section operation
-	// 			}
-	// 			else{
-	// 				//delete section operation
-	// 			}
-	// 		})
-	// 	})
-	// 	.error(function(err){
-	// 		res.json(500,{status:'error', error:err});
-	// 	})
-	// 	res.end();
-	// }
-
-	// postGet: function(req,res){
-	// 	var getResult = {};
-	// 	var headerId = req.body.id;
-
-	// 	//get header
-	// 	knex
-	// 	.select()
-	// 	.from('sys_fa_df_headers')
-	// 	.where({FA_ID: headerId})
-	// 	.then(function(headerRes){
-	// 		if(headerRes.length===0) res.json(500,{status:'get header error', error:err});
-	// 		else {
-	// 			getResult = headerRes[0];
-	// 			//get sections
-	// 			knex
-	// 			.select()
-	// 			.from('sys_fa_df_sections')
-	// 			.where({FA_ID: headerId})
-	// 			.orderBy('ORD', 'desc')
-	// 			.then(function(sectionRes){
-	// 				if(sectionRes.length===0) res.json(500,{status:'get section error', error:err});
-	// 				else{
-	// 					getResult.sections=sectionRes;
-	// 					getResult.sections.forEach(function(section){
-	// 						//get lines
-	// 						knex
-	// 						.select()
-	// 						.from('sys_fa_df_lines')
-	// 						.where({
-	// 							SECTION_ID: section.SECTION_ID,
-	// 							FA_ID: headerId
-	// 						})
-	// 						.orderBy('ORD')
-	// 						.then(function(lineRes){
-	// 							if(lineRes.length===0){
-	// 								if(getResult.sections.indexOf(section) === getResult.sections.length - 1)
-	// 									res.json({status:'success',data: getResult});
-	// 							}
-	// 							else{
-	// 								section.lines = lineRes;
-	// 								section.lines.forEach(function(line){
-	// 									//get detail
-	// 									knex
-	// 									.select()
-	// 									.from('sys_fa_df_line_details')
-	// 									.where({LINE_ID: line.LINE_ID})
-	// 									.orderBy('ORD')
-	// 									.then(function(detailRes){
-	// 										line.details = detailRes;
-	// 										//get comment
-	// 										knex
-	// 										.select()
-	// 										.from('sys_fa_df_comments')
-	// 										.where({LINE_ID: line.LINE_ID})
-	// 										.then(function(commentRes){
-	// 											line.comment = commentRes;
-	// 											if(getResult.sections.indexOf(section)===getResult.sections.length-1 && section.lines.indexOf(line)===section.lines.length-1)
-	// 												res.json({status:'success',data:getResult});
-
-	// 										})
-	// 										.error(function(err){
-	// 											res.json(500,{status:'get section error', error:err});
-	// 										})
-	// 									})
-	// 									.error(function(err){
-	// 										res.json(500,{status:'get section error', error:err});
-	// 									})
-	// 								})
-	// 							}
-	// 						})
-	// 					})
-	// 				}
-	// 			})
-	// 			.error(function(err){
-	// 				res.json(500,{status:'get section error', error:err});
-	// 			})
-	// 		}
-	// 	})
-	// 	.error(function(err){
-	// 		res.json(500,{status:'get header error', error:err});
-	// 	})
-	// }
 }

@@ -4,8 +4,10 @@ var moment = require('moment');
 var extend = require('util')._extend;
 var Promise = require('promise')
 
-
 module.exports = {
+	// newHeaderAndSections: get new header and section layout from "sys_fa" 
+	// input: functional assessment header id
+	// output: header and all the sections of that header
 	newHeaderAndSections: function(req,res){
 		var getResult = {};
 		var headerId = req.body.fa_id;
@@ -18,7 +20,7 @@ module.exports = {
 			if(headerRes.length===0) res.json(500,{status:'get header error'});
 			else{
 				getResult = headerRes[0];
-				//get sections
+				//get section
 				knex
 				.select()
 				.from('sys_fa_df_sections')
@@ -26,6 +28,7 @@ module.exports = {
 				.orderBy('ORD')
 				.then(function(sectionRes){
 					getResult.sections = sectionRes;
+					//return header and all the sections to client
 					res.json({status:'success', data:getResult});
 				})
 				.error(function(err){
@@ -37,7 +40,7 @@ module.exports = {
 			res.json(500,{status:'error'})
 		})
 	},
-
+	
 	newLines: function(req,res){
 		var sectionId = req.body.section_id;
 		var headerId = req.body.fa_id;
@@ -74,7 +77,6 @@ module.exports = {
 			.from('sys_fa_df_comments')
 			.where({LINE_ID: lineId})
 			.then(function(commentRes){
-				console.log('those are comments', commentRes)
 				res.json({
 					status: 'success',
 					data:{
@@ -100,7 +102,6 @@ module.exports = {
 		if(rating_id === 16 || rating_id === 17){
 			knex.raw("select `RATE`, `VALUE`, `FROM_VALUE`, `TO_VALUE` from `sys_rankings` where `HEADER_ID` = ? and ? between `FROM_AGE` and `TO_AGE` and `GENDER` like ?",[rating_id, patient_age, patient_gender])
 			.then(function(result){
-				console.log('this is result.length', result);
 				if(result[0].length===0){
 					res.json({status:'unrated'});
 				}
@@ -113,7 +114,6 @@ module.exports = {
 		else{
 			knex.raw("select `RATE`, `VALUE` from `sys_rankings` where `HEADER_ID` = ? and ? between `FROM_AGE` and `TO_AGE` and `GENDER` like ? and ? between `FROM_VALUE` and `TO_VALUE`",[rating_id, patient_age, patient_gender,valueToRate])
 			.then(function(result){
-				console.log('this is result.length', result);
 				if(result[0].length===0){
 					res.json({status:'unrated'});
 				}
@@ -148,7 +148,6 @@ module.exports = {
 		var headerId = req.body.fa_id;
 		var patient_id = req.body.patient_id;
 		var cal_id = req.body.cal_id;
-		//get header
 		knex
 		.select()
 		.from('cln_fa_df_headers')
@@ -157,7 +156,6 @@ module.exports = {
 			if(headerRes.length===0) res.json(500,{status:'get header error'});
 			else{
 				getResult = headerRes[0];
-				//get sections
 				knex
 				.select()
 				.from('cln_fa_df_sections')
@@ -219,7 +217,6 @@ module.exports = {
 			.from('cln_fa_df_comments')
 			.where({LINE_ID: lineId, PATIENT_ID: patient_id, CAL_ID:cal_id})
 			.then(function(commentRes){
-				console.log('those are comments', commentRes)
 				res.json({
 					status: 'success',
 					data:{
