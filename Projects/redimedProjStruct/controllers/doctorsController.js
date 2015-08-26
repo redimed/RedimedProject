@@ -648,6 +648,7 @@ module.exports =
                     if(err)
                     {
                         console.log("Error Selecting : %s ",err );
+                        res.json(500, {'status': 'error', 'message': err});
                     }else{
                         res.json(rows[0]);
                     }

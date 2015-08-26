@@ -676,7 +676,7 @@ angular.module("app.loggedIn.controller",[
                 {
                     $scope.scheduleList[key]();
                 }
-            }, 4000);
+            }, 10000);
         }
 
         $scope.scheduleList.getNewNotifications=function()
