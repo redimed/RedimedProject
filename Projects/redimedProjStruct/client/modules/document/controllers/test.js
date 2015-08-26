@@ -44,7 +44,7 @@ angular.module('app.loggedIn.document.test.controllers',[])
 			this.arrayscores.push(theScore);
 		},
 		ShowAll:function(){
-			var score = this.arrayscores.length >0 ? this.arrayscores.join(","):"No Scores Yet";
+			var score = this.arrayscores.length >0 ? this.arrayscores.join(", "):"No Scores Yet";
 			return this.name + ", Scores: " + score;
 		},
 		ChangeName:function(newName){

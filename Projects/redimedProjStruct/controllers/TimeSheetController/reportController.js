@@ -410,7 +410,7 @@ module.exports = {
     },
 
 
-    // function LoadReportOweLeave : statistic list of days leave from employee in departments that didn't approved
+    // function LoadReportOweLeave : report Owe Leave   statistic list of days leave from employee in departments that didn't approved
     // input  : employee's information (object info)
     // output : insert list of days leave into hr_leave_owe
     LoadReportOweLeave: function(req, res) {
@@ -439,8 +439,7 @@ module.exports = {
         var delete_hr_leave_owe = "DELETE FROM hr_leave_owe WHERE create_id =" + info.USER_ID + " ";
         db.sequelize.query(delete_hr_leave_owe)
             .success(function(deletes){
-                //query sql_data1 get employee's information and employee's day leave from selected time
-                //push information into data_1
+                //get owe leaves from list of employees based on input employee Ids in a duration
                 var sql_data1 = "SELECT "+
                                 "users.id, "+
                                 "hr_employee.FirstName, "+
