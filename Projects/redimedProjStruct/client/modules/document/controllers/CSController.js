@@ -4,10 +4,11 @@ angular.module('app.loggedIn.document.QANTAScustomerservice.controllers',[])
             formatYear: 'yy',
             startingDay: 1
         };
-        CalID = $stateParams.cal_id; 
+        CalID = $stateParams.cal_id;
         Patient_ID = $stateParams.patient_id;
         $scope.isSignatureShow = false;
         var oriInfo,clearInfo;
+        //push value to rate for 4. FUNCTIONAL TOLERANCES into array $scope.rates 
          $scope.rates = [
           {id:0, name:'Excellent'},
           {id:1, name:'Very Good'},
@@ -15,13 +16,15 @@ angular.module('app.loggedIn.document.QANTAScustomerservice.controllers',[])
           {id:3, name:'Average'},
           {id:4, name:'Poor'}
         ];
+
+        //set attribute isShow: show or not show patient sign from patients, default isShow = false
         $scope.isSignatureShow  = [
             {id:0,isShow:false},
             {id:1,isShow:false}
         ];
         function getAge(dateString) {
-            var now = new Date();
-            var birthDate = new Date(dateString);
+            var now = new Date();// get current date
+            var birthDate = new Date(dateString);// get selected date
             var age = now.getFullYear() - birthDate.getFullYear();
             var m = now.getMonth() - birthDate.getMonth();
             if (m < 0 || (m === 0 && now.getDate() < birthDate.getDate())) {
@@ -29,12 +32,19 @@ angular.module('app.loggedIn.document.QANTAScustomerservice.controllers',[])
             }
             return age;
         }
+
+        //function mathBPM : rating BPM of patient
+        //input  : points BPM
+        //output : rating value 
         $scope.mathBPM = function(value){
+            //check if BPM = null or ='', set BPM default = null
           if($scope.info.group3_sec2_value2==null || $scope.info.group3_sec2_value2==''){
             $scope.info.check25 = null;
             $scope.info.group3_sec2_value2=null;
           }
+          //check if type of BPM is number, it continue working
           if(isNaN(value)==false){
+            //if BPM value = null or <0, set BPM =null, else rating
             if(value==null||value.length==0||value<0){
               $scope.info.group3_sec2_rate =null;
             }
@@ -76,9 +86,11 @@ angular.module('app.loggedIn.document.QANTAScustomerservice.controllers',[])
             }
           }
         }
+
         $scope.showSignature = function(value){
             $scope.isSignatureShow[value].isShow = true;
         }
+
         $scope.okClick = function (value) {
             $scope.isSignatureShow[value].isShow = false;
         }
@@ -169,6 +181,10 @@ angular.module('app.loggedIn.document.QANTAScustomerservice.controllers',[])
         }
 
         $scope.insert = false;
+
+        //function checkQANTAS_CS : check if patient had this record, load information this record and can be updated by patient
+        //input  : patient_id
+        //output : if patient had this record, load record data and status:update. if patient didn't have, status:insert  
         DocumentService.checkQANTAS_CS(Patient_ID).then(function(response){
             $scope.patientInfo = response['patientInfo'];
             $scope.patientInfo.DOB = moment($scope.patientInfo.DOB).format('YYYY-MM-DD');
@@ -332,6 +348,9 @@ angular.module('app.loggedIn.document.QANTAScustomerservice.controllers',[])
             }
             else if(response.status==="error"){
               toastr.error("fail","FAIL");
+              $state.go('loggedIn.listall', null, {
+                    'reload': true
+                  });
             }
             if($scope.isNew==true){
               clearInfo = angular.copy($scope.info);
@@ -472,7 +491,7 @@ angular.module('app.loggedIn.document.QANTAScustomerservice.controllers',[])
               clearInfo.group3_sec2_value1 = parseInt((220 - getAge($scope.patientInfo.DOB))*0.85);
             }
         });
-
+    
         $scope.clearcheck = function(id){
             if(id == 1){
                 if($scope.info.group3_sec3_checkL_1=='0' && $scope.info.group3_sec3_checkR_1=='0'  ||
@@ -633,6 +652,7 @@ angular.module('app.loggedIn.document.QANTAScustomerservice.controllers',[])
             }
 
         }
+
         $scope.clearform = function(id){
             if(id == 1){
                 if($scope.info.group3_sec1_value1==null || $scope.info.group3_sec1_value1==''){
@@ -707,6 +727,10 @@ angular.module('app.loggedIn.document.QANTAScustomerservice.controllers',[])
                 }
             }
         }
+
+        //function submitQANTAS_CS : push data into server to insert or update database
+        //input  : data info patient
+        //output : status success or error
         $scope.submitQANTAS_CS = function(QANTAS_CS){
          if(QANTAS_CS.$invalid){
             toastr.error('error',"x");

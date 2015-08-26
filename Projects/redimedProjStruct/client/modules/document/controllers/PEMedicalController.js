@@ -6,13 +6,14 @@ angular.module('app.loggedIn.document.PEMedical.controllers',[])
     $scope.path ={};
     $scope.isSubmit = false;
     var oriInfo,clearInfo,height,weight,value;
+    //$scope.isSignatureShow la mang dung de quy dinh thuoc tinh show hay khong show cua phan dien chu ky PATIENT_SIGN
     $scope.isSignatureShow  = [
     {id:0,isShow:false},
     {id:1,isShow:false},
     {id:2,isShow:false},
     {id:3,isShow:false}
     ];
-
+    //$scope.part1_rate1 la mang chua cac gia tri rating dung cho EXERCISE AND LIFESTYLE
     $scope.part1_rate1 =[
     	{id:0, name:'Always'},
     	{id:1, name:'Usually'},
@@ -20,7 +21,7 @@ angular.module('app.loggedIn.document.PEMedical.controllers',[])
     	{id:3, name:'Rarely'},
     	{id:4, name:'Never'}
     ];
-
+    
     $scope.rate_Abdominal =[
     	{id:1,
     		name:'Unable to do a full sit-up',

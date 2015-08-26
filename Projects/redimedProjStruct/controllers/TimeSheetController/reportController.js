@@ -409,9 +409,12 @@ module.exports = {
             });
     },
 
+
+    // function LoadReportOweLeave : statistic list of days leave from employee in departments that didn't approved
+    // input  : employee's information (object info)
+    // output : insert list of days leave into hr_leave_owe
     LoadReportOweLeave: function(req, res) {
         var info = req.body.info;
-        //console.log(info);
         var stringEMP = "";
         var stringDept = "";
         var stringID = "";
@@ -421,18 +424,23 @@ module.exports = {
         var date;
         var array = [];
         var listleave = [];
+        // get string Employee_id
         for (var i = 0; i < info.listEMP.length; i++) {
             stringEMP += info.listEMP[i].id + ", ";
         }
         stringEMP += 0;
+        // get string Department_id
         for (var j = 0; j < info.listDept.length; j++) {
             stringDept += info.listDept[j].id + ", ";
         }
         stringDept += 0;
         var getnewdate= new Date();
+        //query delete_hr_leave_owe delete old data that create from user if it exists.
         var delete_hr_leave_owe = "DELETE FROM hr_leave_owe WHERE create_id =" + info.USER_ID + " ";
         db.sequelize.query(delete_hr_leave_owe)
             .success(function(deletes){
+                //query sql_data1 get employee's information and employee's day leave from selected time
+                //push information into data_1
                 var sql_data1 = "SELECT "+
                                 "users.id, "+
                                 "hr_employee.FirstName, "+
@@ -440,11 +448,6 @@ module.exports = {
                                 "hr_employee.Employee_ID , "+
                                 "departments.departmentid, "+
                                 "departments.departmentName, "+
-                                "time_tasks_week.time_charge, "+
-                                "time_tasks_week.time_in_lieu, "+
-                                "time_tasks_week.week_no, "+
-                                "time_tasks_week.creation_date, "+
-                                "time_tasks_week.last_update_date, "+
                                 "time_tasks_week.task_week_id , "+
                                 "time_tasks.tasks_id, "+
                                 "time_tasks.date, "+
@@ -469,6 +472,7 @@ module.exports = {
                 })
                     .success(function(data_1){
                         if(data_1!==undefined&&data_1!==null&&data_1!==""&&data_1.length!==0){
+                            // push employee's information into array
                             data_1.forEach(function(value,index){
                                 if(value!==undefined&&value!==null){
                                     var isFound = false;
@@ -488,6 +492,7 @@ module.exports = {
                                     }
                                 }
                             });
+                            //get user id selected into strings StringID
                             if(array!==undefined&&array!==null&&array!==""&&array.length!==0){
                                 for (var i = 0; i < array.length; i++) {
                                     stringID += array[i].user_id + ", ";
@@ -498,22 +503,29 @@ module.exports = {
                                                 "WHERE user_id IN (" + stringID + ") AND status_id=3 ORDER BY user_id";
                                 db.sequelize.query(sql_data2)
                                     .success(function(data_2){
+                                        // add 1 attribute isReject (isReject = 0 if day leave doesn't approved, = 1 if it were approved)
+                                        // default set isReject = 0 for all
                                        if(data_2!==undefined&&data_2!==null&&data_2!==""&&data_2.length!==0){
                                             for(var i = 0;i < data_1.length; i++){
                                                 data_1[i].isReject = 0;
                                             }
+                                            // get each day leave of employee compare with start date for leave and end date for leave
+                                            // if it's on the range, isReject = 1
                                             for(var x = 0; x < data_1.length;x++){
                                                 date = moment(moment(data_1[x].date).format("YYYY-MM-DD")).format("X");
                                                 for(var y =0; y <data_2.length; y++){
-                                                    start_date = moment(moment(data_2[y].start_date).format("YYYY-MM-DD")).format("X");
-                                                    finish_date = moment(moment(data_2[y].finish_date).format("YYYY-MM-DD")).format("X");
-                                                    if(date>=start_date){
-                                                        if(date<=finish_date){
-                                                            data_1[x].isReject = 1;
+                                                    if(data_1[x].id == data_2[y].user_id){
+                                                        start_date = moment(moment(data_2[y].start_date).format("YYYY-MM-DD")).format("X");
+                                                        finish_date = moment(moment(data_2[y].finish_date).format("YYYY-MM-DD")).format("X");
+                                                        if(date>=start_date){
+                                                            if(date<=finish_date){
+                                                                data_1[x].isReject = 1;
+                                                            }
                                                         }
                                                     }
                                                 }
                                             }
+                                            // push data that didn't approved into listleave's array
                                             for(var j = 0; j <data_1.length; j++){
                                                 if(data_1[j].isReject==0){
                                                     listleave.push(data_1[j]);
@@ -615,18 +627,22 @@ module.exports = {
             })
     },
 
+    // function LoadReportTimeInLieu : statistic time in lieu of one or many employee from one or many departments
+    // input  : employee's information (object info)
+    // output : insert time in lieu of this employees into table time_in_lieu_report
     LoadReportTimeInLieu: function(req, res) {
         var info = req.body.info;
-        //CHUYEN LIST EMPL VA LIST DEPT THANH CHUOI STRING
         var stringEMP = "";
         var stringDept = "";
         var stringline1 = "";
         var getnewdate= new Date();
         getnewdate.setHours(0, 0, 0);
+        //get string Employee_id
         for (var i = 0; i < info.listEMP.length; i++) {
             stringEMP += info.listEMP[i].id + ", ";
         }
         stringEMP += 0;
+        //get string Department_id
         for (var j = 0; j < info.listDept.length; j++) {
             stringDept += info.listDept[j].id + ", ";
         }
@@ -638,11 +654,13 @@ module.exports = {
         d.setHours(0, 0, 0);
         d.setDate(d.getDate() + 4 - (d.getDay() || 7));
         var yearStart = new Date(d.getFullYear(), 0, 1);
+        // get current weekno
         var weeks = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+        // query sql_delete_time_in_lieu_detail_report delete old data from user if it existed
         var sql_delete_time_in_lieu_detail_report = "DELETE FROM time_in_lieu_report WHERE create_id=" + info.USER_ID;
         db.sequelize.query(sql_delete_time_in_lieu_detail_report)
             .success(function(data_delete1) {
-                //cau SQL lay time in lieu ma user duoc chon tich luy~ tu do den from_date
+                // query sql_get_data1 get time in lieu of employees from start day to choosen day and push into data1
                 var sql_get_data1 = "SELECT users.id, " +
                     "hr_employee.Employee_ID , " +
                     "departments.departmentid, " +
@@ -658,11 +676,9 @@ module.exports = {
                     "hr_employee.Employee_ID IN (" + stringEMP + ")";
                 db.sequelize.query(sql_get_data1)
                     .success(function(data1) {
-                        //get time in lieu*********************
                         if (data1 !== null && data1 !== undefined && data1 !=="" && data1.length!==0) {
-
                             data1.forEach(function(value, index) {
-
+                                // push employee's information into data's array
                                 if (value !== null && value !== undefined) {
                                     var isFound = false;
                                     data.forEach(function(valueTime, indexTime) {
@@ -682,8 +698,8 @@ module.exports = {
 
                                     }
                                 }
-
                             });
+                            // with each employee, sum time in lieu from start day to choosen day
                             data.forEach(function(value, index) {
                                 data[index].time_in_lieu = 0;
                                 data1.forEach(function(valueTime, indexTime) {
@@ -692,7 +708,7 @@ module.exports = {
                                     }
                                 });
                             });
-                            //end get time in lieu**********
+                            // query sql_get_data2 get time in lieu of employees used in the departments
                             var sql_get_data2 = "SELECT users.id, " +
                                 "hr_employee.Employee_ID , " +
                                 "departments.departmentid, " +
@@ -713,13 +729,12 @@ module.exports = {
                             db.sequelize.query(sql_get_data2)
                                 .success(function(data2) {
                                     if(data2!==undefined && data2!==null && data2!=="" && data2.length!==0){                                           
-                                        //get time in lieu used and time in lieu remain *******************                                        
+                                        // on data 's array, add 3 attribute time_in_lieu_used, time_in_lieu_remain, time_in_lieu_gan_nhat                                      
                                         if (data !== null && data !== undefined) {
                                             data.forEach(function(value, index) {
                                                 data[index].time_in_lieu_used = 0;
                                                 data[index].time_in_lieu_remain = 0;
                                                 data[index].time_in_lieu_gan_nhat = 0;
-
                                                 if (value !== null && value !== undefined) {
                                                     data2.forEach(function(valueTime, indexTime) {
                                                         if (value.Employee_id === valueTime.Employee_ID && value.Department_id === valueTime.departmentid) {
@@ -734,8 +749,7 @@ module.exports = {
                                                 }
                                             });
                                         }
-                                        //end get ***********************************
-                                        //get time in lieu for Department
+                                        // push list of departments into data_Dept
                                         if (data !== null && data !== undefined) {
                                             data.forEach(function(value, index) {
                                                 if (value !== null && value !== undefined) {
@@ -755,6 +769,8 @@ module.exports = {
                                                     }
                                                 }
                                             });
+                                            // with each element, add 6 attribute tinh time_in_lieu_Dept, time_in_lieu_used_Dept, time_in_lieu_remain_Dept, time_in_lieu_all,
+                                            // time_in_lieu_used_all, time_in_lieu_remain_all
                                             data_Dept.forEach(function(value, index) {
                                                 data_Dept[index].time_in_lieu_Dept = 0;
                                                 data_Dept[index].time_in_lieu_used_Dept = 0;
@@ -770,9 +786,6 @@ module.exports = {
                                                 }
                                             });
                                         }
-                                        //end get***********************
-
-                                        //get time_in_lieu_all***************
                                         var time_in_lieu_all = 0;
                                         var time_in_lieu_used_all = 0;
                                         var time_in_lieu_remain_all = 0;
@@ -795,9 +808,7 @@ module.exports = {
                                                 }
                                             });
                                         }
-                                        //end get************************
-
-                                        //push data_Dept into data**********************
+                                        // if data.Department_id = data_Dept.Department_id, push data_Dept into data
                                         if (data !== null && data !== undefined) {
                                             data.forEach(function(value, index) {
                                                 data[index].time_in_lieu_Dept = 0;
@@ -822,8 +833,7 @@ module.exports = {
                                                 }
                                             });
                                         }
-                                        //end push*********************************
-                                        //get data3 
+                                        // query sql_get_data3 get time in lieu 2 most recent week
                                         var week2 = weeks - 2;
                                         var sql_get_data3 = "SELECT users.id, " +
                                             "hr_employee.Employee_ID , " +
@@ -898,8 +908,7 @@ module.exports = {
                                                         }
                                                     });
                                                 }
-                                                var a = new Date();
-                                                        console.log(a);
+                                                // create strings stringline1 to insert database into time_in_lieu_report
                                                 for(var i = 0; i < data.length; i++){
                                                     stringline1+="("+
                                                                 data[i].create_id+","+
@@ -1011,6 +1020,9 @@ module.exports = {
         //END
     },
 
+    // function LoadReportUtilizationRatioDetail : statistic detail time activity of employees from departments
+    // input  : eployee's information (object info)
+    // output : insert detail time activity into time_activity_report
     LoadReportUtilizationRatioDetail: function(req, res) {
         var info = req.body.info;
         var stringEMP   = "";
@@ -1038,8 +1050,7 @@ module.exports = {
             user_id  :info.USER_ID
         })
             .success(function(data_delete3) {
-
-                                //END DELETE
+                                //sql get employee's information and detail time activity
                                 var sql_get_data_time_activity_table = "SELECT "+
                                                                     "users.id,  "+
                                                                     "hr_employee.FirstName,  "+
@@ -1071,6 +1082,7 @@ module.exports = {
                                 })
                                     .success(function(data) {
                                         if(data!==null&&data!=undefined&data!==""&&data.length!==0){
+                                            //push employee's information into array_employee
                                             data.forEach(function(value,index){
                                                 if(value!==null&&value!==undefined){
                                                     var isFound = false;
@@ -1091,6 +1103,7 @@ module.exports = {
                                                 }
                                             });
                                             if(array_employee!==null&&array_employee!==undefined&&array_employee!==""&&array_employee.length!==0){
+                                                //clone flags_employee into array_employee.time_charge
                                                 array_employee.forEach(function(value,index){
                                                     if(value!==null&&value!==undefined){
                                                         for(var i=0;i<5;i++){
@@ -1119,6 +1132,7 @@ module.exports = {
                                                         array_employee[i].time_charge_week = array_employee[i].time_charge_week + array_employee[i].time_charge[j].time_charge;
                                                     }
                                                 }
+                                                // push list departments into array_Dept
                                                 array_employee.forEach(function(value,index){
                                                     if(value!==null&&value!==undefined){
                                                         var isFound= false;
@@ -1138,6 +1152,7 @@ module.exports = {
                                                     }
                                                 });
                                                 if(array_Dept!==null&&array_Dept!==undefined&&array_Dept!==""&&array_Dept.length!==0){
+                                                    // clone flag_Dept into attribute array_Dept.time_charge
                                                     array_Dept.forEach(function(value,index){
                                                         if(value!==null&&value!==undefined){
                                                             for(var i = 0; i < 5; i++){
@@ -1177,7 +1192,7 @@ module.exports = {
                                                             array_Dept[i].time_charge_all  = array_Dept[i].time_charge_all + array_Dept[i].time_charge[j].time_charge_all;
                                                         }
                                                     }
-
+                                                    // get strings stringline1 data to insert table time_activity_report from array_Dept, array_employee
                                                     for(var i = 0; i < array_employee.length; i++){
                                                         stringline1 +="("+info.USER_ID+","+array_employee[i].time_charge_week+","+array_employee[i].Employee_id+","+array_employee[i].Department_id+",";
                                                         for(var j = 0; j < 5; j++){
@@ -1282,6 +1297,9 @@ module.exports = {
         //
     },
 
+    // function LoadReportUtilizationRatioSumary : statistic summary time activity of employees from departments
+    // input  : employee's information (object info)
+    // output : insert summary time activity into time_activity_summary_report
     LoadReportUtilizationRatioSumary: function(req, res) {
         var info = req.body.info;
         var stringEMP   = "";
@@ -1289,7 +1307,6 @@ module.exports = {
         var stringline1 = "";
         var array_Dept = [];
         var flags_Dept = [];
-        var time_charge_all = 0;
         var getnewdate= new Date();
         getnewdate.setHours(0, 0, 0);
         for (var i = 0; i < info.listEMP.length; i++) {
@@ -1301,16 +1318,15 @@ module.exports = {
         }
         stringDept += 0;
         var time_charge_all = 0;
-        var flag1 = 0;
-        //DELETE ALL TABLE
+        // sql delete old data created by user if it had
         var sql_delete_time_activity_summary_report = " DELETE FROM time_activity_summary_report WHERE user_id= :user_id ";
-        //DELETE TABLE time_activity_summary_table
         db.sequelize.query(sql_delete_time_activity_summary_report,null,{
             raw : true
         },{
             user_id : info.USER_ID
         })
             .success(function(sql_del){
+                // sql get employee's information and time activity
                 var sql_get_data = "SELECT "+
                                     "users.id,  "+
                                     "hr_employee.FirstName,  "+

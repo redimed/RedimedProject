@@ -1,5 +1,8 @@
 var db = require('../../models');
 module.exports = {
+	//function checkQANTAS_RampBaggage : check patient's data exist or not
+	//input  : patient_id
+	//output : patientInfo, status: insert or update(if status : update , return patient's data)
 	checkQANTAS_RampBaggage: function(req, res) {
 		var Patient_ID = req.body.Patient_ID;
 		var patient_check= "select First_name, Sur_name, Address1, DOB, Sex, Mobile, Email, Home_phone from cln_patients where Patient_ID =:Patient_ID "
@@ -47,6 +50,9 @@ module.exports = {
 		})
 	},
 
+	//function insertQANTAS_RampBaggage : insert patient's data into table qantas_rampbaggage
+	//input  : info(object)
+	//output : insert data into qantas_rampbaggage and return status success or error
 	insertQANTAS_RampBaggage: function(req, res) {
 		var info = req.body.info;
 		console.log(info);
@@ -202,6 +208,9 @@ module.exports = {
 		})
 	},
 
+	//function updateQANTAS_RampBaggage : update patient's data into table qantas_rampbaggage
+	//input  : info(object)
+	//output : update data into qantas_rampbaggage and return status success or error
 	updateQANTAS_RampBaggage: function(req, res) {
 		var info = req.body.info;
 		console.log(info);
@@ -356,6 +365,9 @@ module.exports = {
 		})
 	},
 
+	//function deleteQANTAS_Fleet : delete patient's data from table qantas_fleet
+	//input  : patient_id
+	//output : delete data, return status success or error.
 	deleteQANTAS_RampBaggage: function(req, res) {
 		var Patient_ID = req.body.Patient_ID;
 		var CalID = req.body.CalID;

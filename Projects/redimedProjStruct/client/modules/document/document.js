@@ -28,7 +28,8 @@ angular.module("app.loggedIn.document", [
     "app.loggedIn.document.QANTASgroundsupport.controllers",
     "app.loggedIn.document.QANTASrampbaggage.controllers",
     "app.loggedIn.document.PEMedical.controllers",
-    "app.loggedIn.document.directives"
+    "app.loggedIn.document.directives",
+    "app.loggedIn.document.test.controllers"
 ])
     .config(function ($stateProvider) {
         $stateProvider
@@ -195,6 +196,12 @@ angular.module("app.loggedIn.document", [
                 url: "/PEMedical/:patient_id/:cal_id",
                 templateUrl: "modules/document/views/PEMedical.html",
                 controller : 'PEMedicalController'
+            })
+
+            .state("loggedIn.test", {
+                url:"/test",
+                templateUrl:"modules/document/views/test.html",
+                controller: 'test'
             })
 
 

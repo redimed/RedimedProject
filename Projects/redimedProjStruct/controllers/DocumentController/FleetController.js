@@ -1,10 +1,14 @@
 var db = require('../../models');
 module.exports = {
+	//function checkQANTAS_Fleet : check patient's data exist or not
+	//input  : patient_id
+	//output : patientInfo, status: insert or update(if status : update , return patient's data)
 	checkQANTAS_Fleet: function(req, res) {
 		var Patient_ID = req.body.Patient_ID;
-		var patient_check= "select First_name, Sur_name, Address1, DOB, Sex, Mobile, Email, Home_phone from cln_patients where Patient_ID =:Patient_ID "
+		//sql patient_info get patient information
+		var patient_info= "select First_name, Sur_name, Address1, DOB, Sex, Mobile, Email, Home_phone from cln_patients where Patient_ID =:Patient_ID "
 		var qantas_check = "select * from qantas_fleet where PATIENT_ID = :PATIENT_ID";
-		db.sequelize.query(patient_check,null,{raw:true},{
+		db.sequelize.query(patient_info,null,{raw:true},{
 			Patient_ID:Patient_ID
 		})
 		.success(function(patientInfo){
@@ -47,6 +51,9 @@ module.exports = {
 		})
 	},
 
+	//function insertQANTAS_Fleet : insert patient's data into table qantas_fleet
+	//input  : info(object)
+	//output : insert data into qantas_fleet and return status success or error
 	insertQANTAS_Fleet: function(req, res) {
 		var info = req.body.info;
 		console.log(info);
@@ -206,6 +213,9 @@ module.exports = {
 		})
 	},
 
+	//function updateQANTAS_Fleet : update patient's data into table qantas_fleet
+	//input  : info(object)
+	//output : update data into qantas_fleet and return status success or error
 	updateQANTAS_Fleet: function(req, res) {
 		var info = req.body.info;
 		db.qantas_fleet.update({
@@ -362,6 +372,9 @@ module.exports = {
 		})
 	},
 
+	//function deleteQANTAS_Fleet : delete patient's data from table qantas_fleet
+	//input  : patient_id
+	//output : delete data, return status success or error.
 	deleteQANTAS_Fleet: function(req, res) {
 		var Patient_ID = req.body.Patient_ID;
 		var query_delete= "delete from qantas_fleet "+
