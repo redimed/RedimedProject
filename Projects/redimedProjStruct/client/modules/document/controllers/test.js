@@ -1,65 +1,57 @@
 angular.module('app.loggedIn.document.test.controllers',[])
 .controller("test",function($scope, $http, $cookieStore, $state, $stateParams){
 
+
+	//OOP
+	/* 
+		****-------create class--------****
+		function MyClass(prop1,prop2){
+			this.prop1 = prop1;
+			this.prop2 = prop2;
+			this.Action = function(){
+				//TODO : do something
+			}
+		}
+
+		****--------function inherit-------****
+		function inheritPrototype(Class_Parent, Class_Child){
+			var CopyOfParent = Object.create(Class_Parent);
+			Class_Child.prototype = CopyOfParent;
+		};
+
+		inheritPrototype(Parent,Child);
+	*/
+
 	// 1. cach 1 
 
-	// function Fruit (thecolors,thesweetness,thefruitName,thenativeToLand){
-	// 	this.colors 	  = thecolors;
-	// 	this.sweetness 	  = thesweetness;
-	// 	this.fruitName    = thefruitName;
-	// 	this.nativeToLand = thenativeToLand;
-	// 	this.showName = function(){
-	// 		console.log("This is a " + this.fruitName);
-	// 	};
-	// 	this.nativeTo = function(){
-	// 		this.nativeToLand.forEach(function(country){
-	// 			console.log("Grown in:" + country);
-	// 		});		
-	// 	}
-	// }
-	// var aMango = new Fruit("red",9,"Apple",["IRRAQ","VIETNAMESE"]);
-	// //delete aMango.colors;
-	// aMango.showName();
-	// aMango.nativeTo();
-	// console.log(aMango.hasOwnProperty("aaaa"));
-	// console.log("toString" in aMango);
-	// for(var eachItem in aMango){
-	// 	console.log(eachItem);
-	// }
+	function Machine (colors,name,type){
+		this.colors = colors;
+		this.name   = name;
+		this.type   = type;
+		this.ShowType = function(){
+			console.log("this is a "+this.type);
+		};
+	}
 
-	// end 1.
-
-	// 2. cach 2
-
-	function User(theName,theEmail){
-		this.name         = theName;
-		this.email        = theEmail;
-		this.arrayscores  = [];
-		this.currentscore = 0;
-	};
-	User.prototype = {
-		constructor:User,
-
-		SaveScore:function(theScore){
-			this.arrayscores.push(theScore);
-		},
-		ShowAll:function(){
-			var score = this.arrayscores.length >0 ? this.arrayscores.join(", "):"No Scores Yet";
-			return this.name + ", Scores: " + score;
-		},
-		ChangeName:function(newName){
-			this.name = newName;
-			return "New Name Saved: " + this.name;
+	function Computer (chips,blah){
+		this.chips = chips;
+		this.blah  = blah;
+		this.ShowChips = function(){
+			console.log("This is "+this.chips);
 		}
+	}
+
+	var Machines = new Machine("red","Intel","Computer");
+	var Computers= new Computer("core i5","good");
+	function inheritPrototype(parent,child){
+		var copyOfparent = Object.create(parent);
+		//copyOfparent.constructor = child;
+		child.prototype = copyOfparent;
 	};
+	inheritPrototype(Machines,Computers);// phuong nay dung de ke thua: Computer ke thua nhung thuoc tinh cua Machine
+	console.log(Computers);
+	Computers.prototype.ShowType();
 
-	var A = new User("arshavin","a23@g.c");
-	console.log(A);
-	A.SaveScore(23);
-	A.SaveScore(10);
-	console.log(A);
-	var b = A.ShowAll();
-	console.log(b);
+	
 
-	// end 2.
 });

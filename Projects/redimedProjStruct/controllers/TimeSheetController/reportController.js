@@ -408,8 +408,7 @@ module.exports = {
                 return;
             });
     },
-
-
+    
     // function LoadReportOweLeave : report Owe Leave   statistic list of days leave from employee in departments that didn't approved
     // input  : employee's information (object info)
     // output : insert list of days leave into hr_leave_owe
@@ -483,8 +482,8 @@ module.exports = {
                                     });
                                     if(isFound===false){
                                         array.push({
-                                            user_id     : value.id,
-                                            create_id       : info.USER_ID,
+                                            user_id       : value.id,
+                                            create_id     : info.USER_ID,
                                             Employee_id   : value.Employee_ID,
                                             Department_id : value.departmentid
                                         })
