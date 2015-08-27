@@ -43,7 +43,7 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 
 	$scope.isSectionDropable = true;
 
-	//get header if stateParams.action = edit
+	//get header based on stateParams.action
 	if($stateParams.action === 'edit' && !!$stateParams.headerId){
 		var getHeaderId = $stateParams.headerId;
 		FaDefineService.getHeaderAndSection(getHeaderId).then(function(headerAndSectionRes){
@@ -244,12 +244,12 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 		newCloneLine.QUESTION = newCloneLine.QUESTION + " (copy)";
 		if($scope.isEdit === true) newCloneLine.action = 'add';
 		delete newCloneLine.LINE_ID;
-		//set all details action to "add"
+		//set all detail's action to "add"
 		for(var i = 0; i<newCloneLine.details.length; i++){
 			newCloneLine.details[i].action = "add";
 			delete newCloneLine.details[i].DETAIL_ID;
 		}
-		//set all comments action to "add";
+		//set all comment's action to "add";
 		for(var j = 0; j<newCloneLine.comments.length; j++){
 			newCloneLine.comments[j].action = "add";
 			delete newCloneLine.comments[j].FA_COMMENT_ID;
@@ -344,7 +344,6 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 			detail.VAL1_ISCOMMENT_WHEN_YES = null;
 			detail.VAL1_ISCOMMENT_WHEN_NO = null;
 		}
-		console.log($scope.header);
 	}
 
 	$scope.value2TypeWatch = function(detail, val2_type){
@@ -510,7 +509,7 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 	$scope.addFaDefinition = function(){
 		if($scope.header.sections.length===0) toastr.error('Functional Assessment must have at least one section','Error!');
 		else{
-			addOrder($scope.header).then(function(result){
+			AddOtherInfoBeforeApply($scope.header).then(function(result){
 				FaDefineService.insertFa($scope.header).then(function(res){
 					if(res.status==='success') {
 						toastr.success('New functional assessment definition added','Success!');
@@ -529,7 +528,7 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 	$scope.editDefinition = function(){
 		if($scope.header.sections.length===0) toastr.error('Functional Assessment must have at least one section','Error!');
 		else{
-			addOrder($scope.header).then(function(result){
+			AddOtherInfoBeforeApply($scope.header).then(function(result){
 				console.log(result);
 				FaDefineService.editFa(result).then(function(res){
 					if(res.status==='success') {
@@ -542,25 +541,7 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 		}
 	}
 
-	//GENERAL DEFINITION FUNCTION
-	// var addOrder = function(header){
-	// 	return new Promise(function(resolve, reject){
-	// 		header.sections.forEach(function(section){
-	// 			section.ORD = header.sections.indexOf(section) + 1;
-	// 			section.lines.forEach(function(line){
-	// 				line.ORD = section.lines.indexOf(line) + 1;
-	// 				line.details.forEach(function(detail){
-	// 					detail.ORD = line.details.indexOf(detail) + 1;
-	// 					if(detail.ORD === line.details.length){
-	// 						resolve(header);
-	// 					}
-	// 				})
-	// 			})
-	// 		})
-	// 	})
-	// }
-
-	var addOrder = function(header){
+	var AddOtherInfoBeforeApply = function(header){
 		return new Promise(function(resolve, reject){
 			if($scope.isEdit===false) header.Creation_date = moment().format('YYYY-MM-DD hh:mm:ss');
 			else {
@@ -617,7 +598,7 @@ angular.module('app.loggedIn.fadefine.detail.controller',['ngDraggable'])
 		})
 	}
 
-	$scope.openModal = function(data){
+	$scope.OpenImageChooser = function(data){
         var modalInstance = $modal.open({
           animation: true,
           templateUrl: 'modules/fadefine/views/imageModal.html',

@@ -745,11 +745,11 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 
     	}
     	var submitInformations = {
-			insertHeader: insertHeader,
-			insertSections: insertSections,
-			insertLines: insertLines,
-			insertDetails: insertDetails,
-			insertComments: insertComments,
+			infoHeader: insertHeader,
+			infoSections: insertSections,
+			infoLines: insertLines,
+			infoDetails: insertDetails,
+			infoComments: insertComments,
 		}
 
 		return submitInformations;

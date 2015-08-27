@@ -7,6 +7,11 @@ var fs = require('fs');//Read js file for import into
 var Promise = require('promise');
 
 module.exports = {
+	
+	//postSearch: get the list of the functional assessment (FA) template with conditions
+	//
+	//input: FA name, FA type, limit and offset (for pagination).
+	//output: the FA template list and the number of results.
 	postSearch: function(req,res){
 		var postData = req.body;
 
@@ -15,6 +20,7 @@ module.exports = {
 
         var searchData = req.body.search;
 
+        //create the condition for searching.
         var whereClause = {
         	FA_NAME: '',
         	TYPE: ''
@@ -22,6 +28,7 @@ module.exports = {
         if(searchData.FA_NAME) whereClause.FA_NAME = "%"+searchData.FA_NAME+"%";
         if(searchData.TYPE) whereClause.TYPE = "%"+searchData.TYPE+"%"
 
+        //Create the sql query for the searching.
 		var sql = knex
 		.select('FA_ID','FA_NAME','TYPE','ISENABLE','Creation_date')
 		.from('sys_fa_df_headers')
@@ -32,12 +39,14 @@ module.exports = {
 		.offset(offset)
 		.toString();
 
+		//This sql is use to counting the result
 		var sql2 = knex("sys_fa_df_headers")
 		.count("FA_ID as count")
 		.where('FA_NAME','like','%'+whereClause.FA_NAME+'%')
 		.andWhere('TYPE','like','%'+whereClause.TYPE+'%')
 		.toString();
 
+		//Run the query
 		db.sequelize.query(sql)
 		.success(function(result){
 			db.sequelize.query(sql2)
@@ -53,6 +62,7 @@ module.exports = {
 		})
 	},
 
+	// WARNING: my bad coding :3. This function is the same as the function above. For the "very little" different please look at the document.
 	postFaChooseSearch: function(req,res){
 		var postData = req.body;
 		var patient_id = postData.search.patient_id;
@@ -120,7 +130,12 @@ module.exports = {
 	},
 
 
+	//postInsert: insert new FA template to the system
+	//
+	//input: the FA template information.
+	//output: the result of the operations: success or not
 	postInsert: function(req,res){
+		//create the transaction for batch insert operations.
 		knex.transaction(function(trx){
 			var header = req.body;
 			var insertHeader = extend({},req.body);
@@ -131,7 +146,7 @@ module.exports = {
 			.transacting(trx)
 			.then(function(headerResult){
 				var headerId = headerResult[0];
-				//sections config
+				//config and insert sections
 				var sections = header.sections;
 				sections.forEach(function(section){
 					var insertSection = extend({},section);
@@ -143,7 +158,7 @@ module.exports = {
 					.transacting(trx)
 					.then(function(sectionResult){
 						var sectionId = sectionResult[0];
-						//lines config
+						//config and insert lines
 						var lines = section.lines;
 						lines.forEach(function(line){
 							var insertLine = extend({},line);
@@ -157,7 +172,7 @@ module.exports = {
 							.transacting(trx)
 							.then(function(lineResult){
 								var lineId = lineResult[0];
-								//detail and comment config
+								//config and insert detail and comment
 								var details = line.details;
 								var comments = line.comments;
 								for(var i = 0; i<details.length; i++){
@@ -211,74 +226,9 @@ module.exports = {
 	},
 
 
-	postDelete: function(req,res){
-		var deleteHeaderId = req.body.id;
-		//remove header
-		knex('sys_fa_df_headers')
-		.where('FA_ID', deleteHeaderId)
-		.del()
-		.then(function(delHeaderRes){
-			//remove section
-			knex('sys_fa_df_sections')
-			.where('FA_ID', deleteHeaderId)
-			.del()
-			.then(function(delSectionRes){
-				//get list id of line
-				knex
-				.select('LINE_ID')
-				.from('sys_fa_df_lines')
-				.where('FA_ID', deleteHeaderId)
-				.then(function(selectLineRes){
-					var lineIDList = [];
-					selectLineRes.forEach(function(line){
-						lineIDList.push(line.LINE_ID);
-						if(selectLineRes.indexOf(line) === selectLineRes.length - 1){
-							//remove lines
-							knex('sys_fa_df_lines')
-							.where('FA_ID', deleteHeaderId)
-							.del()
-							.then(function(deleteLineRes){
-								//remove detail
-								knex('sys_fa_df_line_details')
-								.whereIn('LINE_ID', lineIDList)
-								.del()
-								.then(function(delDetailRes){
-									//remove comments
-									knex('sys_fa_df_comments')
-									.whereIn('LINE_ID', lineIDList)
-									.del()
-									.then(function(delCommentsRes){
-										res.json({status:'success'})
-									})
-									.catch(function(error){
-										res.json(500,{status:'error', message:error});
-									})
-								})
-								.catch(function(error){
-									res.json(500,{status:'error', message:error});
-								})
-							})
-							.catch(function(error){
-								res.json(500,{status:'error', message:error});
-							})
-						}
-					})
-							
-				})
-				.catch(function(error){
-					res.json(500,{status:'error', message:error});
-				})
-			})
-			.catch(function(error){
-				res.json(500,{status:'error', message:error});
-			})
-		})
-		.catch(function(error){
-			res.json(500,{status:'error', message:error});
-		})
-	},
-
-
+	// postGetHeaderAndSections: get exsited header and section layout from "sys_fa_df" 
+	// input: header_id
+	// output: header and all the sections of that header
 	postGetHeaderAndSections: function(req,res){
 		var getResult = {};
 		var headerId = req.body.id;
@@ -299,6 +249,7 @@ module.exports = {
 				.orderBy('ORD')
 				.then(function(sectionRes){
 					getResult.sections = sectionRes;
+					//return header and all the sections to client
 					res.json({status:'success', data:getResult});
 				})
 				.error(function(err){
@@ -311,6 +262,9 @@ module.exports = {
 		})
 	},
 
+	// postGetLines: get exsited lines layout from "sys_fa_df" 
+	// input: header_id, section_id
+	// output: every lines have matching section_id and header_id
 	postGetLines: function(req,res){
 		var sectionId = req.body.sectionId;
 		var headerId = req.body.headerId;
@@ -324,6 +278,7 @@ module.exports = {
 		})
 		.orderBy('ORD')
 		.then(function(lineRes){
+			//return the lines result list to client
 			res.json({status:'success',data: lineRes});
 		})
 		.error(function(err){
@@ -332,6 +287,9 @@ module.exports = {
 
 	},
 
+	// postGetLines: get exsited detail and comment layout from "sys_fa_df" 
+	// input: line_id
+	// output: every details and comments have matching line_id
 	postGetDetailsAndComments: function(req,res){
 		var lineId = req.body.lineId;
 		//get details
@@ -347,6 +305,7 @@ module.exports = {
 			.from('sys_fa_df_comments')
 			.where({LINE_ID: lineId})
 			.then(function(commentRes){
+				//return the details and comments to client
 				res.json({
 					status: 'success',
 					data:{
@@ -365,7 +324,18 @@ module.exports = {
 
 	},
 
+
+	// postEdit: edit the exsited FA template
+	// input: the FA template new information 
+	// output: the result of the whole operations: success or not.
 	postEdit: function(req,res){
+
+		//The following 5 functions is chained with each other:
+		//updateHeader<-->updateSections<-->updateLines<-->updateDetails<-->updateComments
+		//
+		//WARNING: all 5 functions is promises which mean they must wait each other finished proccessing to continue operating
+
+
 		var updateHeader = function(header){
 			return new Promise(function(resolve, reject){
 				var updateHeader = extend({}, header);
@@ -380,7 +350,9 @@ module.exports = {
 					for(var i=0; i<header.sections.length; i++){
 						header.sections[i].FA_ID=header.FA_ID;
 					}
+					//Call the next funcions in the chain
 					updateSections(header.sections, header.FA_ID).then(function(result){
+						//check the last resolve to return the correct result to client
 						if(result.status === 'failed') res.json(500,{status:'error'});
 						else if(result.status ==='success') res.json({status:'success'});
 					})
@@ -394,27 +366,26 @@ module.exports = {
 		var updateSections = function(sections, headerId){
 			return new Promise(function(resolve, reject){
 				sections.forEach(function(section){
+					//check the action to have the correct operations.
 					if(section.action==='edit'){
 						var updateSection = extend({}, section);
 						if(updateSection.lines) delete updateSection.lines;
-						delete updateSection.action;
+						delete updateSection.action; //there is no column called "action" in database
 						//update section
 						knex('sys_fa_df_sections')
 						.where({SECTION_ID: updateSection.SECTION_ID})
 						.update(updateSection)
 						.then(function(sectionRes){
+							//Check if this is the last section to operate correctly
 							if(section.lines.length===0){
-								if(sections.indexOf(section)===sections.length-1) resolve({status:'success'});
+								if(sections.indexOf(section)===sections.length-1) resolve({status:'success'}); //resolve to the function which call it in the chain
 							}
 							else {
-								// for(var i=0; i<section.lines.length; i++){
-								// 	section.lines[i].SECTION_ID = section.SECTION_ID;
-								// 	section.lines[i].FA_ID = headerId;
-								// }
+								//Call the next functions in the chain
 								updateLines(section.lines, section.SECTION_ID, headerId).then(function(result){
-									if(result.status==='failed') resolve({status:'failed'});
+									if(result.status==='failed') resolve({status:'failed'}); //resolve to the function which call it in the chain
 									else{
-										if(sections.indexOf(section)===sections.length-1) resolve({status:'success'});
+										if(sections.indexOf(section)===sections.length-1) resolve({status:'success'}); //resolve to the function which call it in the chain
 									}
 								})
 							}
@@ -435,10 +406,6 @@ module.exports = {
 								if(sections.indexOf(section)===sections.length-1) resolve({status:'success'});
 							}
 							else {
-								// for(var i=0; i<section.lines.length; i++){
-								// 	section.lines[i].SECTION_ID = section.SECTION_ID;
-								// 	section.lines[i].FA_ID = headerId;
-								// }
 								updateLines(section.lines, sectionId, headerId).then(function(result){
 									if(result.status==='failed') resolve({status:'failed'});
 									else{
@@ -458,10 +425,6 @@ module.exports = {
 								if(sections.indexOf(section)===sections.length-1) resolve({status:'success'});
 							}
 							else {
-								// for(var i=0; i<section.lines.length; i++){
-								// 	section.lines[i].SECTION_ID = section.SECTION_ID;
-								// 	section.lines[i].FA_ID = headerId;
-								// }
 								updateLines(section.lines, null, null).then(function(result){
 									if(result.status==='failed') resolve({status:'failed'});
 									else{
@@ -653,17 +616,24 @@ module.exports = {
 			})
 		}
 
+		//Call the first function in the chain
 		updateHeader(req.body);
 	},
 
+	//postChangeHeaderStt: enable or disable specific FA template.
+	//
+	//input: header_id of the template and the status to change to: enable or disable.
+	//output: the result of the operation.
 	postChangeHeaderStt: function(req,res){
 		var stt = req.body.status;
 		var headerId = req.body.headerId;
 
+		//enable or disable the template
 		knex('sys_fa_df_headers')
 		.where({FA_ID:headerId})
 		.update({ISENABLE: stt})
 		.then(function(result){
+			//return the result of the operation.
 			res.json({status:'success'});
 		})
 		.error(function(err){
@@ -671,6 +641,10 @@ module.exports = {
 		})
 	},
 
+	//postGetImages: get the images for the image chooser on client
+	//
+	//input: 
+	//output: the list of image files.
 	postGetImages: function(req,res){
 		fs.readdir('./download/documentImage', function(err, files){
 			if(err) res.json(500, {status:'error'});
@@ -678,12 +652,18 @@ module.exports = {
 		})
 	},
 
+	//uploadUploadImage: upload new image to the server.
+	//
+	//input: the image files to upload
+	//output: the result of the operation: success or not
 	uploadUploadImage: function(req,res){
 		var targetPath = './download/documentImage/'+req.files.file.name;
+		//Store the temporary path to upload
 		var tmpPath = req.files.file.path;
 
 		fs.rename(tmpPath, targetPath, function(err){
 			if (err) throw err;
+			//Delete the files in temporary directory to free up space
 			fs.unlink(tmpPath, function(){
 				if(err) res.json(500,{status:'upload failed'});
 				else res.json({status:'success'});

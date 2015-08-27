@@ -47,7 +47,7 @@ app.post('/api/document/existHeaderSections', newFAController.existHeaderAndSect
 app.post('/api/document/existLines', newFAController.existLines);
 app.post('/api/document/existDetailsComments', newFAController.existDetailsAndComments);
 app.post('/api/document/insertNewFA', newFAController.insertNewFA);
-app.post('/api/document/updateNewFA', newFAController.updateNewFA);
+app.post('/api/document/updateNewFA', newFAController.updateFA);
 app.post('/api/document/getDoctorFA', newFAController.getDoctor);
 // end
 
