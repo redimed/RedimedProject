@@ -2,9 +2,16 @@
 var db = require('../../models');
 var moment = require('moment');
 var functionForTimesheet = require('./functionForTimesheet');
-//END EXPORTS
 module.exports = {
-    // APPROVE LEAVE
+    /*
+    ApproveLeave: approve Leave form for employee, if Leave form non-standard and approver level 1
+    then send Leave form to approver level 2
+    input: information of Leave form
+    output: 1. Leave form  non-standard, approver level 1: 
+                    - send Leave form to approver level 2
+            2 else: - success: send confirmation notification and message success
+                    - fail: send message error
+    */
     ApproveLeave: function(req, res) {
         var info = req.body.info;
         var dateApprove = moment().format('YYYY-MM-DD h:mm:ss');
@@ -14,7 +21,7 @@ module.exports = {
             userID: info.userID,
             creationDate: moment().format("YYYY-MM-DD h:mm:ss")
         };
-        //CHECK USER APPROVE
+        //get information approver
         var queryGetInfoUserApprove = "SELECT hr_employee.TITLE " + //SELECT
             "FROM hr_employee " + //FROM
             "INNER JOIN users ON hr_employee.Employee_ID = users.employee_id " + //JOIN
@@ -30,8 +37,7 @@ module.exports = {
                     resultInfoUserApprove[0] !== undefined &&
                     resultInfoUserApprove[0] !== null &&
                     resultInfoUserApprove[0].TITLE === "Director") {
-                    //APPROVE FOR DIRECTOR
-                    //APPROVE COMPLETE
+                    //approver is director
                     db.HrLeave.update({
                             status_id: 3,
                             is_approve_first: 0,
@@ -44,17 +50,16 @@ module.exports = {
                         })
                         .success(function(result) {
 
-                            //TRACKER LEAVE
+                            //tracker
                             functionForTimesheet.TracKerLeave(infoTracKer);
-                            //END TRACKER
 
-                            //SEND MAIL
+                            //send mail
                             sendMailInfo = {
                                 leaveID: info.leaveID,
                                 status: 3
                             };
-                            functionForTimesheet.sendMailLeave(req, res, sendMailInfo);
-                            //END SEND MAIL
+
+                            functionForTimesheet.SendMailApprovedLeave(req, res, sendMailInfo);
 
                             res.json({
                                 status: "success"
@@ -68,11 +73,8 @@ module.exports = {
                             });
                             return;
                         });
-                    //END APPROVE FOR DIRECTOR
-                }
-                //END CHECK
-                else {
-                    //APPROVE FOR HEAD OF DEPT.
+                } else {
+                    //approver is head of dept.
                     var queryGetInfoLeave =
                         "SELECT hr_leave.leave_id, hr_leave.standard, hr_leave.is_approve_first, " + //SELECT
                         "hr_leave.is_approve_second, hr_leave.status_id_first, hr_leave.status_id_second " + //SELECT
@@ -88,12 +90,11 @@ module.exports = {
                                 resultInfoLeave !== null &&
                                 resultInfoLeave[0] !== undefined &&
                                 resultInfoLeave[0] !== null) {
-                                //CHECK STANDARD
+                                //non-standard
                                 if (resultInfoLeave[0].standard === 0) {
+                                    //Leave form is approved by approver level 1
                                     if (resultInfoLeave[0].is_approve_first === 0 &&
                                         resultInfoLeave[0].is_approve_second === 1) {
-
-                                        //APPROVE COMPLETE
                                         db.HrLeave.update({
                                                 status_id: 3,
                                                 status_id_first: 3,
@@ -104,17 +105,16 @@ module.exports = {
                                             })
                                             .success(function(result) {
 
-                                                //TRACKER LEAVE
+                                                //tracker
                                                 functionForTimesheet.TracKerLeave(infoTracKer);
-                                                //END TRACKER
 
-                                                //SEND MAIL
+                                                //sen mail
                                                 sendMailInfo = {
                                                     leaveID: info.leaveID,
                                                     status: 3
                                                 };
-                                                functionForTimesheet.sendMailLeave(req, res, sendMailInfo);
-                                                //END SEND MAIL
+
+                                                functionForTimesheet.SendMailApprovedLeave(req, res, sendMailInfo);
 
                                                 res.json({
                                                     status: "success"
@@ -128,9 +128,10 @@ module.exports = {
                                                 });
                                                 return;
                                             });
-                                        //END APPROVE
+                                        //approver level 1
                                     } else if (resultInfoLeave[0].is_approve_first === 1 &&
                                         resultInfoLeave[0].is_approve_second === 0) {
+                                        //check approver is head of dept. ?
                                         var queryCheckHeadOfDept =
                                             "SElECT sys_hierarchy_nodes.NODE_ID " + //SELECT
                                             "FROM sys_hierarchy_nodes " + //FROM
@@ -148,7 +149,7 @@ module.exports = {
                                                     resultCheckHeadOfDept[0] !== undefined &&
                                                     resultCheckHeadOfDept[0] !== null &&
                                                     !isNaN(resultCheckHeadOfDept[0].NODE_ID)) {
-                                                    //APPROVE FIRST AND WAITTING SECOND
+                                                    //approver level 1 completed, watting approver level 2
                                                     db.HrLeave.update({
                                                             is_approve_first: 0,
                                                             is_approve_second: 1,
@@ -157,14 +158,10 @@ module.exports = {
                                                             leave_id: info.leaveID
                                                         })
                                                         .success(function(result) {
-
-                                                            //TRACKER LEAVE
+                                                            //tracker
                                                             functionForTimesheet.TracKerLeave(infoTracKer);
-                                                            //END TRACKER
 
-                                                            //SEND MAIL
-
-                                                            //GET NODE_ID DIRECTOR
+                                                            //get node id of Director
                                                             var queryGetNodeID =
                                                                 "SELECT DISTINCT sys_hierarchy_nodes.NODE_ID " + //SELECT
                                                                 "FROM sys_hierarchy_nodes " + //FROM
@@ -183,6 +180,7 @@ module.exports = {
                                                                         resultNodeId[0] !== undefined &&
                                                                         resultNodeId[0] !== null &&
                                                                         !isNaN(resultNodeId[0].NODE_ID)) {
+                                                                        //get node id for approver
                                                                         var queryGetNodeIdManage =
                                                                             "SELECT DISTINCT sys_hierarchy_nodes.NODE_ID " + //SELECT
                                                                             "FROM sys_hierarchy_nodes " + //FROM
@@ -200,7 +198,7 @@ module.exports = {
                                                                                     resultNodeIdManage[0] !== undefined &&
                                                                                     resultNodeIdManage[0] !== null &&
                                                                                     !isNaN(resultNodeIdManage[0].NODE_ID)) {
-                                                                                    //GET INFOMATION MANAGE
+                                                                                    //get information for approver
                                                                                     var queryGetInfoManage =
                                                                                         "SELECT sys_hierarchies_users.USER_ID " + //SELECT
                                                                                         "FROM sys_hierarchies_users " + //FROM
@@ -213,21 +211,19 @@ module.exports = {
                                                                                             nodeId: resultNodeIdManage[0].NODE_ID
                                                                                         })
                                                                                         .success(function(resultInfoManage) {
-                                                                                            //NOTIFICATION SUBMIT LEAVE
                                                                                             if (resultInfoManage !== undefined &&
                                                                                                 resultInfoManage !== null &&
                                                                                                 resultInfoManage.length !== 0 &&
                                                                                                 resultInfoManage[0] !== undefined &&
                                                                                                 resultInfoManage[0] !== null &&
                                                                                                 resultInfoManage[0].length !== 0) {
-                                                                                                //SEND MAIL
+                                                                                                //send mail
                                                                                                 var sendMailInfo = {
                                                                                                     userId: resultInfoManage[0].USER_ID,
                                                                                                     dateSubmit: new Date(),
                                                                                                     leaveID: info.leaveID
                                                                                                 };
                                                                                                 functionForTimesheet.sendMailSubmitLeaveAgain(req, res, sendMailInfo);
-                                                                                                //END SEND MAIL
                                                                                             }
                                                                                         })
                                                                                         .error(function(err) {
@@ -236,16 +232,13 @@ module.exports = {
                                                                                                 status: "error"
                                                                                             });
                                                                                         });
-                                                                                    //END GET
                                                                                 } else {
-                                                                                    //NOTIFICATION APPROVE FOR EMPLOYEE
-                                                                                    //SEND MAIL
+                                                                                    //send mail
                                                                                     sendMailInfo = {
                                                                                         leaveID: info.leaveID,
                                                                                         status: 3
                                                                                     };
-                                                                                    functionForTimesheet.sendMailLeave(req, res, sendMailInfo);
-                                                                                    //END SEND MAIL
+                                                                                    functionForTimesheet.SendMailApprovedLeave(req, res, sendMailInfo);
                                                                                 }
                                                                             })
                                                                             .error(function(err) {
@@ -268,9 +261,6 @@ module.exports = {
                                                                     });
                                                                     return;
                                                                 });
-                                                            //END
-
-                                                            //END SEND MAIL
 
                                                             res.json({
                                                                 status: "success"
@@ -284,9 +274,8 @@ module.exports = {
                                                             });
                                                             return;
                                                         });
-                                                    //END APPROVE FIRST
                                                 } else {
-                                                    //APPROVE COMPLETE
+                                                    //approve completed
                                                     db.HrLeave.update({
                                                             status_id: 3,
                                                             is_approve_first: 0,
@@ -299,18 +288,15 @@ module.exports = {
                                                         })
                                                         .success(function(result) {
 
-                                                            //TRACKER LEAVE
+                                                            //tracker
                                                             functionForTimesheet.TracKerLeave(infoTracKer);
-                                                            //END TRACKER
 
-                                                            //SEND MAIL
+                                                            //send mail
                                                             sendMailInfo = {
                                                                 leaveID: info.leaveID,
                                                                 status: 3
                                                             };
-                                                            functionForTimesheet.sendMailLeave(req, res, sendMailInfo);
-                                                            //END SEND MAIL
-
+                                                            functionForTimesheet.SendMailApprovedLeave(req, res, sendMailInfo);
                                                             res.json({
                                                                 status: "success"
                                                             });
@@ -323,7 +309,6 @@ module.exports = {
                                                             });
                                                             return;
                                                         });
-                                                    //END APPROVE
                                                 }
                                             })
                                             .error(function(err) {
@@ -334,9 +319,9 @@ module.exports = {
                                                 return;
                                             });
                                     }
-
+                                    //standard:
                                 } else if (resultInfoLeave[0].standard === 1) {
-                                    //APPROVE COMPLETE
+                                    //approve completed
                                     db.HrLeave.update({
                                             status_id: 3,
                                             is_approve_first: 0,
@@ -349,18 +334,15 @@ module.exports = {
                                         })
                                         .success(function(result) {
 
-                                            //TRACKER LEAVE
+                                            //tracker
                                             functionForTimesheet.TracKerLeave(infoTracKer);
-                                            //END TRACKER
 
-                                            //SEND MAIL
+                                            //send mail
                                             sendMailInfo = {
                                                 leaveID: info.leaveID,
                                                 status: 3
                                             };
-                                            functionForTimesheet.sendMailLeave(req, res, sendMailInfo);
-                                            //END SEND MAIL
-
+                                            functionForTimesheet.SendMailApprovedLeave(req, res, sendMailInfo);
                                             res.json({
                                                 status: "success"
                                             });
@@ -373,9 +355,7 @@ module.exports = {
                                             });
                                             return;
                                         });
-                                    //end approve
                                 }
-                                //end
                             } else {
                                 res.json({
                                     status: "error"
@@ -390,7 +370,6 @@ module.exports = {
                                 result: []
                             });
                         });
-                    //END APPROVE FOR HEAD OF DEPT.
                 }
             })
             .error(function(err) {
@@ -401,9 +380,15 @@ module.exports = {
                 return;
             });
     },
-    //END APPROVE
 
-    //REJECT LEAVE
+    /*
+    RejectLeave: send mail for employee when approver rejected a Leave form
+    input: information Leave form
+    output: - success: 1. if Leave form is non-standard and approver level 2 then: send confirmation
+                          notification for approver leave 1, employee and send message success
+                       2. else: send confirmation notification for employee and send message success
+            - fail: send message error
+    */
     RejectLeave: function(req, res) {
         var info = req.body.info;
         db.HrLeave.update({
@@ -418,10 +403,9 @@ module.exports = {
             }, {
                 leave_id: info.leaveID
             })
-            //SUCCESS
             .success(function(result) {
 
-                //TRACKER LEAVE
+                //tracker Leave form
                 var infoTracKer = {
                     leaveID: info.leaveID,
                     userID: info.userID,
@@ -429,35 +413,27 @@ module.exports = {
                     statusID: 4
                 };
                 functionForTimesheet.TracKerLeave(infoTracKer);
-                //END TRACKER
 
-                //SEND MAIL
+                //send mail Leave form
                 var infoSendMail = {
                     status: 4,
                     leaveID: info.leaveID,
                     userID: info.userID
                 };
-                functionForTimesheet.sendMailLeave(req, res, infoSendMail);
-                //END SEND MAIL
 
-                // GET STATUS SUCCESS REJECT
+                functionForTimesheet.SendMailRejectedLeave(req, res, infoSendMail);
+
                 res.json({
                     status: "success"
                 });
                 return;
-                //END GET 
             })
-            //END SUCCESS
-
-        //ERROR
-        .error(function(err) {
-            console.log("*****ERROR:" + err + "*****");
-            res.json({
-                status: "error"
+            .error(function(err) {
+                console.log("*****ERROR:" + err + "*****");
+                res.json({
+                    status: "error"
+                });
+                return;
             });
-            return;
-        });
-        //END ERROR
     },
-    //END REJECT
 };

@@ -144,10 +144,10 @@
                     <a class="btn btn-xs yellow pull-right" ng-show='!isEdit' ui-sref="loggedIn.home" style="width:70px;margin-right:-8px;">Cancel</a>
                     <!-- END EDIT-->
                     <a class="btn btn-xs yellow pull-right" ng-show='isEdit' ui-sref="loggedIn.timesheetHome.timesheetHistory" style="width:70px;margin-right:-8px;">Cancel</a>
-                    <button class="btn btn-xs green pull-right" ng-show="(!isEdit || checkStatus===1) && afterStatusID!==4" ng-click="addAllTask(2, formCreatTimesheet)" style="width:70px;">Submit</button>
-                    <button class="btn btn-xs purple pull-right" ng-show="(isEdit && (checkStatus!==1 || (afterStatusID ===4 && checkStatus==1)))" ng-click="addAllTask(5,formCreatTimesheet)" style="width:70px;">Re-submit</button>
-                    <button class="btn btn-xs blue pull-right" ng-show="afterStatusID ===4" ng-click="addAllTask(4,formCreatTimesheet)" style="width:70px;">Save</button>
-                    <button class="btn btn-xs blue pull-right" ng-show="afterStatusID !==4" ng-click="addAllTask(1,formCreatTimesheet)" style="width:70px;">Save</button>
+                    <button class="btn btn-xs green pull-right" ng-show="(!isEdit || checkStatus===1) && afterStatusID!==4" ng-click="actionTimesheet(2, formCreatTimesheet)" style="width:70px;">Submit</button>
+                    <button class="btn btn-xs purple pull-right" ng-show="(isEdit && (checkStatus!==1 || (afterStatusID ===4 && checkStatus==1)))" ng-click="actionTimesheet(5,formCreatTimesheet)" style="width:70px;">Re-submit</button>
+                    <button class="btn btn-xs blue pull-right" ng-show="afterStatusID ===4" ng-click="actionTimesheet(4,formCreatTimesheet)" style="width:70px;">Save</button>
+                    <button class="btn btn-xs blue pull-right" ng-show="afterStatusID !==4" ng-click="actionTimesheet(1,formCreatTimesheet)" style="width:70px;">Save</button>
                     <!-- END ADDNEW-->
                     <!-- END -->
                 </footer>

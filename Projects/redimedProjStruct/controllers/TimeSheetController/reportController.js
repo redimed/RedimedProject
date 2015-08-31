@@ -6,8 +6,14 @@ var functionForTimesheet = require('./functionForTimesheet');
 var clone = require('clone');
 //END
 module.exports = {
+    /*
+    LoadDeptReport: load list department for report
+    input: id of user
+    output: list department
+    */
     LoadDeptReport: function(req, res) {
         var USER_ID = req.body.USER_ID;
+        //get title of employee
         var query = "SELECT hr_employee.TITLE FROM hr_employee " +
             "INNER JOIN users ON users.employee_id  = hr_employee.Employee_ID " +
             "WHERE users.id = :userId";
@@ -21,11 +27,11 @@ module.exports = {
                     var TITLE = result[0].TITLE;
                     var queryDept = "";
                     if (TITLE === "Director") {
-                        //ALL DEPT
+                        //get all department
                         queryDept = "SELECT DISTINCT departments.departmentid as id, departments.departmentName as label FROM departments " +
                             "WHERE departments.departmentType = 'Time Sheet'";
                     } else {
-                        //ONE DEPT
+                        //get department
                         queryDept = "SELECT DISTINCT departments.departmentid as id, departments.departmentName as label FROM departments " +
                             "INNER JOIN hr_employee ON hr_employee.Dept_ID = departments.departmentid " +
                             "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
@@ -64,6 +70,11 @@ module.exports = {
             });
     },
 
+    /*
+    LoadEmpReport: load list employee
+    input: list department id
+    output: list employee
+    */
     LoadEmpReport: function(req, res) {
         var listDept = req.body.listDept;
         var strListDept = "";
@@ -82,6 +93,7 @@ module.exports = {
             req.body.listDept[0].isStaff === true) {
             queryStaff = "AND users.id = " + (!isNaN(req.body.listDept[0].USER_ID) ? req.body.listDept[0].USER_ID : -1);
         }
+        //get list emloyee on list department tranmission
         var query = "SELECT DISTINCT hr_employee.FirstName, hr_employee.LastName, hr_employee.Employee_ID FROM hr_employee " +
             "INNER JOIN departments ON departments.departmentid = hr_employee.Dept_ID " +
             "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
@@ -104,6 +116,12 @@ module.exports = {
             });
     },
 
+    /*
+    LoadReportOnActualWorking: report time charge for employees classified by activity type as: 
+    billable time, administrator time, time in lieu, over time,...
+    input: information employees, period
+    output: list employee with time charge on report
+    */
     LoadReportOnActualWorking: function(req, res) {
         var info = req.body.info;
         var listEMP = info.listEMP;
@@ -131,7 +149,7 @@ module.exports = {
             strListDeptID = strListDeptID.substring(0, strListDeptID.length - 2);
         } else strListDeptID = -1;
 
-        // SELECT DEPT
+        //get department
         var queryDept = "SELECT DISTINCT COUNT(hr_employee.Employee_ID) AS CountEmp, departments.departmentName, departments.departmentid FROM departments " +
             "INNER JOIN hr_employee ON hr_employee.Dept_ID = departments.departmentid " +
             "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " +
@@ -139,9 +157,8 @@ module.exports = {
             "INNER JOIN time_tasks ON time_tasks.tasks_week_id = time_tasks_week.task_week_id " +
             "WHERE users.employee_id IN (" + strListEmp + ") AND time_tasks_week.task_status_id = 3 AND " +
             "time_tasks.date BETWEEN :dateFrom AND :dateTo GROUP BY departments.departmentName ORDER BY departments.departmentName ASC";
-        // END DEPT
 
-        // SELECT TIMECHARGE ACTIVITY
+        //get time charge classified by activity
         var queryActivity = "SELECT sum(time_tasks.time_charge) as SUM_CHARGE_ACTIVITY, time_tasks.activity_id, hr_employee.Employee_ID, " +
             "hr_employee.FirstName, hr_employee.LastName, departments.departmentName " +
             "FROM time_tasks_week " +
@@ -152,9 +169,8 @@ module.exports = {
             "WHERE users.employee_id IN (" + strListEmp + ") AND time_tasks_week.task_status_id = 3 AND " +
             "time_tasks.date BETWEEN :dateFrom AND :dateTo " +
             "GROUP BY hr_employee.Employee_ID, time_tasks.activity_id ORDER BY departments.departmentid";
-        // END ACTIVITY
 
-        // SELECT TIMECHARGE ALL
+        //get time charge all
         var querySumTimeCharge = "SELECT DISTINCT SUM(C.time_charge) as SUM_CHARGE, SUM(c.time_in_lieu) AS SUM_IN_LIEU, SUM(C.over_time) AS SUM_OVER_TIME, " +
             "C.Employee_ID, C.FirstName, C.LastName, C.departmentName , C.departmentid " +
             " FROM (SELECT DISTINCT time_tasks_week.time_charge , " +
@@ -167,7 +183,6 @@ module.exports = {
             "INNER JOIN departments ON hr_employee.Dept_ID = departments.departmentid " +
             "WHERE users.employee_id IN (" + strListEmp + ") AND time_tasks_week.task_status_id = 3 AND " +
             "time_tasks.date BETWEEN :dateFrom AND :dateTo) C GROUP BY C.Employee_ID";
-        // END ALL
         db.sequelize.query(queryDept, null, {
                 raw: true
             }, {
@@ -193,7 +208,7 @@ module.exports = {
                                     resultDept[i].listEmployee = [];
                                     for (var j = 0; j < resultTimeCharge.length; j++) {
                                         if (resultDept[i].departmentid === resultTimeCharge[j].departmentid) {
-                                            //PUSH DATA
+                                            //push data
                                             resultDept[i].listEmployee.push({
                                                 employee_id: resultTimeCharge[j].Employee_ID,
                                                 name: resultTimeCharge[j].FirstName + " " + resultTimeCharge[j].LastName,
@@ -203,7 +218,6 @@ module.exports = {
                                                 SUM_CHARGE_ACTIVITY: [],
                                                 activity_id: resultTimeCharge[j].activity_id
                                             });
-                                            //END
                                             for (var k = 0; k < resultActivity.length; k++) {
                                                 if (resultActivity[k].Employee_ID === resultDept[i].listEmployee[resultDept[i].listEmployee.length - 1].employee_id) {
                                                     resultDept[i].listEmployee[resultDept[i].listEmployee.length - 1].SUM_CHARGE_ACTIVITY[resultActivity[k].activity_id] = resultActivity[k].SUM_CHARGE_ACTIVITY;
@@ -212,9 +226,8 @@ module.exports = {
                                         }
                                     }
                                 }
-                                //INSERT TEMP TABLE REPORTS1
 
-                                //SUM TIME ON DEPT
+                                //sum time classified department
                                 for (var deptIndex = 0; deptIndex < resultDept.length; deptIndex++) {
                                     resultDept[deptIndex].sum_ac1_dept = 0;
                                     resultDept[deptIndex].sum_ac2_dept = 0;
@@ -233,9 +246,8 @@ module.exports = {
                                         resultDept[deptIndex].overtime_dept += ((resultDept[deptIndex].listEmployee[empIndex].over_time === undefined || resultDept[deptIndex].listEmployee[empIndex].over_time === null) ? 0 : resultDept[deptIndex].listEmployee[empIndex].over_time);
                                     }
                                 }
-                                //END
 
-                                // SUM ALL
+                                //sum all
                                 var sum_all = 0;
                                 var sum_ac1_all = 0,
                                     sum_ac2_all = 0,
@@ -260,13 +272,12 @@ module.exports = {
                                         sum_ac5_all;
                                 }
 
-                                //END
                                 var listEmployeeInsert = "";
                                 var listTimeInsert = "";
                                 for (var i = 0; i < resultDept.length; i++) {
                                     for (var j = 0; j < resultDept[i].listEmployee.length; j++) {
 
-                                        // VALUE EMP
+                                        //value employee
                                         listEmployeeInsert += "(" + USER_ID + "," + resultDept[i].departmentid + "," + resultDept[i].listEmployee[j].employee_id + ",'" +
                                             resultDept[i].listEmployee[j].name + "','" + moment(info.dateWeekFrom).format("YYYY-MM-DD") + "','" + moment(info.dateWeekTo).format("YYYY-MM-DD") + "'," + resultDept[i].sum_ac1_dept +
                                             "," + resultDept[i].sum_ac2_dept + "," +
@@ -277,8 +288,7 @@ module.exports = {
                                             ", " + sum_ac2_all + ", " + sum_ac3_all + ", " + sum_ac4_all + ", " +
                                             sum_ac5_all + ", " + sum_all + ", " + time_in_lieu_all + ", " + overtime_all +
                                             "), ";
-                                        //EMP
-                                        // VALUE TIME CHARGE
+                                        //value time charge
                                         listTimeInsert += "(" + USER_ID + "," +
                                             resultDept[i].listEmployee[j].employee_id + "," +
                                             (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[1] === undefined ? 0 : resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[1]) + "," +
@@ -287,7 +297,6 @@ module.exports = {
                                             (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[4] === undefined ? 0 : resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[4]) + "," +
                                             (resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[5] === undefined ? 0 : resultDept[i].listEmployee[j].SUM_CHARGE_ACTIVITY[5]) + "," +
                                             (resultDept[i].listEmployee[j].time_charge === undefined ? 0 : resultDept[i].listEmployee[j].time_charge) + "," + resultDept[i].listEmployee[j].time_in_lieu + ", " + resultDept[i].listEmployee[j].over_time + "), ";
-                                        //TIME 3
                                     }
                                 }
                                 if (listEmployeeInsert !== "") {
@@ -411,7 +420,6 @@ module.exports = {
 
     LoadReportOweLeave: function(req, res) {
         var info = req.body.info;
-        //console.log(info);
         var stringEMP = "";
         var stringDept = "";
         var stringID = "";

@@ -7,11 +7,12 @@ var functionForTimesheet = require("./functionForTimesheet");
 //END EXPORTS
 module.exports = {
 
-    /// addAllTask: create a new timesheet and add a task list into it
-    // input: new timesheet data, task list data
-    // output:  - success: send confirmation notification and success message
-    //          - fail: send error message
-    addAllTask: function(req, res) {
+    /* addAllTask: create a new timesheet and add details
+       input: new timesheet data, task list data, task item data, file item data
+       output:  - success: send confirmation notification and success message
+                - fail: send error message
+    */
+    AddAllTask: function(req, res) {
         var allTask = req.body.allTask;
         var info = req.body.info;
 
@@ -29,14 +30,14 @@ module.exports = {
                 raw: true
             })
             .success(function(data) {
-                // Add list tasks to created timesheet
+                //add list tasks to created timesheet
                 db.timeTaskWeek.max('task_week_id')
                     .success(function(max) {
                         db.timeTasks.max('tasks_id')
                             .success(function(id) {
                                 var tId = id;
-                                // INSERT TASK LIST TO TIMESHEET
-                             for (var task in allTask) {
+                                //insert task list to Timesheet
+                                for (var task in allTask) {
                                     tId = tId + 1;
                                     chainer.add(
                                         db.timeTasks.create({
@@ -53,7 +54,7 @@ module.exports = {
                                         })
                                     )
 
-                                    //INSERT ITEM LIST TO TASK
+                                    //insert item list to task
                                     if (allTask[task].item.length > 0) {
                                         for (var i = 0; i < allTask[task].item.length; i++) {
                                             var a = allTask[task].item[i];
@@ -67,11 +68,9 @@ module.exports = {
                                                     comment: a.comment
                                                 })
                                             )
-
-                                            //INSERT FILE LIST TO TASK ITEM
                                             if (a.fileUpload !== undefined &&
                                                 a.fileUpload.length > 0) {
-                                                // add list file attachment to task item
+                                                //insert file list to task item
                                                 for (var keyFile = 0; keyFile < a.fileUpload.length; keyFile++) {
                                                     chainer.add(
                                                         db.time_item_file.create({
@@ -83,11 +82,9 @@ module.exports = {
                                                     )
                                                 }
                                             }
-                                            //END INSERT
 
                                         }
                                     }
-                                    //END INSERT
                                 }
 
                             })
@@ -101,7 +98,7 @@ module.exports = {
                         chainer.runSerially()
                             .success(function(result) {
                                 if (result[0] !== undefined && result[0].dataValues !== undefined && result[0].dataValues.tasks_week_id !== undefined) {
-                                    //TRACKER
+                                    //tracker
                                     info.date = moment().format("YYYY-MM-DD HH:mm:ss");
                                     var idTaskWeek = result[0].dataValues.tasks_week_id;
                                     var tracKer = {
@@ -110,16 +107,12 @@ module.exports = {
                                         idTaskWeek: idTaskWeek,
                                         date: info.date
                                     };
-                                    //CALL FUNCTION TRACKER
                                     TracKerTimeSheet(tracKer);
-                                    //END
-                                    //END TRACKER
 
-                                    //FUNCTION SEND MAIL
                                     if (info.statusID === 2) {
+                                        //send mail
                                         SendMailSubmit(req, res, info);
                                     }
-                                    //END SEND MAIL
                                 }
                                 res.json({
                                     status: 'success'
@@ -147,7 +140,13 @@ module.exports = {
 
     },
 
-    editTask: function(req, res) {
+    /*
+    EditTask: Update information a Timesheet
+    input: update Timesheet data, update task list data, update task item data, update file item data
+    output: - success: send confirmation information and message success
+            -  fail: send message error
+    */
+    EditTask: function(req, res) {
         var allTask = req.body.allTask;
         var info = req.body.info;
         db.timeTasks.max('tasks_id')
@@ -156,6 +155,7 @@ module.exports = {
                 for (var i = 0; i < allTask.length; i++) {
                     tId = tId + 1;
                     if (allTask[i].isAction == 'update') {
+                        //update time task with data request
                         chainer.add(
                             db.timeTasks.update({
                                 order: allTask[i].order,
@@ -175,20 +175,21 @@ module.exports = {
                             for (var j = 0; j < allTask[i].item.length; j++) {
                                 var a = allTask[i].item[j];
                                 if (a.isAction == 'update') {
+                                    //update item task with data request
                                     chainer.add(
-                                            db.TimeItemTask.update({
-                                                units: a.totalUnits,
-                                                ratio: a.ratio,
-                                                time_charge: a.time_temp,
-                                                comment: a.comment
-                                            }, {
-                                                task_id: taskId,
-                                                item_id: a.ITEM_ID
-                                            })
-                                        )
-                                        //PROCESS FILE
+                                        db.TimeItemTask.update({
+                                            units: a.totalUnits,
+                                            ratio: a.ratio,
+                                            time_charge: a.time_temp,
+                                            comment: a.comment
+                                        }, {
+                                            task_id: taskId,
+                                            item_id: a.ITEM_ID
+                                        })
+                                    )
                                     if (a.fileUpload !== undefined &&
                                         a.fileUpload.length > 0) {
+                                        //add file item with data request
                                         for (var keyFile = 0; keyFile < a.fileUpload.length; keyFile++) {
                                             if (a.fileUpload[keyFile].isAction == "insert") {
                                                 chainer.add(
@@ -204,6 +205,7 @@ module.exports = {
                                     }
                                     //END
                                 } else if (a.isAction == 'delete') {
+                                    //delete task item with data request
                                     chainer.add(
                                         db.TimeItemTask.update({
                                             'deleted': 1
@@ -214,31 +216,29 @@ module.exports = {
                                     )
                                     if (a.fileUpload !== undefined &&
                                         a.fileUpload.length > 0) {
+                                        //delete file item with data request
                                         for (var keyFileS = 0; keyFileS < a.fileUpload.length; keyFileS++) {
-                                            //DELETE TIME_TASK_FILE
                                             chainer.add(
-                                                    db.sequelize.query("DELETE FROM time_task_file WHERE time_task_file.file_id = :fileId", null, {
-                                                        raw: true
-                                                    }, {
-                                                        fileId: a.fileUpload[keyFileS].file_id
-                                                    })
-                                                )
-                                                //END
+                                                db.sequelize.query("DELETE FROM time_task_file WHERE time_task_file.file_id = :fileId", null, {
+                                                    raw: true
+                                                }, {
+                                                    fileId: a.fileUpload[keyFileS].file_id
+                                                })
+                                            )
 
-                                            //DELETE TIME_ITEM_FILE
                                             chainer.add(
-                                                    db.sequelize.query("DELETE FROM time_item_file WHERE time_item_file.task_id = :taskId AND time_item_file.item_id = :itemId AND time_item_file.file_id = :fileId", null, {
-                                                        raw: true
-                                                    }, {
-                                                        taskId: taskId,
-                                                        itemId: a.ITEM_ID,
-                                                        fileId: a.fileUpload[keyFileS].file_id
-                                                    })
-                                                )
-                                                //END
+                                                db.sequelize.query("DELETE FROM time_item_file WHERE time_item_file.task_id = :taskId AND time_item_file.item_id = :itemId AND time_item_file.file_id = :fileId", null, {
+                                                    raw: true
+                                                }, {
+                                                    taskId: taskId,
+                                                    itemId: a.ITEM_ID,
+                                                    fileId: a.fileUpload[keyFileS].file_id
+                                                })
+                                            )
                                         }
                                     }
                                 } else if (a.isAction == 'insert') {
+                                    //add time task item with data request
                                     chainer.add(
                                         db.TimeItemTask.create({
                                             task_id: taskId,
@@ -250,9 +250,9 @@ module.exports = {
                                         })
                                     )
 
-                                    //PROCESS FILE
                                     if (a.fileUpload !== undefined &&
                                         a.fileUpload.length > 0) {
+                                        //add file item with data request
                                         for (var keyFile = 0; keyFile < a.fileUpload.length; keyFile++) {
                                             if (a.fileUpload[keyFile].isAction == "insert") {
                                                 chainer.add(
@@ -266,11 +266,11 @@ module.exports = {
                                             }
                                         }
                                     }
-                                    //END
                                 }
                             }
                         }
                     } else if (allTask[i].isAction == 'delete') {
+                        //delete time task with data request
                         chainer.add(
                             db.timeTasks.update({
                                 "deleted": 1
@@ -281,6 +281,7 @@ module.exports = {
 
                         var taskId = allTask[i].tasks_id;
                         if (allTask[i].item.length > 0) {
+                            //delete time item with data request
                             for (var j = 0; j < allTask[i].item.length; j++) {
                                 var a = allTask[i].item[j];
                                 chainer.add(
@@ -292,35 +293,33 @@ module.exports = {
                                     })
                                 )
                                 if (a.fileUpload !== undefined &&
-                                        a.fileUpload.length > 0) {
-                                        for (var keyFileS = 0; keyFileS < a.fileUpload.length; keyFileS++) {
-                                            //DELETE TIME_TASK_FILE
-                                            chainer.add(
-                                                    db.sequelize.query("DELETE FROM time_task_file WHERE time_task_file.file_id = :fileId", null, {
-                                                        raw: true
-                                                    }, {
-                                                        fileId: a.fileUpload[keyFileS].file_id
-                                                    })
-                                                )
-                                                //END
+                                    a.fileUpload.length > 0) {
+                                    //delete file item with data request
+                                    for (var keyFileS = 0; keyFileS < a.fileUpload.length; keyFileS++) {
+                                        chainer.add(
+                                            db.sequelize.query("DELETE FROM time_task_file WHERE time_task_file.file_id = :fileId", null, {
+                                                raw: true
+                                            }, {
+                                                fileId: a.fileUpload[keyFileS].file_id
+                                            })
+                                        )
 
-                                            //DELETE TIME_ITEM_FILE
-                                            chainer.add(
-                                                    db.sequelize.query("DELETE FROM time_item_file WHERE time_item_file.task_id = :taskId AND time_item_file.item_id = :itemId AND time_item_file.file_id = :fileId", null, {
-                                                        raw: true
-                                                    }, {
-                                                        taskId: taskId,
-                                                        itemId: a.ITEM_ID,
-                                                        fileId: a.fileUpload[keyFileS].file_id
-                                                    })
-                                                )
-                                                //END
-                                        }
+                                        chainer.add(
+                                            db.sequelize.query("DELETE FROM time_item_file WHERE time_item_file.task_id = :taskId AND time_item_file.item_id = :itemId AND time_item_file.file_id = :fileId", null, {
+                                                raw: true
+                                            }, {
+                                                taskId: taskId,
+                                                itemId: a.ITEM_ID,
+                                                fileId: a.fileUpload[keyFileS].file_id
+                                            })
+                                        )
                                     }
+                                }
 
                             }
                         }
                     } else if (allTask[i].isAction == 'insert') {
+                        //add time task with data request
                         chainer.add(
                             db.timeTasks.create({
                                 tasks_id: tId,
@@ -336,21 +335,22 @@ module.exports = {
                         )
 
                         if (allTask[i].item.length > 0) {
+                            //add time item with data request
                             for (var j = 0; j < allTask[i].item.length; j++) {
                                 var a = allTask[i].item[j];
                                 chainer.add(
-                                        db.TimeItemTask.create({
-                                            task_id: tId,
-                                            item_id: a.ITEM_ID,
-                                            units: a.totalUnits,
-                                            ratio: a.ratio,
-                                            time_charge: a.time_temp,
-                                            comment: a.comment
-                                        })
-                                    )
-                                    //PROCESS FILE
+                                    db.TimeItemTask.create({
+                                        task_id: tId,
+                                        item_id: a.ITEM_ID,
+                                        units: a.totalUnits,
+                                        ratio: a.ratio,
+                                        time_charge: a.time_temp,
+                                        comment: a.comment
+                                    })
+                                )
                                 if (a.fileUpload !== undefined &&
                                     a.fileUpload.length > 0) {
+                                    //add file item with data request
                                     for (var keyFileL = 0; keyFileL < a.fileUpload.length; keyFileL++) {
                                         if (a.fileUpload[keyFileL].isAction == "insert") {
                                             chainer.add(
@@ -364,12 +364,12 @@ module.exports = {
                                         }
                                     }
                                 }
-                                //END
 
                             }
                         }
                     }
                 }
+                //update time task week with data request
                 chainer.add(
                     db.timeTaskWeek.update({
                         time_charge: info.time_temp,
@@ -388,7 +388,7 @@ module.exports = {
             })
 
         chainer.runSerially().success(function(result) {
-            //TRACKER
+            //tracker
             var date = moment().format("YYYY-MM-DD HH:mm:ss");
             var idTaskWeek = info.idWeek;
             var tracKer = {
@@ -397,17 +397,10 @@ module.exports = {
                 idTaskWeek: idTaskWeek,
                 date: date
             };
-            //CALL FUNCTION TRACKER
             TracKerTimeSheet(tracKer);
-            //END
-            //END TRACKER
-
-            //FUNCTION SEND MAIL
             if (info.statusID === 5 || info.statusID === 2) {
                 SendMailSubmit(req, res, info);
             }
-            //END SEND MAIL
-
             res.json({
                 status: 'success'
             });
@@ -419,7 +412,7 @@ module.exports = {
         });
     },
 
-    getItemList: function(req, res) {
+    GetItemList: function(req, res) {
         var limit = (req.body.limit) ? req.body.limit : 10;
         var offset = (req.body.offset) ? req.body.offset : 0;
         var fields = req.body.fields;
@@ -453,7 +446,13 @@ module.exports = {
             });
     },
 
-    getDepartmentLocation: function(req, res) {
+    /*
+    GetDepartmentLocationActivity: get information departments, locations, activities
+    input: 
+    output: list departments, locations, activities
+    */
+    GetDepartmentLocationActivity: function(req, res) {
+        //get list locations
         db.timeLocation.findAll({
                 raw: true
             })
@@ -465,6 +464,7 @@ module.exports = {
                     });
                     return false;
                 } else {
+                    //get list departments
                     db.Departments.findAll({
                             where: {
                                 departmentType: 'Time Sheet'
@@ -480,6 +480,7 @@ module.exports = {
                                 });
                                 return false;
                             } else {
+                                //get list activities
                                 db.sequelize.query("SELECT a.`activity_id`, a.`NAME` FROM `time_activity` a", null, {
                                         raw: true
                                     })
@@ -522,7 +523,13 @@ module.exports = {
             });
     },
 
-    checkTaskWeek: function(req, res) {
+    /*
+    CheckTaskWeek: check time task on Timesheet
+    input: start date of week, id of user
+    output: - exist: list task on Timesheet
+            - not exist: message 'no'
+    */
+    CheckTaskWeek: function(req, res) {
         var info = req.body.info;
         db.timeTaskWeek.find({
                 where: {
@@ -575,17 +582,23 @@ module.exports = {
                 console.log(err);
             });
     },
-
-    showDetailDate: function(req, res) {
+    /*
+    ShowDetailDate: show task detail on date
+    input: id of Timesheet
+    output: task detail on date
+    */
+    ShowDetailDate: function(req, res) {
         var info = req.body.info;
-        db.sequelize.query("SELECT t.`date`,t.activity_id, time_tasks_week.after_status_id, time_tasks_week.time_in_lieuChoose, time_task_status.name as status,tasks_week_id,hr_employee.FirstName, hr_employee.LastName ,t.`time_charge` FROM" +
-                " `time_tasks` t INNER JOIN `time_activity` a ON a.`activity_id` = t.`activity_id`" +
-                " INNER JOIN time_tasks_week ON t.tasks_week_id = time_tasks_week.task_week_id " +
-                " INNER JOIN users ON time_tasks_week.user_id = users.id INNER JOIN hr_employee ON " +
-                " hr_employee.Employee_ID  = users.employee_id INNER JOIN time_task_status ON time_task_status.task_status_id = time_tasks_week.task_status_id " +
-                " WHERE t.`tasks_week_id` = ? AND t.`deleted`= 0 ORDER BY t.order ASC", null, {
-                    raw: true
-                }, [info])
+        var queryGetInformationTask = "SELECT t.`date`,t.activity_id, time_tasks_week.after_status_id, time_tasks_week.time_in_lieuChoose, time_task_status.name as status,tasks_week_id,hr_employee.FirstName, hr_employee.LastName ,t.`time_charge` FROM" +
+            " `time_tasks` t INNER JOIN `time_activity` a ON a.`activity_id` = t.`activity_id`" +
+            " INNER JOIN time_tasks_week ON t.tasks_week_id = time_tasks_week.task_week_id " +
+            " INNER JOIN users ON time_tasks_week.user_id = users.id INNER JOIN hr_employee ON " +
+            " hr_employee.Employee_ID  = users.employee_id INNER JOIN time_task_status ON time_task_status.task_status_id = time_tasks_week.task_status_id " +
+            " WHERE t.`tasks_week_id` = ? AND t.`deleted`= 0 ORDER BY t.order ASC";
+        //get information a task
+        db.sequelize.query(queryGetInformationTask, null, {
+                raw: true
+            }, [info])
             .success(function(tasks) {
                 if (tasks === null || tasks.length === 0) {
                     console.log("Not found tasks in table");
@@ -608,9 +621,14 @@ module.exports = {
             });
     },
 
-    showEdit: function(req, res) {
+    /*
+    ShowEdit: show information Timesheet to update
+    input: id of Timesheet, id of user
+    output: information detail a Timesheet
+    */
+    ShowEdit: function(req, res) {
         var info = req.body.info;
-        //CHECK PERMISS
+        //check permission
         var queryGetPermiss = "SELECT time_tasks_week.task_status_id " + //SELECT
             "FROM time_tasks_week " + //FROM
             "WHERE task_week_id = :idWeek AND time_tasks_week.user_id = :userId";
@@ -629,7 +647,7 @@ module.exports = {
                     resultPermiss[0].task_status_id !== 2 &&
                     resultPermiss[0].task_status_id !== 3 &&
                     resultPermiss[0].task_status_id !== 5) {
-                    //LOAD EDIT
+                    //load edit
                     var query = "SELECT * FROM time_tasks WHERE time_tasks.tasks_week_id =:idWeek AND time_tasks.deleted = 0 ORDER BY time_tasks.order ASC";
                     db.sequelize.query(query, null, {
                             raw: true
@@ -644,16 +662,19 @@ module.exports = {
                                 });
                                 return false;
                             } else {
-                                db.sequelize.query("SELECT DISTINCT time_tasks_week.task_status_id, time_tasks_week.after_status_id, " +
-                                        "t.`tasks_id`, t.isParent, c.`item_id` as ITEM_ID,c.`ITEM_NAME`,i.deleted, i.`units`, i.ratio, i.`COMMENT` as comment, " +
-                                        "i.`time_charge` FROM `time_tasks` t LEFT JOIN `time_item_task` i ON i.`task_id` " +
-                                        "= t.`tasks_id` LEFT JOIN `time_item_code` c ON c.`ITEM_ID` = i.`item_id`" +
-                                        " INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = t.tasks_week_id " +
-                                        " WHERE " +
-                                        "t.`tasks_week_id` = ?", null, {
-                                            raw: true
-                                        }, [info.idWeek])
+                                //get information Timesheet
+                                var queryGetInfomationTimesheet = "SELECT DISTINCT time_tasks_week.task_status_id, time_tasks_week.after_status_id, " +
+                                    "t.`tasks_id`, t.isParent, c.`item_id` as ITEM_ID,c.`ITEM_NAME`,i.deleted, i.`units`, i.ratio, i.`COMMENT` as comment, " +
+                                    "i.`time_charge` FROM `time_tasks` t LEFT JOIN `time_item_task` i ON i.`task_id` " +
+                                    "= t.`tasks_id` LEFT JOIN `time_item_code` c ON c.`ITEM_ID` = i.`item_id`" +
+                                    " INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = t.tasks_week_id " +
+                                    " WHERE " +
+                                    "t.`tasks_week_id` = ?";
+                                db.sequelize.query(queryGetInfomationTimesheet, null, {
+                                        raw: true
+                                    }, [info.idWeek])
                                     .success(function(item) {
+                                        //get information Timesheet's detail
                                         db.sequelize.query("SELECT DISTINCT t.`tasks_id`, c.`item_id` as ITEM_ID, " +
                                                 "time_task_file.path_file, time_task_file.file_id, time_task_file.file_name, time_task_file.file_size " +
                                                 "FROM `time_tasks` t INNER JOIN `time_item_task` i ON i.`task_id` = t.`tasks_id` " +
@@ -702,7 +723,6 @@ module.exports = {
                             });
                             console.log(err);
                         });
-                    //END LOAD
                 } else {
                     res.json({
                         status: "error"
@@ -717,11 +737,13 @@ module.exports = {
                 });
                 return;
             });
-
-        //END
     },
-
-    checkFirstTaskWeek: function(req, res) {
+    /*
+    CheckFirstTaskWeek: get start date of Timesheet
+    input: id of user
+    output: date later
+    */
+    CheckFirstTaskWeek: function(req, res) {
         var info = req.body.info;
         db.timeTaskWeek.max('start_date', {
                 where: {
@@ -751,14 +773,21 @@ module.exports = {
             });
     },
 
-    getTaskList: function(req, res) {
-        db.sequelize.query("SELECT t.*, tw.*, u.`Booking_Person`, ts.`color` AS COLOR, ts.`name` AS STATUS " +
-                "FROM time_tasks t " +
-                "INNER JOIN time_tasks_week tw ON t.`tasks_week_id` = tw.`task_week_id` " +
-                "INNER JOIN users u ON u.`id` =  tw.`user_id` " +
-                "INNER JOIN time_task_status ts ON ts.`stask_status_id` = t.`task_status_id`", null, {
-                    raw: true
-                })
+    /*
+    GetTaskList: get list Timesheet
+    input: 
+    output: list Timesheet
+    */
+    GetTaskList: function(req, res) {
+        //get list Timesheet
+        var queryGetListTimesheet = "SELECT t.*, tw.*, u.`Booking_Person`, ts.`color` AS COLOR, ts.`name` AS STATUS " +
+            "FROM time_tasks t " +
+            "INNER JOIN time_tasks_week tw ON t.`tasks_week_id` = tw.`task_week_id` " +
+            "INNER JOIN users u ON u.`id` =  tw.`user_id` " +
+            "INNER JOIN time_task_status ts ON ts.`stask_status_id` = t.`task_status_id`";
+        db.sequelize.query(queryGetListTimesheet, null, {
+                raw: true
+            })
             .success(function(data) {
                 res.json({
                     status: 'success',
@@ -774,34 +803,43 @@ module.exports = {
 
     },
 
-    getTask: function(req, res) {
+    /*
+    GetTask: get list task of Timesheets
+    input: id of Timesheet
+    output: list task
+    */
+    GetTask: function(req, res) {
         var idWeek = req.body.idWeek;
-        db.sequelize.query("SELECT DISTINCT t.`tasks_id`,t.`tasks_week_id`, time_item_code.ITEM_NAME, time_item_code.IS_BILLABLE , i.units, i.ratio, time_tasks_week.after_status_id, time_tasks_week.time_in_lieuChoose, t.`date`,l.`NAME` AS location,time_task_status.name as STATUS, hr_employee.FirstName, hr_employee.LastName, d.`departmentName` AS department," +
-                "a.`NAME` AS activity,t.`time_charge`,t.`task`, i.`time_charge` AS time_item,i.`item_id` AS ITEM_ID,i.`units`,i.`COMMENT` AS comment " +
-                "FROM `time_tasks` t LEFT JOIN `departments` d ON t.`department_code_id` = d.`departmentid` " +
-                "INNER JOIN time_tasks_week ON time_tasks_week.task_week_id  = t.tasks_week_id " +
-                "INNER JOIN users ON users.id  = time_tasks_week.user_id " +
-                "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " +
-                "INNER JOIN time_task_status ON time_task_status.task_status_id = time_tasks_week.task_status_id " +
-                "LEFT JOIN `time_activity` a ON t.`activity_id` = a.`activity_id`" +
-                "LEFT JOIN `time_location` l ON t.`location_id` = l.`location_id` " +
-                "LEFT OUTER JOIN `time_item_task` i ON i.`task_id` = t.`tasks_id` AND i.deleted = 0 " +
-                "LEFT JOIN time_item_code ON time_item_code.ITEM_ID = i.item_id " +
-                "WHERE t.`tasks_week_id` = ? AND t.`deleted` = 0 ORDER BY t.`tasks_id`", null, {
-                    raw: true
-                }, [idWeek])
+        //get list task
+        var queryGetListTask = "SELECT DISTINCT t.`tasks_id`,t.`tasks_week_id`, time_item_code.ITEM_NAME, time_item_code.IS_BILLABLE , i.units, i.ratio, time_tasks_week.after_status_id, time_tasks_week.time_in_lieuChoose, t.`date`,l.`NAME` AS location,time_task_status.name as STATUS, hr_employee.FirstName, hr_employee.LastName, d.`departmentName` AS department," +
+            "a.`NAME` AS activity,t.`time_charge`,t.`task`, i.`time_charge` AS time_item,i.`item_id` AS ITEM_ID,i.`units`,i.`COMMENT` AS comment " +
+            "FROM `time_tasks` t LEFT JOIN `departments` d ON t.`department_code_id` = d.`departmentid` " +
+            "INNER JOIN time_tasks_week ON time_tasks_week.task_week_id  = t.tasks_week_id " +
+            "INNER JOIN users ON users.id  = time_tasks_week.user_id " +
+            "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " +
+            "INNER JOIN time_task_status ON time_task_status.task_status_id = time_tasks_week.task_status_id " +
+            "LEFT JOIN `time_activity` a ON t.`activity_id` = a.`activity_id`" +
+            "LEFT JOIN `time_location` l ON t.`location_id` = l.`location_id` " +
+            "LEFT OUTER JOIN `time_item_task` i ON i.`task_id` = t.`tasks_id` AND i.deleted = 0 " +
+            "LEFT JOIN time_item_code ON time_item_code.ITEM_ID = i.item_id " +
+            "WHERE t.`tasks_week_id` = ? AND t.`deleted` = 0 ORDER BY t.`tasks_id`";
+        db.sequelize.query(queryGetListTask, null, {
+                raw: true
+            }, [idWeek])
             .success(function(data) {
-                db.sequelize.query("SELECT DISTINCT t.`tasks_id`, c.`item_id` as ITEM_ID, " +
-                        "time_task_file.path_file, time_task_file.file_id, time_task_file.file_name, time_task_file.file_size " +
-                        "FROM `time_tasks` t INNER JOIN `time_item_task` i ON i.`task_id` = t.`tasks_id` " +
-                        "INNER JOIN `time_item_code` c ON c.`ITEM_ID` = i.`item_id`" +
-                        "INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = t.tasks_week_id " +
-                        "INNER JOIN time_item_file ON time_item_file.task_id = i.task_id AND time_item_file.item_id = i.item_id " +
-                        "INNER JOIN time_task_file ON time_task_file.file_id = time_item_file.file_id " +
-                        " WHERE " +
-                        "t.`tasks_week_id` = ?", null, {
-                            raw: true
-                        }, [idWeek])
+                //get list file item
+                var queryGetItemcode = "SELECT DISTINCT t.`tasks_id`, c.`item_id` as ITEM_ID, " +
+                    "time_task_file.path_file, time_task_file.file_id, time_task_file.file_name, time_task_file.file_size " +
+                    "FROM `time_tasks` t INNER JOIN `time_item_task` i ON i.`task_id` = t.`tasks_id` " +
+                    "INNER JOIN `time_item_code` c ON c.`ITEM_ID` = i.`item_id`" +
+                    "INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = t.tasks_week_id " +
+                    "INNER JOIN time_item_file ON time_item_file.task_id = i.task_id AND time_item_file.item_id = i.item_id " +
+                    "INNER JOIN time_task_file ON time_task_file.file_id = time_item_file.file_id " +
+                    " WHERE " +
+                    "t.`tasks_week_id` = ?";
+                db.sequelize.query(queryGetItemcode, null, {
+                        raw: true
+                    }, [idWeek])
                     .success(function(file) {
                         if (data === null || data.length === 0) {
                             console.log("Not found tasks in table");
@@ -834,10 +872,15 @@ module.exports = {
 
     },
 
-    getAllTaskAMonth: function(req, res) {
+    /*
+    GetAllTaskMonth: get all Timesheet of user
+    input: information search, pagination, ...
+    output: list Timesheets
+    */
+    GetAllTaskAMonth: function(req, res) {
         var searchObj = req.body.search;
         var yearNow = moment(searchObj.dateFrom).format("YYYY");
-        //SEARCH
+        //search
         var strSearch = " AND ";
         var strWeek = "";
         for (var keyStatus in searchObj.select) {
@@ -857,9 +900,8 @@ module.exports = {
             searchObj.week_no !== "") {
             strWeek = " AND time_tasks_week.week_no = " + searchObj.week_no + " AND YEAR(time_tasks_week.end_date) = :yearNow";
         }
-        //END SEARCH
 
-        //ORDER BY
+        //order by
         var strOrder = " ORDER BY ";
         for (var keyOrder in searchObj.order) {
             if (searchObj.order[keyOrder] !== undefined && searchObj.order[keyOrder] !== null && searchObj.order[keyOrder] !== "") {
@@ -871,7 +913,7 @@ module.exports = {
         } else {
             strOrder = strOrder.substring(0, strOrder.length - 2);
         }
-        //END ORDER BY
+        //get list Timesheets
         var query = "SELECT time_tasks_week.start_date,time_tasks_week.task_week_id, time_tasks_week.end_date, time_tasks_week.time_charge, time_task_status.name, " +
             "time_tasks_week.comments FROM time_tasks_week INNER JOIN time_task_status ON time_task_status.task_status_id = " +
             "time_tasks_week.task_status_id WHERE time_tasks_week.user_id = :userId" + strWeek + strSearch +
@@ -886,6 +928,7 @@ module.exports = {
                 offset: searchObj.offset
             })
             .success(function(result) {
+                //count list Timesheet
                 var queryCount = "SELECT COUNT(time_tasks_week.task_week_id) AS COUNT FROM time_tasks_week INNER JOIN time_task_status ON time_task_status.task_status_id = " +
                     "time_tasks_week.task_status_id WHERE time_tasks_week.user_id = :userId" + strWeek + strSearch;
                 db.sequelize.query(queryCount, null, {
@@ -932,7 +975,8 @@ module.exports = {
             });
     },
 
-    checkMonth: function(req, res) {
+
+    CheckMonth: function(req, res) {
         var info = req.body.info;
         var task_week_id = [],
             prevMonth = info.month,
@@ -1011,9 +1055,15 @@ module.exports = {
             });
     },
 
+    /*
+        LoadContract: Load contract of employee
+        input: id of employee
+        output: contract of employee
+    */
     LoadContract: function(req, res) {
         var ID = req.body.ID;
-        var query = "SELECT hr_employee.TypeOfContruct FROM hr_employee INNER JOIN users ON users.employee_id = hr_employee.Employee_ID WHERE users.id = :id";
+        var query = "SELECT hr_employee.TypeOfContruct FROM hr_employee INNER JOIN users ON " +
+            "users.employee_id = hr_employee.Employee_ID WHERE users.id = :id";
         db.sequelize.query(query, null, {
                 raw: true
             }, {
@@ -1034,10 +1084,16 @@ module.exports = {
                 return;
             });
     },
-
+    /*
+        SubmitOnView: submit a Timesheet on view it
+        input: information this Timesheet
+        output: - success: send send message success
+                - fail: send message error
+    */
     SubmitOnView: function(req, res) {
         var info = req.body.info;
-        var query = "UPDATE time_tasks_week SET time_tasks_week.task_status_id = :statusId WHERE time_tasks_week.task_week_id = :idWeek";
+        var query = "UPDATE time_tasks_week SET time_tasks_week.task_status_id = :statusId " +
+            "WHERE time_tasks_week.task_week_id = :idWeek";
         db.sequelize.query(query, null, {
                 raw: true
             }, {
@@ -1045,7 +1101,7 @@ module.exports = {
                 idWeek: info.ID_WEEK
             })
             .success(function(result) {
-                //TRACKER
+                //tracker
                 var date = moment().format("YYYY-MM-DD HH:mm:ss");
                 var tracKer = {
                     statusID: info.status,
@@ -1053,15 +1109,11 @@ module.exports = {
                     idTaskWeek: info.ID_WEEK,
                     date: date
                 };
-                //CALL FUNCTION TRACKER
                 TracKerTimeSheet(tracKer);
-                //END
-                //END TRACKER
                 info.statusID = info.status;
                 info.userID = info.USER_ID;
-                // SEND MAIL
+                //send mail
                 SendMailSubmit(req, res, info);
-                //END
                 res.json({
                     status: 'success'
                 });
@@ -1075,6 +1127,11 @@ module.exports = {
             });
     },
 
+    /*
+    CheckTimeInLieu: get Time in lieu of employ
+    input: current date, id of user
+    output: Time in lieu
+    */
     CheckTimeInLieu: function(req, res) {
         var info = req.body.info;
         var dateAddEnd = (7 - moment(info.date).day()) % 7;
@@ -1113,6 +1170,7 @@ module.exports = {
         } else {
             strWeekNo = "((-1,-1))";
         }
+        //get current Time in lieu
         var queryGetTimInLieuHas = "SELECT time_tasks_week.time_in_lieu FROM time_tasks_week WHERE user_id = :userId " +
             "AND time_tasks_week.task_status_id = 3 AND (time_tasks_week.week_no, YEAR(time_tasks_week.end_date)) IN " + strWeekNo;
         db.sequelize.query(queryGetTimInLieuHas, null, {
@@ -1121,6 +1179,7 @@ module.exports = {
                 userId: info.userId
             })
             .success(function(result) {
+                //get time in lieu choose of Timesheet has not status approved
                 var queryGetTimInLieuChoose = "SELECT time_tasks_week.time_in_lieuChoose FROM time_tasks_week WHERE user_id = :userId " +
                     "AND time_tasks_week.task_status_id = 2";
                 db.sequelize.query(queryGetTimInLieuChoose, null, {
@@ -1256,7 +1315,7 @@ module.exports = {
 
 };
 
-// FUNCTION TRACKER
+//tracker
 var TracKerTimeSheet = function(info) {
     var arrayAction = {
         1: "Save",
@@ -1276,15 +1335,15 @@ var TracKerTimeSheet = function(info) {
             console.log("*****ERROR:" + err + "*****");
         });
 };
-//END
 
-//FUNCTION SEND MAIL
+//send mail
 var SendMailSubmit = function(req, res, info) {
     var USER_ID_SUBMIT = info.userID;
     var arrayWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     var DATE_OF_WEEK = arrayWeek[moment(info.date).format('e') - 1];
     var DATE_SUBMIT = moment(info.date).format('DD/MM/YYYY - HH:mm:ss');
     var idTaskWeek = info.idTaskWeek;
+    //get node id ò employee
     var queryNodeChildren =
         "SELECT DISTINCT sys_hierarchies_users.NODE_ID, sys_hierarchies_users.DEPARTMENT_CODE_ID FROM sys_hierarchies_users " +
         "INNER JOIN hr_employee ON hr_employee.Dept_ID = sys_hierarchies_users.DEPARTMENT_CODE_ID " +
@@ -1296,6 +1355,7 @@ var SendMailSubmit = function(req, res, info) {
         })
         .success(function(result) {
             if (result[0] !== undefined && result[0] !== null && result[0].NODE_ID !== undefined && result[0].NODE_ID !== null && result[0].DEPARTMENT_CODE_ID !== undefined && result[0].DEPARTMENT_CODE_ID !== null) {
+                //get node id approver
                 var queryParentNodeId = "SELECT sys_hierarchy_nodes.TO_NODE_ID, sys_hierarchy_nodes.NODE_CODE " +
                     "FROM sys_hierarchy_nodes WHERE sys_hierarchy_nodes.NODE_ID = :nodeId";
                 db.sequelize.query(queryParentNodeId, null, {
@@ -1320,6 +1380,7 @@ var SendMailSubmit = function(req, res, info) {
                                 })
                                 .success(function(result3) {
                                     if (result3[0] !== undefined && result3[0] !== null && result3[0].USER_ID !== undefined && result3[0].USER_ID !== null) {
+                                        //get approver's information
                                         var queryManage = "SELECT hr_employee.Email, hr_employee.FirstName, hr_employee.LastName FROM hr_employee " +
                                             "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID WHERE users.id = :userId";
                                         db.sequelize.query(queryManage, null, {
@@ -1328,6 +1389,7 @@ var SendMailSubmit = function(req, res, info) {
                                                 userId: result3[0].USER_ID
                                             })
                                             .success(function(resultManage) {
+                                                //get employee's information
                                                 var queryEmp = "SELECT hr_employee.FirstName, hr_employee.LastName FROM hr_employee " +
                                                     "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID WHERE users.id = :userId";
                                                 db.sequelize.query(queryEmp, null, {
@@ -1365,13 +1427,8 @@ var SendMailSubmit = function(req, res, info) {
                                                                     '<b><span style="font-size:8.0pt;color:green">Please consider our environment before printing this e - mail</span></b></p>' +
                                                                     '</td></tr></tbody></table>'
                                                             };
-                                                            // END APPROVE
 
-                                                            //CALL SEND MAIL
                                                             FunctionSendMail.sendEmail(req, res, mailOptions);
-                                                            // END CALL
-
-                                                            // END SEND
                                                         }
                                                     })
                                                     .error(function(err) {
@@ -1419,4 +1476,3 @@ var SendMailSubmit = function(req, res, info) {
             return;
         });
 };
-//END SEND MAIL

@@ -17,7 +17,6 @@ angular.module("app.loggedIn.TimeSheet.ViewDetail.Directive", [])
                             scope.list = response;
                             scope.employee_name = (scope.list.result[0].FirstName === null || scope.list.result[0].FirstName === "") ? ((scope.list.result[0].LastName === null || scope.list.result[0].LastName === "") ? " " : scope.list.result[0].LastName) : (scope.list.result[0].FirstName + " " + ((scope.list.result[0].LastName === null || scope.list.result[0].LastName === "") ? " " : scope.list.result[0].LastName));
                         } else {
-                            //catch exception
                             $state.go("loggedIn.home", null, {
                                 "reload": true
                             });
@@ -29,7 +28,7 @@ angular.module("app.loggedIn.TimeSheet.ViewDetail.Directive", [])
                     dialogItem(taskID);
                 };
 
-                //VIEW ITEM CODE
+                //view item code
                 var dialogItem = function(taskID) {
                     var modalInstance = $modal.open({
                         templateUrl: "ViewItem",
@@ -42,7 +41,6 @@ angular.module("app.loggedIn.TimeSheet.ViewDetail.Directive", [])
                         size: "lg"
                     });
                 };
-                //END VIEW ITEM CODE
             },
             templateUrl: "modules/TimeSheet/directives/templates/ViewDetail.html"
         };

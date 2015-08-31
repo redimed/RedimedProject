@@ -12,10 +12,9 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                 scope.$watch('ngModel', function(newModel, oldModel) {
                     scope.items = [];
                     if (newModel !== undefined) {
-                        //LOAD LOCATION NAME - DEPARTMENT NAME
+                        //load location name, department name
                         scope.locationName = newModel.locationName;
                         scope.departmentName = newModel.departmentName;
-                        //END
                         if (newModel.item !== undefined && newModel.item.length !== 0) {
                             angular.forEach(newModel.item, function(item, index) {
                                 if (item !== undefined && item.deleted !== 1 && item.show !== false) {
@@ -23,35 +22,36 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                                 }
                             });
                         }
-                        //SHOW ALL ITEM
+                        //show all item
                         angular.forEach(scope.items, function(item, index) {
                             scope.items[index].show = true;
                         });
-                        //END
+
                         scope.ACTIVITY_ID = newModel.activity_id;
 
-                        //PUSH TASK ID
+                        //push task id
                         if (newModel.taskIndex !== undefined) {
                             scope.taskIndex = newModel.taskIndex;
                         }
-                        //END
                     }
-                    //FUNCTION SETPAGE
+                    //set page
                     scope.setPage = function() {
                         scope.searchObjectMap.offset = (scope.searchObjectMap.currentPage - 1) * scope.searchObjectMap.limit;
-                        scope.loadList();
+                        scope.LoadList();
                     };
-                    //END FUNCTION SETPAGE
 
-                    //FUNCTION RESET
+                    //reset
                     scope.reset = function() {
                         scope.searchObjectMap = angular.copy(scope.searchObject);
-                        scope.loadList();
+                        scope.LoadList();
                     };
-                    //END FUNCTION RESET
 
-                    //FUNCTION LOADLIST
-                    scope.loadList = function() {
+                    /*
+                    LoadList: Load Item code for Task of Timesheet
+                    input: 
+                    output: list item code
+                    */
+                    scope.LoadList = function() {
                         TimeSheetService.LoadItemCode(scope.searchObjectMap).then(function(response) {
                             if (response.status === "success") {
                                 scope.list = response;
@@ -60,14 +60,13 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                                 angular.forEach(scope.list.result, function(value, index) {
                                     scope.list.result[index].status = false;
                                 });
-                                //end set isShow
+
                             } else if (response.status === "error") {
                                 $state.go("loggedIn.timesheetHome.timesheetCreate", null, {
                                     "reload": true
                                 });
                                 toastr.error("Loading fail!", "Error");
                             } else {
-                                //catch exception
                                 $state.go("loggedIn.timesheetHome.timesheetCreate", null, {
                                     "reload": true
                                 });
@@ -75,10 +74,13 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                             }
                         });
                     };
-                    //END FUNCTION LOADLIST
 
-                    //FUNCTION INIT
-                    var init = function() {
+                    /*
+                    Init: load list items default
+                    input: 
+                    output: list items
+                    */
+                    var Init = function() {
                         scope.searchObject = {
                             limit: 10,
                             offset: 0,
@@ -97,27 +99,27 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                         scope.rows = MODE_ROW;
                         scope.searchObjectMap = angular.copy(scope.searchObject);
                         scope.list = {};
-                        scope.loadList();
+                        scope.LoadList();
                     };
-                    //END FUNCTION INIT
 
-                    //CALL INIT
-                    init();
-                    //END CALL INIT
+                    Init();
 
-                    //ORDER BY
+                    //some order by
                     scope.itemCodeASC = function() {
                         scope.searchObjectMap.order['time_item_code.ITEM_ID'] = "ASC";
-                        scope.loadList();
+                        scope.LoadList();
                     };
                     scope.itemCodeDESC = function() {
                         scope.searchObjectMap.order['time_item_code.ITEM_ID'] = "DESC";
-                        scope.loadList();
+                        scope.LoadList();
                     };
-                    //ORDER BY
 
-                    //FUNCTION CHANGE TIMECHARGE
-                    scope.changeTimeCharge = function(index, ratio) {
+                    /*
+                    ChangeTimeCharge: auto set units when enter time charge
+                    input: index, ratio of item
+                    output: unit of item
+                    */
+                    scope.ChangeTimeCharge = function(index, ratio) {
                         if (ratio !== undefined &&
                             ratio !== null &&
                             ratio !== "" &&
@@ -127,9 +129,8 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                             scope.items[index].totalUnits = null;
                         }
                     };
-                    //END
 
-                    scope.clickShow = function(index) {
+                    scope.ClickShow = function(index) {
                         if (scope.list !== undefined &&
                             scope.list.result !== undefined &&
                             scope.list.result[index] !== undefined &&
@@ -137,12 +138,21 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                             scope.list.result[index].status = !scope.list.result[index].status;
                         }
                     };
+
                     scope.isShow = true;
-                    scope.clickAdd = function() {
+
+                    scope.ClickAdd = function() {
                         scope.isShow = true;
                         angular.element('#itemCodeID').focus();
                     };
-                    scope.addItem = function(ITEM_ID, ITEM_NAME, UNITS) {
+
+
+                    /*
+                    AddItem: add a item to list item
+                    input: id, name and units of item
+                    output: list item been added
+                    */
+                    scope.AddItem = function(ITEM_ID, ITEM_NAME, UNITS) {
                         if (scope.isShow === true) {
                             var check = false;
                             angular.forEach(scope.items, function(item, index) {
@@ -169,14 +179,21 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                             toastr.warning("Not found row empty to insert!", "Fail");
                         }
                     };
-                    scope.clickShowSelected = function(index) {
+
+                    scope.ClickShowSelected = function(index) {
                         if (scope.items !== undefined &&
                             scope.items[index] !== undefined &&
                             scope.items[index].status !== undefined) {
                             scope.items[index].status = !scope.items[index].status;
                         }
                     };
-                    scope.deleteItem = function(index) {
+
+                    /*
+                    DeleteItem: delete item on list
+                    input: index of item
+                    output: list item is deleted
+                    */
+                    scope.DeleteItem = function(index) {
                         swal({
                             title: "Do you want to delete this Task / Item?",
                             type: "warning",
@@ -202,13 +219,9 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                             }
                         });
                     };
-
-                    //ATTECHMENT
-
-                    //END ATTECHMENT
                 });
 
-                //SET VALUE DEFAULT FILE UPLOAD
+                //upload file
                 scope.uploader = new FileUploader({
                     url: "/api/TimeSheet/post-upload-file",
                     method: "POST",
@@ -219,9 +232,8 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                     isHTML5: true,
                     isUploading: true
                 });
-                //END SET VALUE DEFAULT FILE UPLOAD
 
-                //FILETER LIMIT FILE UPLOAD
+                //filter limit file upload
                 scope.uploader.filters.push({
                     name: "limitFile",
                     fn: function(item /*{File|FileLikeObject}*/ , options) {
@@ -235,9 +247,8 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                         return (item.size / 1048576) < 10;
                     }
                 });
-                //END FILTER LIMIT FILE UPLOAD
 
-                //FUNCTION REMOVE ITEM
+                //remove file upload
                 scope.removeItem = function(indexItem, indexFile, fileId) {
                     swal({
                         title: "Are you sure detele this file!",
@@ -254,18 +265,14 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                                 }
                             });
                             scope.items[indexItem].fileUpload.splice(indexFile, 1);
-                            //DELETE FROM DATABASE
-                            TimeSheetService.DeleteFile(fileId).then(function(response) {
-                                //DO NOTHING
-                            });
+
+                            TimeSheetService.DeleteFile(fileId).then(function(response) {});
                         }
                     });
                 };
-                //END FUNCTION REMOVE ITEM
 
-                //SOME CALLBACKS UPLOAD FILE
+                //some callback upload
                 scope.uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/ , filter, options) {
-                    //CHECK FILTER
                     if (filter.name === "folder") {
                         swal({
                             title: "Limit 5 file to upload.",
@@ -282,25 +289,19 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                             confirmButtonText: "Yes",
                             closeOnConfirm: true
                         });
-                    }
-                    //END FILTER
-
-                    //ERR
-                    else {
+                    } else {
                         toastr.error("Upload file " + item.name + " fail!", "Error");
                     }
-                    //END ERR
                 };
                 scope.uploader.onAfterAddingAll = function(addedFileItems) {
-                    //SET TASK INDEX
+                    //set task index
                     angular.forEach(scope.items, function(value, index) {
                         if (value.taskIndex === undefined) {
                             scope.items[index].taskIndex = scope.taskIndex;
                         }
                     });
-                    //END SET
                     if (scope.uploader.queue.length > 0) {
-                        //SET ITEM ID AND INDEX ITEM FOR NEW FILE UPLOAD
+                        //set item id and index for new file upload
                         angular.forEach(scope.uploader.queue, function(value, index) {
                             if (value.taskIndex === undefined ||
                                 value.itemId === undefined) {
@@ -308,9 +309,8 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                                 scope.uploader.queue[index].itemId = scope.currentItemId;
                             }
                         });
-                        //END SET
 
-                        //FIND FIRST FILE UPLOADING
+                        //find first file upload
                         var isFound = false;
                         angular.forEach(scope.uploader.queue, function(value, index) {
                             if ((value.isUploading === true || value.isUploaded === false) &&
@@ -318,56 +318,43 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                                 isFound = true;
                                 scope.progressTaskIndex = value.taskIndex;
                                 scope.progressItemId = value.itemId;
-                                //OPEN PROGRESS BAR
+                                //progress
                                 scope.isUploading = true;
-                                //END OPEN PROGRESS BAR
                             }
                         });
                         if (isFound === false) {
                             scope.isUploading = false;
                         }
-                        //END FIND
                     }
                 };
-                scope.uploader.onAfterAddingFile = function(fileItem) {
-                    //DO NOTHING
-                };
-                scope.uploader.onBeforeUploadItem = function(item) {
-                    //DO NOTHING
-                };
+                scope.uploader.onAfterAddingFile = function(fileItem) {};
+                scope.uploader.onBeforeUploadItem = function(item) {};
                 scope.uploader.onProgressItem = function(fileItem, progress) {
                     scope.fileNameProgress = fileItem.file.name;
                     scope.progress = progress;
                 };
-                scope.uploader.onProgressAll = function(progressAll) {
-                    //DO NOTHING
-                };
+                scope.uploader.onProgressAll = function(progressAll) {};
 
                 scope.uploader.onSuccessItem = function(fileItem, response, status, headers) {
-                    //FIND FIRST FILE UPLOADING
+                    //find first file uploading
                     var isFound = false;
                     angular.forEach(scope.uploader.queue, function(value, index) {
-                        //NEXT FILE
+                        //next file
                         if ((value.isUploading === true || value.isUploaded === false) &&
                             isFound === false) {
                             isFound = true;
                             scope.progressTaskIndex = value.taskIndex;
                             scope.progressItemId = value.itemId;
-                            //OPEN PROGRESS BAR
+                            //progress
                             scope.isUploading = true;
-                            //END OPEN PROGRESS BAR
                         }
-                        //END
                     });
-                    //SET STATUS FOR FILE
                     scope.uploader.queue[scope.uploader.getIndexOfItem(fileItem)].file_id = response.file_id;
-                    //END SET
                     if (isFound === false) {
                         scope.isUploading = false;
                     }
-                    //END FIND
 
-                    // PUSH FILE TO ARRAY FILE ON ITEMS
+                    //push file to array file
                     angular.forEach(scope.items, function(valueItem, indexItem) {
                         if (scope.items[indexItem].fileUpload === undefined) {
                             scope.items[indexItem].fileUpload = [];
@@ -393,11 +380,10 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                             }
                         });
                     });
-                    //END PUSH
                 };
-                //END SOME CALLBACKS UPLOAD FILE
-                //FUNCTION GET STYLE WHEN UPLOAD
-                scope.getStyleUpload = function() {
+
+                //GetStyleUpload: get style file uploading
+                scope.GetStyleUpload = function() {
                     if (scope.uploader.queue.length !== 0) {
                         var check = false;
                         angular.forEach(scope.uploader.queue, function(value, index) {
@@ -420,19 +406,14 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                         };
                     }
                 };
-                //END FUNCTON GET STYLE WHEN UPLOAD
 
-                //CALL CLICK SHOW FILE
-                scope.clickShowFile = function(itemIndex, itemId) {
+                scope.ClickShowFile = function(itemIndex, itemId) {
                     $timeout(function() {
                         document.getElementById('uploadTimesheet').click();
                         scope.clicked = true;
-                        //SET CURRENT TASK
                         scope.currentItemId = itemId;
-                        //END SET
                     }, 0);
                 };
-                //END SHOW FILE
             },
             templateUrl: "modules/TimeSheet/directives/templates/ActivityDetail.html"
         };

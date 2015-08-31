@@ -13,48 +13,54 @@ angular.module("app.loggedIn.TimeSheet.ViewTask.Directive", [])
                 scope.info = {};
                 scope.$watch('ngModel', function(newModel, oldModel) {
                     if (!isNaN(newModel)) {
-                        //SET ID TASK WEEK AND USER ID
                         scope.info.idTaskWeek = newModel;
-                        scope.info.USER_ID = ($cookieStore.get('userInfo')!==undefined) ? $cookieStore.get('userInfo').id : null;
-                        //END
-                        TimeSheetService.ViewApproved(newModel).then(function(response) {
-                            if (response.status === "error") {
-                                $state.go("loggedIn.timesheetHome.timesheetApprove", null, {
-                                    "reload": true
-                                });
-                                toastr.error("Loading fail!", "Error");
-                            } else if (response.status === "success") {
-                                scope.list = response;
-                                scope.info.forPermission = scope.list.forPermission;
-                                angular.forEach(scope.list.result, function(timeDate, indexD) {
-                                    scope.list.result[indexD].AC = [];
-                                    angular.forEach(scope.list.resultActivity, function(timeAC, indexAC) {
-                                        if (scope.list.resultActivity[indexAC].date === scope.list.result[indexD].date) {
-                                            scope.list.result[indexD].AC[scope.list.resultActivity[indexAC].activity_id] = scope.list.resultActivity[indexAC].sumAC;
-                                        }
+                        scope.info.USER_ID = ($cookieStore.get('userInfo') !== undefined) ? $cookieStore.get('userInfo').id : null;
+                        /*
+                        ViewApproved: view Timesheet to approve
+                        input: id of Timesheet
+                        output: - success: send message success
+                                - fail: send message error
+                        */
+                        scope.ViewApproved = function(idTimesheet) {
+                            TimeSheetService.ViewApproved(idTimesheet).then(function(response) {
+                                if (response.status === "error") {
+                                    $state.go("loggedIn.timesheetHome.timesheetApprove", null, {
+                                        "reload": true
                                     });
-                                });
-                                scope.employee_name = (scope.list.result[0].FirstName === null || scope.list.result[0].FirstName === "") ? ((scope.list.result[0].LastName === null || scope.list.result[0].LastName === "") ? " " : scope.list.result[0].LastName) : (scope.list.result[0].FirstName + " " + ((scope.list.result[0].LastName === null || scope.list.result[0].LastName === "") ? " " : scope.list.result[0].LastName));
-                                scope.statusID = scope.list.result[0].task_status_id;
-                                if (scope.list.result[0].task_status_id === 4) {
-                                    scope.info.hasReject = true;
-                                    scope.info.comments = scope.list.result[0].comments;
+                                    toastr.error("Loading fail!", "Error");
+                                } else if (response.status === "success") {
+                                    scope.list = response;
+                                    scope.info.forPermission = scope.list.forPermission;
+                                    angular.forEach(scope.list.result, function(timeDate, indexD) {
+                                        scope.list.result[indexD].AC = [];
+                                        angular.forEach(scope.list.resultActivity, function(timeAC, indexAC) {
+                                            if (scope.list.resultActivity[indexAC].date === scope.list.result[indexD].date) {
+                                                scope.list.result[indexD].AC[scope.list.resultActivity[indexAC].activity_id] = scope.list.resultActivity[indexAC].sumAC;
+                                            }
+                                        });
+                                    });
+                                    scope.employee_name = (scope.list.result[0].FirstName === null || scope.list.result[0].FirstName === "") ? ((scope.list.result[0].LastName === null || scope.list.result[0].LastName === "") ? " " : scope.list.result[0].LastName) : (scope.list.result[0].FirstName + " " + ((scope.list.result[0].LastName === null || scope.list.result[0].LastName === "") ? " " : scope.list.result[0].LastName));
+                                    scope.statusID = scope.list.result[0].task_status_id;
+                                    if (scope.list.result[0].task_status_id === 4) {
+                                        scope.info.hasReject = true;
+                                        scope.info.comments = scope.list.result[0].comments;
+                                    }
+                                    scope.info.time_rest = scope.list.result[0].chargeWeek - (38 * 60);
+                                    if (scope.info.time_restFull < 0) {
+                                        scope.info.time_restFull = 0;
+                                    }
+                                    scope.info.time_in_lieu = null;
+                                    scope.info.over_time = null;
+                                    scope.info.TypeOfContruct = scope.list.result[0].TypeOfContruct;
+                                } else {
+                                    $state.go("loggedIn.home", null, {
+                                        "reload": true
+                                    });
+                                    toastr.error('Server not response!', "Error");
                                 }
-                                scope.info.time_rest = scope.list.result[0].chargeWeek - (38 * 60);
-                                if (scope.info.time_restFull < 0) {
-                                    scope.info.time_restFull = 0;
-                                }
-                                scope.info.time_in_lieu = null;
-                                scope.info.over_time = null;
-                                scope.info.TypeOfContruct = scope.list.result[0].TypeOfContruct;
-                            } else {
-                                //catch exception
-                                $state.go("loggedIn.home", null, {
-                                    "reload": true
-                                });
-                                toastr.error('Server not response!', "Error");
-                            }
-                        });
+                            });
+                        };
+                        scope.ViewApproved(newModel);
                     } else if (newModel === "reject") {
                         scope.info.isReject = true;
                         scope.info.isApprove = false;
@@ -74,7 +80,7 @@ angular.module("app.loggedIn.TimeSheet.ViewTask.Directive", [])
                     scope.info.isApprove = 1;
                 };
 
-                //WATCH TIME IN LIEU
+                //watch time in lieu
                 scope.$watch('info.time_in_lieu', function(newTimeInLieu, oldTimeInLieu) {
                     if (newTimeInLieu !== undefined && newTimeInLieu !== null) {
                         //process
@@ -92,9 +98,8 @@ angular.module("app.loggedIn.TimeSheet.ViewTask.Directive", [])
                         //end
                     }
                 });
-                //END TIME IN LIEU
 
-                //WATCH OVER TIME
+                //watch overtime
                 scope.$watch('info.over_time', function(newOverTime, oldOverTime) {
                     if (newOverTime !== undefined && newOverTime !== null) {
                         //process
@@ -112,7 +117,6 @@ angular.module("app.loggedIn.TimeSheet.ViewTask.Directive", [])
                         //end
                     }
                 });
-                //END
 
                 var dialogViewDetail = function(ID, DATE, detailType) {
                     var modalInstance = $modal.open({

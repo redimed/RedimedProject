@@ -91,7 +91,7 @@ angular.module("app.loggedIn.TimeSheet.Service", [])
             });
         };
 
-        TimeSheetService.sendMailTimeSheet = function(infoPost) {
+        TimeSheetService.SendMailTimeSheet = function(infoPost) {
             var sendMailTimeSheet = api.all('TimeSheet/post-send-mail');
             return sendMailTimeSheet.post({
                 info: infoPost

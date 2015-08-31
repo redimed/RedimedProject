@@ -5,6 +5,12 @@
  var moment = require('moment');
  //END
  module.exports = {
+     /*
+     UploadFile: Upload an attach file
+     input: id of user
+     output: - success: response status success
+             - fail: response status error
+     */
      UploadFile: function(req, res) {
          var id_task_week = null;
          var tagetFolder = 'UploadFile\\allFileUploadTimeSheet\\' + req.body.userId;
@@ -31,7 +37,7 @@
                          });
                          return;
                      } else {
-                         //INSERT PATH FILE
+                         //insert path file
                          db.time_task_file.max('file_id')
                              .success(function(maxId) {
                                  db.time_task_file.create({
@@ -64,13 +70,19 @@
                                  });
                                  return;
                              });
-                         //END INSERT
                      }
                  });
              });
          });
 
      },
+
+     /*
+    DeleteFile: delete an attach file
+    input: file id to delete
+    output: - success: response status success
+            - fail: response status error
+     */
      DeleteFile: function(req, res) {
          var fileId = req.body.fileId;
          db.sequelize.query("DELETE FROM time_item_file WHERE time_item_file.file_id=:fileId", null, {

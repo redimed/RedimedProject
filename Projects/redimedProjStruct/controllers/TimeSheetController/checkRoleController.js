@@ -2,8 +2,15 @@
 var db = require("../../models");
 //END
 module.exports = {
+    /*
+    LoadRole: load role of user
+    input: id of user
+    output: - success: send message success
+            - fail: send message error
+    */
     LoadRole: function(req, res) {
         var USER_ID = req.body.USER_ID;
+        //get user's role
         var query =
             "SELECT hr_employee.TITLE " + //SELECT
             "FROM sys_hierarchy_nodes " + //FROM

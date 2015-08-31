@@ -3,7 +3,7 @@ var smtpTransport = require('nodemailer-smtp-transport');
 var smtpPool = require('nodemailer-smtp-pool');
 var isTest = true;
 module.exports = {
-    sendEmail: function(req, res, emailInfo) {
+    SendEmail: function(req, res, emailInfo) {
         if (isTest) {
             var transport = nodemailer.createTransport({
                 service: 'Gmail',

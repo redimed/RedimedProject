@@ -12,10 +12,9 @@ angular.module("app.loggedIn.TimeSheet.ItemCode.Directive", [])
                 scope.$watch('ngModel', function(newModel, oldModel) {
                     scope.items = [];
                     if (newModel !== undefined) {
-                        //LOAD LOCATION NAME - DEPARTMENT NAME
+                        //load location name, department name
                         scope.locationName = newModel.locationName;
                         scope.departmentName = newModel.departmentName;
-                        //END
                         if (newModel.item !== undefined && newModel.item.length !== 0) {
                             angular.forEach(newModel.item, function(item, index) {
                                 if (item !== undefined && item.deleted !== 1 && item.show !== false) {
@@ -23,29 +22,30 @@ angular.module("app.loggedIn.TimeSheet.ItemCode.Directive", [])
                                 }
                             });
                         }
-                        //SHOW ALL ITEM
+                        //show all item
                         angular.forEach(scope.items, function(item, index) {
                             scope.items[index].show = true;
                         });
-                        //END
                     }
                 });
-                //FUNCTION SETPAGE
-                scope.setPage = function() {
+                //set page
+                scope.SetPage = function() {
                     scope.searchObjectMap.offset = (scope.searchObjectMap.currentPage - 1) * scope.searchObjectMap.limit;
-                    scope.loadList();
+                    scope.LoadList();
                 };
-                //END FUNCTION SETPAGE
 
-                //FUNCTION RESET
-                scope.reset = function() {
+                //reset
+                scope.Reset = function() {
                     scope.searchObjectMap = angular.copy(scope.searchObject);
-                    scope.loadList();
+                    scope.LoadList();
                 };
-                //END FUNCTION RESET
 
-                //FUNCTION LOADLIST
-                scope.loadList = function() {
+                /*
+                LoadList: load list items
+                input: type of activity
+                output: list items
+                */
+                scope.LoadList = function() {
                     TimeSheetService.LoadItemCode(scope.searchObjectMap).then(function(response) {
                         if (response.status === "success") {
                             scope.list = response;
@@ -68,10 +68,13 @@ angular.module("app.loggedIn.TimeSheet.ItemCode.Directive", [])
                         }
                     });
                 };
-                //END FUNCTION LOADLIST
 
-                //FUNCTION INIT
-                var init = function() {
+                /*
+                Init: load list items default
+                input: information default
+                output: list items default
+                */
+                var Init = function() {
                     scope.searchObject = {
                         limit: 10,
                         offset: 0,
@@ -91,25 +94,21 @@ angular.module("app.loggedIn.TimeSheet.ItemCode.Directive", [])
                     scope.list = {};
                     scope.loadList();
                 };
-                //END FUNCTION INIT
 
-                //CALL INIT
-                init();
-                //END CALL INIT
+                Init();
 
-                //ORDER BY
-                scope.itemCodeASC = function() {
+                //order by
+                scope.ItemCodeASC = function() {
                     scope.searchObjectMap.order['time_item_code.ITEM_ID'] = "ASC";
                     scope.loadList();
                 };
-                scope.itemCodeDESC = function() {
+                scope.ItemCodeDESC = function() {
                     scope.searchObjectMap.order['time_item_code.ITEM_ID'] = "DESC";
-                    scope.loadList();
+                    scope.LoadList();
                 };
-                //ORDER BY
 
-                //FUNCTION CHANGE TIMECHARGE
-                scope.changeTimeCharge = function(index, ratio) {
+                //change time charge
+                scope.ChangeTimeCharge = function(index, ratio) {
                     if (ratio !== undefined &&
                         ratio !== null &&
                         ratio !== "" &&
@@ -119,9 +118,8 @@ angular.module("app.loggedIn.TimeSheet.ItemCode.Directive", [])
                         scope.items[index].totalUnits = null;
                     }
                 };
-                //END
 
-                scope.clickShow = function(index) {
+                scope.ClickShow = function(index) {
                     if (scope.list !== undefined &&
                         scope.list.result !== undefined &&
                         scope.list.result[index] !== undefined &&
@@ -129,12 +127,19 @@ angular.module("app.loggedIn.TimeSheet.ItemCode.Directive", [])
                         scope.list.result[index].status = !scope.list.result[index].status;
                     }
                 };
+
                 scope.isShow = true;
-                scope.clickAdd = function() {
+                scope.ClickAdd = function() {
                     scope.isShow = true;
                     angular.element('#itemCodeID').focus();
                 };
-                scope.addItem = function(ITEM_ID, ITEM_NAME, UNITS) {
+
+                /*
+                AddItem: add new item for task
+                input: id, name, units of item code
+                output: list items been added 
+                */
+                scope.AddItem = function(ITEM_ID, ITEM_NAME, UNITS) {
                     if (scope.isShow === true) {
                         var check = false;
                         angular.forEach(scope.items, function(item, index) {
@@ -159,14 +164,20 @@ angular.module("app.loggedIn.TimeSheet.ItemCode.Directive", [])
                         toastr.warning("Not found row empty to insert!", "Fail");
                     }
                 };
-                scope.clickShowSelected = function(index) {
+                scope.ClickShowSelected = function(index) {
                     if (scope.items !== undefined &&
                         scope.items[index] !== undefined &&
                         scope.items[index].status !== undefined) {
                         scope.items[index].status = !scope.items[index].status;
                     }
                 };
-                scope.deleteItem = function(index) {
+
+                /*
+                DeleteItem: delete item code
+                input: index of item
+                output: list items is deleted
+                */
+                scope.DeleteItem = function(index) {
                     swal({
                         title: "Do you want to delete this Task / Item?",
                         type: "warning",
