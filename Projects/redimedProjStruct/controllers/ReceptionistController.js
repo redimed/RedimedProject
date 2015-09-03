@@ -3,10 +3,23 @@ var _ = require('lodash-node');
 var moment = require('moment');
 
 module.exports = {
+
+	/// Function: appointmentByDate()
+	/// Description:  Get all upcoming appointments on a specific date and site
+	/// Input: + date: Specific date for query data (MM/dd/YYYY)
+	///        + siteId: ID of specific site
+	/// Output: 4 arrays of appointment sort by status (Booking, Checked In, Emergency, Completed)
 	appointmentByDate: function(req,res){
 		var date = req.body.date;
 		var site = req.body.siteId;
 
+		// Select all appointments in a specific date and site by from following tables: 
+		//		cln_appt_patients
+		//		doctors
+		//		cln_appointment_calendar
+		//		im_injury_appt_status
+		//		cln_patients
+		//		sys_services
 		db.sequelize.query("SELECT d.NAME AS doctor_name,a.id AS appt_id, a.`appt_status` , "+
 							"c.`CAL_ID`,e.SERVICE_COLOR, c.`DOCTOR_ID`,c.`SITE_ID`,p.`Patient_id`,c.`FROM_TIME`,c.`TO_TIME`, "+
 							"a.checkedin_start_time, p.`Title`,p.`First_name`,p.`Sur_name`,p.`Middle_name`, p.`DOB`,co.`Company_name`,p.avatar,a.`Creation_date`,a.isPickUp, "+
@@ -20,10 +33,11 @@ module.exports = {
 							"WHERE c.FROM_TIME BETWEEN ? AND DATE_ADD(?, INTERVAL 1 DAY) AND c.`SITE_ID` = ? "+
 							"ORDER BY c.`FROM_TIME`;", null, {raw:true}, [date,date,site])
 			.success(function(data){
-				var apptUpcoming = [];
-				var apptComplete = [];
-				var apptInjury = [];
-				var apptChecked = [];
+				
+				var apptUpcoming = []; //Array of booking appointments
+				var apptComplete = []; //Array of complete appointments
+				var apptInjury = [];   //Array of emergency appointments
+				var apptChecked = [];  //Array of checked in appointments
 
 				if(data.length > 0)
 				{
@@ -31,10 +45,11 @@ module.exports = {
 					{
 						var item = data[i];
 						var arrName = [item.Title,item.First_name,item.Sur_name,item.Middle_name];
-						item.patient_name = arrName.join(' ');
-						item.checkedin_start_time = moment.utc(item.checkedin_start_time).format('YYYY-MM-DD HH:mm:ss');
+						item.patient_name = arrName.join(' ');	// Ex: 'Mr John Von Smith'
+						item.checkedin_start_time = moment.utc(item.checkedin_start_time).format('YYYY-MM-DD HH:mm:ss'); // Ex: 2000-12-31 00:00:00
 						var status = item.appt_status != null ? item.appt_status.toLowerCase() : null;
 
+						// Push appointment into appropriate array based on appointment status	
 						if(item.appt_id != null)
 						{
 							if(status == 'checked in')
@@ -50,6 +65,7 @@ module.exports = {
 					};
 				}
 
+				// return 4 appointment arrays in a json object
 				res.json({status:'success',
 						  checkedIn: apptChecked,
 						  injury: apptInjury,
@@ -62,10 +78,16 @@ module.exports = {
 			})
 	},
 
+	///Function: progressAppt()
+	///Description: Get all in consult appointments and all available rooms in specific date and site
+	///Input: + date: Specific date for query data (MM/dd/YYYY)
+	///        + siteId: ID of specific site
+	/// Output: Array of all appointments
 	progressAppt: function(req,res){
 		var date = req.body.date;
 		var site = req.body.siteId;
 
+		///Get all rooms of doctor who is currently online and in specific site
 		db.sequelize.query("SELECT d.doctor_id,d.NAME,rr.id as room_id, rr.`room_name` FROM `doctors` d "+
 							"INNER JOIN doctors_room r ON r.`doctor_id` = d.`doctor_id` "+
 							"INNER JOIN redimedsites_room rr ON r.`room_id` = rr.`id` "+
@@ -74,6 +96,8 @@ module.exports = {
 			.success(function(rooms){
 				if(rooms.length > 0)
 				{
+
+					///Group rooms by doctor_id
 					var doctorRooms = _.chain(rooms)
 						.groupBy("doctor_id")
 						.pairs()
@@ -87,6 +111,7 @@ module.exports = {
 						doctorRooms[i].doctor_name = doctorRooms[i].rooms[0].NAME;
 					}
 
+					///Select all appointments that is currently in consult
 					db.sequelize.query("SELECT d.NAME AS doctor_name,a.id AS appt_id,a.`appt_status`,a.`CAL_ID`,a.`actual_doctor_id`,a.room_id, r.room_name,c.`SITE_ID`, "+
 										"p.`Patient_id`,c.`FROM_TIME`,c.`TO_TIME`,a.checkedin_start_time,p.`Title`,p.`First_name`, "+
 										"p.`Sur_name`,e.`SERVICE_COLOR`,p.`Middle_name`,p.`DOB`,co.`Company_name`,p.avatar "+
@@ -106,6 +131,7 @@ module.exports = {
 							if(data.length > 0)
 							{
 								var apptData = data;
+								///Loop through all appointments
 								for (var i = 0; i < apptData.length; i++) 
 								{
 									var item = apptData[i];
@@ -113,6 +139,7 @@ module.exports = {
 									arrName.push(item.Title,item.First_name,item.Sur_name,item.Middle_name);
 									item.patient_name = arrName.join(' ');
 
+									///Loop through all rooms and set appointment into appropriate room
 									for(var j=0; j<doctorRooms.length ;j++)
 									{
 										var index = _.findIndex(doctorRooms[j].rooms,{'doctor_id':item.actual_doctor_id, 'room_id':item.room_id});
@@ -121,6 +148,7 @@ module.exports = {
 									}
 								};
 							}
+							///Return a JSON object of data
 							res.json({status:'success',data: doctorRooms})
 						})
 						.error(function(err){
@@ -148,20 +176,33 @@ module.exports = {
 			})
 	},
 
+
+
+	/// Function: updateAppointment()
+	/// Description:  Update information for each appointment or allocate appointment to room
+	/// Input: + fromAppt: From appointment's information
+	///        + toAppt: To appointment's information
+	///		   + state: State appointment for updating
+	/// Output: status success or error
 	updateAppointment: function(req,res){
 		var fromAppt = req.body.fromAppt;
 		var toAppt = req.body.toAppt;
 		var state = req.body.state;
-		var opts = {};
+		var opts = {}; /// Update options
 
+		///Pickup or online consultation emergency case 
 		if(state.toLowerCase() == 'consult' || state.toLowerCase() == 'pickup')
 			opts = {'isPickUp': state.toLowerCase() == 'consult' ? 0 : 1};
+
+		///Checking appointment
 		else if(state.toLowerCase() == 'checked')
 			opts = {
 				'CAL_ID': toAppt.CAL_ID,
 				'appt_status': 'Checked In',
 				'checkedin_start_time':  moment().format('YYYY-MM-DD HH:mm:ss')
 			};
+
+		///Allocate appointment to specific room
 		else if(state.toLowerCase() == 'progress')
 			opts = {
 				'actual_doctor_id': toAppt.doctor_id,
@@ -169,11 +210,15 @@ module.exports = {
 				'checkedin_end_time': moment().format('YYYY-MM-DD HH:mm:ss'),
 				'room_id': toAppt.room_id
 			};
+
+		///Cancel appointment
 		else if(state.toLowerCase() == 'cancel')
 			opts = {
 				'CAL_ID': toAppt.CAL_ID,
 				'appt_status': 'Cancelled'
 			};
+
+		///Undo allocated appointment
 		else if(state.toLowerCase() == 'undo')
 			opts = {
 				'appt_status': fromAppt.appt_status,
@@ -182,6 +227,7 @@ module.exports = {
 				'checkedin_end_time': null
 			};
 
+		///Update options into data with specific appt_id
 		db.ApptPatient.update(opts,{'id': fromAppt.appt_id})
 			.success(function(){
 				if(state.toLowerCase() == 'pickup')

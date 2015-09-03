@@ -5,8 +5,8 @@ var _ = require('lodash-node'); //**lodash-node: Lodash module bundles for Node.
 var db = require('./models'); //**Include models folder into this.
 var parser = require('socket.io-cookie'); //**socket.io-cookie: Cookie parser middleware for socket.io
 
-var apiKey = "45279332"; //**API Key use for OpenTok API (WebRTC)
-var apiSecret = "8d7639ab2088de84784beab28b3167f78a08c674"; //**API Secret Key use for OpenTok API (WebRTC)
+var apiKey = "45317072"; //**API Key use for OpenTok API (WebRTC)
+var apiSecret = "f3e85e361a9a1d03b39dc2a6da73019d8a64c190"; //**API Secret Key use for OpenTok API (WebRTC)
 
 var OpenTok = require('opentok'), //**opentok: This is a WebRTC platform for embedding live video call into application.
     opentok = new OpenTok(apiKey, apiSecret); //**Create new OpenTok instance with API Key & API Secret
