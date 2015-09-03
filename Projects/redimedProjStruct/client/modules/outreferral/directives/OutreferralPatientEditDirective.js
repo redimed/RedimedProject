@@ -24,7 +24,11 @@ angular.module('app.loggedIn.outreferral.directives.patientEdit', [])
 				created_by: user_id,
 				last_updated_by: user_id,
 			}
-
+				/*
+				save:Update  Outside_referral
+				Input Params : date_issued,date_started,duration,expire_date,referred_to_doctor,doctor_id
+				Output Params : status success and data or status error
+				*/
 			var save = function(){
 				ConfigService.beforeSave(scope.outreferral.errors);
 				var postData = angular.copy(scope.outreferral.form);
@@ -47,7 +51,7 @@ angular.module('app.loggedIn.outreferral.directives.patientEdit', [])
 					ConfigService.beforeError(scope.outreferral.errors);
 				})
 			}
-
+			/*Show popup list Outside_doctor when click*/
 			var outdoctorSelect = function(){
 				$modal.open({
 					templateUrl: 'selectOutdoctorDialog',
@@ -68,7 +72,7 @@ angular.module('app.loggedIn.outreferral.directives.patientEdit', [])
 					scope.outdoctor.name = row.name;
 				})
 			}
-
+			/*Show popup list doctor when click*/
 			var doctorSelect = function(){
 				$modal.open({
 					templateUrl: 'selectDoctorDialog',
@@ -84,7 +88,7 @@ angular.module('app.loggedIn.outreferral.directives.patientEdit', [])
 					scope.referdoctor.name = row.NAME;
 				})
 			}
-
+			/*load a specific*/
 			var load = function(){
 				var postData = {id: scope.id};
 
@@ -105,6 +109,7 @@ angular.module('app.loggedIn.outreferral.directives.patientEdit', [])
 
 				}, function(error){})
 			}
+			/*expire_date = date_started + duration(months)*/
 			scope.onChange = function(){
 				if (scope.outreferral.form.date_started !=null ) {
 					if (scope.outreferral.form.duration == null) {

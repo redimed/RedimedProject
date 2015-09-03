@@ -26,6 +26,11 @@ angular.module('app.loggedIn.company.directives.listInsurer', [])
 				insurer_name:'',
 				address:''
 			}
+			/*
+			load : Get listInsurer
+			input param : insurerArray (list insurer selected)
+			output param : listInsurer
+			*/
 			var load = function(){
 				scope.company.loading = true;
 				CompanyModel.listInsurer(search).then(function(response){
@@ -50,6 +55,11 @@ angular.module('app.loggedIn.company.directives.listInsurer', [])
 				scope.company.load();
 				setPage(1);
 			}
+			/*
+			addNewInsurer : add insurer for company
+			input param : list insurer selected
+			output param : insurer id and insurer name
+			*/
 			scope.addNewInsurer = function(){
 				var modalInstance = $modal.open({
 			      templateUrl: 'modules/company/dialogs/templates/addNewInsurer.html',

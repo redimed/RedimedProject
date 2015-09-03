@@ -26,6 +26,11 @@ angular.module('app.loggedIn.company.directives.listParent', [])
 				Addr:'',
 				country:''
 			}
+			/*
+			load: get list company
+			input params :
+			output params:status success and list company or status error
+			*/
 			var load = function(){
 				scope.company.loading = true;
 				CompanyModel.listParent(search).then(function(response){

@@ -47,6 +47,11 @@ angular.module('app.loggedIn.company.directives.edit', [])
 		        to_date:null,
 		        suburb:null
 			}
+			/*
+			load: get information of a specific company
+			input params : patient_id,company_id
+			output params : information of company
+			*/
 			var load = function(row){
 				scope.company.loading = true;
 				CompanyModel.byCompanyId(form).then(function(response){
@@ -70,6 +75,11 @@ angular.module('app.loggedIn.company.directives.edit', [])
 					scope.company.error = $filter('translate')(error.data.code);
 				})
 			}
+			/*
+			onRowClick : change insurer active for company
+			input param :insurer id , company id
+			output param : status success or error
+			*/
 			scope.onRowClick = function(row){
 				var postData = { 
 					Insurer:row.id,
@@ -84,6 +94,11 @@ angular.module('app.loggedIn.company.directives.edit', [])
 						})
 				
 			}
+			/*
+			disableInsurer : disable Insurer of a specific insurer for company
+			input params: company_id,insurer_id
+			output params : status success or error
+			*/
 			scope.disableInsurer = function(row){
 				var postData ={
 					company_id:$stateParams.companyId,
@@ -104,6 +119,11 @@ angular.module('app.loggedIn.company.directives.edit', [])
 						} 
 				}	
 			}
+			/*
+			remove : disable Insurer of a specific insurer for company
+			input params: company_id,insurer_id
+			output params : status success or error
+			*/
 			var remove = function(row){
 				$modal.open({
 					templateUrl:  'modules/company/dialogs/templates/remove.html',
@@ -128,6 +148,11 @@ angular.module('app.loggedIn.company.directives.edit', [])
 					}, function(error){})
 			    })
 			}
+			/*
+			save : update information of company
+			input params: patient_id ,company_id and information of company
+			output params : status success or error
+			*/
 			var save = function(){
 				ConfigService.beforeSave(scope.company.errors);
 				scope.company.form.patient_id = $stateParams.patient_id;
@@ -154,6 +179,11 @@ angular.module('app.loggedIn.company.directives.edit', [])
 					ConfigService.beforeError(scope.company.errors);
 				})
 			}
+			/*
+			addCompany:create new company
+			input params :patient_id
+			output params:company_id and information company
+			*/
 			var addCompany = function(size){
 				var modalInstance = $modal.open({
 			      templateUrl: 'modules/company/dialogs/templates/addParent.html',
@@ -171,7 +201,11 @@ angular.module('app.loggedIn.company.directives.edit', [])
 			    	scope.company.form.father_id = row.id;
 			    })
 			}
-
+		/*
+			addInsurer : Select insurer in list insurers 
+			input param : 
+			output param : insurers information
+			*/
 			var addInsurer = function(size){
 				var modalInstance = $modal.open({
 			      templateUrl: 'modules/company/dialogs/templates/addInsurer.html',

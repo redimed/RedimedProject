@@ -319,10 +319,10 @@ module.exports = {
 		})
 	},
 
-	//updateFa: update existed functional assessment in "cln_fa_df"
+	//updateFA: update existed functional assessment in "cln_fa_df"
 	//input: infoHeader, infoSections, infoLines, infoDetails, infoComments (populated on client)
 	//output: update status result: success or not
-	updateFa: function(req,res){
+	updateFA: function(req,res){
 		var updateHeader = req.body.updateData.infoHeader;
 		var updateSections = req.body.updateData.infoSections;
 		var updateLines = req.body.updateData.infoLines;

@@ -72,7 +72,7 @@ angular.module('app.loggedIn.outreferral.directives.patientList', [])
 				max_size: 5,
 				patient_id: scope.patientId
 			}
-
+			/*load list outside referral*/
 			var load = function(){
 				var postData = angular.copy(scope.outreferral.search);
 
@@ -90,26 +90,14 @@ angular.module('app.loggedIn.outreferral.directives.patientList', [])
 					}, function(error){})
 				}
 			}
-			var clickEnable = function(row){
-				
-				var postData = {
-					// CAL_ID:$stateParams.calId,//manh comment
-					CAL_ID:$stateParams.cal_id,//manh add
-					patient_id:row.patient_id,
-					outreferral_id:row.id,
-					isEnable:row.isEnable
-				}
-				OutreferralModel.updateEnable(postData)
-					.then(function(response){
-						console.log(response);
-						scope.outreferral.load();
-					}, function(error){})
-			}
+			/*
+			clickDisale:upate IsEnable in table cln_patient_outreferral
+			Input Params: outreferral_id,patient_id,CAL_ID
+			Out Params:status success and data or status error
+			*/
 			var clickDisale = function(row){
-				console.log($stateParams.cal_id);
 				var postData = {
-					// CAL_ID:$stateParams.calId,//manh comment
-					CAL_ID:$stateParams.cal_id,//manh add
+					CAL_ID:$stateParams.cal_id,
 					patient_id:row.patient_id,
 					outreferral_id:row.id,
 					isEnable:row.isEnable
@@ -117,7 +105,6 @@ angular.module('app.loggedIn.outreferral.directives.patientList', [])
 				console.log(postData);
 				OutreferralModel.updateEnable(postData)
 					.then(function(response){
-						console.log(response);
 						scope.outreferral.load();
 					}, function(error){})
 			}
@@ -140,7 +127,6 @@ angular.module('app.loggedIn.outreferral.directives.patientList', [])
 						scope.outreferral.search.Injury_date = option.order;
 						break;
 				}
-
 				scope.outreferral.load();
 			}
 

@@ -31,15 +31,13 @@ angular.module('app.loggedIn.outreferral.controllers.patientList', [])
 		},
 		reload: false,
 		limit: 20,
-		// Patient_id: $stateParams.patientId,//manh comment
-		Patient_id: $stateParams.patient_id,//manh add
+		Patient_id: $stateParams.patient_id,
 	}//end claim
 })
 
 .controller('OutreferralPatientAddDialog', function($scope, $modalInstance, $stateParams, patientId, AppointmentModel){
 	$scope.patientId = patientId;
-	// $scope.calId = $stateParams.calId;//manh comment
-	$scope.calId = $stateParams.cal_id;//manh add
+	$scope.calId = $stateParams.cal_id;
 
 	$scope.success = false;
 

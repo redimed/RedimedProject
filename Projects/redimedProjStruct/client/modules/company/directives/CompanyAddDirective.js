@@ -54,6 +54,11 @@ angular.module('app.loggedIn.company.directives.add', [])
 		        patient_id :$stateParams.patient_id,//tannv.dts add
 		        suburb:null //phanquocchien.c1109g@gmail.com add
 			}
+			/*
+			onRowClick : change insurer active for company
+			input param :insurer id , company id
+			output param : status success or error
+			*/
 			scope.onRowClick = function(row){
 				 var postData = { 
 					Insurer:row.id,
@@ -75,6 +80,11 @@ angular.module('app.loggedIn.company.directives.add', [])
 						} 
 					}
 			}
+			/*
+			remove : delete company
+			input param : company information
+			output param : status success or error
+			*/
 			var remove = function(row){
 				$modal.open({
 					templateUrl:  'modules/company/dialogs/templates/remove.html',
@@ -93,6 +103,11 @@ angular.module('app.loggedIn.company.directives.add', [])
 					}, function(error){})
 			    })
 			}
+			/*
+			addCompany : Create new company
+			input param : 
+			output param : status success company information or error
+			*/
 			var addCompany = function(size){
 				var modalInstance = $modal.open({
 			      templateUrl: 'modules/company/dialogs/templates/addParent.html',
@@ -110,7 +125,11 @@ angular.module('app.loggedIn.company.directives.add', [])
 			    	scope.company.form.father_id = row.id;
 			    })
 			}
-
+			/*
+			addInsurer : Select insurer in list insurers 
+			input param : 
+			output param : insurers information
+			*/
 			var addInsurer = function(size){
 				var modalInstance = $modal.open({
 			      templateUrl: 'modules/company/dialogs/templates/addInsurer.html',
@@ -137,6 +156,11 @@ angular.module('app.loggedIn.company.directives.add', [])
 					
 				})
 			}
+			/*
+			save : create new company for patient
+			input param : patient_id and company information
+			output param : status success or error
+			*/
 			var save = function(){
 				ConfigService.beforeSave(scope.company.errors);
 				_.forEach(form.Site_medic, function(n) {

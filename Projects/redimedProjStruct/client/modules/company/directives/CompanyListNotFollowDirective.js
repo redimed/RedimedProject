@@ -27,6 +27,11 @@ angular.module('app.loggedIn.company.directives.listNotFollow', [])
 				country:'',
 				listId:scope.listId
 			}
+			/*
+			load: get list company
+			input params :
+			output params:status success and list company or status error
+			*/
 			var load = function(){
 				scope.company.loading = true;
 				CompanyModel.listNotFollow(search).then(function(response){

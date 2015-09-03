@@ -31,7 +31,6 @@ module.exports = {
 
 			db.sequelize.query(service_sql)
 			.success(function(services){
-				console.log('------',services);
 				if (services.length == 0) {
 					res.json({data: -1, service: -1});
 				}else{
@@ -47,6 +46,11 @@ module.exports = {
 			res.json(500, {error: error});	
 		})
 	},
+	/*
+	postEdit:Update a specific outreferral 
+	Input Params :outreferral id
+	OutPut Params : status success or error
+	*/
 	postEdit: function(req, res){
 		var postData = req.body.data;
 
@@ -59,7 +63,7 @@ module.exports = {
 			{field: 'referred_to_doctor', message: 'Referred To Doctor required'},
 			{field: 'doctor_id', message: 'Outside Doctor is required'}
 		];
-
+		/*Validate input request */
 		_.forIn(postData, function(value, field){
 			_.forEach(required, function(field_error){
 				if(field_error.field === field && S(value).isEmpty()){
@@ -69,10 +73,11 @@ module.exports = {
 			})
 		})
 
+
 		if(moment(postData.expire_date).isBefore(postData.date_started)){
 			errors.push({field: 'date_started', message: 'Date Started must before Date Expire'});
 		}
-
+		/*Validate duration is number */
 		if(postData.duration % 1 !== 0){
 			errors.push({field: 'duration', message: 'Duration must be number'});
 		}
@@ -82,6 +87,7 @@ module.exports = {
 			return;
 		}
 
+		// update outside referrel  
 		var sql = knex('outside_referrals')
 				.where('id', postData.id)
 				.update(postData)
@@ -89,14 +95,18 @@ module.exports = {
 
 		db.sequelize.query(sql)
 		.success(function(created){
-			res.json({data: created});
+			res.json({data: created,status:'success'});
 		})
 		.error(function(error){
 			res.json(500, {error: error});	
 		})
 	},
-
-	postOne: function(req, res){
+	/*
+	getOutReferralByid:Get one Outreferral by id
+	Input Params : Id of OutReferral
+	Output Params : status success and data or status error
+	*/
+	getOutReferralByid: function(req, res){
 		var postData = req.body.data;
 
 		var sql = knex('outside_referrals')
@@ -112,13 +122,17 @@ module.exports = {
 
 		db.sequelize.query(sql)
 		.success(function(rows){
-			res.json({data: rows[0]});
+			res.json({data: rows[0],status:'success'});
 		})
 		.error(function(error){
 			res.json(500, {error: error});
 		})
 	},
-
+	/*
+	postRemove:Remove one outside referrals  in table outside_referrals by id
+	Input Params : id of outside_referrals
+	output Params : status success or error
+	*/
 	postRemove: function(req, res){
 		var postData = req.body.data;
 
@@ -129,15 +143,19 @@ module.exports = {
 
 		db.sequelize.query(sql)
 		.success(function(del){
-			res.json({data: del});
+			res.json({data: del,status:'success'});
 		})
 		.error(function(error){
-			res.json(500, {error: error});
+			res.json(500, {error: error,status:'error'});
 		})
 	},
-
-	postAddPatient: function(req, res){
-		var postData = req.body.data;
+	/*
+	postAddOutSideReferral:Create new  Outside_referral
+	Input Params : date_issued,date_started,duration,expire_date,referred_to_doctor,doctor_id
+	Output Params : status success and data or status error
+	*/
+	postAddOutSideReferral: function(req, res){
+		var postData = req.body.data;//input data
 		var errors = [];
 		var required = [
 			{field: 'date_issued', message: 'Date Issued required'},
@@ -147,7 +165,7 @@ module.exports = {
 			{field: 'referred_to_doctor', message: 'Referred To Doctor required'},
 			{field: 'doctor_id', message: 'Outside Doctor is required'}
 		];
-
+		/*Validate unput required*/
 		_.forIn(postData, function(value, field){
 			_.forEach(required, function(field_error){
 				if(field_error.field === field && S(value).isEmpty()){
@@ -156,20 +174,20 @@ module.exports = {
 				}
 			})
 		})
-
+		/*Validate Date_Expire > date_started*/
 		if(moment(postData.expire_date).isBefore(postData.date_started)){
 			errors.push({field: 'date_started', message: 'Date Started must before Date Expire'});
 		}
-
+		/*Validate duration is integer number */
 		if(postData.duration % 1 !== 0){
-			errors.push({field: 'duration', message: 'Duration must be number'});
+			errors.push({field: 'duration', message: 'Duration must be integer number'});
 		}
 
 		if(errors.length > 0){
 			res.status(500).json({errors: errors});
 			return;
 		}
-
+		//create new outsider referral with input data
 		var sql = knex('outside_referrals')
 				.insert({
 					Creation_date:postData.Creation_date, 
@@ -187,12 +205,14 @@ module.exports = {
 				.toString();
 		db.sequelize.query(sql)
 		.success(function(created){
+			// reference new created outside referal to patient
 			var sql1 =
                      knex('outside_referrals')
                      .max('id as id')
                      .toString()
                      db.sequelize.query(sql1)
                      .success(function(data1){
+
                      	var sql2 = 
                  				knex('cln_patient_outreferral')
                  				.insert({
@@ -218,8 +238,12 @@ module.exports = {
 			res.json(500, {error: error,sql:sql});	
 		})
 	},
-
-	postSelectPatient: function(req, res){
+	/*
+	postAddPatientOutReferral:create new cln_patient_outreferral
+    input params : patient_id,CAL_ID,outreferral_id ,Default : isEnable = 1
+    output Params : status sucees or error
+    */
+	postAddPatientOutReferral: function(req, res){
 		var postData = req.body.data;
 
 		var sql = knex('cln_patient_outreferral')
@@ -231,7 +255,7 @@ module.exports = {
 			res.json({data: created});
 		})
 		.error(function(error){
-			res.json(500, {error: error,sql: sql});
+			res.json(500, {error: error});
 		})
 	},
 
@@ -296,10 +320,14 @@ module.exports = {
 			res.json(500, {error: error});
 		})
 	},
-
+	/*
+	postListNoFollowPatient:Get list outside_referral 
+	Input Params: offset,limit
+	Out Params:status success and data or status error
+	*/
 	postListNoFollowPatient: function(req, res){
 		var postData = req.body.data;
-
+		/*select data*/
 		var sql = knex
 				.distinct(
 					'outside_referrals.id',
@@ -316,17 +344,15 @@ module.exports = {
 				.innerJoin('outside_doctors', 'outside_referrals.doctor_id', 'outside_doctors.doctor_id')
 				.innerJoin('doctors', 'outside_referrals.referred_to_doctor', 'doctors.doctor_id')
 				.innerJoin('cln_patient_outreferral','cln_patient_outreferral.outreferral_id','outside_referrals.id')
-				.where('outside_referrals.patient_id', postData.patient_id)
 				.limit(postData.limit)
 				.offset(postData.offset)
 				.orderBy('outside_referrals.expire_date', 'desc')
 				.toString();
-
+		/*count row select*/
 		var count_sql = knex('outside_referrals')
 				.innerJoin('outside_doctors', 'outside_referrals.doctor_id', 'outside_doctors.doctor_id')
 				.innerJoin('doctors', 'outside_referrals.referred_to_doctor', 'doctors.doctor_id')
 				.innerJoin('cln_patient_outreferral','cln_patient_outreferral.outreferral_id','outside_referrals.id')
-				.where('outside_referrals.patient_id', postData.patient_id)
 				.count('outside_referrals.id as a')
 				.toString();
 
@@ -334,7 +360,7 @@ module.exports = {
 		.success(function(rows){
 			db.sequelize.query(count_sql)
 			.success(function(count){
-				res.json({data: rows, count: count[0].a, sql: sql});
+				res.json({data: rows, count: count[0].a});
 			})
 			.error(function(error){
 				res.json(500, {error: error});	
@@ -344,10 +370,14 @@ module.exports = {
 			res.json(500, {error: error});
 		})
 	},
-
+	/*
+	postListFollowPatient:Get list outside_referral by patient_id
+	Input Params: offset,limit,patient_id
+	Out Params:status success and data or status error
+	*/
 	postListFollowPatient: function(req, res){
 		var postData = req.body.data;
-
+		/*select data*/
 		var sql = knex
 				.distinct(
 					'outside_referrals.id',
@@ -370,7 +400,7 @@ module.exports = {
 				.offset(postData.offset)
 				.orderBy('outside_referrals.expire_date', 'desc')
 				.toString();
-
+		/*count row select*/
 		var count_sql = knex('outside_referrals')
 				.innerJoin('outside_doctors', 'outside_referrals.doctor_id', 'outside_doctors.doctor_id')
 				.innerJoin('doctors', 'outside_referrals.referred_to_doctor', 'doctors.doctor_id')
@@ -392,7 +422,11 @@ module.exports = {
 			res.json(500, {error: error});
 		})
 	},
-
+	/*
+	postCheckReferral:check calendar exits
+	Input Params: CAL_ID
+	Out Params:status success and data or status error
+	*/
 	postCheckReferral: function(req, res){
 		var postData = req.body.data;
 
@@ -408,7 +442,11 @@ module.exports = {
 			res.json(500, {error: error});
 		})
 	},
-
+	/*
+	postUpdateEnable:upate IsEnable in table cln_patient_outreferral
+	Input Params: outreferral_id,patient_id,CAL_ID
+	Out Params:status success and data or status error
+	*/
 	postUpdateEnable : function(req,res){
 		var postData = req.body.data;
 		if (postData.isEnable != 1){
@@ -427,13 +465,17 @@ module.exports = {
 				.toString();
 		db.sequelize.query(sql)
 		.success(function(data){
-			res.json({data: data,sql:sql});
+			res.json({data: data,status:'success'});
 		})
 		.error(function(error){
 			res.json(500, {error: error});	
 		})
 	},
-
+	/*
+	postDotorFromUserId:select doctor from table doctors by user_id
+	Input Params: user_id
+	Out Params:status success and data or status error
+	*/
 	postDotorFromUserId : function(req,res){
 		var postData = req.body.data;
 		var sql = knex()
@@ -450,6 +492,11 @@ module.exports = {
 			res.json(500, {error: error,sql: sql});
 		})
 	},
+	/*
+	postDotorFromDoctorId:select doctor from table doctors by doctor_id
+	Input Params: doctor_id
+	Out Params:status success and data or status error
+	*/
 	postDotorFromDoctorId : function(req,res){
 		var postData = req.body.data;
 		var sql = knex()

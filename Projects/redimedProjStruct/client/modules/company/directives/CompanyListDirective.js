@@ -24,6 +24,11 @@ angular.module('app.loggedIn.company.directives.list', [])
 				from_date:'',
 				to_date:''
 			}
+			/*
+			onRowClick :Active Company .Company patient working
+			input :patient_id ,company_id
+			output:status success or error
+			*/
 			scope.onRowClick = function(row){
 				scope.updateCompany.id = row.id;
 				scope.updateCompany.to_date = null;
@@ -32,7 +37,7 @@ angular.module('app.loggedIn.company.directives.list', [])
 				var postData = angular.copy(scope.updateCompany);
 				 CompanyModel.upCompanyPatient(postData)
 		  			.then(function(response){
-		  				toastr.success('Change Active Company Successfully');
+		  				toastr.success('Change Company Active Successfully');
 		  				scope.company.load();
 		  				//tannv.dts@gmail.com
 		  				//cap nhat lai patient detail bar
@@ -42,6 +47,10 @@ angular.module('app.loggedIn.company.directives.list', [])
 		  			})
 
 			}
+			/*remove:Delete Company for patient
+			input params :patient_id,company_id
+			output params :status success or error
+			*/
 			var remove = function(row){
 				$modal.open({
 					templateUrl:  'modules/company/dialogs/templates/remove.html',
@@ -62,10 +71,17 @@ angular.module('app.loggedIn.company.directives.list', [])
 			    })
 			}
 
+			
+			/*change page edit company*/
 			scope.clickEdit = function(row){
 					// $state.go('loggedIn.company.edit',{companyId:row.id});//tan comment
 					$state.go('loggedIn.patient.company.edit',{companyId:row.id});//tan add
 			}
+			/*
+			load:get list company for patient
+			input params:patient_id
+			output params :list company
+			*/
 			var load = function(){
 				scope.company.loading = true;
 				CompanyModel.list(search).then(function(response){
@@ -80,12 +96,18 @@ angular.module('app.loggedIn.company.directives.list', [])
 					scope.company.error = $filter('translate')(error.data.code);
 				})
 			}
+			/*change page add new company*/
 			scope.addClick = function(){
 				// $state.go('loggedIn.company.add');//tan comment
 				$state.go('loggedIn.patient.company.add');//tan add
 			}
-
-			scope.addClick1=function()
+			/*show diaglog add new company*/
+			/*
+			addNewCompany:Get company in list
+			input params :patient_id
+			output params:information a specific company
+			*/
+			scope.addNewCompany=function()
 			{
 				var modalInstance = $modal.open({
 			      templateUrl: 'modules/company/views/add.html',
@@ -102,7 +124,7 @@ angular.module('app.loggedIn.company.directives.list', [])
 					
 				})
 			}
-			
+			/*Search comapny_name or industry, Address ,country*/
 			var onSearch = function(option){
 				switch(option.field){
 					case 'Company_name':
@@ -126,6 +148,7 @@ angular.module('app.loggedIn.company.directives.list', [])
 				scope.company.search.offset = (page-1)*scope.company.search.limit;
 				scope.company.load();
 			}
+			/*change is IsEnable */
 			scope.disableCompany = function(row){
 
 				var postData ={
@@ -141,7 +164,11 @@ angular.module('app.loggedIn.company.directives.list', [])
 
 				})
 			}
-			scope.Select = function(){
+			/*SelectCompany :Select a specific company in list company
+			  input params:
+			  output params :company_id
+			*/
+			scope.SelectCompany = function(){
 				var modalInstance = $modal.open({
 			      	templateUrl: 'modules/company/dialogs/templates/listNotFollowPatient.html',
 			      	controller: 'CompanyListNoFollowDialog',

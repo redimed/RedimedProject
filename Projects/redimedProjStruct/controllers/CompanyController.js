@@ -11,7 +11,7 @@ var controllerCode="RED_COMPANY";// tan add
 
 module.exports = {
     postgetFromTime:function(req,res){
-         var postData = req.body.data;
+        var postData = req.body.data;
         var sql = knex
                 .select('cln_appt_patients.*','cln_appointment_calendar.FROM_TIME','cln_appointment_calendar.TO_TIME')
                 .from('cln_appt_patients')
@@ -33,6 +33,11 @@ module.exports = {
             res.json(500, {error: error,sql:sql});
         })
     },
+    /*
+    postselectInsurer:select a specific insurers  
+    Input Params :insurer id
+    OutPut Params : status success and data or error
+    */
     postselectInsurer:function(req,res){
         var postData = req.body.data;
         var sql = knex
@@ -46,9 +51,14 @@ module.exports = {
             res.json({data: data});
         })
         .error(function(error){
-            res.json(500, {error: error,sql:sql});
+            res.json(500, {error: error});
         })
     },
+     /*
+    postDetail:get informtion for patient  
+    Input Params :Patient_id
+    OutPut Params : status success and data or error
+    */
     postDetail: function(req, res){
         var postData = req.body.data;
         var sql = knex
@@ -67,9 +77,14 @@ module.exports = {
             res.json({data: data});
         })
         .error(function(error){
-            res.json(500, {error: error,sql:sql});
+            res.json(500, {error: error});
         })
     },
+    /*
+    postDisableCompany:Update isEnable in table patient_companies
+    Input Params :company_id,patient_id
+    OutPut Params : status success and data or status :error
+    */
     postDisableCompany : function(req,res){
        var postData = req.body.data;
         if (postData.isEnable == 1) {
@@ -87,12 +102,17 @@ module.exports = {
                 .toString()
                 db.sequelize.query(sql)
                 .success(function(data){
-                    res.json({data: data,sql:sql});
+                    res.json({data: data});
                 })
                 .error(function(error){
-                    res.json(500, {error: error,sql:sql});
+                    res.json(500, {error: error});
                 })  
     },
+    /*
+    postupdateInsurer:Update Insurer for a specific companies
+    Input Params :company id
+    OutPut Params : status success and data or error
+    */
     postupdateInsurer :function(req,res){
         var postData = req.body.data;
         var sql = 
@@ -102,12 +122,17 @@ module.exports = {
                 .toString()
                 db.sequelize.query(sql)
                 .success(function(data){
-                    res.json({data: data,sql:sql});
+                    res.json({data: data});
                 })
                 .error(function(error){
-                    res.json(500, {error: error,sql:sql});
+                    res.json(500, {error: error});
                 })
     },
+     /*
+    postDisableInsurer:Update Insurer in table company_insurers
+    Input Params :company_id,insurer_id
+    OutPut Params : status success or status :error
+    */
     postDisableInsurer :function(req,res){
         var postData = req.body.data;
         if (postData.isEnable == 1) {
@@ -123,12 +148,17 @@ module.exports = {
                 .toString()
                 db.sequelize.query(sql)
                 .success(function(data){
-                    res.json({data: data,sql:sql});
+                    res.json({data: data,status:'success'});
                 })
                 .error(function(error){
-                    res.json(500, {error: error,sql:sql});
+                    res.json(500, {error: error});
                 })
     },
+     /*
+    postUpCompanyPatient:Update company_id in table cln_patients
+    Input Params :patient_id
+    OutPut Params : status success or status :error
+    */
     postUpCompanyPatient : function(req,res){
         var postData = req.body.data;
         var sql = 
@@ -159,6 +189,11 @@ module.exports = {
             res.json(500, {error: error});
         }) 
     },
+     /*
+    postRemove:delete a sepsicfic company in table patient_companies
+    Input Params :patient_id
+    OutPut Params : status success or status :error
+    */
     postRemove :function(req,res){
         var postData = req.body.data;
         var sql = knex('patient_companies')
@@ -174,6 +209,11 @@ module.exports = {
             res.json(500, {error: error});
         })
     },
+    /*
+    postEdit:upate information of a specific company
+    Input Params :company_id and information company
+    OutPut Params : status success or status :error
+    */
     postEdit : function(req,res){
         var postData = req.body.data;
             var errors = [];
@@ -182,6 +222,7 @@ module.exports = {
                 {field: 'Addr', message: 'Address is required'},
                 {field: 'Medic_contact_no', message: 'Medic Contact No is required'},
             ]
+            /*Validate format email */
              function validateEmail(email) {
                 var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
                 return re.test(email);
@@ -208,17 +249,12 @@ module.exports = {
             }
             
             if(postData.PO_number % 1 !== 0){
-                errors.push({field: 'PO_number', message: 'PO_number must be number'});
+                errors.push({field: 'PO_number', message: 'PO_number must be integer number'});
             }
             if(postData.postcode % 1 !== 0){
-                errors.push({field: 'postcode', message: 'Post code must be number'});
+                errors.push({field: 'postcode', message: 'Post code must be integer number'});
             }
-             if(postData.latitude % 1 !== 0){
-                errors.push({field: 'latitude', message: 'Latitude must be number'});
-            }
-            if(postData.longitude % 1 !== 0){
-                errors.push({field: 'longitude', message: 'Longitude code must be number'});
-            }
+            /*Validate input request */
             _.forIn(postData, function(value, field){
                 _.forEach(required, function(field_error){
                     if(field_error.field === field && S(value).isEmpty()){
@@ -239,7 +275,7 @@ module.exports = {
             db.sequelize.query(unique_sql)
             .success(function(rows){
                 if(rows.length > 0){
-                    errors.push({field: 'Company_name', message: 'Alert Name exists'});
+                    errors.push({field: 'Company_name', message: 'Company Name exists'});
                     res.status(500).json({errors: errors});
                     return;
                 }else{
@@ -344,7 +380,6 @@ module.exports = {
      */
     postList: function(req, res){
         var postData = req.body.data;
-        //console.log('----------------------------',postData);
         var pagination = req.body.pagination;
         var sql = knex
         .select('companies.*',
@@ -387,10 +422,13 @@ module.exports = {
             res.json(500, {'status': 'error', 'message': error});
         })
     },
-
+    /*
+    postAdd : create new company for patient
+    input params :patient_id and company information
+    out params :status success or error
+    */
     postAdd : function(req,res){
             var postData = req.body.data;
-           // console.log('--------------------------------',postData);
            var errors = [];
             var required = [
                 {field: 'Company_name', message: 'Company Name is required'},
@@ -428,12 +466,6 @@ module.exports = {
             if(postData.postcode % 1 !== 0){
                 errors.push({field: 'postcode', message: 'Post code must be number'});
             }
-             if(postData.latitude % 1 !== 0){
-                errors.push({field: 'latitude', message: 'Latitude must be number'});
-            }
-            if(postData.longitude % 1 !== 0){
-                errors.push({field: 'longitude', message: 'Longitude code must be number'});
-            }
 
             _.forIn(postData, function(value, field){
                 _.forEach(required, function(field_error){
@@ -454,7 +486,7 @@ module.exports = {
             db.sequelize.query(unique_sql)
             .success(function(rows){
                 if(rows.length > 0){
-                    errors.push({field: 'Company_name', message: 'Alert Name exists'});
+                    errors.push({field: 'Company_name', message: 'Company Name exists'});
                     res.status(500).json({errors: errors});
                     return;
                 }else{
@@ -555,7 +587,12 @@ module.exports = {
             .error(function(error){
                 res.json(500, {error: error});
             })
-    },//end postAdd
+    },
+    /*
+    postaddCompanyNotFollow : create new company
+    input params :company information
+    out params :status success or error
+    */
     postaddCompanyNotFollow : function(req,res){
             var postData = req.body.data;
             console.log('chiennnnnnnnnnnnnnnnnnn');
@@ -563,6 +600,7 @@ module.exports = {
             var required = [
                 {field: 'Company_name', message: 'Company Name required'}
             ]
+            /*validate format email*/
             function validateEmail(email) {
                 var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
                 return re.test(email);
@@ -587,20 +625,14 @@ module.exports = {
                      errors.push({field: 'result_email', message: 'Email wrong format'});
                 }
             }
-            
+            /*validate interger number*/
             if(postData.PO_number % 1 !== 0){
-                errors.push({field: 'PO_number', message: 'PO_number must be number'});
+                errors.push({field: 'PO_number', message: 'PO_number must be integer number'});
             }
             if(postData.postcode % 1 !== 0){
-                errors.push({field: 'postcode', message: 'Post code must be number'});
+                errors.push({field: 'postcode', message: 'Post code must be integer number'});
             }
-             if(postData.latitude % 1 !== 0){
-                errors.push({field: 'latitude', message: 'Latitude must be number'});
-            }
-            if(postData.longitude % 1 !== 0){
-                errors.push({field: 'longitude', message: 'Longitude code must be number'});
-            }
-
+            /*validate requered input*/
             _.forIn(postData, function(value, field){
                 _.forEach(required, function(field_error){
                     if(field_error.field === field && S(value).isEmpty()){
@@ -614,6 +646,7 @@ module.exports = {
                 res.status(500).json({errors: errors});
                 return;
             }
+            /*validate company_name exists*/
            var unique_sql = knex('companies')
             .where('Company_name', postData.Company_name)
             .toString();
@@ -705,7 +738,7 @@ module.exports = {
             .error(function(error){
                 res.json(500, {error: error});
             })
-    },//end postAdd
+    },
     postAddlistNotFollow : function(req,res){
         var postData = req.body.data;
         var sql = knex('patient_companies')
@@ -723,6 +756,11 @@ module.exports = {
             res.json(500, {error: error});
         }) 
     },
+    /*
+    postListNotFollow:get list company 
+    input params :
+    output params :status success and data or error
+    */
     postListNotFollow :function(req,res){
         var postData = req.body.data;
         var company_array = [];
@@ -740,6 +778,7 @@ module.exports = {
             'id'
             )
         .from('companies')
+        /*Search Company name , Industry , Address,Country*/
         .where(knex.raw('IFNULL(Company_name,\'\') LIKE \'%'+postData.Company_name+'%\''))
         .where(knex.raw('IFNULL(Industry,\'\') LIKE \'%'+postData.Industry+'%\''))
         .where(knex.raw('IFNULL(Addr,\'\') LIKE \'%'+postData.Addr+'%\''))
@@ -765,6 +804,11 @@ module.exports = {
             res.json(500, {'status': 'error', 'message': error});
         })
     },
+    /*
+    postlistInsurer:get list insurer 
+    input params :
+    output params :status success and data or error
+    */
     postlistInsurer: function(req, res){
         var postData = req.body.data;
         var sql = knex
@@ -833,6 +877,11 @@ module.exports = {
             res.json(500, {'status': 'error', 'message': error});
         })
     },
+    /*
+    postlistInsurer:get infomation company by id
+    input params :company_id
+    output params :status success and data or error
+    */
     postbyCompanyId: function(req, res){
         var postData = req.body.data;
             var sql 
@@ -852,7 +901,6 @@ module.exports = {
                                      'company_insurers.isEnable As checkisEnable')
                             .from('company_insurers')
                             .where({company_id:postData.id})
-                            //.where('company_insurers.isEnable',1)
                             .innerJoin('cln_insurers','company_insurers.insurer_id','=', 'cln_insurers.id')
                             .toString();
                             
@@ -1070,11 +1118,10 @@ module.exports = {
                 console.log(err);
             })
     },
-
+    
     getListPatient: function(req,res){
         var comId = req.body.companyId;
         var currentRecord = req.body.currentRecord;
-        console.log("---------", currentRecord);
         db.sequelize.query("SELECT * FROM cln_patients WHERE company_id = ? ORDER BY Creation_date DESC LIMIT ?,?",null,{raw:true},[comId, currentRecord, 10])
             .success(function(data){
                 res.json({status:'success',data:data});
@@ -1091,7 +1138,6 @@ module.exports = {
         db.sequelize.query(sql, null, {raw:true}, [comId])
             .success(function(data) {
                 res.json({status:'success', data:data[0]});
-                console.log("-----", data);
             })
             .error(function(err) {
                 res.json({status:'error'});
