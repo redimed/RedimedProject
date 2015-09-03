@@ -565,7 +565,7 @@ module.exports = {
                 };
                 functionForTimesheet.TracKerTimeSheet(tracKer);
                 //send mail
-                functionForTimesheet.SendMailTimeSheet(req, res, info);
+                functionForTimesheet.SendMailRejectedTimesheet(req, res, info);
                 res.json({
                     status: "success"
                 });
@@ -833,7 +833,7 @@ module.exports = {
 
 
                                                                                     //send mail
-                                                                                    functionForTimesheet.SendMailTimeSheet(req, res, info);
+                                                                                    functionForTimesheet.SendMailApprovedTimesheet(req, res, info);
 
                                                                                     t.commit();
 
@@ -1032,7 +1032,7 @@ module.exports = {
 
 
                                                 //send mail
-                                                functionForTimesheet.SendMailTimeSheet(req, res, info);
+                                                functionForTimesheet.SendMailApprovedTimesheet(req, res, info);
 
                                                 t.commit();
 

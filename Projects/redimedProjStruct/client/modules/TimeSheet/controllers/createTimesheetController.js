@@ -500,15 +500,17 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
     $scope.LoadTypeOfContrack = function() {
         //check type of contract for employee
         var USER_ID = ($cookieStore.get('userInfo') !== undefined) ? $cookieStore.get('userInfo').id : null;
-        StaffService.LoadContract(USER_ID).then(function(conTract) {
-            if (conTract.status === "success" && conTract.result[0] !== undefined && conTract.result[0].TypeOfContruct !== undefined) {
-                $scope.TypeOfContruct = conTract.result[0].TypeOfContruct;
+        StaffService.LoadContract(USER_ID).then(function(contruct) {
+            if (contruct.status === "success" && contruct.result[0] !== undefined && contruct.result[0].TypeOfContruct !== undefined) {
+                $scope.TypeOfContruct = contruct.result[0].TypeOfContruct;
             } else {
                 toastr.error("User not type of contruct!, Please notification Admin", "Error");
             }
         });
     };
 
+    $scope.LoadTypeOfContrack();
+    
     $scope.LoadInfo();
 
     /*

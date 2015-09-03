@@ -91,7 +91,7 @@
                                          '</td></tr></tbody></table>'
                                  };
 
-                                 FunctionSendMail.sendEmail(req, res, mailOptions);
+                                 FunctionSendMail.SendEmail(req, res, mailOptions);
                              }
                          })
                          .error(function(err) {
@@ -300,7 +300,7 @@
                          '<b><span style="font-size:8.0pt;color:green">Please consider our environment before printing this e - mail</span></b></p>' +
                          '</td></tr></tbody></table>'
                  };
-                 FunctionSendMail.sendEmail(req, res, mailOptions);
+                 FunctionSendMail.SendEmail(req, res, mailOptions);
              })
              .error(function(err) {
                  console.log("*****ERROR:" + err + "*****");
@@ -441,7 +441,7 @@
                                      return;
                                  });
                          } else {
-                             FunctionSendMail.sendEmail(req, res, mailOptions);
+                             FunctionSendMail.SendEmail(req, res, mailOptions);
                          }
 
                      })
@@ -841,7 +841,7 @@
                          '<b><span style="font-size:8.0pt;color:green">Please consider our environment before printing this e - mail</span></b></p>' +
                          '</td></tr></tbody></table>'
                  };
-                 FunctionSendMail.sendEmail(req, res, mailOptions);
+                 FunctionSendMail.SendEmail(req, res, mailOptions);
              })
              .error(function(err) {
                  console.log("*****ERROR:" + err + "*****");

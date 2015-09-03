@@ -9,7 +9,7 @@ angular.module("app.loggedIn.TimeSheet.HistoryLeave.Controller", [])
         //set page
         $scope.SetPage = function() {
             $scope.searchObjectMap.offset = ($scope.searchObjectMap.currentPage - 1) * $scope.searchObjectMap.limit;
-            $scope.loadList();
+            $scope.LoadList();
         };
 
         /*

@@ -83,7 +83,7 @@
                                 <td style="text-align:left;font-size:13px;width:10%;">{{(task.activity===null ||task.activity==="" ||task.activity===undefined)?"N/A":task.activity}}</td>
                                 <td style="text-align:left;font-size:13px;width:12%;">{{(task.location===null ||task.location==="" || task.location===undefined)?"N/A":task.location}}</td>
                                 <td style="text-align:left;font-size:13px;width:12%;">{{(task.department===null||task.department==="" || task.department===undefined)?"N/A":task.department}}</td>
-                                <td style="font-size:13px;text-align:center;width:7%;">{{(task.time_item === null || task.time_item===""||task.time_item===undefined) ? getFortMatTimeCharge(task.time_charge) : getFortMatTimeCharge(task.time_item)}}</td>
+                                <td style="font-size:13px;text-align:center;width:7%;">{{(task.time_item === null || task.time_item===""||task.time_item===undefined) ? GetFortMatTimeCharge(task.time_charge) : GetFortMatTimeCharge(task.time_item)}}</td>
                                 <td style="text-align:left;font-size:13px;width:15%;">{{task.IS_BILLABLE===1?(task.ITEM_ID):(task.ITEM_NAME)}}</td>
                                 <td style="font-size:13px;text-align:center;width:7%;">{{(task.ratio===null||task.ratio==="" ||task.ratio===undefined)?"N/A":task.ratio}}</td>
                                 <td style="font-size:13px;text-align:center;width:8%;">{{(task.units===null||task.units==="" ||task.units===undefined)?"N/A":task.units}}</td>

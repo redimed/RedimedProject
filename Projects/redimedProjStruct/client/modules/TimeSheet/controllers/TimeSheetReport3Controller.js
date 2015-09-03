@@ -22,7 +22,7 @@ angular.module("app.loggedIn.TimeSheet.Report3.Controller", [])
         output: - success: download file PDF
                 - fail: send message error
         */
-        $scope.ListNew = function(listNew) {
+        $scope.LoadEmp = function(listNew) {
             if (listNew !== undefined &&
                 listNew !== null &&
                 listNew.length !== 0) {

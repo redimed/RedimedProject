@@ -148,7 +148,7 @@ module.exports = {
                                 userID: trackerInfo.userID,
                                 dateSubmit: trackerInfo.creationDate
                             };
-                            functionForTimesheet.sendMailSubmitLeave(req, res, sendMailInfo);
+                            functionForTimesheet.SendMailSubmitLeave(req, res, sendMailInfo);
                         }
                         res.json({
                             status: "success"
@@ -225,9 +225,7 @@ module.exports = {
             "INNER JOIN users ON hr_employee.Employee_ID = users.employee_id " + //JOIN
             "INNER JOIN hr_leave ON hr_leave.user_id = users.id " + //JOIN
             "INNER JOIN time_task_status ON time_task_status.task_status_id = hr_leave.status_id " + //JOIN
-            "WHERE hr_leave.user_id = ? " + paramSelect + //WHERE
-            " LIMIT ? " + //LIMIT
-            "OFFSET ?"; //OFFSET
+            "WHERE hr_leave.user_id = ? " + paramSelect; //WHERE
         //get list status for Leave form
         var queryStatus =
             "SELECT time_task_status.task_status_id, time_task_status.name " + //SELECT

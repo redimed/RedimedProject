@@ -21,7 +21,7 @@ angular.module("app.loggedIn.TimeSheet.ReportOweLeave.Controller", [])
         output: - success: download file PDF
                 - fail: send message error
         */
-        $scope.ListNew = function(listNew) {
+        $scope.LoadEmp = function(listNew) {
             TimeSheetService.LoadEmpReport(listNew).then(function(response) {
                 if (response.status === "success") {
                     var arrayEmp = [];

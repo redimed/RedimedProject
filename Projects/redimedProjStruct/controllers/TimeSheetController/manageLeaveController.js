@@ -223,7 +223,7 @@ module.exports = {
                                                                                                     dateSubmit: new Date(),
                                                                                                     leaveID: info.leaveID
                                                                                                 };
-                                                                                                functionForTimesheet.sendMailSubmitLeaveAgain(req, res, sendMailInfo);
+                                                                                                functionForTimesheet.SendMailSubmitLeaveAgain(req, res, sendMailInfo);
                                                                                             }
                                                                                         })
                                                                                         .error(function(err) {

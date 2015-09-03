@@ -87,13 +87,13 @@ angular.module("app.loggedIn.TimeSheet.ViewTask.Directive", [])
                         if (newTimeInLieu.length === 0) {
                             scope.info.time_in_lieu = null;
                             scope.info.over_time = null;
-                        } else if (StaffService.convertShowToFull(newTimeInLieu) > scope.info.time_rest) {
+                        } else if (StaffService.ConvertShowToFull(newTimeInLieu) > scope.info.time_rest) {
                             scope.info.time_in_lieu = null;
                             scope.info.over_time = null;
                         } else {
-                            scope.info.time_in_lieuFull = StaffService.convertShowToFull(newTimeInLieu);
+                            scope.info.time_in_lieuFull = StaffService.ConvertShowToFull(newTimeInLieu);
                             scope.info.over_timeFull = scope.info.time_rest - scope.info.time_in_lieuFull;
-                            scope.info.over_time = StaffService.convertFromFullToShow(scope.info.over_timeFull);
+                            scope.info.over_time = StaffService.ConvertFromFullToShow(scope.info.over_timeFull);
                         }
                         //end
                     }
@@ -106,19 +106,19 @@ angular.module("app.loggedIn.TimeSheet.ViewTask.Directive", [])
                         if (newOverTime.length === 0) {
                             scope.info.over_time = null;
                             scope.info.time_in_lieu = null;
-                        } else if (StaffService.convertShowToFull(newOverTime) > scope.info.time_rest) {
+                        } else if (StaffService.ConvertShowToFull(newOverTime) > scope.info.time_rest) {
                             scope.info.time_in_lieu = null;
                             scope.info.over_time = null;
                         } else {
-                            scope.info.over_timeFull = StaffService.convertShowToFull(newOverTime);
+                            scope.info.over_timeFull = StaffService.ConvertShowToFull(newOverTime);
                             scope.info.time_in_lieuFull = scope.info.time_rest - scope.info.over_timeFull;
-                            scope.info.time_in_lieu = StaffService.convertFromFullToShow(scope.info.time_in_lieuFull);
+                            scope.info.time_in_lieu = StaffService.ConvertFromFullToShow(scope.info.time_in_lieuFull);
                         }
                         //end
                     }
                 });
 
-                var dialogViewDetail = function(ID, DATE, detailType) {
+                var DialogViewDetail = function(ID, DATE, detailType) {
                     var modalInstance = $modal.open({
                         templateUrl: "ViewDetail",
                         controller: function($scope) {
@@ -146,7 +146,7 @@ angular.module("app.loggedIn.TimeSheet.ViewTask.Directive", [])
                 };
 
                 scope.ViewDetail = function(ID, DATE, detailType) {
-                    dialogViewDetail(ID, DATE, detailType);
+                    DialogViewDetail(ID, DATE, detailType);
                 };
             },
             templateUrl: "modules/TimeSheet/directives/templates/ViewTask.html"
