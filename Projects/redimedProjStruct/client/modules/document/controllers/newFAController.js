@@ -19,12 +19,13 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 	$scope.isSignatureShow = false;
 	$scope.clickedValidation = false;
 
-	
-	//End Init params
-
-	//Functions for Init
+	//getNewFA(): get new functional assessment template for this appointment
+	//
+	//input: fa_id (the header id of the template)
+	//result: the $scope.header variable will contain all the template
 	var getNewFA = function(fa_id){
 		var getHeaderId = fa_id;
+		//get all header and section
 		DocumentService.loadNewHeaderSections(getHeaderId).then(function(headerAndSectionRes){
 			if(headerAndSectionRes.status === 'error') toastr.error('Unexpected error', 'Error!');
 			else{
@@ -50,6 +51,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 							section.lines.forEach(function(line){
 								line.PATIENT_ID = patient_id;
 								line.CAL_ID = cal_id;
+								//check if the line have picture to config for preview on the GUI
 								if(line.PICTURE!==null){
 									var strarr = line.PICTURE.split("\\");
 									var fileName = strarr[strarr.length-1];
@@ -66,6 +68,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 										line.details.forEach(function(detail){
 											detail.PATIENT_ID = patient_id;
 											detail.CAL_ID = cal_id;
+											//check if the details have picture to config for preview on the GUI
 											if(detail.PICTURE!==null){
 												var strarr = detail.PICTURE.split("\\");
 												var fileName = strarr[strarr.length-1];
@@ -90,6 +93,10 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 		})
 	}
 
+	//getExistFA(): get the existed FA information of the appointment
+	//
+	//input: fa_id, patiet_id, cal_id
+	//result: $scope.header variable will contain all the functional assessment information
 	var getExistFA = function(fa_id, patient_id, cal_id){
 		var getHeaderId = fa_id;
 		DocumentService.loadExistHeaderSections(getHeaderId, patient_id, cal_id).then(function(headerAndSectionRes){
@@ -138,23 +145,31 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 		})
 	}
 
+	//getPatientInfo: get info of the patient that participated in the assessment
+	//
+	//input: id of patient
 	var getPatientInfo = function(patient_id){
 		PatientService.getById(patient_id).then(function(result){
 			if(result!== null) {
-				console.log("this is patient info", result);
-				//tmp fix for patient gender
+				//fix for patient gender
 				if(result.Sex==="0") result.Sex = "Male";
 				else result.Sex = "Female";
 				$scope.patient_info= result;
-				
+				//call the function to calculate the patient's age
 				getPatientAge($scope.patient_info.DOB);
 			}
 		})
 	}
 
-	var getDoctorInfo = function(cal_id, patient_id){1
+	//getDoctorInfo: get info of the doctor that participated in this assessment
+	//
+	//input: cal_id and patient_id
+	//result: the doctor name and signature
+	var getDoctorInfo = function(cal_id, patient_id){
+		//get currently logged user
 		var userInfo = $cookieStore.get('userInfo');
 		var apptInfo = {user_id: userInfo.id};
+		//Find the doctor that have matching user_id
 		DocumentService.getDoctor(apptInfo).then(function(result){
 			if(result.status === "error") toastr.error("Unexpected error!","Error");
 			else if(result.status === "no doctor") toastr.error("The account treating this assessment have no doctor link with it", "Error!");
@@ -165,11 +180,17 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 		})
 	}
 
+	//getPatientAge: calculate the age of the patient
+	//
+	//input: patient birthday.
+	//result: $scope.patient age will store the result.
 	var getPatientAge = function(dateString){
 		var now = new Date();
         var birthDate = new Date(dateString);
         var age = now.getFullYear() - birthDate.getFullYear();
+        //calculate the month differrent
         var m = now.getMonth() - birthDate.getMonth();
+        //check the different month to correct the age.
         if (m < 0 || (m === 0 && now.getDate() < birthDate.getDate()))
         {
             age--;
@@ -178,6 +199,10 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
         $scope.patient_age = age;
 	}
 
+	//checkExistFA: check if this assessment already have a FA record
+	//
+	//input: fa_id, patient_id, cal_id
+	//result: this function will decide either getNewFA() or getExistFA() function will be called.
 	var checkExistFA = function(fa_id, patient_id, cal_id){
 		DocumentService.checkExistFA(fa_id, patient_id, cal_id).then(function(result){
 			if(result.status==='error') toastr.error('Unexpected error!','Error!');
@@ -193,17 +218,18 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 	}
 	//End Functions for Init
 
-	// Init function
+	// Init function.
 	var init = function(){
 		checkExistFA(fa_id, patient_id,cal_id);
 		getPatientInfo(patient_id);
 	}
 
-	init(); //Call init function
-	// End Init function31
+	init();
 
 	//Auto calculate functions
-	//For VAL1
+	//
+	//input: the line to calculate the result
+	//result: will call the autoRating() function after completing calculate the result
 	var calculateFunctionsVal1 = {
 		calAvg: function(line){
 			var sum = 0;
@@ -256,7 +282,12 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 		}
 	}
 
+	//autoCalculationVal1: auto calculate the functions of the line when the line info changed on the GUI
+	//
+	// input: the changed detail and the line contain that detail
+	// 
 	$scope.autoCalculationVal1 = function(line,detail){
+		//just understand that it check the detail type to take the correct calculation operation
 		if(detail!==undefined){
 			if(detail.VAL1_ISCHECKBOX === 4 || detail.VAL1_ISCHECKBOX === 5){
 				line.RATING_VALUE1 = 0;
@@ -314,6 +345,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 				}
 			}
 		}
+		//now it will check the score type of the line to take the correct calculation operation
 		if((line.SCORE_TYPE1 === 9) && (detail.VAL1_ISVALUE===7 || detail.VAL1_ISVALUE===8 || detail.VAL1_ISVALUE===9 || detail.VAL1_ISVALUE===10)){
 			var default_details_value = null;
 			if(detail.VAL2_ISVALUE === 7 || detail.VAL2_ISVALUE === 8 || detail.VAL2_ISVALUE === 9 || detail.VAL2_ISVALUE === 10){
@@ -342,7 +374,9 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 				line.details[1].VAL1_VALUE = angular.copy(default_details_value);
 			}
 		}
+		//check the ISSCORE variable to continue operating
 		if(line.ISSCORE1===1){
+			//if ISSCORE=1 then take the correct operation based on the score type
 			switch(line.SCORE_TYPE1){
 				case 20:
 				case 3: calculateFunctionsVal1.calAvg(line);
@@ -366,11 +400,8 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 			}
 		}
 
-		// if($scope.header.TYPE === "Crown"){
-			
-		// }
 	}
-	//For VAL2
+	//Those value 2 logic is exactly the same of value 1
 	var calculateFunctionsVal2 = {
 		calAvg: function(line){
 			var sum = 0;
@@ -421,8 +452,9 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 				autoRatingVal2(line, line.SCORE2);
 			}
 		},
-	}
+	} 
 
+	//the same as val1
 	$scope.autoCalculationVal2 = function(line){
 		if(line.ISSCORE2===1){
 			switch(line.SCORE_TYPE2){
@@ -445,10 +477,13 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 			}
 		}
 	}
-	//End Auto calculate functions
 
-	//Auto rating functions
+	//autoRatingVal1(): auto rating the line based on the test performed in the line.
+	//
+	//input: the line need to rating, the value need to be rated and a flag to check if the function call this is from the summary line type.
+	//
 	var autoRatingVal1 = function(line, valueToRate,totalMode){
+		//check the rating ID to decide the rating operation: take from database of do rating locally
 		if(line.RATING_ID1!==null && line.RATING_ID1!==''){
 			var ratingData = {
 				patient_age: $scope.patient_age,
@@ -468,6 +503,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 						}
 					}
 					else{
+						//check the rating result the get the correct data for the RATING_VALUE variable
 						if(line.SCORE_TYPE1 === 3){
 							console.log('rating result', result);
 							line.RATE1 = result.data[0].RATE;
@@ -477,6 +513,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 						}
 						else{
 							line.RATE1 = result.data[0].RATE;
+							//check the total mode to prevent a call loop.
 							if(totalMode!==1){ 
 								line.RATING_VALUE1 = result.data[0].VALUE;
 								autoSummary(line);
@@ -510,6 +547,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 	
 	}
 
+	//The same as the autoRatingValue1 expect that there is no "totalMode" flag
 	var autoRatingVal2 = function(line, valueToRate){
 		if(line.RATING_ID2!==null && line.RATING_ID2!==''){
 			var ratingData = {
@@ -561,7 +599,12 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 		}				
 	}
 	//End Auto rating functions
-	//Auto line rating watch
+	//
+
+	//autoLineSummary(): special summary function to rate for the SCORE_TPE 9,17,18,19
+	//
+	//input: the line needed to summary.
+	//
 	$scope.autoLineSummary = function(line){
 		if(line.SCORE_TYPE1 === 7 || line.SCORE_TYPE1 === 9 || line.SCORE_TYPE1 === 17 || line.SCORE_TYPE1 === 18 || line.SCORE_TYPE1 === 19){
 			if(line.RATING_VALUE1 === '0'){
@@ -577,20 +620,25 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 		}
 		
 	}
-	// Auto summary functions
+	// autosummary(): auto fill data function for the summary line type
+	//
+	// input: the line that needed summary
 	var autoSummary = function(line){
 		console.log('this is line satis', line);
 		var sectionId = line.SECTION_ID;
 		var lineId = line.LINE_ID;
-		var detailNeedChanged = {};
-		var lineTotalInSummary = {};
+		var detailNeedChanged = {};  //store the specific detail refer to the input line
+		var lineTotalInSummary = {}; //will store the summary line result total
+		//loop through all the header to find the line that having the detail refer to the input line
 		for(var i = 0; i<$scope.header.sections.length; i++){
 			if($scope.header.sections[i].SECTION_ID === sectionId){
 				for(var j=0; j<$scope.header.sections[i].lines.length; j++){
 					if($scope.header.sections[i].lines[j].LineType===1){
+						//store the result line
 						lineTotalInSummary = $scope.header.sections[i].lines[j];
 						for(var k=0; k<$scope.header.sections[i].lines[j].details.length; k++){
 							if($scope.header.sections[i].lines[j].details[k].LineTestRefer===lineId){
+								//store the detail refer to the input line
 								detailNeedChanged = $scope.header.sections[i].lines[j].details[k];
 								break;
 							}
@@ -601,9 +649,11 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 				break;
 			}
 		}
+		//update the detail info
 		detailNeedChanged.VAL1_VALUE = line.RATING_VALUE1;
 		detailNeedChanged.VAL2_VALUE = line.RATE1;
 
+		//re-calculate the rsult of the summary line contain the just-changed detail
 		var lineTotal = 0;
 		for(var m=0; m<lineTotalInSummary.details.length; m++){
 			if(lineTotalInSummary.details[m].VAL1_VALUE !== null && lineTotalInSummary.details[m].VAL1_VALUE !== ''){
@@ -612,6 +662,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 			else lineTotal+= 0;
 		}
 
+		//take that line total result, set totalMode and call the autoRating for the summary line.
 		lineTotalInSummary.RATING_VALUE1 = lineTotal;
 		var totalMode = 1;
 		console.log('this is lineTotalInSummary',lineTotalInSummary);
@@ -622,7 +673,6 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 	//Validation functions
 	//End Validation functions
 
-	//Process functions
 	$scope.showSignature = function(){
 		$scope.isSignatureShow = true;
 	}
@@ -634,15 +684,23 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
     }
     $scope.clearClick = function () {
         $scope.header.PATIENT_SIGN = '';
-    }
+    } 
+
+    //newFASubmit(): submit new Functional Assessment Record to the system
+    //
+    //input: the whole $scope.header variable (contain all the record info)
+    //result: success or not
     $scope.newFASubmit = function(){
+    	//set validation process flag to true
     	$scope.clickedValidation = true;
     	if($scope.FAForm.$invalid){
     		toastr.error('Invalid fields!','Error!');
     	}
     	else{
+    		//cal the function to populate the whole header to the correct format
     		var insertInfo = getInsertInformation($scope.header);
     		console.log('this is insert info', insertInfo);
+    		//do the insert
 	    	DocumentService.insertNewFA(insertInfo).then(function(result){
 	    		if(result.status==='success') {
 	    			$scope.editMode=true;
@@ -654,6 +712,11 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
     	}
     	
     }
+
+    //faUpdate(): update the existed functional assessment record in the system
+    //
+    //input: the whole $scope.header contain the updated info.
+    //result: success or not
     $scope.faUpdate = function(){
     	$scope.clickedValidation = true;
     	if($scope.FAForm.$invalid){
@@ -672,14 +735,20 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 	    	
     }
 
+
+    //getInsertInformation(): take the whole header and populate it to the format for easier insert or update operating.
+    //
+    //input: the whole header.
+    //output: the populated data that contain the header, the list of sections, lines, details, comments need to insert or update
     var getInsertInformation = function(header){
+    	//create some variable to store the populated result
     	var insertHeader = {};
 		var insertSections = [];
 		var insertLines = [];
 		var insertDetails = [];
 		var insertComments = [];
 		var dateFormatString = "YYYY-MM-DD hh:mm:ss";
-    	//get submit header
+    	//config and populate the header
     	var tmpHeader = angular.copy(header);
     	delete tmpHeader.sections;
     	if($scope.editMode===false){
@@ -690,7 +759,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
     	}
     	tmpHeader.Last_update_date = moment().format(dateFormatString);
     	insertHeader = tmpHeader;
-    	//get submit sections
+    	//config and populate sections
     	for(var i=0; i<header.sections.length; i++){
     		var tmpSection = angular.copy(header.sections[i]);
     		delete tmpSection.lines;
@@ -703,7 +772,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 			tmpSection.Last_update_date = moment().format(dateFormatString);
 
     		insertSections.push(tmpSection);
-    		//get submit lines
+    		//config and populate the lines
     		for(var j=0; j<header.sections[i].lines.length; j++){
     			var tmpLine = angular.copy(header.sections[i].lines[j]);
     			delete tmpLine.details;
@@ -717,7 +786,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 		    	}
 		    	tmpLine.Last_update_date = moment().format(dateFormatString);
 		    	insertLines.push(tmpLine);
-		    	//get submit details
+		    	//config and populate the details
 		    	for(var k=0; k<header.sections[i].lines[j].details.length; k++){
 		    		var tmpDetail = angular.copy(header.sections[i].lines[j].details[k]);
 		    		delete tmpDetail.previewPath;
@@ -729,7 +798,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
 			    	tmpDetail.Last_update_date = moment().format(dateFormatString);
 			    	insertDetails.push(tmpDetail);
 		    	}
-		    	//get submit comments
+		    	//config and populate the comments
 		    	for(var m=0; m<header.sections[i].lines[j].comments.length; m++){
 		    		var tmpComment= angular.copy(header.sections[i].lines[j].comments[m]);
 		    		if($scope.editMode===false){
@@ -744,6 +813,7 @@ angular.module("app.loggedIn.document.newFA.controllers",[])
     		}
 
     	}
+    	//get all the populated informations into a variable
     	var submitInformations = {
 			infoHeader: insertHeader,
 			infoSections: insertSections,
