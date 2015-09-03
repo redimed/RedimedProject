@@ -266,13 +266,9 @@ module.exports =
                 });
         })
     },
-
-    /**
-     * phanquochien create
-     * phanquochien modify
-    * modify by tannv.dts@gmail.com on 10-3-2015
-    * modify content: replace search by Specialties_id with Specialties_name
-    */
+    // getListDateAppointmentCalendar
+    // input: booking information
+    // output: list date calendar
     getListDateAppointmentCalendar: function(req,res){
         var DOCTOR_ID=req.query.DOCTOR_ID;
         var SITE_ID=req.query.SITE_ID;
@@ -361,9 +357,9 @@ module.exports =
             res.json(rows);
         });
     },
-    /**
-     * phanquocchien.c1109g@gmail.com
-     */
+    // getAppointmentCalendarNotService
+    // input: booking information
+    // output: list calendar not to involve service
     getAppointmentCalendarNotService: function(req,res)
     {
         var DOCTOR_ID=req.query.DOCTOR_ID;
@@ -391,9 +387,9 @@ module.exports =
             res.json(rows);
         },true);
     },
-    /**
-     * phanquocchien.c1109g@gmail.com
-     */
+    // getAppointmentCalendarMobile
+    // input: booking information
+    // output: list calendar in mobile
     getAppointmentCalendarMobile: function(req,res)
     {
         var DOCTOR_ID=req.query.DOCTOR_ID;
@@ -498,11 +494,9 @@ module.exports =
         });
     },
 
-    /**
-     * Phan quoc chien add
-     * tannv.dts mofify
-     * Them mot calendar moi vao ngay
-     */
+    // insertCasualCalendar
+    // input: calendar information
+    // output: new calendar 
     insertCasualCalendar:function(req,res){
 
         console.log(req.body.postData);
@@ -513,7 +507,7 @@ module.exports =
         var DOCTOR_ID=kiss.checkData(postData.DOCTOR_ID)?postData.DOCTOR_ID:null;
         var CLINICAL_DEPT_ID=kiss.checkData(postData.CLINICAL_DEPT_ID)?postData.CLINICAL_DEPT_ID:null;
         var SERVICE_ID=kiss.checkData(postData.SERVICE_ID)?postData.SERVICE_ID:null;
-
+        // check data input
         if(!kiss.checkListData(FROM_TIME,TO_TIME,SITE_ID,DOCTOR_ID,CLINICAL_DEPT_ID,SERVICE_ID))
         {
             kiss.exlog('insertCasualCalendar',"Loi data truyen den");
@@ -529,7 +523,7 @@ module.exports =
             SERVICE_ID:SERVICE_ID,
             CLINICAL_DEPT_ID:CLINICAL_DEPT_ID
         }
-
+        // new row in table cln_appointment_calendar
         var sql="INSERT INTO `cln_appointment_calendar` SET ?";
         
         kiss.executeQuery(req,sql,[insertRow],function(result){
@@ -540,24 +534,17 @@ module.exports =
         })
     },
 
-    /**
-     * Phan Quoc chien add
-     * tannv.dts modify
-     * Chinh sua mot calendar
-     */
+    // editCasualCalendar
+    // input: calendar information
+    // output: new calendar after update
     editCasualCalendar:function(req,res){
-        // { FROM_TIME: '2015-04-27 07:00:00',
-        //   TO_TIME: '2015-04-27 07:30:00',
-        //   SITE_ID: 2,
-        //   SERVICE_ID: 7,
-        //   CAL_ID: 7092 }
         var postData = req.body.postData;
         var FROM_TIME=kiss.checkData(postData.FROM_TIME)?postData.FROM_TIME:null;
         var TO_TIME=kiss.checkData(postData.TO_TIME)?postData.TO_TIME:null;
         var SITE_ID=kiss.checkData(postData.SITE_ID)?postData.SITE_ID:null;
         var CAL_ID=kiss.checkData(postData.CAL_ID)?postData.CAL_ID:null;
         var SERVICE_ID=kiss.checkData(postData.SERVICE_ID)?postData.SERVICE_ID:null;
-
+        // check data input
         if(!kiss.checkListData(FROM_TIME,TO_TIME,SITE_ID,SERVICE_ID,CAL_ID))
         {
             kiss.exlog('editCasualCalendar',"Loi data truyen den");
@@ -571,7 +558,7 @@ module.exports =
             TO_TIME:TO_TIME,
             SERVICE_ID:SERVICE_ID
         }
-
+        // update row in table cln_appointment_calendar
         var sql="UPDATE `cln_appointment_calendar` SET ? WHERE `CAL_ID` = ?";
         kiss.executeQuery(req,sql,[insertRow,CAL_ID],function(result){
             res.json({status:'success'});  

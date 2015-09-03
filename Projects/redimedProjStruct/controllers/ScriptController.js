@@ -112,21 +112,24 @@ module.exports = {
             });
         });
 	},//end postList
-
+	// postAdd
+	// input: script information
+	// output: new script
+	// phanquocchien.c1109g@gmail.com
 	postAdd: function(req, res){
 
 		var postData = req.body.data;
 		var errors = [];
+		// field check validation
 		var required = [
 			{field: 'prescriber', message: 'Prescriber is required'},
 			{field: 'scriptNum', message: 'Script Number is required'},
-			//{field: 'Medicare', message: 'Medicare is required'},
 			{field: 'EntitlementNo', message: 'EntitlementNo is required'},
 			{field: 'doctordate', message: 'Doctor Date is required'},
 			{field: 'patientDate', message: 'Patient Date is required'},
 			{field: 'agentAddress', message: 'Agent Address is required'}
 		]
-
+		// check validation
 		_.forIn(postData, function(value, field){
 			_.forEach(required, function(field_error){
 				if(field_error.field === field && S(value).isEmpty()){
@@ -135,12 +138,11 @@ module.exports = {
 				}
 			})
 		})
-
 		if(errors.length>0){
 			res.status(500).json({errors: errors});
 			return;
 		}
-		
+		// create transaction
 		kiss.beginTransaction(req,function (data) {
 			var userInfo=kiss.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
 	        var userId=kiss.checkData(userInfo.id)?userInfo.id:null;
@@ -168,11 +170,12 @@ module.exports = {
 	            Last_update_date: moment().format("YYYY-MM-DD HH:mm:ss"),
 	            Created_by: userId
 	        };
-
+	        // insert new row in table cln_scripts
 			kiss.executeInsertIfDupKeyUpdate(req,'cln_scripts',[insertRow],['!Creation_date','!Created_by'],function(data) {
 				var idScript = data.insertId;
-				// check medicare of script
+				// if exists medication of script
 				if (postData.medicare.length > 0) {
+					// delete script head in table script_head 
 					var sql = 'DELETE FROM `script_head` WHERE `ID_SCRIPT` = ?';
 			        req.getConnection(function(err,connection)
 			        {
@@ -187,6 +190,7 @@ module.exports = {
 			                }
 			                else
 			                {
+			                	// create list script head
 			                	var listScript = [];
 								_.forEach(postData.medicare, function(item) {
 									if (item.Checked == 1) {
@@ -205,6 +209,7 @@ module.exports = {
 									};
 								});
 								if (listScript.length > 0) {
+									// insert new row in table script_head
 									kiss.executeInsertIfDupKeyUpdate(req,'script_head',listScript,['!Creation_date','!Created_by'],function (data) {
 										kiss.commit(req,function (data) {
 											res.json({status:'success',data:data})
@@ -493,6 +498,10 @@ module.exports = {
 		}
 
 	},
+	// listMedicationInScript
+	// input: script information
+	// output: list medication of script
+	// phanquocchien.c1109g@gmail.com
 	listMedicationInScript: function (req, res) {
         var id = kiss.checkData(req.body.id)?req.body.id:'';
 

@@ -11,11 +11,10 @@ var rlobEmailController=require('./rlobEmailController');
 var fs = require('fs');//Read js file for import into
 module.exports =
 {
-    //phanquocchien.c1109g@gmail.com
-    //insert Non Emergency
-    //mobile
+    // insertNonEmergency
+    // input: non emergency booking information 
+    // output: new non emergency booking
     insertNonEmergency:function(req,res){
-        // return
         var FIRSTNAME=kiss.checkData(req.body.info.FIRSTNAME)?req.body.info.FIRSTNAME:null;
         var LASTNAME=kiss.checkData(req.body.info.LASTNAME)?req.body.info.LASTNAME:null;
         var GENDER=kiss.checkData(req.body.info.GENDER)?req.body.info.GENDER:null;
@@ -36,20 +35,17 @@ module.exports =
         var REMEMBER_PATIENTS=kiss.checkData(req.body.info.REMEMBER_PATIENTS)?req.body.info.REMEMBER_PATIENTS:0;
         var RECEIVE_REDIMED=kiss.checkData(req.body.info.RECEIVE_REDIMED)?req.body.info.RECEIVE_REDIMED:0;
         var currentDate=moment().format("YYYY/MM/DD HH:mm:ss");
-        // phanquocchien.c1109g@gmail.com
-        // check data neu ko co thi tra ve loi ko insert
+        // check data input
         if(!kiss.checkListData(FIRSTNAME,LASTNAME,GENDER,DOB,CONTACT_NO,INJURY,CAL_ID,BookingType,EMAIL))
         {
             kiss.exlog('insertNonEmergency',"Loi data truyen den");
             res.json({status:'fail',message:'Infomation is require'});
             return;
         }
-        // phanquocchien.c1109g@gmail.com
-        // tao transaction
+        // create transaction
         kiss.beginTransaction(req,function (data) {
+            // select patient in table cln_aptients
             var sql="SELECT * FROM `cln_patients` WHERE `First_name` = ? AND `Sur_name` = ? AND `Middle_name` IS NULL AND `DOB` = ?";
-            // phanquocchien.c1109g@gmail.com
-            // check patient trong bang cln_patient
             req.getConnection(function (err,connection) {
                 var query = connection.query(sql,[FIRSTNAME,LASTNAME,DOB],function (err,rows) {
                     if (err) {
@@ -58,15 +54,14 @@ module.exports =
                             res.json({status:'fail',message:'Can not insert server error'});
                         });
                     }else{
+                        // if patient exists in the system
                         if (rows.length > 0) {
                             var Patient_id = rows[0].Patient_id;
                             var insertApptPatient={
                                 Patient_id:Patient_id,
                                 CAL_ID:CAL_ID
                             };
-                            // phanquocchien.c1109g@gmail.com
-                            // patient da co thong tin trong bang cln_patient
-                            // insert patient_id va cal_id vao bang cln_appt_patient
+                            // insert new row in table cln_appt_patients
                             var sql="INSERT INTO `cln_appt_patients` SET ?";
                             req.getConnection(function (err,connection) {
                                 var query = connection.query(sql,[insertApptPatient],function (err,rows) {
@@ -76,6 +71,7 @@ module.exports =
                                             res.json({status:'fail',message:'Can not insert server error'});
                                         });
                                     }else{
+                                        // set input value of query
                                         var insertRow={
                                             CONTACT_NO:CONTACT_NO,
                                             MEDICARE_NO:MEDICARE_NO,
@@ -89,8 +85,7 @@ module.exports =
                                             receive_redimed:RECEIVE_REDIMED,
                                             patient_id:Patient_id
                                         };
-                                        // phanquocchien.c1109g@gmail.com
-                                        // insert thong tin vao bang waf_sponsor1
+                                        //  insert new row in table waf_sponsor1
                                         var sql="INSERT INTO `waf_sponsor1` SET ?";
                                         req.getConnection(function (err,connection) {
                                             var query = connection.query(sql,[insertRow],function (err,rows) {
@@ -100,8 +95,6 @@ module.exports =
                                                         res.json({status:'fail',message:'Can not insert server error'});
                                                     });
                                                 }else{
-                                                    // phanquocchien.c1109g@gmail.com
-                                                    // commit transaction 
                                                     kiss.commit(req,function () {
                                                         res.json({status:'success',data:rows})
                                                     },function (error) {
@@ -109,8 +102,7 @@ module.exports =
                                                         res.json({status:'fail'});
                                                     });
 
-                                                    // phanquocchien.c1109g@gmail.com
-                                                    // sen email
+                                                    // send email notification to user
                                                     var emailInfo={
                                                         subject:'',
                                                         senders:'',
@@ -191,14 +183,14 @@ module.exports =
                                 })
                             })                 
                         }else{
+                            // if patient not exists in the system 
                             var insertRow={
                                 First_name:FIRSTNAME,
                                 Sur_name:LASTNAME,
                                 Sex:GENDER,
                                 DOB:moment(DOB).format("YYYY/MM/DD")
                             };
-                            // phanquocchien.c1109g@gmail.com
-                            // innert thong tin patient cln_patients
+                            // innert new row in table cln_patients
                             var sql="INSERT INTO `cln_patients` SET ?";
                             req.getConnection(function (err,connection) {
                                 var query = connection.query(sql,[insertRow],function (err,rows) {
@@ -213,8 +205,7 @@ module.exports =
                                             Patient_id:Patient_id,
                                             CAL_ID:CAL_ID
                                         };
-                                        // phanquocchien.c1109g@gmail.com
-                                        // insert appt patient
+                                        // insert new row in table cln_appt_patients
                                         var sql="INSERT INTO `cln_appt_patients` SET ?";
                                         req.getConnection(function (err,connection) {
                                             var query = connection.query(sql,[insertApptPatient],function (err,rows) {
@@ -237,8 +228,7 @@ module.exports =
                                                         receive_redimed:RECEIVE_REDIMED,
                                                         patient_id:Patient_id
                                                     };
-                                                    // phanquocchien.c1109g@gmail.com
-                                                    // insert waf_sponsor1
+                                                    // insert new row in table waf_sponsor1
                                                     var sql="INSERT INTO `waf_sponsor1` SET ?";
                                                     req.getConnection(function (err,connection) {
                                                         var query = connection.query(sql,[insertRow],function (err,rows) {
@@ -254,8 +244,7 @@ module.exports =
                                                                     kiss.exlog('insertNonEmergency','commit loi',error);
                                                                     res.json({status:'fail'});
                                                                 });
-                                                                // phanquocchien.c1109g@gmail.com
-                                                                // send mail
+                                                                // send email notification to user
                                                                 var emailInfo={
                                                                     subject:'',
                                                                     senders:'',
@@ -345,10 +334,11 @@ module.exports =
             kiss.exlog('insertNonEmergency','loi mo transaction insertNonEmergency',err);
             res.json({status:'fail'});
         });                
-    }
-    ,insertEmergency:function(req,res){
-        // return
-        // console.log()
+    },
+    // insertEmergency
+    // input: emergency booking information
+    // output: new emergency booking
+    insertEmergency:function(req,res){
         var FIRSTNAME=kiss.checkData(req.body.info.FIRSTNAME)?req.body.info.FIRSTNAME:null;
         var LASTNAME=kiss.checkData(req.body.info.LASTNAME)?req.body.info.LASTNAME:null;
         var GENDER=kiss.checkData(req.body.info.GENDER)?req.body.info.GENDER:null;
@@ -364,15 +354,16 @@ module.exports =
         var EMAIL=kiss.checkData(req.body.info.EMAIL)?req.body.info.EMAIL:null;
         var REMEMBER_PATIENTS=kiss.checkData(req.body.info.REMEMBER_PATIENTS)?req.body.info.REMEMBER_PATIENTS:0;
         var RECEIVE_REDIMED=kiss.checkData(req.body.info.RECEIVE_REDIMED)?req.body.info.RECEIVE_REDIMED:0;
-
+        // check data input
         if(!kiss.checkListData(FIRSTNAME,LASTNAME,GENDER,DOB,CONTACT_NO,INJURY))
         {
             kiss.exlog('insertEmergency',"Loi data truyen den");
             res.json({status:'fail',message:'Infomation is require'});
             return;
         }
-
+        // create transaction
         kiss.beginTransaction(req,function (data) {
+            // select patient in table cln_patients
             var sql="SELECT * FROM `cln_patients` WHERE `First_name` = ? AND `Sur_name` = ? AND `Middle_name` IS NULL AND `DOB` = ?";
             req.getConnection(function (err,connection) {
                 var query = connection.query(sql,[FIRSTNAME,LASTNAME,DOB],function (err,rows) {
@@ -382,6 +373,7 @@ module.exports =
                             res.json({status:'fail',message:'Can not insert server error'});
                         });
                     }else{
+                        // if paitent exists in the system
                         if (rows.length > 0) {
                             var insertRow={
                                 CONTACT_NO:CONTACT_NO,
@@ -395,7 +387,7 @@ module.exports =
                                 CREATION_DATE:currentDate,
                                 patient_id:rows[0].Patient_id
                             }
-
+                            // insert new row in table waf_sponsor1
                             var sql="INSERT INTO `waf_sponsor1` SET ?";
                             req.getConnection(function (err,connection) {
                                 var query = connection.query(sql,[insertRow],function (err,rows) {
@@ -411,7 +403,7 @@ module.exports =
                                             kiss.exlog('insertNonEmergency','commit loi',error);
                                             res.json({status:'fail',message:'Can not insert server error'});
                                         });
-
+                                        // send email notification to user
                                         var emailInfo={
                                             subject:'',
                                             senders:'',
@@ -473,6 +465,7 @@ module.exports =
                                 })
                             })
                         }else{
+                            // if patient not exists in the system
                             var insertRow={
                                 First_name:FIRSTNAME,
                                 Sur_name:LASTNAME,
@@ -481,6 +474,7 @@ module.exports =
                                 Address1:ADD,
                                 Email:EMAIL
                             };
+                            // insert new row in table cln_patient
                             var sql="INSERT INTO `cln_patients` SET ?";
                             req.getConnection(function (err,connection) {
                                 var query = connection.query(sql,[insertRow],function (err,rows) {
@@ -502,7 +496,7 @@ module.exports =
                                             CREATION_DATE:currentDate,
                                             patient_id:rows.insertId
                                         }
-
+                                        // insert new row in table waf_sponsor1
                                         var sql="INSERT INTO `waf_sponsor1` SET ?";
                                         req.getConnection(function (err,connection) {
                                             var query = connection.query(sql,[insertRow],function (err,rows) {
@@ -518,7 +512,7 @@ module.exports =
                                                         kiss.exlog('insertEmergency','commit loi',error);
                                                         res.json({status:'fail',message:'Can not insert server error'});
                                                     });
-
+                                                    // send email notification of user
                                                     var emailInfo={
                                                         subject:'',
                                                         senders:'',
@@ -591,6 +585,9 @@ module.exports =
             res.json({status:'fail'});
         });   
     },
+    // uploadFile
+    // input: file information
+    // output: new file in folder
     uploadFile:function(req,resq){
         console.log('uploadFile ::'+JSON.stringify(req.body));
         // resq.json({status:"success"});

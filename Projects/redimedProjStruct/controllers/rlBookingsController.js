@@ -20,31 +20,14 @@ module.exports =
     /**
      * Them mot booking moi
      * tannv.dts@gmail.com
+     * edit phanquocchien
      */
+
+     // add
+     // input: booking information
+     // output: new booking
     add:function(req,res){
         var input = req.body;
-        console.log(input);
-
-        // req.getConnection(function(err,connection){
-        //     var query=connection.query('insert into rl_bookings set ?',input,function(err,rows){
-        //         if (err)
-        //         {
-        //             console.log("Error inserting : %s ",err );
-        //             res.json({status:"fail"});
-        //         }
-        //         else
-        //         {
-        //             console.log("***************************"+JSON.stringify(input.BOOKING_ID));
-        //             res.json({status:"success",data:input.BOOKING_ID});
-        //         }
-
-        //     })
-        // });
-        /*
-        phan quoc chien
-        phanquocchien.c1109g@gmail.com
-        add booking info
-         */
         var userInfo=kiss.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
         var userId=kiss.checkData(userInfo.id)?userInfo.id:null;
         var BOOKING_ID=kiss.checkData(req.body.BOOKING_ID)?req.body.BOOKING_ID:null;
@@ -84,7 +67,7 @@ module.exports =
         var WRK_DATE_OF_INJURY=kiss.checkData(req.body.WRK_DATE_OF_INJURY)?req.body.WRK_DATE_OF_INJURY:null;
 
         var currentTime=moment().format("YYYY/MM/DD HH:mm:ss");
-
+	// validate empty input
         if(!kiss.checkListData(userId,BOOKING_ID,CLAIM_NO,WRK_SURNAME,WRK_OTHERNAMES,WRK_DOB,WRK_CONTACT_NO,WRK_DATE_OF_INJURY,DESC_INJURY,COMPANY_ID,RL_TYPE_ID,SPECIALITY_ID,DOCTOR_ID,SITE_ID,CAL_ID))
         {
             kiss.exlog('add',"Loi data truyen den");
@@ -337,7 +320,7 @@ module.exports =
                 " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID`=rltype.`RL_TYPE_ID`                            "+
                 " INNER JOIN `doctors` doctor ON booking.`DOCTOR_ID`=doctor.`doctor_id`                               "+
                 " INNER JOIN users u ON booking.ASS_ID=u.`id`                                                         "+
-                " WHERE     booking.`CLAIM_NO` LIKE CONCAT('%',?,'%')                                                 "+
+                " WHERE booking.`CLAIM_NO` LIKE CONCAT('%',?,'%')                                                     "+
                 "   AND booking.`WRK_OTHERNAMES`LIKE CONCAT('%',?,'%')                                                "+
                 "   AND booking.`WRK_SURNAME`LIKE CONCAT('%',?,'%')                                                   "+
                 "   AND booking.FULL_NAME LIKE CONCAT('%',?,'%')                                                      "+
@@ -670,7 +653,6 @@ module.exports =
 
     sendConfirmEmail:function(req,res)
     {
-//        rlobEmailController.sendEmail("asdfasdf jasodfja sfiasjd foids>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         var bookingId=kiss.checkData(req.body.bookingId)?req.body.bookingId:'' ;
         var siteAddress=kiss.checkData(req.body.siteAddress)?req.body.siteAddress:'';
         var mapUrl=kiss.checkData(req.body.mapUrl)?req.body.mapUrl:'';
@@ -795,11 +777,9 @@ module.exports =
 
         });
     },
-    /**
-     *Dem cac upcomming booking
-     *Upcomming booking: nhung booking sap toi
-     * phanquocchien.c1109g@gmail.com
-     */
+    // getCountReportUpcommingBookings
+    // input: upcomming booking information
+    // output: number upcomming booking
     getCountReportUpcommingBookings:function(req,res)
     {
         console.log(req.body);
@@ -813,6 +793,7 @@ module.exports =
         var documentStatus = '%';
         var FromAppointmentDate = '1900-1-1';
         var ToAppointmentDate = '2500-1-1';
+        // check the value input
         if(req.body.filterInfo){
             var filterInfo=req.body.filterInfo;
             console.log(filterInfo);
@@ -842,6 +823,7 @@ module.exports =
             " AND `booking`.`STATUS` LIKE ?                                                                               "+
             " AND `booking`.`DOCUMENT_STATUS` LIKE ?                                                                      "+
             " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)                                   ";
+       // set Input value of query
         var params=[];
         params.push(bookingType);
         params.push(doctorId);
@@ -854,6 +836,7 @@ module.exports =
         params.push(FromAppointmentDate);
         params.push(ToAppointmentDate);
         console.log(params);
+        // select number upcomming
         req.getConnection(function(err,connection)
         {
             var query = connection.query(sql,params,function(err,rows)
@@ -871,10 +854,9 @@ module.exports =
             });
         });
     },
-    /**
-     *get items booking
-     * phanquocchien.c1109g@gmail.com
-     */
+    // getItemsOfPageReportUpcommingBookings
+    // input: upcomming booking information
+    // output: list upcomming booking
     getItemsOfPageReportUpcommingBookings:function(req,res)
     {
         console.log(req.body);
@@ -888,6 +870,7 @@ module.exports =
         var documentStatus = '%';
         var FromAppointmentDate = '1900-1-1';
         var ToAppointmentDate = '2500-1-1';
+        // check value input
         if(req.body.filterInfo){
             var filterInfo=req.body.filterInfo;
             console.log(filterInfo);
@@ -900,6 +883,7 @@ module.exports =
             FromAppointmentDate=filterInfo.FromAppointmentDate?filterInfo.FromAppointmentDate:'1900-1-1';
             ToAppointmentDate=filterInfo.ToAppointmentDate?filterInfo.ToAppointmentDate:'2500-1-1';
         }
+        // set value paging
         var pageIndex= parseInt((req.body.currentPage-1)*req.body.itemsPerPage);
         var itemsPerPage= parseInt(req.body.itemsPerPage);
         var sql=
@@ -917,10 +901,11 @@ module.exports =
             " AND stite.`Site_name` LIKE ?                                                                                "+
             " AND CONCAT(booking.`WRK_SURNAME`,' ',booking.`WRK_OTHERNAMES`) LIKE ?                                       "+
             " AND `rltype`.`Rl_TYPE_NAME` LIKE ?                                                                          "+
-            " AND `booking`.`STATUS` LIKE ?                                                                          "+
-            " AND `booking`.`DOCUMENT_STATUS` LIKE ?                                                                          "+
+            " AND `booking`.`STATUS` LIKE ?                                                                               "+
+            " AND `booking`.`DOCUMENT_STATUS` LIKE ?                                                                      "+
             " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)                                   "+
             " ORDER BY booking.`APPOINTMENT_DATE` ASC  LIMIT ?,?                                                          ";
+        // set Input value of query
         var params=[];
         params.push(bookingType);
         params.push(doctorId);
@@ -935,27 +920,25 @@ module.exports =
         params.push(pageIndex);
         params.push(itemsPerPage);
         console.log(params);
+        // select list upcomming
         req.getConnection(function(err,connection)
         {
             var query = connection.query(sql,params,function(err,rows)
             {
                 if(err || rows.length<1)
                 {
-                    //console.log("Error Selecting : %s ",err );
                     res.json({status:'fail'});
                 }
                 else
                 {
-                    //console.log(">>>>>>>>>>>>>>>>>>>>>>>>"+rows.length)
                     res.json({status:'success',data:rows});
                 }
             });
         });
     },
-    /**
-     *count total bookings status < CURRENT_TIMESTAMP
-     * phanquocchien.c1109g@gmail.com
-     */
+    // getCountReportOutstandingBookings
+    // input: outstanding booking
+    // output: number outstanding booking
     getCountReportOutstandingBookings:function(req,res)
     {
         console.log(req.body);
@@ -969,6 +952,7 @@ module.exports =
         var documentStatus = '%';
         var FromAppointmentDate = '1900-1-1';
         var ToAppointmentDate = '2500-1-1';
+        // check value input
         if(req.body.filterInfo){
             var filterInfo=req.body.filterInfo;
             console.log(filterInfo);
@@ -989,7 +973,6 @@ module.exports =
             " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID` = rltype.`RL_TYPE_ID`                                          "+
             " INNER JOIN  `doctors` dt ON booking.`DOCTOR_ID` = dt.`doctor_id`                                                    "+
             " INNER JOIN `redimedsites` stite ON booking.`SITE_ID` = stite.`id`                                                   "+
-            //" WHERE rlfile.`BOOKING_ID` IS NULL                                                                                   "+
             " WHERE booking.`APPOINTMENT_DATE` < CURRENT_TIMESTAMP                                                                "+
             " AND booking.`BOOKING_TYPE`= ?                                                                                       "+                                                    
             " AND booking.`STATUS` NOT IN ('Cancel','Completed','Not Arrived','Late Cancellation')                                "+
@@ -1002,6 +985,7 @@ module.exports =
             " AND `booking`.`DOCUMENT_STATUS` LIKE ?                                                                              "+
             " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)                                           ";
         console.log(sql);
+        // set Input value of query
         var params=[];
         params.push(bookingType);
         params.push(doctorId);
@@ -1014,6 +998,7 @@ module.exports =
         params.push(FromAppointmentDate);
         params.push(ToAppointmentDate);
         console.log(params);
+        // select number outstanding
         req.getConnection(function(err,connection)
         {
             var query = connection.query(sql,params,function(err,rows)
@@ -1031,10 +1016,9 @@ module.exports =
             });
         });
     },
-    /**
-     *get items booking
-     * phanquocchien.c1109g@gmail.com
-     */
+   // getItemsOfPageReportOutstandingBookings
+   // input: outstanding booking
+   // output: list outstanding booking
     getItemsOfPageReportOutstandingBookings:function(req,res)
     {
         console.log(req.body);
@@ -1048,6 +1032,7 @@ module.exports =
         var Doctor = '%';
         var FromAppointmentDate = '1900-1-1';
         var ToAppointmentDate = '2500-1-1';
+        // check value input
         if(req.body.filterInfo){
             var filterInfo=req.body.filterInfo;
             console.log(filterInfo);
@@ -1060,6 +1045,7 @@ module.exports =
             FromAppointmentDate=filterInfo.FromAppointmentDate?filterInfo.FromAppointmentDate:'1900-1-1';
             ToAppointmentDate=filterInfo.ToAppointmentDate?filterInfo.ToAppointmentDate:'2500-1-1';
         }
+        // set value paging
         var pageIndex= parseInt((req.body.currentPage-1)*req.body.itemsPerPage);
         var itemsPerPage= parseInt(req.body.itemsPerPage);
         var sql=
@@ -1071,7 +1057,6 @@ module.exports =
             " INNER JOIN `rl_types` rltype ON booking.`RL_TYPE_ID` = rltype.`RL_TYPE_ID`                                                    "+
             " INNER JOIN  `doctors` dt ON booking.`DOCTOR_ID` = dt.`doctor_id`                                                              "+
             " INNER JOIN `redimedsites` stite ON booking.`SITE_ID` = stite.`id`                                                             "+
-            //" WHERE rlfile.`BOOKING_ID` IS NULL                                                                                             "+
             " WHERE booking.`BOOKING_TYPE`= ?                                                                                               "+
             " AND booking.`APPOINTMENT_DATE` < CURRENT_TIMESTAMP                                                                            "+
             " AND booking.`STATUS` NOT IN ('Cancel','Completed','Not Arrived','Late Cancellation')                                          "+
@@ -1085,6 +1070,7 @@ module.exports =
             " AND `booking`.`APPOINTMENT_DATE` BETWEEN ? AND DATE_ADD(?,INTERVAL 1 DAY)                                                     "+
             " ORDER BY booking.`APPOINTMENT_DATE` DESC  LIMIT ?,?                                                                           ";
         console.log(sql);
+        // set input value of query
         var params=[];
         params.push(bookingType);
         params.push(doctorId);
@@ -1099,18 +1085,17 @@ module.exports =
         params.push(pageIndex);
         params.push(itemsPerPage);
         console.log(params);
+        // select list outstanding
         req.getConnection(function(err,connection)
         {
             var query = connection.query(sql,params,function(err,rows)
             {
                 if(err || rows.length<1)
                 {
-                    //console.log("Error Selecting : %s ",err );
                     res.json({status:'fail'});
                 }
                 else
                 {
-                    //console.log(">>>>>>>>>>>>>>>>>>>>>>>>"+rows.length)
                     res.json({status:'success',data:rows});
                 }
             });
@@ -1508,8 +1493,9 @@ module.exports =
             });
         });
     },
-    //chien change document status
-    //phanquocchien.c1109g@gmail.com
+    // lob_change_documents_status
+    // input: document status information
+    // output: new doccument status after change status
     lob_change_documents_status:function(req,res)
     {
         console.log(JSON.stringify(req.body));
@@ -1538,8 +1524,9 @@ module.exports =
                 });
         });
     },
-    // chien insert-update-delete messages
-    // phanquocchien.c1109g@gmail.com
+    // rl_messages_select_contents
+    // input:
+    // output: list messages content
     rl_messages_select_contents:function(req,res){
         db.sequelize.query('SELECT * FROM rl_messages WHERE ISENABLE = 1',null,{raw:true})
             .success(function(data){
@@ -1549,6 +1536,9 @@ module.exports =
                 res.json({status:'error'});
             })
     },
+    // rl_messages_insert_contents
+    // input: messages information
+    // output: new messages content
     rl_messages_insert_contents:function(req,res){
         console.log(req.query);
         var Content = req.query.messageContent;
@@ -1568,17 +1558,14 @@ module.exports =
                 console.log(err);
             })
     },
+    // rl_messages_change_isenable
+    // input:
+    // output: remove messages
     rl_messages_change_isenable:function(req,res){
         console.log(req.query);
         var ID = req.query.ID;
-        //var Content = req.query.CONTENTS;
         db.BMessages.update({
-            //CONTENTS: Content,
             ISENABLE: 0
-            //CREATED_BY: null,
-            //CREATION_DATE: null,
-            //LAST_UPDATED_BY: null,
-            //LAST_UPDATED_DATE: null
         },{ID:ID},{raw:true})
             .success(function(data){
                 res.json({status:'success'});
@@ -1588,17 +1575,15 @@ module.exports =
                 console.log(err);
             })
     },
+    // rl_messages_update_message
+    // input: messages information
+    // output: new messages after update
     rl_messages_update_message:function(req,res){
         console.log(req.query);
         var ID = req.query.ID;
         var Content = req.query.CONTENTS;
         db.BMessages.update({
             CONTENTS: Content
-            //ISENABLE: 0
-            //CREATED_BY: null,
-            //CREATION_DATE: null,
-            //LAST_UPDATED_BY: null,
-            //LAST_UPDATED_DATE: null
         },{ID:ID},{raw:true})
             .success(function(data){
                 res.json({status:'success'});
@@ -1711,11 +1696,9 @@ module.exports =
         });
     },
 
-    /*
-    phan quoc chien 
-    phanquocchien.c1109g@gmail.com
-    update patient id in booking
-     */
+   // updatePatientIdInBooking
+   // input: patient information
+   // output: new booking after update
     updatePatientIdInBooking:function(req,res){
         var patientId = req.body.PATIENT_ID;
         var bookingId = req.body.BOOKING_ID;
@@ -1742,15 +1725,13 @@ module.exports =
                 });
         });
     },
-    /*
-    phan quoc chien 
-    phanquocchien.c1109g@gmail.com
-    cancel booking
-    mofify:tannv.dts@gmail.com
-    */
+    // cancelBooking
+    // input: booking information
+    // output: cancel booking
     cancelBooking:function(req,res){
         var patientId=kiss.checkData(req.body.PATIENT_ID)?req.body.PATIENT_ID:'';
         var calId=kiss.checkData(req.body.CAL_ID)?req.body.CAL_ID:'';
+        // check value input
         if(!kiss.checkListData(patientId,calId))
         {
             kiss.exlog("cancelBooking","Loi data truyen den");
@@ -1758,10 +1739,12 @@ module.exports =
             return;
         }
         kiss.beginTransaction(req,function(){
+            // select detail appt in table cln_appointment_calendar
             var sql="SELECT * FROM `cln_appointment_calendar` WHERE `CAL_ID` = ?";
             kiss.executeQuery(req,sql,[calId],function(rows){
                 if(rows.length>0)
                 {
+                    // update column STATUS and NOTES in table cln_appointment_calendar
                     var sql="UPDATE `cln_appointment_calendar` SET ? WHERE `CAL_ID` = ?";
                     var updateInfo={
                         STATUS:rlobUtil.calendarStatus.noAppointment,
@@ -1770,6 +1753,7 @@ module.exports =
                     kiss.executeQuery(req,sql,[updateInfo,calId],function(result){
                         if(result.affectedRows>0)
                         {
+                            // delete row in table cln_appt_patients
                             var sql="DELETE FROM `cln_appt_patients` WHERE `Patient_id` = ? AND `CAL_ID` = ?";
                             kiss.executeQuery(req,sql,[patientId,calId],function(result){
                                 kiss.commit(req,function(){
@@ -1817,24 +1801,15 @@ module.exports =
             res.json({status:'fail'});
         });
     },
-
-    /*
-    phan quoc chien 
-    phanquocchien.c1109g@gmail.com
-    change booking
-    */
-    // changeBooking:function(req,res){
+    // undoCancelBooking
+    // intput: booking information
+    // output: undo booking
     undoCancelBooking:function(req,res){
-        // var patientId = req.body.PATIENT_ID;
-        // var calId = req.body.CAL_ID;
-        // var patientName = req.body.PATIENT_NAME;
-        // var PATIENT = '[{"Patient_id":'+patientId+',"Patient_name":"'+patientName+'"}]';
-        // var NOTES = rlobUtil.sourceType.REDiLEGAL;
-        // var STATUS = rlobUtil.calendarStatus.booked;
 
         var patientId=kiss.checkData(req.body.PATIENT_ID)?req.body.PATIENT_ID:'';
         var calId=kiss.checkData(req.body.CAL_ID)?req.body.CAL_ID:'';
         var currentTime=kiss.getCurrentTimeStr();
+        // check input data
         if(!kiss.checkListData(patientId,calId))
         {
             kiss.exlog("undoCancelBooking","Loi data truyen den");
@@ -1842,12 +1817,14 @@ module.exports =
             return;
         }
         kiss.beginTransaction(req,function(){
+            // Update column STATUS and NOTES in table cln_appointment_calendar
             var sql="UPDATE `cln_appointment_calendar` SET ? WHERE `CAL_ID` = ?";
             var updateInfo={
                 STATUS:rlobUtil.calendarStatus.booked,
                 NOTES:rlobUtil.sourceType.REDiLEGAL
             }
             kiss.executeQuery(req,sql,[updateInfo,calId],function(result){
+                // New row in table cln_appt_patients
                 var sql="INSERT INTO `cln_appt_patients` set ?";
                 var insertInfo={
                     Patient_id:patientId,
@@ -1879,14 +1856,11 @@ module.exports =
             res.json({status:'fail'});
         });
     },
-    /*
-    phan quoc chien
-    phanquocchien.c1109g@gmail.com
-    list mail user booking
-     */
+    // listMailUserOnlineBooking
+    // input: 
+    // output: email list of user medicolegal
     listMailUserOnlineBooking:function(req,res){
-        var sql=
-            "SELECT `Contact_email` FROM `users` WHERE `MEDICO_LEGAL_REGISTER_STATUS` IS NOT NULL";
+        var sql= "SELECT `Contact_email` FROM `users` WHERE `MEDICO_LEGAL_REGISTER_STATUS` IS NOT NULL";
 
         req.getConnection(function(err,connection)
         {
@@ -1900,6 +1874,7 @@ module.exports =
                 {
                     if(rows.length>0)
                     {
+                        // add email item in list email
                         var listUser = '';
                         for (var i = 1; i < rows.length; i++)
                         {
@@ -1919,14 +1894,11 @@ module.exports =
             });
         });
     },
-    /*
-    phan quoc chien
-    phanquocchien.c1109g@gmail.com
-    list dortor
-     */
+    // listDoctorReport
+    // input:
+    // output: list doctor name
     listDoctorReport:function(req,res){
-        var sql=
-            "SELECT `NAME` FROM `doctors` ORDER BY `NAME` ASC";
+        var sql= "SELECT `NAME` FROM `doctors` ORDER BY `NAME` ASC";
 
         req.getConnection(function(err,connection)
         {
@@ -1950,10 +1922,11 @@ module.exports =
             });
         });
     },
+    // listLocationReport
+    // input: 
+    // output: list location name
     listLocationReport:function(req,res){
-        var sql=
-            "SELECT `Site_name` FROM `redimedsites` ORDER BY `Site_name` ASC";
-
+        var sql= "SELECT `Site_name` FROM `redimedsites` ORDER BY `Site_name` ASC";
         req.getConnection(function(err,connection)
         {
             var query = connection.query(sql,function(err,rows)
@@ -2109,20 +2082,23 @@ module.exports =
 
         });
     },
-    //phanquocchien.c1109g@gmail.com
+    // addApptPatient
+    // input: appt information
+    // output new appt
     addApptPatient:function(req,res){
         var userInfo=kiss.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
         var userId=kiss.checkData(userInfo.id)?userInfo.id:null;
         var patientId = kiss.checkData(req.body.Patient_id)?req.body.Patient_id:null;
         var calId = kiss.checkData(req.body.CAL_ID)?req.body.CAL_ID:null;
         var currentTime=kiss.getCurrentTimeStr();
-
+        // check value input 
         if (!kiss.checkListData(patientId,calId)) {
             kiss.exlog("addApptPatient","Loi data truyen den");
             res.json({status:'fail'});
             return
         };
         var sql = 'INSERT INTO `cln_appt_patients` SET ?';
+        // set input value of query
         var postData={
            Patient_id:patientId,
            CAL_ID:calId,
@@ -2130,6 +2106,7 @@ module.exports =
            Creation_date:currentTime,
            isEnable:1
         }
+        // new row in table cln_appt_patient
         req.getConnection(function(err,connection)
         {
             var query = connection.query(sql,[postData],function(err,data)

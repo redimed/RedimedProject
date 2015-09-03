@@ -2,20 +2,12 @@ var db = require('../models');
 var mdt_functions = require('../mdt-functions.js');
 
 module.exports = {
+    // rl_form_ams6_insert
+    // input: from ams6 information
+    // output: new from ams6
     rl_form_ams6_insert:function(req,res){
         console.log(req.body);
         var info = req.body.info;
-        // var userInfo=JSON.parse(req.cookies.userInfo.id);
-        // var date = moment().format('MMMM Do YYYY, h:mm:ss');
-        // var sql = mdt_functions.commonAdd("rl_form_ams6", info);
-
-        // db.sequelize.query(sql)
-        // .success(function(created){
-        //     res.json({status:'success'});
-        // })
-        // .error(function(error){
-        //     res.json({status:'error'});
-        // });
         db.FormAms6.create({
             BOOKING_ID : info.BOOKING_ID,
             WRK_NAME : info.WRK_NAME,
@@ -66,20 +58,12 @@ module.exports = {
                 console.log(err);
             })
     },
+    // rl_form_ams6_update
+    // input: from ams6 information 
+    // output: new from ams6 after update
     rl_form_ams6_update:function(req,res){
         console.log(req.body);
         var info = req.body.info;
-        // var userInfo=JSON.parse(req.cookies.userInfo.id);
-        // var date = moment().format('MMMM Do YYYY, h:mm:ss');
-        // var sql = mdt_functions.commonAdd("rl_form_ams6", info);
-
-        // db.sequelize.query(sql)
-        // .success(function(created){
-        //     res.json({status:'success'});
-        // })
-        // .error(function(error){
-        //     res.json({status:'error'});
-        // });
         db.FormAms6.update({
             BOOKING_ID : info.BOOKING_ID,
             WRK_NAME : info.WRK_NAME,
@@ -130,6 +114,9 @@ module.exports = {
                 console.log(err);
             })
     },
+    // get_booking_doctor_company
+    // input: booking information
+    // output: object booking information together with doctors and companies
     get_booking_doctor_company:function(req,res){
         var BOOKING_ID = req.query.BOOKING_ID;
         var sql=
@@ -167,6 +154,9 @@ module.exports = {
                 });
         });
     },
+    // select_Item_rl_form_ams6_bookingid
+    // input: booking information
+    // output: object from ams6
     select_Item_rl_form_ams6_bookingid: function(req,res){
         var BOOKING_ID = req.query.BOOKING_ID;
         console.log(BOOKING_ID);
@@ -194,6 +184,9 @@ module.exports = {
                 });
         });
     },
+    // select_Item_rl_form_ams5_bookingid
+    // input: booking information
+    // output: object from ams5
     select_Item_rl_form_ams5_bookingid: function(req,res){
         var BOOKING_ID = req.query.BOOKING_ID;
         console.log(BOOKING_ID);
@@ -221,20 +214,12 @@ module.exports = {
                 });
         });
     },
+    // rl_form_ams5_insert
+    // input: from ams5 information
+    // output: new from ams5
     rl_form_ams5_insert:function(req,res){
         console.log(req.body);
         var info = req.body.info;
-        // var userInfo=JSON.parse(req.cookies.userInfo.id);
-        // var date = moment().format('MMMM Do YYYY, h:mm:ss');
-        // var sql = mdt_functions.commonAdd("rl_form_ams6", info);
-
-        // db.sequelize.query(sql)
-        // .success(function(created){
-        //     res.json({status:'success'});
-        // })
-        // .error(function(error){
-        //     res.json({status:'error'});
-        // });
         db.FormAms5.create({
               BOOKING_ID : info.BOOKING_ID,
               WRK_NAME : info.WRK_NAME,
@@ -294,20 +279,12 @@ module.exports = {
                 console.log(err);
             })
     },
+    // rl_form_ams5_update
+    // input: from ams5 information
+    // output: new from ams5 after update
     rl_form_ams5_update:function(req,res){
         console.log(req.body);
         var info = req.body.info;
-        // var userInfo=JSON.parse(req.cookies.userInfo.id);
-        // var date = moment().format('MMMM Do YYYY, h:mm:ss');
-        // var sql = mdt_functions.commonAdd("rl_form_ams6", info);
-
-        // db.sequelize.query(sql)
-        // .success(function(created){
-        //     res.json({status:'success'});
-        // })
-        // .error(function(error){
-        //     res.json({status:'error'});
-        // });
         db.FormAms5.update({
               BOOKING_ID : info.BOOKING_ID,
               WRK_NAME : info.WRK_NAME,

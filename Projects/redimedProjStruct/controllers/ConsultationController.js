@@ -216,11 +216,9 @@ module.exports = {
                 res.json({status:'error',error:err})
             })
 	},
-
-    /*
-    *phanquocchien.c1109g@gmail.com
-    *update Measurements
-    */
+    // submitMeasurements
+    // input: measurement information
+    // output: new measurement
     submitMeasurements: function (req,res) {
         var info = req.body.info;
         var userInfo=kiss.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
@@ -267,16 +265,17 @@ module.exports = {
             Created_by:userId,
             Last_updated_by:userId
         };
+        // new row in table cln_patient_measurements
+        // using dupkey in mysql
         kiss.executeInsertIfDupKeyUpdate(req,'cln_patient_measurements',[insertRow],['!Creation_date','!Created_by'],function(data) {
             res.json({status:'success',data:data});
         },function (error) {
             res.json({status:'error',error:error});
         })
     },
-    /*
-    *phanquocchien.c1109g@gmail.com
-    *update Measurements
-    */
+    // submitMedication
+    // input: medication information
+    // output: new medication
     submitMedication: function (req,res) {
         var info = req.body.info;
         var userInfo=kiss.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
@@ -301,16 +300,17 @@ module.exports = {
             Created_by:userId,
             Last_updated_by:userId
         };
+        // new row in table cln_patient_medication_details
+        // using dupkey in mysql
         kiss.executeInsertIfDupKeyUpdate(req,'cln_patient_medication_details',[insertRow],['!Creation_date','!Created_by'],function(data) {
             res.json({status:'success',data:data});
         },function (error) {
             res.json({status:'error',error:error});
         })
     },
-     /*
-    *phanquocchien.c1109g@gmail.com
-    *set Is Enable Measurements
-    */
+    // setIsEnableMeasurements
+    // input: measurement information
+    // output: new measurement after update
     setIsEnableMeasurements: function (req,res) {
         var measure_id = req.body.measure_id;
         var isEnable = req.body.isEnable;
@@ -325,10 +325,9 @@ module.exports = {
             console.log(err);
         });
     },
-     /*
-    *phanquocchien.c1109g@gmail.com
-    *set Is Enable Measurements
-    */
+    // setIsEnableMedication
+    // input: medication information
+    // output: new medication after update
     setIsEnableMedication: function (req,res) {
         var id = req.body.id;
         var isEnable = req.body.isEnable;
@@ -343,10 +342,9 @@ module.exports = {
             console.log(err);
         });
     },
-    /*
-    *phanquocchien.c1109g@gmail.com
-    *submit consualtation
-    */
+    // submitConsult
+    // input: consult information
+    // output: new consult
     submitConsult: function(req,res){
         var info = req.body.info;
         var userInfo=kiss.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
@@ -638,13 +636,13 @@ module.exports = {
         },true);
 
     },
-    /**
-     * get list consultation of patient
-     * pahnquocchien.c1109g@gmail.com@gmail.com
-     */
+    // getListConsultOfPatient
+    // input: patient information
+    // output: list consult of patient
     getListConsultOfPatient:function(req,res)
     {
         var patientId=kiss.checkData(req.body.patient_id)?req.body.patient_id:'';
+        // check data input
         if(!kiss.checkListData(patientId))
         {
             kiss.exlog("getListConsultOfPatient Loi data truyen den");
@@ -662,7 +660,7 @@ module.exports = {
             " ON (consult.`patient_id` = dra.`patient_id` and consult.`cal_id` = dra.`cal_id`)                                                          "+
             " WHERE consult.`patient_id` = ?                                                                                                            "+
             " ORDER BY app.`FROM_TIME` DESC                                                                                                             ";
-
+        // select list consult of patient
         kiss.executeQuery(req,sql,patientId,function(rows){
             if(rows.length>0)
             {
@@ -676,9 +674,13 @@ module.exports = {
             res.json({status:'error',error:err})
         });
     },
+    // getListConsultOfPatientMobile
+    // input: patient information
+    // output: list consult of patient in mobile
     getListConsultOfPatientMobile:function(req,res)
     {
         var patientId=kiss.checkData(req.body.patient_id)?req.body.patient_id:'';
+        // check data input
         if(!kiss.checkListData(patientId))
         {
             kiss.exlog("getListConsultOfPatientMobile Loi data truyen den");
@@ -703,25 +705,29 @@ module.exports = {
             res.json({status:'error',error:err})
         })
     },
+    // getdetailHistoryAndDrawing
+    // input: consult information
+    // output: history consualt and list drawing
     getdetailHistoryAndDrawing:function(req,res)
     {
         var cal_id=kiss.checkData(req.body.cal_id)?req.body.cal_id:'';
         var patient_id=kiss.checkData(req.body.patient_id)?req.body.patient_id:'';
+        // check data input
         if(!kiss.checkListData(cal_id,patient_id))
         {
             kiss.exlog("getdetailHistoryAndDrawing Loi data truyen den");
             res.json({status:'fail'});
             return;
         }
-        var sql=
-            " SELECT * FROM `cln_patient_consults` WHERE `cal_id` = ? AND `patient_id` = ? "; 
+        // select consult of patient
+        var sql= " SELECT * FROM `cln_patient_consults` WHERE `cal_id` = ? AND `patient_id` = ? "; 
         var data = {};
         kiss.executeQuery(req,sql,[cal_id,patient_id],function(rows){
             if(rows.length>0)
             {
                 data.history = rows[0];
-                var sql2=
-                    " SELECT id FROM `cln_patient_drawings` WHERE `patient_id` = ? AND `cal_id` = ?"; 
+                // select list drawing
+                var sql2= " SELECT id FROM `cln_patient_drawings` WHERE `patient_id` = ? AND `cal_id` = ?"; 
                 kiss.executeQuery(req,sql2,[patient_id,cal_id],function(rows){
                     if(rows.length>0)
                     {
@@ -744,13 +750,13 @@ module.exports = {
             res.json({status:'error',error:err})
         });
     },
-    /*
-    * phanquocchien.c1109g@gmail.com
-    * check consultation
-    */
+    // checkConsultation
+    // input: consult information
+    // output: object consult
    checkConsultation:function(req,res){
         var patientId=kiss.checkData(req.body.patient_id)?req.body.patient_id:'';
         var calId=kiss.checkData(req.body.cal_id)?req.body.cal_id:'';
+        // check data input
         if(!kiss.checkListData(patientId,calId))
         {
             kiss.exlog("checkConsultation Loi data truyen den");
@@ -774,12 +780,12 @@ module.exports = {
             res.json({status:'error',error:err})
         })
    },
-   /*
-    * phanquocchien.c1109g@gmail.com
-    * list Measurements of patient
-    */
+   // getListMeasurements
+   // input: patient information
+   // output: list measurement of patient
    getListMeasurements:function(req,res){
         var patientId=kiss.checkData(req.body.patient_id)?req.body.patient_id:'';
+        // check data input
         if(!kiss.checkListData(patientId))
         {
             kiss.exlog("getListMeasurements Loi data truyen den");
@@ -798,13 +804,13 @@ module.exports = {
             res.json({status:'error',error:err})
         })
    },
-   /*
-    * phanquocchien.c1109g@gmail.com
-    * list Measurements of consualt
-    */
+   // getListMeasurementsOfConsualt
+   // intput: consult information
+   // output: list measurement of consult
    getListMeasurementsOfConsualt:function(req,res){
         var patientId=kiss.checkData(req.body.patient_id)?req.body.patient_id:'';
         var cal_id=kiss.checkData(req.body.cal_id)?req.body.cal_id:'';
+        // check data input
         if(!kiss.checkListData(patientId,cal_id))
         {
             kiss.exlog("getListMeasurementsOfConsualt Loi data truyen den");
@@ -823,10 +829,9 @@ module.exports = {
             res.json({status:'error',error:err})
         })
    },
-   /*
-    * phanquocchien.c1109g@gmail.com
-    * list Measurements of patient
-    */
+   // getListMedication
+   // input: medication information
+   // output: list medication
    getListMedication:function(req,res){
         var patientId=kiss.checkData(req.body.patient_id)?req.body.patient_id:'';
         if(!kiss.checkListData(patientId))
@@ -848,10 +853,9 @@ module.exports = {
             res.json({status:'error',error:err})
         })
    },
-   /*
-    * phanquocchien.c1109g@gmail.com
-    * list Measurements of consualt
-    */
+   // getListMedicationOfConsualt
+   // input: consult information
+   // output: list medication of consult
    getListMedicationOfConsualt:function(req,res){
         var patientId=kiss.checkData(req.body.patient_id)?req.body.patient_id:'';
         var cal_id=kiss.checkData(req.body.cal_id)?req.body.cal_id:'';
@@ -874,25 +878,19 @@ module.exports = {
             res.json({status:'error',error:err})
         })
    },
-    /*
-    * phanquocchien.c1109g@gmail.com
-    * get Img Drawing History
-    */
+    // getImgDrawingHistory
+    // input: consult information
+    // output: list image drawing of consult
     getImgDrawingHistory:function(req,res){
         var patientId=kiss.checkData(req.body.patient_id)?req.body.patient_id:'';
         var calId=kiss.checkData(req.body.cal_id)?req.body.cal_id:'';
+        // check data input
         if(!kiss.checkListData(patientId,calId))
         {
             kiss.exlog("getImgDrawingHistory Loi data truyen den");
             res.json({status:'fail'});
             return;
         }
-        // var sql=
-        //     " SELECT d.*, p.`cal_id`  FROM `cln_patient_drawings` d                      "+
-        //     " INNER JOIN `cln_patient_consults` p ON d.`consult_id` = p.`consult_id`     "+
-        //     " WHERE d.`patient_id` = ?                                                   "+
-        //     " AND p.`cal_id` = ?                                                         ";
-
         var sql = "SELECT d.* FROM `cln_patient_drawings` d WHERE d.`patient_id` = ? AND d.`cal_id` = ?";
         kiss.executeQuery(req,sql,[patientId,calId],function(rows){
             if(rows.length>0)
@@ -907,13 +905,13 @@ module.exports = {
             res.json({status:'error',error:err})
         });
     },
-    /*
-    * phanquocchien.c1109g@gmail.com
-    * get document theo patient_id and cal_id
-    */
+    // getDocumentFileOfPatientidAndCalid
+    // input: consult information
+    // output: list doccument file of consult
     getDocumentFileOfPatientidAndCalid:function(req,res){
         var patientId=kiss.checkData(req.body.patient_id)?req.body.patient_id:'';
         var calId=kiss.checkData(req.body.cal_id)?req.body.cal_id:'';
+        // check data input
         if(!kiss.checkListData(patientId,calId))
         {
             kiss.exlog("getDocumentFileOfPatientidAndCalid Loi data truyen den");
@@ -937,6 +935,9 @@ module.exports = {
             res.json({status:'error',error:err})
         });
     },
+    // drawingImageById
+    // input: image information
+    // output: url image
     drawingImageById: function(req,res) {
         var imageId = req.param('imageId');
         if(!kiss.checkListData(imageId))

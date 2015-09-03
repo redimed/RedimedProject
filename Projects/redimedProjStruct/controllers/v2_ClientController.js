@@ -345,6 +345,10 @@ module.exports = {
 			res.json(500, {status: 'error', error: error});
 		});
     },
+    // postCheckPatientInfo
+    // input: patient information
+    // output: patient detail
+    // phanquocchien.c1109g@gmail.com
     postCheckPatientInfo : function(req,res){
     	var First_name=kiss.checkData(req.body.First_name)?req.body.First_name:'';
         var Sur_name=kiss.checkData(req.body.Sur_name)?req.body.Sur_name:'';

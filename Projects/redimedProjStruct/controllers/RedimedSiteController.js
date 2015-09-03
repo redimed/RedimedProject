@@ -47,12 +47,14 @@ module.exports = {
             })
 
     },
-    //phanquocchien.c1109g@gmail.com
-    //get list service 
+    // rlobListMobile
+    // input: redimedsite information
+    // output: list redimedstie in date
     rlobListMobile:function(req,res)
     {
         var date=kiss.checkData(req.body.date)?moment(req.body.date).format("YYYY-MM-DD"):'';
         var serviceId=kiss.checkData(req.body.serviceId)?req.body.serviceId:'';
+        // check data input
         if(!kiss.checkListData(date))
         {
             kiss.exlog("rlobListMobile","Loi data truyen den");
@@ -86,8 +88,9 @@ module.exports = {
         });
 
     },
-    //phanquocchien.c1109g@gmail.com
-    //get list location not service 
+    // rlobListMobile
+    // input: redimedsite information
+    // output: list redimedstie not service in date
     rlobListLocationNotService:function(req,res)
     {
         var date=kiss.checkData(req.body.date)?moment(req.body.date).format("YYYY-MM-DD"):'';

@@ -947,11 +947,14 @@ module.exports = {
             });
         });
     },
-    // ben chien
+    // insertPatientCompanies
+    // input: patient_company information
+    // output: new patient_company
     insertPatientCompanies:function(req,res){
         var company_id=kiss.checkData(req.body.company_id)?req.body.company_id:null;
         var patient_id=kiss.checkData(req.body.patient_id)?req.body.patient_id:null;
         var currentDate=moment().format("YYYY/MM/DD HH:mm:ss");
+        // check data input
         if(!kiss.checkListData(company_id,patient_id))
         {
             kiss.exlog('insertPatientCompanies',"Loi data truyen den");
@@ -964,6 +967,7 @@ module.exports = {
             isEnable:1,
             Creation_date:currentDate
         }
+        // new row in table patient_companies
         var sql="INSERT INTO `patient_companies` SET ?";
         req.getConnection(function(err,connection)
         {

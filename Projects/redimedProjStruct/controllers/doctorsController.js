@@ -789,12 +789,13 @@ module.exports =
             });
         });
     },
-
-    //phanquocchien.c1109g@gmail.com
-    // get doctor not service
+    // getDoctorForSourceTypeNotServiceMobile
+    // input: date
+    // output: list doctor not service in date of web
     getDoctorForSourceTypeNotServiceMobile:function(req,res)
     {
         var date=kiss.checkData(req.body.date)?moment(req.body.date).format("YYYY-MM-DD"):'';
+        // check data input
         if(!kiss.checkListData(date))
         {
             kiss.exlog("getDoctorForSourceTypeMobile","Loi data truyen den");
@@ -826,12 +827,14 @@ module.exports =
             });
         });
     },
-    //phanquocchien.c1109g@gmail.com
-    // get doctor calendar
+    // getDoctorForSourceTypeNotServiceMobile
+    // input: date
+    // output: list doctor in date 
     getDoctorForSourceTypeMobile:function(req,res)
     {
         var date=kiss.checkData(req.body.date)?moment(req.body.date).format("YYYY-MM-DD"):'';
         var serviceId=kiss.checkData(req.body.serviceId)?req.body.serviceId:'';
+        // check data input
         if(!kiss.checkListData(date))
         {
             kiss.exlog("getDoctorForSourceTypeMobile","Loi data truyen den");
