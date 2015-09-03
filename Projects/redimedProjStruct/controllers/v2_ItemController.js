@@ -547,7 +547,14 @@ module.exports = {
 
 	
 	/**
-     * tannv.dts@gmail.com
+     * với item id truyền đến ta lấy được các thông tin liên quan đến item như:
+     * feeGroup, các fee type của từng fee group, các fee item của từng fee type
+     * input:
+     * +postData: itemId
+     * output:
+     * +if fail return fail status
+     * +if success return success status+
+     * 					data: chứa thông tin tổng hợp cho một item: danh sách feeGroup, danh sách feeType, các item fee hiện có của item
      */
     postGetItemFeeList:function(req,res)
     {
@@ -562,7 +569,9 @@ module.exports = {
             res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN001')});
             return;
         }
-        
+        //t1: Lấy ra danh sách fee group và fee type tương ứng của group đó
+        //t2: lấy ra thông tin fee type và fee item của một item
+        //result: với item id truyền đến ta lấy được: feeGroup, các fee type của từng fee group, các fee item của từng fee type
         var sql=
 			"  SELECT t1.FEE_GROUP_ID, t1.FEE_GROUP_NAME, t1.FEE_GROUP_TYPE,                                        "+
 			"  t1.FEE_TYPE_ID, t1.FEE_TYPE_NAME,t2.ITEM_FEE_ID, t2.CLN_ITEM_ID,                                     "+

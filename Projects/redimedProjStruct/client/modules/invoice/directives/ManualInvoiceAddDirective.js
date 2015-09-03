@@ -37,6 +37,7 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 			$scope.InvoiceMap = {
 				lines:[]
 			}
+			//khi đã có id patient thì lấy thông tin patient lên làm mặc định cho tạo invoice
 			if($scope.patientid){
 				$scope.patientTest = true;
 				var postDataPatient={
@@ -47,10 +48,11 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 					$scope.patientName = response.data[0].First_name + ' ' + response.data[0].Sur_name;
 				})
 			}
-			/*
-				DManh Create
-			*/
-			$scope.patientSearch = {//When Click Patient Search
+			
+			/**
+			 * patientSearch: object chứ các attribute và function liên quan đến việc select patient hoặc add patient để đưa vào invoice
+			 */
+			$scope.patientSearch = {
 				open: function() {
 					$modal.open({
 						templateUrl: 'popupPatientSearch',
@@ -59,9 +61,12 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 							$scope.cancel=function(){
                                 $modalInstance.dismiss('cancel');
                             }
+                            //xu ly khi chọn patient trong danh sách
 							$scope.rowClick = function(item){
 								$modalInstance.close(item);
 							}
+
+							//datatable search patients
 							$scope.patients = {
 									select:0,
 									class:function(patient){
@@ -86,8 +91,10 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 						                	Address1: {type: 'text'},
 						                	Post_code: {type: 'text'}
 						                	}
-										}
+									}
 							}
+
+							//tạo thêm thông tin patient
 							$scope.showAddPatient = function(){
 
 			                    var modalInstance=$modal.open({
@@ -128,6 +135,7 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 			                        },
 			                        size:'lg'
 			                    })
+								//xu ly khi ket thuc viec tao patient
 			                    .result.then(function(response){
 			                    	if (response.status == 'success') {
 			                    		$modalInstance.close(response.data);
@@ -143,6 +151,7 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 			                }
 			            }
 					})
+					// xử lý khi đã chọn được patient
 					.result.then(function(data){ 
 						$scope.patientName = data.First_name + ' ' + data.Sur_name;
 						$scope.patient = data;
@@ -150,21 +159,25 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 					})
 				}
 			}
-			/*
-				DManh Create
-			*/
-			$scope.insurerSearch = {//When Select Insurer From List Insurer
+
+			/**
+			 * object được dùng để xử lý chọn thông tin insurer để đưa vào invoice
+			 */
+			$scope.insurerSearch = {
 				open: function() {
 					$scope.claim = null;
+					// mở dialog chọn insurer
 					$modal.open({
 						templateUrl: 'popupInsurerSearch',
 						controller: function($scope, $modalInstance,ConfigService){
 							$scope.cancel=function(){
                                 $modalInstance.dismiss('cancel');
                             }
+                            // xử lý khi click chọn 1 insurer trong danh sách
 							$scope.rowClick = function(item){
 								$modalInstance.close(item);
 							}
+							//mydatatable data dùng để lấy danh sách insurer
 							$scope.insurer = {
 									select:0,
 									class:function(insurer){
@@ -201,10 +214,11 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 					})
 				}
 			}
-			/*
-				DManh Create
-			*/
-			$scope.claimSearch = {//When Cick Button Search Claim
+			
+			/**
+			 * object dùng để xử lý chọn claim cho invoice
+			 */
+			$scope.claimSearch = {
 				open: function() {
 					$modal.open({
 						templateUrl: 'popupClaimSearchInsurer',
@@ -234,7 +248,7 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 								})
 							}
 							$scope.load();
-							$scope.showAddClaim = function(){//Add New Claim
+							$scope.showAddClaim = function(){
 			                    var modalInstance=$modal.open({
 			                        templateUrl:'popupAddClaim',
 			                        controller:function($scope,$modalInstance,insurers,patientData){
@@ -285,9 +299,10 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 					})
 				}
 			}
-			/*
-				DManh Create
-			*/
+			
+			/**
+			 * feeGroupTypeChange: xử lý khi thay đổi group fee type
+			 */
 			$scope.feeGroupTypeChange = function(value){// When Choose Bill To
 				$scope.feeGroupChange('');
 				$scope.modelObjectMap.FEE_GROUP_TYPE = value;
@@ -295,13 +310,13 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 				$scope.feeTypes = null;
 				InvoiceService.getFeeGroupByType(value).then(function(response){
 					$scope.feeGroupID = response.data;
-
 				})
 			}
-			/*
-				DManh Create
-			*/
-			$scope.feeGroupChange = function(value){//When Change Group Name
+			
+			/**
+			 * feeGroupChange: xử lý khi thay đổi group fee
+			 */
+			$scope.feeGroupChange = function(value){
 				$scope.feeTypeChange('');
 				$scope.InvoiceMap.lines = [];
 				$scope.modelObjectMap.FEE_TYPE_ID=null;
@@ -323,15 +338,17 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 					$scope.feeTypeID = response.data;
 				})
 			}
-			/*
-				DManh Create
-			*/
-			$scope.feeTypeChange = function(value){//When CHoose Fee Type
+			
+			/**
+			 * feeTypeChange: xử lý khi thay đổi fee Type
+			 */
+			$scope.feeTypeChange = function(value){
 				$scope.InvoiceMap.lines = [];
 			}
-			/*
-				DManh Create
-			*/
+			
+			/**
+			 * object dùng để xử lý chọn item cho invoice
+			 */
 			$scope.itemSearch = {
 				open: function() {
 					$modal.open({
@@ -410,18 +427,22 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 								checkExit ++;
 							}
 						};
+						//phân tách formula
+						//ví dụ 100:75:50 phân tách thành mảng [100,75,50]
 						$scope.FORMULACal= $scope.FORMULA.split(":");
 						if (checkExit == 0) {
 							$scope.ArrayInv_ITEM.ITEM_FEE_ID = data.ITEM_FEE_ID;
 							$scope.ArrayInv_ITEM.FEE = data.FEE;
-
 							data.ITEM_NAME = data.ITEM_NAME.substring(0, 50);
 							// data.PRICE = data.FEE;
 							data.QUANTITY = 1;
 							data.TIME_SPENT = 0;
 							data.IS_ENABLE = 1;
 							$scope.InvoiceMap.lines.push(data);
-							function sortLine(a,b){//Sort Array by FEE
+
+							//sort by fee desc
+							//áp dụng hàm sort của javascript
+							function sortLine(a,b){
 								if(a.FEE<b.FEE)
 									return 1;
 								else if(a.FEE>b.FEE)
@@ -448,10 +469,11 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 					})
 				}
 			}
-			/*
-				DManh Create
-			*/
-			$scope.amountAll = function() {//cal amount = price * quantity
+
+			/**
+			 * amountAll: tính tổng amount chưa thuế của invoice
+			 */
+			$scope.amountAll = function() {//cal amount=price * quantity
 				var amount = 0;
 				for(var i = 0, len = $scope.InvoiceMap.lines.length; i < len; ++i) {
 		 			var line = $scope.InvoiceMap.lines[i];
@@ -461,9 +483,10 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 
 		 		return Math.round(amount * 100) / 100;
 			}
-			/*
-				DManh Create
-			*/
+			
+			/**
+			 * taxAmountAll: tính tổng tax amount của invoice
+			 */
 			$scope.taxAmountAll = function() {//cal amount_tax = price * quantity + tax_rate
 				var amount = 0;
 				for(var i = 0, len = $scope.InvoiceMap.lines.length; i < len; ++i) {
@@ -474,9 +497,10 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 
 		 		return Math.round(amount * 100) / 100;
 			}
-			/*
-				DManh Create
-			*/
+			
+			/**
+			 * totalAmount: tổng tiền sau thuế của invoice
+			 */
 			$scope.totalAmount = function() {// cal totalAmount = amount * amount_tax
 				var amount = 0;
 				for(var i = 0, len = $scope.InvoiceMap.lines.length; i < len; ++i) {
@@ -487,23 +511,25 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 
 		 		return Math.round(amount * 100) / 100;
 			}
-			/*
-				DManh Create
-			*/
+			
+			/**
+			 * Hàm xử lý save invoice: nếu invoice chưa tồn tại thì add, nếu invoice đã tồn tại thì edit
+			 */
 			$scope.save = function() {
 				$scope.isSubmit = true;
                 if (!$scope.mainForm.$invalid) {
+                	// neu FEE_GROUP_TYPE=private_fund thì source_id lấy theo insurer
+                	// ngược lại source_id lấy theo FEE_GROUP
                 	if ($scope.modelObjectMap.FEE_GROUP_TYPE == 'private_fund') {//IS Private Fund
-					postData = {
-						Patient_id:$scope.patient.Patient_id,
-						SOURCE_TYPE:$scope.modelObjectMap.FEE_GROUP_TYPE,
-						SOURCE_ID:$scope.insurers.FEE_GROUP_ID,
-						FEE_TYPE:$scope.modelObjectMap.FEE_TYPE_ID,
-						FORMULA:$scope.FORMULA,
-						Insurer_id:$scope.insurers.id,
-						listLines:$scope.InvoiceMap.lines,
-						claim_id:$scope.claim.Claim_id
-
+						postData = {
+							Patient_id:$scope.patient.Patient_id,
+							SOURCE_TYPE:$scope.modelObjectMap.FEE_GROUP_TYPE,
+							SOURCE_ID:$scope.insurers.FEE_GROUP_ID,
+							FEE_TYPE:$scope.modelObjectMap.FEE_TYPE_ID,
+							FORMULA:$scope.FORMULA,
+							Insurer_id:$scope.insurers.id,
+							listLines:$scope.InvoiceMap.lines,
+							claim_id:$scope.claim.Claim_id
 						}
 					}else{//Is Not Private Fund
 						postData = {
@@ -515,6 +541,7 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 							listLines:$scope.InvoiceMap.lines
 						}
 					};
+
 					if ($scope.checkedit !== true) {// Is Edit Form
 						postData.CREATION_DATE = moment().format('YYYY-MM-DD HH:mm:ss');
 						postData.LAST_UPDATE_DATE = moment().format('YYYY-MM-DD HH:mm:ss');
@@ -537,9 +564,10 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 					
                 }
 			}
-			/*
-				DManh Create
-			*/
+
+			/**
+			 * removeInvoiceLine: xóa invoice line ra khỏi model trên giao diện, chưa xóa xuống database
+			 */
 			$scope.removeInvoiceLine = function(item){
 				for (var i = 0; i < $scope.InvoiceMap.lines.length; i++) {
 					if ($scope.InvoiceMap.lines[i].ITEM_ID == item.ITEM_ID) {
@@ -547,10 +575,14 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 					};
 				};
 			}
-			$scope.resetEdit = function(){//Button Reset Form Edit 
+
+			//resetEdit: dùng để phục hồi lại invoice info
+			//trường hợp sử dụng: user thay đổi invoice info nhưng chưa nhấn nút save
+			$scope.resetEdit = function(){
 				var postData = {
 					header_id : $scope.headerdata.header_id
 				}
+
 				InvoiceService.getOnemanual(postData).then(function(response){//Get Manual by Id
 					$scope.patientName = response.data[0].First_name +''+ response.data[0].Sur_name ;
 					$scope.patient = {
@@ -561,6 +593,8 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 					$scope.feeGroupChange(response.data[0].groupFEE_GROUP_ID);
 					$scope.modelObjectMap.FEE_TYPE_ID = response.data[0].typesFEE_TYPE_ID;
 					$scope.InvoiceMap.lines = response.dataline;
+
+					//xử lý sắp xếp giảm dần
 					function sortLine(a,b){
 						if(a.FEE<b.FEE)
 							return 1;
@@ -576,7 +610,10 @@ angular.module('app.loggedIn.invoice.addMaunalInvoice.directive', [])
 					else{
 						$scope.FORMULA 	  = "100";
 					}
+					//phân tách formula
+					//ví dụ : 100:75:50 sẽ phân tách thành mảng [100,75,50]
 					$scope.FORMULACal = response.data[0].FORMULA.split(":");
+					//sắp xếp các line theo FEE giảm dần
 					$scope.InvoiceMap.lines.sort(sortLine);
 					for(var i=0;i<$scope.InvoiceMap.lines.length;i++){
 						if($scope.FORMULACal[i]){

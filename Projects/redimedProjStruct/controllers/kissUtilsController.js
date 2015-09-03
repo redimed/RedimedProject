@@ -1,6 +1,7 @@
 /**
- * tannv.dts@gmail.com
- * 5-3-2015
+ * author: tannv.dts@gmail.com
+ * create date: 5-3-2015
+ * lasted update date: 31-08-2015
  */
 
 var moment=require('moment');

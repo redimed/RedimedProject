@@ -771,7 +771,7 @@ module.exports =
             " FROM  doctors doctor INNER JOIN doctor_specialities doctorSpec ON doctor.`doctor_id`=doctorSpec.`doctor_id`   "+
             "  INNER JOIN `cln_specialties` spec ON spec.`Specialties_id`=doctorSpec.`Specialties_id`                      "+
             "  INNER JOIN `rl_types` rltype ON rltype.`RL_TYPE_ID`=spec.`RL_TYPE_ID`                                       "+
-            " WHERE  rltype.`SOURCE_TYPE` like ?                                                                             ";
+            " WHERE  rltype.`SOURCE_TYPE` like ?  and doctor.Isenable=1                                                                           ";
         req.getConnection(function(err,connection)
         {
 

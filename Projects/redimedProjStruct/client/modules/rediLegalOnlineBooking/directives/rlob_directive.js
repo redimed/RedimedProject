@@ -615,10 +615,9 @@ angular.module("app.loggedIn.rlob.directive", ['app.calendar.mobile.controller']
                 //Lay thong tin user login
                 $scope.loginInfo = $cookieStore.get('userInfo');
 
-                //Config Send mail template
+
                 /***
-                 * Config email template
-                 * tannv.dts@gmail.com
+                 * updateMailtoLink: update email template, customer will send to redilegal to booking appointment                 
                  */
                 $scope.updateMailtoLink=function()
                 {
@@ -666,11 +665,13 @@ angular.module("app.loggedIn.rlob.directive", ['app.calendar.mobile.controller']
 
                     if($scope.bookingType=='REDiLEGAL')
                     {
+                        //create email template link (run outlook..  when click)
                         $scope.mailtoLink = Mailto.url($scope.mailTemplate.REDiLEGAL.recepient, $scope.mailTemplate.REDiLEGAL.options);
                     
                     }
                     else if($scope.bookingType=='Vaccination')
                     {
+                        //create email template link (run outlook..  when click)
                         $scope.mailtoLink = Mailto.url($scope.mailTemplate.Vaccination.recepient, $scope.mailTemplate.Vaccination.options);
                     
                     }
@@ -943,7 +944,12 @@ angular.module("app.loggedIn.rlob.directive", ['app.calendar.mobile.controller']
                         }
                     })    
                 }
-                //Get Appoiment Calendar
+
+                /**
+                 * updateAppoinmentsList:   get appoiwntments list which have been filterd by: location, rlType, Specialty,
+                 *                          doctor and date
+                 * 
+                 */
                 $scope.updateAppoinmentsList=function()
                 {
                     
@@ -955,6 +961,7 @@ angular.module("app.loggedIn.rlob.directive", ['app.calendar.mobile.controller']
                     
                     $scope.getListDateAppoinment(rlTypeId,specialtyName,doctorId,locationId,$scope.selectedFilter.var1);
 
+                    //api taken appointments list in filter
                     $http({
                         method:"GET",
                         url:"/api/rlob/appointment-calendar/get-appointment-calendar" ,
@@ -966,6 +973,7 @@ angular.module("app.loggedIn.rlob.directive", ['app.calendar.mobile.controller']
 
                         for(var i=0;i<data.length;i++)
                         {
+                            //preprocessing: group appointments list by rlType
                             if(!temp[data[i].RL_TYPE_ID])
                             {
                                 temp[data[i].RL_TYPE_ID]={DOCTOR_ITEMS:[]};
@@ -975,6 +983,7 @@ angular.module("app.loggedIn.rlob.directive", ['app.calendar.mobile.controller']
                                 });
                             }
 
+                            //preprocessing: group appointments list by doctor
                             if(!temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID])
                             {
                                 temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID]={LOCATION_ITEMS:[]};
@@ -984,6 +993,7 @@ angular.module("app.loggedIn.rlob.directive", ['app.calendar.mobile.controller']
                                 });
                             }
 
+                            //preprocessing: group appointments list by location
                             if(!temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID][data[i].SITE_ID])
                             {
                                 temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID][data[i].SITE_ID]={APPOINTMENT_ITEMS:[]};
@@ -993,6 +1003,7 @@ angular.module("app.loggedIn.rlob.directive", ['app.calendar.mobile.controller']
                                 });
                             }
 
+                            //preprocessing: group appointments list by calendarId
                             if(!temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID][data[i].SITE_ID][data[i].CAL_ID])
                             {
                                 temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID][data[i].SITE_ID][data[i].CAL_ID]={SPEC_ITEMS:[]};
@@ -1006,6 +1017,7 @@ angular.module("app.loggedIn.rlob.directive", ['app.calendar.mobile.controller']
                                 });
                             }
 
+                            //preprocessing: group appointments calendar by doctor specialty
                             if(!temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID][data[i].SITE_ID][data[i].CAL_ID][data[i].Specialties_id])
                             {
                                 temp[data[i].RL_TYPE_ID][data[i].DOCTOR_ID][data[i].SITE_ID][data[i].CAL_ID][data[i].Specialties_id]={};
@@ -1017,11 +1029,12 @@ angular.module("app.loggedIn.rlob.directive", ['app.calendar.mobile.controller']
 
                         }
                         var arr=[];
+                        //get rlType list
                         for (var i=0;i<temp.TYPE_ITEMS.length;i++)
                         {
                             var type_item=temp.TYPE_ITEMS[i];
                             type_item.DOCTOR_ITEMS=[];
-
+                            //get doctor list for rlType Item
                             for(var j=0;j<temp[type_item.RL_TYPE_ID].DOCTOR_ITEMS.length;j++)
                             {
                                 var doctor_item=temp[type_item.RL_TYPE_ID].DOCTOR_ITEMS[j];
@@ -1029,16 +1042,19 @@ angular.module("app.loggedIn.rlob.directive", ['app.calendar.mobile.controller']
                                 doctor_item.SPECS_STR="";
                                 doctor_item.LOCATION_ITEMS=[];
                                 type_item.DOCTOR_ITEMS.push(doctor_item);
+                                //get location list for doctor item
                                 for(var q=0;q<temp[type_item.RL_TYPE_ID][doctor_item.DOCTOR_ID].LOCATION_ITEMS.length;q++)
                                 {
                                     var location_item=temp[type_item.RL_TYPE_ID][doctor_item.DOCTOR_ID].LOCATION_ITEMS[q];
                                     location_item.APPOINTMENT_ITEMS=[];
                                     doctor_item.LOCATION_ITEMS.push(location_item);
+                                    //get appointment list for location item
                                     for(var k=0;k<temp[type_item.RL_TYPE_ID][doctor_item.DOCTOR_ID][location_item.SITE_ID].APPOINTMENT_ITEMS.length;k++)
                                     {
                                         var appointment_item=temp[type_item.RL_TYPE_ID][doctor_item.DOCTOR_ID][location_item.SITE_ID].APPOINTMENT_ITEMS[k];
                                         appointment_item.SPEC_ITEMS=[];
                                         location_item.APPOINTMENT_ITEMS.push(appointment_item);
+                                        //get specialty list for appointment item
                                         for(var l=0;l<temp[type_item.RL_TYPE_ID][doctor_item.DOCTOR_ID][location_item.SITE_ID][appointment_item.CAL_ID].SPEC_ITEMS.length;l++)
                                         {
                                             var spec_item=temp[type_item.RL_TYPE_ID][doctor_item.DOCTOR_ID][location_item.SITE_ID][appointment_item.CAL_ID].SPEC_ITEMS[l];
@@ -1046,46 +1062,16 @@ angular.module("app.loggedIn.rlob.directive", ['app.calendar.mobile.controller']
                                             {
                                                 doctor_item.SPECS[spec_item.Specialties_name]=spec_item.Specialties_name;
                                                 doctor_item.SPECS_STR=doctor_item.SPECS_STR+spec_item.Specialties_name+'; ';
-                                            }
-                                            
-                                            // exlog.log(appointment_item);
+                                            }                                          
                                             appointment_item.SPEC_ITEMS.push(spec_item);
                                         }
                                     }
                                 }
-                            }
-
-                            /*for(var j=0;j<temp[type_item.RL_TYPE_ID].SPEC_ITEMS.length;j++)
-                            {
-                                var spec_item=temp[type_item.RL_TYPE_ID].SPEC_ITEMS[j];
-                                spec_item.DOCTOR_ITEMS=[];
-                                type_item.SPEC_ITEMS.push(spec_item);
-
-                                for(var q=0;q<temp[type_item.RL_TYPE_ID][spec_item.Specialties_id].DOCTOR_ITEMS.length;q++)
-                                {
-                                    var doctor_item=temp[type_item.RL_TYPE_ID][spec_item.Specialties_id].DOCTOR_ITEMS[q];
-                                    doctor_item.LOCATION_ITEMS=[];
-                                    spec_item.DOCTOR_ITEMS.push(doctor_item);
-
-                                    for(var k=0;k<temp[type_item.RL_TYPE_ID][spec_item.Specialties_id][doctor_item.DOCTOR_ID].LOCATION_ITEMS.length;k++)
-                                    {
-                                        var location_item=temp[type_item.RL_TYPE_ID][spec_item.Specialties_id][doctor_item.DOCTOR_ID].LOCATION_ITEMS[k];
-                                        location_item.APPOINTMENT_ITEMS=[];
-                                        doctor_item.LOCATION_ITEMS.push(location_item);
-
-                                        for(var l=0;l<temp[type_item.RL_TYPE_ID][spec_item.Specialties_id][doctor_item.DOCTOR_ID][location_item.SITE_ID].APPOINTMENT_ITEMS.length;l++)
-                                        {
-                                            var appointment_item=temp[type_item.RL_TYPE_ID][spec_item.Specialties_id][doctor_item.DOCTOR_ID][location_item.SITE_ID].APPOINTMENT_ITEMS[l];
-                                            location_item.APPOINTMENT_ITEMS.push(appointment_item);
-                                        }
-                                    }
-                                }
-                            }*/    
+                            }                            
                             arr.push(type_item);
                         }
+                        //export appointment group view
                         $scope.appointmentsFilter=arr;
-                        // exlog.log($scope.appointmentsFilter);
-                        // exlog.log(temp);
                         
                     })
                     .error(function (data) {

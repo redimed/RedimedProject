@@ -10,10 +10,8 @@ var errorCode=require('./errorCode');// tan add
 var controllerCode="RED_RLOB_CORE";
 
 /**
- * Xu ly cap nhat lai appointment fromTime va toTime
- * day la function con, la mot function chay trong 1 function beginTransaction truoc do
- * function nay khong the chay truc tiep ma phai duoc nam trong function beginTransaction
- * tannv.dts@gmail.com
+ * saveBookingInfo: save bookingInfo, patientInfo, claimInfo, cln_appt_patients. Update cln_appointment_calendar
+ * used only in case: this function is called by other function and this function must be called in beginTransaction(open database transaction)
  */
 var saveBookingInfo=function(req,res)
 {
@@ -21,8 +19,9 @@ var saveBookingInfo=function(req,res)
 	var functionCode="FN002";
 	var userInfo=kiss.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
     var userId=kiss.checkData(userInfo.id)?userInfo.id:null;
-
+    //bookingInfo have sent from client
 	var bookingInfo=kiss.checkData(req.body.bookingInfo)?req.body.bookingInfo:{};
+	//patientInfo to save to cln_patients
     var patientInfo={
     	Sur_name:bookingInfo.WRK_SURNAME,
     	First_name:bookingInfo.WRK_OTHERNAMES,
@@ -30,7 +29,7 @@ var saveBookingInfo=function(req,res)
     	Email:bookingInfo.WRK_EMAIL,
     	Mobile:bookingInfo.WRK_CONTACT_NO
     }
-
+    //claimInfo to save to cln_claims
     var claimInfo={
     	Claim_no :bookingInfo.CLAIM_NO,
         Injury_name : 'No Description'
@@ -39,12 +38,12 @@ var saveBookingInfo=function(req,res)
     var currentTime=kiss.getCurrentTimeStr();
 
     var sql="INSERT INTO `cln_patients` SET ?";
-
     kiss.executeQuery(req,sql,[patientInfo],function(result){
     	var patientId=result.insertId;
     	claimInfo.Patient_id = patientId;
     	var sql="INSERT INTO `cln_claims` SET ?";
     	kiss.executeQuery(req,sql,[claimInfo],function(result){
+    		//check patient have not yet booked this appointment calendar
     		var sql="SELECT ap.id FROM `cln_appt_patients` ap WHERE ap.`Patient_id`=? AND ap.`CAL_ID`=?";
     		kiss.executeQuery(req,sql,[patientId,claimInfo.Claim_no],function(data){
     			if(data.length>0)
@@ -76,6 +75,7 @@ var saveBookingInfo=function(req,res)
 	                            kiss.executeQuery(req,sql,[appointmentUpdateInfo,bookingInfo.CAL_ID],function(result){
 	                            	if(result.affectedRows>0)
 	                            	{
+	                            		//insertBookingInfo: bookingInfo to save to rl_bookings
 	                            		var insertBookingInfo={
 								            BOOKING_ID:bookingInfo.BOOKING_ID,
 								            BOOKING_DATE:bookingInfo.BOOKING_DATE,
@@ -122,11 +122,13 @@ var saveBookingInfo=function(req,res)
 								        	var sql="UPDATE `cln_appointment_calendar` SET ? WHERE `CAL_ID`=?";
 								        	var appointmentUpdateStatus={
 								        		NOTES:rlobUtil.sourceType.REDiLEGAL,
-								        		STATUS:rlobUtil.calendarStatus.booked
+								        		STATUS:rlobUtil.calendarStatus.booked //set appointment calendar have been booked
 								        	}
 								        	kiss.executeQuery(req,sql,[appointmentUpdateStatus,bookingInfo.CAL_ID],function(result){
 								        		if(result.affectedRows>0)
 								        		{
+								        			//transaction commit
+								        			//return status success if commit success
 								        			kiss.commit(req,function(){
 										        		res.json({status:'success'});
 				                    				},function(err)
@@ -349,8 +351,15 @@ var changeBookingCalendar=function(req,res)
 }
 
 /**
- * xu ly dieu chinh fromtime va to time cua cac appointment calendar phia sau
- * tannv.dts@gmail.com
+ * 
+ * xử lý điều chỉnh fromtime va totime của các appointment calendar sau thời điểm appointment calendar hiện tại.
+ * Vì các appointment calendar ban đầu được tạo ra với khoản thời gian của 1 slot là 30phút, 
+ * tuy nhiên có các booking thời gian khám tới 45 phút, cho nên nếu một slot được dùng để booking 45phút, 
+ * thì các slot phía sau phải dịch chuyển thời gian
+ * -input: 
+ * + handlePeriodInfo: doctorId, siteId, selectedAppFromTime, rlTypeId, oldCalId
+ * + functionNext: run when this function finish
+ * -output: if error->return fail status, if success-> call functionNext()
  */
 var handlePeriodTimeAppointmentCalendar=function(req,res,functionNext)	
 {
@@ -380,12 +389,11 @@ var handlePeriodTimeAppointmentCalendar=function(req,res,functionNext)
 		res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'TN002')});
 		return;
 	}
-	//Thoi gian can thiet 
+	//lấy ra khoảng thời gian cần thiết cho một phiên khám bệnh tương ứng với rlType
 	var periodRequire=rlobUtil.periodTimeOfRlType[rlTypeId].value;
-	//service REDiLEGAL id=7
 	var serviceId = rlobUtil.redilegalServiceId;
-	//Lay danh cac session, ke tu selectedSession, cac session nay phai thuoc redilegal
-	//phai con trong va phai co periodTime>0 tuc la con thoi gian. 
+	//lấy ra danh sách các slot, kể từ selectedSlot, các slot này phải thuộc redilegal
+	//các slot phải còn trống và phải có khoảng thời gian đủ cho 1 phiên khám bệnh ngắn nhất
 	var sql=
 		" SELECT calendar.*,MINUTE(TIMEDIFF(calendar.`TO_TIME`,calendar.`FROM_TIME`)) AS `PERIOD_TIME`   "+
 		" FROM `cln_appointment_calendar` calendar                                                       "+
@@ -401,11 +409,11 @@ var handlePeriodTimeAppointmentCalendar=function(req,res,functionNext)
 		kiss.executeQuery(req,sql,[doctorId,siteId,selectedDate,selectedAppFromTime,oldCalId,serviceId],function(data){
 			if(data.length>0)
 			{
-				//selectedItem, day chinh la session duoc chon de booking
+				//selectedItem, day chinh la slot duoc chon de booking
 				var selectedItem=data[0];
-				//khoang thoi gian cua selectedSession
+				//khoản thời gian của phiên khám bệnh trong selectedItem
 	            var selectedItemPeriodTime=moment(new Date(selectedItem.TO_TIME)).diff(moment(new Date(selectedItem.FROM_TIME)),'minutes');
-	            //Neu selectedSession co khoang thoi gian nho hon khoang default mac dinh
+	            //Neu selectedItem co khoang thoi gian nho hon khoang default mac dinh
 	            //thi khong duoc phep booking, chung nao bang hoac lon hon khoang thoi gian
 	            //mac dinh thi moi duoc "xet" booking
 	            if(selectedItemPeriodTime<periodTimeDefault)
@@ -416,18 +424,18 @@ var handlePeriodTimeAppointmentCalendar=function(req,res,functionNext)
 	            }
 	            else
 	            {
-	            	//tinh xem do chenh lech cua selectedSession va khoang thoi gian can thiet
+	            	//tinh xem do chenh lech cua selectedItem va khoang thoi gian can thiet
 		            var periodLack=periodRequire-selectedItemPeriodTime;
-		            //Neu selectedSession co khoang thoi gian lon hon khoang thoi gian can thiet
+		            //Neu selectedItem co khoang thoi gian lon hon khoang thoi gian can thiet
 		            //thi duoc quyen booking ngay
-		            //neu khong (selectedSession khong du khoang thoi gian) phai xem xet de dich chuyen thoi gian
+		            //neu khong (selectedItem khong du khoang thoi gian) phai xem xet de dich chuyen thoi gian
 		            if(periodLack>0)
 		            {
-		            	//mang Y nay se chua cac session bao bong selectedSession va cac session lien ke liep tiep
-		            	//tat cac cac session phai trong va deu thuoc redilegal
-		            	//qua trinh lay cac item cua i se duong lai khi
-		            	//- Phat hien thay co session khong lien ke (do co mot booking chen ngang chang han)
-		            	//- Khi co mot session khong toan ven ve khoang thoi gian, tuc co khoang thoi gian>0 nhung nho hon khoang thoi gian mac dinh
+		            	//mang Y nay se chua cac slot bao gom selectedItem va cac slot lien ke liep tiep
+		            	//tat cac cac slot phai trong va deu thuoc redilegal
+		            	//qua trinh lay cac item cua i se dung lai khi
+		            	//- Phat hien thay co slot khong lien ke (do co mot booking chen ngang chang han)
+		            	//- Khi co mot slot khong toan ven ve khoang thoi gian, tuc co khoang thoi gian>0 nhung nho hon khoang thoi gian mac dinh
 		                var listY=[];
 		                //day selectedItem vao mang
 		                listY.push(selectedItem);
@@ -436,45 +444,46 @@ var handlePeriodTimeAppointmentCalendar=function(req,res,functionNext)
 		                {
 		                    var item=data[i];
 		                    var fromTime=moment(new Date(item.FROM_TIME));
-		                    //kiem tra tinh lien ke lien tiep cua cac sesssion
+		                    //kiem tra tinh lien ke lien tiep cua cac slot
 		                    if(fromTime.diff(previousToTime,'minutes')==0)
 		                    {
 		                        listY.push(item);
 		                        previousToTime=moment(new Date(item.TO_TIME));
 		                    }
+		                    //neu current slot khong phai la mot slot du (<default), ma la mot slot thieu
+		                    //thi ngung lai
 		                    else
 		                    {
 		                        break;
 		                    }
-		                    //neu currentSession khong phai la mot session du (<default), ma la mot session thieu
-		                    //thi ngung lai
+		                    
 		                    
 		                    var periodTime=moment(new Date(item.TO_TIME)).diff(moment(new Date(item.FROM_TIME)),'minutes');
 		                    if(periodTime<periodTimeDefault)
 		                    {
 		                    	break;
 		                    }
-		                    //hoac currentSession la mot session du(>default) thi cung ngung lai
+		                    //hoac currentSlot la mot slot du(>default) thi cung ngung lai
 		                    if(periodTime>periodTimeDefault)
 		                    {
 		                    	break;
 		                    }
 		                }
 
-		                //Vi hien tai selectedSession khong du thoi gian
-		                //nen phai can cac session lien ke de bu tru
-		                //Neu khong co cac session lien ke de bu tru thi khong the booking
+		                //Vi hien tai current slot khong du thoi gian
+		                //nen phai can cac slot lien ke de bu tru
+		                //Neu khong co cac slot lien ke de bu tru thi khong the booking
 		                if(listY.length>1)
 		                {
 		                	var listChanged=[];
-		                    //cong them khoang thoi gian thieu cho selectedSession
+		                    //cong them khoang thoi gian thieu cho selectedSlot
 		                    listY[0].TO_TIME=moment(new Date(listY[0].TO_TIME)).add(periodLack,"minutes").toDate();
 		                    listChanged.push(listY[0]);
 		                    for(var i=1;i<listY.length;i++)
 		                    {
 		                        var item=listY[i];
 		                        var periodTime=moment(new Date(item.TO_TIME)).diff(moment(new Date(item.FROM_TIME)),'minutes');
-		                        //neu currentSession co khoang thoi gian lon hon khoang thoi gian mac dinh
+		                        //neu currentSlot co khoang thoi gian lon hon khoang thoi gian mac dinh
 		                        //thi ngung tai day va chi can cong FROM_TIME
 		                        if(periodTime>periodTimeDefault)
 		                        {
@@ -485,8 +494,8 @@ var handlePeriodTimeAppointmentCalendar=function(req,res,functionNext)
 		                        else
 		                        {
 		                            item.FROM_TIME=moment(new Date(item.FROM_TIME)).add(periodLack,"minutes").toDate();
-		                            //Neu la session cuoi cung trong mang thi khong dich chuyen TO_TIME nua
-		                            //neu khong phai la session cuoi cung thi dich chuyen ca FROM_TIME va TO_TIME
+		                            //Neu la slot cuoi cung trong array thi khong dich chuyen TO_TIME nua
+		                            //neu khong phai la slot cuoi cung thi dich chuyen ca FROM_TIME va TO_TIME
 		                            if(i<listY.length-1)
 		                            	item.TO_TIME=moment(new Date(item.TO_TIME)).add(periodLack,"minutes").toDate();
 		                            listChanged.push(item);
@@ -531,11 +540,6 @@ var handlePeriodTimeAppointmentCalendar=function(req,res,functionNext)
 		                    	})
 		                    }
 
-		                    // for(var i=0;i<listChanged.length;i++)
-		                    // {
-		                    //     console.log(moment(new Date(listChanged[i].FROM_TIME)).format("HH:mm DD/MM/YYYY")+
-		                    //         " "+moment(new Date(listChanged[i].TO_TIME)).format("HH:mm DD/MM/YYYY"));
-		                    // }
 		                    updateAppointmentCalendar(req,listChanged,0);
 		                }
 		                else
