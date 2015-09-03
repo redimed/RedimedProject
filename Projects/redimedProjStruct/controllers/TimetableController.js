@@ -9,11 +9,6 @@ var rlobUtil=require('./rlobUtilsController');
 var kiss=require('./kissUtilsController');
 
 module.exports = {
-	/*
-	* Description: Remove a permernant row of timetable
-	* Input Params: cal_header_df_id
-	* Output Params: return error or success message
-	*/
 	postRemove: function(req, res){
 		var postData = req.body.data;
 
@@ -34,11 +29,6 @@ module.exports = {
 		})
 	},
 
-	/*
-	* Description: Remove site of a permernant row of timetable
-	* Input Params: id (sys_cal_sites_df)
-	* Output Params: return error or success message
-	*/
 	postSiteRemove: function(req, res){
 		var postData = req.body.data;
 		var sql="delete from sys_cal_sites_df where id=?";
@@ -54,9 +44,6 @@ module.exports = {
 	/**
 	 * Kiem tra co appointment da duoc booking hay chua
 	 * tannv.dts@gmail.com
-	 * Description: Before generating calendar, execute all actions before that
-	 * Input Params: from_time, to_time, appt_interval, doctor_id
-	 * Output Params: return error or success message
 	 */
 	beforeGenerateCalendar:function(req,res)
 	{
@@ -106,11 +93,6 @@ module.exports = {
 
 	},
 
-	/*
-	* Description: Create Timetable from time range: from time, to time, display slots on appointment
-	* Input Params: from_time, to_time, doctor_id, day_of_Week_code, appt_interval, service_id, clinical_dept_id, site
-	* Output Params: return error and success message 
-	*/
 	postCreateTimetable: function(req, res){
 		var postData = kiss.checkData(req.body.data)?req.body.data:{};
 
@@ -277,11 +259,6 @@ module.exports = {
 
 	},
 
-	/*
-	* Description: add site into a retrieve timetable
-	* Input Params: doctor_id, cal_header_df_id, week_ord_of_month
-	* Output Params: return error and success message
-	*/
 	postSiteAdd: function(req, res){
 		var postData = req.body.data;
 
@@ -344,11 +321,6 @@ module.exports = {
 		})
 	},
 
-	/*
-	* Description: List redimed Sites by CLINICAL_DEPT_ID
-	* Input Params: CLINICAL_DEPT_ID
-	* Output Params: return error and success message
-	*/
 	postRedimedsiteList: function(req, res){
 		var postData = req.body.data;
 

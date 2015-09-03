@@ -11,10 +11,6 @@ var errorCode=require('./errorCode');//tan add
 var controllerCode="RED_APPOINTMENT";//tan add
 
 module.exports = {
-	/* Description: Check appointment next to old appoinment
-	* Input Params: cal_id, patient_id
-	* Output Params: return error or success message
-	*/
 	checkNextAppointment: function(req,res){
 		var postData  = req.body.data;
 		console.log(postData);
@@ -56,12 +52,6 @@ module.exports = {
 	},
 	changeStatus:function(req,res){
 		var postData  = req.body.data;
-
-		/*
-		Intend SQL:
-		Get data of cln_appointment_calendar
-		Input: CAL_ID, STATUS
-		*/
 		var sql = knex('cln_appointment_calendar')
 				.where('CAL_ID',postData.CAL_ID)
 				.update({'STATUS':postData.STATUS})
@@ -74,11 +64,6 @@ module.exports = {
 			res.status(500).json({error: error, sql: sql});
 		})
 	},
-	/*
-	* Description: Change Service Appointment Calendar
-	* Input Params: SERVICE_ID
-	* Output Params: return error or success message
-	*/
 	changeService:function(req,res){
 		var postData  = req.body.data;
 		kiss.executeInsertIfDupKeyUpdate(req,'cln_appointment_calendar',postData,['SERVICE_ID'],function(result){
@@ -87,12 +72,6 @@ module.exports = {
 			res.status(500).json({error: err});
 		});
 	},
-
-	/*
-	* Description: Get list of patients by appointment slot
-	* Input Params: CAL_ID
-	* Output Params: return error or success message
-	*/
 	getOneApptPatient:function(req,res){
 		var postData  = req.body.data;
 		var sql = knex('cln_appt_patients')
@@ -111,11 +90,6 @@ module.exports = {
 			res.status(500).json({error: error, sql: sql});
 		})
 	},
-
-	/* Description: Get list of service and attribute color
-	* Input Params: No
-	* Output Params: return error or success message
-	*/
 	getServiceColor:function(req,res){
 		var postData = req.body.data;
 		var sql = knex('sys_services')
@@ -146,12 +120,6 @@ module.exports = {
 			res.status(500).json({error: error, sql: sql});
 		})
 	},
-
-	/*
-	* DESCRIPTION: List Alert List of Appointment Slots to display on Calendar by site_id
-	* INPUT: site_id, datepicker
-	* OUTPUT: return error or success
-	*/
 	alertSiteCenter: function(req, res){
 		var postData = req.body.data;
 
@@ -178,8 +146,13 @@ module.exports = {
 		.innerJoin('cln_appt_patients', 'cln_appointment_calendar.CAL_ID', 'cln_appt_patients.CAL_ID')
 		.innerJoin('cln_patients', 'cln_appt_patients.Patient_id', 'cln_patients.Patient_id')
 		.innerJoin('sys_services', 'cln_appointment_calendar.SERVICE_ID', 'sys_services.SERVICE_ID')
+		// .innerJoin('sys_services',function(){
+		// 	this.on('cln_appointment_calendar.SERVICE_ID', '=', 'sys_services.SERVICE_ID')
+		// 	.andOn('sys_services.IS_REFERRAL', 1)
+		// })
 		.leftOuterJoin('cln_patient_alerts', function(){
 			this.on('cln_appt_patients.Patient_id', 'cln_patient_alerts.patient_id')
+			// .andOn('cln_patient_alerts.cal_id','cln_appointment_calendar.CAL_ID')
 		})
 		.leftOuterJoin('cln_alerts', 'cln_patient_alerts.alert_id', 'cln_alerts.id')
 		.leftOuterJoin('cln_patient_outreferral', function(){
@@ -201,12 +174,6 @@ module.exports = {
 			res.status(500).json({error: error, sql: main_sql});
 		})
 	},
-
-	/*
-	* Description: List Alert List For Appointment
-	* Input: site_id, datepicker, clinical_dept_id
-	* Output: success -> main alert list for appointment, error -> Error Code of MySQL
-	*/
 	alertCenter: function(req, res){
 		var postData = req.body.data;
 
@@ -239,8 +206,13 @@ module.exports = {
 		.innerJoin('cln_appt_patients', 'cln_appointment_calendar.CAL_ID', 'cln_appt_patients.CAL_ID')
 		.innerJoin('cln_patients', 'cln_appt_patients.Patient_id', 'cln_patients.Patient_id')
 		.innerJoin('sys_services', 'cln_appointment_calendar.SERVICE_ID', 'sys_services.SERVICE_ID')
+		// .innerJoin('sys_services',function(){
+		// 	this.on('cln_appointment_calendar.SERVICE_ID', '=', 'sys_services.SERVICE_ID')
+		// 	.andOn('sys_services.IS_REFERRAL', 1)
+		// })
 		.leftOuterJoin('cln_patient_alerts', function(){
 			this.on('cln_appt_patients.Patient_id', 'cln_patient_alerts.patient_id')
+			// .andOn('cln_patient_alerts.cal_id','cln_appointment_calendar.CAL_ID')
 		})
 		.leftOuterJoin('cln_alerts', 'cln_patient_alerts.alert_id', 'cln_alerts.id')
 		.leftOuterJoin('cln_patient_outreferral', function(){
@@ -450,14 +422,127 @@ module.exports = {
 		});
     },
 
-    /*
-    * Description: Add Patient Information with Appointment Information into Appointment Calendar
-    * Input Params: CAL_ID, Patient_id
-    * Output Params: success: return success message, error: return sql code error information
-    */
-	postAdd: function(req, res){
+	/*postByDoctor: function(req, res){
 		var postData = req.body.data;
 
+		knex
+		.column('FROM_TIME', 'TO_TIME')
+		.select()
+		.from('cln_appointment_calendar')
+		.where({
+			DOCTOR_ID: postData.doctor_id
+		})
+		.then(function(rows){
+			if(!rows.length){
+				commonFunction.commonError(null, 'ERR_SYS_006', res);
+				return;
+			}
+
+			var data = {
+				FROM_TIME: rows[0].FROM_TIME,
+				TO_TIME: rows[rows.length-1].TO_TIME
+			}
+			res.json({data: data});
+		})
+		.catch(function(error){
+			commonFunction.commonError(error, 'ERR_SYS_003', res);
+		})
+	},*/
+	deleteClnAppPatient : function(req,res){
+		var postData = req.body.data;
+		var sql = knex('cln_appt_patients')
+			  	.where('id', postData.id)
+			  	.del()
+			  	.toString()
+	  	db.sequelize.query(sql)
+		.success(function(data){
+			res.json({data: 'success'});
+		})
+		.error(function(error){
+			res.status(500).json({status: 'error'});
+		})
+
+	},
+	postGetCal:function(req,res){
+		var postData = req.body.data;
+		if(postData.CAL_ID !== -1){
+			var fHeader="v2_InvoiceController->postGetCal";
+			var functionCode='FN003';
+			var postData=kiss.checkData(postData)?postData:'';
+			if(!kiss.checkListData(postData))
+			{
+				kiss.exlog(fHeader,"Loi data truyen den",req.body);
+				res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM002')});
+				return;
+			}
+			var sql=
+				"SELECT `cln_appt_patients`.*,`cln_patients`.`First_name`,`cln_patients`.`Sur_name`				"+
+				"FROM `cln_appt_patients`                                                                       "+
+				"INNER JOIN  `cln_patients` ON `cln_appt_patients`.`Patient_id` = `cln_patients`.`Patient_id`   "+
+				"WHERE `cln_appt_patients`.`CAL_ID` = ?                                                         "+
+				"AND `cln_appt_patients`.`Patient_id` = ?                                                       ";
+			kiss.executeQuery(req,sql,[postData.CAL_ID,postData.Patient_id],function(rows){
+				res.json({status:'success',data:rows});
+			},function(err){
+				kiss.exlog(fHeader,'Loi truy van lay thong tin thong qua',err);
+				res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
+			});
+		}else{
+			var fHeader="v2_InvoiceController->postGetCal";
+			var functionCode='FN003';
+			var postData=kiss.checkData(postData)?postData:'';
+			if(!kiss.checkListData(postData))
+			{
+				kiss.exlog(fHeader,"Loi data truyen den",req.body);
+				res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM002')});
+				return;
+			}
+			var sql=
+				"SELECT `cln_appt_patients`.*,`cln_patients`.`First_name`,`cln_patients`.`Sur_name`				"+
+				"FROM `cln_appt_patients`                                                                       "+
+				"INNER JOIN  `cln_patients` ON `cln_appt_patients`.`Patient_id` = `cln_patients`.`Patient_id`   "+
+				"WHERE `cln_appt_patients`.`Patient_id` = ?                                                     ";
+			kiss.executeQuery(req,sql,[postData.Patient_id],function(rows){
+				res.json({status:'success',data:rows});
+			},function(err){
+				kiss.exlog(fHeader,'Loi truy van lay thong tin thong qua',err);
+				res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
+			});
+		}
+
+	},
+	postEdit:function(req,res){
+
+		var postData  = req.body.data;
+		var sql = knex('cln_appt_patients')
+				.where('id',postData.cln_appt_patientsID)
+				.update({
+						Patient_id: postData.Patient_id,
+						CAL_ID: postData.form.CAL_ID,
+						PHONE:postData.form.PHONE,
+						APP_TYPE:postData.form.APP_TYPE,
+						STATUS:postData.form.STATUS,
+						AVAILABLE:postData.form.AVAILABLE,
+						ARR_TIME:postData.form.ARR_TIME,
+						ATTEND_TIME:postData.form.ATTEND_TIME,
+						bill_to:postData.form.bill_to,
+						ACC_TYPE:postData.form.ACC_TYPE,
+						SERVICE_ID:postData.form.SERVICE_ID,
+						NOTES:postData.form.NOTES,
+					})
+				.toString()
+		db.sequelize.query(sql)
+		.success(function(created){
+			res.json({data: 'success'});
+		})
+		.error(function(error){
+			res.status(500).json({error: error, sql: sql});
+		})
+
+	},
+	postAdd: function(req, res){
+
+		var postData = req.body.data;
 		var sql = knex('cln_appointment_calendar')
 			.where('cln_appointment_calendar.CAL_ID', postData.form.CAL_ID)
 			.update(postData.form)
@@ -494,20 +579,11 @@ module.exports = {
 		})
 	},
 
-	/*
-	* Description: List Doctor Detail Appointment
-	* Input Params: clinical_dept_id, site_id, doctor_id, datepicker
-	* Output Params: Output: success -> main alert list for appointment, error -> Error Code of MySQL
-	*/
 	postDetailLoad: function(req, res){
 		var postData = req.body.data;
 
 		if(!postData.clinical_dept_id) postData.clinical_dept_id = '';
 		
-		/*
-		* TABLE JOIN: cln_appt_patients, doctors, cln_patients, sys_services, cln_patient_outreferral
-		* Input SQL: site_id, doctor_id, datepicker, clinical_dept_id
-		*/
 		var main_sql = knex
 		.distinct(
 			knex.raw("DATE_FORMAT(cln_appointment_calendar.FROM_TIME, '%H:%i') AS FROM_TIME"),
@@ -542,9 +618,6 @@ module.exports = {
 		.orderBy('cln_appointment_calendar.FROM_TIME', 'asc')
 		.toString();
 
-		/*
-		* TABLE: cln_appointment_calendar
-		*/
 		var sub_sql = knex
 		.distinct(
 			'cln_appointment_calendar.DOCTOR_ID',
@@ -577,25 +650,11 @@ module.exports = {
 		})
 	},
 
-	/*
-	* Display Main Appointment List
-	* input: clinical_dept_id, datepicker, site_id
-	* output: main appointment list
-	*/
 	postLoad: function(req, res){
 		var postData = req.body.data;
 
 		if(!postData.clinical_dept_id) postData.clinical_dept_id = '';
 
-		/*
-		* JOIN
-		* cln_appointment_calendar
-		* sys_services
-		* cln_patients
-		* cln_appt_patients
-		* doctors
-		* cln_patient_outreferral
-		*/
 		var main_sql = knex
 		.distinct(
 			knex.raw("DATE_FORMAT(cln_appointment_calendar.FROM_TIME, '%H:%i') AS FROM_TIME"),
@@ -628,10 +687,6 @@ module.exports = {
 		.orderBy('cln_appointment_calendar.FROM_TIME', 'asc')
 		.toString();
 
-		/*
-		* SELECT TABLE
-		* cln_appointment_calendar
-		*/
 		var sub_sql = knex
 		.distinct(
 			'cln_appointment_calendar.DOCTOR_ID',
@@ -679,7 +734,7 @@ module.exports = {
 				})
 			})
 			.error(function(error){
-				res.status(500).json({error: error, sql: sub_sql});
+				res.status(500).json({error: error, sql: sub_sql});	
 			})
 		})
 		.error(function(error){
@@ -687,11 +742,6 @@ module.exports = {
 		})
 
 	},
-	/*
-	* Description: Check Patient Alert to know alert has been done
-	* Input Params: id (id of patient alerts), isCheck (1, 0)
-	* Output Params: success -> return success message, error -> return error code MySQL
-	*/
 	postCheck: function(req, res) {
 
 		var postData = req.body.data;
