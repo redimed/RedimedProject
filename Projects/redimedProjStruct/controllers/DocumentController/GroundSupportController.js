@@ -1,5 +1,8 @@
 var db = require('../../models');
 module.exports = {
+	//function checkQANTAS_groundsupport : check patient's data exist or not
+	//input  : patient_id
+	//output : patientInfo, status: insert or update(if status : update , return patient's data) 
 	checkQANTAS_groundsupport: function(req, res) {
 		var Patient_ID = req.body.Patient_ID;
 		var patient_check= "select First_name, Sur_name, Address1, DOB, Sex, Mobile, Email, Home_phone from cln_patients where Patient_ID =:Patient_ID "
@@ -47,6 +50,9 @@ module.exports = {
 		})
 	},
 
+	//function insertQANTAS_groundsupport : insert patient's data into table qantas_groundsupport
+	//input  : info(object)
+	//output : insert data into qantas_groundsupport and return status success or error
 	insertQANTAS_groundsupport: function(req, res) {
 		var info = req.body.info;
 		db.qantas_groundsupport.create({
@@ -203,6 +209,9 @@ module.exports = {
 		})
 	},
 
+	//function updateQANTAS_groundsupport : update patient's data into table qantas_groundsupport
+	//input  : info(object)
+	//output : update data into qantas_groundsupport and return status success or error
 	updateQANTAS_groundsupport: function(req, res) {
 		var info = req.body.info;
 		console.log(info);
@@ -359,6 +368,9 @@ module.exports = {
 		})
 	},
 
+	//function deleteQANTAS_groundsupport : delete patient's data from table qantas_groundsupport
+	//input  : patient_id
+	//output : delete data, return status success or error.
 	deleteQANTAS_groundsupport: function(req, res) {
 		var Patient_ID = req.body.Patient_ID;
 		var query_delete ="delete from qantas_groundsupport "+

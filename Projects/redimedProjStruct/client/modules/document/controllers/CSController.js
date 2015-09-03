@@ -1,13 +1,14 @@
 angular.module('app.loggedIn.document.QANTAScustomerservice.controllers',[])
-	.controller("CSController",function($scope, $filter, DocumentService, ConfigService, $http, $cookieStore, $state, toastr, $stateParams, localStorageService){
-		$scope.dateOptions = {
+    .controller("CSController",function($scope, $filter, DocumentService, ConfigService, $http, $cookieStore, $state, toastr, $stateParams, localStorageService){
+        $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
         };
-        CalID = $stateParams.cal_id; 
+        CalID = $stateParams.cal_id;
         Patient_ID = $stateParams.patient_id;
         $scope.isSignatureShow = false;
         var oriInfo,clearInfo;
+        //push value to rate for 4. FUNCTIONAL TOLERANCES into array $scope.rates 
          $scope.rates = [
           {id:0, name:'Excellent'},
           {id:1, name:'Very Good'},
@@ -15,13 +16,15 @@ angular.module('app.loggedIn.document.QANTAScustomerservice.controllers',[])
           {id:3, name:'Average'},
           {id:4, name:'Poor'}
         ];
+
+        //set attribute isShow: show or not show patient sign from patients, default isShow = false
         $scope.isSignatureShow  = [
             {id:0,isShow:false},
             {id:1,isShow:false}
         ];
         function getAge(dateString) {
-            var now = new Date();
-            var birthDate = new Date(dateString);
+            var now = new Date();// get current date
+            var birthDate = new Date(dateString);// get selected date
             var age = now.getFullYear() - birthDate.getFullYear();
             var m = now.getMonth() - birthDate.getMonth();
             if (m < 0 || (m === 0 && now.getDate() < birthDate.getDate())) {
@@ -29,56 +32,65 @@ angular.module('app.loggedIn.document.QANTAScustomerservice.controllers',[])
             }
             return age;
         }
+
+        //function mathBPM : rating BPM of patient
+        //input  : points BPM
+        //output : rating value 
         $scope.mathBPM = function(value){
-          if($scope.info.group3_sec2_value2==null || $scope.info.group3_sec2_value2==''){
-            $scope.info.check25 = null;
-            $scope.info.group3_sec2_value2=null;
-          }
-          if(isNaN(value)==false){
-            if(value==null||value.length==0||value<0){
-              $scope.info.group3_sec2_rate =null;
+            //check if BPM = null or ='', set BPM default = null
+            if($scope.info.group3_sec2_value2==null || $scope.info.group3_sec2_value2==''){
+                $scope.info.check25 = null;
+                $scope.info.group3_sec2_value2=null;
             }
-            else{
-              if($scope.info.Sex==0){
-                if(value<71&&value>0){
-                  $scope.info.group3_sec2_rate ="Excellent";
-                }
-                else if(value>=71&&value<=102){
-                  $scope.info.group3_sec2_rate ="Good";
-                }
-                else if(value>=103&&value<=117){
-                  $scope.info.group3_sec2_rate ="Average";
-                }
-                else if(value>=118&&value<=147){
-                  $scope.info.group3_sec2_rate ="Below Average";
+          //check if type of BPM is number, it continue working
+            if(isNaN(value)==false){
+            //if BPM value = null or <0, set BPM =null, else rating
+                if(value==null||value.length==0||value<0){
+                    $scope.info.group3_sec2_rate =null;
                 }
                 else{
-                  $scope.info.group3_sec2_rate ="Poor";
+                    if($scope.info.Sex==0){
+                        if(value<71&&value>0){
+                            $scope.info.group3_sec2_rate ="Excellent";
+                        }
+                        else if(value>=71&&value<=102){
+                            $scope.info.group3_sec2_rate ="Good";
+                        }
+                        else if(value>=103&&value<=117){
+                            $scope.info.group3_sec2_rate ="Average";
+                        }
+                        else if(value>=118&&value<=147){
+                            $scope.info.group3_sec2_rate ="Below Average";
+                        }
+                        else{
+                            $scope.info.group3_sec2_rate ="Poor";
+                        }
+                    }
+                    else{
+                        if(value<97&&value>0){
+                            $scope.info.group3_sec2_rate ="Excellent";
+                        }
+                        else if(value>=97&&value<=127){
+                            $scope.info.group3_sec2_rate ="Good";
+                        }
+                        else if(value>=128&&value<=142){
+                            $scope.info.group3_sec2_rate ="Average";
+                        }
+                        else if(value>=143&&value<=171){
+                            $scope.info.group3_sec2_rate ="Below Average";
+                        }
+                        else{
+                            $scope.info.group3_sec2_rate ="Poor";
+                        }
+                    }
                 }
-              }
-              else if($scope.info.Sex==1){
-                if(value<97&&value>0){
-                  $scope.info.group3_sec2_rate ="Excellent";
-                }
-                else if(value>=97&&value<=127){
-                  $scope.info.group3_sec2_rate ="Good";
-                }
-                else if(value>=128&&value<=142){
-                  $scope.info.group3_sec2_rate ="Average";
-                }
-                else if(value>=143&&value<=171){
-                  $scope.info.group3_sec2_rate ="Below Average";
-                }
-                else{
-                  $scope.info.group3_sec2_rate ="Poor";
-                }
-              }
             }
-          }
         }
+
         $scope.showSignature = function(value){
             $scope.isSignatureShow[value].isShow = true;
         }
+
         $scope.okClick = function (value) {
             $scope.isSignatureShow[value].isShow = false;
         }
@@ -107,25 +119,25 @@ angular.module('app.loggedIn.document.QANTAScustomerservice.controllers',[])
 
         $scope.clearForm = function() {
             swal({
-              title: "Are you sure to clear?",
-              text: "You will not be able to recover this information!",
-              type: "warning",
-              showCancelButton: true,
-              confirmButtonClass: "btn-danger",
-              confirmButtonText: "Yes, clear it!",
-              cancelButtonText: "No, cancel plx!",
-              closeOnConfirm: false,
-              closeOnCancel: false
+                title: "Are you sure to clear?",
+                text: "You will not be able to recover this information!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Yes, clear it!",
+                cancelButtonText: "No, cancel plx!",
+                closeOnConfirm: false,
+                closeOnCancel: false
             },
             function(isConfirm) {
-              if (isConfirm) {
-                $scope.info = angular.copy(clearInfo);
-                $scope.QANTAS_CS.$setPristine();
-                swal("Clear!", "Clear Successfully.", "success");
-              }
-              else{
-                swal("Cancelled", "Cancel Clear", "error");
-              }
+                if (isConfirm) {
+                    $scope.info = angular.copy(clearInfo);
+                    $scope.QANTAS_CS.$setPristine();
+                    swal("Clear!", "Clear Successfully.", "success");
+                }
+                else{
+                    swal("Cancelled", "Cancel Clear", "error");
+                }
             });
         }
 
@@ -134,41 +146,45 @@ angular.module('app.loggedIn.document.QANTAScustomerservice.controllers',[])
         }
 
         $scope.deleteForm = function(){
-          swal({
-            title: "Are you sure to delete?",
-            text: "You will not be able to recover this information!",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonClass: "btn-danger",
-            confirmButtonText: "Yes, delete it!",
-            cancelButtonText: "No, cancel plx!",
-            closeOnConfirm: false,
-            closeOnCancel: false
-          },
-          function(isConfirm) {
-            if (isConfirm) {
-              DocumentService.deleteQANTAS_CS(Patient_ID).then(function(response){
-                if(response.status==="success"){
-                  swal("Deleted!", "Delete Successfully.", "success");
-                  $state.go('loggedIn.listall', null, {
-                    'reload': true
-                  });
+            swal({
+                title: "Are you sure to delete?",
+                text: "You will not be able to recover this information!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel plx!",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            },
+            function(isConfirm) {
+                if (isConfirm) {
+                    DocumentService.deleteQANTAS_CS(Patient_ID).then(function(response){
+                        if(response.status==="success"){
+                            swal("Deleted!", "Delete Successfully.", "success");
+                            $state.go('loggedIn.listall', null, {
+                                'reload': true
+                            });
+                        }
+                        else{
+                            toastr.error("fail!!","FAIL");
+                            $state.go('loggedIn.listall', null, {
+                                'reload': true
+                            });
+                        }
+                    });
                 }
                 else{
-                  toastr.error("fail!!","FAIL");
-                  $state.go('loggedIn.listall', null, {
-                    'reload': true
-                  });
+                    swal("Cancelled", "Cancel Delete", "error");
                 }
-              });
-            }
-            else{
-              swal("Cancelled", "Cancel Delete", "error");
-            }
-          });
+            });
         }
 
         $scope.insert = false;
+
+        //function checkQANTAS_CS : check if patient had this record, load information this record and can be updated by patient
+        //input  : patient_id
+        //output : if patient had this record, load record data and status:update. if patient didn't have, status:insert  
         DocumentService.checkQANTAS_CS(Patient_ID).then(function(response){
             $scope.patientInfo = response['patientInfo'];
             $scope.patientInfo.DOB = moment($scope.patientInfo.DOB).format('YYYY-MM-DD');
@@ -308,7 +324,7 @@ angular.module('app.loggedIn.document.QANTAScustomerservice.controllers',[])
                     assessor:null,
                     age2:null
                 };
-                if($scope.patientInfo.Sex=="Male" || $scope.patientInfo.Sex==0){
+                if($scope.patientInfo.Sex=="Male"||$scope.patientInfo.Sex==0){
                     $scope.info.Sex = 0;
                 }
                 else{
@@ -321,7 +337,7 @@ angular.module('app.loggedIn.document.QANTAScustomerservice.controllers',[])
               $scope.insert = false;
               $scope.isNew = false;
               $scope.info = angular.copy(response['data']);
-              if($scope.patientInfo.Sex=="Male"){
+              if($scope.patientInfo.Sex=="Male"||$scope.patientInfo.Sex==0){
                     $scope.info.Sex = 0;
                 }
                 else{
@@ -332,6 +348,9 @@ angular.module('app.loggedIn.document.QANTAScustomerservice.controllers',[])
             }
             else if(response.status==="error"){
               toastr.error("fail","FAIL");
+              $state.go('loggedIn.listall', null, {
+                    'reload': true
+                  });
             }
             if($scope.isNew==true){
               clearInfo = angular.copy($scope.info);
@@ -473,6 +492,9 @@ angular.module('app.loggedIn.document.QANTAScustomerservice.controllers',[])
             }
         });
         
+        //function clearcheck : set checbox's value null
+        //input  : checkbox's id
+        //output : checkbox's value null
         $scope.clearcheck = function(id){
             if(id == 1){
                 if($scope.info.group3_sec3_checkL_1=='0' && $scope.info.group3_sec3_checkR_1=='0'  ||
@@ -633,6 +655,10 @@ angular.module('app.loggedIn.document.QANTAScustomerservice.controllers',[])
             }
 
         }
+
+        //function clearform : set form's value null
+        //input  : form's id
+        //output : form's value null
         $scope.clearform = function(id){
             if(id == 1){
                 if($scope.info.group3_sec1_value1==null || $scope.info.group3_sec1_value1==''){
@@ -707,48 +733,51 @@ angular.module('app.loggedIn.document.QANTAScustomerservice.controllers',[])
                 }
             }
         }
+
+        //function submitQANTAS_CS : push data into server to insert or update database
+        //input  : data info patient
+        //output : status success or error
         $scope.submitQANTAS_CS = function(QANTAS_CS){
-         if(QANTAS_CS.$invalid){
-            toastr.error('error',"x");
-         }
-         else{
-          if($scope.insert==true){
-            $scope.info.dateChose = $scope.dateChose?$scope.dateChose:null;
-            $scope.info.age2 = getAge($scope.patientInfo.DOB);
-            DocumentService.insertQANTAS_CS($scope.info).then(function(response){
-              if(response.status==="success"){
-                toastr.success("insert!!","success");
-                $state.go('loggedIn.QANTAScustomerservice', null, {
-                  'reload': true
-                });
-              }
-              else{
-                toastr.error("fail!!","FAIL");
-                $state.go('loggedIn.listall', null, {
-                  'reload': true
-                });
-              }
-            })
-          }
-          else{
-            $scope.info.dateChose = $scope.dateChose;
-            $scope.info.age2 = getAge($scope.patientInfo.DOB);
-            DocumentService.updateQANTAS_CS($scope.info).then(function(response){
-              
-              if(response.status==="success"){
-                toastr.success("update!!","success");
-                $state.go('loggedIn.QANTAScustomerservice', null, {
-                  'reload': true
-                });
-              }
-              else{
-                toastr.error("fail!!","FAIL");
-                $state.go('loggedIn.listall', null, {
-                  'reload': true
-                });
-              }
-            })
-          }
-         }
+            if(QANTAS_CS.$invalid){
+                toastr.error('error',"x");
+            }
+            else{
+                if($scope.insert==true){
+                    $scope.info.dateChose = $scope.dateChose?$scope.dateChose:null;
+                    $scope.info.age2 = getAge($scope.patientInfo.DOB);
+                    DocumentService.insertQANTAS_CS($scope.info).then(function(response){
+                        if(response.status==="success"){
+                            toastr.success("insert!!","success");
+                            $state.go('loggedIn.QANTAScustomerservice', null, {
+                                'reload': true
+                            });
+                        }
+                        else{
+                            toastr.error("fail!!","FAIL");
+                            $state.go('loggedIn.listall', null, {
+                                'reload': true
+                            });
+                        }
+                    })
+                }
+                else{
+                    $scope.info.dateChose = $scope.dateChose;
+                    $scope.info.age2 = getAge($scope.patientInfo.DOB);
+                    DocumentService.updateQANTAS_CS($scope.info).then(function(response){             
+                        if(response.status==="success"){
+                            toastr.success("update!!","success");
+                            $state.go('loggedIn.QANTAScustomerservice', null, {
+                                'reload': true
+                            });
+                        }
+                        else{
+                            toastr.error("fail!!","FAIL");
+                            $state.go('loggedIn.listall', null, {
+                                'reload': true
+                            });
+                        }
+                    })
+                }
+            }
         };
-	});
+    });

@@ -1,8 +1,10 @@
 var db = require('../../models');
 module.exports = {
+	//function insertQANTAS_CS : insert patient's data into table qantas_cs
+	//input  : info(object)
+	//output : insert data into qantas_cs, return status success or error
 	insertQANTAS_CS: function(req, res){
 		var info = req.body.info;
-		// console.log(info.PATIENT_ID);
 		db.qantas_cs.create({
 			PATIENT_ID:info.PATIENT_ID,
 			CAL_ID:info.CAL_ID,
@@ -152,11 +154,14 @@ module.exports = {
 		})
 	},
 
+	//function checkQANTAS_CS : check patient's data exist or not
+	//input  : patient_id
+	//output : patientInfo, status: insert or update(if status : update , return patient's data)
 	checkQANTAS_CS: function(req, res){
 		var Patient_ID = req.body.Patient_ID;
-		var patient_check= "select First_name, Sur_name, Address1, DOB, Sex, Mobile, Email, Home_phone from cln_patients where Patient_ID =:Patient_ID "
+		var patient_info= "select First_name, Sur_name, Address1, DOB, Sex, Mobile, Email, Home_phone from cln_patients where Patient_ID =:Patient_ID "
 		var qantas_check = "select * from qantas_cs where PATIENT_ID = :PATIENT_ID";
-		db.sequelize.query(patient_check,null,{raw:true},{
+		db.sequelize.query(patient_info,null,{raw:true},{
 			Patient_ID:Patient_ID
 		})
 		.success(function(patientInfo){
@@ -198,6 +203,10 @@ module.exports = {
 			return;
 		})
 	},
+
+	//function updateQANTAS_CS : update patient's data into table qantas_cs
+	//input  : info(object)
+	//output : update data into qantas_cs and return status success or error
 	updateQANTAS_CS: function(req, res){
 		var info = req.body.info;
 		// console.log(info);
@@ -349,6 +358,9 @@ module.exports = {
 		})
 	},
 
+	//function deleteQANTAS_CS : delete patient's data from table qantas_cs
+	//input  : patient_id
+	//output : delete data, return status success or error.
 	deleteQANTAS_CS: function(req, res){
 		var Patient_ID = req.body.Patient_ID;
 		var query_delete = "delete from qantas_cs "+
