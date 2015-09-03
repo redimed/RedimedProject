@@ -4,14 +4,14 @@ angular.module("app.loggedIn.staff.service", [])
     var service = {};
     var api = Restangular.all("api");
 
-    service.addAllTask = function(allTaskPost, infoPost) {
+    service.AddAllTask = function(allTaskPost, infoPost) {
         var addAllTask = api.all('staff/addAllTask');
         return addAllTask.post({
             allTask: allTaskPost,
             info: infoPost
         });
     };
-    service.getAllTaskAMonth = function(searchPost) {
+    service.GetAllTaskAMonth = function(searchPost) {
         var getAllTaskAMonth = api.all('staff/getAllTaskAMonth');
         return getAllTaskAMonth.post({
             search: searchPost
@@ -24,61 +24,61 @@ angular.module("app.loggedIn.staff.service", [])
         });
     };
 
-    service.editTask = function(task, infoPost) {
+    service.EditTask = function(task, infoPost) {
         var editTask = api.all('staff/editTask');
         return editTask.post({
             allTask: task,
             info: infoPost
         });
     };
-    service.checkTimeInLieu = function(infoPost) {
-        var checkTimeInLieu = api.all('staff/checktime');
-        return checkTimeInLieu.post({
+    service.CheckTimeInLieu = function(infoPost) {
+        var CheckTimeInLieu = api.all('staff/checktime');
+        return CheckTimeInLieu.post({
             info: infoPost
         });
     };
 
-    service.getTask = function(idWeekPost) {
+    service.GetTask = function(idWeekPost) {
         var getTask = api.all('staff/getTask');
         return getTask.post({
             idWeek: idWeekPost
         });
     };
 
-    service.getDepartmentLocation = function() {
+    service.GetDepartmentLocationActivity = function() {
         var getDepartmentLocation = api.one('staff/getDepartmentLocation');
         return getDepartmentLocation.get();
     };
 
-    service.checkFirstTaskWeek = function(infoPost) {
+    service.CheckFirstTaskWeek = function(infoPost) {
         var checkFirstTaskWeek = api.all('staff/checkFirstTaskWeek');
         return checkFirstTaskWeek.post({
             info: infoPost
         });
     };
 
-    service.checkTaskWeek = function(infoPost) {
+    service.CheckTaskWeek = function(infoPost) {
         var checkTaskWeek = api.all('staff/checkTaskWeek');
         return checkTaskWeek.post({
             info: infoPost
         });
     };
 
-    service.showEdit = function(infoPost) {
+    service.ShowEdit = function(infoPost) {
         var showEdit = api.all('staff/showEdit');
         return showEdit.post({
             info: infoPost
         });
     };
 
-    service.showDetailDate = function(infoPost) {
+    service.ShowDetailDate = function(infoPost) {
         var showDetailDate = api.all('staff/showDetailDate');
         return showDetailDate.post({
             info: infoPost
         });
     };
 
-    service.getTaskList = function() {
+    service.SetTaskList = function() {
         return api.one('staff/task/getList').get();
     };
 
@@ -90,7 +90,7 @@ angular.module("app.loggedIn.staff.service", [])
     };
 
     //thanh
-    service.convertShowToFull = function(time_charge) {
+    service.ConvertShowToFull = function(time_charge) {
         if (time_charge !== undefined && time_charge !== null && !(isNaN(time_charge)) && time_charge !== 0 && time_charge.length !== 0) {
             var hours = 0;
             var minutes = 0;
@@ -102,7 +102,7 @@ angular.module("app.loggedIn.staff.service", [])
         }
     };
 
-    service.convertFromFullToShow = function(time_charge) {
+    service.ConvertFromFullToShow = function(time_charge) {
         if (time_charge !== undefined && time_charge !== null) {
             var hours = parseInt(time_charge / 60);
             var minutes = parseInt(time_charge % 60);
@@ -116,7 +116,7 @@ angular.module("app.loggedIn.staff.service", [])
         }
     };
 
-    service.getFortMatTimeCharge = function(time_charge) {
+    service.GetFortMatTimeCharge = function(time_charge) {
         if (time_charge !== undefined && time_charge !== null && time_charge !== 0) {
             var hours = parseInt(time_charge / 60);
             var minutes = parseInt(time_charge % 60);
@@ -132,7 +132,7 @@ angular.module("app.loggedIn.staff.service", [])
         }
     };
 
-    service.showWeek = function(userID) {
+    service.ShowWeek = function(userID) {
         var startDate;
         var endDate;
         var checkMonth = api.all('staff/checkMonth');

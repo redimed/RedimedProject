@@ -5,9 +5,14 @@ var path = require("path");
 var mime = require('mime');
 //END
 module.exports = {
+    /*
+    DownloadFile: download attach files
+    input: id of file download
+    output: - success: send file user download
+            - fail: send message error
+    */
     DownloadFile: function(req, res) {
         var file_id = req.params.idFile;
-        //FIND FILE DOWNLOAD
         db.time_task_file.find({
                 where: {
                     file_id: file_id
@@ -16,7 +21,6 @@ module.exports = {
                 raw: true
             })
             .success(function(result) {
-
                 if (result !== undefined &&
                     result !== null &&
                     result.length !== 0) {
@@ -25,14 +29,13 @@ module.exports = {
                     res.setHeader('Content-type', mineType);
                     res.setHeader('Content-disposition', 'filename=' + fileName);
                     var readStream = fs.createReadStream(result.path_file);
-                    //SEND FILE TO CLIENT
+                    //send file to client
                     readStream.on('open', function() {
                         readStream.pipe(res);
                     });
                     readStream.on('finish', function() {
                         file.close();
                     });
-                    //END
                     readStream.on('error', function(err) {
                         console.log("*****ERROR:" + err + "*****");
                         res.json({
@@ -54,6 +57,5 @@ module.exports = {
                 });
                 return;
             });
-        //END FIND FILE DOWNLOAD
     },
 };

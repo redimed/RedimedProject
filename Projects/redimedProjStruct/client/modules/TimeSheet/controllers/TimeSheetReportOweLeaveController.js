@@ -1,25 +1,29 @@
 angular.module("app.loggedIn.TimeSheet.ReportOweLeave.Controller", [])
     .controller("ReportOweLeave", function($scope, localStorageService, StaffService, TimeSheetService, $cookieStore, toastr, $state, $filter) {
-        // POPUP Date
+        //popup date
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1
         };
-        // END
-        //LOAD POSITION
+
+        //load position
         $scope.position = localStorageService.get('position');
-        //END
+
         $scope.listDepartmentChoose = [];
         $scope.listEmployeeChoose = [];
         $scope.listDept = [];
         $scope.listEmp = [];
         $scope.isHavedata = 0;
-        //SERVICE LOAD DEPT
 
-        $scope.ListNew = function(listNew) {
+        /*
+        ListNew: create new report
+        input: list employee id
+        output: - success: download file PDF
+                - fail: send message error
+        */
+        $scope.LoadEmp = function(listNew) {
             TimeSheetService.LoadEmpReport(listNew).then(function(response) {
                 if (response.status === "success") {
-                    //LOAD EMP
                     var arrayEmp = [];
                     angular.forEach(response.result, function(emp, index) {
                         arrayEmp.push({
@@ -29,14 +33,12 @@ angular.module("app.loggedIn.TimeSheet.ReportOweLeave.Controller", [])
                     });
                     $scope.listEmp = angular.copy(arrayEmp);
                     $scope.listEmployeeChoose = [];
-                    //END
                 } else if (response.status === "error") {
                     $state.go("loggedIn.home", null, {
                         "reload": true
                     });
                     toastr.error("Loading employee fail!", "Error");
                 } else {
-                    //catch exception
                     $state.go("loggedIn.home", null, {
                         "reload": true
                     });
@@ -44,7 +46,8 @@ angular.module("app.loggedIn.TimeSheet.ReportOweLeave.Controller", [])
                 }
             });
         };
-        //FUNCTION GET WEEK NUMBER
+        
+        //get week's number
         $scope.getWeekNumber = function(d) {
             d = new Date(+d);
             d.setHours(0, 0, 0);
@@ -53,8 +56,12 @@ angular.module("app.loggedIn.TimeSheet.ReportOweLeave.Controller", [])
             var weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
             return weekNo;
         };
-        //FUNCTION GET WEEK NUMBER
 
+        /*
+        ChangeEmp: load employee when choose depoartment
+        input: list department is choossed
+        output: list employee
+        */
         $scope.changeEmp = function(list) {
             if ($scope.dateWeekFrom !== undefined && $scope.dateWeekFrom !== null && $scope.dateWeekFrom !== "" &&
                 $scope.dateWeekTo !== undefined && $scope.dateWeekTo !== null && $scope.dateWeekTo !== "" &&
@@ -63,31 +70,27 @@ angular.module("app.loggedIn.TimeSheet.ReportOweLeave.Controller", [])
                 var info = {};
                 var weekNoFrom = $scope.dateWeekFrom;
                 var weekNoTo = $scope.dateWeekTo;
-                info.weekNoFrom = $scope.getWeekNumber(weekNoFrom);
-                info.weekNoTo = $scope.getWeekNumber(weekNoTo);
+                info.weekNoFrom = $scope.GetWeekNumber(weekNoFrom);
+                info.weekNoTo = $scope.GetWeekNumber(weekNoTo);
                 info.listEMP = angular.copy($scope.listEmployeeChoose);
-                info.USER_ID = ($cookieStore.get('userInfo')!==undefined) ? $cookieStore.get('userInfo').id : null;
+                info.USER_ID = ($cookieStore.get('userInfo') !== undefined) ? $cookieStore.get('userInfo').id : null;
                 info.weekFrom = $scope.dateWeekFrom;
                 info.weekTo = $scope.dateWeekTo;
                 info.listDept = $scope.listDepartmentChoose;
-                info.weekNoFrom = $scope.getWeekNumber(weekNoFrom);
+                info.weekNoFrom = $scope.GetWeekNumber(weekNoFrom);
                 TimeSheetService.LoadReportOweLeave(info).then(function(response) {
                     if (response.status === "success") {
-                        // PROCESSING PDF
-                        $scope.USER_ID = ($cookieStore.get('userInfo')!==undefined) ? $cookieStore.get('userInfo').id : null;
-                        //END PDF
+                        //pdf
+                        $scope.USER_ID = ($cookieStore.get('userInfo') !== undefined) ? $cookieStore.get('userInfo').id : null;
                     } else if (response.status === "error") {
                         $state.go("loggedIn.home", null, {
                             "reload": true
                         });
                         toastr.error("Loading reports fail!", 'Error');
-                    }
-                    else if(response.status === "null") {
+                    } else if (response.status === "null") {
                         $scope.isHavedata = 0;
-                        toastr.error("No Data!!!!",'Error');
-                    } 
-                    else {
-                        //catch exception
+                        toastr.error("No Data!!!!", 'Error');
+                    } else {
                         $state.go("loggedIn.home", null, {
                             "reload": true
                         });
@@ -98,24 +101,32 @@ angular.module("app.loggedIn.TimeSheet.ReportOweLeave.Controller", [])
 
         };
 
-        // END DEPT
-        TimeSheetService.LoadDeptReport($cookieStore.get("userInfo").id).then(function(response) {
-            if (response.status === "error") {
-                $state.go("loggedIn.home", null, {
-                    "reload": true
-                });
-                toastr.error("Load Department fail!", "Error");
-            } else if (response.status === "success") {
-                $scope.listDept = response.result;
-            } else {
-                //catch exception
-                $state.go("loggedIn.home", null, {
-                    "reload": true
-                });
-                toastr.error("Server not response!", "Error");
-            }
-        });
-        //TRANLATION TEXT DEPT
+        /*
+        LoadDeptReport: load list department of redimed
+        input: id of user
+        output: list department
+        */
+        $scope.LoadDeptReport = function(userId) {
+            TimeSheetService.LoadDeptReport(userId).then(function(response) {
+                if (response.status === "error") {
+                    $state.go("loggedIn.home", null, {
+                        "reload": true
+                    });
+                    toastr.error("Load Department fail!", "Error");
+                } else if (response.status === "success") {
+                    $scope.listDept = response.result;
+                } else {
+                    $state.go("loggedIn.home", null, {
+                        "reload": true
+                    });
+                    toastr.error("Server not response!", "Error");
+                }
+            });
+        };
+
+        $scope.LoadDeptReport($cookieStore.get("userInfo").id);
+
+        //tranlation text department
         $scope.translationTextDept = {};
         $scope.translationTextDept = {
             checkAll: 'Check All',
@@ -127,21 +138,18 @@ angular.module("app.loggedIn.TimeSheet.ReportOweLeave.Controller", [])
             buttonDefaultText: '--Choose Department--',
             dynamicButtonTextSuffix: 'Department Selected'
         };
-        //END DEPT
 
-        // SEARCH DEPT
+        //enable search department
         $scope.searchDept = {
             enableSearch: true
         };
-        // END SEARCH
 
-        // SEARCH EMP
+        //enable search employee
         $scope.searchEmp = {
             enableSearch: true
         };
-        // END SEARCH
 
-        //TRANLATION TEXT EMP
+        //tranlation text employee
         $scope.translationTextEmp = {};
         $scope.translationTextEmp = {
             checkAll: 'Check All',
@@ -153,5 +161,4 @@ angular.module("app.loggedIn.TimeSheet.ReportOweLeave.Controller", [])
             buttonDefaultText: '--Choose Employee--',
             dynamicButtonTextSuffix: 'Employee Selected'
         };
-        //END EMP
     });

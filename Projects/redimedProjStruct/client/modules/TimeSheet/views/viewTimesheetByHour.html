@@ -71,7 +71,7 @@
                                 </td>
                                 <td class="bold" style="font-size:13px; text-align:center; width:10%;">{{task.time_charge_date | customHours}}</td>
                                 <td style="text-align:center; width:10%;">
-                                    <a ng-click="viewDetailDate(week,task.date)" class="btn btn-xs" style="font-size:13px;">View Detail</a>
+                                    <a ng-click="ViewDetailDate(week,task.date)" class="btn btn-xs" style="font-size:13px;">View Detail</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -87,16 +87,16 @@
             <!-- END TABLE TASK OF WEEK -->
         </fieldset>
         <!-- BUTTON -->
-        <a class='btn pull-right btn-xs btn-warning' ng-click='cancelClick()' style="width:70px;font-size:13px;">Cancel</a>
-        <a style="width:70px; font-size:13px;" ng-hide='STATUS==="Submitted" || STATUS==="Re-submitted" || STATUS==="Approved"' ng-click="okClick()" class="btn pull-right blue-steel btn-xs">
+        <a class='btn pull-right btn-xs btn-warning' ng-click='ClickCancel()' style="width:70px;font-size:13px;">Cancel</a>
+        <a style="width:70px; font-size:13px;" ng-hide='STATUS==="Submitted" || STATUS==="Re-submitted" || STATUS==="Approved"' ng-click="OkClick()" class="btn pull-right blue-steel btn-xs">
                 Edit
             </a>
         <a style="width:70px;font-size:13px;" ng-hide='STATUS==="Submitted" || STATUS==="Re-submitted" || STATUS==="Approved" || 
-        STATUS==="Rejected" || (STATUS==="Awaiting for Submit" && afterStatusID ===4)' ng-click="submitClick(submitOnView)" class="btn btn-xs green pull-right">
+        STATUS==="Rejected" || (STATUS==="Awaiting for Submit" && afterStatusID ===4)' ng-click="SubmitOnView(submitOnView)" class="btn btn-xs green pull-right">
                Submit
             </a>
         <a style="width:70px;font-size:13px;" ng-hide='STATUS==="Submitted" || STATUS==="Re-submitted" || STATUS==="Approved" || 
-        (STATUS==="Awaiting for Submit" && afterStatusID!==4)' ng-click="submitClick(submitOnView)" class="btn purple pull-right btn-xs">
+        (STATUS==="Awaiting for Submit" && afterStatusID!==4)' ng-click="SubmitOnView(submitOnView)" class="btn purple pull-right btn-xs">
                Re-submit
             </a>
         <!-- END BUTTON -->

@@ -6,13 +6,14 @@ var functionForTimesheet = require("./functionForTimesheet");
 var ServiceErp = require('../../helper/ERP_Rest');
 //END
 module.exports = {
+    /*
+    ViewApproved: View detail Timesheet to approve
+    input: id of Timesheet
+    output: detail of Timesheet
+    */
     ViewApproved: function(req, res) {
-
-        //DECLARATION
         var idTaskWeek = req.body.info;
-        // END DECLARATION
-
-        // QUERY 
+        //get information Timesheet 
         var strQuery =
             "SELECT SUM(DISTINCT time_tasks.time_charge) AS sumDATE, time_tasks.date, time_tasks.tasks_id, " + //SELECT
             "time_tasks.activity_id, time_tasks_week.start_date, time_tasks_week.end_date, " + //SELECT
@@ -21,7 +22,7 @@ module.exports = {
             "time_tasks.time_charge, time_tasks_week.over_time, time_task_status.name AS status, " + //SELECT
             "time_task_status.task_status_id, time_tasks_week.time_charge as chargeWeek, " + //SELECT
             "hr_employee.FirstName, hr_employee.LastName " + //SELECT
-            "FROM time_tasks " + //FORM
+            "FROM time_tasks " + //FROM
             "INNER JOIN time_tasks_week ON time_tasks_week.task_week_id = time_tasks.tasks_week_id " + //JOIN
             "LEFT JOIN time_item_task ON time_tasks.tasks_id = time_item_task.task_id " + //JOIN
             "INNER JOIN time_task_status ON time_task_status.task_status_id = time_tasks_week.task_status_id " + //JOIN
@@ -29,7 +30,7 @@ module.exports = {
             "LEFT JOIN time_activity ON time_activity.activity_id = time_tasks.activity_id " + //JOIN
             "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " + //JOIN
             "WHERE time_tasks.tasks_week_id = :idTaskWeek GROUP BY time_tasks.date ORDER BY time_tasks.date"; //WHERE
-
+        //get information Timesheet detail, group by date, activiti id
         var strActivity =
             "SELECT SUM(time_tasks.time_charge) AS sumAC, time_tasks.date, " + //SELECT
             "time_tasks.activity_id, time_tasks_week.start_date, time_tasks_week.end_date,  " + //SELECT
@@ -45,16 +46,14 @@ module.exports = {
             "WHERE time_tasks.tasks_week_id = :idTaskWeek " + //WHERE
             "GROUP BY time_tasks.date, time_activity.activity_id " + //GROUP
             "ORDER BY time_tasks.date"; //ORDER
-        // END QUERY
 
-        // RUN QUERY
         db.sequelize.query(strQuery, null, {
                 raw: true
             }, {
                 idTaskWeek: idTaskWeek
             })
             .success(function(result) {
-                //CHECK LEAVE
+                //check Leave form - Timesheet
                 var queryGetLeaveApprove =
                     "SELECT hr_leave.start_date, hr_leave.finish_date " + //SELECT
                     "FROM hr_leave " + //FROM
@@ -65,7 +64,7 @@ module.exports = {
                         userId: result[0].user_id
                     })
                     .success(function(resultLeaveApprove) {
-                        //CHECK EXIST LEAVE
+                        //check exist leave
                         var forPermission = true;
                         result.forEach(function(valueResult, indexResult) {
                             var date = moment(valueResult.date).format("X");
@@ -83,9 +82,8 @@ module.exports = {
                                 }
                             });
                         });
-                        //END CHECK EXIST LEAVE
 
-                        //GET TIME SHEET
+                        //get Timesheet
                         if (result === undefined || result === null || result.length === 0) {
                             res.json({
                                 status: "success",
@@ -120,7 +118,6 @@ module.exports = {
                                 });
 
                         }
-                        //END GET TIME SHEET
                     })
                     .error(function(err) {
                         console.log("*****ERROR:" + err + "*****");
@@ -129,7 +126,6 @@ module.exports = {
                         });
                         return;
                     });
-                //END CHECK LEAVE
             })
             .error(function(err) {
                 console.log("*****ERROR:" + err + "*****");
@@ -140,11 +136,16 @@ module.exports = {
                 });
                 return;
             });
-        //END RUN QUERY
     },
 
+    /*
+    ViewOnDate: View detail Timesheet on date
+    input: information Timesheet
+    output: Detail Timesheet on date
+    */
     ViewOnDate: function(req, res) {
         var info = req.body.info;
+        //get detail Timesheet on date
         var strQuery =
             "SELECT DISTINCT time_tasks.date, time_tasks.tasks_id, time_tasks.task, time_item_task.units, " + //SELECT
             "time_item_code.ITEM_NAME,time_item_task.ITEM_ID, time_item_code.IS_BILLABLE, time_item_task.ratio, " + //SELECT
@@ -174,6 +175,7 @@ module.exports = {
                 id: info.ID
             })
             .success(function(result) {
+                //get file on this Timesheet
                 var queryGetFile =
                     "SELECT DISTINCT t.`tasks_id`, c.`item_id` as ITEM_ID, " + //SELECT
                     "time_task_file.path_file, time_task_file.file_id, time_task_file.file_name, " + //SELECT
@@ -217,6 +219,11 @@ module.exports = {
             });
     },
 
+    /*
+    LoadTimeSheetApprove: Load list Timesheet to approve
+    input: infomation search, pagination, order, ...
+    output: list Timesheet
+    */
     LoadTimeSheetApprove: function(req, res) {
         var searchObj = req.body.searchObj;
         var strSearch = " AND ";
@@ -235,7 +242,6 @@ module.exports = {
                 strSearch += keySearch + " like '%" + searchObj.data[keySearch] + "%' AND ";
             }
         }
-        //end search
 
         //select
         for (var keySelect in searchObj.select) {
@@ -245,7 +251,6 @@ module.exports = {
                 strSearch += keySelect + " = " + searchObj.select[keySelect] + " AND ";
             }
         }
-        //end select
 
         if (strSearch.length === 5) {
             strSearch = "";
@@ -264,7 +269,7 @@ module.exports = {
             orderBY = "";
         }
         var isDirector = false;
-        //get NODE_ID Head of Dept. on TIMESHEET
+        //get node id Head of Dept. on TIMESHEET
         var strQueryGetNodeDept =
             "SELECT sys_hierarchy_nodes.NODE_ID, sys_hierarchy_nodes.NODE_CODE " + //SELECT
             "FROM sys_hierarchy_nodes " + //FROM
@@ -301,7 +306,7 @@ module.exports = {
                     if (NodeDeptId !== "") {
                         NodeDeptId = "(" + NodeDeptId.substring(0, NodeDeptId.length - 1) + ")";
                     }
-                    //get list Dept's manager
+                    //get list department
                     var strQueryDeptList =
                         "SELECT sys_hierarchies_users.DEPARTMENT_CODE_ID " + //SELECT
                         "FROM sys_hierarchies_users " + //FORM
@@ -391,7 +396,7 @@ module.exports = {
                                                         if (listUser !== "") {
                                                             listUser = "(" + listUser.substring(0, listUser.length - 1) + ")";
                                                         }
-                                                        //get list approved
+                                                        //get list for approver
                                                         var queryApprovedTimeSheet =
                                                             "SELECT DISTINCT time_tasks_week.task_week_id, time_tasks_week.time_charge, " + //SELECT
                                                             "time_tasks_week.start_date, time_tasks_week.end_date, " + //SELECT
@@ -407,7 +412,7 @@ module.exports = {
                                                             "AND users.id IN " + listUser + strSearch + strSearchEmployee + orderBY +
                                                             " LIMIT :limit" + //LIMIT
                                                             " OFFSET :offset"; //OFFSET
-
+                                                        //count list
                                                         var queryCountApprovedTimeSheet =
                                                             "SELECT COUNT(DISTINCT time_tasks_week.task_week_id) AS COUNT " + //SELECT
                                                             "FROM time_tasks_week " + //FORM
@@ -449,7 +454,6 @@ module.exports = {
                                                                                     return;
 
                                                                                 }
-                                                                                //end get list employee
                                                                             })
                                                                             .error(function(err) {
                                                                                 console.log("*****ERROR:" + err + "*****");
@@ -531,7 +535,12 @@ module.exports = {
                 return;
             });
     },
-
+    /*
+    RejectTaskWeek: rejected a Timesheet
+    input: id of Timesheet
+    output: - success: send message success
+            - fail: send message error
+    */
     RejectTaskWeek: function(req, res) {
         var info = req.body.info;
         info.date = moment().format("YYYY-MM-DD HH:mm:ss");
@@ -547,21 +556,16 @@ module.exports = {
                 idTaskWeek: info.idTaskWeek
             })
             .success(function(result) {
-                //TRACKER
+                //tracker
                 var tracKer = {
                     statusID: 4,
                     USER_ID: info.USER_ID,
                     idTaskWeek: info.idTaskWeek,
                     date: info.date
                 };
-                //CALL FUNCTION TRACKER
                 functionForTimesheet.TracKerTimeSheet(tracKer);
-                //END
-                // SEND MAIL
-                functionForTimesheet.SendMailTimeSheet(req, res, info);
-                // END MAIL
-
-                //END TRACKER
+                //send mail
+                functionForTimesheet.SendMailRejectedTimesheet(req, res, info);
                 res.json({
                     status: "success"
                 });
@@ -575,10 +579,16 @@ module.exports = {
                 return;
             });
     },
-
+    /*
+    ApproveTaskWeek: approved a Timesheet
+    input: id of Timesheet
+    output: - success: send message success
+            - fail: send message error 
+    */
     ApproveTaskWeek: function(req, res) {
         var info = req.body.info;
         var idTaskWeek = info.idTaskWeek;
+        //get Timesheet's Time in lieu
         var queryGetTimeInLieu =
             "SELECT time_in_lieuChoose " + //SELECT
             "FROM time_tasks_week " + //FROM
@@ -589,13 +599,11 @@ module.exports = {
                 idTaskWeek: idTaskWeek
             })
             .success(function(result) {
-                // FOR CHOOSE TIME IN LIEU
                 if (result[0] !== undefined &&
                     result[0] !== null &&
                     result[0].time_in_lieuChoose > 0) {
-                    //processing time in lieu
                     var time_in_lieuChoose = result[0].time_in_lieuChoose;
-                    //GET USER ID OF EMPLOYEE
+                    //get user id of employee
                     var queryGetUserID =
                         "SELECT time_tasks_week.user_id " + //SELECT
                         "FROM time_tasks_week " + //FROM
@@ -648,7 +656,7 @@ module.exports = {
                                 } else {
                                     strWeekNo = "((-1,-1))";
                                 }
-
+                                //get Time in lieu of employee
                                 var queryGetTimeInLieu = "SELECT time_tasks_week.time_in_lieu, time_tasks_week.task_week_id " + //SELECT
                                     "FROM time_tasks_week " + //FROM
                                     "WHERE time_tasks_week.user_id = :userId AND " + //WHERE
@@ -661,7 +669,7 @@ module.exports = {
                                     .success(function(resultTimeInLieu) {
                                         if (resultTimeInLieu !== null &&
                                             resultTimeInLieu.length !== 0) {
-                                            // FOR SUBTRACT TIME IN LIEU
+                                            //subtract time in lieu
                                             resultTimeInLieu.forEach(function(valueTimeInLieu, indexTimeInLieu) {
                                                 if (valueTimeInLieu !== null &&
                                                     valueTimeInLieu.time_in_lieu !== undefined &&
@@ -678,17 +686,15 @@ module.exports = {
                                                     }
                                                 }
                                             });
-                                            //END
 
-                                            //NOT ENOUGH TIME IN LIEU
+                                            //Time in lieu is not enough
                                             if (time_in_lieuChoose > 0) {
                                                 res.json({
                                                     status: "error"
                                                 });
                                             }
-                                            //END
 
-                                            //FOR UPDATE TIME IN LIEU
+                                            //update Time in lieu
                                             var queryUpdateTimeInLieu = "UPDATE time_tasks_week " + //UPDATE
                                                 "SET time_tasks_week.time_in_lieu = :timeInLieu " +
                                                 "WHERE time_tasks_week.task_week_id = :taskWeekId";
@@ -718,7 +724,7 @@ module.exports = {
                                                                 transaction: t
                                                             })
                                                             .success(function(result) {
-                                                                //TRANSFER DATA TO ERP
+                                                                //transfer data to ERP system
                                                                 var queryGetInfoTimeWeek =
                                                                     "SELECT DISTINCT hr_employee.Employee_Code, " + //SELECT
                                                                     "time_tasks_week.start_date, time_tasks_week.end_date, time_tasks_week.over_time, " + //SELECT
@@ -747,15 +753,14 @@ module.exports = {
                                                                                 overTime = 0,
                                                                                 nonPaid = 0;
                                                                             resultInfoTimeWeek.forEach(function(valueResultInfoTimeWeek, indexResultInfoTimeWeek) {
-                                                                                //SUM FOR PUBLIC HOLIDAY
+                                                                                //sum puclic holiday
                                                                                 if (valueResultInfoTimeWeek !== undefined &&
                                                                                     valueResultInfoTimeWeek !== null &&
                                                                                     valueResultInfoTimeWeek.item_id == 26) {
                                                                                     publicHoliday += valueResultInfoTimeWeek.time_charge_item;
                                                                                 }
-                                                                                //END
 
-                                                                                // SUM FOR CARER/PERSONAL
+                                                                                //sum carer/personal
                                                                                 else if (valueResultInfoTimeWeek !== undefined &&
                                                                                     valueResultInfoTimeWeek !== null &&
                                                                                     (valueResultInfoTimeWeek.item_id == 15 ||
@@ -763,25 +768,22 @@ module.exports = {
                                                                                         valueResultInfoTimeWeek.item_id == 24)) {
                                                                                     carerPersonal += valueResultInfoTimeWeek.time_charge_item;
                                                                                 }
-                                                                                //END
 
-                                                                                //SUM FOR ANNUAL LEAVE
+                                                                                //sum annual leave
                                                                                 else if (valueResultInfoTimeWeek !== undefined &&
                                                                                     valueResultInfoTimeWeek !== null &&
                                                                                     (valueResultInfoTimeWeek.item_id == 17)) {
                                                                                     annualLeave += valueResultInfoTimeWeek.time_charge_item;
                                                                                 }
-                                                                                //END
 
-                                                                                //SUM FOR NON-PAIN
+                                                                                //sum non-pain
                                                                                 else if (valueResultInfoTimeWeek !== undefined &&
                                                                                     valueResultInfoTimeWeek !== null &&
                                                                                     (valueResultInfoTimeWeek.item_id == 19)) {
                                                                                     nonPaid += valueResultInfoTimeWeek.time_charge_item;
                                                                                 }
-                                                                                //END
 
-                                                                                //SUM FOR PAIN-HOUR
+                                                                                //sum pain-hour
                                                                                 else if (valueResultInfoTimeWeek !== undefined &&
                                                                                     valueResultInfoTimeWeek !== null) {
                                                                                     if (valueResultInfoTimeWeek.item_id !== undefined &&
@@ -793,7 +795,6 @@ module.exports = {
                                                                                         paidHour += valueResultInfoTimeWeek.time_charge_task;
                                                                                     }
                                                                                 }
-                                                                                //END
                                                                             });
                                                                             var objectTranfer = {
                                                                                 pEMPLOYEE_CODE: resultInfoTimeWeek[0].Employee_Code,
@@ -807,9 +808,7 @@ module.exports = {
                                                                                 pANNUAL_LEAVE: annualLeave,
                                                                                 pCARER_PERSONAL: carerPersonal
                                                                             };
-                                                                            //CALL ERP SERVICE
 
-                                                                            //SET TIMEOUT CHECK SERVER ERP
                                                                             setTimeout(function() {
                                                                                 t.rollback();
                                                                                 res.json({
@@ -817,13 +816,12 @@ module.exports = {
                                                                                 });
                                                                                 return;
                                                                             }, 30000);
-                                                                            //END
 
                                                                             ServiceErp.transferTimeWeek(objectTranfer).then(function(resultErp) {
                                                                                 if (resultErp !== undefined &&
                                                                                     resultErp !== null &&
                                                                                     resultErp.data === true) {
-                                                                                    //TRACKER
+                                                                                    //tracker
                                                                                     var tracKer = {
                                                                                         statusID: 3,
                                                                                         USER_ID: info.USER_ID,
@@ -831,34 +829,26 @@ module.exports = {
                                                                                         date: info.date
                                                                                     };
 
-                                                                                    //CALL FUNCTION TRACKER
                                                                                     functionForTimesheet.TracKerTimeSheet(tracKer);
-                                                                                    //END
-                                                                                    //END TRACKER
 
 
-                                                                                    // SEND MAIL
-                                                                                    functionForTimesheet.SendMailTimeSheet(req, res, info);
-                                                                                    // ENE MAIL
+                                                                                    //send mail
+                                                                                    functionForTimesheet.SendMailApprovedTimesheet(req, res, info);
 
-                                                                                    //COMMIT APPROVE
                                                                                     t.commit();
-                                                                                    //END COMMIT
+
                                                                                     res.json({
                                                                                         status: "success"
                                                                                     });
                                                                                     return;
 
                                                                                 } else {
-                                                                                    //CAL ROLLBACK
                                                                                     t.rollback();
                                                                                     res.json({
                                                                                         status: "error"
                                                                                     });
-                                                                                    //END
                                                                                 }
                                                                             });
-                                                                            //END
 
                                                                         } else {
                                                                             res.json({
@@ -874,7 +864,6 @@ module.exports = {
                                                                         });
                                                                         return;
                                                                     });
-                                                                //END TRANSFER
 
                                                             })
                                                             .error(function(err) {
@@ -885,12 +874,10 @@ module.exports = {
                                                                 return;
                                                             });
                                                     });
-                                                    //END
                                                 })
                                                 .error(function(err) {
 
                                                 });
-                                            //END
                                         } else {
                                             res.json({
                                                 status: "error"
@@ -920,10 +907,8 @@ module.exports = {
                             });
                             return;
                         });
-                    //END
                 }
-                //FOR NOT CHOOSE TIME IN LIEU
-                //SET APPROVE
+                //not choose Time in lieu
                 info.date = moment().format("YYYY-MM-DD HH:mm:ss");
                 info.status = 3;
                 db.sequelize.transaction(function(t) {
@@ -938,7 +923,7 @@ module.exports = {
                             transaction: t
                         })
                         .success(function(result) {
-                            //TRANSFER DATA TO ERP
+                            //transfer data to ERP system
                             var queryGetInfoTimeWeek =
                                 "SELECT DISTINCT hr_employee.Employee_Code, " + //SELECT
                                 "time_tasks_week.start_date, time_tasks_week.end_date, time_tasks_week.over_time, " + //SELECT
@@ -967,15 +952,14 @@ module.exports = {
                                             overTime = 0,
                                             nonPaid = 0;
                                         resultInfoTimeWeek.forEach(function(valueResultInfoTimeWeek, indexResultInfoTimeWeek) {
-                                            //SUM FOR PUBLIC HOLIDAY
+                                            //sum public holiday
                                             if (valueResultInfoTimeWeek !== undefined &&
                                                 valueResultInfoTimeWeek !== null &&
                                                 valueResultInfoTimeWeek.item_id == 26) {
                                                 publicHoliday += valueResultInfoTimeWeek.time_charge_item;
                                             }
-                                            //END
 
-                                            // SUM FOR CARER/PERSONAL
+                                            //sum carer/personal
                                             else if (valueResultInfoTimeWeek !== undefined &&
                                                 valueResultInfoTimeWeek !== null &&
                                                 (valueResultInfoTimeWeek.item_id == 15 ||
@@ -983,25 +967,22 @@ module.exports = {
                                                     valueResultInfoTimeWeek.item_id == 24)) {
                                                 carerPersonal += valueResultInfoTimeWeek.time_charge_item;
                                             }
-                                            //END
 
-                                            //SUM FOR ANNUAL LEAVE
+                                            //sum annual leave
                                             else if (valueResultInfoTimeWeek !== undefined &&
                                                 valueResultInfoTimeWeek !== null &&
                                                 (valueResultInfoTimeWeek.item_id == 17)) {
                                                 annualLeave += valueResultInfoTimeWeek.time_charge_item;
                                             }
-                                            //END
 
-                                            //SUM FOR NON-PAIN
+                                            //sum non-pain
                                             else if (valueResultInfoTimeWeek !== undefined &&
                                                 valueResultInfoTimeWeek !== null &&
                                                 (valueResultInfoTimeWeek.item_id == 19)) {
                                                 nonPaid += valueResultInfoTimeWeek.time_charge_item;
                                             }
-                                            //END
 
-                                            //SUM FOR PAIN-HOUR
+                                            //sum pain-hour
                                             else if (valueResultInfoTimeWeek !== undefined &&
                                                 valueResultInfoTimeWeek !== null) {
                                                 if (valueResultInfoTimeWeek.item_id !== undefined &&
@@ -1013,7 +994,6 @@ module.exports = {
                                                     paidHour += valueResultInfoTimeWeek.time_charge_task;
                                                 }
                                             }
-                                            //END
                                         });
                                         var objectTranfer = {
                                             pEMPLOYEE_CODE: resultInfoTimeWeek[0].Employee_Code,
@@ -1027,9 +1007,7 @@ module.exports = {
                                             pANNUAL_LEAVE: annualLeave,
                                             pCARER_PERSONAL: carerPersonal
                                         };
-                                        //CALL ERP SERVICE
 
-                                        //SET TIMEOUT CHECK SERVER ERP
                                         setTimeout(function() {
                                             t.rollback();
                                             res.json({
@@ -1037,13 +1015,12 @@ module.exports = {
                                             });
                                             return;
                                         }, 30000);
-                                        //END
 
                                         ServiceErp.transferTimeWeek(objectTranfer).then(function(resultErp) {
                                             if (resultErp !== undefined &&
                                                 resultErp !== null &&
                                                 resultErp.data === true) {
-                                                //TRACKER
+                                                //tracker
                                                 var tracKer = {
                                                     statusID: 3,
                                                     USER_ID: info.USER_ID,
@@ -1051,34 +1028,26 @@ module.exports = {
                                                     date: info.date
                                                 };
 
-                                                //CALL FUNCTION TRACKER
                                                 functionForTimesheet.TracKerTimeSheet(tracKer);
-                                                //END
-                                                //END TRACKER
 
 
-                                                // SEND MAIL
-                                                functionForTimesheet.SendMailTimeSheet(req, res, info);
-                                                // ENE MAIL
+                                                //send mail
+                                                functionForTimesheet.SendMailApprovedTimesheet(req, res, info);
 
-                                                //COMMIT APPROVE
                                                 t.commit();
-                                                //END COMMIT
+
                                                 res.json({
                                                     status: "success"
                                                 });
                                                 return;
 
                                             } else {
-                                                //CAL ROLLBACK
                                                 t.rollback();
                                                 res.json({
                                                     status: "error"
                                                 });
-                                                //END
                                             }
                                         });
-                                        //END
 
                                     } else {
                                         res.json({
@@ -1094,8 +1063,6 @@ module.exports = {
                                     });
                                     return;
                                 });
-                            //END TRANSFER
-
                         })
                         .error(function(err) {
                             console.log("*****ERROR:" + err + "*****");
@@ -1105,7 +1072,6 @@ module.exports = {
                             return;
                         });
                 });
-                //END
             })
             .error(function(err) {
                 console.log("*****ERROR:" + err + "*****");

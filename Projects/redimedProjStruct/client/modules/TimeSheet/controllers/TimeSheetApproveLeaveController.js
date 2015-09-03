@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.TimeSheet.ApproveLeave.Controller", [])
     .controller("ApproveLeaveController", function($scope, MODE_ROW, $modal, toastr, $state, TimeSheetService, $cookieStore) {
-        //STATUS
+        //status
         $scope.listStatus = [{
             code: 2,
             name: "Awaiting for Approve"
@@ -14,24 +14,25 @@ angular.module("app.loggedIn.TimeSheet.ApproveLeave.Controller", [])
             code: 5,
             name: "Re-submitted"
         }];
-        //END STATUS
 
-        //FUNCTION SET PAGE
-        $scope.setPage = function() {
+        //set page
+        $scope.SetPage = function() {
             $scope.searchObjectMap.offset = ($scope.searchObjectMap.currentPage - 1) * $scope.searchObjectMap.limit;
-            $scope.loadList();
+            $scope.LoadList();
         };
-        //END SET PAGE
 
-        //FUNCTION RESET
-        $scope.reset = function() {
+        //reset
+        $scope.Reset = function() {
             $scope.searchObjectMap = angular.copy($scope.searchObject);
-            $scope.loadList();
+            $scope.LoadList();
         };
-        //END RESET
 
-        //FUNCTION LOAD LIST
-        $scope.loadList = function() {
+        /*
+        LoadList: load list Leave form to approve
+        input: information search, order, pagination,...
+        output: list Leave form
+        */
+        $scope.LoadList = function() {
             TimeSheetService.LoadLeaveApprove($scope.searchObjectMap).then(function(response) {
                 if (response.status === "success") {
                     $scope.list = response;
@@ -50,25 +51,23 @@ angular.module("app.loggedIn.TimeSheet.ApproveLeave.Controller", [])
                 }
             });
         };
-        //END LOAD LIST
 
-        //ORDER
-        $scope.clickAsc = function() {
+        //order
+        $scope.ClickAsc = function() {
             $scope.searchObjectMap.order[0] = "ASC";
-            $scope.loadList();
+            $scope.LoadList();
         };
-        $scope.clickDesc = function() {
+        $scope.ClickDesc = function() {
             $scope.searchObjectMap.order[0] = "DESC";
-            $scope.loadList();
+            $scope.LoadList();
         };
-        //END ORDER
 
-        $scope.view = function(idView) {
+        $scope.View = function(idView) {
             var modalInstance = $modal.open({
                 templateUrl: "ViewLeaveApprove",
                 controller: function($scope) {
                     $scope.idView = idView;
-                    $scope.clickCancel = function(value) {
+                    $scope.ClickCancel = function(value) {
                         if (value !== undefined &&
                             value !== null &&
                             value.isReject === true) {
@@ -77,16 +76,22 @@ angular.module("app.loggedIn.TimeSheet.ApproveLeave.Controller", [])
                             modalInstance.close();
                         }
                     };
-                    $scope.clickReject = function(value) {
-                        if (value !== undefined &&
-                            value !== null &&
-                            value.isReject === false) {
+
+                    /*
+                    clickReject: reject a leave form
+                    input: information of Timesheet
+                    output: - success: send message success
+                            - fail: send message error
+                    */
+                    $scope.ClickReject = function(info) {
+                        if (info !== undefined &&
+                            info !== null &&
+                            info.isReject === false) {
                             $scope.idView = "clickReject";
-                        } else if (value !== undefined &&
-                            value !== null &&
-                            value.isReject === true) {
-                            //Reject leave
-                            TimeSheetService.RejectLeave(value).then(function(response) {
+                        } else if (info !== undefined &&
+                            info !== null &&
+                            info.isReject === true) {
+                            TimeSheetService.RejectLeave(info).then(function(response) {
                                 if (response.status === "success") {
                                     modalInstance.close();
                                     $state.go("loggedIn.timesheetHome.leaveApprove", null, {
@@ -110,8 +115,15 @@ angular.module("app.loggedIn.TimeSheet.ApproveLeave.Controller", [])
                             });
                         }
                     };
-                    $scope.clickApprove = function(value) {
-                        TimeSheetService.ApproveLeave(value).then(function(response) {
+
+                    /*
+                    ClickApprove: approve a leave form
+                    input: information of Timsheet
+                    output: - success: send message success
+                            - fail: send message error
+                    */
+                    $scope.ClickApprove = function(info) {
+                        TimeSheetService.ApproveLeave(info).then(function(response) {
                             if (response.status === "success") {
                                 modalInstance.close();
                                 $state.go("loggedIn.timesheetHome.leaveApprove", null, {
@@ -139,7 +151,12 @@ angular.module("app.loggedIn.TimeSheet.ApproveLeave.Controller", [])
             });
         };
 
-        var init = function() {
+        /*
+        init: load value default for list Leave form
+        input: 
+        output: list:  list Leave form
+        */
+        var Init = function() {
             $scope.searchObject = {
                 limit: 5,
                 offset: 0,
@@ -159,14 +176,13 @@ angular.module("app.loggedIn.TimeSheet.ApproveLeave.Controller", [])
             $scope.searchObjectMap = angular.copy($scope.searchObject);
             $scope.list = {};
             $scope.rows = MODE_ROW;
-            $scope.loadList();
+            $scope.LoadList();
         };
 
-        //CALL INIT
-        init();
-        //END INIT
-        //GET STYLE
-        $scope.getStyle = function(timeLeave) {
+        Init();
+
+        //GetStyle
+        $scope.GetStyle = function(timeLeave) {
             if (timeLeave >= 6000) {
                 return {
                     "margin-right": "5px"
@@ -175,6 +191,4 @@ angular.module("app.loggedIn.TimeSheet.ApproveLeave.Controller", [])
                 return;
             }
         };
-        //END
-
     });

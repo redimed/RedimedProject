@@ -83,7 +83,7 @@
                             </td>
                             <td style="width:90%;">
                                 <div ng-class="{'error-input':isRequired===1 && formLeave.start_date.$error.required}" style="width:202px;">
-                                    <input ng-model="info.start_date" type="text" name="start_date" class="form-control input-sm" datepicker-popup="dd/MM/yyyy" is-open="openDOB1" ng-click="openDOB1 = true" datepicker-options="dateOptions3" max-date="info.finish_date" close-text="Close" style="width:200px; margin-bottom:0px; color:#31708f;" ng-required="info.start_date===undefined || info.start_date===null || info.start_date.length===0" ng-change="checkLeaveExist()"/>
+                                    <input ng-model="info.start_date" type="text" name="start_date" class="form-control input-sm" datepicker-popup="dd/MM/yyyy" is-open="openDOB1" ng-click="openDOB1 = true" datepicker-options="dateOptions3" max-date="info.finish_date" close-text="Close" style="width:200px; margin-bottom:0px; color:#31708f;" ng-required="info.start_date===undefined || info.start_date===null || info.start_date.length===0" ng-change="CheckLeaveExist()"/>
                                 </div>
                             </td>
                         </tr>
@@ -93,7 +93,7 @@
                             </td>
                             <td style="width:90%;">
                                 <div ng-class="{'error-input':isRequired===1 && formLeave.finish_date.$error.required}" style="width:202px;">
-                                    <input ng-model="info.finish_date" type="text" class="form-control input-sm" name="finish_date" datepicker-popup="dd/MM/yyyy" is-open="openDOB2" ng-click="openDOB2 = true" datepicker-options="dateOptions3" max-date="info.work_date" min-date="info.start_date" close-text="Close" style="width:200px; margin-bottom:0px; color:#31708f;" ng-required="info.finish_date===undefined ||info.finish_date===null || info.finish_date.length===0" ng-change="checkLeaveExist()" />
+                                    <input ng-model="info.finish_date" type="text" class="form-control input-sm" name="finish_date" datepicker-popup="dd/MM/yyyy" is-open="openDOB2" ng-click="openDOB2 = true" datepicker-options="dateOptions3" max-date="info.work_date" min-date="info.start_date" close-text="Close" style="width:200px; margin-bottom:0px; color:#31708f;" ng-required="info.finish_date===undefined ||info.finish_date===null || info.finish_date.length===0" ng-change="CheckLeaveExist()" />
                                 </div>
                             </td>
                         </tr>
@@ -114,7 +114,7 @@
             <div class='row'>
                 <label for='idStandard' class='col-md-6 col-sm-6' style='width:270px; margin-left:-15px;'>
                     <div class='col-md-1' style='width:5px;'>
-                        <input type='radio' name="standard" id='idStandard' ng-model="info.standard" ng-value="1" ng-click="clickStandardChange(1)" />
+                        <input type='radio' name="standard" id='idStandard' ng-model="info.standard" ng-value="1" ng-click="ClickStandardChange(1)" />
                     </div>
                     <div class='col-md-11 col-sm-11' style='margin-left:-10px;'>
                         <span class='control-label bold'>STANDARD LEAVE REQUEST</span>
@@ -122,7 +122,7 @@
                 </label>
                 <label for='idNonStandard' class='col-md-6 col-sm-6'>
                     <div class='col-md-1' style='width:5px;'>
-                        <input type='radio' name="nonStandard" id='idNonStandard' ng-model="info.standard" ng-value="0" ng-click="clickStandardChange(0)" />
+                        <input type='radio' name="nonStandard" id='idNonStandard' ng-model="info.standard" ng-value="0" ng-click="ClickStandardChange(0)" />
                     </div>
                     <div class='col-md-11 col-sm-11' style='margin-left:-10px;'>
                         <span class='control-label bold' for='idNonStandard'>NON-STANDARD LEAVE REQUEST</span>
@@ -164,10 +164,10 @@
                                 <input ng-if="l.leave_type_id===5" name="leave_type" class="form-control input-sm" style=" width:435px; margin-bottom:0px;" ng-model="info.infoTypeLeave[$index].type_other" model-validate="info.infoTypeLeave[$index].time_leave" form-validate="formRepeat.leave_type.$error" ng-maxlength="500" ng-required="false"/>
                             </td>
                             <td style="width:10%;">
-                                <input type="text" ui-mask="999:99" name="time_leave_nonStandard" ng-if="info.standard===0 && l.leave_type_id===1" class='form-control input-sm' ng-model="info.infoTypeLeave[$index].time_leave" ng-change="changeTime()" style="text-align:center; margin-bottom:0px;width:100%;" time-chargenon form-validate="formRepeat.time_leave_nonStandard.$error" require-validate="info.infoTypeLeave[$index].reason_leave" ng-required="false"/>
+                                <input type="text" ui-mask="999:99" name="time_leave_nonStandard" ng-if="info.standard===0 && l.leave_type_id===1" class='form-control input-sm' ng-model="info.infoTypeLeave[$index].time_leave" ng-change="ChangeTime()" style="text-align:center; margin-bottom:0px;width:100%;" time-chargenon form-validate="formRepeat.time_leave_nonStandard.$error" require-validate="info.infoTypeLeave[$index].reason_leave" ng-required="false"/>
                                 <!-- END -->
                                 <!-- WHEN STANDARD -->
-                                <input type="text" ui-mask="99:99" name="time_leave_standard" ng-if="(info.standard===1 || (info.standard===0 && l.leave_type_id!==1))" class='form-control input-sm' ng-model="info.infoTypeLeave[$index].time_leave" ng-change="changeTime()" style="text-align:center; margin-bottom:0px;width:100%;" time-chargeleave form-validate="formRepeat.time_leave_standard.$error" require-validate="info.infoTypeLeave[$index].reason_leave" ng-required="false"/>
+                                <input type="text" ui-mask="99:99" name="time_leave_standard" ng-if="(info.standard===1 || (info.standard===0 && l.leave_type_id!==1))" class='form-control input-sm' ng-model="info.infoTypeLeave[$index].time_leave" ng-change="ChangeTime()" style="text-align:center; margin-bottom:0px;width:100%;" time-chargeleave form-validate="formRepeat.time_leave_standard.$error" require-validate="info.infoTypeLeave[$index].reason_leave" ng-required="false"/>
                                 <!-- END -->
                             </td>
                             <td style="width:40%; text-align:center; ">
@@ -194,10 +194,10 @@
             <div class="row" style="margin-right:-7px;">
                 <a class="btn btn-xs yellow pull-right" ng-if="isEdit===true" ui-sref="loggedIn.timesheetHome.leaveHistory" style="width:75px;">Cancel</a>
                 <a class="btn btn-xs yellow pull-right" ng-if="isEdit===false" ui-sref="loggedIn.home" style="width:75px;">Cancel</a>
-                <button class="btn btn-xs blue pull-right" ng-click="clickSendServer(2,formLeave)" style="width:75px;" ng-if="is_reject!==1">Submit</button>
-                <button class="btn btn-xs purple pull-right" ng-click="clickSendServer(5,formLeave)" style="width:75px; " ng-if="is_reject===1">Re-submit</button>
-                <button class="btn btn-xs green pull-right" ng-click="clickSendServer(1,formLeave)" style="width:75px;" ng-if="status_id!==4">Save</button>
-                <button class="btn btn-xs green pull-right" ng-click="clickSendServer(4,formLeave)" style="width:75px;" ng-if="status_id===4">Save</button>
+                <button class="btn btn-xs blue pull-right" ng-click="ClickSendServer(2,formLeave)" style="width:75px;" ng-if="is_reject!==1">Submit</button>
+                <button class="btn btn-xs purple pull-right" ng-click="ClickSendServer(5,formLeave)" style="width:75px; " ng-if="is_reject===1">Re-submit</button>
+                <button class="btn btn-xs green pull-right" ng-click="ClickSendServer(1,formLeave)" style="width:75px;" ng-if="status_id!==4">Save</button>
+                <button class="btn btn-xs green pull-right" ng-click="ClickSendServer(4,formLeave)" style="width:75px;" ng-if="status_id===4">Save</button>
             </div>
         </div>
         <!-- END STANDARD REQUEST -->

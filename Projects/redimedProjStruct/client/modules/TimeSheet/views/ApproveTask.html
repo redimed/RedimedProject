@@ -15,7 +15,7 @@
     <div class="portlet-title">
         <div class="caption">
             List of Timesheets
-            <a ng-click="reset()"><i class="glyphicon glyphicon-refresh"></i></a>
+            <a ng-click="Reset()"><i class="glyphicon glyphicon-refresh"></i></a>
         </div>
     </div>
     <div class="portlet-body">
@@ -32,9 +32,9 @@
                         </th>
                         <th style="width:15%;">
                             <div class="th">
-                                <span class="glyphicon glyphicon-chevron-up" ng-click="weekNoASC()" ng-class="{'active': searchObjectMap.order['time_tasks_week.week_no']==='ASC'}">
+                                <span class="glyphicon glyphicon-chevron-up" ng-click="WeekNoASC()" ng-class="{'active': searchObjectMap.order['time_tasks_week.week_no']==='ASC'}">
                             </span>
-                                <span class="glyphicon glyphicon-chevron-down" ng-click="weekNoDESC()" ng-class="{ 'active': searchObjectMap.order['time_tasks_week.week_no']==='DESC' } ">
+                                <span class="glyphicon glyphicon-chevron-down" ng-click="WeekNoDESC()" ng-class="{ 'active': searchObjectMap.order['time_tasks_week.week_no']==='DESC' } ">
                             </span> For The Week
                             </div>
                         </th>
@@ -58,12 +58,12 @@
                 <tbody>
                     <tr ng-show="list.result!==null || (list.result.length!==0 && list.result!==null)">
                         <td style="width:20%;">
-                            <input type="text" class="form-control input-sm" ng-model="searchObjectMap.name['nameEmployee']" ng-change="loadList()">
+                            <input type="text" class="form-control input-sm" ng-model="searchObjectMap.name['nameEmployee']" ng-change="LoadList()">
                         </td>
                         <td style="width:15%;"></td>
                         <td style="width:13%;"></td>
                         <td style="width:16%;">
-                            <select class="form-control input-sm" ng-model="searchObjectMap.select['time_tasks_week.task_status_id']" ng-options="itemStatus.code as itemStatus.name for itemStatus in listStatus " ng-change="loadList()">
+                            <select class="form-control input-sm" ng-model="searchObjectMap.select['time_tasks_week.task_status_id']" ng-options="itemStatus.code as itemStatus.name for itemStatus in listStatus " ng-change="LoadList()">
                             </select>
                         </td>
                         <td></td>
@@ -73,7 +73,7 @@
                             <h4 class="custom-timesheet">There is no items</h4>
                         </td>
                     </tr>
-                    <tr ng-repeat="l in list.result " ng-class-odd="'odd'" style="cursor: pointer;" ng-dblclick="viewTask(l.task_week_id)">
+                    <tr ng-repeat="l in list.result " ng-class-odd="'odd'" style="cursor: pointer;" ng-dblclick="ViewTask(l.task_week_id)">
                         <td style="text-align:left;width:20%;">
                             {{(l.FirstName==null||l.FirstName=="")?((l.LastName==null||l.LastName=="")?" ":l.LastName):(l.FirstName+" "+((l.LastName==null||l.LastName=="")?" ":l.LastName))}}
                         </td>
@@ -100,14 +100,14 @@
                             <div class="input-group ">
                                 <span class="custom-timesheet ">Total: {{list.count}}</span>
                                 <span class="custom-timesheet ">Show</span>
-                                <select class="custom-timesheet " ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows " style="width:50px;">
+                                <select class="custom-timesheet " ng-model="searchObjectMap.limit " ng-change="LoadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows " style="width:50px;">
                                 </select>
                                 <span class="custom-timesheet ">entries per page</span>
                             </div>
                         </div>
                         <div class="col-ms-6 text-right pagination-container ">
                             <span ng-show="count.loading "><i class="fa fa-spinner fa-spin fa-2x "></i></span>
-                            <pagination boundary-links="true " total-items="list.count " ng-model="searchObjectMap.currentPage " class="pagination-sm " previous-text="&lsaquo; " next-text="&rsaquo; " first-text="&laquo; " last-text="&raquo; " items-per-page="searchObjectMap.limit " max-size="searchObjectMap.maxSize " ng-change="setPage() "></pagination>
+                            <pagination boundary-links="true " total-items="list.count " ng-model="searchObjectMap.currentPage " class="pagination-sm " previous-text="&lsaquo; " next-text="&rsaquo; " first-text="&laquo; " last-text="&raquo; " items-per-page="searchObjectMap.limit " max-size="searchObjectMap.maxSize " ng-change="SetPage() "></pagination>
                         </div>
                     </div>
             </footer>
@@ -115,5 +115,5 @@
         </div>
     </div>
     <script type="text/ng-template " id="ViewTask ">
-        <view-task ng-model="infoTaskWeek" on-cancel="clickCancel(return) " on-reject="clickReject(return)" on-approve="clickApprove(return)"></view-task>
+        <view-task ng-model="infoTaskWeek" on-cancel="ClickCancel(return) " on-reject="ClickReject(return)" on-approve="ClickApprove(return)"></view-task>
     </script>

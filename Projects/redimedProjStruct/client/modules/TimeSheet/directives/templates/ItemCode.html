@@ -84,10 +84,10 @@
                                 <!-- MORE -->
                                 <td ng-show="item.show===true" style="border:1px solid #ccc; text-align:left; width:30%;" ng-if="(item.ITEM_NAME | readMoreSelected).check===true">
                                     <div ng-show="item.show===true" ng-if="item.status===false">
-                                        {{(item.ITEM_NAME | readMoreSelected).value}}<a ng-click="clickShowSelected($index)">&nbsp;&nbsp;More...</a>
+                                        {{(item.ITEM_NAME | readMoreSelected).value}}<a ng-click="ClickShowSelected($index)">&nbsp;&nbsp;More...</a>
                                     </div>
                                     <div ng-show="item.show===true" ng-if="item.status===true">
-                                        {{item.ITEM_NAME}}<a ng-click="clickShowSelected($index)">&nbsp;Close</a>
+                                        {{item.ITEM_NAME}}<a ng-click="ClickShowSelected($index)">&nbsp;Close</a>
                                     </div>
                                 </td>
                                 <td ng-show="item.show===true" style="border:1px solid #ccc; text-align:left; width:30%;" ng-if="(item.ITEM_NAME | readMoreSelected).check===false">
@@ -121,7 +121,7 @@
                                 <td>&nbsp;</td>
                             </tr>
                             <td colspan="7 ">
-                                <a class="btn btn-xs" style="color:#26a69a;font-size:13px; font-weight:bold;" ng-click="clickAdd()"><i class="glyphicon glyphicon-plus-sign" style="font-size:15px; color:#26a69a;"></i>&nbsp;Insert</a>
+                                <a class="btn btn-xs" style="color:#26a69a;font-size:13px; font-weight:bold;" ng-click="ClickAdd()"><i class="glyphicon glyphicon-plus-sign" style="font-size:15px; color:#26a69a;"></i>&nbsp;Insert</a>
                             </td>
                             <!-- end temp row -->
                         </tbody>
@@ -134,34 +134,34 @@
                     <!-- TABLE ITEM-->
                     <center ng-show="list.loading"><i class="fa fa-spinner fa-spin fa-3x"></i>
                     </center> <span class="bold" style="margin-left:3px;font-size:13px;">List of Tasks / Items<span>
-                     <a ng-click="reset()"><i class="fa fa-refresh"></i></a>
+                     <a ng-click="Reset()"><i class="fa fa-refresh"></i></a>
                     <table class="responsive table table-bordered" ng-show="!list.loading">
                 <tbody>
                     <tr style="background-color:#67809f;height:32px;">
                         <td style="text-align:left; width:10%;">
                             <div class="col-md-6">
-                    <input type="text" class="input-sm" ng-model="searchObjectMap.data['time_item_code.ITEM_ID']" ng-change="loadList()" style="border:1px solid #ccc; font-size:13px; width:100px;height:20px;background-color:white;margin-top:3px;" placeholder="Tasks / Items" tabindex="1" id="itemCodeID"/>
+                    <input type="text" class="input-sm" ng-model="searchObjectMap.data['time_item_code.ITEM_ID']" ng-change="LoadList()" style="border:1px solid #ccc; font-size:13px; width:100px;height:20px;background-color:white;margin-top:3px;" placeholder="Tasks / Items" tabindex="1" id="itemCodeID"/>
                 </div>
                 <div class="col-md-6">
-                    <span class="glyphicon glyphicon-chevron-up" ng-click="itemCodeASC()" ng-class="{'active': searchObjectMap.order['time_item_code.ITEM_ID']==='ASC'}">
+                    <span class="glyphicon glyphicon-chevron-up" ng-click="ItemCodeASC()" ng-class="{'active': searchObjectMap.order['time_item_code.ITEM_ID']==='ASC'}">
                             </span>
-                    <span class="glyphicon glyphicon-chevron-down" ng-click="itemCodeDESC()" ng-class="{ 'active': searchObjectMap.order['time_item_code.ITEM_ID']==='DESC' } ">
+                    <span class="glyphicon glyphicon-chevron-down" ng-click="ItemCodeDESC()" ng-class="{ 'active': searchObjectMap.order['time_item_code.ITEM_ID']==='DESC' } ">
                             </span>
                 </div>
                 </td>
                 <td style="text-align:left;width:auto;">
-                    <input type="text" class="input-sm" style="border:1px solid #ccc; font-size:13px; height:20px;background-color:white;margin-top:3px;" placeholder="Description" ng-model="searchObjectMap.data['time_item_code.ITEM_NAME']" ng-change="loadList()" tabindex="2" id="itemNameID">
+                    <input type="text" class="input-sm" style="border:1px solid #ccc; font-size:13px; height:20px;background-color:white;margin-top:3px;" placeholder="Description" ng-model="searchObjectMap.data['time_item_code.ITEM_NAME']" ng-change="LoadList()" tabindex="2" id="itemNameID">
                 </td>
                 </tr>
-                <tr ng-repeat="l in list.result" ng-class-odd="'odd'" style="cursor: pointer; " ng-dblclick="addItem(l.ITEM_ID, l.ITEM_NAME, l.ITEM_UNITS)">
+                <tr ng-repeat="l in list.result" ng-class-odd="'odd'" style="cursor: pointer; " ng-dblclick="AddItem(l.ITEM_ID, l.ITEM_NAME, l.ITEM_UNITS)">
                     <td style="text-align:left;width:10%;font-size:13px;">{{l.ITEM_ID}}
                     </td>
                     <td style="border:1px solid #ccc; text-align:left;font-size:13px; width:auto;" ng-if="(l.ITEM_NAME | readMore).check===true">
                         <div ng-if="l.status===false">
-                            {{(l.ITEM_NAME | readMore).value}}<a ng-click="clickShow($index)">&nbsp;&nbsp;More...</a>
+                            {{(l.ITEM_NAME | readMore).value}}<a ng-click="ClickShow($index)">&nbsp;&nbsp;More...</a>
                         </div>
                         <div ng-if="l.status===true">
-                            {{l.ITEM_NAME}}<a ng-click="clickShow($index)">&nbsp;Close</a>
+                            {{l.ITEM_NAME}}<a ng-click="ClickShow($index)">&nbsp;Close</a>
                         </div>
                     </td>
                     <td style="border:1px solid #ccc; text-align:left;font-size:13px;;" ng-if="(l.ITEM_NAME | readMore).check===false">
@@ -176,13 +176,13 @@
                             <div class="col-md-4 col-sm-5 ">
                                 <span class="bold custom-timesheet">Total: {{list.count}}</span>
                                 <span class="custom-timesheet">Show</span>
-                                <select class="custom-timesheet" ng-model="searchObjectMap.limit " ng-change="loadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows " style="font-size:13px; width:48px;height:18px;">
+                                <select class="custom-timesheet" ng-model="searchObjectMap.limit " ng-change="LoadList() " ng-options="itemRow.code as itemRow.code for itemRow in rows " style="font-size:13px; width:48px;height:18px;">
                                 </select>
                                 <span class="custom-timesheet">entries per page</span>
                             </div>
                             <div class="col-ms-6 text-right pagination-container ">
                                 <span ng-show="count.loading "><i class="fa fa-spinner fa-spin fa-2x "></i></span>
-                                <pagination boundary-links="true " total-items="list.count " ng-model="searchObjectMap.currentPage " class="pagination-sm " previous-text="&lsaquo; " next-text="&rsaquo; " first-text="&laquo; " last-text="&raquo; " items-per-page="searchObjectMap.limit " max-size="searchObjectMap.maxSize " ng-change="setPage() "></pagination>
+                                <pagination boundary-links="true " total-items="list.count " ng-model="searchObjectMap.currentPage " class="pagination-sm " previous-text="&lsaquo; " next-text="&rsaquo; " first-text="&laquo; " last-text="&raquo; " items-per-page="searchObjectMap.limit " max-size="searchObjectMap.maxSize " ng-change="SetPage() "></pagination>
                             </div>
                         </div>
                     </div>

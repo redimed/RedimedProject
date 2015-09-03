@@ -1,31 +1,36 @@
 angular.module("app.loggedIn.TimeSheet.HistoryLeave.Controller", [])
     .controller("HistoryLeaveController", function($scope, TimeSheetService, $cookieStore, toastr, $state, MODE_ROW, $modal, $stateParams) {
-        // FUNCTION RESET
-        $scope.reset = function() {
+        //reset
+        $scope.Reset = function() {
             $scope.searchObjectMap = angular.copy($scope.searchObject);
-            $scope.loadList();
+            $scope.LoadList();
         };
-        // END RESET
 
-        // FUNCTION SET PAGE
-        $scope.setPage = function() {
+        //set page
+        $scope.SetPage = function() {
             $scope.searchObjectMap.offset = ($scope.searchObjectMap.currentPage - 1) * $scope.searchObjectMap.limit;
-            $scope.loadList();
+            $scope.LoadList();
         };
-        // END SET PAGE
 
-        // FUNCTION LOAD LIST
-        $scope.loadList = function() {
+        /*
+        LoadList: load list history Leave form
+        input: 
+        output: list Leave form
+        */
+        $scope.LoadList = function() {
             TimeSheetService.LoadHistoryLeave($scope.searchObjectMap).then(function(response) {
                 $scope.list = response;
                 $scope.count = (response.count !== undefined && response.count !== null) ? response.count : 0;
                 $scope.listStatus = response.resultStatus;
             });
         };
-        // END LOAD LIST
 
-        // FUNCTION INIT
-        var init = function() {
+        /*
+        Init: load list history Leave form default
+        input: information as: pagination, order, search,...
+        output: list Leave form
+        */
+        var Init = function() {
             $scope.searchObject = {
                 limit: 5,
                 offset: 0,
@@ -42,30 +47,36 @@ angular.module("app.loggedIn.TimeSheet.HistoryLeave.Controller", [])
             $scope.rows = MODE_ROW;
             $scope.searchObjectMap = angular.copy($scope.searchObject);
             $scope.list = {};
-            $scope.loadList();
+            $scope.LoadList();
         };
-        // END INIT
 
-        // CALL INIT
-        init();
-        // END CALL
+        Init();
 
-        //FUNCTION VIEW LEAVE
-        $scope.view = function(id) {
+        /*
+        View: show details of Leave form
+        input: id of leave form
+        output: defails of Leave form
+        */
+        $scope.View = function(id) {
             var modalInstance = $modal.open({
                 templateUrl: "ViewLeave",
                 controller: function($scope) {
                     $scope.idView = id;
-                    $scope.clickCancel = function(value) {
+                    $scope.ClickCancel = function(value) {
                         modalInstance.close();
                     };
-                    $scope.clickSubmitAgain = function(statusID, leaveID) {
-                        //UPDATE STATUS
+                    $scope.SubmitOnViewLeave = function(statusID, leaveID) {
                         var info = {
                             statusID: statusID,
                             leaveID: leaveID,
                             userID: $cookieStore.get("userInfo").id
                         };
+                        /*
+                        SubmitOnViewLeave: submit leave form on view detail
+                        input: information leave form
+                        output: - success: send message success
+                                - fail: send message error
+                        */
                         TimeSheetService.SubmitOnViewLeave(info).then(function(response) {
                             if (response.status === "success") {
                                 modalInstance.close();
@@ -79,17 +90,15 @@ angular.module("app.loggedIn.TimeSheet.HistoryLeave.Controller", [])
                                 });
                                 toastr.error("Submit fail!", "Error");
                             } else {
-                                //catch exception
                                 $state.go("loggedIn.home", null, {
                                     "reload": true
                                 });
                                 toastr.error("Server not response!", "Error");
                             }
                         });
-                        //END UPDATE
                     };
 
-                    $scope.clickEdit = function(leaveID) {
+                    $scope.ClickEdit = function(leaveID) {
                         modalInstance.close();
                         $state.go("loggedIn.timesheetHome.leaveCreate", {
                             id: leaveID
@@ -99,20 +108,19 @@ angular.module("app.loggedIn.TimeSheet.HistoryLeave.Controller", [])
                 size: "lg"
             });
         };
-        //END VIEW
 
-        $scope.clickAsc = function() {
+        $scope.ClickAsc = function() {
             $scope.searchObjectMap.order[0] = "ASC";
-            $scope.loadList();
+            $scope.LoadList();
         };
 
-        $scope.clickDesc = function() {
+        $scope.ClickDesc = function() {
             $scope.searchObjectMap.order[0] = "DESC";
-            $scope.loadList();
+            $scope.LoadList();
         };
 
-        //GET STYLE
-        $scope.getStyle = function(timeLeave) {
+        //GetStyle
+        $scope.GetStyle = function(timeLeave) {
             if (timeLeave >= 6000) {
                 return {
                     "margin-right": "5px"
@@ -121,5 +129,4 @@ angular.module("app.loggedIn.TimeSheet.HistoryLeave.Controller", [])
                 return;
             }
         };
-        //END
     });

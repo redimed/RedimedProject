@@ -22,20 +22,20 @@
             <div class="col-md-3">
                 <div class="input-group">
                     <span class="input-group-addon">From</span>
-                    <input ng-model="dateWeekFrom" ng-change="changeDate()" type="text" class="form-control input-sm" name="dob" datepicker-popup="dd/MM/yyyy" is-open="openDOB" ng-click="openDOB = true" datepicker-options="dateOptions3" max-date="dateWeekTo" close-text="Close" style="text-align:center;font-weight:bold;color:blue;">
+                    <input ng-model="dateWeekFrom" ng-change="ChangeDate()" type="text" class="form-control input-sm" name="dob" datepicker-popup="dd/MM/yyyy" is-open="openDOB" ng-click="openDOB = true" datepicker-options="dateOptions3" max-date="dateWeekTo" close-text="Close" style="text-align:center;font-weight:bold;color:blue;">
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="input-group">
                     <span class="input-group-addon">To</span>
-                    <input ng-model="dateWeekTo" ng-change="changeDate()" type="text" class="form-control input-sm" name="dob" datepicker-popup="dd/MM/yyyy" is-open="openDOB1" ng-click="openDOB1 = true" datepicker-options="dateOptions3" close-text="Close" style="text-align:center;font-weight:bold;color:blue;" min-date="dateWeekFrom">
+                    <input ng-model="dateWeekTo" ng-change="ChangeDate()" type="text" class="form-control input-sm" name="dob" datepicker-popup="dd/MM/yyyy" is-open="openDOB1" ng-click="openDOB1 = true" datepicker-options="dateOptions3" close-text="Close" style="text-align:center;font-weight:bold;color:blue;" min-date="dateWeekFrom">
                 </div>
             </div>
             <div class="col-md-3">
-                <div ng-dropdown-multiselect="" extra-settings="searchDept" translation-texts="translationTextDept" options="listDept" selected-model="listDepartmentChoose" checkboxes="true" get-selected="ListNew(info)"></div>
+                <div ng-dropdown-multiselect="" extra-settings="searchDept" translation-texts="translationTextDept" options="listDept" selected-model="listDepartmentChoose" checkboxes="true" get-selected="LoadEmp(info)"></div>
             </div>
             <div class="col-md-3">
-                <div ng-dropdown-multiselect="" extra-settings="searchEmp" translation-texts="translationTextEmp" options="listEmp" selected-model="listEmployeeChoose" get-selected="changeEmp(info)" checkboxes="true"></div>
+                <div ng-dropdown-multiselect="" extra-settings="searchEmp" translation-texts="translationTextEmp" options="listEmp" selected-model="listEmployeeChoose" get-selected="ChangeEmp(info)" checkboxes="true"></div>
             </div>
         </div>
     </div>
@@ -43,7 +43,7 @@
 <div class="row">
     <div class="col-md-12">
         <a ui-sref="loggedIn.home" class="btn btn-xs pull-right red">Cancel</a>
-        <a class="btn btn-xs pull-right green" ng-click="clickReview()" ng-disabled="dateWeekFrom===null || dateWeekFrom===undefined || dateWeekFrom.length===0 || dateWeekTo===undefined || dateWeekTo===null ||dateWeekTo.length===0 || listDepartmentChoose.length===0 || listEmployeeChoose.length===0 || isHavedata==0 " href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/timeSheetDetailActivities/{{USER_ID}}" target="_blank">Display</a>
+        <a class="btn btn-xs pull-right green" ng-click="ClickReview()" ng-disabled="dateWeekFrom===null || dateWeekFrom===undefined || dateWeekFrom.length===0 || dateWeekTo===undefined || dateWeekTo===null ||dateWeekTo.length===0 || listDepartmentChoose.length===0 || listEmployeeChoose.length===0 || isHavedata==0 " href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/timeSheetDetailActivities/{{USER_ID}}" target="_blank">Display</a>
     </div>
 </div>
 <!-- END INFO SYS -->

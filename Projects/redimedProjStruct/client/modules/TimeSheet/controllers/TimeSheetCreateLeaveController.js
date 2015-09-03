@@ -2,26 +2,20 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
     .controller("CreateLeaveController", function($scope, TimeSheetService, $cookieStore, $state, toastr, $modal, StaffService, $stateParams) {
         $scope.info = {};
 
-        // POPUP DATE
+        //popup date
         $scope.dateOptions = {
             formatYear: "yy",
             startingDate: 1
         };
-        //END POPUP
 
-        if ($stateParams.id) {
-
-            //SET FIELD EDIT
-            $scope.isEdit = true;
-            //END SET
-            var info = {
-                idLeave: $stateParams.id,
-                userId: $cookieStore.get("userInfo").id
-            };
-            //EDIT
+        /*
+        LoadLeaveEdit: load a Leave form to edit
+        input: information Leave form
+        output: Leave form
+        */
+        $scope.LoadLeaveEdit = function(info) {
             TimeSheetService.LoadLeaveEdit(info).then(function(response) {
                 if (response.status === "success") {
-
                     if (response !== undefined && response !== null &&
                         response.resultLeave !== undefined &&
                         response.resultLeave !== null &&
@@ -30,15 +24,11 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                         $scope.info = response.resultLeave[0];
                         $scope.is_reject = response.resultLeave[0].is_reject;
                         $scope.status_id = response.resultLeave[0].status_id;
-
-                        //convert time
-                        $scope.info.time_leave = StaffService.convertFromFullToShow($scope.info.time_leave);
-                        //end
+                        //convert format time
+                        $scope.info.time_leave = StaffService.ConvertFromFullToShow($scope.info.time_leave);
                     }
-
                     $scope.info.infoTypeLeave = response.resultLeaveDetail;
-
-                    //convert time
+                    //convert format time
                     angular.forEach($scope.info.infoTypeLeave, function(leave, index) {
                         if ($scope.info.infoTypeLeave[index] !== undefined &&
                             $scope.info.infoTypeLeave[index] !== null &&
@@ -46,7 +36,7 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                             $scope.info.infoTypeLeave[index].time_leave !== null &&
                             $scope.info.infoTypeLeave[index].time_leave !== 0 &&
                             !(isNaN($scope.info.infoTypeLeave[index].time_leave))) {
-                            $scope.info.infoTypeLeave[index].time_leave = StaffService.convertFromFullToShow($scope.info.infoTypeLeave[index].time_leave);
+                            $scope.info.infoTypeLeave[index].time_leave = StaffService.ConvertFromFullToShow($scope.info.infoTypeLeave[index].time_leave);
                             if (index === 0 &&
                                 $scope.info.infoTypeLeave[index].time_leave.length === 4 &&
                                 $scope.info.standard === 0) {
@@ -54,11 +44,7 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                             }
                         }
                     });
-                    //end convert
-
-                    //CALL CHANGE TIME - INIT TIME CHARGE
-                    $scope.changeTime();
-                    //END CALL
+                    $scope.ChangeTime();
                 } else {
                     $state.go("loggedIn.home", null, {
                         "reload": true
@@ -66,10 +52,15 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                     toastr.error("Load fail!", "Error");
                 }
             });
-        } else {
-            $scope.isEdit = false;
-            //ADD NEW
-            //LOAD INFO EMPLOYEE
+        };
+
+        /*
+        LoadLeaveAddNew: load information to create new Timesheet
+        input:
+        output: new Timesheet
+        */
+        $scope.LoadLeaveAddNew = function() {
+            //load information employee
             if ($cookieStore.get('userInfo') !== undefined && $cookieStore.get('userInfo') !== null &&
                 $cookieStore.get("userInfo").id !== undefined && $cookieStore.get("userInfo").id !== null) {
                 TimeSheetService.LoadInfoEmployee($cookieStore.get('userInfo').id).then(function(response) {
@@ -103,18 +94,88 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                 });
                 toastr.error("You not section!", "Error");
             }
-            //END LOAD INFO
-        }
-        $scope.clickSendServer = function(statusID, formLeave) {
-            $scope.isRequired = 1; //SET REQUIRED
+        };
 
-            //ERROR INPUT
+        /*
+        CreateLeaveForm: create new Leave form
+        input: new Leave form data
+        output: 
+            - success: send message success
+            - fail: send message error
+        */
+        $scope.CreateLeaveForm = function(info) {
+            TimeSheetService.CreateLeaveForm(info).then(function(response) {
+                if (response.status === "success") {
+                    toastr.success("Apply leave success!", "Success");
+                    $state.go("loggedIn.timesheetHome.leaveHistory", null, {
+                        "reload": true
+                    });
+                } else if (response.status === "error") {
+                    $state.go("loggedIn.home", null, {
+                        "reload": true
+                    });
+                    toastr.error("Apply leave fail!", "Error");
+                } else {
+                    $state.go("loggedIn.home", null, {
+                        "reload": true
+                    });
+                    toastr.error("Server not response!", "Error");
+                }
+            });
+        };
+
+        /*
+        UpdateLeave: update a Leave form
+        input: data leave form update
+        output: - success: send message success
+                - error: send message error
+        */
+        $scope.UpdateLeave = function(info) {
+            TimeSheetService.UpdateLeave(info).then(function(response) {
+                if (response.status === "success") {
+                    $state.go("loggedIn.timesheetHome.leaveHistory", null, {
+                        "reload": true
+                    });
+                    toastr.success("Update leave success!", "Success");
+                } else if (response.status === "error") {
+                    toastr.error("Update leave fail!", "Error");
+                } else {
+                    $state.go("loggedIn.home", null, {
+                        "reload": true
+                    });
+                    toastr.error("Server not response!", "Error");
+                }
+            });
+        };
+
+        if ($stateParams.id) {
+            $scope.isEdit = true;
+            var info = {
+                idLeave: $stateParams.id,
+                userId: $cookieStore.get("userInfo").id
+            };
+            $scope.LoadLeaveEdit(info);
+
+        } else {
+            $scope.isEdit = false;
+            $scope.LoadLeaveAddNew();
+        }
+
+        /*
+        ClickSendServer: validate Leave form and call create new leave or update leave function
+        input: - statusID: status id of leave form
+               - formLeave: form enter leave form
+        output: - success: call function create, update leave form
+                - error: send message error
+        */
+        $scope.ClickSendServer = function(statusID, formLeave) {
+            $scope.isRequired = 1;
+            //validate input required
             if (formLeave.$invalid) {
                 toastr.error("Please Input All Required Information!", "Error");
             }
-            //END ERROR
 
-            //ERROR NOT SIGN TIME LEAVE
+            //validate enter time leave
             else if ($scope.info.time_leave_real === 0 ||
                 $scope.info.time_leave === undefined ||
                 $scope.info.time_leave === null ||
@@ -127,82 +188,47 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                         ($scope.info.time_leave_real <= 4560 &&
                             $scope.info.standard === 0)))) {
                 toastr.warning("Please make sure you have chosen the right type of Leave Form (Standard/Non-Standard).", "Warning");
-            }
-            //END SIGN TIME LEAVE
-
-            //NOT ERROR INPUT
-            else {
+            } else {
                 $scope.info.statusID = statusID;
+                //check exist cookieStore userInfo and get userId
                 $scope.info.USER_ID = ($cookieStore.get('userInfo') !== undefined) ? $cookieStore.get('userInfo').id : null;
+
                 if ($scope.isEdit === false) {
-                    //ADD NEW
-
-                    //SAVE LEAVE FORM IN SERVER
-                    TimeSheetService.UpLeaveServer($scope.info).then(function(response) {
-                        if (response.status === "success") {
-                            toastr.success("Apply leave success!", "Success");
-                            $state.go("loggedIn.timesheetHome.leaveHistory", null, {
-                                "reload": true
-                            });
-                        } else if (response.status === "error") {
-                            $state.go("loggedIn.home", null, {
-                                "reload": true
-                            });
-                            toastr.error("Apply leave fail!", "Error");
-                        } else {
-                            $state.go("loggedIn.home", null, {
-                                "reload": true
-                            });
-                            toastr.error("Server not response!", "Error");
-                        }
-                    });
-                    // END SAVE SERVER
-
+                    //create
+                    $scope.CreateLeaveForm($scope.info);
                 } else if ($scope.isEdit === true) {
-
-                    //UPDATE
-                    TimeSheetService.UpdateLeave($scope.info).then(function(response) {
-                        if (response.status === "success") {
-                            $state.go("loggedIn.timesheetHome.leaveHistory", null, {
-                                "reload": true
-                            });
-                            toastr.success("Update leave success!", "Success");
-                        } else if (response.status === "error") {
-                            toastr.error("Update leave fail!", "Error");
-                        } else {
-
-                            //catch exception
-                            $state.go("loggedIn.home", null, {
-                                "reload": true
-                            });
-                            toastr.error("Server not response!", "Error");
-                        }
-                    });
+                    //update
+                    $scope.UpdateLeave($scope.info);
                 }
 
             }
-            //END NOT ERROR
         };
 
-        //FUNCTION CHANGE TIME LEAVE
-        $scope.changeTime = function() {
+        /*
+        ChangeTime: sum time charge when enter time charge
+        input: 
+        output: total time charge
+        */ 
+        $scope.ChangeTime = function() {
             var total_time = 0;
             angular.forEach($scope.info.infoTypeLeave, function(time, index) {
-                total_time += StaffService.convertShowToFull($scope.info.infoTypeLeave[index].time_leave);
-                $scope.info.infoTypeLeave[index].time_leave_real = StaffService.convertShowToFull($scope.info.infoTypeLeave[index].time_leave);
+                total_time += StaffService.ConvertShowToFull($scope.info.infoTypeLeave[index].time_leave);
+                $scope.info.infoTypeLeave[index].time_leave_real = StaffService.ConvertShowToFull($scope.info.infoTypeLeave[index].time_leave);
             });
-            $scope.info.time_leave = StaffService.convertFromFullToShow(total_time);
-            $scope.info.time_leave_real = StaffService.convertShowToFull($scope.info.time_leave);
-            //SHOW __ 
+            $scope.info.time_leave = StaffService.ConvertFromFullToShow(total_time);
+            $scope.info.time_leave_real = StaffService.ConvertShowToFull($scope.info.time_leave);
+            //show __ 
             if (total_time === 0) {
                 $scope.info.time_leave = null;
             }
-            //END SHOW __
         };
-        //END CHANGE TIME LEAVE
 
-        // FUNCTION CHANGE STANDARD
-        $scope.clickStandardChange = function(standardID) {
+        /*
+        ClickStandardChange: convert format time charge hh-mm or hhh-mm when time charge change
+        input: id of standard
+        output: format time chagre changed
+        */
+        $scope.ClickStandardChange = function(standardID) {
             if (standardID === 1) {
                 if ($scope.info.infoTypeLeave !== undefined && $scope.info.infoTypeLeave !== null &&
                     $scope.info.infoTypeLeave[0] !== undefined && $scope.info.infoTypeLeave[0] !== null &&
@@ -211,9 +237,7 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                     $scope.info.infoTypeLeave[0].time_leave.length === 5) {
                     $scope.info.infoTypeLeave[0].time_leave = $scope.info.infoTypeLeave[0].time_leave.substr(1, $scope.info.infoTypeLeave[0].time_leave.length - 1);
 
-                    //CALL CHANGETIME
-                    $scope.changeTime();
-                    //END CALL
+                    $scope.ChangeTime();
                 }
             } else if (standardID === 0) {
                 if ($scope.info.infoTypeLeave !== undefined &&
@@ -225,16 +249,17 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                     $scope.info.infoTypeLeave[0].time_leave.length === 4) {
                     $scope.info.infoTypeLeave[0].time_leave = '0' + $scope.info.infoTypeLeave[0].time_leave;
 
-                    //CALL CHANGETIME
-                    $scope.changeTime();
-                    //END CALL
+                    $scope.ChangeTime();
                 }
             }
         };
-        //END CHANGE STANDARD
 
-        //FUNCTION CHECK LEAVE EXIST
-        $scope.checkLeaveExist = function() {
+        /*
+        CheckLeaveExist: Check user exist leave form from start date to finish date
+        input: 
+        output: - exist: notification and load that Leave form
+        */
+        $scope.CheckLeaveExist = function() {
             if ($scope.info.start_date !== undefined &&
                 $scope.info.start_date !== null &&
                 $scope.info.start_date.length !== 0 &&
@@ -277,5 +302,4 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
                 });
             }
         };
-        //END CHECK LEAVE
     });

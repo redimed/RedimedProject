@@ -1,7 +1,13 @@
 angular.module("app.loggedIn.timesheet.view.controller", [])
 
 .controller("TimesheetViewController", function($rootScope, $scope, MODE_ROW, $filter, $cookieStore, ConfigService, $modal, calendarHelper, moment, StaffService, $state, toastr) {
-    //SELECT STATUS
+    //popup date
+    $scope.dateOptions = {
+        formatYear: 'yy',
+        startingDay: 1
+    };
+
+    //set status
     $scope.listStatus = [{
         code: 1,
         name: "Awaiting for Submit"
@@ -18,27 +24,28 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
         code: 5,
         name: "Re-submitted"
     }];
-    //END SELECT STATUS
 
-    //FUNCTION SETPAGE
-    $scope.setPage = function() {
+    //set page
+    $scope.SetPage = function() {
         $scope.searchObjectMap.offset = ($scope.searchObjectMap.currentPage - 1) * $scope.searchObjectMap.limit;
-        $scope.loadList();
+        $scope.LoadList();
     };
-    //END FUNCTION SETPAGE
 
-    //FUNCTION RESET
-    $scope.reset = function() {
+    //reset
+    $scope.Reset = function() {
         $scope.searchObjectMap = angular.copy($scope.searchObject);
-        $scope.loadList();
+        $scope.LoadList();
         $scope.dateWeekFrom = null;
 
     };
-    //END FUNCTION RESET
 
-    //FUNCTION LOADLIST
-    $scope.loadList = function() {
-        StaffService.getAllTaskAMonth($scope.searchObjectMap).then(function(response) {
+    /*
+    LoadList: load list history Timesheet
+    input: 
+    output: list timesheet
+    */
+    $scope.LoadList = function() {
+        StaffService.GetAllTaskAMonth($scope.searchObjectMap).then(function(response) {
             if (response['status'] == 'error') {
                 toastr.error("Error", "Error");
             } else if (response['status'] == 'no task') {
@@ -48,16 +55,14 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
             }
         });
     };
-    //END FUNCTION LOADLIST
 
-    //FUNCTION FORMAT TIME
-    $scope.getFortMatTimeCharge = function(val) {
-        return StaffService.getFortMatTimeCharge(val);
+    //format time charge
+    $scope.GetFortMatTimeCharge = function(val) {
+        return StaffService.GetFortMatTimeCharge(val);
     };
-    //END FUNCTION FORMAT TIME
 
-    //FUNCTION GET WEEK
-    $scope.getWeekNumber = function(d) {
+    //get week' number
+    $scope.GetWeekNumber = function(d) {
         d = new Date(+d);
         d.setHours(0, 0, 0);
         d.setDate(d.getDate() + 4 - (d.getDay() || 7));
@@ -65,17 +70,20 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
         var weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
         return weekNo;
     };
-    //END FUNCTION GET WEEK
 
-    //FUNCTION INIT
-    var init = function() {
+    /*
+    Init: load list Timesheet detault
+    input: 
+    output: list Timeshest
+    */
+    var Init = function() {
         $scope.rows = MODE_ROW;
         $scope.searchObject = {
             limit: 10,
             offset: 0,
             maxSize: 5,
             currentPage: 1,
-            userID: ($cookieStore.get('userInfo')!==undefined) ? $cookieStore.get('userInfo').id : null,
+            userID: ($cookieStore.get('userInfo') !== undefined) ? $cookieStore.get('userInfo').id : null,
             week_no: null,
             order: {
                 0: "DESC"
@@ -85,30 +93,21 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
             }
         };
 
-        //SEARCH FUNCTION
         $scope.searchObjectMap = angular.copy($scope.searchObject);
-        //END SEARCH FUNCTION
 
         $scope.list = {};
-        $scope.loadList();
-        //format date
-        $scope.dateOptions = {
-            formatYear: 'yy',
-            startingDay: 1
-        };
-        //end format date
+        $scope.LoadList();
+
     };
-    //END FUNCTION INIT
 
-    //CALL INIT FUNCTION
-    init();
-    //END CAL INIT FUNCTION
+    Init();
 
-    $scope.changeDate = function(dateValue) {
+    //change date
+    $scope.ChangeDate = function(dateValue) {
         var dateFrom = new Date(dateValue.substr(6, 4), dateValue.substr(3, 2) - 1, dateValue.substr(0, 2));
-        $scope.searchObjectMap.week_no = $scope.getWeekNumber(dateFrom);
+        $scope.searchObjectMap.week_no = $scope.GetWeekNumber(dateFrom);
         $scope.searchObjectMap.dateFrom = dateFrom;
-        $scope.loadList();
+        $scope.LoadList();
     };
 
     if (!$scope.tasks) {
@@ -132,7 +131,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
     $scope.calendarDay = new Date();
 
 
-    $scope.orderWeek = function(type) {
+    $scope.OrderWeek = function(type) {
         if (type == 'desc') {
             $scope.list.result = $filter('orderBy')($scope.list.result, 'week_no', true);
             $scope.isAsc = false;
@@ -142,7 +141,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
         }
     };
 
-    $scope.chooseItem = function(task) {
+    $scope.ChooseItem = function(task) {
         var modalInstance = $modal.open({
             templateUrl: "modules/TimeSheet/views/itemModal.html",
             controller: 'ItemController',
@@ -150,7 +149,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
         });
     };
 
-    $scope.view = function(item) {
+    $scope.View = function(item) {
         var modalInstance = $modal.open({
             templateUrl: "modules/TimeSheet/views/viewTimesheetByHour.html",
             controller: "ViewTimesheetByHourController",
@@ -163,19 +162,17 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
         });
     };
 
-    $scope.clickAsc = function() {
+    $scope.ClickAsc = function() {
         $scope.searchObjectMap.order[0] = "ASC";
-        $scope.loadList();
+        $scope.LoadList();
     };
 
-    $scope.clickDesc = function() {
+    $scope.ClickDesc = function() {
         $scope.searchObjectMap.order[0] = "DESC";
-        $scope.loadList();
+        $scope.LoadList();
     };
 
-    //CHECK MOTH AND WEEK
-    StaffService.showWeek(); //    VIEW NOT DISABLE
-    //END
+    StaffService.ShowWeek();
 })
 
 .controller("ViewDetailController", function($rootScope, $modalInstance, $modal, $scope, $cookieStore, $filter, ConfigService, calendarHelper, moment, StaffService, $state, toastr, infoWeek) {
@@ -183,8 +180,8 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
         $scope.tasks = [];
     }
 
-    //FUNCTION GET WEEK NUMBER
-    $scope.getWeekNumber = function(d) {
+    //get week's number
+    $scope.GetWeekNumber = function(d) {
         d = new Date(+d);
         d.setHours(0, 0, 0);
         d.setDate(d.getDate() + 4 - (d.getDay() || 7));
@@ -192,67 +189,82 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
         var weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
         return weekNo;
     };
-    //FUNCTION GET WEEK NUMBER
 
-    // GET TIME IN LIEU TO CHECK SUBMIT
     var info = {
         date: new Date(),
-        userId: ($cookieStore.get('userInfo')!==undefined) ? $cookieStore.get('userInfo').id : null
+        userId: ($cookieStore.get('userInfo') !== undefined) ? $cookieStore.get('userInfo').id : null
     };
-    StaffService.checkTimeInLieu(info).then(function(response) {
-        if (response.status === "error") {
-            toastr.error("Check Time in Lieu fail!", "Fail");
-        } else if (response.status === "success") {
-            var timeInLieu = 0;
-            angular.forEach(response.result, function(data, index) {
-                timeInLieu += data.time_in_lieu;
-            });
-            $scope.time_in_lieuHas = timeInLieu;
 
-        } else {
-            $state.go("loggedIn.home", null, {
-                "reload": true
-            });
-            toastr.error("Server not response!", "Error");
-        }
-    });
-    //END
 
-    $scope.getDay = function(day) {
+    /*
+    checkTimeInLieu: check employee's time in lieu for lastest 2 weeks from current date.
+    input:
+    output: employee's time in lieu.
+    */
+    $scope.CheckTimeInLieu = function(info) {
+        StaffService.CheckTimeInLieu(info).then(function(response) {
+            if (response.status === "error") {
+                toastr.error("Check Time in Lieu fail!", "Fail");
+            } else if (response.status === "success") {
+                var timeInLieu = 0;
+                angular.forEach(response.result, function(data, index) {
+                    timeInLieu += data.time_in_lieu;
+                });
+                $scope.time_in_lieuHas = timeInLieu;
+
+            } else {
+                $state.go("loggedIn.home", null, {
+                    "reload": true
+                });
+                toastr.error("Server not response!", "Error");
+            }
+        });
+    };
+
+    $scope.CheckTimeInLieu(info);
+
+    $scope.GetDay = function(day) {
         var date = new Date(day);
         return date.getDay() === 0 ? 7 : date.getDay();
     };
 
     $scope.week = infoWeek;
 
-    $scope.getFortMatTimeCharge = function(val) {
-        return StaffService.getFortMatTimeCharge(val);
+    $scope.GetFortMatTimeCharge = function(val) {
+        return StaffService.GetFortMatTimeCharge(val);
     };
 
-    $scope.cancelClick = function() {
+    $scope.CancelClick = function() {
         $modalInstance.close();
     };
 
-    $scope.okClick = function() {
+    $scope.OkClick = function() {
         $modalInstance.close();
         $state.go('loggedIn.timesheetHome.timesheetCreate', {
             id: infoWeek.task_week_id
         });
     };
-    //summit on date
-    $scope.submitClick = function(value) {
+    /*
+    SubmitOnView: submit time sheet on view detail
+    input: information timesheet
+    output:  - success: send message success
+             - fail: send message error
+    */
+    $scope.SubmitOnView = function(info) {
+        //validate time charge
         if ($scope.week.time_charge < (38 * 60)) {
             toastr.warning("Please check time charge(>=38)", "Error");
+            //validate time in lieu
         } else if ($scope.time_in_lieuChoose > $scope.time_in_lieuHas) {
             toastr.warning("Please check time in lieu use larger time in lieu you have!", "Fail");
         } else {
-            value.status = 0;
-            if (value.STATUS == 'Awaiting for Submit') {
-                value.status = 2;
-            } else if (value.STATUS == 'Rejected') {
-                value.status = 5;
+            info.status = 0;
+            if (info.STATUS == 'Awaiting for Submit') {
+                info.status = 2;
+            } else if (info.STATUS == 'Rejected') {
+                info.status = 5;
             }
-            StaffService.SubmitOnView(value).then(function(response) {
+            StaffService.SubmitOnView(info).then(function(response) {
                 if (response.status === 'error') {
                     toastr.error("Submit fail!", "Error");
                     $modalInstance.close();
@@ -267,11 +279,15 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
             });
         }
     };
-    //end
 
-    $scope.loadInfo = function() {
+    /*
+    LoadInfo: load Timesheet detail
+    input: 
+    output: detail Timesheet
+    */
+    $scope.LoadInfo = function(idTaskWeek) {
         $scope.tasks.loading = true;
-        StaffService.getTask(infoWeek.task_week_id).then(function(response) {
+        StaffService.GetTask(idTaskWeek).then(function(response) {
             if (response['status'] == 'fail' || response['status'] == 'error') {
                 toastr.error("Error", "Error");
             } else if (response['status'] == 'success') {
@@ -281,51 +297,44 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                     result[0] !== undefined) {
                     $scope.ID_WEEK = result[0].tasks_week_id;
                     $scope.STATUS = result[0].STATUS;
-                    $scope.USER_ID = ($cookieStore.get('userInfo')!==undefined) ? $cookieStore.get('userInfo').id : null;
+                    $scope.USER_ID = ($cookieStore.get('userInfo') !== undefined) ? $cookieStore.get('userInfo').id : null;
                     $scope.after_status_id = result[0].after_status_id;
                     $scope.time_in_lieuChoose = result[0].time_in_lieuChoose;
-                    //TRACKER
+
+                    //tracker
                     $scope.submitOnView = {};
                     $scope.submitOnView.STATUS = $scope.STATUS;
                     $scope.submitOnView.ID_WEEK = $scope.ID_WEEK;
                     $scope.submitOnView.USER_ID = $scope.USER_ID;
-                    //END
+
                     $scope.employee_name = (result[0].FirstName === null || result[0].FirstName === "") ? ((result[0].LastName === null || result[0].LastName === "") ? " " : result[0].LastName) : (result[0].FirstName + " " + ((result[0].LastName === null || result[0].LastName === "") ? " " : result[0].LastName));
                 }
-                //end get
-                if (infoWeek.date != 'full') {
-                    $scope.one = true;
-                    $scope.Title = "Timesheet Detail"; //seet title TimeSheet Detail
-                    $scope.tasks = _.filter(response['data'], function(data) {
-                        return data.date == infoWeek.date;
+                $scope.one = true;
+                $scope.Title = "Timesheet Detail";
+                $scope.tasks = _.filter(response['data'], function(data) {
+                    return data.date == infoWeek.date;
+                });
+                //push file
+                angular.forEach($scope.tasks, function(valueTask, indexTask) {
+                    $scope.tasks[indexTask].files = [];
+                    angular.forEach(response['file'], function(valueFile, indexFile) {
+                        if (valueTask.tasks_id === valueFile.tasks_id &&
+                            valueTask.ITEM_ID === valueFile.ITEM_ID) {
+                            $scope.tasks[indexTask].files.push({
+                                file_id: valueFile.file_id,
+                                file_name: valueFile.file_name
+                            });
+                        }
                     });
-                    //PUSH FILE
-                    angular.forEach($scope.tasks, function(valueTask, indexTask) {
-                        $scope.tasks[indexTask].files = [];
-                        angular.forEach(response['file'], function(valueFile, indexFile) {
-                            if (valueTask.tasks_id === valueFile.tasks_id &&
-                                valueTask.ITEM_ID === valueFile.ITEM_ID) {
-                                $scope.tasks[indexTask].files.push({
-                                    file_id: valueFile.file_id,
-                                    file_name: valueFile.file_name
-                                });
-                            }
-                        });
-                    });
-                    //END PUSH
-                } else {
-                    $scope.Title = "Full Timesheet"; //set title Full Timesheet
-                    $scope.one = false;
-                    $scope.tasks = response['data'];
-                }
+                });
             }
         });
         $scope.tasks.loading = false;
     };
 
-    $scope.loadInfo();
+    $scope.LoadInfo(infoWeek.task_week_id);
 
-    $scope.chooseItem = function(item) {
+    $scope.ChooseItem = function(item) {
         var modalInstance = $modal.open({
             templateUrl: "modules/TimeSheet/views/itemModal.html",
             controller: 'ItemController',
@@ -352,8 +361,8 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
     if (!$scope.info) {
         $scope.info = {};
     }
-    //FUNCTION GET WEEK NUMBER
-    $scope.getWeekNumber = function(d) {
+    //get week's number
+    $scope.GetWeekNumber = function(d) {
         d = new Date(+d);
         d.setHours(0, 0, 0);
         d.setDate(d.getDate() + 4 - (d.getDay() || 7));
@@ -361,39 +370,53 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
         var weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
         return weekNo;
     };
-    //FUNCTION GET WEEK NUMBER
-    // GET TIME IN LIEU TO CHECK SUBMIT
+
+    /*
+    checkTimeInLieu: check employee's time in lieu for lastest 2 weeks from current date.
+    input:
+    output: employee's time in lieu.
+    */
+    $scope.CheckTimeInLieu = function(info) {
+        StaffService.CheckTimeInLieu(info).then(function(response) {
+            if (response.status === "error") {
+                toastr.error("Check Time in Lieu fail!", "Fail");
+            } else if (response.status === "success") {
+                var timeInLieu = 0;
+                angular.forEach(response.result, function(data, index) {
+                    timeInLieu += data.time_in_lieu;
+                });
+                $scope.time_in_lieuHas = timeInLieu;
+
+            } else {
+                $state.go("loggedIn.home", null, {
+                    "reload": true
+                });
+                toastr.error("Server not response!", "Error");
+            }
+        });
+    };
+
     var info = {
         date: new Date(),
-        userId: ($cookieStore.get('userInfo')!==undefined) ? $cookieStore.get('userInfo').id : null
+        userId: ($cookieStore.get('userInfo') !== undefined) ? $cookieStore.get('userInfo').id : null
     };
-    StaffService.checkTimeInLieu(info).then(function(response) {
-        if (response.status === "error") {
-            toastr.error("Check Time in Lieu fail!", "Fail");
-        } else if (response.status === "success") {
-            var timeInLieu = 0;
-            angular.forEach(response.result, function(data, index) {
-                timeInLieu += data.time_in_lieu;
-            });
-            $scope.time_in_lieuHas = timeInLieu;
+    $scope.CheckTimeInLieu(info);
 
-        } else {
-            $state.go("loggedIn.home", null, {
-                "reload": true
-            });
-            toastr.error("Server not response!", "Error");
-        }
-    });
-    //END
-
-    $scope.getFortMatTimeCharge = function(val) {
-        return StaffService.getFortMatTimeCharge(val);
+    $scope.GetFortMatTimeCharge = function(val) {
+        return StaffService.GetFortMatTimeCharge(val);
     };
 
-    $scope.cancelClick = function() {
+    $scope.ClickCancel = function() {
         $modalInstance.close();
     };
-    $scope.submitClick = function(value) {
+
+    /*
+    SubmitClick: Submit Timesheet on view detail
+    input: information Timesheet
+    output: - success: send message success
+            - fail: send message error
+    */
+    $scope.SubmitOnView = function(value) {
         if ($scope.week.time_charge < (38 * 60)) {
             toastr.warning("Please check time charge(>=38)", "Error");
         } else if ($scope.time_in_lieuChoose > $scope.time_in_lieuHas) {
@@ -420,7 +443,8 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
             });
         }
     };
-    $scope.okClick = function() {
+
+    $scope.OkClick = function() {
         $modalInstance.close();
         $state.go('loggedIn.timesheetHome.timesheetCreate', {
             id: infoWeek.task_week_id
@@ -428,33 +452,38 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
     };
     $scope.week = infoWeek;
 
-    $scope.loadInfo = function() {
+    /*
+    LoadInfo: load detail Timesheet
+    input: 
+    output: detail of Timesheet
+    */
+    $scope.LoadInfo = function() {
         $scope.tasks.loading = true;
-        StaffService.showDetailDate(infoWeek.task_week_id).then(function(response) {
+        StaffService.ShowDetailDate(infoWeek.task_week_id).then(function(response) {
             if (response['status'] == 'fail' || response['status'] == 'error') {
                 toastr.error("Error", "Error");
             } else if (response['status'] == 'success') {
 
-                //SET SOME VALUE CHECK STATUS AND BUTTON
+                //check input and button enable - disable
                 var result = response.data;
                 if (result !== undefined && result[0] !== undefined) {
                     $scope.STATUS = result[0].status;
                     $scope.ID_WEEK = result[0].tasks_week_id;
                     $scope.time_in_lieuChoose = result[0].time_in_lieuChoose;
-                    $scope.USER_ID = ($cookieStore.get('userInfo')!==undefined) ? $cookieStore.get('userInfo').id : null;
-                    //TRACKER
+                    $scope.USER_ID = ($cookieStore.get('userInfo') !== undefined) ? $cookieStore.get('userInfo').id : null;
+                    //tracker
                     $scope.submitOnView = {};
                     $scope.submitOnView.STATUS = $scope.STATUS;
                     $scope.submitOnView.ID_WEEK = $scope.ID_WEEK;
                     $scope.submitOnView.USER_ID = $scope.USER_ID;
-                    //END
+
                     $scope.afterStatusID = result[0].after_status_id;
                     $scope.employee_name = (result[0].FirstName === null || result[0].FirstName === "") ? ((result[0].LastName === null || result[0].LastName === "") ? " " : result[0].LastName) : (result[0].FirstName + " " + ((result[0].LastName === null || result[0].LastName === "") ? " " : result[0].LastName));
                 }
-                // END
                 var arrayDate = [];
                 var arrayActivity = [];
-                //PUSH DATE
+
+                //sum and group by time charge
                 angular.forEach(response['data'], function(valueData, indexData) {
                     var isFoundDate = false;
                     angular.forEach(arrayDate, function(valueDate, indexDate) {
@@ -468,7 +497,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
                         });
                     }
                 });
-                //END
+
                 angular.forEach(arrayDate, function(valueDate, indexDate) {
                     var timeChargeDate = 0;
                     var timeChargeActivity = 0;
@@ -499,9 +528,9 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
         $scope.tasks.loading = false;
     };
 
-    $scope.loadInfo();
+    $scope.LoadInfo();
 
-    $scope.viewDetailDate = function(infoWeek, date) {
+    $scope.ViewDetailDate = function(infoWeek, date) {
         var modalInstance = $modal.open({
             templateUrl: "modules/TimeSheet/views/viewDetail.html",
             controller: 'ViewDetailController',

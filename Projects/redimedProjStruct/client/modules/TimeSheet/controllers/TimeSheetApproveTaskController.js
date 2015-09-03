@@ -1,6 +1,6 @@
 angular.module("app.loggedIn.TimeSheet.ApproveTask.Controller", [])
     .controller("ApproveTask", function($scope, $modal, TimeSheetService, toastr, $state, MODE_ROW, $cookieStore) {
-        //STATUS
+        //status
         $scope.listStatus = [{
             code: 2,
             name: "Awaiting for Approve"
@@ -14,24 +14,25 @@ angular.module("app.loggedIn.TimeSheet.ApproveTask.Controller", [])
             code: 5,
             name: "Re-submitted"
         }];
-        //END STATUS
 
-        //SET PAGE
-        $scope.setPage = function() {
+        //set page
+        $scope.SetPage = function() {
             $scope.searchObjectMap.offset = ($scope.searchObjectMap.currentPage - 1) * $scope.searchObjectMap.limit;
-            $scope.loadList();
+            $scope.LoadList();
         };
-        //END SET PAGE
 
-        //RESET
-        $scope.reset = function() {
+        //reset
+        $scope.Reset = function() {
             $scope.searchObjectMap = angular.copy($scope.searchObject);
-            $scope.loadList();
+            $scope.LoadList();
         };
-        //END RESET
 
-        //LOAD LIST
-        $scope.loadList = function() {
+        /*
+        LoadList: load list Timesheet with condition transmission
+        input: searchObjectMap: infomation as search, pagination, ...
+        output: list Timesheet submitted by employee
+        */
+        $scope.LoadList = function() {
             TimeSheetService.LoadTimeSheetApprove($scope.searchObjectMap).then(function(response) {
                 if (response.status == "success") {
                     $scope.list = response;
@@ -49,10 +50,14 @@ angular.module("app.loggedIn.TimeSheet.ApproveTask.Controller", [])
                 }
             });
         };
-        //END LOAD LIST
 
-        //INIT
-        var init = function() {
+        /*
+        Init: load list Timesheet default
+        input:
+        output: list Timesheet
+        */
+        var Init = function() {
+            //set value default for load
             $scope.searchObject = {
                 offset: 0,
                 limit: 10,
@@ -77,41 +82,40 @@ angular.module("app.loggedIn.TimeSheet.ApproveTask.Controller", [])
             $scope.searchObjectMap = angular.copy($scope.searchObject);
             $scope.list = {};
             $scope.rows = MODE_ROW;
-            $scope.loadList();
+            $scope.LoadList();
         };
-        init(); //call init
-        //END INIT
 
-        //SOME FUNCTION ORDER BY
-        $scope.weekNoASC = function() {
+        Init();
+
+        //some function order
+        $scope.WeekNoASC = function() {
             $scope.searchObjectMap.order['time_tasks_week.date_submited'] = null;
             $scope.searchObjectMap.order['time_tasks_week.week_no'] = "ASC";
-            $scope.loadList();
+            $scope.LoadList();
         };
-        $scope.weekNoDESC = function() {
+        $scope.WeekNoDESC = function() {
             $scope.searchObjectMap.order['time_tasks_week.date_submited'] = null;
             $scope.searchObjectMap.order['time_tasks_week.week_no'] = "DESC";
-            $scope.loadList();
+            $scope.LoadList();
         };
-        $scope.dateSubmitedASC = function() {
+        $scope.DateSubmitedASC = function() {
             $scope.searchObjectMap.order['time_tasks_week.date_submited'] = "ASC";
             $scope.searchObjectMap.order['time_tasks_week.week_no'] = null;
-            $scope.loadList();
+            $scope.LoadList();
         };
-        $scope.dateSubmitedDESC = function() {
+        $scope.DateSubmitedDESC = function() {
             $scope.searchObjectMap.order['time_tasks_week.date_submited'] = "DESC";
             $scope.searchObjectMap.order['time_tasks_week.week_no'] = null;
-            $scope.loadList();
+            $scope.LoadList();
         };
-        //END SOME FUNCTION ORDER BY
 
-        //DIALOG VIEWTASK APPROVE
+        //dialog view task to approve
         var dialogViewTask = function(idTaskWeek) {
             var modalInstance = $modal.open({
                 templateUrl: "ViewTask",
                 controller: function($scope) {
                     $scope.infoTaskWeek = idTaskWeek;
-                    $scope.clickCancel = function(info) {
+                    $scope.ClickCancel = function(info) {
                         if ((info.clickCancel === undefined || info.clickCancel === null) && (info.isReject === undefined || info.isReject === null) && info.isApprove !== true) {
                             modalInstance.close({
                                 status: "cancel"
@@ -120,7 +124,13 @@ angular.module("app.loggedIn.TimeSheet.ApproveTask.Controller", [])
                             $scope.infoTaskWeek = "cancelOn";
                         }
                     };
-                    $scope.clickReject = function(info) {
+                    /*
+                    CLickReject: reject a Timesheet
+                    input: information Timesheet
+                    output: - success: send message success
+                            - error: send message error
+                    */
+                    $scope.ClickReject = function(info) {
                         if (info.isReject === undefined || info.isReject === null) {
                             $scope.infoTaskWeek = "reject";
                         } else if (info.isReject === true) {
@@ -150,12 +160,18 @@ angular.module("app.loggedIn.TimeSheet.ApproveTask.Controller", [])
                         }
                     };
 
-                    $scope.clickApprove = function(info) {
+                    /*
+                    ClickApprove: approves a Timesheet
+                    input: information Timesheet
+                    output: - success: send message success
+                            - error: send message error
+                    */
+                    $scope.ClickApprove = function(info) {
                         if (info.time_rest !== null && info.time_rest != 0.00 && info.time_rest !== "" && info.isApprove !== true) {
                             $scope.infoTaskWeek = "chooseApprove";
                         } else {
                             if (info.forPermission === false) {
-                                //NOTIFICATION
+                                //confirmation notification
                                 swal({
                                     title: "Warning!",
                                     text: "Please noted that the Leave Form has not yet been submitted/approved. Do you want to approve this Timesheet?",
@@ -231,9 +247,8 @@ angular.module("app.loggedIn.TimeSheet.ApproveTask.Controller", [])
                 size: "lg"
             });
         };
-        //END DIALOG VIEWTASK APPROVE
 
-        $scope.viewTask = function(idTaskWeek) {
+        $scope.ViewTask = function(idTaskWeek) {
             dialogViewTask(idTaskWeek);
         };
     });

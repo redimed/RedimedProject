@@ -5,11 +5,17 @@
  var FunctionSendMail = require("./sendMailSystemController");
  //END
  module.exports = {
-     sendMailSubmitLeave: function(req, res, info) {
+     /*
+     SendMailSubmitLeave: send mail when submitted leave form
+     input: date submitted leave form, id of user submitted
+     output: - success: send messsage success
+             - fail: send message error
+     */
+     SendMailSubmitLeave: function(req, res, info) {
          var arrayWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
          var DATE_OF_WEEK = arrayWeek[moment(info.dateSubmit).format('e') - 1];
          var DATE_SUBMIT = moment(info.dateSubmit).format('DD/MM/YYYY - HH:mm:ss');
-         //GET INFOMATION MANAGE AND EMPLOYEE
+         //get information of approver, information of employee
          var queryGetInfoEmployee =
              "SELECT hr_employee.FirstName, hr_employee.LastName, hr_employee.TITLE, sys_hierarchy_nodes.NODE_ID, sys_hierarchies_users.DEPARTMENT_CODE_ID " + //SELECT
              "FROM hr_employee " + //FROM
@@ -33,6 +39,7 @@
                      if (resultInfoEmployee[0].TITLE === "Staff") {
                          queryAddWhenHeadOfDept = " AND sys_hierarchies_users.DEPARTMENT_CODE_ID = :deptId";
                      }
+                     //get information of approver
                      var queryGetInfoManage =
                          "SELECT hr_employee.FirstName, hr_employee.LastName, hr_employee.Email " + //SELECT
                          "FROM hr_employee " + //FROM
@@ -55,7 +62,7 @@
                                  resultInfoManage[0].Email !== undefined &&
                                  resultInfoManage[0].Email !== null &&
                                  resultInfoManage[0].Email.length !== 0) {
-                                 //SEND EMAIL TO MANAGE
+                                 //send mail to approver
                                  mailOptions = {
                                      senders: 'TimeSheet',
                                      recipients: resultInfoManage[0].Email,
@@ -84,11 +91,7 @@
                                          '</td></tr></tbody></table>'
                                  };
 
-                                 // CALL SEND MAIL
-                                 FunctionSendMail.sendEmail(req, res, mailOptions);
-                                 // END CALL
-
-                                 // END SEND EMAIL
+                                 FunctionSendMail.SendEmail(req, res, mailOptions);
                              }
                          })
                          .error(function(err) {
@@ -106,13 +109,19 @@
                      status: "error"
                  });
              });
-         //END GET INFORMATION
      },
 
-     sendMailSubmitLeaveAgain: function(req, res, info) {
+     /*
+     SendMailSubmitLeaveAgain: send mail to approver level 2
+     input: date approver level 1 approve, id of user
+     output: - success: send message success
+             -  fail: send message error
+     */
+     SendMailSubmitLeaveAgain: function(req, res, info) {
          var arrayWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
          var DATE_OF_WEEK = arrayWeek[moment(info.dateSubmit).format('e') - 1];
          var DATE_SUBMIT = moment(info.dateSubmit).format('DD/MM/YYYY - HH:mm:ss');
+         //get information approver level 1
          var queryGetNodeIdUserApproveFirst =
              "SElECT hr_employee.FirstName, hr_employee.LastName, hr_employee.Email, sys_hierarchy_nodes.TO_NODE_ID " + //SELECT
              "FROM hr_employee " + //FROM
@@ -130,6 +139,7 @@
                  if (resultNodeInUserApproveFirst !== undefined &&
                      resultNodeInUserApproveFirst !== null &&
                      resultNodeInUserApproveFirst.length !== 0) {
+                     // get information level 2
                      var queryGetInfoUserApproveSecond =
                          "SElECT hr_employee.FirstName, hr_employee.LastName, hr_employee.Email " + //SELECT
                          "FROM hr_employee " + //FROM
@@ -147,6 +157,7 @@
                              if (resultInfoUserApproveSecond !== undefined &&
                                  resultInfoUserApproveSecond !== null &&
                                  resultInfoUserApproveSecond.length !== 0) {
+                                 //get information employee
                                  var queryGetInfoEmployee =
                                      "SELECT DISTINCT hr_employee.FirstName, hr_employee.LastName, hr_employee.Email " + //SELECT
                                      "FROM hr_employee " + //FROM
@@ -193,10 +204,7 @@
                                                          '<b><span style="font-size:8.0pt;color:green">Please consider our environment before printing this e - mail</span></b></p>' +
                                                          '</td></tr></tbody></table>'
                                                  };
-
-                                                 // CALL SEND MAIL
                                                  FunctionSendMail.sendEmail(req, res, mailOptions);
-                                                 // END CALL
                                              }
                                          } else {
                                              console.log("*****ERROR:NOT FOUND INFOMATION EMPLOYEE TO SEND EMAIL*****");
@@ -237,8 +245,15 @@
              });
      },
 
-     sendMailLeave: function(req, res, info) {
+     /*
+     SendMailApprovedLeave: send mail when approver approved a Timesheet
+     input: information of timesheet
+     output: - success: send message success
+             -  fail: send message error
+     */
+     SendMailApprovedLeave: function(req, res, info) {
          var mailOptions = {};
+         //get information employee
          var queryGetInfoEmployee =
              "SELECT hr_employee.FirstName, hr_employee.TITLE, hr_employee.Email, hr_employee.LastName, " + //SELECT
              "hr_leave.start_date, hr_leave.finish_date, hr_leave.user_id " + //SELECT
@@ -257,160 +272,35 @@
                      start_date = moment(result[0].start_date).format('DD/MM/YYYY');
                      finish_date = moment(result[0].finish_date).format('DD/MM/YYYY');
                  }
-                 if (info.status === 4) {
-                     mailOptions = {
-                         senders: 'TimeSheet',
-                         recipients: result[0].Email,
-                         subject: 'Notification of Rejected Leave(s)',
-                         htmlBody: '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Attention: <b>' + result[0].FirstName + ' ' + result[0].LastName + ',</b></label><br/><br/><br/>' +
-                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Your leave for the period (' + start_date + '–' + finish_date + ') has been rejected.<br/><br/><br/> Please log into the e-Timesheet System to correct and re-submit your leave. ' +
-                             'Failure to re-submit your leave may result in not being paid or loss of accrued leave.</label><br/><br/><br/>' +
-                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">If you have any questions regarding your leave in general then please contact your Team Leader.</label><br/><br/><br/>' +
-                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Access the e-Timesheet System at https://apps.redimed.com.au<label><br/><br/><br/>' +
-                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
-                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">e-Timesheet Reporting System<br></label><br/><br/><br/>' +
-                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label><br/><br/><br/>' +
-                             '<table><tbody><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">1 Frederick Street, Belmont WA 6104</span>' +
-                             '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T:&nbsp;</b> 08 9230 0900 | F: 08 9230 0999</span><br/><span><b>W:&nbsp;</b>www.redimed.com.au</span></td></tr>' +
-                             '<tr><td><img src="cid:logoRedimed"></td></tr>' +
-                             '<tr><td><span style="color:#203864;">&nbsp;&nbsp;&nbsp;Joondalup | Belmont | Rockingham</span></td></tr>' +
-                             '<tr><td><span style="font-family:Calibri,sans-serif;font-size:9.0pt;color:#203864;">This e-mail and any attachments are intended for the addressee(s) only and may be confidential.<br/>' +
-                             'They may contain legally privileged or copyright material.You should not read, copy, use or disclose them without authorisation.<br/>' +
-                             'If you are not the intended recipient, please contact the sender as soon as possible by return e-mail and then please delete both messages.<br/>' +
-                             'Please note that any views or opinions presented in this email are solely those of the author and do not necessarily represent those of REDIMED Pty Ltd. The ' +
-                             'recipient should check this email and any attachments for the presence of viruses. REDIMED Pty Ltd accepts no liability for any damage caused by any virus ' +
-                             'transmitted by this email.<br/><br/><br/>' +
-                             '<p class="MsoNormal"><span style="font-size:13.5pt;font-family:Webdings;color:green">P</span>' +
-                             '<span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:green">&nbsp;</span>' +
-                             '<b><span style="font-size:8.0pt;color:green">Please consider our environment before printing this e - mail</span></b></p>' +
-                             '</td></tr></tbody></table>'
-                     };
-                     queryGetPositionUserReject =
-                         "SELECT hr_employee.TITLE " + //SELECT
-                         "FROM hr_employee " + //FROM
-                         "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //JOIN
-                         "WHERE users.id = :userId"; //WHERE
-                     db.sequelize.query(queryGetPositionUserReject, null, {
-                             raw: true
-                         }, {
-                             userId: info.userID
-                         })
-                         .success(function(resultPosition) {
-                             if (resultPosition !== undefined &&
-                                 resultPosition !== null &&
-                                 resultPosition.length !== 0 &&
-                                 resultPosition[0] !== undefined &&
-                                 resultPosition[0] !== null &&
-                                 resultPosition[0].TITLE === "Director" &&
-                                 result[0].TITLE === "Staff") {
-                                 var queryGetNodeIdManage =
-                                     "SELECT sys_hierarchy_nodes.TO_NODE_ID " + //SELECT
-                                     "FROM sys_hierarchy_nodes " + //FROM
-                                     "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.NODE_ID = sys_hierarchy_nodes.NODE_ID " + //JOIN
-                                     "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " + //JOIN
-                                     "WHERE sys_hierarchy_group.GROUP_TYPE='Time Sheet' AND sys_hierarchies_users.USER_ID = :userId"; //WHERE
-                                 db.sequelize.query(queryGetNodeIdManage, null, {
-                                         raw: true
-                                     }, {
-                                         userId: result[0].user_id
-                                     })
-                                     .success(function(resultNodeIdManage) {
-                                         if (resultNodeIdManage !== undefined &&
-                                             resultNodeIdManage !== null &&
-                                             resultNodeIdManage.length !== 0) {
-                                             var queryGetEmailTeamLeader =
-                                                 "SElECT hr_employee.Email " + //SELECT
-                                                 "FROM hr_employee " + //FROM
-                                                 "INNER JOIN users ON hr_employee.Employee_ID = users.employee_id " + //JOIN
-                                                 "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " + //JOIN
-                                                 "INNER JOIN sys_hierarchy_nodes ON sys_hierarchies_users.NODE_ID = sys_hierarchy_nodes.TO_NODE_ID " + //JOIN
-                                                 "WHERE sys_hierarchies_users.NODE_ID = :nodeId"; //WHERE
-                                             db.sequelize.query(queryGetEmailTeamLeader, null, {
-                                                     raw: true
-                                                 }, {
-                                                     nodeId: resultNodeIdManage[0].TO_NODE_ID
-                                                 })
-                                                 .success(function(resultEmailTeamLeader) {
-                                                     if (resultEmailTeamLeader !== undefined &&
-                                                         resultEmailTeamLeader !== null &&
-                                                         resultEmailTeamLeader.length !== 0 &&
-                                                         resultEmailTeamLeader[0] !== undefined &&
-                                                         resultEmailTeamLeader[0] !== null) {
-                                                         mailOptions.cc = resultEmailTeamLeader[0].Email;
-                                                     }
-                                                     //CALL SEND MAIL
-                                                     FunctionSendMail.sendEmail(req, res, mailOptions);
-                                                     // END CALL
-                                                 })
-                                                 .error(function(err) {
-                                                     console.log("*****ERROR:" + err + "*****");
-                                                     res.json({
-                                                         status: "error"
-                                                     });
-                                                     return;
-                                                 });
-                                         }
-                                     })
-                                     .error(function(err) {
-                                         console.log("*****ERROR:" + err + "*****");
-                                         res.json({
-                                             status: "error"
-                                         });
-                                         return;
-                                     });
-                             } else {
-                                 //CALL SEND MAIL
-                                 FunctionSendMail.sendEmail(req, res, mailOptions);
-                                 // END CALL
-                             }
-
-                         })
-                         .error(function(err) {
-                             console.log("*****ERROR:" + err + "*****");
-                             res.json({
-                                 status: "error"
-                             });
-                             return;
-                         });
-
-                     // END REJECT
-
-                 } else if (info.status === 3) {
-                     //IS APPROVE
-                     mailOptions = {
-                         senders: 'TimeSheet',
-                         recipients: result[0].Email,
-                         subject: 'Notification of Approved Leave(s)',
-                         htmlBody: '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Attention: <b>' +
-                             result[0].FirstName + ' ' + result[0].LastName +
-                             '</b></label><br/><br/><br/>' +
-                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Your leave for the period (' +
-                             start_date + '–' + finish_date + ') has been approved.</label><br/><br/><br/>' +
-                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Access the e-Timesheet System at https://apps.redimed.com.au</label><br/><br/><br/>' +
-                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
-                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">e-Timesheet Reporting System<label><br/><br/><br/>' +
-                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label><br/><br/><br/>' +
-                             '<table><tbody><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">1 Frederick Street, Belmont WA 6104</span>' +
-                             '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T:&nbsp;</b> 08 9230 0900 | F: 08 9230 0999</span><br/><span><b>W:&nbsp;</b>www.redimed.com.au</span></td></tr>' +
-                             '<tr><td><img src="cid:logoRedimed"></td></tr>' +
-                             '<tr><td><span style="color:#203864;">&nbsp;&nbsp;&nbsp;Joondalup | Belmont | Rockingham</span></td></tr>' +
-                             '<tr><td><span style="font-family:Calibri,sans-serif;font-size:9.0pt;color:#203864;">This e-mail and any attachments are intended for the addressee(s) only and may be confidential.<br/>' +
-                             'They may contain legally privileged or copyright material.You should not read, copy, use or disclose them without authorisation.<br/>' +
-                             'If you are not the intended recipient, please contact the sender as soon as possible by return e-mail and then please delete both messages.<br/>' +
-                             'Please note that any views or opinions presented in this email are solely those of the author and do not necessarily represent those of REDIMED Pty Ltd. The ' +
-                             'recipient should check this email and any attachments for the presence of viruses. REDIMED Pty Ltd accepts no liability for any damage caused by any virus ' +
-                             'transmitted by this email.<br/><br/><br/>' +
-                             '<p class="MsoNormal"><span style="font-size:13.5pt;font-family:Webdings;color:green">P</span>' +
-                             '<span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:green">&nbsp;</span>' +
-                             '<b><span style="font-size:8.0pt;color:green">Please consider our environment before printing this e - mail</span></b></p>' +
-                             '</td></tr></tbody></table>'
-                     };
-                     // END APPROVE
-
-                     //CALL SEND MAIL
-                     FunctionSendMail.sendEmail(req, res, mailOptions);
-                     // END CALL
-                 }
+                 mailOptions = {
+                     senders: 'TimeSheet',
+                     recipients: result[0].Email,
+                     subject: 'Notification of Approved Leave(s)',
+                     htmlBody: '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Attention: <b>' +
+                         result[0].FirstName + ' ' + result[0].LastName +
+                         '</b></label><br/><br/><br/>' +
+                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Your leave for the period (' +
+                         start_date + '–' + finish_date + ') has been approved.</label><br/><br/><br/>' +
+                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Access the e-Timesheet System at https://apps.redimed.com.au</label><br/><br/><br/>' +
+                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
+                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">e-Timesheet Reporting System<label><br/><br/><br/>' +
+                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label><br/><br/><br/>' +
+                         '<table><tbody><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">1 Frederick Street, Belmont WA 6104</span>' +
+                         '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T:&nbsp;</b> 08 9230 0900 | F: 08 9230 0999</span><br/><span><b>W:&nbsp;</b>www.redimed.com.au</span></td></tr>' +
+                         '<tr><td><img src="cid:logoRedimed"></td></tr>' +
+                         '<tr><td><span style="color:#203864;">&nbsp;&nbsp;&nbsp;Joondalup | Belmont | Rockingham</span></td></tr>' +
+                         '<tr><td><span style="font-family:Calibri,sans-serif;font-size:9.0pt;color:#203864;">This e-mail and any attachments are intended for the addressee(s) only and may be confidential.<br/>' +
+                         'They may contain legally privileged or copyright material.You should not read, copy, use or disclose them without authorisation.<br/>' +
+                         'If you are not the intended recipient, please contact the sender as soon as possible by return e-mail and then please delete both messages.<br/>' +
+                         'Please note that any views or opinions presented in this email are solely those of the author and do not necessarily represent those of REDIMED Pty Ltd. The ' +
+                         'recipient should check this email and any attachments for the presence of viruses. REDIMED Pty Ltd accepts no liability for any damage caused by any virus ' +
+                         'transmitted by this email.<br/><br/><br/>' +
+                         '<p class="MsoNormal"><span style="font-size:13.5pt;font-family:Webdings;color:green">P</span>' +
+                         '<span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:green">&nbsp;</span>' +
+                         '<b><span style="font-size:8.0pt;color:green">Please consider our environment before printing this e - mail</span></b></p>' +
+                         '</td></tr></tbody></table>'
+                 };
+                 FunctionSendMail.SendEmail(req, res, mailOptions);
              })
              .error(function(err) {
                  console.log("*****ERROR:" + err + "*****");
@@ -422,8 +312,165 @@
              });
      },
 
+     /*
+      SendMailRejectedLeave: send mail when approver rejected a Timesheet
+      input: information of timesheet
+      output: - success: send message success
+              -  fail: send message error
+      */
+     SendMailRejectedLeave: function(req, res, info) {
+         var mailOptions = {};
+         //get information employee
+         var queryGetInfoEmployee =
+             "SELECT hr_employee.FirstName, hr_employee.TITLE, hr_employee.Email, hr_employee.LastName, " + //SELECT
+             "hr_leave.start_date, hr_leave.finish_date, hr_leave.user_id " + //SELECT
+             "FROM hr_employee INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //FROM
+             "INNER JOIN hr_leave ON users.id = hr_leave.user_id " + //JOIN
+             "WHERE hr_leave.leave_id = :leaveID"; //WHERE
+         db.sequelize.query(queryGetInfoEmployee, null, {
+                 raw: true
+             }, {
+                 leaveID: info.leaveID
+             })
+             .success(function(result) {
+                 var start_date = "";
+                 var end_date = "";
+                 if (result[0] !== undefined && result[0] !== null) {
+                     start_date = moment(result[0].start_date).format('DD/MM/YYYY');
+                     finish_date = moment(result[0].finish_date).format('DD/MM/YYYY');
+                 }
+                 mailOptions = {
+                     senders: 'TimeSheet',
+                     recipients: result[0].Email,
+                     subject: 'Notification of Rejected Leave(s)',
+                     htmlBody: '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Attention: <b>' + result[0].FirstName + ' ' + result[0].LastName + ',</b></label><br/><br/><br/>' +
+                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Your leave for the period (' + start_date + '–' + finish_date + ') has been rejected.<br/><br/><br/> Please log into the e-Timesheet System to correct and re-submit your leave. ' +
+                         'Failure to re-submit your leave may result in not being paid or loss of accrued leave.</label><br/><br/><br/>' +
+                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">If you have any questions regarding your leave in general then please contact your Team Leader.</label><br/><br/><br/>' +
+                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Access the e-Timesheet System at https://apps.redimed.com.au<label><br/><br/><br/>' +
+                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
+                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">e-Timesheet Reporting System<br></label><br/><br/><br/>' +
+                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label><br/><br/><br/>' +
+                         '<table><tbody><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">1 Frederick Street, Belmont WA 6104</span>' +
+                         '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T:&nbsp;</b> 08 9230 0900 | F: 08 9230 0999</span><br/><span><b>W:&nbsp;</b>www.redimed.com.au</span></td></tr>' +
+                         '<tr><td><img src="cid:logoRedimed"></td></tr>' +
+                         '<tr><td><span style="color:#203864;">&nbsp;&nbsp;&nbsp;Joondalup | Belmont | Rockingham</span></td></tr>' +
+                         '<tr><td><span style="font-family:Calibri,sans-serif;font-size:9.0pt;color:#203864;">This e-mail and any attachments are intended for the addressee(s) only and may be confidential.<br/>' +
+                         'They may contain legally privileged or copyright material.You should not read, copy, use or disclose them without authorisation.<br/>' +
+                         'If you are not the intended recipient, please contact the sender as soon as possible by return e-mail and then please delete both messages.<br/>' +
+                         'Please note that any views or opinions presented in this email are solely those of the author and do not necessarily represent those of REDIMED Pty Ltd. The ' +
+                         'recipient should check this email and any attachments for the presence of viruses. REDIMED Pty Ltd accepts no liability for any damage caused by any virus ' +
+                         'transmitted by this email.<br/><br/><br/>' +
+                         '<p class="MsoNormal"><span style="font-size:13.5pt;font-family:Webdings;color:green">P</span>' +
+                         '<span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:green">&nbsp;</span>' +
+                         '<b><span style="font-size:8.0pt;color:green">Please consider our environment before printing this e - mail</span></b></p>' +
+                         '</td></tr></tbody></table>'
+                 };
+                 /*
+                 get information approver, if approver level 2 then send mail and cc for approver level 1
+                 */
+                 queryGetPositionUserReject =
+                     "SELECT hr_employee.TITLE " + //SELECT
+                     "FROM hr_employee " + //FROM
+                     "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //JOIN
+                     "WHERE users.id = :userId"; //WHERE
+                 db.sequelize.query(queryGetPositionUserReject, null, {
+                         raw: true
+                     }, {
+                         userId: info.userID
+                     })
+                     .success(function(resultPosition) {
+                         if (resultPosition !== undefined &&
+                             resultPosition !== null &&
+                             resultPosition.length !== 0 &&
+                             resultPosition[0] !== undefined &&
+                             resultPosition[0] !== null &&
+                             resultPosition[0].TITLE === "Director" &&
+                             result[0].TITLE === "Staff") {
+                             var queryGetNodeIdManage =
+                                 "SELECT sys_hierarchy_nodes.TO_NODE_ID " + //SELECT
+                                 "FROM sys_hierarchy_nodes " + //FROM
+                                 "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.NODE_ID = sys_hierarchy_nodes.NODE_ID " + //JOIN
+                                 "INNER JOIN sys_hierarchy_group ON sys_hierarchy_group.GROUP_ID = sys_hierarchy_nodes.GROUP_ID " + //JOIN
+                                 "WHERE sys_hierarchy_group.GROUP_TYPE='Time Sheet' AND sys_hierarchies_users.USER_ID = :userId"; //WHERE
+                             db.sequelize.query(queryGetNodeIdManage, null, {
+                                     raw: true
+                                 }, {
+                                     userId: result[0].user_id
+                                 })
+                                 .success(function(resultNodeIdManage) {
+                                     if (resultNodeIdManage !== undefined &&
+                                         resultNodeIdManage !== null &&
+                                         resultNodeIdManage.length !== 0) {
+                                         var queryGetEmailTeamLeader =
+                                             "SElECT hr_employee.Email " + //SELECT
+                                             "FROM hr_employee " + //FROM
+                                             "INNER JOIN users ON hr_employee.Employee_ID = users.employee_id " + //JOIN
+                                             "INNER JOIN sys_hierarchies_users ON sys_hierarchies_users.USER_ID = users.id " + //JOIN
+                                             "INNER JOIN sys_hierarchy_nodes ON sys_hierarchies_users.NODE_ID = sys_hierarchy_nodes.TO_NODE_ID " + //JOIN
+                                             "WHERE sys_hierarchies_users.NODE_ID = :nodeId"; //WHERE
+                                         db.sequelize.query(queryGetEmailTeamLeader, null, {
+                                                 raw: true
+                                             }, {
+                                                 nodeId: resultNodeIdManage[0].TO_NODE_ID
+                                             })
+                                             .success(function(resultEmailTeamLeader) {
+                                                 if (resultEmailTeamLeader !== undefined &&
+                                                     resultEmailTeamLeader !== null &&
+                                                     resultEmailTeamLeader.length !== 0 &&
+                                                     resultEmailTeamLeader[0] !== undefined &&
+                                                     resultEmailTeamLeader[0] !== null) {
+                                                     mailOptions.cc = resultEmailTeamLeader[0].Email;
+                                                 }
+                                                 FunctionSendMail.sendEmail(req, res, mailOptions);
+                                             })
+                                             .error(function(err) {
+                                                 console.log("*****ERROR:" + err + "*****");
+                                                 res.json({
+                                                     status: "error"
+                                                 });
+                                                 return;
+                                             });
+                                     }
+                                 })
+                                 .error(function(err) {
+                                     console.log("*****ERROR:" + err + "*****");
+                                     res.json({
+                                         status: "error"
+                                     });
+                                     return;
+                                 });
+                         } else {
+                             FunctionSendMail.SendEmail(req, res, mailOptions);
+                         }
+
+                     })
+                     .error(function(err) {
+                         console.log("*****ERROR:" + err + "*****");
+                         res.json({
+                             status: "error"
+                         });
+                         return;
+                     });
+             })
+             .error(function(err) {
+                 console.log("*****ERROR:" + err + "*****");
+                 res.json({
+                     status: "error"
+                 });
+                 return;
+
+             });
+     },
+     /*
+     SendMailNotification: send mail notification for employee send Timesheet 
+     when employee's Timesheet is approved or rejected
+     input: 
+     output: - success: send message success
+             - fail: send message error
+     */
      SendMailNotification: function(req, res) {
-         //SEND MAIL
+         //get node id of employee staff and head of dept.
          var queryNode =
              "SELECT sys_hierarchy_nodes.NODE_ID " + //SELECT
              "FROM sys_hierarchy_nodes " + //FROM
@@ -447,6 +494,7 @@
                      strNode = "(" + strNode.substring(0, strNode.length - 2) + ")";
                  }
                  var yearNow = moment().format("YYYY");
+                 //get employee has Timesheet
                  var queryHasTimeSheet = "SELECT time_tasks_week.user_id FROM time_tasks_week WHERE time_tasks_week.week_no = :weekNo AND YEAR(time_tasks_week.end_date)=:yearNow";
                  db.sequelize.query(queryHasTimeSheet, null, {
                          raw: true
@@ -471,6 +519,7 @@
                              strHasTimeSheet = "(" + strHasTimeSheet.substring(0, strHasTimeSheet.length - 2) + ")";
                          }
 
+                         //get information of employee has not Timesheet
                          var queryListEmp = "SELECT DISTINCT hr_employee.Email, hr_employee.FirstName, hr_employee.LastName FROM users " +
                              "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " +
                              "INNER JOIN sys_hierarchies_users ON users.id = sys_hierarchies_users.USER_ID " +
@@ -479,6 +528,7 @@
                          db.sequelize.query(queryListEmp)
                              .success(function(resultListEmp) {
                                  var FRIDAY = moment(moment().day(5)).format("DD/MM/YYYY");
+                                 //send mail to list employee has not Timesheet for next week
                                  for (var lM = 0; lM < resultListEmp.length; lM++) {
                                      var mailOptions = {
                                          senders: 'TimeSheet',
@@ -508,9 +558,7 @@
                                              '<b><span style="font-size:8.0pt;color:green">Please consider our environment before printing this e - mail</span></b></p>' +
                                              '</td></tr></tbody></table>'
                                      };
-                                     //CALL SEND MAIL
                                      FunctionSendMail.sendEmail(req, res, mailOptions);
-                                     // END CALL
                                  }
                              })
                              .error(function(err) {
@@ -536,10 +584,9 @@
                  });
                  return;
              });
-         //END
      },
 
-     getWeekNo: function(date) {
+     GetWeekNo: function(date) {
          var d = new Date(date);
          d.setHours(0, 0, 0);
          d.setDate(d.getDate() + 4 - (d.getDay() || 7));
@@ -548,6 +595,12 @@
          return weekNo;
      },
 
+     /*
+     TrackerTimesheet: save tracker Timesheet for user
+     input: information of action, id of user
+     output: - success: send message success
+             -  fail: send message error
+     */
      TracKerTimeSheet: function(info) {
          var arrayAction = {
              1: "Save",
@@ -568,7 +621,14 @@
              });
      },
 
+     /*
+     TrackerLeave: save tracker Leave form for user
+     input: information of action, id of user
+     output: - success: send message success
+             - fail: send message error
+     */
      TracKerLeave: function(info) {
+         //get user id of Leave form
          var queryGetUserIdLeave =
              "SElECT hr_leave.user_id " +
              "FROM hr_leave " +
@@ -596,6 +656,7 @@
                      } else {
                          nameAction = arrayAction[info.statusID];
                      }
+                     //save tracker Leave form
                      var queryTracKer = "INSERT INTO leave_tracker (action_name, leave_id, user_id, creation_date) " +
                          "VALUES(:nameAction, :leaveID, :userID, :creationDate)";
                      db.sequelize.query(queryTracKer, null, {
@@ -622,7 +683,7 @@
              });
      },
 
-     getFortMatTimeCharge: function(time_charge) {
+     GetFortMatTimeCharge: function(time_charge) {
          if (time_charge !== undefined && time_charge !== null && time_charge !== 0) {
              var hours = parseInt(time_charge / 60);
              var minutes = parseInt(time_charge % 60);
@@ -638,7 +699,7 @@
          }
      },
 
-     convertTime: function(time) {
+     ConvertTime: function(time) {
          if (time === undefined || time === null || isNaN(time)) {
              return 0;
          } else {
@@ -657,9 +718,15 @@
              return tempTimeInt;
          }
      },
-
-     SendMailTimeSheet: function(req, res, info) {
+     /*
+     SendMailApprovedTimesheet: send mail for employee when approver approved a Timesheet
+     input: information  of Timsheet been approved
+     output: - success: send message success
+             - fail: send message error
+     */
+     SendMailApprovedTimesheet: function(req, res, info) {
          var mailOptions = {};
+         //get information employee submitted a Timesheet
          var query =
              "SELECT hr_employee.FirstName, hr_employee.Email, hr_employee.LastName, time_tasks_week.start_date, " + //SELECT
              "time_tasks_week.end_date " + //SELECT
@@ -679,76 +746,35 @@
                      start_date = moment(result[0].start_date).format('DD/MM/YYYY');
                      end_date = moment(result[0].end_date).format('DD/MM/YYYY');
                  }
-                 if (info.status === 4) {
-                     mailOptions = {
-                         senders: 'TimeSheet',
-                         recipients: result[0].Email,
-                         subject: 'Notification of Rejected Timesheet(s)',
-                         htmlBody: '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Attention: <b>' + result[0].FirstName + ' ' + result[0].LastName + ',</b></label><br/><br/><br/>' +
-                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Your timesheet for the period (' + start_date + '–' + end_date + ') has been rejected.<br/><br/><br/> Please log into the Timesheet System to correct and re-submit your timesheet. ' +
-                             'Failure to re-submit your timesheets may result in not being paid or loss of accrued leave.</label><br/><br/><br/>' +
-                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">If you have any questions regarding your timesheet in general then please contact your Team Leader.</label><br/><br/><br/>' +
-                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Access the e-Timesheet at https://apps.redimed.com.au<label><br/><br/><br/>' +
-                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
-                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Timesheet Reporting System<br></label><br/><br/><br/>' +
-                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label></br/>' +
-                             '<table><tbody><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">1 Frederick Street, Belmont WA 6104</span>' +
-                             '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T:&nbsp;</b> 08 9230 0900 | F: 08 9230 0999</span><br/><span><b>W:&nbsp;</b>www.redimed.com.au</span></td></tr>' +
-                             '<tr><td><img src="cid:logoRedimed"></td></tr>' +
-                             '<tr><td><span style="color:#203864;">&nbsp;&nbsp;&nbsp;Joondalup | Belmont | Rockingham</span></td></tr>' +
-                             '<tr><td><span style="font-family:Calibri,sans-serif;font-size:9.0pt;color:#203864;">This e-mail and any attachments are intended for the addressee(s) only and may be confidential.<br/>' +
-                             'They may contain legally privileged or copyright material.You should not read, copy, use or disclose them without authorisation.<br/>' +
-                             'If you are not the intended recipient, please contact the sender as soon as possible by return e-mail and then please delete both messages.<br/>' +
-                             'Please note that any views or opinions presented in this email are solely those of the author and do not necessarily represent those of REDIMED Pty Ltd. The ' +
-                             'recipient should check this email and any attachments for the presence of viruses. REDIMED Pty Ltd accepts no liability for any damage caused by any virus ' +
-                             'transmitted by this email.<br/><br/><br/>' +
-                             '<p class="MsoNormal"><span style="font-size:13.5pt;font-family:Webdings;color:green">P</span>' +
-                             '<span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:green">&nbsp;</span>' +
-                             '<b><span style="font-size:8.0pt;color:green">Please consider our environment before printing this e - mail</span></b></p>' +
-                             '</td></tr></tbody></table>'
-                     };
-                     // END APPROVE
-
-                     //CALL SEND MAIL
-                     FunctionSendMail.sendEmail(req, res, mailOptions);
-                     // END CALL
-
-                 } else if (info.status === 3) {
-                     //IS APPROVE
-                     mailOptions = {
-                         senders: 'TimeSheet',
-                         recipients: result[0].Email,
-                         subject: 'Notification of Approved Timesheet(s)',
-                         htmlBody: '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Attention: <b>' +
-                             result[0].FirstName + ' ' + result[0].LastName +
-                             '</b></label><br/><br/><br/>' +
-                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Your timesheet for the period (' +
-                             start_date + '–' + end_date + ') has been approved.</label><br/><br/><br/>' +
-                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Access the e-Timesheet at https://apps.redimed.com.au</label><br/><br/><br/>' +
-                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
-                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Timesheet Reporting System<label><br/><br/><br/>' +
-                             '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label<br/>' +
-                             '<table><tbody><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">1 Frederick Street, Belmont WA 6104</span>' +
-                             '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T:&nbsp;</b> 08 9230 0900 | F: 08 9230 0999</span><br/><span><b>W:&nbsp;</b>www.redimed.com.au</span></td></tr>' +
-                             '<tr><td><img src="cid:logoRedimed"></td></tr>' +
-                             '<tr><td><span style="color:#203864;">&nbsp;&nbsp;&nbsp;Joondalup | Belmont | Rockingham</span></td></tr>' +
-                             '<tr><td><span style="font-family:Calibri,sans-serif;font-size:9.0pt;color:#203864;">This e-mail and any attachments are intended for the addressee(s) only and may be confidential.<br/>' +
-                             'They may contain legally privileged or copyright material.You should not read, copy, use or disclose them without authorisation.<br/>' +
-                             'If you are not the intended recipient, please contact the sender as soon as possible by return e-mail and then please delete both messages.<br/>' +
-                             'Please note that any views or opinions presented in this email are solely those of the author and do not necessarily represent those of REDIMED Pty Ltd. The ' +
-                             'recipient should check this email and any attachments for the presence of viruses. REDIMED Pty Ltd accepts no liability for any damage caused by any virus ' +
-                             'transmitted by this email.<br/><br/><br/>' +
-                             '<p class="MsoNormal"><span style="font-size:13.5pt;font-family:Webdings;color:green">P</span>' +
-                             '<span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:green">&nbsp;</span>' +
-                             '<b><span style="font-size:8.0pt;color:green">Please consider our environment before printing this e - mail</span></b></p>' +
-                             '</td></tr></tbody></table>'
-                     };
-                     // END APPROVE
-
-                     //CALL SEND MAIL
-                     FunctionSendMail.sendEmail(req, res, mailOptions);
-                     // END CALL
-                 }
+                 mailOptions = {
+                     senders: 'TimeSheet',
+                     recipients: result[0].Email,
+                     subject: 'Notification of Approved Timesheet(s)',
+                     htmlBody: '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Attention: <b>' +
+                         result[0].FirstName + ' ' + result[0].LastName +
+                         '</b></label><br/><br/><br/>' +
+                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Your timesheet for the period (' +
+                         start_date + '–' + end_date + ') has been approved.</label><br/><br/><br/>' +
+                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Access the e-Timesheet at https://apps.redimed.com.au</label><br/><br/><br/>' +
+                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
+                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Timesheet Reporting System<label><br/><br/><br/>' +
+                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label<br/>' +
+                         '<table><tbody><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">1 Frederick Street, Belmont WA 6104</span>' +
+                         '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T:&nbsp;</b> 08 9230 0900 | F: 08 9230 0999</span><br/><span><b>W:&nbsp;</b>www.redimed.com.au</span></td></tr>' +
+                         '<tr><td><img src="cid:logoRedimed"></td></tr>' +
+                         '<tr><td><span style="color:#203864;">&nbsp;&nbsp;&nbsp;Joondalup | Belmont | Rockingham</span></td></tr>' +
+                         '<tr><td><span style="font-family:Calibri,sans-serif;font-size:9.0pt;color:#203864;">This e-mail and any attachments are intended for the addressee(s) only and may be confidential.<br/>' +
+                         'They may contain legally privileged or copyright material.You should not read, copy, use or disclose them without authorisation.<br/>' +
+                         'If you are not the intended recipient, please contact the sender as soon as possible by return e-mail and then please delete both messages.<br/>' +
+                         'Please note that any views or opinions presented in this email are solely those of the author and do not necessarily represent those of REDIMED Pty Ltd. The ' +
+                         'recipient should check this email and any attachments for the presence of viruses. REDIMED Pty Ltd accepts no liability for any damage caused by any virus ' +
+                         'transmitted by this email.<br/><br/><br/>' +
+                         '<p class="MsoNormal"><span style="font-size:13.5pt;font-family:Webdings;color:green">P</span>' +
+                         '<span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:green">&nbsp;</span>' +
+                         '<b><span style="font-size:8.0pt;color:green">Please consider our environment before printing this e - mail</span></b></p>' +
+                         '</td></tr></tbody></table>'
+                 };
+                 FunctionSendMail.sendEmail(req, res, mailOptions);
              })
              .error(function(err) {
                  console.log("*****ERROR:" + err + "*****");
@@ -758,10 +784,76 @@
                  return;
 
              });
-
      },
 
-     defineNumberWeekTimeSheet: function(req, res) {
+     /*
+     SendMailRejectedTimesheet: send mail for employee when approver rejected a Timesheet
+     input: information of Timsheet is rejected
+     output: - success: send message success
+             - fail: send message error
+     */
+     SendMailRejectedTimesheet: function(req, res, info) {
+         var mailOptions = {};
+         //get information employee submitted this Timesheet
+         var query =
+             "SELECT hr_employee.FirstName, hr_employee.Email, hr_employee.LastName, time_tasks_week.start_date, " + //SELECT
+             "time_tasks_week.end_date " + //SELECT
+             "FROM hr_employee " + //FROM
+             "INNER JOIN users ON users.employee_id = hr_employee.Employee_ID " + //JOIN
+             "INNER JOIN time_tasks_week ON users.id = time_tasks_week.user_id " + //JOIN
+             "WHERE time_tasks_week.task_week_id = :idTaskWeek";
+         db.sequelize.query(query, null, {
+                 raw: true
+             }, {
+                 idTaskWeek: info.idTaskWeek
+             })
+             .success(function(result) {
+                 var start_date = "";
+                 var end_date = "";
+                 if (result[0] !== undefined && result[0] !== null) {
+                     start_date = moment(result[0].start_date).format('DD/MM/YYYY');
+                     end_date = moment(result[0].end_date).format('DD/MM/YYYY');
+                 }
+                 mailOptions = {
+                     senders: 'TimeSheet',
+                     recipients: result[0].Email,
+                     subject: 'Notification of Rejected Timesheet(s)',
+                     htmlBody: '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Attention: <b>' + result[0].FirstName + ' ' + result[0].LastName + ',</b></label><br/><br/><br/>' +
+                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Your timesheet for the period (' + start_date + '–' + end_date + ') has been rejected.<br/><br/><br/> Please log into the Timesheet System to correct and re-submit your timesheet. ' +
+                         'Failure to re-submit your timesheets may result in not being paid or loss of accrued leave.</label><br/><br/><br/>' +
+                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">If you have any questions regarding your timesheet in general then please contact your Team Leader.</label><br/><br/><br/>' +
+                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Access the e-Timesheet at https://apps.redimed.com.au<label><br/><br/><br/>' +
+                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Regards,</label><br/><br/><br/>' +
+                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">Timesheet Reporting System<br></label><br/><br/><br/>' +
+                         '<label style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">This e-mail was auto generated. Please do not respond</label></br/>' +
+                         '<table><tbody><tr><td><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;">1 Frederick Street, Belmont WA 6104</span>' +
+                         '<br/><span style="font-family:Helvetica Neue,Segoe UI,Helvetica,Arial,Lucida Grande,sans-serif;"><b>T:&nbsp;</b> 08 9230 0900 | F: 08 9230 0999</span><br/><span><b>W:&nbsp;</b>www.redimed.com.au</span></td></tr>' +
+                         '<tr><td><img src="cid:logoRedimed"></td></tr>' +
+                         '<tr><td><span style="color:#203864;">&nbsp;&nbsp;&nbsp;Joondalup | Belmont | Rockingham</span></td></tr>' +
+                         '<tr><td><span style="font-family:Calibri,sans-serif;font-size:9.0pt;color:#203864;">This e-mail and any attachments are intended for the addressee(s) only and may be confidential.<br/>' +
+                         'They may contain legally privileged or copyright material.You should not read, copy, use or disclose them without authorisation.<br/>' +
+                         'If you are not the intended recipient, please contact the sender as soon as possible by return e-mail and then please delete both messages.<br/>' +
+                         'Please note that any views or opinions presented in this email are solely those of the author and do not necessarily represent those of REDIMED Pty Ltd. The ' +
+                         'recipient should check this email and any attachments for the presence of viruses. REDIMED Pty Ltd accepts no liability for any damage caused by any virus ' +
+                         'transmitted by this email.<br/><br/><br/>' +
+                         '<p class="MsoNormal"><span style="font-size:13.5pt;font-family:Webdings;color:green">P</span>' +
+                         '<span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:green">&nbsp;</span>' +
+                         '<b><span style="font-size:8.0pt;color:green">Please consider our environment before printing this e - mail</span></b></p>' +
+                         '</td></tr></tbody></table>'
+                 };
+                 FunctionSendMail.SendEmail(req, res, mailOptions);
+             })
+             .error(function(err) {
+                 console.log("*****ERROR:" + err + "*****");
+                 res.json({
+                     status: "error"
+                 });
+                 return;
+
+             });
+     },
+
+     DefineNumberWeekTimeSheet: function(req, res) {
          return 2;
      },
  };

@@ -91,7 +91,7 @@ angular.module("app.loggedIn.TimeSheet.Service", [])
             });
         };
 
-        TimeSheetService.sendMailTimeSheet = function(infoPost) {
+        TimeSheetService.SendMailTimeSheet = function(infoPost) {
             var sendMailTimeSheet = api.all('TimeSheet/post-send-mail');
             return sendMailTimeSheet.post({
                 info: infoPost
@@ -112,9 +112,9 @@ angular.module("app.loggedIn.TimeSheet.Service", [])
             return LoadTypeLeave.get({});
         };
 
-        TimeSheetService.UpLeaveServer = function(infoPost) {
-            var UpLeaveServer = api.all("TimeSheet/post-leave-form");
-            return UpLeaveServer.post({
+        TimeSheetService.CreateLeaveForm = function(infoPost) {
+            var CreateLeaveForm = api.all("TimeSheet/post-leave-form");
+            return CreateLeaveForm.post({
                 info: infoPost
             });
         };

@@ -35,18 +35,18 @@ app.get("/api/TimeSheet/get-download-file/:idFile", downloadController.DownloadF
 
 
 //TIMESHEET FOR STAFF
-app.post('/api/staff/addAllTask', staffTimesheetController.addAllTask);
-app.post('/api/staff/editTask', staffTimesheetController.editTask);
-app.post('/api/staff/getTask', staffTimesheetController.getTask);
-app.post('/api/staff/showDetailDate', staffTimesheetController.showDetailDate);
-app.post('/api/staff/checkMonth', staffTimesheetController.checkMonth);
-app.post('/api/staff/getAllTaskAMonth', staffTimesheetController.getAllTaskAMonth);
-app.post('/api/staff/checkFirstTaskWeek', staffTimesheetController.checkFirstTaskWeek);
-app.post('/api/staff/checkTaskWeek', staffTimesheetController.checkTaskWeek);
-app.post('/api/staff/showEdit', staffTimesheetController.showEdit);
-app.get('/api/staff/getDepartmentLocation', staffTimesheetController.getDepartmentLocation);
-app.get('/api/staff/task/getList', staffTimesheetController.getTaskList);
-app.post('/api/staff/items', staffTimesheetController.getItemList);
+app.post('/api/staff/addAllTask', staffTimesheetController.AddAllTask);
+app.post('/api/staff/editTask', staffTimesheetController.EditTask);
+app.post('/api/staff/getTask', staffTimesheetController.GetTask);
+app.post('/api/staff/showDetailDate', staffTimesheetController.ShowDetailDate);
+app.post('/api/staff/checkMonth', staffTimesheetController.CheckMonth);
+app.post('/api/staff/getAllTaskAMonth', staffTimesheetController.GetAllTaskAMonth);
+app.post('/api/staff/checkFirstTaskWeek', staffTimesheetController.CheckFirstTaskWeek);
+app.post('/api/staff/checkTaskWeek', staffTimesheetController.CheckTaskWeek);
+app.post('/api/staff/showEdit', staffTimesheetController.ShowEdit);
+app.get('/api/staff/getDepartmentLocation', staffTimesheetController.GetDepartmentLocationActivity);
+app.get('/api/staff/task/getList', staffTimesheetController.GetTaskList);
+app.post('/api/staff/items', staffTimesheetController.GetItemList);
 app.post("/api/staff/get-contract", staffTimesheetController.LoadContract);
 app.post("/api/staff/SubmitOnView", staffTimesheetController.SubmitOnView);
 app.post("/api/staff/checktime", staffTimesheetController.CheckTimeInLieu);
@@ -55,7 +55,7 @@ app.post("/api/TimeSheet/post-itemcode-list", staffTimesheetController.LoadItemC
 
 //LEAVE FORM FOR STAFF
 app.post("/api/TimeSheet/post-info-employee", staffLeaveController.LoadInfoEmployee);
-app.post("/api/TimeSheet/post-leave-form", staffLeaveController.UpLeaveServer);
+app.post("/api/TimeSheet/post-leave-form", staffLeaveController.CreateLeaveForm);
 app.post("/api/TimeSheet/post-history-leave", staffLeaveController.LoadHistoryLeave);
 app.post("/api/TimeSheet/post-view-leave", staffLeaveController.ViewLeave);
 app.post("/api/TimeSheet/post-submit-view", staffLeaveController.SubmitOnViewLeave);
