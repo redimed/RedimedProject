@@ -9,11 +9,15 @@ angular.module('app.loggedIn.alert.directives.edit', [])
 		},
 		templateUrl: 'modules/alert/directives/templates/edit.html',
 		link: function(scope, elem, attrs){
+			
 			var user_id = $cookieStore.get('userInfo').id;
 
+			// Service color
 			$("#service_color").minicolors({
 		        control: 'wheel'
 		    });
+
+			// information
 			var form = {
 				name: '',
 				description: '',
@@ -22,8 +26,12 @@ angular.module('app.loggedIn.alert.directives.edit', [])
 				Last_updated_by: user_id
 			}
 
+			// Create new data
+
 			var save = function(){
+
 				ConfigService.beforeSave(scope.alert.errors);
+				
 				var postData = angular.copy(scope.alert.form);
 				postData.Last_update_date = moment().format('YYYY-MM-DD');
 
@@ -32,10 +40,12 @@ angular.module('app.loggedIn.alert.directives.edit', [])
 					scope.success = true;
 				}, function(error){
 					scope.alert.errors = angular.copy(error.data.errors);
+					
 					ConfigService.beforeError(scope.alert.errors);
 				})
 			}
 
+			// load data into edit form
 			var load = function(){
 				var postData = {id: scope.alertId};
 
@@ -44,6 +54,7 @@ angular.module('app.loggedIn.alert.directives.edit', [])
 					angular.extend(scope.alert.form, response.data);
 					delete scope.alert.form.Creation_date;
 				}, function(error){})
+				
 			}
 
 			scope.alert = {

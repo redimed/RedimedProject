@@ -11,6 +11,7 @@ angular.module('app.loggedIn.booking.admin.requirement.directive', [])
         },
         link: function(scope, ele, attrs){
 
+            // information
             var search = {
                 limit: 5,
                 offset: 0,
@@ -19,6 +20,7 @@ angular.module('app.loggedIn.booking.admin.requirement.directive', [])
                 company_id: $stateParams.fatherId
             }
 
+            // Load data
             var load = function() {
 
                 OnlineBookingAdminService.getAlert(search)
@@ -28,12 +30,13 @@ angular.module('app.loggedIn.booking.admin.requirement.directive', [])
                 }, function(error){})
 
             }
-
+            // paging
             scope.setPage = function (page) {
                 scope.req.search.offset = (page-1)*scope.req.search.limit;
                 scope.req.load();
             }
 
+            // Dialog create
             var add = function() {
 
                 var modalInstance = $modal.open({
@@ -62,6 +65,7 @@ angular.module('app.loggedIn.booking.admin.requirement.directive', [])
                 })
             }
 
+            // Enable Disable
             var disable = function(d) {
 
                 OnlineBookingAdminService.getDisable(d)
@@ -71,6 +75,7 @@ angular.module('app.loggedIn.booking.admin.requirement.directive', [])
 
             }
 
+            // Dialog edit
             var edit = function(g) {
 
                 var modalInstance = $modal.open({

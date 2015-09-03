@@ -1116,26 +1116,34 @@ module.exports = {
             res.json(500, {error: error});
         })
     },
-        // Correspondence
+    /*
+        <summary>
+            postListCor: Get all value (CAL_ID, PATIEN_ID) a specific table
+            Input param: CAL_ID, PATIENT_ID
+            Ouput param: get all data
+        </summary>
+    */
     postListCor: function(req, res){
 
         var postData = req.body.data;
 
+        // Get data and paging
         var sql = knex('cln_patient_correspondence')
-        .where({
-            'PATIENT_ID': postData.PATIENT_ID
-        })
-        .limit(postData.limit)
-        .offset(postData.offset)
-        .toString();
+            .where({
+                'PATIENT_ID': postData.PATIENT_ID
+            })
+            .limit(postData.limit)
+            .offset(postData.offset)
+            .toString();
 
+        // Count data
         var sql_count = knex('cln_patient_correspondence')
-        .where({
-            'CAL_ID': postData.CAL_ID,
-            'PATIENT_ID': postData.PATIENT_ID
-        })
-        .count('ID as a')
-        .toString();
+            .where({
+                'CAL_ID': postData.CAL_ID,
+                'PATIENT_ID': postData.PATIENT_ID
+            })
+            .count('ID as a')
+            .toString();
 
         db.sequelize.query(sql)
         .success(function(data){
@@ -1152,10 +1160,20 @@ module.exports = {
         })
 
     },
+
+    /* 
+        <summary>
+            postAddCor: Create data into a specific table and
+            update data when named is exist in table
+            Input param: data of coresspondence, PATIENT_ID, CAL_ID, ID
+            Ouput param: success or error
+        </summary>
+    */
     postAddCor: function(req, res){
+
         var errors = [];
         var postData = req.body.data;
-        console.log('$$$$$$$$$$ ',postData);
+
         var required = [
             {field: 'Mode', message: 'Mode is required'},
             {field: 'Duration', message: 'Duration is required'},
@@ -1164,6 +1182,7 @@ module.exports = {
             {field: 'Details', message: 'Details is required'}
         ]
 
+        // Validate data
         _.forIn(postData, function(value, field){
             _.forEach(required, function(field_error){
                 if(field_error.field === field && S(value).isEmpty()){
@@ -1178,35 +1197,39 @@ module.exports = {
             return;
         }   
 
+        // Get data to checked
         var unique_sql = knex('cln_patient_correspondence')
-        .where({
-            'CAL_ID': postData.CAL_ID,
-            'PATIENT_ID': postData.PATIENT_ID
-        })
-        .toString();
+            .where({
+                'CAL_ID': postData.CAL_ID,
+                'PATIENT_ID': postData.PATIENT_ID
+            })
+            .toString();
 
+        // Insert data
         var sql = knex('cln_patient_correspondence')
-        .insert(postData)
-        .toString();
+            .insert(postData)
+            .toString();
 
+        // Update data(ID)
         var sql_update = knex('cln_patient_correspondence')
-        .where({
-            ID: postData.ID
-        })
-        .update(postData)
-        .toString();
+            .where({
+                ID: postData.ID
+            })
+            .update(postData)
+            .toString();
 
+        // Update data(CAL_ID, PATIENT_ID)
         var sql_ud = knex('cln_patient_correspondence')
-        .where({
-            'CAL_ID': postData.CAL_ID,
-            'PATIENT_ID': postData.PATIENT_ID
-        })
-        .update(postData)
-        .toString();
+            .where({
+                'CAL_ID': postData.CAL_ID,
+                'PATIENT_ID': postData.PATIENT_ID
+            })
+            .update(postData)
+            .toString();
 
         db.sequelize.query(unique_sql)
         .success(function(rows){
-            //console.log('ID log: ',rows[0].ID);
+
             if(rows.length > 0){
                 if(rows[0].ID){
                     db.sequelize.query(sql_ud)
@@ -1281,14 +1304,22 @@ module.exports = {
             res.json(500, {'status': 'error', 'message': error});
         })
     }*/
+
+    /*
+        postById: Get data(ID) from a specific table
+        Input param: ID
+        Ouput param: list of table    
+    */
     postById: function(req, res){
 
         var postData = req.body.data;
+        
         var sql = knex('cln_patient_correspondence')
-        .where({
-            ID: postData
-        })
-        .toString();
+            .where({
+                ID: postData
+            })
+            .toString();
+        
         db.sequelize.query(sql)
         .success(function(data){
             res.json({data: data[0]});

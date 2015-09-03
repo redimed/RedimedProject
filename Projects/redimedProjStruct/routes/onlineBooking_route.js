@@ -29,5 +29,4 @@ app.post('/api/booking/edit/note',BookingController.editAppointmentNote);
 app.get('/api/booking/export/:cId',BookingController.exportToExcel);
 app.post('/api/booking/getalert', BookingController.getAlert);
 app.post('/api/booking/updatealert', BookingController.updateAlert);
-// app.post('/api/booking/getbyalert', BookingController.getByAlert);
 app.post('/api/booking/getdisable', BookingController.getDisable);

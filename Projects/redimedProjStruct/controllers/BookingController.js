@@ -772,27 +772,35 @@ module.exports = {
             })
     },
 
+    // <summary>
+    // getAlert: Get list all alert(company_id) a specific table
+    // Input param: company_id, limit, offset
+    // Output param: display data from table cln_alerts 
+    // </summary>
     getAlert: function(req, res) {
 
         var postData = req.body.data;
 
+        // Get data from cln_alerts table and according to company_id variable
         var sql = knex('cln_alerts')
-        .where({
-            'company_id' : postData.company_id
-        })
-        .limit(postData.limit)
-        .offset(postData.offset)
-        .orderBy('id', 'desc')
-        .toString();
-
+            .where({   
+                'company_id' : postData.company_id
+            })
+            .limit(postData.limit)
+            .offset(postData.offset)
+            .orderBy('id', 'desc')
+            .toString();
+    
         var sql_count = knex('cln_alerts')
-        .where({
-            'company_id' : postData.company_id
-        })
-        .count('cln_alerts.id as a')
-        .toString();
+            .where({
+                'company_id' : postData.company_id
+            })
+            .count('cln_alerts.id as a')
+            .toString();
+
         db.sequelize.query(sql)
         .success(function(data) {
+            
             db.sequelize.query(sql_count)
             .success(function(count) {
                 res.json({data: data, count: count[0].a});
@@ -800,22 +808,31 @@ module.exports = {
             .error(function(error){
                 res.json(500, {'status': 'error', 'message': error});
             })
+        
         })
         .error(function(error){
             res.json('500', {'status': 'error', 'message': error});
         })
+
     },
 
+    // <summmary>
+    // updateAlert: Update data into a specific table
+    // Input param: id
+    // Output param: return a queries
+    // </summmary>
     updateAlert: function(req, res) {
 
         var postData = req.body.data;
 
+        //Update data into table cln_alerts via id variable
         var sql = knex('cln_alerts')
-        .where({
-            'id': postData.id
-        })
-        .update(postData)
-        .toString();
+            .where({
+                'id': postData.id
+            })
+            .update(postData)
+            .toString();
+
         db.sequelize.query(sql)
         .success(function(data) {
             res.json({data: data});
@@ -823,29 +840,14 @@ module.exports = {
         .error(function(error){
             res.json('500', {'status': 'error', 'message': error});
         })
+
     },
 
-    // getByAlert: function(req, res) {
-
-    //     var postData = req.body.data;
-
-    //     var sql = knex('cln_alerts')
-    //     .where({
-    //         'id': postData.id,
-    //         'isenable': '1'
-    //     })
-    //     .toString();
-
-    //     db.sequelize.query(sql)
-    //     .success(function(data) {
-    //         res.json({data: data[0]});
-    //     })
-    //     .error(function(error) {
-    //         res.json('500', {'status': 'error', 'message': error});
-    //     })
-
-    // },
-
+    // <summary>
+    // getDisable: Update status of a specific table
+    // Input param: isenable and id variable
+    // Output param: return a queries
+    // </summary>
     getDisable: function(req, res) {
 
         var postData = req.body.data;
@@ -857,13 +859,14 @@ module.exports = {
         }
 
         var sql = knex('cln_alerts')
-        .update({
-            'isenable': postData.isenable
-        })
-        .where({
-            'id': postData.id
-        })
-        .toString();
+            .update({
+                'isenable': postData.isenable
+            })
+            .where({
+                'id': postData.id
+            })
+            .toString();
+        
         db.sequelize.query(sql)
         .success(function(data) {
             res.json({data: data, sql: sql});

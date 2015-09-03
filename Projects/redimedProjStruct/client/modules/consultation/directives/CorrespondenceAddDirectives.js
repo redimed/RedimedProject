@@ -10,15 +10,17 @@ angular.module('app.loggedIn.corres.add.directive', [])
 		},
 		link: function(scope, ele, attrs){
 
+			// information of user
 			var user_id = $cookieStore.get('userInfo').id;
 
+			// Create new data
 			var saveCor = function(){
 
 				ConfigService.beforeSave(scope.scor.errors);
 				scope.scor.errors = [];
 
 				var postData = angular.copy(scope.scor.form);
-				console.log('^^^^^^^, ', postData);
+				
 				postData.Date = moment().format('YYYY-MM-DD');
 				postData.Time = moment().format('hh:mm');
 				postData.CAL_ID = $stateParams.cal_id;

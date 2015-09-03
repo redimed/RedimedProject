@@ -8,9 +8,17 @@ var kiss=require('./kissUtilsController');
 
 module.exports = {
 
+	/* 
+		<summary>
+			postDisable: Enable or Disable(Patient_id, ID) a specific table
+			Input param: isEnable, ID, Patient_id
+			Ouput param: success or error
+		</summary>
+	*/
 	postDisable: function(req, res){
 
 		var postData = req.body.data;
+		
 		if(postData.isEnable == 1){
 			postData.isEnable = 0;	
 		}else{
@@ -18,14 +26,15 @@ module.exports = {
 		}
 
 		var sql = knex('cln_scripts')
-		.update({
-			'isEnable': postData.isEnable
-		})
-		.where({
-			'ID': postData.ID,
-			'Patient_id': postData.Patient_id,
-		})
-		.toString();
+			.update({
+				'isEnable': postData.isEnable
+			})
+			.where({
+				'ID': postData.ID,
+				'Patient_id': postData.Patient_id,
+			})
+			.toString();
+
 		db.sequelize.query(sql)
 		.success(function(data){
 			res.json({data: data, sql: sql});
@@ -241,15 +250,22 @@ module.exports = {
 		})
 	},//end postAdd
 
+	/* 
+		<summary>
+			postById: Get value (id) a specific table
+			Input param: id
+			Ouput param: one row data of table
+		</summary>
+	*/
 	postById: function(req, res){
 
 		var postData = req.body.data;
 
 		var sql = knex('cln_scripts')
-		.where({
-			ID: postData
-		})
-		.toString();
+			.where({
+				ID: postData
+			})
+			.toString();
 
 		db.sequelize.query(sql)
 		.success(function(data){
@@ -326,17 +342,26 @@ module.exports = {
 		})
 	},
 
+
+	/* 
+		<summary>
+			postSing: Get signature of doctor(user_id) a specific table
+			Input param: user_id
+			Ouput param: Signature
+		</summary>
+	*/
 	postSing: function(req, res){
 
 		var postData = req.body.data;
 
 		var sql = knex
-		.column('doctors.Signature')
-		.from('doctors')
-		.where({
-			'doctors.User_id': postData
-		})
-		.toString();
+			.column('doctors.Signature')
+			.from('doctors')
+			.where({
+				'doctors.User_id': postData
+			})
+			.toString();
+			
 		db.sequelize.query(sql)
 		.success(function(data){
 			res.json({data: data[0]});

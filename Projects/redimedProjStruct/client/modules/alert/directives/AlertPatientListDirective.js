@@ -15,6 +15,7 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 		},
 		templateUrl: 'modules/alert/directives/templates/patientList.html',
 		link: function(scope, elem, attrs){
+			
 			if(typeof scope.permission === 'undefined'){
 				scope.action = {
 					edit: true,
@@ -25,6 +26,7 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 				scope.action = scope.$eval(scope.permission);
 			}
 
+			// information
 			var search = {
 				page: 1,
 				limit: scope.limit,
@@ -54,22 +56,19 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 				offset: 0
 			}
 
-			// var searchcheck = {
-			// 	check: 0
-			// }
-
-			
-
+			// Paging
 			scope.setPage = function (page) {
 				scope.alert.searchlist.offset = (page-1)*scope.alert.searchlist.limit;
 				scope.alert.load();
 			}
 
+			// Paging
 			scope.onPage = function (page) {
 				scope.alert.bysearch.offset = (page-1)*scope.alert.bysearch.limit;
 				scope.alert.load();
 			}
 
+			// Display data
 			var load = function(){
 
 				if(scope.action.edit == true){
@@ -78,15 +77,8 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 					.then(function(response) {
 						scope.alert.bylist = response.data;
 						scope.alert.count = response.count;
-						//console.log('@@@@@@@@@@: ', scope.alert.count);
 					}, function(error){})
 				}else{
-					// AlertModel.postlistalert(scope.alert.searchlist)
-					// .then(function(res) {
-					// 	//console.log(res.data);
-					// 	scope.alert.list = res.data;
-					// 	scope.alert.count_list = res.count;
-					// }, function(error) {})
 					AlertModel.showcompanyid($stateParams.patient_id)
 					.then(function(response) {
 						
@@ -96,12 +88,6 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 							scope.alert.list = res.data;
 							scope.alert.count_list = res.count;
 						}, function(error) {})
-						
-						// var company_id = response.data[0].company_id;
-						// 	AlertModel.showalert(company_id)
-						// 	.then(function(resp) {
-						// 		scope.alert.list = resp.data;
-						// 	}, function(error){})
 					}, function(error){ })
 				}
 				if(typeof scope.withoutPatient !== 'undefined' && scope.withoutPatient){
@@ -124,12 +110,14 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 				}
 			}
 
+			// Set page
 			var onSearch = function(){
 				scope.alert.search.offset = 0;
 				scope.alert.load();
 				scope.alert.search.page = 1;
 			}
 
+			// Sort date
 			var onOrderBy = function(option){
 				switch(option.field){
 					case 'Creation_date':
@@ -140,6 +128,7 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 				scope.alert.load();
 			}
 
+			// Dialog remove
 			var remove = function(list){
 				$modal.open({
 					templateUrl: 'dialogAlertRemove',
@@ -152,6 +141,7 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 					}
 				})
 				.result.then(function(list){
+
 					AlertModel.remove(list)
 					.then(function(response){
 						toastr.success('Delete Successfully');
@@ -159,7 +149,7 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 					}, function(error){})
 				})
 			}
-
+			// Dialog edit
 			var edit = function(list){
 				$modal.open({
 					templateUrl: 'dialogAlertEdit',
@@ -178,7 +168,7 @@ angular.module('app.loggedIn.alert.directives.patientList', [])
 					}
 				})
 			}
-
+			// Paging
 			var onPage = function(page){
 				scope.alert.search.offset = (page-1)*scope.alert.search.limit;
 				scope.alert.load();

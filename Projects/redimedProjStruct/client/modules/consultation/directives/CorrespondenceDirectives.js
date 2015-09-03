@@ -8,6 +8,8 @@ angular.module('app.loggedIn.corres.list.directive', [])
 		},
 		link: function(scope, ele, attrs){
 
+
+			// information
 			var search = {
 				page: 1,
 				limit: 20,
@@ -17,6 +19,7 @@ angular.module('app.loggedIn.corres.list.directive', [])
 				CAL_ID: $stateParams.cal_id
 			}
 
+			// Load data
 			var load = function(){
 
 				ConsultationService.getListCor(search)
@@ -28,12 +31,14 @@ angular.module('app.loggedIn.corres.list.directive', [])
 
 			}
 
+			// Paging
 			scope.setPage = function (page) {
 				scope.cor.search.offset = (page-1)*scope.cor.search.limit;
 				scope.cor.load();
 			}
 
 
+			// Dialog add or update
 			scope.Action = function(type, index){
 
 				if(type == 'new'){
@@ -46,6 +51,7 @@ angular.module('app.loggedIn.corres.list.directive', [])
 			        	scope.cor.load();
 			        })
 				}
+				
 				if(type == 'update'){
 					console.log('sdjkds ', index);
 					var modalInstance = $modal.open({

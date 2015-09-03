@@ -9,15 +9,19 @@ angular.module('app.loggedIn.alert.directives.add', [])
 		},
 		templateUrl: 'modules/alert/directives/templates/add.html',
 		link: function(scope, elem, attrs){
+			
+			// Service color
 			$("#service_color").minicolors({
 		        control: 'wheel'
 		    });
-
+			
+			// get id value of user
 			var user_id = $cookieStore.get('userInfo').id;
-
+			// get patient_id and cal_id of patient and calendar
 			var Patient_id = $stateParams.patient_id;
 			var Cal_id = $stateParams.cal_id;
 
+			// information
 			var form = {
 				name: '',
 				description: '',
@@ -27,8 +31,12 @@ angular.module('app.loggedIn.alert.directives.add', [])
 				Last_updated_by: user_id
 			}
 			
+			// Create new data
+
 			var save = function(){
+
 				ConfigService.beforeSave(scope.alert.errors);
+				
 				var postData = angular.copy(scope.alert.form);
 				postData.Creation_date = postData.Last_update_date = moment().format('YYYY-MM-DD');
 
@@ -41,7 +49,6 @@ angular.module('app.loggedIn.alert.directives.add', [])
 					postData.cal_id = Cal_id;
 				}
 
-				// console.log('@@: ', postData);
 				AlertModel.add(postData)
 				.then(function(response){
 					toastr.success('Added Successfully');

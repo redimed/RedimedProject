@@ -1,7 +1,10 @@
 angular.module('app.loggedIn.alert.controllers.patientList', [])
 
 .controller('AlertPatientSelectDialog', function($scope, $modalInstance, Patient_id, CAL_ID, AlertModel, toastr){
+
+	// Create new data when checked
 	var onSaveCheck = function(data){
+
 		var postData = angular.copy(data);
 
 		AlertModel.insertalert(postData)
@@ -9,6 +12,7 @@ angular.module('app.loggedIn.alert.controllers.patientList', [])
 			toastr.success('Select Successfully');
 			$modalInstance.close('success');
 		}, function(error){})
+
 	}
 
 	$scope.alert = {
@@ -21,42 +25,20 @@ angular.module('app.loggedIn.alert.controllers.patientList', [])
 		}
 	})
 
-	// var onClickRow = function(row){
-		
-	// 	var search = {
-	// 		patient_id: 0,
-	// 		cal_id: 0,
-	// 		alert_id: 0,
-	// 		isEnable: 0
-	// 	}
-
-	// 	search.alert_id = row.id;
-	// 	search.patient_id = Patient_id;
-	// 	search.cal_id = CAL_ID;
-
-	// 	AlertModel.insertalert(search)
-	// 	.then(function(response) {
-	// 		toastr.success('Select Successfully');
-	// 		$modalInstance.close('success');
-	// 	}, function(error){})
-
-
-	// }
-
 	$scope.alert = {
 		Patient_id: Patient_id,
 		CAL_ID: CAL_ID,
 		limit: 10,
 		onSaveCheck: function(data){ onSaveCheck(data); }
-		// onClickRow: function(row){
-		// 	onClickRow(row);
-		// },
 	}
 })
 
 .controller('AlertPatientListController', function($scope, $modal, $stateParams, toastr){
+	
+	// Dialog show list
 	var select = function(){
 		$scope.alert.reload = false;
+		
 		$modal.open({
 			templateUrl: 'dialogAlertPatientSelect',
 			controller: 'AlertPatientSelectDialog',
@@ -77,9 +59,11 @@ angular.module('app.loggedIn.alert.controllers.patientList', [])
 		})
 	}
 
+	// Dialog add manual alert
 	var add = function() {
 
 		$scope.alert.reload = false;
+		
 		$modal.open({
 			templateUrl: 'dialogAddAlert',
 			controller: 'AlertPatientSelectDialog',

@@ -11,7 +11,7 @@ angular.module('app.loggedIn.script.directive.list', [])
 			medicare: '='
 		},
 		link: function(scope, ele, attrs){		
-
+			
 			var search = {
 				page: 1,
 				limit: 5,

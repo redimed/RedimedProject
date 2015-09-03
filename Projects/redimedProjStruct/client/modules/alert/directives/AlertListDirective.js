@@ -31,6 +31,8 @@ angular.module('app.loggedIn.alert.directives.list', [])
 		},
 		templateUrl: 'modules/alert/directives/templates/list.html',
 		link: function(scope, elem, attrs){
+			
+			// information
 			var search = {
 				page: 1,
 				limit: scope.limit,
@@ -42,6 +44,8 @@ angular.module('app.loggedIn.alert.directives.list', [])
 				Creation_date: 'desc',
 				isenable:''
 			}
+
+			// Disable alert
 			var disableAlert = function(l){
 				AlertModel.disableAlert(l)
 				.then(function(response){
@@ -50,6 +54,8 @@ angular.module('app.loggedIn.alert.directives.list', [])
 
 				})
 			}
+			
+			// Display data
 			var load = function(){
 				var postData = angular.copy(scope.alert.search);
 				AlertModel.list(postData)
@@ -58,13 +64,14 @@ angular.module('app.loggedIn.alert.directives.list', [])
 					scope.alert.count = response.count;
 				}, function(error){})
 			}
-
+			
+			// Set page
 			var onSearch = function(){
 				scope.alert.search.offset = 0;
 				scope.alert.load();
 				scope.alert.search.page = 1;
 			}
-
+			// Sort date
 			var onOrderBy = function(option){
 				switch(option.field){
 					case 'Creation_date':
@@ -75,6 +82,7 @@ angular.module('app.loggedIn.alert.directives.list', [])
 				scope.alert.load();
 			}
 
+			// Dialog remove alert
 			var remove = function(list){
 				$modal.open({
 					templateUrl: 'dialogAlertRemove',
@@ -94,7 +102,7 @@ angular.module('app.loggedIn.alert.directives.list', [])
 					}, function(error){})
 				})
 			}
-
+			// Dialog edit alert
 			var edit = function(list){
 				$modal.open({
 					templateUrl: 'dialogAlertEdit',
@@ -113,7 +121,7 @@ angular.module('app.loggedIn.alert.directives.list', [])
 					}
 				})
 			}
-
+			// paging
 			var onPage = function(page){
 				scope.alert.search.offset = (page-1)*scope.alert.search.limit;
 				scope.alert.load();
