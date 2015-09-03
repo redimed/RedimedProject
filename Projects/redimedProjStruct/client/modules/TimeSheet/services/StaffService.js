@@ -32,8 +32,8 @@ angular.module("app.loggedIn.staff.service", [])
         });
     };
     service.CheckTimeInLieu = function(infoPost) {
-        var checkTimeInLieu = api.all('staff/checktime');
-        return checkTimeInLieu.post({
+        var CheckTimeInLieu = api.all('staff/checktime');
+        return CheckTimeInLieu.post({
             info: infoPost
         });
     };

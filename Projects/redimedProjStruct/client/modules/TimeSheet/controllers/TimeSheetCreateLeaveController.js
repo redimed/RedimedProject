@@ -104,7 +104,7 @@ angular.module("app.loggedIn.TimeSheet.CreateLeave.Controller", [])
             - fail: send message error
         */
         $scope.CreateLeaveForm = function(info) {
-            TimeSheetService.UpLeaveServer(info).then(function(response) {
+            TimeSheetService.CreateLeaveForm(info).then(function(response) {
                 if (response.status === "success") {
                     toastr.success("Apply leave success!", "Success");
                     $state.go("loggedIn.timesheetHome.leaveHistory", null, {

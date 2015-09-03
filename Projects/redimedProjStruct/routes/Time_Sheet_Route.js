@@ -55,7 +55,7 @@ app.post("/api/TimeSheet/post-itemcode-list", staffTimesheetController.LoadItemC
 
 //LEAVE FORM FOR STAFF
 app.post("/api/TimeSheet/post-info-employee", staffLeaveController.LoadInfoEmployee);
-app.post("/api/TimeSheet/post-leave-form", staffLeaveController.UpLeaveServer);
+app.post("/api/TimeSheet/post-leave-form", staffLeaveController.CreateLeaveForm);
 app.post("/api/TimeSheet/post-history-leave", staffLeaveController.LoadHistoryLeave);
 app.post("/api/TimeSheet/post-view-leave", staffLeaveController.ViewLeave);
 app.post("/api/TimeSheet/post-submit-view", staffLeaveController.SubmitOnViewLeave);

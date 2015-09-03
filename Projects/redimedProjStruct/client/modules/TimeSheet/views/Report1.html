@@ -20,10 +20,10 @@
     <div class="panel-body">
         <div class="row">
             <div class="col-md-3">
-                <div ng-dropdown-multiselect="" extra-settings="searchDept" translation-texts="translationTextDept" options="listDept" selected-model="listDepartmentChoose" checkboxes="true" get-selected="ListNew(info)"></div>
+                <div ng-dropdown-multiselect="" extra-settings="searchDept" translation-texts="translationTextDept" options="listDept" selected-model="listDepartmentChoose" checkboxes="true" get-selected="LoadEmp(info)"></div>
             </div>
             <div class="col-md-3">
-                <div ng-dropdown-multiselect="" extra-settings="searchEmp" translation-texts="translationTextEmp" options="listEmp" selected-model="listEmployeeChoose" get-selected="changeEmp(info)" checkboxes="true"></div>
+                <div ng-dropdown-multiselect="" extra-settings="searchEmp" translation-texts="translationTextEmp" options="listEmp" selected-model="listEmployeeChoose" get-selected="ChangeEmp(info)" checkboxes="true"></div>
             </div>
         </div>
     </div>
@@ -31,7 +31,7 @@
 <div class="row">
     <div class="col-md-12">
         <a ui-sref="loggedIn.home" class="btn btn-xs pull-right red">Cancel</a>
-        <a class="btn btn-xs pull-right green" ng-click="clickReview()" ng-disabled="listDepartmentChoose.length===0 || listEmployeeChoose.length===0 || isHavedata==0" href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/timeSheetTimeInLieu/{{USER_ID}}" target="_blank">Display</a>
+        <a class="btn btn-xs pull-right green" ng-click="ClickReview()" ng-disabled="listDepartmentChoose.length===0 || listEmployeeChoose.length===0 || isHavedata==0" href="http://testapp.redimed.com.au:3003/RedimedJavaREST/api/document/timeSheetTimeInLieu/{{USER_ID}}" target="_blank">Display</a>
     </div>
 </div>
 <!-- END INFO SYS -->

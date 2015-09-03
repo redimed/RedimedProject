@@ -21,10 +21,10 @@
                 <span ng-hide='isEdit'>Create New Timesheet</span>
                 <span ng-hide='!isEdit'>Edit Timesheet</span>
             </div>
-            <a class="btn pull-right btn-info btn-xs btn-circle" ng-click="checkTimeInLieu()" style="margin-top:10px;font-size:13px;">Check Time in Lieu</a>
+            <a class="btn pull-right btn-info btn-xs btn-circle" ng-click="CheckTimeInLieu()" style="margin-top:10px;font-size:13px;">Check Time in Lieu</a>
             <a class="btn pull-right btn-xs">
                 <label for="weekFrom" style="color:white;margin-top:9px;font-weight:bold;">Week From</label>
-                <input id="weekFrom" ng-hide='isEdit' class="week-picker" ng-model="dateWeekFrom" ng-change="changeDate()" style="color:black; font-weight:bold;" />
+                <input id="weekFrom" ng-hide='isEdit' class="week-picker" ng-model="dateWeekFrom" ng-change="ChangeDate()" style="color:black; font-weight:bold;" />
                 <input ng-disabled='isEdit' ng-show='isEdit' type="text" name="dob" ng-model="dateStart" datepicker-popup="dd-MM-yyyy" is-open="openDOB" ng-click="openDOB = true" datepicker-options="dateOptions3" close-text="Close" style="color:black; font-weight:bold;font-family: 'inherit';" />
             </a>
         </div>
@@ -83,10 +83,10 @@
                     <tbody>
                         <tr ng-hide="task.isAction == 'delete'" ng-repeat="(key,task) in tasks track by $index" ng-form="formRepeat">
                             <td style="text-align:center;width:2%;">
-                                <i ng-if="task.isParent === 1" class="fa fa-plus pointer" ng-click="addRow($index,task.date,task.tasks_week_id)" style="font-size: 13px;margin-top:10px;"></i>
+                                <i ng-if="task.isParent === 1" class="fa fa-plus pointer" ng-click="AddRow($index,task.date,task.tasks_week_id)" style="font-size: 13px;margin-top:10px;"></i>
                             </td>
                             <td style="text-align:center;width:2%;">
-                                <i ng-hide="task.isParent===1" ng-click="delTask($index,task.order)" class="fa fa-trash pointer" style="font-size: 13px;margin-top:7px;"></i>
+                                <i ng-hide="task.isParent===1" ng-click="DelTask($index,task.order)" class="fa fa-trash pointer" style="font-size: 13px;margin-top:7px;"></i>
                             </td>
                             <td style="vertical-align: middle; width:10%;">{{task.date | date : 'EEE, dd MMM yyyy'}}
                             </td>
@@ -107,11 +107,11 @@
                             </td>
                             <td style="text-align:center;width:10%;">
                                 <a ng-disabled="((task.activity_id==='' || task.activity_id===undefined || task.activity_id===null || task.location_id==='' || task.location_id===null || task.location_id===undefined || task.department_code_id==='' || task.department_code_id===null || task.department_code_id===undefined)&&task.activity_id!==5) || ((task.department_code_id===19 || task.department_code_id===27 ||task.department_code_id===29 || task.department_code_id===30 ||task.department_code_id===31
-                            ) && task.activity_id===1) || task.notPopup===true" ng-click="chooseItem(task, uploader, isEdit, key)" class="btn btn-xs blue-dark btn-circle" style="margin-left:5px; margin-top:5px;">Choose</a>
+                            ) && task.activity_id===1) || task.notPopup===true" ng-click="ChooseItem(task, uploader, isEdit, key)" class="btn btn-xs blue-dark btn-circle" style="margin-left:5px; margin-top:5px;">Choose</a>
                             </td>
                             <td style="text-align: center;width:8%;">
                                 <!-- ENTER VALUE -->
-                                <input type="text" ui-mask="99:99" ng-model="task.time_charge" name="time_charge" ng-change="changeTimeCharge()" style="font-style: 'normal';text-align: center;" ng-if="((task.department_code_id===19 || task.department_code_id===27 ||task.department_code_id===29 || task.department_code_id===30 ||task.department_code_id===31) && task.activity_id===1)" class="form-control input-sm" time-charge="task.time_charge" form-validate="formRepeat.time_charge.$error" ng-required="true" />
+                                <input type="text" ui-mask="99:99" ng-model="task.time_charge" name="time_charge" ng-change="ChangeTimeCharge()" style="font-style: 'normal';text-align: center;" ng-if="((task.department_code_id===19 || task.department_code_id===27 ||task.department_code_id===29 || task.department_code_id===30 ||task.department_code_id===31) && task.activity_id===1)" class="form-control input-sm" time-charge="task.time_charge" form-validate="formRepeat.time_charge.$error" ng-required="true" />
                                 <!-- END -->
                                 <!-- VIEW OTHER VALUE -->
                                 <label type="text" disabled name="time_charge" style="font-style: 'normal';text-align: center;" ng-if="!((task.department_code_id===19 || task.department_code_id===27 ||task.department_code_id===29 || task.department_code_id===30 ||task.department_code_id===31) && task.activity_id===1)" class="form-control input-sm">
@@ -144,10 +144,10 @@
                     <a class="btn btn-xs yellow pull-right" ng-show='!isEdit' ui-sref="loggedIn.home" style="width:70px;margin-right:-8px;">Cancel</a>
                     <!-- END EDIT-->
                     <a class="btn btn-xs yellow pull-right" ng-show='isEdit' ui-sref="loggedIn.timesheetHome.timesheetHistory" style="width:70px;margin-right:-8px;">Cancel</a>
-                    <button class="btn btn-xs green pull-right" ng-show="(!isEdit || checkStatus===1) && afterStatusID!==4" ng-click="actionTimesheet(2, formCreatTimesheet)" style="width:70px;">Submit</button>
-                    <button class="btn btn-xs purple pull-right" ng-show="(isEdit && (checkStatus!==1 || (afterStatusID ===4 && checkStatus==1)))" ng-click="actionTimesheet(5,formCreatTimesheet)" style="width:70px;">Re-submit</button>
-                    <button class="btn btn-xs blue pull-right" ng-show="afterStatusID ===4" ng-click="actionTimesheet(4,formCreatTimesheet)" style="width:70px;">Save</button>
-                    <button class="btn btn-xs blue pull-right" ng-show="afterStatusID !==4" ng-click="actionTimesheet(1,formCreatTimesheet)" style="width:70px;">Save</button>
+                    <button class="btn btn-xs green pull-right" ng-show="(!isEdit || checkStatus===1) && afterStatusID!==4" ng-click="ActionTimesheet(2, formCreatTimesheet)" style="width:70px;">Submit</button>
+                    <button class="btn btn-xs purple pull-right" ng-show="(isEdit && (checkStatus!==1 || (afterStatusID ===4 && checkStatus==1)))" ng-click="ActionTimesheet(5,formCreatTimesheet)" style="width:70px;">Re-submit</button>
+                    <button class="btn btn-xs blue pull-right" ng-show="afterStatusID ===4" ng-click="ActionTimesheet(4,formCreatTimesheet)" style="width:70px;">Save</button>
+                    <button class="btn btn-xs blue pull-right" ng-show="afterStatusID !==4" ng-click="ActionTimesheet(1,formCreatTimesheet)" style="width:70px;">Save</button>
                     <!-- END ADDNEW-->
                     <!-- END -->
                 </footer>
@@ -156,11 +156,11 @@
     </div>
 </form>
 <script type="text/ng-template" id="ViewTask">
-    <view-task ng-model="idDept" on-cancel="clickCancel(return)" on-save="clickSave(return)"></view-task>
+    <view-task ng-model="idDept" on-cancel="ClickCancel(return)" on-save="ClickSave(return)"></view-task>
 </script>
 <script type="text/ng-template" id="ItemCode">
-    <item-code ng-model="items" on-cancel="clickCancel(return)" on-save="clickSave(return,formValid)"></item-code>
+    <item-code ng-model="items" on-cancel="ClickCancel(return)" on-save="ClickSave(return,formValid)"></item-code>
 </script>
 <script type="text/ng-template" id="ActivityDetail">
-    <activity-detail ng-model="activities" on-cancel="clickCancel(return)" on-save="clickSave(return,formValid, upload)"></activity-detail>
+    <activity-detail ng-model="activities" on-cancel="ClickCancel(return)" on-save="ClickSave(return,formValid, upload)"></activity-detail>
 </script>

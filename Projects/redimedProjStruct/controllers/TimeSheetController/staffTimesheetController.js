@@ -1136,9 +1136,9 @@ module.exports = {
         var info = req.body.info;
         var dateAddEnd = (7 - moment(info.date).day()) % 7;
         var dateEnd = moment(info.date).add(dateAddEnd, 'day')
-        var weekNoEnd = functionForTimesheet.getWeekNo(dateEnd);
+        var weekNoEnd = functionForTimesheet.GetWeekNo(dateEnd);
         var yearEnd = moment(dateEnd).year();
-        var numberWeek = functionForTimesheet.defineNumberWeekTimeSheet();
+        var numberWeek = functionForTimesheet.DefineNumberWeekTimeSheet();
         var arrayWeekNo = [{
             weekNo: weekNoEnd,
             year: yearEnd
@@ -1146,7 +1146,7 @@ module.exports = {
         for (var i = 0; i < numberWeek; i++) {
             var dateAdd = (7 - moment(info.date).day()) % 7;
             var lastDateOfWeek = moment(info.date).add(dateAdd, 'day').subtract((i + 1) * 7, 'day').format("YYYY-MM-DD");
-            var weekNo = functionForTimesheet.getWeekNo(lastDateOfWeek);
+            var weekNo = functionForTimesheet.GetWeekNo(lastDateOfWeek);
             var yearOfFirstDate = moment(lastDateOfWeek).year();
             arrayWeekNo.push({
                 weekNo: weekNo,
@@ -1428,7 +1428,7 @@ var SendMailSubmit = function(req, res, info) {
                                                                     '</td></tr></tbody></table>'
                                                             };
 
-                                                            FunctionSendMail.sendEmail(req, res, mailOptions);
+                                                            FunctionSendMail.SendEmail(req, res, mailOptions);
                                                         }
                                                     })
                                                     .error(function(err) {

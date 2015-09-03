@@ -75,7 +75,7 @@ angular.module("app.loggedIn.TimeSheet.ViewTask.Directive", [])
                     }
                 });
 
-                scope.cancelClick = function() {
+                scope.CancelClick = function() {
                     scope.info.isReject = 1;
                     scope.info.isApprove = 1;
                 };
@@ -136,7 +136,7 @@ angular.module("app.loggedIn.TimeSheet.ViewTask.Directive", [])
                                     STATUS: "on-date"
                                 };
                             }
-                            $scope.clickCancel = function(value) {
+                            $scope.ClickCancel = function(value) {
                                 modalInstance.close();
                             };
                         },

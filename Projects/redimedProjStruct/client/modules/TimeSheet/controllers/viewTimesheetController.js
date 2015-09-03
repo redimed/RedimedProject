@@ -100,7 +100,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
 
     };
 
-    init();
+    Init();
 
     //change date
     $scope.ChangeDate = function(dateValue) {
@@ -223,7 +223,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
 
     $scope.CheckTimeInLieu(info);
 
-    $scope.getDay = function(day) {
+    $scope.GetDay = function(day) {
         var date = new Date(day);
         return date.getDay() === 0 ? 7 : date.getDay();
     };
@@ -245,12 +245,12 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
         });
     };
     /*
-    SubmitClick: submit time sheet on view detail
+    SubmitOnView: submit time sheet on view detail
     input: information timesheet
     output:  - success: send message success
              - fail: send message error
     */
-    $scope.SubmitClick = function(value) {
+    $scope.SubmitOnView = function(info) {
         //validate time charge
         if ($scope.week.time_charge < (38 * 60)) {
             toastr.warning("Please check time charge(>=38)", "Error");
@@ -258,13 +258,13 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
         } else if ($scope.time_in_lieuChoose > $scope.time_in_lieuHas) {
             toastr.warning("Please check time in lieu use larger time in lieu you have!", "Fail");
         } else {
-            value.status = 0;
-            if (value.STATUS == 'Awaiting for Submit') {
-                value.status = 2;
-            } else if (value.STATUS == 'Rejected') {
-                value.status = 5;
+            info.status = 0;
+            if (info.STATUS == 'Awaiting for Submit') {
+                info.status = 2;
+            } else if (info.STATUS == 'Rejected') {
+                info.status = 5;
             }
-            StaffService.SubmitOnView(value).then(function(response) {
+            StaffService.SubmitOnView(info).then(function(response) {
                 if (response.status === 'error') {
                     toastr.error("Submit fail!", "Error");
                     $modalInstance.close();
@@ -285,9 +285,9 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
     input: 
     output: detail Timesheet
     */
-    $scope.LoadInfo = function() {
+    $scope.LoadInfo = function(idTaskWeek) {
         $scope.tasks.loading = true;
-        StaffService.GetTask(infoWeek.task_week_id).then(function(response) {
+        StaffService.GetTask(idTaskWeek).then(function(response) {
             if (response['status'] == 'fail' || response['status'] == 'error') {
                 toastr.error("Error", "Error");
             } else if (response['status'] == 'success') {
@@ -309,36 +309,30 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
 
                     $scope.employee_name = (result[0].FirstName === null || result[0].FirstName === "") ? ((result[0].LastName === null || result[0].LastName === "") ? " " : result[0].LastName) : (result[0].FirstName + " " + ((result[0].LastName === null || result[0].LastName === "") ? " " : result[0].LastName));
                 }
-                if (infoWeek.date != 'full') {
-                    $scope.one = true;
-                    $scope.Title = "Timesheet Detail";
-                    $scope.tasks = _.filter(response['data'], function(data) {
-                        return data.date == infoWeek.date;
+                $scope.one = true;
+                $scope.Title = "Timesheet Detail";
+                $scope.tasks = _.filter(response['data'], function(data) {
+                    return data.date == infoWeek.date;
+                });
+                //push file
+                angular.forEach($scope.tasks, function(valueTask, indexTask) {
+                    $scope.tasks[indexTask].files = [];
+                    angular.forEach(response['file'], function(valueFile, indexFile) {
+                        if (valueTask.tasks_id === valueFile.tasks_id &&
+                            valueTask.ITEM_ID === valueFile.ITEM_ID) {
+                            $scope.tasks[indexTask].files.push({
+                                file_id: valueFile.file_id,
+                                file_name: valueFile.file_name
+                            });
+                        }
                     });
-                    //push file
-                    angular.forEach($scope.tasks, function(valueTask, indexTask) {
-                        $scope.tasks[indexTask].files = [];
-                        angular.forEach(response['file'], function(valueFile, indexFile) {
-                            if (valueTask.tasks_id === valueFile.tasks_id &&
-                                valueTask.ITEM_ID === valueFile.ITEM_ID) {
-                                $scope.tasks[indexTask].files.push({
-                                    file_id: valueFile.file_id,
-                                    file_name: valueFile.file_name
-                                });
-                            }
-                        });
-                    });
-                } else {
-                    $scope.Title = "Full Timesheet";
-                    $scope.one = false;
-                    $scope.tasks = response['data'];
-                }
+                });
             }
         });
         $scope.tasks.loading = false;
     };
 
-    $scope.LoadInfo();
+    $scope.LoadInfo(infoWeek.task_week_id);
 
     $scope.ChooseItem = function(item) {
         var modalInstance = $modal.open({
@@ -412,7 +406,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
         return StaffService.GetFortMatTimeCharge(val);
     };
 
-    $scope.CancelClick = function() {
+    $scope.ClickCancel = function() {
         $modalInstance.close();
     };
 
@@ -422,7 +416,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
     output: - success: send message success
             - fail: send message error
     */
-    $scope.SubmitClick = function(value) {
+    $scope.SubmitOnView = function(value) {
         if ($scope.week.time_charge < (38 * 60)) {
             toastr.warning("Please check time charge(>=38)", "Error");
         } else if ($scope.time_in_lieuChoose > $scope.time_in_lieuHas) {
@@ -536,7 +530,7 @@ angular.module("app.loggedIn.timesheet.view.controller", [])
 
     $scope.LoadInfo();
 
-    $scope.viewDetailDate = function(infoWeek, date) {
+    $scope.ViewDetailDate = function(infoWeek, date) {
         var modalInstance = $modal.open({
             templateUrl: "modules/TimeSheet/views/viewDetail.html",
             controller: 'ViewDetailController',

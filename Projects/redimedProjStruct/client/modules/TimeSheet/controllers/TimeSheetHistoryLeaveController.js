@@ -27,7 +27,7 @@ angular.module("app.loggedIn.TimeSheet.HistoryLeave.Controller", [])
 
         /*
         Init: load list history Leave form default
-        input:
+        input: information as: pagination, order, search,...
         output: list Leave form
         */
         var Init = function() {
@@ -57,7 +57,7 @@ angular.module("app.loggedIn.TimeSheet.HistoryLeave.Controller", [])
         input: id of leave form
         output: defails of Leave form
         */
-        $scope.view = function(id) {
+        $scope.View = function(id) {
             var modalInstance = $modal.open({
                 templateUrl: "ViewLeave",
                 controller: function($scope) {
@@ -65,7 +65,7 @@ angular.module("app.loggedIn.TimeSheet.HistoryLeave.Controller", [])
                     $scope.ClickCancel = function(value) {
                         modalInstance.close();
                     };
-                    $scope.ClickSubmitAgain = function(statusID, leaveID) {
+                    $scope.SubmitOnViewLeave = function(statusID, leaveID) {
                         var info = {
                             statusID: statusID,
                             leaveID: leaveID,

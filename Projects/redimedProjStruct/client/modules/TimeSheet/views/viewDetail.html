@@ -4,7 +4,7 @@
         <fieldset>
             <legend>{{Title}}
                 <!-- BUTTON -->
-                <a class="btn pull-right btn-xs red" ng-hide="!one" ng-click="cancelClick()">X</a>
+                <a class="btn pull-right btn-xs red" ng-hide="!one" ng-click="CancelClick()">X</a>
                 <!-- END BUTTON -->
             </legend>
             <!-- INFORMATION -->
@@ -109,9 +109,9 @@
             <!-- END TABLE TASK OF WEEK -->
         </fieldset>
         <!-- BUTTON -->
-        <a href="javascript:;" ng-hide='one' ng-click="cancelClick()" class="btn pull-right btn-warning btn-xs" style="width:70px;font-size:13px;">
+        <a href="javascript:;" ng-hide='one' ng-click="CancelClick()" class="btn pull-right btn-warning btn-xs" style="width:70px;font-size:13px;">
             Cancel </a>
-        <a style="width:70px;font-size:13px;" ng-hide='one || STATUS==="Submitted" || STATUS==="Re-submitted" || STATUS==="Approved"' ng-click="okClick()" class="btn pull-right blue-steel btn-xs">
+        <a style="width:70px;font-size:13px;" ng-hide='one || STATUS==="Submitted" || STATUS==="Re-submitted" || STATUS==="Approved"' ng-click="OkClick()" class="btn pull-right blue-steel btn-xs">
                 Edit
             </a>
         <a style="width:70px;font-size:13px;" ng-hide='one || STATUS==="Submitted" || STATUS==="Re-submitted" || STATUS==="Approved" || 
@@ -119,7 +119,7 @@
                Submit
             </a>
         <a style="width:70px;font-size:13px;" ng-hide='one||STATUS==="Submitted" || STATUS==="Re-submitted" || STATUS==="Approved" || 
-        (STATUS==="Awaiting for Submit" && after_status_id!==4)' ng-click="submitClick(submitOnView)" class="btn purple pull-right btn-xs">
+        (STATUS==="Awaiting for Submit" && after_status_id!==4)' ng-click="SubmitClick(submitOnView)" class="btn purple pull-right btn-xs">
                Re-submit
             </a>
         <!-- END BUTTON -->

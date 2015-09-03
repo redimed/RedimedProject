@@ -25,16 +25,16 @@ angular.module("app.loggedIn.TimeSheet.ViewDetail.Directive", [])
                     });
                 });
                 scope.DetailItem = function(taskID) {
-                    dialogItem(taskID);
+                    DialogItem(taskID);
                 };
 
                 //view item code
-                var dialogItem = function(taskID) {
+                var DialogItem = function(taskID) {
                     var modalInstance = $modal.open({
                         templateUrl: "ViewItem",
                         controller: function($scope) {
                             $scope.taskID = taskID;
-                            $scope.clickCancel = function() {
+                            $scope.ClickCancel = function() {
                                 modalInstance.close();
                             };
                         },

@@ -41,7 +41,7 @@ angular.module("app.loggedIn.TimeSheet.ViewLeave.Directive", [])
                         scope.ViewLeave(info);
                     }
                 });
-                scope.getStyle = function(timeLeave) {
+                scope.GetStyle = function(timeLeave) {
                     if (timeLeave >= 6000) {
                         return {
                             "margin-right": "5px"

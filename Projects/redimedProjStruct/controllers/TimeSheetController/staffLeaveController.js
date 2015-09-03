@@ -88,12 +88,12 @@ module.exports = {
             });
     },
     /*
-    UpLeaveServer: create new Leave form
+    CreateLeaveForm: create new Leave form
     input: information new Leave form
     output: - success: confirmation notification  and success message
             - fail: send error message
     */
-    UpLeaveServer: function(req, res) {
+    CreateLeaveForm: function(req, res) {
         var info = req.body.info;
         //add new Leave form with request data
         db.HrLeave.create({
@@ -617,7 +617,8 @@ module.exports = {
                     userID: trackerInfo.userID,
                     dateSubmit: trackerInfo.creationDate
                 };
-                functionForTimesheet.sendMailSubmitLeave(req, res, sendMailInfo);
+
+                functionForTimesheet.SendMailSubmitLeave(req, res, sendMailInfo);
 
                 res.json({
                     status: "success"
@@ -790,7 +791,7 @@ module.exports = {
                                 userID: trackerInfo.userID,
                                 dateSubmit: trackerInfo.creationDate
                             };
-                            functionForTimesheet.sendMailSubmitLeave(req, res, sendMailInfo);
+                            functionForTimesheet.SendMailSubmitLeave(req, res, sendMailInfo);
                         }
                         res.json({
                             status: "success"

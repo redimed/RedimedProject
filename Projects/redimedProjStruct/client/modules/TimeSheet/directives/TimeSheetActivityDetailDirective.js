@@ -35,13 +35,13 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                         }
                     }
                     //set page
-                    scope.setPage = function() {
+                    scope.SetPage = function() {
                         scope.searchObjectMap.offset = (scope.searchObjectMap.currentPage - 1) * scope.searchObjectMap.limit;
                         scope.LoadList();
                     };
 
                     //reset
-                    scope.reset = function() {
+                    scope.Reset = function() {
                         scope.searchObjectMap = angular.copy(scope.searchObject);
                         scope.LoadList();
                     };
@@ -105,11 +105,11 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                     Init();
 
                     //some order by
-                    scope.itemCodeASC = function() {
+                    scope.ItemCodeASC = function() {
                         scope.searchObjectMap.order['time_item_code.ITEM_ID'] = "ASC";
                         scope.LoadList();
                     };
-                    scope.itemCodeDESC = function() {
+                    scope.ItemCodeDESC = function() {
                         scope.searchObjectMap.order['time_item_code.ITEM_ID'] = "DESC";
                         scope.LoadList();
                     };
@@ -249,7 +249,7 @@ angular.module("app.loggedIn.TimeSheet.ActivityDetail.Directive", [])
                 });
 
                 //remove file upload
-                scope.removeItem = function(indexItem, indexFile, fileId) {
+                scope.RemoveItem = function(indexItem, indexFile, fileId) {
                     swal({
                         title: "Are you sure detele this file!",
                         type: "warning",

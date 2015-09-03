@@ -62,12 +62,12 @@ angular.module("app.loggedIn.TimeSheet.ApproveLeave.Controller", [])
             $scope.LoadList();
         };
 
-        $scope.view = function(idView) {
+        $scope.View = function(idView) {
             var modalInstance = $modal.open({
                 templateUrl: "ViewLeaveApprove",
                 controller: function($scope) {
                     $scope.idView = idView;
-                    $scope.clickCancel = function(value) {
+                    $scope.ClickCancel = function(value) {
                         if (value !== undefined &&
                             value !== null &&
                             value.isReject === true) {

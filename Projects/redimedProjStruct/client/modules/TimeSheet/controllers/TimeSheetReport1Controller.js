@@ -22,7 +22,7 @@ angular.module("app.loggedIn.TimeSheet.Report1.Controller", [])
         output: - success: download file PDF
                 - fail: send message error
         */
-        $scope.ListNew = function(listNew) {
+        $scope.LoadEmp = function(listNew) {
             if (listNew !== undefined &&
                 listNew !== null &&
                 listNew.length !== 0) {
@@ -89,7 +89,6 @@ angular.module("app.loggedIn.TimeSheet.Report1.Controller", [])
                         $scope.isHavedata = 0;
                         toastr.error("No Data!!!!", 'Error');
                     } else {
-                        //catch exception
                         $state.go("loggedIn.home", null, {
                             "reload": true
                         });

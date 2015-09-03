@@ -256,7 +256,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
 
 
     /*
-    checkFirstTaskWeek: get next week enter timesheet
+    CheckFirstTaskWeek: get next week enter timesheet
     input:
     output: next week for employee enter Timesheet
     */
@@ -483,7 +483,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
                 } else {
                     //create new timesheet
                     $scope.isEdit = false;
-                    $scope.checkFirstTaskWeek();
+                    $scope.CheckFirstTaskWeek();
                 }
             }
 
@@ -626,7 +626,7 @@ angular.module("app.loggedIn.timesheet.create.controller", [])
         $scope.info.startWeek = startWeek;
         $scope.info.endWeek = endWeek;
         $scope.info.statusID = status;
-        $scope.info.weekNo = $scope.getWeekNumber($scope.viewWeek.startWeek);
+        $scope.info.weekNo = $scope.GetWeekNumber($scope.viewWeek.startWeek);
 
         StaffService.AddAllTask($scope.tasks, $scope.info).then(function(response) {
             if (response['status'] == 'success') {

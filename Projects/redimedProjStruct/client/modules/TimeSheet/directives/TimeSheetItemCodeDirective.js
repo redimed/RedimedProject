@@ -92,7 +92,7 @@ angular.module("app.loggedIn.TimeSheet.ItemCode.Directive", [])
                     scope.rows = MODE_ROW;
                     scope.searchObjectMap = angular.copy(scope.searchObject);
                     scope.list = {};
-                    scope.loadList();
+                    scope.LoadList();
                 };
 
                 Init();
