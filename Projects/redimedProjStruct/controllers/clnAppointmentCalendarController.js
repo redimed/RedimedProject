@@ -316,11 +316,10 @@ module.exports =
             });
     },
     /**
-     * tannv.dts@gmail.com create
-     * phanquocchien.c1109g@gmail.com mofify
-     * edit DATE_FORMAT(h.`FROM_TIME`,'%i')) va AND h.`PATIENTS` IS NULL
-     * modify by tannv.dts@gmail.com on 10-3-2015
-     *     modify content: replace search by Specialties_id with Specialties_name
+     * getAppointmentCalendar: get appointment calendar list, filter by:
+     *       serviceId,sourceType,RL_TYPE_ID,Specialties_name,DOCTOR_ID,SITE_ID,FROM_TIME,currentDate,periodTimeDefault
+     * input: req.query: DOCTOR_ID,SITE_ID,FROM_TIME,Specialties_name,RL_TYPE_ID,sourceType,serviceId
+     * output: res: list of appointment calendar
      */
     getAppointmentCalendar: function(req,res)
     {
@@ -333,6 +332,9 @@ module.exports =
         var serviceId = rlobUtil.redilegalServiceId;
         var periodTimeDefault=rlobUtil.periodTimeDefault;
         var currentDate=kiss.getCurrentDateStr();
+        //query get appointment calendar info
+        //cln_appointment_calendar inner join with: doctor_specialties, redimedsites,doctors
+        //cln_specialties inner join with: rl_types
         var sql =
             " SELECT  DISTINCT h.*,CONCAT(DATE_FORMAT(h.`FROM_TIME`,'%H'),':',DATE_FORMAT(h.`FROM_TIME`,'%i')) AS appointment_time,    "+  
             "   `redimedsite`.`Site_name`,`redimedsite`.`Site_addr`, doctor.`NAME`,spec.`Specialties_id`,                              "+ 
@@ -344,7 +346,6 @@ module.exports =
             "   INNER JOIN `redimedsites` redimedsite ON h.`SITE_ID`=`redimedsite`.id                                                  "+ 
             "   INNER JOIN `doctors` doctor ON doctor.`doctor_id`=h.`DOCTOR_ID`                                                        "+ 
             " WHERE     h.`NOTES` IS NULL                                                                                              "+ 
-            //"   AND h.`PATIENTS` IS NULL                                                                                               "+ 
             "   AND h.`SERVICE_ID` = ?                                                                                                 "+ 
             "   AND                                                                                                                    "+ 
             "   rltype.`SOURCE_TYPE` LIKE ? AND spec.`RL_TYPE_ID` LIKE ?  AND spec.`Specialties_name` LIKE ?                           "+ 

@@ -40,9 +40,14 @@ var inc_common_model =  [
 module.exports = {
 
 	/**
-	 * created by: unknown
-	 * tannv.dts mark
-	 * khoi tao cln_invoice_header
+	 * postInit: khởi tạo invoice
+	 * Nếu kiểm tra thấy invoice đã tồn tại thì update, nếu invoice chưa tồn tại thì insert
+	 * input:
+	 * + patient_id
+	 * + cal_id
+	 * output:
+	 * - if fail return fail status
+	 * - if success return success status
 	 */
 	postInit: function(req, res) {
 		var fHeader='v2_InvoiceController->postInit';
@@ -55,16 +60,19 @@ module.exports = {
 		var userInfo=kiss.checkData(req.cookies.userInfo)?JSON.parse(req.cookies.userInfo):{};
 		var userId=userInfo.id;
 		var currentTime=kiss.getCurrentTimeStr();
+		//truy van thong tin calendar
 		var sql="SELECT * FROM `cln_appointment_calendar` WHERE `CAL_ID`=?";
 		kiss.executeQuery(req,sql,[cal_id],function(rows){
 			if(rows.length>0)
 			{
 				appt = rows[0];
+				//truy van thong tin patient
 				var sql="SELECT patient.* FROM `cln_patients` patient where patient.`Patient_id`=?";
 				kiss.executeQuery(req,sql,[patient_id],function(rows){
 					if(rows.length>0)
 					{
 						patient=rows[0];
+
 						var sql=
 							" SELECT patientClaim.*,claim.`insurer_id` FROM `cln_patient_claim` patientClaim  "+   
 							" INNER JOIN `cln_claims` claim ON patientClaim.`Claim_id`=claim.`Claim_id`       "+
@@ -74,6 +82,8 @@ module.exports = {
 							{
 								patient_claim=rows[0];
 							}
+							//kiem tra invoice co ton tai hay chua
+							//neu co ton tai thi update, neu chua ton tai thi insert
 							var sql=
 								" SELECT invoiceHeader.* FROM `cln_invoice_header` invoiceHeader  "+
 								" where invoiceHeader.`cal_id`=? AND invoiceHeader.`Patient_id`=?    ";
@@ -626,8 +636,13 @@ module.exports = {
 	},
 
 	/**
-	 * tannv.dts@gmail.com
-	 * update invoice header
+	 * postSave: lưu thông tin invoice(header+line)
+	 * Nếu status==done-> gửi invoice sang  ERP
+	 * input:
+	 * +postData
+	 * output:
+	 * + if fail return fail status
+	 * + if success return success status
 	 */
 	postSave:function(req,res)
 	{
@@ -655,6 +670,7 @@ module.exports = {
 		if(lines.length>0)
 		{
 			var insertLines=[];
+			//tạo danh sách insertLines có thể insert vào database
 			for(var i=0;i<lines.length>0;i++)
 			{
 				var line=lines[i];
@@ -699,6 +715,7 @@ module.exports = {
 		}
 		// kiss.exFileJSON(postData,'invoice_data.txt');
 		kiss.beginTransaction(req,function(){
+		//kiem tra xem invoice co ton tai haykhong
 		var sql=
 			" SELECT header.`header_id`, COUNT(line.`line_id`) AS TOTAL_LINES,     "+
 			" IFNULL(SUM (line.`AMOUNT`),0) AS TOTAL_AMOUNT                        "+    
@@ -711,6 +728,7 @@ module.exports = {
 				{
 					var totalLine=rows[0].TOTAL_LINES;
 					var totalAmount=rows[0].TOTAL_AMOUNT;
+					//update invoice header
 					var sql="UPDATE `cln_invoice_header` SET ? WHERE header_id= ?";
 					var invoiceHeaderUpdateInfo={
 						claim_id:kiss.parseValue(claimId,'int'),
@@ -725,17 +743,19 @@ module.exports = {
 						SOURCE_ID:kiss.parseValue(SOURCE_ID,'int'),
 						FEE_TYPE:kiss.parseValue(FEE_TYPE,'int') ,
 						FORMULA:'100:100:100'
-						// AMOUNT: totalAmount// tann comment
 					};
-					// kiss.exlog(invoiceHeaderUpdateInfo);
 					kiss.executeQuery(req,sql,[invoiceHeaderUpdateInfo,invoiceHeaderId],function(result){
 						if(result.affectedRows>0)
 						{
+							//xoa tat ca cac invoice lines cu de add vao invoice line moi
 							var sql="DELETE FROM `cln_invoice_lines` WHERE HEADER_ID=?";
 							kiss.executeQuery(req,sql,[invoiceHeaderId],function(result){
+								//add invoice line
 								kiss.executeInsert(req,'cln_invoice_lines',insertLines,function(result){
+									//neu status==done thì gửi invoice sang erp
 									if(status=='done')
 									{
+										// tạo invoice number
 										invoiceUtil.getNewInvoiceNumber(req,function(newInvoiceNo){
 											var sql="UPDATE `cln_invoice_header` SET ? WHERE header_id= ?";
 											var invoiceDate=moment();
@@ -749,6 +769,10 @@ module.exports = {
 												var customerInfo={};
 												var listItemInfo=[];
 												var listInvoiceLine=[];
+												//lay thong tin customer cua invoice
+												//if invoice co insurer thi customer la insurer
+												//neu invoice khong co insurer ma co company thi customer la company
+												//neu invoice khong co ca insurer va company thi customer la patient
 												function getCustomerInfo()
 												{
 													console.log(">>>>>>>>>>>>>>>>>getCustomerInfo");
@@ -860,9 +884,9 @@ module.exports = {
 													return q.promise;
 												}
 
+												//Lay thong tin chi tiet cua cac item trong invoice
 												function getListItemInfo()
 												{
-													
 													console.log(">>>>>>>>>>>>>>>>>getListItemInfo");
 													var q = $q.defer();
 													var listItemInfo=[];
@@ -905,6 +929,7 @@ module.exports = {
 													return q.promise;
 												}
 
+												//Lay danh sach invoice lines
 												function getListInvoiceLine()
 												{
 													console.log(">>>>>>>>>>>>>>>>>getListInvoiceLine");
@@ -1279,9 +1304,12 @@ module.exports = {
 	},
 
 	/**
-	 * tannv.dts@gmail.com
-	 * save invoice line sheet (consultation)
+	 * postSaveInvoiceLineSheet: save invoice item được chọn bởi doctor
+	 * input:
+	 * +invoiceHeaderId
+	 * +listLine: list invoice line
 	 */
+	
 	postSaveInvoiceLineSheet:function(req,res)
 	{
 		var fHeader="v2_InvoiceController->postSaveInvoiceLineSheet";
@@ -1486,7 +1514,11 @@ module.exports = {
 	},
 
 	/**
-	 * Duc Manh
+	 * postSavemanual: insert invoice
+	 * input: invoice header info and list invoice lines
+	 * output:
+	 * status success and list invoice line
+	 * or status fail
 	 */
 	postSavemanual:function(req,res){
 		var postData = req.body.data;
@@ -1526,6 +1558,7 @@ module.exports = {
 					if(result.affectedRows>0)
 					{
 					
+					// chuyen đổi danh sách invoice line gửi từ client thành danh sách invoice line có thể lưu vào database
                     for (var i = 0; i < listBDLine.length; i++) {
                     	var obj = {
                     		HEADER_ID:result.insertId,
@@ -1581,6 +1614,12 @@ module.exports = {
 			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
 		});	
 	},
+
+	/**
+	 * postEditmanual: update invoice
+	 * input: invoice header info and invoice lines
+	 * output: status success and list invoice lines or status fail
+	 */
 	postEditmanual:function(req,res){
 
 		var postData = req.body.data;
@@ -1618,6 +1657,7 @@ module.exports = {
 			kiss.executeInsertIfDupKeyUpdate(req,'cln_invoice_header',[invoiceHeaderInsert],null,function(result){
 				if(result.affectedRows>0)
 				{	
+					//tạo listInsertLine, là list có thể lưu vào database 
                     for (var i = 0; i < listBDLine.length; i++) {
                     	var obj = {
                     		line_id:listBDLine[i].line_id,
@@ -1641,36 +1681,37 @@ module.exports = {
                     	}
                     	listInsertLine.push(obj);
                     };
-                    	var sql="DELETE FROM `cln_invoice_lines` WHERE HEADER_ID=?";
-						kiss.executeQuery(req,sql,[postData.header_id],function(result){
-							if (listBDLine.length !==0) {
-								kiss.executeInsertIfDupKeyUpdate(req,'cln_invoice_lines',listInsertLine,null,function(result){
-									kiss.commit(req,function(){
-			                        	 res.json({status:'success',data:listInsertLine});
-				                    },function(err){
-				                        kiss.exlog(fHeader,"Loi commit",err);
-				                        res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM004')});
-				                    })
-			                    },function(err){
-			                        kiss.exlog(fHeader,'Loi truy van insert list lines',err);
-			                       kiss.rollback(req,function(){
-										res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM003')});
-									});
-			                    })
-							}else{
-			                	kiss.commit(req,function(){
+                    //xóa tất cả các lines của invoice để insert các lines mới
+                	var sql="DELETE FROM `cln_invoice_lines` WHERE HEADER_ID=?";
+					kiss.executeQuery(req,sql,[postData.header_id],function(result){
+						if (listBDLine.length !==0) {
+							kiss.executeInsertIfDupKeyUpdate(req,'cln_invoice_lines',listInsertLine,null,function(result){
+								kiss.commit(req,function(){
 		                        	 res.json({status:'success',data:listInsertLine});
 			                    },function(err){
 			                        kiss.exlog(fHeader,"Loi commit",err);
 			                        res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM004')});
 			                    })
-			                };
-						},function(err){
-	                        kiss.exlog(fHeader,'Loi truy van delete list lines',err);
-	                       kiss.rollback(req,function(){
-								res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM003')});
-							});
-	                    })
+		                    },function(err){
+		                        kiss.exlog(fHeader,'Loi truy van insert list lines',err);
+		                       kiss.rollback(req,function(){
+									res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM003')});
+								});
+		                    })
+						}else{
+		                	kiss.commit(req,function(){
+	                        	 res.json({status:'success',data:listInsertLine});
+		                    },function(err){
+		                        kiss.exlog(fHeader,"Loi commit",err);
+		                        res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM004')});
+		                    })
+		                };
+					},function(err){
+                        kiss.exlog(fHeader,'Loi truy van delete list lines',err);
+                       kiss.rollback(req,function(){
+							res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM003')});
+						});
+                    })
 	                
 				}
 			},function(err){
@@ -1684,10 +1725,13 @@ module.exports = {
 			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
 		});	
 	},
+	
 	/**
-	 * duc manh
-	 * Get manualInvoice By Id
-	 * 04-08-2015
+	 * Lấy thông tin manual invoice thông qua id invoice
+	 * input: header_id: invoice header id
+	 * output: 
+	 * if fail return fail status
+	 * if success return success status, data: invoice header info, dataline: invoice lines
 	 */
 	postOnemanual:function(req,res){ 
 		var postData = req.body.data;
@@ -1736,10 +1780,14 @@ module.exports = {
 	},
 
 	/**
-	 * created by: ducmanh
-	 * edited by: tannv.dts@gmail.com
-	 * edition date: 12-08-2015
-	 * Lay ra gia cua item tuong tuong voi item id, fee type va ngay
+	 * Lấy ra giá của item tương ứng với item id, fee type id, và ngày cụ thể
+	 * input: 
+	 * + data:ITEM_ID,FEE_TYPE_ID,CurrentDate
+	 * output:
+	 * + nếu data truyền đến bị lỗi: return post-data-fail status
+	 * + nếu truy vấn bị lỗi: return fail status
+	 * + nếu kết quả truy vấn rỗng: return not-found status
+	 * + nếu truy vấn có trả về giá trị: return success status+ data(thông tin fee tương ứng của item)
 	 */
 	postGetfeetypefillter:function(req,res){ //get Item  by FEE_TYPE_ID and ITEM_ID 
 		var postData = req.body.data;
@@ -1778,6 +1826,8 @@ module.exports = {
 			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM001')});
 		});
 	},
+
+
 	postGetpatientbyid:function(req,res){//get patient by id
 		var postData = req.body.data;
 		var fHeader="v2_InvoiceController->postGetpatientbyid";
@@ -1830,7 +1880,16 @@ module.exports = {
 		});
 	},
 
-	postGetitemfillterfeeid:function(req,res){ //get Item  by FEE_TYPE_ID and ITEM_ID 
+
+	/**
+	 * postGetitemfillterfeeid: lấy danh sách giá hiện tại của item theo fee type
+	 * input: 
+	 * + data : FEE_TYPE_ID, currentDate
+	 * output:
+	 * + if fail return fail status
+	 * + if success return success status + data: list of items fees
+	 */
+	postGetitemfillterfeeid:function(req,res){
 		var postData = req.body.data;
 		console.log(postData);
 		var fHeader="v2_InvoiceController->postGetitemfillterfeeid";
@@ -1842,7 +1901,9 @@ module.exports = {
 			res.json({status:'fail',error:errorCode.get(controllerCode,functionCode,'DM002')});
 			return;
 		}
-		console.log(postData);
+		
+		//temp: lấy ra danh sách các item_fee hiện đang được áp dụng trong một feeType
+		//sau đó nối với cln_item_fee để lấy chi tiết fee
 		var sql=
 			" SELECT clnItemFee.`ITEM_FEE_ID`,clnItemFee.`FEE`,clnItemFee.`PERCENT`,clnItemFee.`FEE_START_DATE`,           "+
 			" item.`ITEM_ID`,item.`ITEM_CODE`,item.`TAX_ID`,item.`TAX_CODE`,item.`TAX_RATE`,                               "+
@@ -1870,9 +1931,12 @@ module.exports = {
 	},
 
 	/**
-	 * tannv.dts@gmail.com
-	 * 07-08-2015
-	 * lay fee cua list item id
+	 * postGetCurrentFeeOfItems: lấy ra fee thuộc fee type của các item nằm trong listItem
+	 * input:
+	 * +postData: listItem, feeTypeId
+	 * output:
+	 * + if fail return fail status
+	 * + if success return success status and data: list item fee
 	 */
 	postGetCurrentFeeOfItems:function(req,res){
 		var fHeader="v2_InvoiceController->postGetCurrentFeeOfItems";
@@ -1894,6 +1958,8 @@ module.exports = {
 			return;
 		}
 
+		//temp query: lấy ra fee hiện tại được sử dụng của item
+		//sau đó nối với cln_item_fees để lấy thông tin chi tiết của fee
 		var sql=
 			" SELECT clnItemFee.`ITEM_FEE_ID`,clnItemFee.`FEE`,clnItemFee.`PERCENT`,clnItemFee.`FEE_START_DATE`,          "+
 			" item.`ITEM_ID`,item.`ITEM_CODE`,item.`TAX_ID`,item.`TAX_CODE`,item.`TAX_RATE`,                              "+
@@ -1904,7 +1970,7 @@ module.exports = {
 			" 	FROM `cln_item_fees` itemFee                                                                              "+
 			" 	WHERE itemFee.`FEE_TYPE_ID`=?                                                                             "+
 			" 	AND itemFee.`FEE_START_DATE`<=?                                                                           "+
-			" 	AND itemFee.`CLN_ITEM_ID` IN (?)                                                                            "+
+			" 	AND itemFee.`CLN_ITEM_ID` IN (?)                                                                          "+
 			" 	GROUP BY itemFee.`FEE_TYPE_ID`, itemFee.`CLN_ITEM_ID`                                                     "+
 			" ) temp                                                                                                      "+
 			" INNER JOIN `cln_item_fees` clnItemFee                                                                       "+

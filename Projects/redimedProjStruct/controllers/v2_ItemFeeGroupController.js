@@ -12,13 +12,17 @@ var node_xj = require("xls-to-json");//tannv add
 
 
 /**
- * Function doc file xml luu thanh JSON
- * tannv.dts@gmail.com
+ * function đọc file xml lưu thành json
+ * input:
+ * -filePath: đường dẫn file xml
+ * -functionSuccess: function sẽ chạy nếu parse thành công
+ * -functionErr: function sẽ chạy nếu parse thất bại
+ * output:
+ * Json Object tương ứng với file xml
  */
 var parseXMLToJSON=function(filePath,functionSuccess,functionErr)
 {
     var parser = new xml2js.Parser();
-    // fs.readFile(__dirname + '/foo.xml', function(err, data) {
     fs.readFile(filePath, function(err, data) {
         parser.parseString(data, function (err, result) {
             if(!err)
@@ -36,9 +40,13 @@ var parseXMLToJSON=function(filePath,functionSuccess,functionErr)
 }
 
 /**
- * Ham chuyen tu file txt thanh array
- * tannv.dts@gmail.com
- * 21-07-2015
+ * Hàm chuyển từ file txt thành mảng array trong json
+ * input:
+ * -filePath: đường dẫn file txt
+ * -functionSuccess: function sẽ chạy nếu parse thành công
+ * -functionErr: function sẽ chạy nếu parse thất bại
+ * output:
+ * -javascript array
  */
 var parseTxtSource=function(filePath,functionSuccess,functionError)
 {
@@ -81,7 +89,7 @@ var parseTxtSource=function(filePath,functionSuccess,functionError)
             for(var i=0;i<listLine.length;i++)
             {
                 var item=listLine[i].split('\t');
-                //nhung item trong thi khong push vao mang
+                //những item trống thì không push vào mảng
                 if(item.length==1 && !kiss.checkData(item[0]))
                     continue;
                 {
@@ -100,9 +108,13 @@ var parseTxtSource=function(filePath,functionSuccess,functionError)
 }
 
 /**
- * Doc file excel xsl thanh json list
- * tannv.dts@gmail.com
- * 21-07-2015
+ * đọc file excel xsl chuyển thành json list
+ * input:
+ * -filePath: đường dẫn file txt
+ * -functionSuccess: function sẽ chạy nếu parse thành công
+ * -functionErr: function sẽ chạy nếu parse thất bại
+ * output:
+ * -javascript array
  */
 var parseXslSourceToJSON=function(filePath,functionSuccess,functionError)
 {
@@ -324,10 +336,12 @@ module.exports = {
 
 
     /**
-     * tannv.dts@gmail.com
-     * 17-07-2015
-     * import cho medicare:schedule/rebate/ip rebate tu file xml
-     * 
+     * import medicare fee từ file xml
+     * input:
+     * + postData:feeGroupId
+     * output:
+     * + if fail return fail status
+     * + if success return success status+ list item fee của medicare
      */
     postImportMedicareFeeFromSource:function(req,res)
     {
@@ -370,25 +384,14 @@ module.exports = {
                     {
                         var sourceItem=listSourceItem[i];
                         var dbItem={
-                            // ITEM_ID:,//tu tang
                             ITEM_NAME:getAttrVal(sourceItem,'Description'),
-                            // ALT_NAME:null,
-                            // DESCRIPTION:null,
                             UOM:getAttrVal(sourceItem,'BasicUnits'),
                             ITEM_TYPE:getAttrVal(sourceItem,'ItemType'),
-                            // TAX_ID:null,
-                            // ISINV:null,
-                            // ISASSET:null,
-                            // ISBOM:null,
-                            // LOT_OR_SERIAL:null,
-                            // ISEXP:null,
-                            // PRICE:null,
                             ISENABLE:1,
                             CREATED_BY:userId,
                             CREATION_DATE:currentTime,
                             Last_updated_by:userId,
                             Last_update_date:currentTime,
-                            // Prefix:null,
                             ITEM_START_DATE:getAttrVal(sourceItem,'ItemStartDate','date'),
                             ITEM_END_DATE:getAttrVal(sourceItem,'ItemEndDate','date'),
                             CATEGORY:getAttrVal(sourceItem,'Category'),
@@ -426,13 +429,6 @@ module.exports = {
                             QFE_END_DATE:getAttrVal(sourceItem,'QFEEndDate','date'),
                             ITEM_CODE:getAttrVal(sourceItem,'ItemNum'),
                             SUB_ITEM_CODE:getAttrVal(sourceItem,'SubItemNum'),
-                            // DURING_TIME:null
-                            // AMA_CODE:null
-                            // AMA_DESC:null
-                            // isPO:null
-                            // isOM:null
-                            // TAX_CODE:null
-                            // TAX_RATE:null
                         }
                         listDbItem.push(dbItem);
                     }
@@ -608,9 +604,12 @@ module.exports = {
     },
 
     /**
-     * Ham doc dva fee tu file xml
-     * tannv.dts@gmail.com
-     * 21-07-2015
+     * Hàm đọc DVA fee từ file xml
+     * input: 
+     * + postData: feeGroupId
+     * output:
+     * + if fail return fail status
+     * + if success return success status+list item fees
      */
     postImportDvaFeeFromSource:function(req,res)
     {
@@ -783,9 +782,12 @@ module.exports = {
     },
 
     /**
-     * Import fee tu txt source
-     * tannv.dts@gmail.com
-     * 20-07-2015
+     * Import item fee từ file txt
+     * input: 
+     * + postData: feeGroupId
+     * output:
+     * + if fail return fail status
+     * + if success return success status+list item fees
      */
     postImportFeeFromTxtSource:function(req,res){
         var fHeader="v2_ItemFeeGroupController->postImportFeeFromTxtSource";
@@ -987,8 +989,12 @@ module.exports = {
     
     /**
      * Xu ly upload file source
-     * tannv.dts@gmail.com
-     * 23-07-2015
+     * input: 
+     * +req.body: feeGroupId
+     * +req.files: chứ thông tin file
+     * output:
+     * +if fail return fail status
+     * +if success return success status+feeGroup info
      */
     uploadUploadSourceFileFee:function(req,res)
     {
@@ -1093,9 +1099,12 @@ module.exports = {
 
 
     /**
-     * Save tat ca fee item trong group fee truyen den
-     * tannv.dts@gmail.com
-     * 29-07-2015
+     * Save tất cả các item fees trong group fee truyền đến
+     * input:
+     * +feeGroup
+     * output:
+     * +if fail return fail status
+     * +if success return success status+list item fees
      */
     postSaveAllItemFeeInGroupFee:function(req,res)
     {

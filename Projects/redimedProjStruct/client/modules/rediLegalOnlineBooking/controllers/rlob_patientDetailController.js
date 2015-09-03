@@ -430,10 +430,13 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
         }
 
         $scope.isSaving=false;
+        /**
+         * save: Save booking to database
+         */
         $scope.save=function()
         {   
-            // if($scope.loginInfo.company_id==undefined || $scope.loginInfo.company_id==null || $scope.loginInfo.company_id=='')// tan comment
-            if(!$scope.companyInfo.id)// tannv.dts change
+            //check the data required
+            if(!$scope.companyInfo.id)
             {
                 rlobMsg.popup(rlobLang.rlobHeader,rlobConstant.msgPopupType.error,"Create booking fail because the company is unknown!");
                 return;
@@ -464,6 +467,7 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
                 return;
             }
 
+            //email template to send paperwork of patient though outlook
             $scope.mailBodyData={
                 requestBy:$scope.loginInfo.FIRST_NAME?$scope.loginInfo.FIRST_NAME:'',
                 company: $scope.companyInfo.Company_name?$scope.companyInfo.Company_name:'',
@@ -480,7 +484,7 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
                 wrkContactNo:$scope.newBooking.WRK_CONTACT_NO?$scope.newBooking.WRK_CONTACT_NO:'',
                 injuryDesc:$scope.newBooking.DESC_INJURY?$scope.newBooking.DESC_INJURY:''
             }
-
+            //email template 
             $scope.emailContent=
                 "The below appointment has been requested by "+$scope.mailBodyData.requestBy+" from "+$scope.mailBodyData.company+".\n\n"+
                 "Appointment Details:\n\n"+
@@ -499,14 +503,12 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
 
             var recepient = "medicolegal@redimed.com.au";
             var options = {
-//                cc: "tannv.dts@gmail.com",
-//                bcc: "nguyenvantan27binhduong@gmail.com",
                 subject: ("Medico-Legal Paperwork "+$scope.mailBodyData.wrkName),
                 body: $scope.emailContent
             };
-
             $scope.mailtoLink = Mailto.url(recepient, options);
             //---------------------------------------------------------------------------
+            
             $scope.newBooking.BOOKING_DATE=moment().format("YYYY-MM-DD HH:mm");
             $scope.newBooking.APPOINTMENT_DATE=$scope.from_time.format("YYYY-MM-DD HH:mm");
             $scope.newBooking.COMPANY_ID=$scope.companyInfo.id;
@@ -518,8 +520,7 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
             $scope.newBooking.refered_date_string=$scope.from_time.format("ddd DD/MM/YYYY HH-mm")+" "+selectedInfo.locationSelected.Site_name;
             $scope.newBooking.STATUS="Confirmed";
             $scope.newBooking.BOOKING_TYPE=$scope.bookingType;
-            // console.log($scope.WRK_DATE_OF_INJURY_TEMP);
-            // console.log($scope.WRK_DOB_TEMP);
+
             if($scope.WRK_DOB_TEMP!=undefined && $scope.WRK_DOB_TEMP!=null)
             {
                 $scope.newBooking.WRK_DOB=moment($scope.WRK_DOB_TEMP).format("YYYY-MM-DD") ;
@@ -554,17 +555,19 @@ angular.module('app.loggedIn.rlob.patientDetail.controller',[])
                 $("#lob-client-send-document-dialog").modal({show:true,backdrop:'static'});
             }
 
+            //save booking info to database
             rlobService.core.saveBookingInfo($scope.newBooking)
             .then(function(data){
 
-                if (data.status == 'success') {
+                if (data.status == 'success') {                
                     $scope.scrollTo($('.bookingSuccess'),-200);
                     bookingService.setBookingInfo($scope.newBooking);
                     $scope.isSaving=true;
                     $scope.bookingSuccess=true;
+                    //show dialog message booking success, and upload file paperwork of patient
                     $scope.showDialogAddSuccess();
                     $scope.getAppointmentCalendarUpcoming();
-                    //Gui email confirm  cho khach hang
+                    //send email to customer to notice booking success
                     $scope.sendConfirmEmail();
                     for(var i=0;i<data.data.length;i++)
                     {
