@@ -7,7 +7,7 @@ var ServiceErp = require('../../helper/ERP_Rest');
 //END
 module.exports = {
     /*
-    ViewApproved: View detail Timesheet to approve
+    ViewApproved: View detail Timesheet to approved
     input: id of Timesheet
     output: detail of Timesheet
     */
@@ -30,7 +30,7 @@ module.exports = {
             "LEFT JOIN time_activity ON time_activity.activity_id = time_tasks.activity_id " + //JOIN
             "INNER JOIN hr_employee ON hr_employee.Employee_ID = users.employee_id " + //JOIN
             "WHERE time_tasks.tasks_week_id = :idTaskWeek GROUP BY time_tasks.date ORDER BY time_tasks.date"; //WHERE
-        //get information Timesheet detail, group by date, activiti id
+        //get information Timesheet detail, group by date, activiti_id
         var strActivity =
             "SELECT SUM(time_tasks.time_charge) AS sumAC, time_tasks.date, " + //SELECT
             "time_tasks.activity_id, time_tasks_week.start_date, time_tasks_week.end_date,  " + //SELECT
@@ -165,13 +165,13 @@ module.exports = {
             "LEFT JOIN departments ON departments.departmentid = time_tasks.department_code_id " + //JOIN
             "LEFT OUTER JOIN time_item_task ON time_tasks.tasks_id = time_item_task.task_id AND time_item_task.deleted = 0 " + //JOIN
             "LEFT JOIN time_item_code ON time_item_code.ITEM_ID = time_item_task.item_id " + //JOIN
-            "WHERE time_tasks.date = :dateTast AND time_tasks.tasks_week_id = :id" + //WHERE
+            "WHERE time_tasks.date = :dateTask AND time_tasks.tasks_week_id = :id" + //WHERE
             " AND time_tasks.deleted = 0" + //WHERE
             " ORDER BY time_tasks.order ASC"; //ORDER
         db.sequelize.query(strQuery, null, {
                 raw: true
             }, {
-                dateTast: info.DATE,
+                dateTask: info.DATE,
                 id: info.ID
             })
             .success(function(result) {
