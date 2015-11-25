@@ -1,0 +1,217 @@
+<ion-view title="Pharmacist Info" >
+<div class="bar bar-subheader customHeaderBar">
+ <button class="button button-icon icon fa fa-reply " style="color:#fff;padding-top: 12px;" ui-sref="app.main.pharmacist"></button>
+  <h2 class="title customHeaderBar"  style="margin-left: 14%;font-size: 20px;top: 11px;">Pharmacist Info</h2>
+</div>
+    <ion-content class="background-content">
+         <div class="form-group">
+            <form name="formPharmacist">
+                     <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">Sur Name Phar</span><div class="im1"></div>
+                          <input ng-keypress="keyPress($event.keyCode)" class="ip_custom pl" ng-required="true" type="text"placeholder="Surname" name="surname" ng-model="pharmacisinfo.surname"
+                        ng-class="{'error':iserr|| formPharmacist.surname.$dirty && formPharmacist.surname.$invalid}"/>
+                    </label>
+                    
+                    <div class="err" ng-messages="formPharmacist.surname.$error" ng-show="iserr||formPharmacist.surname.$dirty && formPharmacist.surname.$invalid">
+                            <small ng-message="required"
+                                ng-show="formPharmacist.surname.$error">
+                                Surname is required 
+                            </small>
+                     </div>
+                     <br>
+                     <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">First Name Phar</span><div class="im1"></div>
+                          <input ng-keypress="keyPress($event.keyCode)" class="ip_custom pl" ng-required="true" type="text"placeholder="First Name" name="firstName" ng-model="pharmacisinfo.firstname"
+                        ng-class="{'error':iserr|| formPharmacist.firstName.$dirty && formPharmacist.firstName.$invalid}"/>
+                    </label>
+        
+                     <div class="err" ng-messages="formPharmacist.firstName.$error" ng-show="iserr||formPharmacist.firstName.$dirty && formPharmacist.firstName.$invalid">
+                            <small ng-message="required"
+                                ng-show="formPharmacist.firstName.$error">
+                                FirstName is required 
+                            </small>
+                      </div>
+                      <br>
+                        <div class="item-input item-floating-label">
+                          <span class="input-label sp_custom">DOB</span><!-- <div class="im1"></div> -->
+                          <!-- <input ng-keypress="keyPress($event.keyCode)" class="ip_custom pl"  ng-required="true" type="date" placeholder="DOB" name="DOB" ng-model="pharmacisinfo.DOB" pharmacisinfo  ng-class="{'error':iserr|| formPharmacist.DOB.$dirty && formPharmacist.DOB.$invalid}"/> -->
+                        <div style="width: 100%">
+                          <input id="day" class="pl" auto-tab-to="month" type="tel" maxlength="2" placeholder="DD"
+                          ng-model="pharmacisinfo.DOB.date" numbers-only required/>
+                          <span style="float: left;width: 15px;margin-top: 13px; color:white">/</span>              
+                          <input id="month" class="pl" auto-tab-to="year" type="tel" maxlength="2" placeholder="MM" 
+                          ng-model="pharmacisinfo.DOB.month" numbers-only required/>
+                          <span style="float: left;width: 15px;margin-top: 13px; color:white">/</span>
+                          <input id="year" class="pl" type="tel" maxlength="4" placeholder="YYYY" 
+                          ng-model="pharmacisinfo.DOB.year" numbers-only required/>
+                        </div>
+                    </div>
+                 
+                    <!-- <div class="err" ng-messages="formPharmacist.DOB.$error" ng-show="iserr||formPharmacist.DOB.$dirty && formPharmacist.DOB.$invalid">
+                            <small ng-message="required"
+                                ng-show="formPharmacist.DOB.$error">
+                                DOB is required 
+                            </small>
+                    </div> -->
+                    <br>
+                      <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">Email Pharmacis</span><div class="im1"></div>
+                          <input ng-keypress="keyPress($event.keyCode)" class="ip_custom pl" ng-required="true" type="email" placeholder="Email" name="email" ng-model="pharmacisinfo.email" 
+                        ng-class="{'error':iserr|| formPharmacist.email.$dirty && formPharmacist.email.$invalid}" />
+                    </label>
+                 
+                     <div class="err" ng-messages="formPharmacist.email.$error" ng-show="iserr||formPharmacist.email.$dirty && formPharmacist.email.$invalid">
+                            <small ng-message="required"
+                                ng-show="formPharmacist.email.$error">
+                                Email is required 
+                            </small>
+                      </div>
+                      <br>
+                       <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">Phone Pharmacis</span><div class="im1"></div>
+                          <input ng-keypress="keyPress($event.keyCode)" class="ip_custom pl"  type="number" placeholder="Phone" ng-model="pharmacisinfo.phone" name="phone"
+                        ng-class="{'error':iserr|| formPharmacist.phone.$dirty && formPharmacist.phone.$invalid}"/>
+                    </label>
+                     <div class="err" ng-messages="formPharmacist.phone.$error" ng-show="iserr||formPharmacist.phone.$dirty && formPharmacist.phone.$invalid">
+                            <small ng-message="required"
+                                ng-show="formPharmacist.email.$error">
+                                Phone is required 
+                            </small>
+                      </div>
+                      <br>
+                       <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">Mobile Pharmacis</span><div class="im1"></div>
+                          <input ng-keypress="keyPress($event.keyCode)" class="ip_custom pl"  placeholder="Mobile" name="mobile" ng-model="pharmacisinfo.mobile" required type="number"
+                        ng-class="{'error':iserr|| formPharmacist.mobile.$dirty && formPharmacist.mobile.$invalid}"/>
+                    </label>
+                   
+                    <div class="err" ng-messages="formPharmacist.mobile.$error" ng-show="iserr||formPharmacist.mobile.$dirty && formPharmacist.mobile.$invalid">
+                            <small ng-message="required"
+                                ng-show="formPharmacist.mobile.$error">
+                                Mobile is required 
+                            </small>
+                        </div>
+                        <br>
+                        <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">Address Pharmacis</span><div class="im1"></div>
+                          <input ng-keypress="keyPress($event.keyCode)" class="ip_custom pl"  placeholder="Address" name="address" ng-model="pharmacisinfo.address" required type="text"
+                          ng-autocomplete options="options" details="details" id="autocomplete" 
+                          ng-focus="disableTap()"
+                        ng-class="{'error':iserr|| formPharmacist.address.$dirty && formPharmacist.address.$invalid}" />
+                    </label>
+                     
+                    <div class="err" ng-messages="formPharmacist.address.$error" ng-show="iserr||formPharmacist.address.$dirty && formPharmacist.address.$invalid">
+                            <small ng-message="required"
+                                ng-show="formPharmacist.address.$error">
+                                Address is required 
+                            </small>
+                      </div>
+                      <br>
+                       <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">Surburb Pharmacis</span><div class="im1"></div>
+                          <input ng-keypress="keyPress($event.keyCode)" class="ip_custom pl"  placeholder="Surburb" name="surburb" ng-model="pharmacisinfo.surburb" required type="text"
+                        ng-class="{'error':iserr|| formPharmacist.surburb.$dirty && formPharmacist.surburb.$invalid}"  />
+                    </label>
+                   
+                     <div class="err" ng-messages="formPharmacist.surburb.$error" ng-show="iserr||formPharmacist.surburb.$dirty && formPharmacist.surburb.$invalid">
+                            <small ng-message="required"
+                                ng-show="formPharmacist.surburb.$error">
+                                Surburb is required 
+                            </small>
+                      </div>
+                      <br>
+                       <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">PostCode Pharmacis</span><div class="im1"></div>
+                          <input ng-keypress="keyPress($event.keyCode)" class="ip_custom pl"  placeholder="PostCode" name="postcode" ng-model="pharmacisinfo.postcode" required type="number"
+                        ng-class="{'error':iserr|| formPharmacist.postcode.$dirty && formPharmacist.postcode.$invalid}" />
+                    </label>
+                    
+                      <div class="err" ng-messages="formPharmacist.postcode.$error" ng-show="iserr||formPharmacist.postcode.$dirty && formPharmacist.postcode.$invalid">
+                            <small ng-message="required"
+                                ng-show="formPharmacist.postcode.$error">
+                                Postcode is required 
+                            </small>
+                        </div>
+                        <br>
+                        <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">State Pharmacis</span><div class="im1"></div>
+                          <input ng-keypress="keyPress($event.keyCode)" class="ip_custom pl" placeholder="State" name="state" ng-model="pharmacisinfo.state" required type="text"
+                        ng-class="{'error':iserr|| formPharmacist.state.$dirty && formPharmacist.state.$invalid}" />
+                    </label>
+                      
+                     <div class="err" ng-messages="formPharmacist.state.$error" ng-show="iserr||formPharmacist.state.$dirty && formPharmacist.state.$invalid">
+                            <small ng-message="required"
+                                ng-show="formPharmacist.state.$error">
+                                State is required 
+                            </small>
+                      </div>
+                      <br>
+                        <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">Country Pharmacis</span><div class="im1"></div>
+                          <input ng-keypress="keyPress($event.keyCode)" class="ip_custom pl" placeholder="Country" name="country" ng-model="pharmacisinfo.country" required type="text"
+                        ng-class="{'error':iserr|| formPharmacist.country.$dirty && formPharmacist.country.$invalid}"/>
+                    </label>
+                    <div class="err" ng-messages="formPharmacist.country.$error" ng-show="iserr||formPharmacist.country.$dirty && formPharmacist.country.$invalid">
+                            <small ng-message="required"
+                                ng-show="formPharmacist.country.$error">
+                                Country is required 
+                            </small>
+                     </div>
+                     <br>
+                     <label class="item-input item-floating-label">
+                        <span class="span-ex" style="font-size: 17px;color:white">Gender</span><div class="im1"></div>
+                         <select ng-required="true" ng-model="pharmacisinfo.gender" name="Title" class="browser-default"  
+                          style="float: right; margin-top: -25px; border: none; height: 21px; 
+                          background-color: transparent; color:white">
+                            <option value="" style="color:black">Choose Gender</option>
+                            <option style="color:black">Male</option>
+                            <option style="color:black">Famale</option>
+                        </select>
+                    </label>
+                    <hr style="margin: -10px 0px 20px 15px;">
+                    <br>
+                       <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">Preferred Name</span><div class="im1"></div>
+                          <input ng-keypress="keyPress($event.keyCode)" class="ip_custom pl" placeholder="Preferred" ng-model="pharmacisinfo.preferred_name" type="text"/>
+                    </label>
+
+                   <br>
+                     <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">APHRA</span><div class="im1"></div>
+                          <input ng-keypress="keyPress($event.keyCode)" class="ip_custom pl" placeholder="Preferred" ng-model="pharmacisinfo.APHRA" type="text"/>
+                    </label>
+                   <br>
+                    <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">Proficident</span><div class="im1"></div>
+                          <input ng-keypress="keyPress($event.keyCode)" class="ip_custom pl"  placeholder="Preferred" ng-model="pharmacisinfo.Proficient" type="text"/>
+                    </label>
+                   <ul> 
+                     <li class=" item item-checkbox " style="border: none;background-color: transparent;color: white;" >
+                         <label class="checkbox ">
+                           <input type="checkbox" ng-model="pharmacisinfo.isCPOP"  ng-true-value="1" ng-false-value="0">
+                         </label>
+                         CPOP
+                    </li>
+                     <li class="item item-checkbox " style="border: none;background-color: transparent;color: white;">
+                         <label class="checkbox ">
+                           <input type="checkbox" ng-model="pharmacisinfo.isHMR"  ng-true-value="1" ng-false-value="0">
+                         </label>
+                         HMR
+                    </li>
+                     <li class="item item-checkbox " style="border: none;background-color: transparent;color: white;">
+                         <label class="checkbox ">
+                           <input type="checkbox" ng-model="pharmacisinfo.isCompounding"  ng-true-value="1" ng-false-value="0">
+                         </label>
+                         Compouding
+                    </li>
+                    </ul>
+                    
+                    <br>
+                     <button class="btn"  style="width:100%" ng-click="updatePharmasict()">Save</button>
+              </form>   
+          </div>             
+    
+     
+     
+    </ion-content>
+</ion-view>

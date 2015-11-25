@@ -1,0 +1,119 @@
+ <ion-view>
+    <ion-content class="content-scroll background-content" >
+      <div  class="ic-tabs">
+          <img src="img/Design-Appb_01.png"  style="margin-top: -2px;">
+      </div>
+         <div class="form-group">
+                <div class="action_bar"><h1 class="logo_login" >SignUp</h1></div>
+                <form name="signUpForm" style="padding-top: 3px;">
+
+                   <label class=" item-input item-floating-label">
+                    <span class="input-label sp_custom">Username</span>
+                    <input type="text"  class="ip_custom pl"  placeholder="Username" ng-model="signupData.username" name="username" required ng-minlength=5 ng-maxlength=20 ng-class="{'error':iserr|| signUpForm.username.$dirty && signUpForm.username.$invalid}" >
+                  </label>
+                    
+                    <div class="err"  ng-messages="signUpForm.username.$error" ng-show="iserr || signUpForm.username.$dirty && signUpForm.username.$invalid">
+                            <small ng-message="required"
+                                ng-show="signUpForm.username.$error.required">
+                                Your name is required 
+                            </small>
+                            <small ng-message="min"
+                                ng-show="signUpForm.username.$error.minlength">
+                                5 character or more
+                            </small>
+                            <small ng-message="max"
+                                    ng-show="signUpForm.username.$error.maxlength">
+                                Your name cannot be longer than 20 characters
+                            </small>
+                        </div>
+                        <br>
+                    <label class="item-input item-floating-label" >
+                        <span class="input-label sp_custom">Password</span>
+                        <input  class="ip_custom pl" ng-required="true"  ng-model="signupData.password" placeholder="Password" type="password" name="password" required ng-minlength=7 
+                         ng-class="{'error':iserr|| signUpForm.password.$dirty && signUpForm.password.$invalid}" />
+                      </label>
+                    <div class="err" ng-messages="signUpForm.password.$error" ng-show="iserr || signUpForm.password.$dirty && signUpForm.password.$invalid">
+                            <small ng-message="required"
+                                ng-show="signUpForm.password.$error.required">
+                                Your Password is required 
+                            </small>
+                            <small ng-message="min"
+                                ng-show="signUpForm.password.$error.minlength">
+                                7 character or more
+                            </small>
+                    </div>
+                    <br>
+                     <label class="item-input item-floating-label" >
+                        <span class="input-label sp_custom">Confirm Password</span>
+                        <input  class="ip_custom pl" ng-required="true"  ng-model="signupData.cfpassword" placeholder="Confirm Password" data-password-verify="signupData.password" type="password" name="cfpassword" required ng-class="{'error':iserr|| signUpForm.cfpassword.$dirty && signUpForm.cfpassword.$invalid}" />
+                      </label>
+                    
+                    <div class="err" ng-messages="signUpForm.cfpassword.$error" ng-show="iserr ||signUpForm.cfpassword.$dirty && signUpForm.cfpassword.$invalid">
+                            <small ng-message="required"
+                                ng-show="signUpForm.cfpassword.$error.passwordVerify">
+                                Your Password don't match.
+                            </small>
+                    </div>
+                   <br>
+                    <label class="item-input item-floating-label" >
+                      <span class="span-ex" style="color:white">User Type</span>
+                      <select ng-required="true" ng-model="signupData.user_type" name="User Type" class="browser-default" style="float: right; margin-top: -2px; border: none; height: 21px; 
+                      background-color: transparent; color:white">
+                            <option value="" style="color:black">--User Type--</option>
+                            <option style="color:black">Company</option>
+                            <option style="color:black">Pharmacist</option>
+                      </select>
+                      <hr>
+                    </label>
+                    <br>
+                     <label class="item-input item-floating-label" >
+                        <span class="input-label sp_custom">First Name</span>
+                        <input  class="ip_custom pl" type="text" placeholder="First Name" 
+                        ng-model="signupData.firstname"/>
+                      </label>
+                     <br>
+                      <label class="item-input item-floating-label" >
+                        <span class="input-label sp_custom">Sur Name</span>
+                        <input  class="ip_custom pl" type="text" placeholder="Sur Name" ng-model="signupData.surname" />
+                      </label>
+                    <br>
+                    <label class="item-input item-floating-label" >
+                        <span class="input-label sp_custom">Mobile</span>
+                        <input  class="ip_custom pl" ng-required="true"  placeholder="Mobile" type="number" ng-model="signupData.mobile" name="mobile" required ng-minlength=10 ng-maxlength=15 ng-class="{'error':iserr|| signUpForm.mobile.$dirty && signUpForm.mobile.$invalid}" />
+                      </label>
+                    
+                     <div class="err" ng-messages="signUpForm.mobile.$error " ng-show="iserr ||signUpForm.mobile.$dirty && signUpForm.mobile.$invalid">
+                            <small ng-message="required"
+                                ng-show="signUpForm.mobile.$error">
+                                Your mobile is required 
+                            </small>
+                           
+                    </div>
+                    <br>
+                     <label class="item-input item-floating-label" >
+                        <span class="input-label sp_custom">Email</span>
+                        <input  class="ip_custom pl" ng-required="true"  placeholder="Email" type="email" name="email" ng-model="signupData.email" required ng-class="{'error':iserr|| signUpForm.email.$dirty && signUpForm.email.$invalid}" />
+                      </label>
+                    
+                     <div class="err" ng-messages="signUpForm.email.$error" ng-show="iserr ||signUpForm.email.$dirty && signUpForm.email.$invalid">
+                            <small ng-message="required"
+                                ng-show="signUpForm.email.$error">
+                                Your Email is required 
+                            </small>
+                        </div>
+                    <br>
+                    <div>
+                        <button class="btn" ng-click="updatePicture()" style="float:left; margin:30px 0px 0px 15px; width:160px;" 
+                        data-tap-disabled="true">
+                          Upload Avatar
+                        </button>
+                        <img ng-src="{{image}}" ng-model="signupData.image" name="image" style="width:100px; height:100px; margin-left:10px" 
+                        alt="Image"/>
+                    </div>
+                    <!--  <md-button class="md-raised md-primary" ng-click="signup()" style="float:right" data-tap-disabled="true">Sign Up</md-button> -->
+                    <button class="btn"  style="float:right" data-tap-disabled="true" ng-click="nextForm(signUpForm)" >Next </button> 
+                    <button class="btn" ui-sref="security.login"  style="float:left; margin-left: 15px;" data-tap-disabled="true">Back </button>
+                </form>
+        </div>
+   </ion-content>
+</ion-view>

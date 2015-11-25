@@ -1,0 +1,162 @@
+<ion-view>
+    <ion-content class="content-scroll" style="background:#015190">
+        <div class="transparent-modal-phone wd100" >
+            <form novalidate name="registerForm1" >
+                <div class="cus-content-modal-phone content">
+                    <div >
+                        <div class="header-logo">
+                            <img src="img/main_logo.png" class="img-header">
+                        </div>
+                        <div class="background-header-logo-child">
+                            <span class="span-header">Injury Management</span>
+                        </div>
+                        <div class="dv-fn">
+                            <span class="span-fn">SIGN UP</span>
+                        </div>
+                        <div class="actionBar">
+                            <a class="button button-icon color-fff" ui-sref="security.login" style="float:left">Back</i></a>
+                        </div>
+                    </div>
+                    <div style="margin-top:50px">
+                        <div class="col">
+                            <a ng-click="selectOption()">
+                                <img ng-src="{{avatarUpload}}" class="avatar_profile" style="margin: auto"/>
+                            </a> <br>
+                            <a class="button btn-non-emer" style="margin-left:-5px; padding-right:10px" 
+                            ng-click="selectOption()">Choose Images</a>
+                        </div>
+                        <div class="item-input label-custom-field ">
+                            <span class=" span-input-color">Username<span class="icon-require">*</span></span>
+                            <input type="text" name="username"
+                                   ng-model="userInfo.user_name" required ng-pattern="/^[\w&.-]+$/"
+                                   style="color:white"
+                                   ng-blur="checkUsername()"
+                                   ng-class="{'has-error': registerForm1.username.$error.pattern || isValidUsername}"
+                                   ng-click="usernameClick()"
+                                   class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"/>
+                            <span ng-show="registerForm1.username.$error.pattern && !isValidUsername" class="text-error">This username isn't valid</span>
+                            <span ng-show="isValidUsername && !registerForm1.username.$error.pattern" class="text-error">This username already taken</span>
+                        </div>
+                        <div class="bd-bottom"></div>
+                        <div class="item-input label-custom-field ">
+                            <span class=" span-input-color">Password<span class="icon-require">*</span></span>
+                            <input type="password" name="Password"
+                                   ng-model="userInfo.password" required  class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
+                        </div>
+                        <div class="bd-bottom"></div>
+                        <div class="item-input label-custom-field ">
+                            <span class=" span-input-color">Re-Password<span class="icon-require">*</span></span>
+                            <input type="password" name="Re-Password" ng-model="userInfo.rePass"
+                                   required ng-match="userInfo.password" ng-keyup="current=true" ng-focus="current=false"
+                                   ng-class="{'has-error': userInfo.password !== userInfo.rePass && current}"  class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
+                        </div>
+                        <div class="bd-bottom"></div>
+                        <div class="item-input ">
+                            <span class="span-input-color">Title<span class="icon-require">*</span></span>
+                            <select ng-required="true" ng-model="patientInfo.Title" name="Title" class="select-custom"
+                                    ng-options="row.name as row.name for row in titleIndex">
+                                <option value="">--Select Title--</option>
+                            </select>
+                        </div>
+                        <div class="bd-bottom"></div>
+                        <div class="item-input label-custom-field " >
+                            <span class=" span-input-color">First Name<span class="icon-require">*</span></span>
+                            <input ng-required="true" type="text" ng-model="patientInfo.First_name" name="First_name"  class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white;text-transform: capitalize;"/>
+                        </div>
+                        <div class="bd-bottom"></div>
+                        <div class="item-input label-custom-field ">
+                            <span class=" span-input-color">Sur Name<span class="icon-require">*</span></span>
+                            <input ng-required="true" type="text" ng-model="patientInfo.Sur_name" name="Sur_name"  class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white;text-transform: capitalize;"/>
+                        </div>
+                        <div class="bd-bottom"></div>
+                        <div class="item-input label-custom-field ">
+                            <span class=" span-input-color">Middle Name</span>
+                            <input type="text" ng-model="patientInfo.Middle_name" name="Middle_name"  class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white;text-transform: capitalize;" />
+                        </div>
+                        <div class="bd-bottom"></div>
+                        <div class="item-input label-custom-field ">
+                            <span class=" span-input-color">Email</span>
+                            <input type="email" name="email" ng-model="patientInfo.Email"  ng-keyup="validEmail()"  class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
+                        </div>
+                        <div class="bd-bottom"></div>
+                        <div  class="item-input ">
+                            <span class=" span-input-color">Gender<span class="icon-require">*</span>
+                            </span>
+                            <select ng-required="true" ng-model="patientInfo.Sex" name="Sex" class="select-custom"
+                                    ng-options="row.name as row.name for row in sexIndex">
+                                <option value="">--Select Sex--</option>
+                            </select>
+                        </div>
+                        <div class="bd-bottom"></div>
+                        <div  class="item-input label-custom-field " show-errors='{showSuccess: true}'>
+
+                            <span class="input-label span-input-color">Date Of Birth<span class="icon-require">*</span></span>
+
+                            <input ng-required="true" type="text" onfocus="this.type='date';
+                    this.setAttribute('onfocus','');this.blur();
+                    this.focus();" ng-model="patientInfo.DOB" name="DOB" min="1940-01-01"
+                                   ng-class="{'has-error':isSubmit && first.DOB.$invalid || dateError}" ng-change="changeDOBworker()" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
+
+
+                        </div>
+                        <div class="bd-bottom"></div>
+                        <div class="item-input label-custom-field " >
+                            <span class="span-input-color">Address<span class="icon-require">*</span></span>
+                            <input id="autocomplete" googleplace Place="place.value"  ng-focus="disableTap()" ng-required="true" type="text" ng-model="patientInfo.Address1"  name="Address" ng-class="{'has-error':isSubmit && first.Address1.$invalid}" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
+                        </div>
+                        <div class="bd-bottom"></div>
+                        <div class="item-input label-custom-field ">
+                            <span class="span-input-color">Suburb<span class="icon-require">*</span></span>
+                            <input required type="text" ng-model="patientInfo.Surburb" name="Suburb" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
+                        </div>
+                        <div class="bd-bottom"></div>
+                        <div class="item-input label-custom-field ">
+                            <span class="span-input-color">State<span class="icon-require">*</span></span>
+
+                            <select  required ng-model="patientInfo.State" class="select-custom" name="type">
+                                <option value="">--Select State--</option>
+                                <option value="NT">Northern Territory</option>
+                                <option value="QLD">Queensland</option>
+                                <option value="VIC">Victoria</option>
+                                <option value="NSW">New South Wales</option>
+                                <option value="SA">South Australia</option>
+                                <option value="WA">Western Australia</option>
+                                <option value="TAS">Tasmania</option>
+                            </select>
+                        </div>
+                        <div class="bd-bottom"></div>
+                        <div class="item-input label-custom-field " ng-init="patientInfo.Country='Australia'">
+                            <span class="span-input-color">Country<span class="icon-require">*</span></span>
+                            <input required type="text" ng-model="patientInfo.Country" name="Country" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
+                        </div>
+                        <div class="bd-bottom"></div>
+                        <div class="item-input label-custom-field">
+                        <span class="span-input-color">Post Code<span style="color: red;">*</span></span>
+                        <input required type="text" ng-model="patientInfo.Post_code" name="Post_code" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
+                        </div>
+                        <div class="bd-bottom"></div>
+                        <div class="item-input label-custom-field ">
+                            <span class="span-input-color">Address 2</span>
+                            <input type="text" ng-model="patientInfo.Address2" name="Address2" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
+                        </div>
+                        <div class="bd-bottom"></div>
+                        <div class="item-input label-custom-field ">
+                            <span class=" span-input-color">Mobile Phone<span class="icon-require">*</span></span>
+                            <input type="tel" name="phone" ng-model="patientInfo.Mobile" required maxlength="10" minlength="10"  class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
+                        </div>
+                        <div class="bd-bottom"></div>
+                        <div class="item-input label-custom-field">
+                            <span class="span-input-color" >Know as</span>
+                            <input type="text" ng-model="patientInfo.Known_as" name="Known_as" 
+                            class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" 
+                            style="color:white" />
+                        </div>
+                        <div class="bd-bottom"></div>
+                        <a class="button button-icon icon ion-arrow-right-c next-button-submitinjury" 
+                        ng-click="checkValidate(registerForm1)" style="margin-top:10px"></a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </ion-content>
+</ion-view>

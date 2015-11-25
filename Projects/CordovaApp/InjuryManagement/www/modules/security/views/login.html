@@ -1,0 +1,32 @@
+<ion-view>
+<div class="wrapper-login wd100">
+    <div class="cus-content-modal-phone content">
+        <div ui-sref="login" class="bg-lg">
+            <img src="img/main_logo.png"  class="im-lg">
+        </div>
+        <div class="form-group form-lg" >
+            <label >
+                <input class="input-login"
+                ng-keypress="keyPress($event.keyCode)" type="text" name="username" ng-model="modelUser.username" required placeholder="Username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'"/>
+            </label>
+            <label >
+                <input class="input-login"
+                ng-keypress="keyPress($event.keyCode)" type="password" name="password" ng-model="modelUser.password" required placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" />
+            </label>
+        </div>
+        <button class="button btn-login-custom " ng-click="loginApp()" ng-disabled="!modelUser.username || !modelUser.password">
+        <h5>SIGN IN</h5>
+        </button>
+        <div class="forget-password">
+            <a ui-sref="security.forgot" class="fp">
+            <i class="icon ion-help-circled"></i>
+            Forgot password ?
+            </a>
+            &nbsp; | &nbsp;
+            <a ui-sref="security.register.info3" class="btn-regis">
+            Create a free account
+            </a>
+        </div>
+    </div>
+</div>
+</ion-view>

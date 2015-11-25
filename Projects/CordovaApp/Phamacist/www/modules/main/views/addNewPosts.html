@@ -1,0 +1,301 @@
+<ion-view title="Manage Post" >
+      <div class="bar bar-subheader customHeaderBar">
+        <h2 class="title customHeaderBar" style="margin-left: 14%;font-size: 20px;top: 11px;">
+          New Post
+        </h2>
+      </div>
+        <ion-content class="background-content">
+        <form name="formPost">
+           <div class="form-group"> 
+            <div class="ui-field-contain" style="border: none; margin-top: 20px">
+              <label class="item-input item-floating-label" for="select-custom-19" style="border: none; float: left; width:65%; margin-top: -4px">
+                <span class="span-ex" style="color:white; font-size:14px">Choose Shop</span>
+              </label>
+                <select multiple="multiple" data-native-menu="false" ng-model="outputShop"
+                        ng-options="outputShop.name for outputShop in modernShop" id="itemShop" 
+                        style="border: none; background-color: transparent; color: white;">
+                </select>
+            </div>
+            <hr style=" margin: 10px 0px 30px 15px;">
+            <br>
+            <label class="item-input item-floating-label">
+              <span class="span-ex" style="color:white; font-size:14px">User Type</span>
+              <select ng-required="true" ng-model="post.post_type" name="User Type" class="browser-default"
+                style="float: right; margin-top: -2px; border: none; height: 21px; 
+                background-color: transparent; color:white">
+                <option value="" style="color:black">Choose Post Type</option>
+                <option style="color:black">Locum</option>
+                <option style="color:black">Ads</option>
+              </select>
+              <hr>
+            </label>
+            <br>
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Job Title</span><div class="im1"></div>
+            <input type="text" class="pl" placeholder="Job Title" ng-model="post.job_title" 
+            name="job_title" maxlength="20" ng-class="{'error':iserr|| formPost.job_title.$dirty && 
+            formPost.job_title.$invalid}" required/>
+            </label>
+            <div class="err" ng-messages="formPost.job_title.$error" 
+            ng-show="iserr||formPost.job_title.$dirty && formPost.job_title.$invalid">
+                <small ng-message="required"
+                    ng-show="formPost.country.$error">
+                    Job Title is required 
+                </small>
+            </div>
+            <br>
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Job Descriptiton</span><div class="im1"></div>
+            <input  type="text" class="pl" placeholder="Job Descriptiton" ng-model="post.job_description" name="job_description" maxlength="20" required 
+            ng-class="{'error':iserr|| formPost.job_description.$dirty && 
+            formPost.job_description.$invalid}"/>
+            </label>
+            <div class="err" ng-messages="formPost.job_description.$error" 
+            ng-show="iserr||formPost.job_description.$dirty && formPost.job_description.$invalid">
+                <small ng-message="required"
+                    ng-show="formPost.job_description.$error">
+                    Job Description is required 
+                </small>
+            </div>
+            <br>
+            <div class="item-input item-floating-label">
+                <span style="color:white; font-size:12px">Required Date</span><div class="im1"></div>
+                <!-- <div style="width: 100%">
+                    <input id="day" class="pl" auto-tab-to="month" type="tel" maxlength="2" placeholder="DD"
+                    ng-model="post.required_date.date" numbers-only required/>
+
+                    <span style="float: left;width: 15px;margin-top: 13px; color:white">/</span>              
+                    <input id="month" class="pl" auto-tab-to="year" type="tel" maxlength="2" 
+                    placeholder="MM" ng-model="post.required_date.month" numbers-only required/>
+
+                    <span style="float: left;width: 15px;margin-top: 13px; color:white">/</span>
+
+                    <input id="year" class="pl" type="tel" maxlength="4" placeholder="YYYY" 
+                    ng-model="post.required_date.year" numbers-only required/>
+                </div> -->
+
+                <ionic-datepicker idate="RequiredDatePicker" disablepreviousdates="true"  
+                callback="datePickerCallbackRequired">
+                    <button class="button button-block button-positive"> 
+                        {{ RequiredDatePicker | date:'dd/MM/yyyy' }} 
+                    </button>
+                </ionic-datepicker>
+
+            </div>
+            <br>
+            <label class="item-input item-floating-label">
+            <span style="color:white; font-size:12px">Time Od Shift</span><div class="im1"></div>
+            <input class="pl" placeholder="Time Od Shift" ng-required="true" type="time" 
+            ng-model="post.time_od_shift" name="time_od_shift"/>
+            </label>
+            <br>
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Local Weekday Rate</span><div class="im1"></div>
+            <input class="pl" placeholder="Local Weekday Rate" ng-required="true" type="number" 
+            ng-model="post.local_weekday_rate" name="local_weekday_rate" maxlength="20" required
+            ng-class="{'error':iserr|| formPost.local_weekday_rate.$dirty && 
+            formPost.local_weekday_rate.$invalid}"/>
+            </label>
+            <div class="err" ng-messages="formPost.local_weekday_rate.$error" 
+            ng-show="iserr||formPost.local_weekday_rate.$dirty && formPost.local_weekday_rate.$invalid">
+                <small ng-message="required"
+                    ng-show="formPost.local_weekday_rate.$error">
+                    Local Weekday Rate is required 
+                </small>
+            </div>
+            <br>
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">None Local Weekday Rate</span><div class="im1"></div>
+            <input maxlength="20" class="pl" placeholder="None Local Weekday Rate" 
+            ng-required="true" type="number" ng-model="post.nonelocal_weekday_rate" 
+            name="nonelocal_weekday_rate" required
+            ng-class="{'error':iserr|| formPost.nonelocal_weekday_rate.$dirty && 
+            formPost.nonelocal_weekday_rate.$invalid}"/>
+            </label>
+            <div class="err" ng-messages="formPost.nonelocal_weekday_rate.$error" 
+            ng-show="iserr||formPost.nonelocal_weekday_rate.$dirty && formPost.nonelocal_weekday_rate.$invalid">
+                <small ng-message="required"
+                    ng-show="formPost.nonelocal_weekday_rate.$error">
+                    None Weekday Rate is required 
+                </small>
+            </div>
+            <br>
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Sat Rate</span><div class="im1"></div>
+            <input class="pl" placeholder="Sat Rate" ng-required="true" type="number" 
+            ng-model="post.sat_rate" name="sat_rate" required maxlength="20" 
+            ng-class="{'error':iserr|| formPost.sat_rate.$dirty && formPost.sat_rate.$invalid}"/>
+            </label>
+            <div class="err" ng-messages="formPost.sat_rate.$error" 
+            ng-show="iserr||formPost.sat_rate.$dirty && formPost.sat_rate.$invalid">
+                <small ng-message="required"
+                    ng-show="formPost.sat_rate.$error">
+                    Sat Rate is required 
+                </small>
+            </div>
+            <br>
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Sun Rate</span><div class="im1"></div>
+            <input class="pl" placeholder="Sun Rate" ng-required="true" type="number" 
+            ng-model="post.sun_rate" name="sun_rate" required maxlength="20" 
+            ng-class="{'error':iserr || formPost.sun_rate.$dirty && formPost.sun_rate.$invalid}"/>
+            </label>
+            <div class="err" ng-messages="formPost.sun_rate.$error" 
+            ng-show="iserr||formPost.sun_rate.$dirty && formPost.sun_rate.$invalid">
+                <small ng-message="required"
+                    ng-show="formPost.sun_rate.$error">
+                    Sun Rate is required 
+                </small>
+            </div>
+            <br>
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">PH Rate</span><div class="im1"></div>
+            <input class="pl" placeholder="PH Rate" ng-required="true" type="number" 
+            ng-model="post.ph_rate" name="ph_rate" required maxlength="20" 
+            ng-class="{'error':iserr || formPost.ph_rate.$dirty && formPost.ph_rate.$invalid}"/>
+            </label>
+            <div class="err" ng-messages="formPost.ph_rate.$error" 
+            ng-show="iserr||formPost.ph_rate.$dirty && formPost.ph_rate.$invalid">
+                <small ng-message="required"
+                    ng-show="formPost.ph_rate.$error">
+                    PH Rate is required 
+                </small>
+            </div>
+            <br>
+            <li class=" item  item-checkbox " style="border: none;background-color: transparent;color: white;" >
+              <label class="checkbox ">
+                <input type="checkbox" ng-model="post.isTravel"  ng-true-value="1" ng-false-value="0">
+              </label>
+                Travel
+            </li>
+            <li class=" item  item-checkbox " style="border: none;background-color: transparent;color: white;" >
+                <label class="checkbox ">
+                  <input type="checkbox" ng-model="post.isAccommodation"  ng-true-value="1" ng-false-value="0">
+                </label>
+                Accommodation
+            </li>
+            <br>
+            <div class="item-input item-floating-label">
+                <span style="color:white; font-size:12px">Start Day</span><div class="im1"></div>
+                <!-- <div style="width: 100%">
+                    <input id="day" class="pl" auto-tab-to="month" type="tel" maxlength="2" placeholder="DD"
+                    ng-model="post.Start_date.date" numbers-only required/>
+                    <span style="float: left;width: 15px;margin-top: 13px; color:white">/</span>
+                    <input id="month" class="pl" auto-tab-to="year" type="tel" maxlength="2" 
+                    placeholder="MM" 
+                    ng-model="post.Start_date.month" numbers-only required/>
+                    <span style="float: left;width: 15px;margin-top: 13px; color:white">/</span>
+                    <input id="year" class="pl" type="tel" maxlength="4" placeholder="YYYY" 
+                    ng-model="post.Start_date.year" numbers-only required/>
+                </div> -->
+                <ionic-datepicker idate="StartDatePicker" disablepreviousdates="true"  
+                callback="datePickerCallbackStart">
+                    <button class="button button-block button-positive"> 
+                        {{ StartDatePicker | date:'dd/MM/yyyy' }} 
+                    </button>
+                </ionic-datepicker>
+            </div>
+            <br>
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Duration</span><div class="im1"></div>
+            <input class="pl" id="txtDuration" placeholder="Duration" ng-required="true" type="number" 
+            ng-model="post.Duration" name="Duration" maxlength="50" 
+            ng-class="{'error':iserr || formPost.Duration.$dirty && formPost.Duration.$invalid}"/>
+            </label>
+            <div class="err" ng-messages="formPost.Duration.$error" 
+            ng-show="iserr||formPost.Duration.$dirty && formPost.Duration.$invalid">
+                <small ng-message="required"
+                    ng-show="formPost.Duration.$error">
+                    Duration is required 
+                </small>
+            </div>
+            <br>
+            <label class="item-input item-floating-label">
+              <span class="span-ex" style="color:white; font-size:14px">Job Type</span>
+              <select ng-required="true" ng-model="post.job_type" name="Title" class="browser-default" 
+                style="float: right; margin-top: -2px; border: none; height: 21px; 
+                background-color: transparent; color:white">
+                <option value="" style="color:black">Choose Job Type</option>
+                <option style="color:black">Full Time</option>
+                <option style="color:black">Part Time</option>
+                <option style="color:black">Casual</option>
+              </select>
+            </label>
+            <br>
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Qualification</span><div class="im1"></div>
+            <input class="pl" placeholder="Qualification" ng-required="true" type="text" 
+            ng-model="post.Qualification" name="Qualification" maxlength="20" 
+            ng-class="{'error':iserr || formPost.Qualification.$dirty && formPost.Qualification.$invalid}"/>
+            </label>
+            <div class="err" ng-messages="formPost.Qualification.$error" 
+            ng-show="iserr||formPost.Qualification.$dirty && formPost.Qualification.$invalid">
+                <small ng-message="required"
+                    ng-show="formPost.Qualification.$error">
+                    Qualification is required 
+                </small>
+            </div>
+            <br>
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Experiences Require</span><div class="im1"></div>
+            <input class="pl" placeholder="Experiences Require" ng-required="true" type="text" ng-model="post.experiences_require" name="experiences_require" maxlength="20" 
+            ng-class="{'error':iserr || formPost.experiences_require.$dirty && 
+            formPost.experiences_require.$invalid}"/>
+            </label>
+            <div class="err" ng-messages="formPost.experiences_require.$error" 
+            ng-show="iserr||formPost.experiences_require.$dirty && formPost.experiences_require.$invalid">
+                <small ng-message="required"
+                    ng-show="formPost.experiences_require.$error">
+                    Experiences Require is required 
+                </small>
+            </div>
+            <br>
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Hours Per Week</span><div class="im1"></div>
+            <input class="pl" placeholder="Hours Per Week" ng-required="true" type="number" 
+            ng-model="post.hours_per_week" name="hours_per_week" maxlength="20" 
+            ng-class="{'error':iserr || formPost.hours_per_week.$dirty && 
+            formPost.hours_per_week.$invalid}"/>
+            </label>
+            <div class="err" ng-messages="formPost.hours_per_week.$error" 
+            ng-show="iserr||formPost.hours_per_week.$dirty && formPost.hours_per_week.$invalid">
+                <small ng-message="required"
+                    ng-show="formPost.hours_per_week.$error">
+                    Hours Per Week is required 
+                </small>
+            </div>
+            <br>
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Day Per Week</span><div class="im1"></div>
+            <input class="pl" placeholder="Day Per Week" ng-required="true" type="number" 
+            ng-model="post.days_per_week" name="days_per_week" 
+            ng-class="{'error':iserr || formPost.days_per_week.$dirty && formPost.days_per_week.$invalid}"/>
+            </label>
+            <div class="err" ng-messages="formPost.days_per_week.$error" 
+            ng-show="iserr||formPost.days_per_week.$dirty && formPost.days_per_week.$invalid">
+                <small ng-message="required"
+                    ng-show="formPost.days_per_week.$error">
+                    Day Per Week is required 
+                </small>
+            </div>
+            <br>
+            <li class="item item-checkbox" style="border: none;background-color: transparent;color: white;">
+              <label class="checkbox ">
+                <input type="checkbox" ng-model="post.isweekend_shift" ng-true-value="1" ng-false-value="0"/>
+              </label>
+              Weekend Shift
+            </li>
+            <br>
+            <div style="float:right">
+           	    <button class="btn-red waves-effect" data-tap-disabled="true" 
+                ng-click="addNewPost(outputShop, formPost)">
+                    Add
+                </button>
+            </div>
+            <div>
+                <button class="btn-red waves-effect fa fa-reply fa-2x" ui-sref="app.main.shop"></button>
+            </div>
+          </div>
+          </form>
+        </ion-content>
+</ionic-view>

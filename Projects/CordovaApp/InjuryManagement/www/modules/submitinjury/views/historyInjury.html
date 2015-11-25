@@ -1,0 +1,40 @@
+<ion-view>
+   
+    <ion-content class="content-scroll" style="background:#015190">
+        <div class="transparent-modal-phone wd100">
+            <div >
+                <div class="header-logo">
+                    <img src="img/main_logo.png" class="img-header">
+                </div>
+                <div class="background-header-logo-child">
+                    <span class="span-header">Injury Management</span>
+
+                </div>
+                <div class="dv-fn">
+                    <span class="span-fn">History</span>
+                </div>
+            </div>
+            <div class="actionBar">
+                <button menu-toggle="left" class="button button-icon icon ion-navicon mn-left"></button>
+            </div>
+            <div style="margin-top:100px">
+                <div class="list" ng-repeat="history in historyCompany | limitTo:pageSize" 
+                    style="text-align: left;font-size: 12px;padding-left: 30px;">
+                    <a ui-sref="app.injury.historyDetail({injuryID:history.injury_id})">
+                        <h2 style="color:#f3c90a;text-transform: capitalize;">{{history.FullName}}</h2>
+                        <p style="color:white">{{history.pickup_address}}</p>
+                        <p style="color:white">{{history.injury_date| date:'yyyy-MM-dd'}}</p>
+                    </a>
+                    <div class="bd-bottom"></div>
+                </div>
+            </div>
+            <ion-infinite-scroll on-infinite="loadMore()" distance="10%" 
+            ng-if="!noMoreItemsAvailable">
+            </ion-infinite-scroll>
+        </div>
+
+    </ion-content>
+
+   
+  
+</ion-view>

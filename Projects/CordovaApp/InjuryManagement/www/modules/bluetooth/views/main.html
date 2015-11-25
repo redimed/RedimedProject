@@ -1,0 +1,108 @@
+<ion-view title="bluetooth">
+    <ion-content class="content-scroll" style="background:#015190">
+        <div class="transparent-modal-phone wd100" >
+            <div >
+                <div class="header-logo">
+                    <img src="img/main_logo.png" class="img-header">
+                </div>
+                <div class="background-header-logo-child">
+                    <span class="span-header">Injury Management</span>
+
+                </div>
+                <div class="dv-fn">
+                    <span class="span-fn">Bluetooth</span>
+                </div>
+            </div>
+            <div class="actionBar">
+                <button menu-toggle="left" class="button button-icon icon ion-navicon mn-left" ></button>
+            </div>
+            <div style="margin-top:100px">
+                <div class="item-input label-custom-field padding" style="text-align: center">
+                    <div class="col">
+                        <a class="button button-stable" ng-click="DiscoveryDevice(Isclick = false)" ng-disabled="isLoad" style="background-color: #e74c3c !important; color: whitesmoke; border: none; border-radius: 5px; width: 60%;">
+                            <i class="fa fa-hand-o-right"></i> All Device
+                        </a>
+                    </div>
+
+
+                    <div class="col">
+                        <a class="button button-stable" ng-click="DiscoveryDevice(Isclick = true)" ng-disabled="isLoad" style="background-color: #34495e !important; color: whitesmoke; border: none; border-radius: 5px; width: 60%;">
+                            One Device <i class="fa fa-hand-o-left"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div ng-hide="deviceType == null">
+                    <div ng-show="deviceType == 'Pulse Oximeter'">
+                        <div class="content text-center">
+                            <div class="row-stretch">
+                                <div class="margin-bot0 row">
+                                    <div class="col">
+                                        <span style="font-size: 30px; font-weight: lighter; color: #1AD6FD">Pulse</span>
+                                    </div>
+                                    <div class="col">
+                                        <span style="font-size: 30px; font-weight: lighter; color: #4CD964">SpO2</span>
+                                    </div>
+                                </div>
+                                <div class="margin-bot0 row">
+                                    <div class="col">
+                                        <label class="font-responsive" style="color: #1AD6FD">{{dataReceive.pulse == NaN ? 0 : dataReceive.pulse}}</label>
+                                    </div>
+                                    <div class="col">
+                                        <label class="font-responsive" style="color: #4CD964">{{dataReceive.spO2 == NaN ? 0 : dataReceive.spO2}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div ng-show="deviceType !== 'Pulse Oximeter'">
+                        <div class="content text-center">
+                            <div class="row-stretch">
+                                <div class="margin-bot0 row margin-top50"  ng-repeat="(k,v) in copydataReceive" ng-if="k !== 'deviceType'">
+                                    <div class="col">
+                                        <span style="font-size: 30px; font-weight: lighter; text-transform: uppercase;">{{k}}</span>
+                                        <hr class="hr-data-device" style="margin-top: 0; margin-bottom: 30px;">
+                                    </div>
+                                    <div class="col">
+                                        <span style="font-size: 30px; font-weight: lighter; color: #FF5E3A">{{v == NaN ? 0 : v}}</span>
+                                        <hr style="margin-top: 0; margin-bottom: 30px;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ion-list class="padding" show-reorder="disableList">
+                    <div class="list border-top">
+                        <!--<a class="item item-avatar" ng-repeat="device in listDiscover"-->
+                        <!--ng-click="selectDevice(device.deviceType, device.address)">-->
+                        <!--{{device.deviceType}}-->
+                        <!--</a>-->
+
+                        <!--ui-sref="app.detailDeviceBluetooth({ deviceType: device.deviceType, address: device.address })" ui-sref-opts="{reload: true}"-->
+
+                        <a class="item item-avatar custom-item-listDevice" ng-repeat="device in listDiscover"
+                           ng-click="selectDevice(device.device_name, device.address, device.id)"
+                           ng-class="{'opacity02': !device.isOnline, 'opacity1': device.isOnline}">
+                            <div class="fLeft">
+                                <div class="parallelogram">
+                                    <img ng-src="{{device.imgDevice}}" width="100" />
+                                </div>
+                            </div>
+                            <div class="info-device">
+                                <h3 class="nameDevice" style="font-size: 20px; font-weight: 300; line-height: 1.1em"> - {{device.device_name}}
+                            <span class="status-device">
+                                <i class="icon ion-ios7-circle-filled" ng-class="{'green-text':device.isOnline, 'red-text':!device.isOnline}"></i>
+                            </span>
+                                </h3>
+                            </div>
+                        </a>
+                    </div>
+                </ion-list>
+            </div>
+
+        </div>
+
+    </ion-content>
+</ion-view>

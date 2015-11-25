@@ -1,0 +1,121 @@
+<ion-view >
+<ion-content class="content-scroll">
+<div>
+    <img src="img/logo-1.png">
+</div>
+<div style="height: 50px;background-color: #13b2cf;">
+    <button id="register-back-btn" type="button" class="button button-clear" ui-sref="security.login" style="margin-top: 9px;
+    margin-left: 6px;color:white">
+    <i class="fa fa-reply fa-2x"></i> </button>
+    <div style="font-size: 18px;color: white;margin-left: 28px;padding-top: 14px;float: right;width: 200px;">Patient Information</div>
+</div>
+<div>
+    <div style="height: 30px;background: #ebebeb;">
+    </div>
+    <!-- start -->
+    <form  class="FormEmergency" novalidate style="display: block;" name="FormEmergency">
+        <div class="form-group">
+            <span style="color: red;">*</span>Indicates Required field
+        </div>
+        <div class="form-group" show-errors='{showSuccess: true}'>
+            <label class="item item-input label-custom-field" >
+                <span class="input-label span-input-color">First Name<span style="color: red;"><sup>*</sup></span></span>
+                <input ng-required="true" type="text" placeholder="First Name" ng-model="em.FIRSTNAME" name="FIRSTNAME" required
+                />
+            </label>
+        </div>
+        <div class="form-group" show-errors='{showSuccess: true}'>
+            <label class="item item-input label-custom-field" >
+                <span class="input-label span-input-color">Last Name<span style="color: red;"><sup>*</sup></span></span>
+                <input ng-required="true" type="text" placeholder="Last Name" ng-model="em.LASTNAME" name="LASTNAME" required
+                />
+            </label>
+        </div>
+        <div class="form-group">
+            <label class="item item-input  label-custom-field" >
+                <span class="input-label span-input-color">Gender<span style="color: red;"><sup>*</sup></span></span>
+                <select ng-required="true" ng-model="em.GENDER" name="Gender" class="browser-default" style="border:none">
+                    <option value="">--Gender--</option>
+                    <option>Male</option>
+                    <option >Female</option>
+                </select>
+            </label>
+        </div>
+        <div class="form-group">
+            <label class="item item-input label-custom-field" style="width:100%" show-errors='{showSuccess: true}'>
+                <span class="input-label span-input-color">Date Of Birth<span style="color: red;"><sup>*</sup></span></span>
+                <input  type="date"  ng-model="em.DOB" name="Date Of Birth" required />
+            </label>
+        </div>
+        <div class="form-group">
+            <label class="item item-input label-custom-field" style="width:100%" show-errors='{showSuccess: true}'>
+                <span class="input-label span-input-color">Email Address<span style="color: red;"><sup>*</sup></span></span>
+                <input  type="email" placeholder="Email Address" ng-model="em.EMAIL" name="Email" required />
+            </label>
+        </div>
+        <div class="form-group" show-errors='{showSuccess: true}'>
+            <label class="item item-input label-custom-field" >
+                <span class="input-label span-input-color">Contact No<span style="color: red;"><sup>*</sup></span></span>
+                <input ng-required="true" type="number" placeholder="Contact No" ng-model="em.CONTACT_NO" name="CONTACT_NO" required
+                />
+            </label>
+        </div>
+        <div class="form-group" show-errors='{showSuccess: true}'>
+            <div class="row">
+                <div class="col-md-12 div-custom" >
+                    <div class="item item-input label-custom-field" style="width: 90%;float: left;" >
+                        <span class="input-label span-input-color" style="margin-left:-5px">Current Address<span style="color: red;"><sup>*</sup></span></span>
+                        <input  ng-required="true" type="text" placeholder="Address" ng-model="em.ADD" name="Address" ng-autocomplete required
+                        />
+                    </div>
+                    <div style="width: 25px;float: left;"> <ion-google-place  ng-model="em.ADD" ng-change="test=!test" class="pl"/> </div>
+                    <div id="map-canvas"  style="width:100%;height:200px"  lo="test"></div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" show-errors='{showSuccess: true}'>
+            <label class="item item-input label-custom-field" >
+                <span class="input-label span-input-color">Description<span style="color: red;"><sup>*</sup></span></span>
+                <input ng-required="true" type="text" placeholder="Injury" ng-model="em.INJURY" name="INJURY" required />
+            </label>
+        </div>
+        <div class="form-group" show-errors='{showSuccess: true}'>
+            <li class="item item-checkbox " style="border:none;white-space: normal;" >
+                <label class="checkbox ">
+                    <input type="checkbox" ng-model="em.REMEMBER_PATIENTS"  ng-true-value="1" ng-false-value="0">
+                </label>
+                Remember patients details on this device
+            </li>
+            <li class="item item-checkbox " style="border:none;white-space: normal;" >
+                <label class="checkbox ">
+                    <input type="checkbox" ng-model="em.RECEIVE_REDIMED"  ng-true-value="1" ng-false-value="0">
+                </label>
+                Receive REDIMED offers, information and relevant notifications
+            </li>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-12 div-custom">
+                    <button class="btn btn-success" ng-click="getPick()"><i class="fa fa-camera"></i></button>
+                    <button style="background-color: rgb(179, 29, 68);color: white;" class="btn pull-right" ng-click="insertEmergency(FormEmergency)">
+                    Submit</i>
+                    </button>
+                    <div class="footer_injury padding-top" ng-if="imageData!=='null'">
+                        <ion-scroll direction="x">
+                        <a  ng-repeat="item in imageData" >
+                        <img ng-src="{{item.image}}" class="a-img-custom img-thumbnail"/>
+                        </a>
+                        </ion-scroll>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div  class="form-group">
+        </div>
+    </div>
+</div>
+</form>
+<!-- end -->
+</div>
+</ion-content>
+</ion-view>

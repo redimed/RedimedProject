@@ -1,0 +1,54 @@
+<ion-view title="Pharmacist Experiences" >
+<div class="bar bar-subheader customHeaderBar">
+  <button class="button button-icon icon fa fa-reply " style="color:#fff;padding-top: 12px" ui-sref="app.main.pharmacist"></button>
+  <h2 class="title customHeaderBar"  style="margin-left: 14%;font-size: 20px;top: 11px;">Pharmacist Experiences</h2>
+   <button class="button button-icon icon fa fa-plus " style="color:#fff" ng-click="openModalExperience('Add New Experience','addNew')"></button>
+</div>
+   
+    <ion-content class="background-content">
+        <div class="list" ng-repeat="exp in expInfo">
+            <div class="item-divider">
+              <i class="icon fa fa-building-o "></i>
+              {{exp.company}}
+               <span class="item-note">
+               <i class="fa fa-trash fa-2x"  ng-click="deleteExp(exp.exp_id)"></i>
+              </span>
+               <span class="item-note">
+               <i class="fa fa-pencil fa-2x" style="padding-right: 39px;" ng-click="modalEditExp(exp)" ></i>
+              </span>
+            </div>
+            <div class="form-group">
+           
+               <label class="item-input label-custom-field" >
+                        <span class="input-label span-input-color">Duty</span>
+                        <span class="input-label">{{exp.duty}}</span>
+                </label>
+                 <label class="item-input label-custom-field" >
+                        <span class="input-label span-input-color">Position</span>
+                        <span class="input-label">{{exp.POSITION}}</span>
+                </label>
+                <label class="item-input label-custom-field" >
+                        <span class="input-label span-input-color">From Date</span>
+                        <span class="input-label">{{exp.from_date | date:'dd/MM/yyyy'}}</span>
+                </label>
+                <label class="item-input label-custom-field" >
+                        <span class="input-label span-input-color">To Date</span>
+                        <span class="input-label">{{exp.to_date |date:'dd/MM/yyyy'}}</span>
+                </label>
+                 <label class="item-input label-custom-field" >
+                        <span class="input-label span-input-color">Reference Name  :</span>
+                        <span class="input-label">{{exp.reference_name}}</span>
+                </label>
+                <label class="item-input label-custom-field" >
+                        <span class="input-label span-input-color">Reference Contact  :</span>
+                        <span class="input-label">{{exp.reference_contact}}</span>
+                </label>
+             </div>
+            
+        </div>
+       
+        
+     
+          
+    </ion-content>
+</ion-view>

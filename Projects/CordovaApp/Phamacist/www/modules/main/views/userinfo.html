@@ -1,0 +1,82 @@
+<ion-view title="User Info" >
+  <div class="bar bar-subheader customHeaderBar">
+  <div class="welcom" style=" margin-left: 130px;">Welcom {{userInfo.firstname}} &nbsp; {{userInfo.surname}}</div>
+  <div class="ava">
+      <img alt="Avartar"
+      ng-src="https://testapp.redimed.com.au:3000/api/phUser/getAvatar/{{userInfo.user_id}}" id="avatar"/>
+  </div>
+  
+  <h2 class="title customHeaderBar" style="margin-left: 14%;font-size: 20px;top: 11px;">User Info</h2>
+  </div>
+  <div class="sub-ss"></div>
+    <ion-content class="background-content">
+      <form name="userInfoFrom">
+        <div class="list c-list" >
+           <label class=" item-input item-floating-label" >
+                <span class="input-label sp_custom">User Name</span><div class="im1"></div>
+                <input type="text" class="ip_custom pl"  placeholder="User Name" ng-model="userInfo.username" name="username" ng-disabled="true" />
+          </label>
+          <br>
+           <label class="item-input item-floating-label"  >
+                <span class="span-ex" style="color:white">Password</span><div class="im1"></div>
+               <!--  <input  style="background:white;height: 36px;border:none;width:100%;padding-top: 7px;" name="username" 
+                ng-disabled="true" ng-click="openModal()"/>Change Password</span> -->
+                <button style="float: right; margin-top: -20px; border: 1px solid; height: 21px; background-color: transparent;" 
+                ng-click="openModal()" class="ip_custom pl" name="username">Change Password</button>
+                <hr>
+          </label>
+          <br >
+          <label class="item-input item-floating-label"  >
+                <span class="input-label sp_custom">First Name</span><div class="im1"></div>
+                <input class="ip_custom pl"  ng-required="true" type="text" placeholder="First Name" 
+                ng-model="userInfo.firstname" name="firstname" maxlength="50" />
+          </label>
+          <br >
+            <label class="item-input item-floating-label"  >
+                <span class="input-label sp_custom">Sur Name</span><div class="im1"></div>
+                <input  class="ip_custom pl" ng-required="true" type="text" placeholder="Sur Name" 
+                ng-model="userInfo.surname" name="surname" maxlength="50"/>
+          </label>
+          <br>
+          <label class="item-input item-floating-label"  >
+                <span class="input-label sp_custom">Mobile</span><div class="im1"></div>
+                <input  class="ip_custom pl"  ng-required="true" type="number" placeholder="Mobile" 
+                ng-model="userInfo.mobile" name="mobile" maxlength="20" minlength="11" 
+                ng-class="{'error':iserr|| userInfoFrom.mobile.$dirty && userInfoFrom.mobile.$invalid}"/>
+          </label>
+          <div class="err" ng-messages="userInfoFrom.mobile.$error " 
+          ng-show="iserr ||userInfoFrom.mobile.$dirty && userInfoFrom.mobile.$invalid">
+            <small ng-message="required" ng-show="userInfoFrom.mobile.$error">
+              Your mobile is required 
+            </small>
+          </div>
+          <br>
+          <label class="item-input item-floating-label"  >
+                <span class="input-label sp_custom">Email</span><div class="im1"></div>
+                <input  class="ip_custom pl" ng-required="true" type="email" placeholder="Email" 
+                ng-model="userInfo.email" name="email" maxlength="50"
+                ng-class="{'error':iserr || userInfoFrom.email.$dirty && userInfoFrom.email.$invalid}"/>
+          </label>
+          <div class="err" ng-messages="userInfoFrom.email.$error" 
+          ng-show="iserr||userInfoFrom.email.$dirty && userInfoFrom.email.$invalid">
+            <small ng-message="required" ng-show="userInfoFrom.email.$error">
+              Email is required 
+            </small>
+          </div>
+          <br>
+          <div>
+                <button class="btn-red waves-effect" ng-click="updatePicture()" style="float:left; margin-left: 15px;">Upload Avatar</button>
+                <img ng-src="{{image}}" name="image" style="width:100px; height:100px; margin-left:15px ;border:1px solid white;" 
+                alt="Image"/>
+          </div>
+          <br>
+          <div style="float: right;">
+             <button class=" btn-red waves-effect" ng-click="UpdateUserInfo()">Save</button>
+          </div>
+           <div style="float: left;">
+             <button class="btn-red waves-effect fa fa-reply fa-2x" ui-sref="app.main.profile"></button>
+          </div>      
+        </div>
+      </form>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,128 @@
+<ion-view>
+<ion-content class="content-scroll" style="background:#015190">
+<div class="transparent-modal-phone wd100">
+    <form novalidate name="registerForm2" >
+        <div class="cus-content-modal-phone content">
+            <div >
+                <div class="header-logo">
+                    <img src="img/main_logo.png" class="img-header">
+                </div>
+                <div class="background-header-logo-child">
+                    <span class="span-header">Injury Management</span>
+                </div>
+                <div class="dv-fn">
+                    <span class="span-fn">SIGN UP</span>
+                </div>
+                <div class="actionBar">
+                    <a class="button button-icon color-fff" ui-sref="security.register.info1" style="float:left">Back</a>
+                </div>
+            </div>
+            <div style="margin-top:50px">
+                <div class="item-input ">
+                    <span class="span-input-color">Health Fund<span class="icon-require">*</span></span>
+                    <select ng-required="true" ng-model="patientInfo.Private_fund_id" name="HealthFund" 
+                    class="select-custom" ng-options="row.PF_id as row.Fund_name for row in fundIndex">
+                    <option value="">--Select Fund--</option>
+                </select>
+                </div>
+                <div class="bd-bottom"></div>
+                <div class="item-input label-custom-field " style="margin-bottom: 10px;">
+                    <span class="span-input-color">Account Type</span>
+                    <select  ng-model="patientInfo.Account_type" class="select-custom" name="type"
+                        ng-options="row.Account_id as row.Account_name for row in accTypeIndex">
+                        <option value="">--Select Type--</option>
+                    </select>
+                </div>
+                <div class="bd-bottom"></div>
+                <div class="item-input label-custom-field ">
+                    <span class="span-input-color">Account Holder</span>
+                    <input type="text" ng-model="patientInfo.Account_holder" name="patientInfo.Account_holder" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
+                </div>
+                <div class="bd-bottom"></div>
+                <div class="item-input label-custom-field " 
+                ng-class="{'has-error':isSubmit2 && second.Medicare_no.$invalid}">
+                    <span class="span-input-color">Medicare No</span>
+                    <input  type="tel" ng-model="patientInfo.Medicare_no" name="Medicare_no" ng-class="{'has-error':isSubmit2 && second.Medicare_no.$invalid}" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
+                </div>
+                <div class="bd-bottom"></div>
+                <div class="item-input label-custom-field ">
+                    <span class="span-input-color">Expire Medicare</span>
+                    <input type="text" onfocus="this.type='date';
+                    this.setAttribute('onfocus','');this.blur();
+                    this.focus();" ng-model="patientInfo.Exp_medicare" name="Exp_medicare" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
+                </div>
+                <div class="bd-bottom"></div>
+                <div class="item-input label-custom-field ">
+                    <span class="span-input-color">MemberShip No</span>
+                    <input type="tel" ng-model="patientInfo.MemberShip_no" name="MemberShip_no" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
+                </div>
+                <div class="bd-bottom"></div>
+                <div class="item-input label-custom-field ">
+                    <span class="span-input-color">DVA No</span>
+                    <input ng-model="patientInfo.DVA_No" type="tel" name="DVA_No" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"
+                    style="color:white" maxlength="10">
+                </div>
+            </div>
+            <div class="bd-bottom"></div>
+           <!--  <a class="button button-icon icon ion-arrow-right-c next-button-submitinjury" ng-click="checkValidate(registerForm2)"style="margin-top:11px"></a> -->
+           <div class="item-input label-custom-field ">
+                <span class="span-input-color">HCC/Pension No</span>
+                <input ng-model="patientInfo.HCC_Pension_No" type="number" name="HCC_Pension_No" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
+            </div>
+            <div class="bd-bottom"></div>
+            <div class="item-input label-custom-field ">
+                <span class="span-input-color">Expiry</span>
+                <input type="text" onfocus="this.type='date';
+                this.setAttribute('onfocus','');this.blur();
+                this.focus();" ng-model="patientInfo.Exp_pension" name="Exp_pension" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
+            </div>
+            <div class="bd-bottom"></div>           
+            <div class="item-input label-custom-field ">
+                <span class="span-input-color">UPI</span>
+                <input type="tel" ng-model="patientInfo.UPI" name="UPI" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white" >
+            </div>
+            <div class="bd-bottom"></div>
+            <div class="item-input label-custom-field ">
+                <span class="span-input-color">Occupation</span>
+                <input type="text" ng-model="patientInfo.Occupation" name="Occupation" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
+            </div>
+            <div class="bd-bottom"></div>
+            <div class="item-input label-custom-field ">
+                <span class="span-input-color">Partner's Name</span>
+                <input type="text" ng-model="patientInfo.Partner_name" name="Partner_name" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
+            </div>
+            <div class="bd-bottom"></div>
+            <div class="item-input label-custom-field ">
+                <span class="span-input-color">Partner's DOB</span>
+                <input type="text" onfocus="this.type='date';
+                this.setAttribute('onfocus','');this.blur();
+                this.focus();" ng-model="patientInfo.Partner_DOB" name="Partner_DOB" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
+            </div>
+            <div class="bd-bottom"></div>
+            <div class="item-input label-custom-field ">
+                <span class="span-input-color">Partner's Occupation</span>
+                <input type="text" ng-model="patientInfo.Partner_Occupation" name="Partner_Occupation" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
+            </div>
+            <div class="bd-bottom"></div>
+            <div class="item-input label-custom-field ">
+                <span class="span-input-color">Alias First Name</span>
+                <input type="text" ng-model="patientInfo.Alias_First_name" name="Alias_First_name" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
+            </div>
+            <div class="bd-bottom"></div>
+            <div class="item-input label-custom-field ">
+                <span class="span-input-color">Alias Sur Name</span>
+                <input type="text" ng-model="patientInfo.Alias_Sur_name" name="Alias_Sur_name" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
+            </div>
+            <div class="row responsive-sm">
+                <div class="col col-80 col-offset-10">
+                    <button class="button btn-login-custom button-full" style="margin-top: 11px;"
+                    ng-click="submitRegister()">
+                    <h4>SIGN UP</h4>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</ion-content>
+</ion-view>

@@ -1,0 +1,132 @@
+<ion-view title="Post Detail" >
+    <div class="bar bar-subheader customHeaderBar">
+        <button class="button button-icon icon fa fa-reply" 
+        style="color:#fff" ui-sref="app.main.shop"></button>
+        <h2 class="title customHeaderBar"  style="margin-left: 14%;font-size: 20px;top: 11px;">
+            Post Detail
+        </h2>
+    </div>
+    <ion-content class="background-content">
+		<div class="form-group">
+	    	<br>
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Shop Name</span><div class="im1"></div>
+            <input  class="ip_custom pl" type="text" placeholder="Shop Name" ng-model="postDetail.shop_name" name="shop_name" ng-disabled="true" />
+            </label>
+            <br>
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Job Type</span><div class="im1"></div>
+            <input  class="ip_custom pl" type="text" placeholder="Job Type" ng-model="postDetail.job_type" name="job_type" ng-disabled="true" />
+            </label>
+            <br>
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Job Title</span><div class="im1"></div>
+            <input  class="ip_custom pl" type="text" placeholder="Job Title" ng-model="postDetail.job_title" name="job_title" ng-disabled="true" />
+            </label>
+            <br>
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Job Descriptiton</span><div class="im1"></div>
+            <input  class="ip_custom pl" type="text" placeholder="Job Descriptiton" ng-model="postDetail.job_description" name="job_description" ng-disabled="true" />
+            </label>
+            <br>
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Required Date</span><div class="im1"></div>
+            <input  class="ip_custom pl" type="text" placeholder="Required Date" ng-model="postDetail.required_date | date:'MM/dd/yyyy'" name="required_date" ng-disabled="true" />
+            </label>
+            <br>
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Time Od Shift</span><div class="im1"></div>
+            <input  class="ip_custom pl" type="text" placeholder="Time Od Shift" ng-model="postDetail.time_od_shift" 
+            name="time_od_shift" ng-disabled="true" />
+            </label>
+            <br>
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Local Weekday Rate</span><div class="im1"></div>
+            <input class="ip_custom pl" type="text" placeholder="Local Weekday Rate" 
+            ng-model="postDetail.local_weekday_rate" name="local_weekday_rate" ng-disabled="true" />
+            </label>
+            <br>
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">None Local Weekday Rate</span><div class="im1"></div>
+            <input  class="ip_custom pl" type="text" placeholder="None Local Weekday Rate" 
+            ng-model="postDetail.nonelocal_weekday_rate" name="nonelocal_weekday_rate" ng-disabled="true" />
+            </label>
+            <br>
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Sat Rate</span><div class="im1"></div>
+            <input  class="ip_custom pl" type="text" placeholder="Sat Rate" ng-model="postDetail.sat_rate" 
+            name="sat_rate" ng-disabled="true" />
+            </label>
+            <br>
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Sun Rate</span><div class="im1"></div>
+            <input  class="ip_custom pl" type="text" placeholder="Sun Rate" ng-model="postDetail.sun_rate" name="sun_rate" ng-disabled="true" />
+            </label>
+            <br>
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">PH Rate</span><div class="im1"></div>
+            <input  class="ip_custom pl" type="text" placeholder="PH Rate" ng-model="postDetail.ph_rate" name="ph_rate" ng-disabled="true" />
+            </label>
+            <br>
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Travel</span><div class="im1"></div>
+            <input  class="ip_custom pl" type="text" placeholder="Travel" 
+            ng-model="postDetail.isTravel" name="Travel" ng-disabled="true" />
+            </label>
+            <br>
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Accommodation</span><div class="im1"></div>
+            <input  class="ip_custom pl" type="text" placeholder="Accommodation" 
+            ng-model="postDetail.isAccommodation" name="Accommodation" ng-disabled="true" />
+            </label>
+            <br>
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Start Day</span><div class="im1"></div>
+            <input  class="ip_custom pl" type="text" placeholder="Start Day" 
+            ng-model="postDetail.Start_date | date: 'MM/dd/yyyy'" name="shop_name" ng-disabled="true" />
+            </label>
+            <br>
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Duration</span><div class="im1"></div>
+            <input  class="ip_custom pl" type="text" placeholder="Duration" ng-model="postDetail.Duration" name="Duration" ng-disabled="true" />
+            </label>
+            <br>
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Qualification</span><div class="im1"></div>
+            <input  class="ip_custom pl" type="text" placeholder="Qualification" ng-model="postDetail.Qualification" name="Qualification" ng-disabled="true" />
+            </label>
+            <br>
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Experiences Require</span><div class="im1"></div>
+            <input  class="ip_custom pl" type="text" placeholder="Experiences Require" 
+            ng-model="postDetail.experiences_require" name="Experiences Require" ng-disabled="true" />
+            </label>
+            <br>
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Hours Per Week</span><div class="im1"></div>
+            <input  class="ip_custom pl" type="text" placeholder="Hours Per Week" ng-model="postDetail.hours_per_week" name="hours_per_week" ng-disabled="true" />
+            </label>
+            <br>
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Day Per Week</span><div class="im1"></div>
+            <input  class="ip_custom pl" type="text" placeholder="Day Per Week" ng-model="postDetail.hours_per_week" name="date_per_week" ng-disabled="true" />
+            </label>
+            <br>
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Weekend Shift</span><div class="im1"></div>
+            <input  class="ip_custom pl" type="text" placeholder="Weekend Shift" 
+            ng-model="postDetail.isweekend_shift" name="isweekend_shift" ng-disabled="true" />
+            </label>
+            <br>
+            <label class="item-input item-floating-label">
+            <span class="input-label sp_custom">Total Member Join</span><div class="im1"></div>
+            <input  class="ip_custom pl" type="text" placeholder="Total Member Join" 
+            ng-model="mem" name="mem" ng-disabled="true" />
+            </label>
+            <br>
+            <button class="btn-red" ng-if="mem > 0" ng-click="getPharmacistId(postDetail)">
+                See Pharmacist Apply  
+            </button>
+	    </div>
+  	</ion-content> 
+</ion-view>

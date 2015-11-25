@@ -1,0 +1,32 @@
+<ion-view title="Company" >
+<div class="bar bar-subheader customHeaderBar">
+<div class="welcom" style=" margin-left: 130px;">Welcom {{userInfo.firstname}} &nbsp; {{userInfo.surname}}</div>
+  <div class="ava">
+      <img alt="Avartar"
+      ng-src="https://testapp.redimed.com.au:3000/api/phUser/getAvatar/{{userInfo.user_id}}" 
+      id="avatar"/>
+  </div>
+</div>
+<h2 class="title customHeaderBar"  style="margin-left: 14%;font-size: 20px;top: 11px;">Company</h2>
+ <div class="sub-ss"></div>
+     <ion-content  class="background-content">
+       <div class="list c-list" >
+           <label class="item-input input_us"  ui-sref="app.main.companyinfo" ng-if="user_type == 'Company' ">
+                <span class="input-label span-input-color"> <i class="icon ion-briefcase icon_custom"></i></span><div class="im1"></div>
+                <div  class="c-label" style="margin-right: 80px;">  Company Info </div> 
+          </label>
+          <br>
+           <label class="item-input input_us" ng-if="user_type == 'Company' && isMain == 1 " ui-sref="app.main.userincompany">
+                <span class="input-label span-input-color"><i class="icon ion-person icon_custom"></i></span><div class="im1"></div>
+                <div  class="c-label" style="margin-right: 80px;">  User in Company</div> 
+          </label>
+          <br>
+           <div style="float: left;">
+             <button style="margin-left:0px" class="btn-red waves-effect fa fa-reply fa-2x" 
+             ui-sref="app.main.profile"></button>
+          </div>
+      
+      </div>
+
+    </ion-content>
+</ion-view>

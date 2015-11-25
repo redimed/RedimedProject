@@ -1,0 +1,198 @@
+<ion-view title="Company Info" >
+<div class="bar bar-subheader customHeaderBar">
+<button class="button button-icon icon fa fa-reply " style="color:#fff;padding-top: 12px;" ui-sref="app.main.company"></button>
+  <h2 class="title customHeaderBar">Company Info</h2>
+</div>
+   
+    <ion-content class="background-content">
+  <div class="form-group">
+
+   <form name="CompanyForm">
+
+                   <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">Company Name</span><div class="im1"></div>
+                          <input ng-keypress="keyPress($event.keyCode)" class="ip_custom pl" ng-required="true" type="text" placeholder="Company Name" ng-model="companyinfo.company_name" name="CompanyName" ng-disabled="true"
+                        ng-class="{'error':iserr|| CompanyForm.CompanyName.$dirty && CompanyForm.CompanyName.$invalid}"/>
+                    </label>
+                     <div class="err" ng-messages="CompanyForm.CompanyName.$error" ng-show="iserr ||CompanyForm.CompanyName.$dirty && CompanyForm.CompanyName.$invalid">
+                            <small ng-message="required"
+                                ng-show="CompanyForm.CompanyName.$error.required">
+                                 Company name is required 
+                            </small>
+                    </div>
+                    <br>
+                    <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">Address</span><div class="im1"></div>
+                          <input ng-keypress="keyPress($event.keyCode)" class="ip_custom pl" ng-required="true" type="text" 
+                          name="address" placeholder="Address" 
+                          ng-autocomplete ng-model="companyinfo.address" options="options" details="details"id="autocomplete" ng-focus="disableTap()"
+                          ng-class="{'error':iserr|| CompanyForm.address.$dirty && CompanyForm.address.$invalid}"/>
+                    </label>
+                     <div class="err" ng-messages="CompanyForm.address.$error" ng-show="iserr|| CompanyForm.address.$dirty && CompanyForm.address.$invalid">
+                            <small ng-message="required"
+                                ng-show="CompanyForm.address.$error.required">
+                                 Address is required 
+                            </small>
+                    </div>
+                        <br>
+                     <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">Surburb</span><div class="im1"></div>
+                          <input ng-keypress="keyPress($event.keyCode)" class="ip_custom pl" ng-required="true" type="text" placeholder="Surburb" ng-model="companyinfo.surburb" 
+                          name="Surburb" maxlength="50" 
+                        ng-class="{'error':iserr|| CompanyForm.Surburb.$dirty && CompanyForm.Surburb.$invalid}" />
+                    </label>
+                    <div class="err" ng-messages="CompanyForm.Surburb.$error" ng-show="iserr || CompanyForm.Surburb.$dirty && CompanyForm.Surburb.$invalid">
+                            <small ng-message="required"
+                                ng-show="CompanyForm.Surburb.$error.required">
+                                 Surburb is required 
+                            </small>
+                    </div>
+                    
+                    <br>
+                     <label class="item-input item-floating-label" style="margin: 15px 0 15px 0; 
+                    font-size: medium;">
+                    <span class="span-ex" style="color:white">State</span>
+                      <select ng-required="true" ng-model="companyinfo.state" name="state" 
+                      class="browser-default" style="float: right; margin-top: -2px; border: none; 
+                      height: 21px; background-color: transparent; color:white">
+                            <option value="" style="color:black">Choose State</option>
+                            <option value="NT" style="color:black">Northern Territory</option>
+                            <option value="QLD" style="color:black">Queensland</option>
+                            <option value="VIC" style="color:black">Victoria</option>
+                            <option value="NSW" style="color:black">New South Wales</option>
+                            <option value="SA" style="color:black">South Australia</option>
+                            <option value="WA" style="color:black">Western Australia</option>
+                            <option value="TAS" style="color:black">Tasmania</option>
+                      </select>
+                      <hr lass="customHr" ng-class="{'error':iserr|| 
+                      CompanyForm.state.$dirty && CompanyForm.state.$invalid}">
+                    </label>
+                    <br>
+                     <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">Country</span><div class="im1"></div>
+                          <input ng-keypress="keyPress($event.keyCode)" class="ip_custom pl" ng-required="true" type="text"placeholder="Country" name="country" 
+                          ng-model="companyinfo.country" maxlength="50" 
+                        ng-class="{'error':iserr|| CompanyForm.country.$dirty && CompanyForm.country.$invalid}" />
+                    </label>
+                    <div class="err" ng-messages="CompanyForm.country.$error" ng-show="iserr||CompanyForm.country.$dirty && CompanyForm.country.$invalid">
+                            <small ng-message="required"
+                                ng-show="CompanyForm.country.$error.required">
+                                 Country is required 
+                            </small>
+                    </div>
+                    <br>
+                    <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">Post Code</span><div class="im1"></div>
+                          <input ng-keypress="keyPress($event.keyCode)" class="ip_custom pl" ng-required="true" type="number" placeholder="Post code" name="postcode" ng-model="companyinfo.postcode" type="number" maxlength="11" 
+                        ng-class="{'error':iserr|| CompanyForm.postcode.$dirty && CompanyForm.postcode.$invalid}" />
+                    </label>
+                   
+                   <div class="err" ng-messages="CompanyForm.postcode.$error" ng-show="iserr|| CompanyForm.postcode.$dirty && CompanyForm.postcode.$invalid">
+                            <small ng-message="required"
+                                ng-show="CompanyForm.postcode.$error.required">
+                                 Postcode is required 
+                            </small>
+                    </div>
+                    <br>
+                      <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">Contact Name</span><div class="im1"></div>
+                          <input ng-keypress="keyPress($event.keyCode)" class="ip_custom pl" ng-required="true" type="text" placeholder="Contact Name" name="Contactname" 
+                          ng-model="companyinfo.contact_name" maxlength="50" 
+                        ng-class="{'error':iserr|| CompanyForm.Contactname.$dirty && CompanyForm.Contactname.$invalid}" />
+                    </label>
+                    
+                   <div class="err" ng-messages="CompanyForm.Contactname.$error" ng-show="iserr||CompanyForm.Contactname.$dirty && CompanyForm.Contactname.$invalid">
+                            <small ng-message="required"
+                                ng-show="CompanyForm.Contactname.$error.required">
+                                 Contactname is required 
+                            </small>
+                     </div>
+                     <br>
+                     <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">Contact Number</span><div class="im1"></div>
+                          <input ng-keypress="keyPress($event.keyCode)" class="ip_custom pl" ng-required="true" type="number" placeholder="Contact Number" name="contactNumber" 
+                          ng-model="companyinfo.contact_number" maxlength="15" 
+                        ng-class="{'error':iserr|| CompanyForm.contactNumber.$dirty && CompanyForm.contactNumber.$invalid}"  />
+                    </label>
+                     <div class="err" ng-messages="CompanyForm.contactNumber.$error" ng-show="iserr||CompanyForm.contactNumber.$dirty && CompanyForm.contactNumber.$invalid">
+                            <small ng-message="required"
+                                ng-show="CompanyForm.contactNumber.$error.required">
+                                 Contact Number is required 
+                            </small>
+                        </div>
+                        <br>
+                    <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">Email Company</span><div class="im1"></div>
+                          <input ng-keypress="keyPress($event.keyCode)" class="ip_custom pl"  ng-required="true"  placeholder="Email" name="email" ng-model="companyinfo.email" type="email"
+                          maxlength="50" 
+                        ng-class="{'error':iserr|| CompanyForm.email.$dirty && CompanyForm.email.$invalid}"  />
+                    </label>
+                    <div class="err" ng-messages="CompanyForm.email.$error" ng-show="iserr||CompanyForm.email.$dirty && CompanyForm.email.$invalid">
+                            <small ng-message="required"
+                                ng-show="CompanyForm.email.$error">
+                                 Email is required 
+                            </small>
+                     </div>
+                     <br>
+                      <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">Phone Company</span><div class="im1"></div>
+                          <input ng-keypress="keyPress($event.keyCode)" class="ip_custom pl"  placeholder="Phone" ng-model="companyinfo.phone" type="number" name="phone" maxlength="15" 
+                        ng-class="{'error':iserr|| CompanyForm.phone.$dirty && CompanyForm.phone.$invalid}" />
+                    </label>
+                     <div class="err" ng-messages="CompanyForm.phone.$error" ng-show="iserr||CompanyForm.phone.$dirty && CompanyForm.phone.$invalid">
+                            <small ng-message="required"
+                                ng-show="CompanyForm.phone.$error">
+                                 Phone is required 
+                            </small>
+                     </div>
+                     <br>
+                      <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">Mobile Company</span><div class="im1"></div>
+                          <input ng-keypress="keyPress($event.keyCode)" class="ip_custom pl"   placeholder="Mobile" name="mobile" ng-model="companyinfo.mobile" required type="number" maxlength="15" 
+                        ng-class="{'error':iserr|| CompanyForm.mobile.$dirty && CompanyForm.mobile.$invalid}"/>
+                    </label>
+                
+                    <div class="err" ng-messages="CompanyForm.mobile.$error" ng-show="iserr||CompanyForm.mobile.$dirty && CompanyForm.mobile.$invalid">
+                            <small ng-message="required"
+                                ng-show="CompanyForm.mobile.$error">
+                                 Mobile is required 
+                            </small>
+                    </div>
+
+                    <li class=" item item-checkbox " style="border: none;background-color: transparent;color: white;" >
+                         <label class="checkbox ">
+                           <input type="checkbox" ng-model="companyinfo.isCompouding"  ng-true-value="1" ng-false-value="0">
+                         </label>
+                         Compouding
+                    </li>
+                     <li class="item item-checkbox " style="border: none;background-color: transparent;color: white;" >
+                         <label class="checkbox ">
+                           <input type="checkbox" ng-model="companyinfo.isCPOP"  ng-true-value="1" ng-false-value="0">
+                         </label>
+                         CPOP
+                    </li>
+                    <li class="item item-checkbox " style="border: none;background-color: transparent;color: white;" >
+                         <label class="checkbox ">
+                           <input type="checkbox" ng-model="companyinfo.isMutiShops"  ng-true-value="1" ng-false-value="0">
+                         </label>
+                         MultiShop
+                    </li>
+                     <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">Dispending Software</span><div class="im1"></div>
+                          <input ng-keypress="keyPress($event.keyCode)" class="ip_custom pl"   placeholder="Dispending Software" name="Dispending" ng-model="companyinfo.Dispensing_software"  type="text" required maxlength="50" 
+                        ng-class="{'error':iserr|| CompanyForm.Dispending.$dirty && CompanyForm.Dispending.$invalid}"/>
+                    </label>
+                   
+                    <div class="err" ng-messages="CompanyForm.Dispending.$error" ng-show="iserr||CompanyForm.Dispending.$dirty && CompanyForm.Dispending.$invalid">
+                            <small ng-message="required"
+                                ng-show="CompanyForm.Dispending.$error.required">
+                                 Dispending is required 
+                            </small>
+                    </div>
+                    <br>
+                     <button class="btn"  style="width:100%" ng-click="updateCompanyInfo()">Save</button>
+                   
+                </form>
+        </div>
+    </ion-content>
+</ion-view>

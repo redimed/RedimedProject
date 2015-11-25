@@ -1,0 +1,23 @@
+<ion-view title="Pharmacist Info" >
+<div class="bar bar-subheader customHeaderBar">
+ <button class="button button-icon icon fa fa-reply " style="color:#fff;padding-top: 12px;" 
+ ui-sref="app.main.shop"></button>
+  <h2 class="title customHeaderBar" style="margin-left: 14%;font-size: 20px;top: 11px;">Pharmacist Info</h2>
+</div>
+    <ion-content class="background-content">
+      <div class="list card" ng-repeat="info in infoPhar">
+        <div class="item item-avatar">
+          <p>Name: {{info.firstname}}</p>
+          <p>Date of Birth: {{info.DOB | date:MM/dd/yyyy}}</p>
+          <p>Email: {{info.email}}</p>
+          <p>Address: {{info.address}}</p>
+          <p>Phone: {{info.mobile}}</p>
+          <a class="button icon-right ion-chevron-right button-calm" 
+            style="background-color:#26a69a; font-size: 15px;"
+            ng-click="getDetailPharmacist(info.phamacist_id)">
+            Details
+          </a>
+        </div>
+      </div>        
+    </ion-content>
+</ion-view>

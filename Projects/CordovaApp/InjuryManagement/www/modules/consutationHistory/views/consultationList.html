@@ -1,0 +1,33 @@
+<ion-view >
+
+<ion-content class="content-scroll" style="background:#015190">
+<div class="transparent-modal-phone wd100" >
+    <div >
+        <div class="header-logo">
+            <img src="img/main_logo.png" class="img-header">
+        </div>
+        <div class="background-header-logo-child">
+            <span class="span-header">Injury Management</span>
+        </div>
+        <div class="dv-fn">
+            <span class="span-fn">Consultation History</span>
+        </div>
+    </div>
+    <div class="actionBar">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon mn-left" ></button>
+    </div>
+    <div style="margin-top:100px">
+
+        <div class="list" ng-repeat="history in HistoryConsultation" style="text-align: left;font-size: 12px;padding-left: 30px;" >
+            <a ui-sref="app.detailConsultation({patient_id:history.patient_id,cal_id:history.cal_id})">
+            <h4 style="color:#f3c90a;text-transform: capitalize;">{{history.FROM_TIME|date: 'dd-MM-yyyy hh:ss'}}</h4>
+            </a>
+            <div class="bd-bottom"></div>
+        </div>
+    </div>
+
+</div>
+</ion-content>
+
+
+</ion-view>

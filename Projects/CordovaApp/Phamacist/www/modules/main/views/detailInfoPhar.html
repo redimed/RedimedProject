@@ -1,0 +1,164 @@
+<ion-view title="Detail Info Pharmacist">
+	<div class="bar bar-subheader customHeaderBar">
+		<button class="button button-icon icon fa fa-reply" style="color:#fff;padding-top: 12px;" 
+		ui-sref="app.main.infoPhar"></button>
+		<h2 class="title customHeaderBar"  style="margin-left: 14%;font-size: 20px;top: 11px;">
+      Pharmacist Info
+    </h2>
+	</div>
+	<div class="sub-ss">
+  <label class="item-input item-floating-label">
+  <!-- <span class="span-ex" style="color:white; font-size:14px">Choose: </span> -->
+  <select id="selPhar" ng-change="selectAction()" ng-model="myOption" class="browser-default"
+  style="float: right; margin-top: -2px; border: none; height: 21px; background-color: transparent; color:white">
+    <option value="inf" style="color:black">Infomation</option>
+    <option value="exp" style="color:black">Experiences</option>
+    <option value="qua" style="color:black">Qualifications</option>
+  </select>
+  </label>
+
+  </div>
+    <ion-content class="background-content">
+    	<div class="list c-list" ng-show="myOption == 'inf'">
+                    <label class="item-input item-floating-label" >
+                        <span class="input-label sp_custom">Sur Name Phar</span><div class="im1"></div>
+                        <input  class="ip_custom pl" type="text" placeholder="Surname" ng-model="detailInfoPhar.surburb" name="surburb" ng-disabled="true" />
+                    </label>
+                     <br>
+                     <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">First Name Phar</span><div class="im1"></div>
+                          <input class="ip_custom pl" ng-disabled="true" type="text" placeholder="First Name" name="firstName" ng-model="detailInfoPhar.firstname"/>
+                    </label>
+                    <br>
+                    <label class="item-input item-floating-label">
+                        <span class="input-label sp_custom">DOB</span>
+                        <input  class="ip_custom pl" type="text" placeholder="Date of Birth" 
+                        ng-model="detailInfoPhar.DOB | date:'MM/dd/yyyy'" name="Date of Birth" ng-disabled="true" />
+                    </label>
+                    <br>
+                    <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">Email Pharmacis</span><div class="im1"></div>
+                          <input class="ip_custom pl" ng-disabled="true" type="email" placeholder="Email" name="email" ng-model="detailInfoPhar.email" ng-disabled="true"/>
+                    </label>
+                    <br>
+                       <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">Phone Pharmacis</span><div class="im1"></div>
+                          <input class="ip_custom pl" type="text" ng-disabled="true"
+                          placeholder="Phone" ng-model="detailInfoPhar.phone" name="phone"/>
+                    </label>
+                     
+                      <br>
+                       <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">Mobile Pharmacis</span><div class="im1"></div>
+                          <input class="ip_custom pl"  placeholder="Mobile" name="mobile" 
+                          ng-model="detailInfoPhar.mobile" type="text" ng-disabled="true"/>
+                    </label>
+                        <br>
+                        <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">Address Pharmacis</span><div class="im1"></div>
+                          <input class="ip_custom pl"  placeholder="Address" 
+                          name="address" ng-model="detailInfoPhar.address" type="text" ng-disabled="true"/>
+                    </label>                   
+                     <br>
+                       <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">Surburb Pharmacis</span><div class="im1"></div>
+                          <input class="ip_custom pl"  placeholder="Surburb" name="surburb" 
+                          ng-model="detailInfoPhar.surburb" type="text" ng-disabled="true"/>
+                    </label>
+                      <br>
+                       <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">PostCode Pharmacis</span><div class="im1"></div>
+                          <input class="ip_custom pl"  placeholder="PostCode" name="postcode" ng-model="detailInfoPhar.postcode" type="number" ng-disabled="true"/>
+                    </label>      
+                       <br>
+                        <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">State Pharmacis</span><div class="im1"></div>
+                          <input class="ip_custom pl" placeholder="State" name="state" ng-model="detailInfoPhar.state"  type="text" ng-disabled="true"/>
+                    </label>
+                      <br>
+                        <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">Country Pharmacis</span><div class="im1"></div>
+                          <input class="ip_custom pl" placeholder="Country" name="country" ng-model="detailInfoPhar.country" ng-disabled="true" type="text"/>
+                    </label>
+                     <br>
+                     <label class="item-input item-floating-label">
+                        <span class="input-label sp_custom">Gender</span><div class="im1"></div>
+                        <input class="ip_custom pl" placeholder="Country" name="country" 
+                        ng-model="detailInfoPhar.gender" ng-disabled="true" type="text"/>
+                    </label>
+                    <br>
+                       <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">Preferred Name</span><div class="im1"></div>
+                          <input class="ip_custom pl" placeholder="Preferred" ng-model="detailInfoPhar.preferred_name" type="text" ng-disabled="true"/>
+                    </label>
+                   <br>
+                     <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">APHRA</span><div class="im1"></div>
+                          <input class="ip_custom pl" placeholder="Preferred" ng-model="detailInfoPhar.APHRA" 
+                          type="text" ng-disabled="true"/>
+                    </label>
+                   <br>
+                    <label class="item-input item-floating-label" >
+                          <span class="input-label sp_custom">Proficident</span><div class="im1"></div>
+                          <input class="ip_custom pl"  placeholder="Preferred" ng-model="detailInfoPhar.Proficient" 
+                          type="text" ng-disabled="true"/>
+                    </label>
+                   <ul> 
+                     <li class=" item item-checkbox " style="border: none;background-color: transparent;color: white;" >
+                         <label class="checkbox ">
+                           <input type="checkbox" ng-model="detailInfoPhar.isCPOP"  ng-true-value="1" 
+                           ng-false-value="0" ng-disabled="true" ng-if="detailInfoPhar.isCPOP == 1">
+                         </label>
+                         CPOP
+                    </li>
+                     <li class="item item-checkbox " style="border: none;background-color: transparent;color: white;">
+                         <label class="checkbox ">
+                           <input type="checkbox" ng-model="detailInfoPhar.isHMR"  ng-true-value="1" ng-false-value="0"
+                           ng-disabled="true" ng-if="detailInfoPhar.isHMR == 1">
+                         </label>
+                         HMR
+                    </li>
+                     <li class="item item-checkbox " style="border: none;background-color: transparent;color: white;">
+                         <label class="checkbox ">
+                           <input type="checkbox" ng-model="detailInfoPhar.isCompounding"  ng-true-value="1" 
+                           ng-false-value="0" ng-disabled="true" ng-if="detailInfoPhar.isCompounding == 1">
+                         </label>
+                         Compouding
+                    </li>
+                    </ul>
+	    <button class="btn" style="width:100%" 
+        ng-click="AcceptPharmacist(detailInfoPhar.phamacist_id)"
+	      ng-if="isSelect.isSelect !== 1">
+	       	Accept
+	    </button>
+      </div>
+
+      <div ng-show="myOption == 'exp'">
+        <ion-item class="item-avatar background-content" 
+        ng-repeat="exp in dataExp" 
+        style="margin-left: -60px;">
+          <div class="item item-avatar">
+             <img ng-src="img/app-icons/android/mipmap-hdpi/logo.png">
+              <h2>Company Name: {{exp.company}}</h2>
+              <p>From Date: {{exp.from_date | date:'yyyy/MM/dd'}}</p>
+              <p>To Date: {{exp.to_date | date:'yyyy/MM/dd'}}</p>
+              <p>Position: {{exp.POSITION}}</p>
+              <p>Duty: {{exp.duty}}</p>
+              <p>Reference Name: {{exp.reference_name}}</p>
+              <p>Reference Contact: {{exp.reference_contact}}</p>
+            </div>
+        </ion-item>
+      </div>
+
+      <div ng-show="myOption == 'qua'">
+        <ion-item class="item-avatar background-content" 
+        ng-repeat="qua in dataQua" 
+        style="margin-left: -60px;">
+          <div class="item item-avatar">
+            <img ng-src="img/app-icons/android/mipmap-hdpi/logo.png">
+            <h2>Qualification: {{qua.qualification}}</h2>
+          </div>
+        </ion-item>
+      </div>  
+    </ion-content>
+</ion-view>

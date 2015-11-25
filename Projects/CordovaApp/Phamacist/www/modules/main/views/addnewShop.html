@@ -1,0 +1,115 @@
+<ion-view title="Manage Shop" >
+        
+      <div class="bar bar-subheader customHeaderBar">
+        <h2 class="title customHeaderBar" style="margin-left: 14%;font-size: 20px;top: 11px;">
+          {{title}}
+        </h2>
+      </div>
+
+        <ion-content class="background-content">
+        <form name="formShop">
+           <div class="form-group">
+                    <label class="item-input item-floating-label">
+                          <span class="input-label span-input-color">Shop Name</span><div class="im1"></div>
+                          <input class="ip_custom pl" id="disableIput" ng-required="true" type="text" 
+                          placeholder="Shop Name" ng-model="shopInfo.shop_name" name="shop_name"
+                          maxlength="50" />
+                    </label>
+                     <div class="err" ng-messages="formShop.shop_name.$error " 
+                    ng-show="iserr || formShop.shop_name.$dirty && formShop.shop_name.$invalid">
+                      <small ng-message="required" ng-show="formShop.shop_name.$error">
+                        Your address is required 
+                      </small>
+                    </div>
+                 	    <br>
+                    <label class="item-input item-floating-label" >
+                          <span class="input-label span-input-color">Address</span><div class="im1"></div>
+                          <input class="ip_custom pl" ng-required="true" type="text" placeholder="Address"
+                          ng-autocomplete ng-model="shopInfo.address" options="options" details="details" 
+                          id="autocomplete" ng-focus="disableTap()" required
+                          ng-class="{'error':iserr||formShop.address.$dirty && formShop.address.$invalid}"/>
+                    </label>
+                    <div class="err" ng-messages="formShop.address.$error " 
+                    ng-show="iserr || formShop.address.$dirty && formShop.address.$invalid">
+                      <small ng-message="required" ng-show="formShop.address.$error">
+                        Your address is required 
+                      </small>
+                    </div>
+                    <br>
+                     <label class="item-input item-floating-label" >
+                          <span class="input-label span-input-color">Surburb</span><div class="im1"></div>
+                          <input class="ip_custom pl" ng-required="true" type="text" placeholder="Surburb" 
+                          ng-model="shopInfo.suburb" name="suburb" maxlength="50" 
+                          ng-class="{'error':iserr||formShop.suburb.$dirty && formShop.suburb.$invalid}"/>
+                    </label>
+                    <div class="err" ng-messages="formShop.suburb.$error " 
+                      ng-show="iserr || formShop.suburb.$dirty && formShop.suburb.$invalid">
+                      <small ng-message="required" ng-show="formShop.suburb.$error">
+                        Your suburb is required 
+                      </small>
+                    </div>
+                      
+                      <br>
+                    <label class="item-input item-floating-label" style="margin: 15px 0 15px 0; 
+                    font-size: medium;">
+                    <span class="span-ex" style="color:white">State</span>
+                      <select ng-required="true" ng-model="shopInfo.state" name="state" 
+                      class="browser-default" id="selState" 
+                      style="float: right; margin-top: -2px; border: none; 
+                      height: 21px; background-color: transparent; color:white">
+                          <option value="" style="color:black">Choose State</option>
+                          <option value="NT" style="color:black">Northern Territory</option>
+                          <option value="QLD" style="color:black">Queensland</option>
+                          <option value="VIC" style="color:black">Victoria</option>
+                          <option value="NSW" style="color:black">New South Wales</option>
+                          <option value="SA" style="color:black">South Australia</option>
+                          <option value="WA" style="color:black">Western Australia</option>
+                          <option value="TAS" style="color:black">Tasmania</option>
+                      </select>
+                      <hr class="customHr" ng-class="{'error':iserr|| 
+                      formShop.state.$dirty && formShop.state.$invalid}">
+                    </label>
+                    <br>
+                      <label class="item-input item-floating-label" >
+                        <span class="input-label span-input-color">PostCode</span><div class="im1"></div>
+                        <input class="ip_custom pl" ng-required="true" type="number" placeholder="PostCode" ng-model="shopInfo.postcode" name="postcode" maxlength="11" 
+                        ng-class="{'error':iserr||formShop.postcode.$dirty && formShop.postcode.$invalid}"/>
+                    </label>
+                    <div class="err" ng-messages="formShop.postcode.$error " 
+                      ng-show="iserr || formShop.postcode.$dirty && formShop.postcode.$invalid">
+                      <small ng-message="required" ng-show="formShop.postcode.$error">
+                        Your post is required 
+                      </small>
+                    </div>
+                    <br>
+                    <label class="item-input item-floating-label" >
+                          <span class="input-label span-input-color">Phone</span><div class="im1"></div>
+                          <input class="ip_custom pl" ng-required="true" type="number" 
+                          placeholder="Phone" ng-model="shopInfo.phone" name="phone" maxlength="15" 
+                          ng-class="{'error':iserr||formShop.phone.$dirty && formShop.phone.$invalid}"/>
+                    </label>
+                    <div class="err" ng-messages="formShop.phone.$error " 
+                      ng-show="iserr || formShop.phone.$dirty && formShop.phone.$invalid">
+                      <small ng-message="required" ng-show="formShop.phone.$error">
+                        Your phone is required 
+                      </small>
+                    </div>
+                    <br>
+                  	<div style="float: right;">
+                       <button class="btn-red waves-effect" ng-click="createNewShop(formShop)" 
+                       ng-show="title == 'Add New Shop'">
+                          Add
+                       </button>
+
+                       <button class="btn-red waves-effect" ng-click="updateShopCompany()" 
+                       ng-show="title == 'Edit Shop'">
+                          Edit
+                       </button>
+                    </div>
+                     <div style="float: left;">
+                       <button class="  btn-red waves-effect fa fa-reply fa-2x" ui-sref="app.main.shop"></button>
+                    </div>
+          </div>
+          </form>
+        </ion-content>
+</ion-view title>

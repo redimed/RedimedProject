@@ -1,0 +1,28 @@
+<ion-view  >
+  	<div  class="ic-tabs">
+  		<img src="img/Design-Appb_01.png" alt="" style="width: 129px; margin-top: -2px;">
+  	</div>
+  	<ion-tabs class="tabs-custom tabs-icon-only tabs-top bar-header" style="background-color: white;border-bottom: none;">
+		<ion-tab title="Home" icon-on="icon icon_home_active" icon-off="icon icon_home" 
+		ui-sref="app.main.home" style="margin-left: 30%;padding-left: 10%;">
+		  	<ion-nav-view name="home"></ion-nav-view> 
+		</ion-tab>
+
+		<ion-tab title="Profile" icon-on="icon icon_info_active" icon-off="icon icon_info" 
+		ui-sref="app.main.profile">
+		   	<ion-nav-view name="profile"></ion-nav-view>
+		</ion-tab>
+
+	    <ion-tab title="Shop" icon-on="icon icon_shop_active" icon-off="icon icon_shop" ng-click="tabShop()"ng-if="user_type == 'Company' ">
+			<ion-nav-view name="shop"></ion-nav-view>
+		</ion-tab>
+
+		<ion-tab title="Post" icon-on="icon icon_post_active" icon-off="icon icon_post" ng-click="tabPost()"ng-if="user_type == 'Company' ">
+			<ion-nav-view name="post"></ion-nav-view>
+		</ion-tab>
+
+		<ion-tab title="Post" icon-on="icon icon_post_active" icon-off="icon icon_post" ng-click="tabPost()"ng-if="user_type == 'Pharmacist' ">
+			<ion-nav-view name="post"></ion-nav-view>
+		</ion-tab>
+	</ion-tabs>
+</ion-view>

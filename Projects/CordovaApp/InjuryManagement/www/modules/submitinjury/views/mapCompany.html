@@ -1,0 +1,35 @@
+<ion-view title="Map Company">
+    <ion-content class="content-scroll" style="background:#015190">
+        <div class="transparent-modal-phone wd100" >
+            <div >
+                <div class="header-logo">
+                    <img src="img/main_logo.png" class="img-header">
+                </div>
+                <div class="background-header-logo-child">
+                    <span class="span-header">Injury Management</span>
+
+                </div>
+
+                <div class="dv-fn">
+                    <span class="span-fn">Map Company</span>
+                </div>
+            </div>
+            <div class="actionBar">
+                <button menu-toggle="left" class="button button-icon icon ion-navicon mn-left" ></button>
+            </div>
+            <div style="margin-top:100px; height: 100%;">
+                <div ng-show="userType !== 'Company'">
+                    <div style="width: 50%;float: right;text-align: -webkit-left;" ng-if="flag == true">
+                          <img ng-src="{{sourceUserImg}}" class="avatar-pickup">
+                    </div>
+                    <div style="color: white;width: 50%;float: left;" ng-if="flag == true">
+                        <span>Your pickup driver is <br/>{{infobackup.username}}</span> <br/>
+                        <span>Your estimates pickup time is <br/>{{infobackup.duration}}</span><br/>
+                    </div>
+                </div>
+            <div id="map-canvas" data-tap-disabled="true" company-map class="col-md-12 wd100" style="height:70%"></div>
+            </div>
+        </div>
+    </ion-content>
+    </div>
+</ion-view>

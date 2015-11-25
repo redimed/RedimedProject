@@ -1,0 +1,154 @@
+<ion-view >
+    <ion-content class="content-scroll" style="background:#015190">
+        <div class="transparent-modal-phone" style="width: 100%; height: 100%">
+            <div >
+                <div class="header-logo">
+                    <img src="img/main_logo.png" class="img-header">
+                </div>
+                <div class="background-header-logo-child">
+                    <span class="span-header">Injury Management</span>
+
+                </div>
+                <div class="dv-fn">
+                    <span class="span-fn">Second Info</span>
+                </div>
+            </div>
+            <form name="second" novalidate style="margin-top:50px">
+                <ion-list>
+                    <div class="actionBar">               
+                        <a class="button button-icon icon ion-ios7-arrow-back color-fff mn-left" ui-sref="app.worker.add" >&nbsp;Back</a>
+                    </div>
+                    <div class="item-input label-custom-field item-input-ipad">
+                        <span class="input-label span-input-color">Account Type</span>
+                        <select ng-model="worker.Account_type" class="select-custom" name="type"
+                                ng-options="row.Account_id as row.Account_name for row in accTypeIndex">
+                            <option value="">--Select Type--</option>
+                        </select>
+                    </div>
+                    <div class="bd-bottom"></div>
+                    <div class="item-input label-custom-field item-input-ipad">
+                        <span class="input-label span-input-color">Account Holder</span>
+                        <input type="text" ng-model="worker.Account_holder" name="worker.Account_holder" maxlength="100" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
+                    </div>
+                    <div class="bd-bottom"></div>
+                    <div class="item-input label-custom-field item-input-ipad">
+                        <span class="input-label span-input-color">Medicare No</span>
+                        <input type="tel" ng-model="worker.Medicare_no" name="Medicare_no" maxlength="20" ng-class="{'has-error':isSubmit2 && second.Medicare_no.$invalid}" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
+                    </div>
+                    <div class="bd-bottom"></div>
+                    <div class="item-input label-custom-field item-input-ipad">
+                        <span class="input-label span-input-color">Expire Medicare</span>
+                        <input type="text" onfocus="this.type='date';
+                    this.setAttribute('onfocus','');this.blur();
+                    this.focus();" ng-model="worker.Exp_medicare" name="Exp_medicare" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
+                    </div>
+                    <div class="bd-bottom"></div>
+                    <div class="item-input label-custom-field item-input-ipad">
+                        <span class="input-label span-input-color">MemberShip No</span>
+                        <input type="tel" ng-model="worker.MemberShip_no" name="MemberShip_no" maxlength="11" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
+                    </div>
+                    <div class="bd-bottom"></div>
+                    <div class="item-input label-custom-field item-input-ipad">
+                        <span class="input-label span-input-color">DVA No</span>
+                        <input ng-model="worker.DVA_No" type="number" name="DVA_No" maxlength="11" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
+                    </div>
+                    <div class="bd-bottom"></div>
+                    <div class="item-input label-custom-field">
+                        <span class="input-label span-input-color">HCC/Pension No</span>
+                        <input ng-model="worker.HCC_Pension_No" type="number" name="HCC_Pension_No" maxlength="11" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white">
+                    </div>
+                    <div class="bd-bottom"></div>
+                    <div class="item-input label-custom-field item-input-ipad">
+                        <span class="input-label span-input-color">Expiry</span>
+                        <input type="text" onfocus="this.type='date';
+                    this.setAttribute('onfocus','');this.blur();
+                    this.focus();" ng-model="worker.Exp_pension" name="Exp_pension" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
+                    </div>
+                    <div class="bd-bottom"></div>
+                    <div class="item-input label-custom-field item-input-ipad">
+                        <span class="input-label span-input-color">Health Fund</span>
+                        <select ng-model="worker.Private_fund_id" class="select-custom"
+                                ng-options="row.PF_id as row.Fund_name for row in fundIndex">
+                            <option value="">--Select Fund--</option>
+                        </select>
+                    </div>
+                    <div class="bd-bottom"></div>
+                    <div class="item-input label-custom-field item-input-ipad">
+                        <span class="input-label span-input-color">UPI</span>
+                        <input type="tel" ng-model="worker.UPI" name="UPI" class="pl" maxlength="11" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white" >
+                    </div>
+                    <div class="bd-bottom"></div>
+                    <!-- <a ng-click="nextFormSecond(second)" class="button button-icon icon ion-arrow-right-c next-button-submitinjury" style="margin-top:11px"><i class="icon ion-ios7-arrow-right"></i></a> -->
+                    <div class="item-input label-custom-field item-input-ipad">
+                        <span class="input-label span-input-color">Occupation</span>
+                        <input type="text" ng-model="worker.Occupation" name="Occupation"
+                               class="pl"  style="color:white" maxlength="50"
+                               placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------">
+                    </div>
+                    <div class="bd-bottom"></div>
+                    <div class="item-input label-custom-field item-input-ipad">
+                        <span class="input-label span-input-color">Partner's Name</span>
+                        <input type="text" ng-model="worker.Partner_name" name="Partner_name" maxlength="50"
+                               class="pl" style="color:white"
+                               placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------">
+                    </div>
+                    <div class="bd-bottom"></div>
+                    <div class="item-input label-custom-field item-input-ipad">
+                        <span class="input-label span-input-color">Partner's DOB</span>
+                        <input type="text" onfocus="this.type='date';
+                    this.setAttribute('onfocus','');this.blur();
+                    this.focus();" ng-model="worker.Partner_DOB" name="Partner_DOB" class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white"/>
+                    </div>
+
+                    <div class="bd-bottom"></div>
+                    <div class="item-input label-custom-field item-input-ipad">
+                        <span class="input-label span-input-color">Partner's Occupation</span>
+                        <input type="text" ng-model="worker.Partner_Occupation" name="Partner_Occupation" maxlength="50"
+                               class="pl" style="color:white"
+                               placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------">
+                    </div>
+                    <div class="bd-bottom"></div>
+                    <div class="item-input label-custom-field item-input-ipad">
+                        <span class="input-label span-input-color">Alias First Name</span>
+                        <input type="text" ng-model="worker.Alias_First_name" name="Alias_First_name" maxlength="50"
+                               class="pl" style="color:white"
+                               placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------">
+                    </div>
+                    <div class="bd-bottom"></div>
+                    <div class="item-input label-custom-field item-input-ipad">
+                        <span class="input-label span-input-color">Alias Sur Name</span>
+                        <input type="text" ng-model="worker.Alias_Sur_name" name="Alias_Sur_name" maxlength="50"
+                               class="pl" style="color:white"
+                               placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------">
+                    </div>
+                    <div class="bd-bottom"></div>
+                    <div class="item-input label-custom-field item-input-ipad">
+                        <span class="input-label span-input-color">UR No</span>
+                        <input type="tel" ng-model="worker.UR_no" name="UR_no" maxlength="11"
+                               class="pl" style="color:white"
+                               placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------">
+                    </div>
+                    <div class="bd-bottom"></div>
+                    <div class="item-input label-custom-field item-input-ipad">
+                        <span class="input-label span-input-color">Custom</span>
+                        <input type="text" ng-model="worker.Custom" name="Custom" maxlength="50"
+                               class="pl" style="color:white"
+                               placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------">
+                    </div>
+                    <div class="bd-bottom"></div>
+                    <div class="row responsive-sm">
+                        <div class="col col-80 col-offset-10">
+                            <a class="button button-full btn-full-yellow" ng-click="submitInsertWorker(workerForm, second)">
+                                Submit
+                            </a>
+                        </div>
+                    </div>
+                </ion-list>
+            </form>
+
+        </div>
+
+    </ion-content>
+
+
+</ion-view>

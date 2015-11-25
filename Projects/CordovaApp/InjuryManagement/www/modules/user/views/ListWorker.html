@@ -1,0 +1,45 @@
+<ion-view title="Profile">
+<ion-content class="content-scroll" style="background:#015190">
+<div class="transparent-modal-phone wd100" >
+    <div >
+        <div class="header-logo">
+            <img src="img/main_logo.png" class="img-header">
+        </div>
+        <div class="background-header-logo-child">
+            <span class="span-header">Injury Management</span>
+        </div>
+        <div class="dv-fn">
+            <span class="span-fn">Worker List</span>
+        </div>
+    </div>
+    <div class="actionBar">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon mn-left" ></button>
+        <a class=" button-icon color-fff mn-right" ui-sref="app.worker.second"><i class="ion-plus-circled"></i>Add Worker</a>
+    </div>
+    <div style="margin-top:100px">
+        <div class="list list-inset" style="margin-top: 40px;">
+            <label class="item item-input search-item-input">
+                <i class="icon ion-search placeholder-icon"></i>
+                <input id="icon_prefix" class="validate" size="40" ng-required="true" type="text" ng-model="searchText" name="SearchKey"   placeholder="Search key" >
+            </label>
+        </div>
+        <ion-list>
+        <div class="list" ng-repeat="Workers in listWorker | limitTo:pageSize" 
+        style="text-align: left;font-size: 12px;padding-left: 30px;" >
+            <a  ui-sref="app.detailWorker({patientID:Workers.Patient_id})">
+            <h3 style="color:#f3c90a; text-transform: capitalize;">{{Workers.Title}}.{{Workers.First_name}}&nbsp;{{Workers.Sur_name}}</h2>
+            <p style="color:white">{{Workers.Email}}</p>
+            <p style="color:white">{{Workers.Mobile}}</p>
+            <p style="color:white">{{Workers.Address1}}</p>
+            <p style="color:white">{{Workers.Suburb}}</p>
+            </a>
+            <div class="bd-bottom"></div>
+        </div>
+        </ion-list>
+        <ion-infinite-scroll on-infinite="loadMore()" distance="10%" 
+        ng-if="!noMoreItemsAvailable">
+        </ion-infinite-scroll>
+    </div>
+</div>
+</ion-content>
+</ion-view>

@@ -1,0 +1,23 @@
+<ion-modal-view class="custom-modal-size" style="background-color: #f3c90a; height: 50%; overflow: auto;">
+    <div style="margin: 60px auto 60px auto;">
+        <div class="parent-img-caller">
+            <img width="180" height="180" ng-src="{{avatarCaller}}" class="img-content"/>
+        </div>
+        <div class="name-caller">
+            <h3>{{fromUsername}}&nbsp;<span>is calling you</span></h3>
+        </div>
+        <div class="row btn-modal-parent">
+            <div class="col">
+                <a class="btn-modal-talk"ng-click="acceptCall()">
+                    <i class="icon ion-ios-videocam" style="margin-right: 12px; color: #000;"></i>Answer
+                </a>
+            </div>
+            <div class="col">
+                <a class="btn-modal-later" ng-click="ignoreCall()">
+                    <i class="icon ion-ios-close-empty" style="margin-right: 12px; color: #000;"></i>Decline
+                </a>
+            </div>
+        </div>
+    </div>
+</ion-modal-view>
+

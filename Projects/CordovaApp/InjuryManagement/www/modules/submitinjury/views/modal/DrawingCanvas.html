@@ -1,0 +1,19 @@
+<span style="color:white">Signature</span><br>
+<canvas id='signatureCanvas' width='300' height='180' style='border: 1px solid white;' ></canvas>
+<div class='button-bar'>
+    <div style="margin:0 auto;" class="row">
+        <div class="col">
+            <a class="button button-block bg-btn-custom" ng-click='saveCanvas()'
+               style="font-size: 14px; width: 10px; float: right">
+                OK
+            </a>
+        </div>
+        <div class="col">
+            <a class="button button-block bg-btn-custom" ng-click='clearCanvas()'
+               style="font-size: 14px; float: left">
+                Clear
+            </a>
+        </div>
+    </div>
+</div>
+<img ng-src='{{signature}}'/>

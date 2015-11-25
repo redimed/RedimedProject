@@ -1,0 +1,14 @@
+<div class="modal image-modal transparent" ng-class="hide.bars ? 'content-dark' : 'content-light'">
+    <div class="text-right h-descImg">
+        <a class="button button-clear margin-right-10 margin-top-20 fix-margin cssFade"
+           ng-click="hideModal()">
+            <span class="done-btn">Back</span>
+        </a>
+    </div>
+    <img ng-src="{{image.path}}" class="fullscreen-image"  /><br>
+    <div class="bg-descImg padding cssFade" >
+        <span>
+            <span style="font-size: 15px; font-weight: bolder;">Description:</span> {{image.desc}}
+        </span>
+    </div>
+</div>

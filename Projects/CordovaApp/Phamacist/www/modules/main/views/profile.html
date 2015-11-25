@@ -1,0 +1,55 @@
+<ion-view title="Profile" >
+<div class="bar bar-subheader customHeaderBar">
+  <div class="welcom" style=" margin-left: 130px;">{{userInfo.firstname}} &nbsp; {{userInfo.surname}}</div>
+  <div class="ava">
+      <img alt=""
+      ng-src="https://testapp.redimed.com.au:3000/api/phUser/getAvatar/{{userInfo.user_id}}" 
+      id="avatar"/>
+  </div>
+<h2 class="title customHeaderBar"  style="margin-left: 14%;font-size: 20px;top: 11px;">Profile</h2>
+</div>
+<div class="sub-ss"></div>
+    <ion-content style="background:#7e9daa">
+       <div class="list c-list" >
+          <label class="item-input input_us"  ui-sref="app.main.userinfo">
+                <span class=" span-input-color">
+                <i class="icon ion-person icon_custom"></i>
+                </span>
+                <div class="im1"></div>
+                <div  class="c-label" style="margin-left: 108px;">User Info </div> 
+          </label>
+          <br>
+           <label class="item-input input_us" ui-sref="app.main.company" ng-if="user_type == 'Company' " >
+                <span class=" span-input-color"> 
+                <i class="icon ion-briefcase icon_custom"></i>
+                </span>
+                <div class="im1">
+                  
+                </div>
+                <div  class="c-label" style="margin-left: 108px;">Company</div> 
+          </label>
+          <br ng-if="user_type == 'Company' ">
+           <label class="item-input input_us" ui-sref="app.main.pharmacist" ng-if="user_type == 'Pharmacist' ">
+                <span class=" span-input-color"><i class="ion-medkit icon_custom"></i></span><div class="im1"></div>
+                <div  class="c-label" style="margin-left: 108px;">Pharmacist</div> 
+          </label>
+          <!-- <br>
+          <br ng-if="user_type == 'Company' ">
+           <label class="item-input input_us" ui-sref="app.main.postPharmacist" ng-if="user_type == 'Pharmacist' ">
+                <span class=" span-input-color"><i class="ion-plus-circled icon_custom"></i></span><div class="im1"></div>
+                <div  class="c-label" style="margin-left: 108px;">Apply</div> 
+          </label> -->
+          <br ng-if="user_type == 'Pharmacist' ">
+            <label class="item-input input_us" ng-click="signout()">
+                <span class=" span-input-color">
+               <i class="icon ion-log-in icon_custom"></i>
+                </span>
+                <div class="im1"></div>
+                <div  class="c-label" style="margin-left: 108px;">Logout</div> 
+          </label>
+
+      
+      </div>
+
+    </ion-content>
+</ion-view>

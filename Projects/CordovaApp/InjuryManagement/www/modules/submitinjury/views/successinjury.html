@@ -1,0 +1,116 @@
+<ion-view >
+    <ion-content class="content-scroll" style="background:#015190" >
+        <div class="transparent-modal-phone wd100">
+            <div>
+                <div class="header-logo">
+                    <img src="img/main_logo.png" class="img-header">
+                </div>
+                <div class="background-header-logo-child">
+                    <span class="span-header">Injury Management</span>
+
+                </div>
+                <div class="dv-fn">
+                    <span class="span-fn">Submit Injury</span>
+                </div>
+                <div class="actionBar">
+                    <button class="button button-icon icon ion-arrow-left-c mn-left" ui-sref="app.injury.desInjury" ></button>
+                </div>
+            </div>
+
+            <div class="bg-info-success text-center">
+
+                <div class="portlet light">
+                    <div id="map-canvas" mdt-map address="location.format_address" ad="ad" sc="sc"  lo="test"  style="height: 300px; width: 100%"></div>
+                    <div class="clearfix"></div>
+                    <div class="wrapper-info-company">
+                        <img ng-src="{{worker.avatar}}" class="img-detail-injurypickup">
+                        <span class="ion-google-place ion-google-place_custom"></span>
+                       <!-- <ion-google-place  ng-model="location.format_address" ng-change="test=!test" class="pl"/>  -->
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="info-injury-pickup">
+             <div class=" item-input label-custom-field .col text-left padding-right lb-view" >
+                    <span class="input-label span-input-color">Address</span>
+                   <input ng-required="true" type="text" ng-model="location.format_address" name="Address"  
+                                class="pl" placeholder="--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" style="color:white;"/>
+                     <ion-google-place  ng-model="location.format_address" ng-change="test=!test" /> 
+                </div>
+                <div class="bd-bottom"></div>
+                <label class=" item-input label-custom-field .col text-left padding-right lb-view" >
+                    <span class="input-label span-input-color">Name</span>
+                    <span style="text-transform:capitalize;" class="span-value-infoinjurypickup ng-binding">{{worker.Title}}<span ng-if="worker.Title !== null">.</span>{{worker.First_name}} {{worker.Sur_name}} {{worker.Middle_name}}</span>
+                </label>
+                <div class="bd-bottom"></div>
+                <label class="item-input label-custom-field lb-view">
+                    <span class="input-label span-input-color">Birthday</span>
+                    <span class="span-value-infoinjurypickup ng-binding">{{worker.DOB |date:'MMM dd, yyyy'}}</span>
+                </label>
+                <div class="bd-bottom"></div>
+                <label class=" item-input label-custom-field col-xs-6 text-left padding-right lb-view" >
+                    <span class="input-label span-input-color">Gender</span>
+                    <span class="span-value-infoinjurypickup ng-binding">{{worker.Sex}}</span>
+                </label>
+                <div class="bd-bottom"></div>
+                <label class=" item-input label-custom-field col-xs-6 text-left padding-right lb-view" >
+                    <span class="input-label span-input-color">Mobile</span>
+                    <span class="span-value-infoinjurypickup ng-binding">{{worker.Mobile}}</span>
+                </label>
+                <div class="bd-bottom"></div>
+                <label class=" item-input label-custom-field col-xs-6 text-left padding-right lb-view">
+                    <span class="input-label span-input-color">Email</span>
+                    <span class="span-value-infoinjurypickup ng-binding">{{worker.Email}}</span>
+                </label>
+                <div class="bd-bottom"></div>
+                <label class=" item-input label-custom-field col-xs-6 text-left padding-right lb-view">
+                    <span class="input-label span-input-color">Description</span>
+                    <span class="span-value-infoinjurypickup ng-binding">{{worker.injury_description}}</span>
+                </label>
+                <div class="bd-bottom"></div>
+                <label class=" item-input label-custom-field col-xs-6 text-left padding-right lb-view">
+                    <span class="input-label span-input-color">Date Injury</span>
+                    <span class="span-value-infoinjurypickup ng-binding">{{worker.injury_date | date:'medium'}}</span>
+                </label>
+                <div class="bd-bottom"></div>
+                <label class="item-input label-custom-field col-xs-6 text-left padding-left lb-view" 
+                ng-hide="imgURI.length == 0" style="height: 182px;">
+                <span class="input-label span-input-color" style="width: 0;">Image</span>
+                <ion-scroll direction="x" style="position: absolute; white-space: nowrap; width: 80%;">
+                    <a ng-repeat="imgDetail in imgURI" ng-click="selectImg(imgDetail)" 
+                    style="margin-right: 50px;">
+                        <img ng-src="{{imgDetail.image}}" class="a-img-custom"/>
+                    </a>
+                </ion-scroll>
+                </label>
+                <div class="bd-bottom"></div>
+               <drawing data="worker.signature" empty="worker.signEmpty" style="margin:0 auto">
+                   
+               </drawing>
+              
+          </div>
+          <br>
+          <img ng-src='{{signature}}'/>
+
+                <div class="row">
+                    <div class="col col-50 col-offset-25 padding-bottom">
+                        <button class="button button-block bg-btn-custom" ng-click="submitInjuryAll()">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        </div>
+
+
+
+        </div>
+
+    </ion-content>
+
+
+</ion-view>

@@ -1,0 +1,87 @@
+<ion-view title="Add Worker">
+ 
+     <ion-content class="content-scroll" style="background:#015190">
+        <div class="transparent-modal-phone wd100">
+            <div >
+                <div class="header-logo">
+                    <img src="img/main_logo.png" class="img-header">
+                </div>
+                <div class="background-header-logo-child">
+                    <span class="span-header">Injury Management</span>
+
+                </div>
+                <div class="dv-fn">
+                    <span class="span-fn">Write NFC</span>
+                </div>
+            </div>
+            <form name="last" novalidate style="margin-top:50px">
+                <ion-list>
+                    <div class="actionBar">
+                        <a menu-toggle="left"  class="button button-icon icon ion-navicon-round mn-left" ng-click="toogleMenu()"></a>
+
+                    </div>
+                    <label class="item-input label-custom-field">
+                        <span class="input-label span-input-color">Full Name</span>
+                      <span style="color:white">
+                          {{nfcInfo.data.Title}}. {{nfcInfo.data.First_name}} {{nfcInfo.data.Sur_name}}
+                      </span>
+                    </label>
+                    <div class="bd-bottom"></div>
+                    <label class="item-input label-custom-field">
+                        <span class="input-label span-input-color">BirthDay</span>
+                      <span style="color:white">
+                            {{nfcInfo.data.DOB | date:'yyyy-MM-dd'}}
+                      </span>
+                    </label>
+                    <div class="bd-bottom"></div>
+                      <label class="item-input label-custom-field">
+                        <span class="input-label span-input-color">Mobile</span>
+                      <span style="color:white">
+                            {{nfcInfo.data.Mobile}}
+                      </span>
+                    </label>
+                    <div class="bd-bottom"></div>
+                     <label class="item-input label-custom-field">
+                        <span class="input-label span-input-color">MedicareNo</span>
+                      <span style="color:white">
+                            {{nfcInfo.data.Medicare_no}}
+                      </span>
+                    </label>
+                    <div class="bd-bottom"></div>
+                    <label class="item-input label-custom-field">
+                        <span class="input-label span-input-color">Address</span>
+                      <span style="color:white">
+                           {{nfcInfo.data.Address1}}
+                      </span>
+                    </label>
+                    <div class="bd-bottom"></div>
+                    <label class="item-input label-custom-field">
+                        <span class="input-label span-input-color"> PassportorDriverslicence</span>
+                      <span style="color:white">
+                           
+                      </span>
+                    </label>
+                    <div class="bd-bottom"></div>
+                    <div class="row">
+                        <div class="col col-50 col-offset-25 padding-bottom">
+                            <button class="button button-block bg-btn-custom" ng-click="NFCwrite()">
+                                 Write To Tag NFC
+                            </button>
+                        </div>
+                    </div>
+                    <div class="app">
+                        <div id="messageDiv">No tag found</div>
+                    </div> 
+                    
+                </ion-list>
+            </form>
+
+        </div>
+
+    </ion-content>
+
+
+
+</ion-view>
+
+

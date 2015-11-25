@@ -1,0 +1,63 @@
+<ion-view >
+<ion-content class="content-scroll">
+<div>
+    <img src="img/bk.png" style="width:200px">
+</div>
+<div class="title-0">
+    <div class="title-1" style="font-size: 18px;color: white;margin-left: 28px;padding-top: 14px;float:right;width: 130px;">Calendar</div>
+    <button id="register-back-btn" type="button" class="button button-clear" ui-sref="security.rlobNonEmergency.rlobBookingType" style="margin-top: 9px;
+    margin-left: 6px;color:white">
+    <i class="fa fa-reply fa-2x"></i> </button>
+</div>
+</div>
+<ion-list>
+<label class="item item-input " >
+<span class="input-label span-input-color">Date</span>
+<input  ng-required="true" type="date" style="border: 1px solid silver;position: absolute;width: 160px;margin-top: 6px;" ng-model="selectedFilter.date" name="Date" ng-click="getDatePicker()"   />
+</label>
+<label  class="item item-input " >
+<span class="input-label span-input-color">Location</span>
+<select  ng-model="selectedFilter.locationSelected" ng-options="location.Site_name for location in locationsFilter" ng-change="updateAppoinmentsList()" >
+    <option  value=""></option>
+</select>
+</label>
+<label class="item item-input " >
+<span class="input-label span-input-color">Doctors</span>
+<select   ng-model="selectedFilter.doctorSelected" ng-options="doctor.NAME for doctor in doctorsFilter" ng-change="updateAppoinmentsList();" class="browser-default">
+    <option  value=""></option>
+</select>
+</label>
+<div class="table-responsive" style="margin-top: 20px">
+<div ng-if="appointmentsFilter.length<=0" style="text-align: center">
+    <h4>No Results</h4>
+</div>
+<div ng-repeat="doctor in appointmentsFilter" class="card" style="background-color: whitesmoke;">
+    <div ng-repeat="location in doctor.LOCATION_ITEMS" style="border-bottom: 1px solid #dcdcdc">
+        <div class="col-md-2" style="width: 1050px;padding-left:10px">
+            <i class="fa fa-map-marker fa-2x " style="color:#b71c1c"></i>
+            <span class="text-primary" style="margin: 12px">{{location.SITE_NAME}}</span>
+        </div>
+        </br>
+        <div class="col-md-2" style="width: 800px;padding-left:10px">
+            <i class="fa fa-user-md fa-2x " style="color:#b71c1c"></i>
+            <span class="text-primary" style="margin: 12px">{{doctor.DOCTOR_NAME}}</span>
+        </div></br>
+        <div class="col-md-2" style="padding-left:10px">
+            <i class="fa fa-calendar fa-2x " style="float: left; color:#b71c1c" ></i>
+            <div class="col s10" style="margin-left:16px">
+                <div class="grid-example col s12 m6" style="margin-bottom: 10px">
+                    <a ng-repeat="appointment in location.APPOINTMENT_ITEMS"
+                    class="btn btn-sm blue filter-submit margin-bottom "
+                    style="margin-left: 10px;margin-bottom: 10px;"
+                    ng-click="selectAppointmentCalendar(appointment,doctor.DOCTOR_NAME,location.SITE_NAME)">
+                    {{ appointment.APPOINTMENT_TIME }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</ion-list>
+</ion-content>
+</ion-view>

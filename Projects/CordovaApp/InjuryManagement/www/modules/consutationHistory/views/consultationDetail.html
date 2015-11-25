@@ -1,0 +1,148 @@
+<ion-view >
+<ion-content class="content-scroll" style="background:#015190">
+<div class="transparent-modal-phone wd100">
+    <div >
+        <div class="header-logo">
+            <img src="img/main_logo.png" class="img-header">
+        </div>
+        <div class="background-header-logo-child">
+            <span class="span-header">Injury Management</span>
+        </div>
+        <div class="dv-fn">
+            <span  class="span-fn">Consultation Detail</span>
+        </div>
+    </div>
+    <div class="actionBar">
+        <a class="button button-icon icon ion-ios-arrow-left mn-left" ui-sref="app.consultationList"></a>
+    </div>
+    <div style="margin-top:100px">
+        <div class="card">
+            <div class="item item-divider-c">
+                Diagnonis
+            </div>
+            <div class="item-c item-text-wrap row responsive-sm">
+                <span >
+                {{consultation.consultData.diagnosis}}
+                </span>
+            </div>
+        </div>
+        <div class="card">
+            <div class="item item-divider-c">
+                Examination
+            </div>
+            <div class="item-c item-text-wrap">
+                {{consultation.consultData.examination}}
+            </div>
+        </div>
+        <div class="card">
+            <div class="item item-divider-c">
+                History
+            </div>
+            <div class="item-c item-text-wrap">
+                {{consultation.consultData.history}}
+            </div>
+        </div>
+        <div class="card">
+            <div class="item item-divider-c">
+                Treatment Plan
+            </div>
+            <div class="item-c item-text-wrap">
+                {{consultation.consultData.treatment_plan}}
+            </div>
+        </div>
+        <div class="card">
+            <div class="item item-divider-c">
+                Drawing
+            </div>
+            <div class="item-c item-text-wrap">
+                <div class="footer_injury padding-top">
+                    <ion-scroll delegate-handle="calendarScroll" direction="x">
+                    <img ng-src="{{im.image}}" class="a-img-custom" style="margin-left:0px" ng-repeat="im in drawing"  ng-click="selectImg(im.image)"/>
+                    </ion-scroll>
+                </div>
+            </div>
+        </div>
+        <div class="card" style="background:#f5f5f5">
+            <div class="item item-divider-c">
+                FinalArr
+            </div>
+            <div class="item-c item-text-wrap" style="border-bottom: none;">
+                <a  class="btn-pdf" ng-repeat="final in consultation.finalArr" style="margin-left: 10px;margin-bottom: 10px;" ng-click="download('final',final.id)">
+                {{final.date|date: 'dd-MM-yyyy'}}
+                </a>
+            </div>
+        </div>
+        <div class="card" style="background:#f5f5f5">
+            <div class="item item-divider-c">
+                FirstArr
+            </div>
+            <div class="item-c item-text-wrap" style="border-bottom: none;">
+                <a  class="btn-pdf" ng-repeat="first in consultation.firstArr" style="margin-left: 10px;margin-bottom: 10px;" ng-click="download('firt',first.id)">
+                {{first.date|date: 'dd-MM-yyyy'}}
+                </a>
+            </div>
+        </div>
+        <div class="card" style="background:#f5f5f5">
+            <div class="item item-divider-c">
+                General
+            </div>
+            <div class="item-c item-text-wrap" style="border-bottom: none;">
+                <a  class="btn-pdf" ng-repeat="general in consultation.generalArr" style="margin-left: 10px;margin-bottom: 10px;" ng-click="download('general',general.id)">
+                {{general.date|date: 'dd-MM-yyyy'}}
+                </a>
+            </div>
+        </div>
+        <div class="card" style="background:#f5f5f5">
+            <div class="item item-divider-c">
+                Progress
+            </div>
+            <div class="item-c item-text-wrap" style="border-bottom: none;">
+                <a  class="btn-pdf" ng-repeat="progress in consultation.progressArr" style="margin-left: 10px;margin-bottom: 10px;" ng-click="download('progress',progress.id)">
+                {{progress.date|date: 'dd-MM-yyyy'}}
+                </a>
+            </div>
+        </div>
+        <div class="card" style="background:#f5f5f5">
+            <div class="item item-divider-c">
+                Medication
+            </div>
+            <div class="item-c item-text-wrap" style="border-bottom: none;">
+                <div class="footer_injury padding-top">
+                    <ion-scroll delegate-handle="calendarScroll" direction="x" >
+                    <table>
+                        <tr>
+                            <th class="medication">Name</th>
+                            <th class="medication">Dose</th>
+                            <th class="medication">Unit</th>
+                            <th class="medication">Route</th>
+                            <th class="medication">Frequency</th>
+                            <th class="medication">Start Date</th>
+                            <th class="medication">End Date</th>
+                            <th class="medication">Quanlity</th>
+                            <th class="medication">Doctor</th>
+                            <th class="medication">Condition/Indication</th>
+                        </tr>
+                        <tr ng-repeat="medication in consultation.medications">
+                            <td class="medication-td">{{medication.medication_name}}</td>
+                            <td class="medication-td">{{medication.dose}}</td>
+                            <td class="medication-td">{{medication.unit}}</td>
+                            <td class="medication-td">{{medication.route}}</td>
+                            <td class="medication-td">{{medication.frequency}}</td>
+                            <td class="medication-td">{{medication.start_date|date:'dd-MM-yyyy'}}</td>
+                            <td class="medication-td">{{medication.end_date|date:'dd-MM-yyyy'}}</td>
+                            <td class="medication-td">{{medication.qty}}</td>
+                            <td class="medication-td">{{medication.NAME}}</td>
+                            <td class="medication-td">{{medication.condition_Indication}}</td>
+
+                        </tr>
+
+                        
+                    </table>
+                    </ion-scroll>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</ion-content>
+</ion-view>
